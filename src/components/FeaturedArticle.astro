@@ -14,7 +14,7 @@ const provenanceLabel = signal?.image_provenance_label || 'Editorial visual';
 const provenanceKind = signal?.image_provenance_kind || 'image2';
 const date = signal?.date || signal?.publishedAt || '';
 const formattedDate = date
-  ? new Date(date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+  ? new Date(date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' })
   : '';
 const readerImpact = Array.isArray(signal?.reader_impact) ? signal.reader_impact.slice(0, 3) : [];
 const whyItMatters = signal?.why_it_matters ? String(signal.why_it_matters).replace(/^Why it\s+matters:\s*/i, '') : '';

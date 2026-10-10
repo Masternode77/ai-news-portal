@@ -92,15 +92,25 @@ const ALIAS_GUARDS = {
   마이크론: '(?!\\s?(?:급|두께|단위|미터))',
 };
 
+const KOREAN_PARTICLE = '(?:은|는|이|가|을|를|의|와|과|도|만|에서|에게|로|으로|측|사)';
+
+function companyTermPattern(value = '') {
+  const escaped = value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const guarded = `${escaped}${ALIAS_GUARDS[value] || ''}`;
+  if (/[가-힣]$/.test(value)) {
+    return `(?<![A-Za-z0-9가-힣])${guarded}(?=$|[^A-Za-z0-9가-힣]|${KOREAN_PARTICLE}(?=$|[^가-힣]))`;
+  }
+  return `(?<![A-Za-z0-9])${guarded}(?![A-Za-z0-9])`;
+}
+
 const COMPANY_MATCHERS = TRACKED_COMPANIES.map((company) => ({
   ...company,
   // Case-sensitive so common words (arm, meta, crusoe) never match prose.
-  pattern: new RegExp(`(?<![A-Za-z0-9])(?:${[company.name, ...company.aliases]
-    .map((value) => `${value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}${ALIAS_GUARDS[value] || ''}`).join('|')})(?![A-Za-z0-9])`),
+  pattern: new RegExp(`(?:${[company.name, ...company.aliases].map(companyTermPattern).join('|')})`),
 }));
 
-// English patterns use word boundaries; Korean terms match as substrings
-// because JavaScript word boundaries are ASCII-only.
+// English patterns use word boundaries. Korean company aliases require a
+// full Hangul token or a recognized grammatical particle.
 const TOPIC_RULES = [
   { key: 'data_centers', weight: 3, patterns: [/\b(?:data ?cent(?:er|re)s?|datacent(?:er|re)s?|colocation|hyperscal\w*|server farms?)\b/i, /데이터\s?센터|하이퍼스케일|컴퓨팅\s?센터/] },
   { key: 'ai', weight: 2, patterns: [/(?:\bAI\b|\bA\.I\.|\b(?:artificial intelligence|LLMs?|large language models?|generative|GenAI|inference|foundation models?|frontier models?|agentic|ChatGPT|Claude|Gemini|Llama|Grok|Copilot)\b)/, /인공지능|생성형|초거대|AI(?=[가-힣\s]|$)/] },

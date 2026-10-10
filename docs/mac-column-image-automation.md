@@ -4,52 +4,81 @@ The Mac's existing Codex task performs native image generation. Git stores the c
 
 ## Start of each authorized scheduled run
 
-Use the existing repository checkout and existing schedule. Before refresh or
-generation, acquire the repository-wide operation lock:
+Use the existing repository only as the coordinator checkout. It may contain
+user edits or be on another branch; never reset, clean, stash or switch it for a
+scheduled run. Resolve the successful production deployment serving
+`www.computecurrent.com` with the Vercel connector and require both `READY` and
+an exact 40-character `meta.githubCommitSha`. A pending deployment, branch name,
+short SHA or local `HEAD` is not an acceptable anchor.
+
+From any checkout in the same repository, start one isolated job with that full
+production SHA:
 
 ```sh
-node scripts/subscription-operation-lock.mjs acquire
+node scripts/subscription-job.mjs start --ref <production-ready-full-sha>
 ```
 
-Codex App commands use separate shells. Retain the owner token printed by
-`acquire` and pass it explicitly as
-`CC_SUBSCRIPTION_LOCK_OWNER='<owner-token-from-acquire>'` to the subscription
-runner. Keep the same owner through text generation, native artwork and import,
-final gates, success heartbeat, and any authorized commit/push. Do not use an
-`EXIT` trap unless one genuinely long-lived shell spans the native image tool and
-every later step; a trap in a one-command shell releases the lock immediately.
+Invoke this command through a structured subprocess and parse its JSON result.
+Keep `id`, `workspace` and `owner` in the task's private runtime state; do not
+use `eval`, paste the owner into chat, echo it, or interpolate the JSON into a
+shell command. `start` fetches `origin`, requires `origin/main` to equal the
+verified production SHA, takes the common-Git-directory operation lock, and
+creates a detached worktree at the recorded `workspace`. By default the
+workspace is below
+`~/.local/share/compute-current/subscription-jobs/<repository-id>/<job-id>`.
+Job records are stored with restricted permissions in the repository common Git
+directory under `subscription-jobs/<job-id>.json`.
 
-The common Git directory makes the lock apply to every linked checkout. A
-concurrent job must stop when acquisition fails; it must not generate in another
-worktree. The lock is never removed automatically as stale, and a different
-owner cannot release it. Verify an interrupted owner's processes have stopped
-before any manual lock recovery. After the complete operation, release it in the
-final command:
+Run dependency installation, text generation, native artwork, review, commits
+and validation only inside the returned job workspace. Pass the parsed values as
+`CC_SUBSCRIPTION_JOB_ID=<id>` and `CC_SUBSCRIPTION_LOCK_OWNER=<owner>` to
+`node scripts/run-subscription-news.mjs`. The runner rejects the primary
+checkout, a different worktree, a different owner and a completed job. Each job
+allows one real runner lease; duplicate processes and reruns of a completed or
+failed attempt are rejected. Finish a failed attempt, then start a new isolated
+job rather than rerunning its workspace. The lock
+continues through artwork, final gates, heartbeat, authorized push and deployment
+verification. A concurrent start must stop when lock acquisition fails.
+
+The coordinator never deletes an old job workspace. A failed generation remains
+there with its exact diagnostic changes, while the next successful `start`
+creates a clean workspace from the then-current verified production commit.
+`node scripts/subscription-job.mjs status` lists the ten newest records without
+revealing lock owners.
+
+After the runner process and all children have stopped, always close the job from
+the coordinator checkout with exactly one terminal status:
 
 ```sh
-CC_SUBSCRIPTION_LOCK_OWNER='<owner-token-from-acquire>' node scripts/subscription-operation-lock.mjs release
+node scripts/subscription-job.mjs finish --id <job-id> --status <failed|no_change|published> [--reason <bounded-reason>]
 ```
 
-Then check `git status --porcelain` and `git branch --show-current`. On a clean
-`main` checkout with no local-only commits, run `git fetch origin` and
-`git merge --ff-only origin/main`. If local changes, a different branch,
-divergence or another writer are present, preserve them and report the exact
-blocker; do not reset, stash, force-push or silently switch branches. Read the
-updated `AGENTS.md` and `.codex/skills/compute-current-images/SKILL.md` after
-refreshing. Verify live production as required there. An unmerged branch or
-pending production deployment is not proof of production alignment.
+Pass `CC_SUBSCRIPTION_LOCK_OWNER=<owner>` privately to `finish`. Use `failed`
+for any generation, source review, artwork, gate, push or deployment failure;
+dirty output is preserved. Use `no_change` only when the job workspace is clean
+and still at its base commit. Use `published` only after the workspace is clean,
+its new commit is on `origin/main`, and the corresponding Vercel deployment is
+`READY` at that exact full SHA. `finish` writes `finished_at`, records the
+published commit when applicable, and releases the owner-matched operation lock.
+Do not call `subscription-operation-lock.mjs release` during a normal job, and
+do not use an `EXIT` trap. If a runner PID is still alive, `finish` deliberately
+refuses to release the lock. If the job record becomes terminal but lock release
+fails, retry the identical `finish` command with the same owner and status. The
+retry completes the prior release without changing the result or releasing a
+newer job's lock.
 
 If the existing Mac task has no refresh step, it needs a one-time update on that Mac (or through a connected Mac host) to follow this document. Use Codex's automation tool to update the existing task, preserving its schedule and previously authorized publication scope; do not create a duplicate Windows schedule. No API key or credential export is needed.
 If that checkout does not yet contain the lock script, first verify that no other
 writer is active and perform the one-time clean fast-forward that installs this
 reviewed change. Do not generate during that bootstrap refresh. Every subsequent
-scheduled run acquires the lock before its refresh.
+scheduled run uses `subscription-job.mjs start` before generation.
 Retire or reconcile any separate image-only or legacy text schedule so exactly
 one job can acquire this lock and own the full operation.
 
 ## Each new column
 
-1. Create the column through the existing editorial and quality gates.
+1. Create the column through the existing editorial and quality gates in the
+   job workspace returned by `subscription-job.mjs start`.
 2. Run `node scripts/prepare-codex-images.mjs --id <column-id> --limit 1`.
 3. For `generate`, use the native image tool to create a fresh illustration for that column's headline, thesis and angle. Use a distinct scene/composition. Do not recycle the source news illustration, shared library, old crop or renamed file.
 4. Visually inspect the actual result and import it with the queued fingerprint. Re-run the same ID queue command; successful completion has no job, no blocked entry and `pendingCount: 0`. An empty `jobs` array alone does not mean completion. A failure stays pending and must not be reported as completed artwork.
@@ -96,8 +125,9 @@ The importer rejects exact reused source files and their normalized source bytes
 
 For the Astra/Fable migration, follow [subscription-generation.md](subscription-generation.md)
 before creating new columns. Use `node scripts/run-subscription-news.mjs` in the
-existing authorized Mac task; then finish this native artwork workflow and rerun
-the gates before publication. GitHub now validates artifacts rather than
+existing authorized Mac task, inside the active job workspace with its job ID
+and lock owner; then finish this native artwork workflow and rerun the gates
+before publication. GitHub now validates artifacts rather than
 scheduling text generation. Pulling this document does not itself reconfigure
 the Mac automation. Preserve the existing task and reconcile its schedule once
 on the Mac rather than adding another writer.

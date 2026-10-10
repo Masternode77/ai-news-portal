@@ -81,6 +81,13 @@ export function json(res, statusCode, payload, headers = {}) {
   res.end(JSON.stringify(payload));
 }
 
+export function adminUnavailable(res) {
+  json(res, 503, {
+    error: 'Admin service is currently unavailable.',
+    code: 'ADMIN_UNAVAILABLE',
+  });
+}
+
 export async function readJson(req) {
   const chunks = [];
   for await (const chunk of req) {
@@ -128,11 +135,11 @@ function headerValue(req, name) {
 
 export function requireAdmin(req, res, options = {}) {
   if (!adminAuthConfigured()) {
-    json(res, 500, { error: 'Admin auth is not configured. Set ADMIN_USERNAME, ADMIN_PASSWORD_HASH, and ADMIN_SESSION_SECRET.' });
+    adminUnavailable(res);
     return null;
   }
   if (!adminRateLimitControlReady()) {
-    json(res, 503, { error: 'Admin authentication is unavailable until its production rate-limit control is attested.' });
+    adminUnavailable(res);
     return null;
   }
 

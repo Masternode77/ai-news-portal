@@ -1,18 +1,24 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import LatestAnalysisFeed from '../../components/LatestAnalysisFeed.astro';
+import PublicationGrid from '../../components/PublicationGrid.astro';
 import taxonomyPages from '../../data/taxonomy-pages.json';
+import latestNews from '../../data/latest-news.json';
+import archivedNews from '../../data/archived-news.json';
+import authoredColumns from '../../data/authored-columns.json';
 import { SITE } from '../../config/site';
-import { buildHomepageFeed } from '../../../scripts/lib/homepage-feed-builder.mjs';
+import { buildPublicPublicationCatalog } from '../../../scripts/lib/public-publication-catalog.mjs';
+
+const catalog = buildPublicPublicationCatalog({ articles: [...latestNews, ...archivedNews], columns: authoredColumns });
 
 export function getStaticPaths() {
   return (taxonomyPages.regions || []).map((page) => ({ params: { slug: page.slug }, props: { page } }));
 }
 
 const { page } = Astro.props;
-const feed = buildHomepageFeed(page.items || [], { limit: 50, minimumVisible: 0 });
+const publications = catalog.filter((item) => item.regionSlug === page.slug);
+const noindex = publications.length === 0;
 ---
-<Layout title={`${page.name} | ${SITE.name}`} description={`Compute Current regional coverage for ${page.name}.`} canonicalPath={`/region/${page.slug}/`}>
+<Layout title={`${page.name} | ${SITE.name}`} description={`Compute Current regional coverage for ${page.name}.`} canonicalPath={`/region/${page.slug}/`} noindex={noindex}>
   <main class="policy-shell taxonomy-page">
     <a class="back-link" href="/">Latest analysis</a>
     <section class="policy-page">
@@ -20,6 +26,6 @@ const feed = buildHomepageFeed(page.items || [], { limit: 50, minimumVisible: 0 
       <h1>{page.name}</h1>
       <p class="policy-lede">Regional AI infrastructure analysis and briefs.</p>
     </section>
-    <LatestAnalysisFeed feed={feed} title={page.name} dek="" />
+    <PublicationGrid publications={publications} emptyText={`No qualifying public ${page.name} publications are available yet.`} />
   </main>
 </Layout>

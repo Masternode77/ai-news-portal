@@ -2,9 +2,10 @@
 import ProductLayout from '../../layouts/ProductLayout.astro';
 import latestNews from '../../data/latest-news.json';
 import archivedNews from '../../data/archived-news.json';
+import authoredColumns from '../../data/authored-columns.json';
 import { buildWeeklyDigest } from '../../../scripts/lib/newsletter.mjs';
 
-const digest = buildWeeklyDigest([...latestNews, ...archivedNews], { now: new Date() });
+const digest = buildWeeklyDigest([...latestNews, ...archivedNews], { now: new Date(), columns: authoredColumns });
 const dateFormatter = new Intl.DateTimeFormat('en-US', {
   month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC',
 });
@@ -29,7 +30,8 @@ const dateFormatter = new Intl.DateTimeFormat('en-US', {
         {digest.articles.map((article) => (
           <article class="product-card">
             <div class="product-meta">
-              <span class="product-tag">{article.category}</span>{' '}
+              <span class="product-tag">{article.type}</span>{' '}
+              <span>{article.category}</span>{' '}
               <span>{dateFormatter.format(new Date(article.publishedAt))}</span>
             </div>
             <h3><a href={article.href}>{article.title}</a></h3>

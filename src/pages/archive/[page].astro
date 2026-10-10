@@ -1,13 +1,17 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import LatestAnalysisFeed from '../../components/LatestAnalysisFeed.astro';
+import PublicationGrid from '../../components/PublicationGrid.astro';
 import latestNews from '../../data/latest-news.json';
 import archivedNews from '../../data/archived-news.json';
+import authoredColumns from '../../data/authored-columns.json';
 import { SITE } from '../../config/site';
-import { buildArchiveFeed } from '../../../scripts/lib/archive-feed-builder.mjs';
+import { buildPublicPublicationCatalog, filterPublications } from '../../../scripts/lib/public-publication-catalog.mjs';
+
+const pageSize = 18;
 
 export function getStaticPaths() {
-  const rootFeed = buildArchiveFeed([...latestNews, ...archivedNews], { page: 1, pageSize: 50 });
+  const staticCatalog = buildPublicPublicationCatalog({ articles: [...latestNews, ...archivedNews], columns: authoredColumns });
+  const rootFeed = filterPublications(staticCatalog, { page: 1, pageSize: 18 });
   return Array.from({ length: Math.max(0, rootFeed.pageCount - 1) }, (_, index) => {
     const pageNumber = index + 2;
     return {
@@ -18,7 +22,8 @@ export function getStaticPaths() {
 }
 
 const { pageNumber } = Astro.props;
-const feed = buildArchiveFeed([...latestNews, ...archivedNews], { page: pageNumber, pageSize: 50 });
+const catalog = buildPublicPublicationCatalog({ articles: [...latestNews, ...archivedNews], columns: authoredColumns });
+const feed = filterPublications(catalog, { page: pageNumber, pageSize });
 ---
 <Layout title={`Publication archive page ${pageNumber} | ${SITE.name}`} description="Compute Current publication archive page." canonicalPath={`/archive/${pageNumber}/`}>
   <main class="policy-shell taxonomy-page publication-archive">
@@ -28,6 +33,10 @@ const feed = buildArchiveFeed([...latestNews, ...archivedNews], { page: pageNumb
       <h1>Publication archive page {pageNumber}</h1>
       <p class="policy-lede">Browse recent AI infrastructure intelligence, briefs, and source-linked analysis.</p>
     </section>
-    <LatestAnalysisFeed feed={feed} title="Recent intelligence" eyebrow="Publication archive" dek="" />
+    <PublicationGrid publications={feed.items} />
+    <nav class="archive-pagination" aria-label="Archive pages">
+      <a href={pageNumber === 2 ? '/archive/' : `/archive/${pageNumber - 1}/`}>Previous page</a>
+      {pageNumber < feed.pageCount ? <a href={`/archive/${pageNumber + 1}/`}>Next page</a> : null}
+    </nav>
   </main>
 </Layout>

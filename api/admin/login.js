@@ -1,6 +1,7 @@
 import {
   adminAuthConfigured,
   adminRateLimitControlReady,
+  adminUnavailable,
   clearSessionCookie,
   createSession,
   credentialsMatch,
@@ -31,11 +32,11 @@ export default async function handler(req, res) {
   }
 
   if (!adminRateLimitControlReady()) {
-    json(res, 503, { error: 'Admin login is unavailable until its production rate-limit control is attested.' });
+    adminUnavailable(res);
     return;
   }
   if (!adminAuthConfigured()) {
-    json(res, 500, { error: 'Admin auth is not configured. Set a valid ADMIN_USERNAME, ADMIN_PASSWORD_HASH, and ADMIN_SESSION_SECRET.' });
+    adminUnavailable(res);
     return;
   }
 

@@ -218,7 +218,7 @@ Every bold repository path is verified by `tests/benchmark-evidence-paths.test.m
 | Feed, archive, and discovery | **src/pages/rss.xml.ts**, **public/feed.xsl**, **src/pages/follow.astro**, **src/pages/archive/index.astro**, **src/pages/archive/[page].astro**, **src/pages/sitemap.xml.ts**, and **src/pages/robots.txt.ts**. |
 | Public quality and rights | **scripts/lib/source-registry.mjs**, **scripts/lib/source-extraction-fail-closed.mjs**, **scripts/lib/copyright-safe-copy-guard.mjs**, **scripts/lib/final-publication-integrity.mjs**, **scripts/lib/public-surface-eligibility.mjs**, and **config/sourceRegistry.yml**. |
 | Search and structured presentation | **src/lib/seo-safeguards.js**, **src/pages/category/[slug].astro**, **src/pages/company/[slug].astro**, **src/pages/region/[slug].astro**, **src/pages/about.astro**, and **src/pages/contact.astro**. |
-| Deployment shape | **package.json**, **astro.config.mjs**, and **vercel.json**. The site remains Astro 7.2 static output; it has compatible non-CSP security headers but no enforced or report-only CSP. |
+| Deployment shape | **package.json**, **astro.config.mjs**, and **vercel.json**. The site remains Astro 7.3 static output; it has compatible non-CSP security headers but no enforced or report-only CSP. |
 
 ## Policy and architecture evidence
 
@@ -239,7 +239,7 @@ Every bold repository path is verified by `tests/benchmark-evidence-paths.test.m
   the [Astro sitemap integration](https://docs.astro.build/en/guides/integrations-guide/sitemap/)
   define the current static architecture and future options.
 
-Astro 7.2 can support a build-time hash CSP; an enforced AdSense/CMP CSP is
+Astro 7.3 can support a build-time hash CSP; an enforced AdSense/CMP CSP is
 deferred because this static deployment has neither a request-time nonce path
 nor a validated compatible policy. Do not add a report-only CSP without a
 collector. Revisit it only after a nonce-capable runtime or validated compatible

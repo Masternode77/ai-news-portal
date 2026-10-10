@@ -105,7 +105,19 @@ test('common words that share a tracked company name do not tag or admit a headl
   }
   assert.deepEqual(headlineCompanies('인텔, 18A 공정 AI 칩 양산').map((company) => company.name), ['Intel']);
   assert.deepEqual(headlineCompanies('메타, AI 데이터센터 증설').map((company) => company.name), ['Meta']);
+  assert.deepEqual(headlineCompanies('메타가 AI 데이터센터를 증설한다').map((company) => company.name), ['Meta']);
+  assert.deepEqual(headlineCompanies('메타의 AI 데이터센터 투자').map((company) => company.name), ['Meta']);
+  assert.deepEqual(headlineCompanies('스튜디오메타케이, AI 버추얼 아티스트 공개').map((company) => company.name), []);
+  assert.deepEqual(headlineCompanies('스튜디오 메타케이, AI 버추얼 아티스트 공개').map((company) => company.name), []);
   assert.deepEqual(headlineCompanies('Constellation Energy signs nuclear PPA with Microsoft data centers').map((company) => company.name).sort(), ['Constellation Energy', 'Microsoft']);
+});
+
+test('the committed Korean headline snapshot contains no stale Studio MetaK attribution to Meta', async () => {
+  const snapshot = JSON.parse(await fs.readFile('src/data/industry-headlines.json', 'utf8'));
+  assert.equal(snapshot.items.some((item) => /스튜디오\s*메타케이/.test(item.title)), false);
+  for (const item of snapshot.items.filter((entry) => entry.companies?.some((company) => company.name === 'Meta'))) {
+    assert.ok(headlineCompanies(item.title).some((company) => company.name === 'Meta'), item.title);
+  }
 });
 
 test('selection removes cross-outlet duplicates, caps each publisher and lists newest first', () => {

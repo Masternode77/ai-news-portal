@@ -1,9 +1,9 @@
 import { shouldNoindexArticle } from '../../src/lib/seo-safeguards.js';
 import { CATEGORY_PAGES } from './taxonomy-page-builder.mjs';
 import { DEFAULT_COMPANIES } from './company-entity-index.mjs';
-import { DEFAULT_REGIONS } from './region-index.mjs';
 import { articleOpenGraphImage, isTrustedPublicImage } from './article-image-surface.mjs';
 import { isPublicLongformArticle } from './public-surface-eligibility.mjs';
+import { buildPublicPublicationCatalog } from './public-publication-catalog.mjs';
 
 function slugify(value = '') {
   return String(value).toLowerCase().replace(/&/g, 'and').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
@@ -17,6 +17,7 @@ export function buildSitemapEntries(items = [], options = {}) {
     '/editorial-policy/',
     '/ai-disclosure/',
     '/archive/',
+    '/search/',
     '/contact/',
   ];
   const articlePages = items
@@ -35,10 +36,14 @@ export function buildSitemapEntries(items = [], options = {}) {
         image: isTrustedPublicImage(image) ? image : '',
       };
     });
+  const catalog = buildPublicPublicationCatalog({ articles: items, columns: options.columns || [] }, options);
+  const activeCategories = new Set(catalog.map((item) => item.categorySlug));
+  const activeRegions = new Set(catalog.map((item) => item.regionSlug));
+  const activeCompanySlugs = new Set(options.activeCompanySlugs || DEFAULT_COMPANIES.map(slugify));
   const taxonomy = [
-    ...CATEGORY_PAGES.map(([slug]) => `/category/${slug}/`),
-    ...DEFAULT_REGIONS.map((name) => `/region/${slugify(name)}/`),
-    ...DEFAULT_COMPANIES.map((name) => `/company/${slugify(name)}/`),
+    ...CATEGORY_PAGES.filter(([slug]) => activeCategories.has(slug)).map(([slug]) => `/category/${slug}/`),
+    ...[...activeRegions].map((slug) => `/region/${slug}/`),
+    ...DEFAULT_COMPANIES.filter((name) => activeCompanySlugs.has(slugify(name))).map((name) => `/company/${slugify(name)}/`),
   ].map((loc) => ({ loc }));
   return [
     ...staticPages.map((loc) => ({ loc })),

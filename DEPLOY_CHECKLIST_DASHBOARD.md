@@ -2,7 +2,7 @@
 
 ## 목적
 
-현재 후보는 정적 Astro 7.2 사이트와 인증된 관리자 API를 사용한다. 이 문서는
+현재 후보는 정적 Astro 7.3 사이트와 인증된 관리자 API를 사용한다. 이 문서는
 폐기된 공개 대시보드, 대시보드 데이터 파일, 또는 별도 대시보드 cron 스냅샷을
 배포 대상으로 간주하지 않는다. 외부 서비스의 승인·법률 상태를 선언하는 문서가
 아니며, 각 운영자가 실제 증거를 기록할 수 있도록 하는 점검표다.
@@ -10,7 +10,7 @@
 ## 1) 후보 범위와 정적 빌드
 
 - [ ] `npm run check`와 대상 테스트를 실행해 현재 후보를 확인한다.
-- [ ] `npm run build`가 정적 Astro 7.2 출력물을 생성하는지 확인한다.
+- [ ] `npm run build`가 정적 Astro 7.3 출력물을 생성하는지 확인한다.
 - [ ] 공개 `/dashboard` 경로, `dashboard-data.json`, 대시보드 cron 스냅샷, 그리고
   `sync-dashboard-data` 작업을 새 배포 절차나 공개 검증 대상으로 추가하지 않는다.
 - [ ] 공개 사이트 검증은 `/`, 공개 기사 경로, `/privacy/`, `/terms/`, `/robots.txt`,
@@ -54,7 +54,7 @@
 ## 4) 정적 보안 헤더와 CSP 위험 수용
 
 - [ ] `vercel.json`의 정적 호환 헤더와 `/ads.txt` Content-Type을 확인한다.
-- [ ] 정적 Astro 7.2 출력은 검증된 호환 정책을 CSP로 전달할 수 있지만, 이 후보에는
+- [ ] 정적 Astro 7.3 출력은 검증된 호환 정책을 CSP로 전달할 수 있지만, 이 후보에는
   enforced CSP가 없다는 위험 수용을 배포 기록에 남긴다. 선택한 AdSense/CMP 조합에서
   per-request nonce를 발급할 수 없고 호환 정책도 아직 검증하지 않았기 때문이다.
 - [ ] 수집기 없는 report-only CSP를 추가하지 않는다. 이후 report-only 또는 enforced

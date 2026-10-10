@@ -17,7 +17,7 @@ import {
   recentHeadingsFromColumns,
   recentLeadsFromColumns,
 } from '../scripts/lib/authored-column-policy.mjs';
-import { buildColumnFigures, numericLedgerClaims } from '../scripts/lib/authored-column-figures.mjs';
+import { buildColumnFigures, extractFigureNumbers, numericLedgerClaims } from '../scripts/lib/authored-column-figures.mjs';
 import { buildClaimLedger } from '../scripts/lib/claim-ledger.mjs';
 import { headingSequence } from '../scripts/lib/visible-body-length.mjs';
 import { resetLlmUsageForTests } from '../scripts/lib/llm-budget.mjs';
@@ -834,6 +834,52 @@ test('fact-table labels preserve the complete verified statement and its qualifi
   assert.match(result.figures[0].items[0].label,/growing demand for dynamic, bursty workloads/);
 });
 
+test('first-person source fact rows are visibly quoted and retain source attribution', () => {
+  const sourceFacts = [
+    'We extracted the chart data and fit trends for median and 90th percentile researchers using coding agents.',
+    'The chart gives us evidence about coding-agent usage trends among the researchers in the sample.',
+    'The source gave me evidence about coding-agent usage trends among the researchers in the sample.',
+    'The conclusion about coding-agent usage trends is ours after fitting the researcher data.',
+  ];
+  for (const [index, sourceFact] of sourceFacts.entries()) {
+    const result = buildColumnFigures({
+      ledger: { claims: [{
+        claim_id: `epoch-first-person-fact-${index}`,
+        claim_text: sourceFact,
+        verification_status: 'verified_primary',
+        source_name: 'Epoch AI',
+      }] },
+      stance: { angle: 'researchers coding agents chart data trends evidence' },
+      headline: 'researchers coding agents chart data trends evidence',
+      sectionCount: 5,
+    });
+    const [item] = result.figures[0].items;
+
+    assert.equal(item.label, `“${sourceFact}”`);
+    assert.equal(item.source, 'Epoch AI');
+  }
+});
+
+test('first-person numeric rows are quoted without treating the country acronym US as a pronoun', () => {
+  const firstPerson = 'The source gives us evidence that data center capacity reached 10 MW in the operating region.';
+  const country = 'US data center capacity reached 20 MW after the utility completed the operating milestone.';
+  const ledger = { claims: [
+    { claim_id: 'first-person-numeric', claim_text: firstPerson, numeric_value: 10, unit: 'MW', verification_status: 'verified_primary', source_name: 'Epoch AI' },
+    { claim_id: 'country-numeric', claim_text: country, numeric_value: 20, unit: 'MW', verification_status: 'verified_primary', source_name: 'Epoch AI' },
+  ] };
+  const result = buildColumnFigures({
+    ledger,
+    stance: { angle: 'data center capacity operating region utility milestone evidence' },
+    headline: 'data center capacity operating region utility milestone evidence',
+    sectionCount: 5,
+    modelSpec: [{ type: 'stat-row', title: 'Capacity evidence by operating region', claim_indexes: [0, 1], anchor: 2 }],
+  });
+  const [quoted, unquoted] = result.figures[0].items;
+
+  assert.equal(quoted.label, `“${firstPerson}”`);
+  assert.equal(unquoted.label, country);
+});
+
 test('evidence-pack figure labels do not cut conditional facts into partial claims', () => {
   const conditionalFact='Local SSD-backed swap may increase pod density only when enough resident memory is dormant and the active working set remains in physical memory.';
   const result=buildColumnFigures({
@@ -887,18 +933,58 @@ test('equal magnitudes with different units keep their own figure labels', () =>
     supporting_sources: [],
   }, 'units');
   const claims = numericLedgerClaims(ledger);
-  const indexOf = (unit) => claims.findIndex((claim) => claim.numeric_value === 10 && claim.unit === unit);
+  const indexOf = (unit) => claims.findIndex((claim) => claim.numeric_value === 10 && claim.unit.toLowerCase() === unit);
+  const capacityIndex = indexOf('mw');
+  const financingIndex = indexOf('usd million');
+  assert.notEqual(capacityIndex, -1);
+  assert.notEqual(financingIndex, -1, 'the canonical USD-scaled unit remains addressable');
   const result = buildColumnFigures({
     ledger,
     stance: { angle: 'Battery capacity and financing at the data center campus' },
     headline: 'The utility battery approval is a data center campus financing story',
     sectionCount: 6,
-    modelSpec: [{ type: 'stat-row', title: 'Battery capacity and financing', claim_indexes: [indexOf('MW'), indexOf('million')], anchor: 1 }],
+    modelSpec: [{ type: 'stat-row', title: 'Battery capacity and financing', claim_indexes: [capacityIndex, financingIndex], anchor: 1 }],
   });
   const [capacity, financing] = result.figures[0].items;
   assert.match(capacity.label, /10 MW/);
   assert.match(financing.label, /\$10 million/, 'the financing row windows around its own figure');
+  assert.equal(financing.unit, 'USD million');
+  assert.equal(financing.display, '$10 million');
   assert.notEqual(capacity.label, financing.label);
+});
+
+test('equal currency and count magnitudes keep their own financing and user context', () => {
+  const ledger = buildClaimLedger({
+    cluster_id: 'authored_currency_and_count',
+    representative_source: {
+      source_url: 'https://example.com/currency-and-count',
+      source_name: 'Example Platform',
+      title: 'Northline financing supports a platform serving millions of users',
+      cleaned_text: 'Northline secured $10 million in construction financing and the completed platform serves 10 million users across its operating region.',
+    },
+    supporting_sources: [],
+  }, 'currency_and_count');
+  const claims = numericLedgerClaims(ledger);
+  const financingIndex = claims.findIndex((claim) => claim.numeric_value === 10 && claim.unit.toLowerCase() === 'usd million');
+  const usersIndex = claims.findIndex((claim) => claim.numeric_value === 10 && claim.unit.toLowerCase() === 'million');
+  assert.notEqual(financingIndex, -1);
+  assert.notEqual(usersIndex, -1);
+
+  const result = buildColumnFigures({
+    ledger,
+    stance: { angle: 'Northline financing and the platform user base' },
+    headline: 'Northline financing supports a platform serving millions of users',
+    sectionCount: 6,
+    modelSpec: [{ type: 'stat-row', title: 'Financing and platform reach', claim_indexes: [financingIndex, usersIndex], anchor: 1 }],
+  });
+  const [financing, users] = result.figures[0].items;
+
+  assert.equal(financing.label, 'Northline secured $10 million in construction financing');
+  assert.equal(financing.display, '$10 million');
+  assert.equal(financing.unit, 'USD million');
+  assert.equal(users.label, 'the completed platform serves 10 million users across its operating region');
+  assert.equal(users.display, '10 million');
+  assert.equal(users.unit, 'million');
 });
 
 test('two figures early in one sentence without a comma still get their own labels', () => {
@@ -913,13 +999,17 @@ test('two figures early in one sentence without a comma still get their own labe
     supporting_sources: [],
   }, 'early_pair');
   const claims = numericLedgerClaims(ledger);
-  const indexOf = (unit) => claims.findIndex((claim) => claim.numeric_value === 10 && claim.unit === unit);
+  const indexOf = (unit) => claims.findIndex((claim) => claim.numeric_value === 10 && claim.unit.toLowerCase() === unit);
+  const capacityIndex = indexOf('mw');
+  const financingIndex = indexOf('usd million');
+  assert.notEqual(capacityIndex, -1);
+  assert.notEqual(financingIndex, -1);
   const result = buildColumnFigures({
     ledger,
     stance: { angle: 'Northline campus battery capacity and financing at the data center' },
     headline: 'Northline campus battery capacity and financing set the data center schedule',
     sectionCount: 6,
-    modelSpec: [{ type: 'stat-row', title: 'Northline capacity and financing', claim_indexes: [indexOf('MW'), indexOf('million')], anchor: 1 }],
+    modelSpec: [{ type: 'stat-row', title: 'Northline capacity and financing', claim_indexes: [capacityIndex, financingIndex], anchor: 1 }],
   });
   const [capacity, financing] = result.figures[0].items;
   assert.equal(capacity.label, 'Northline approved 10 MW of battery capacity');
@@ -987,13 +1077,17 @@ test('a between that names parties does not stop two figures from splitting', ()
     supporting_sources: [],
   }, 'parties');
   const claims = numericLedgerClaims(ledger);
-  const indexOf = (unit) => claims.findIndex((claim) => claim.numeric_value === 10 && claim.unit === unit);
+  const indexOf = (unit) => claims.findIndex((claim) => claim.numeric_value === 10 && claim.unit.toLowerCase() === unit);
+  const capacityIndex = indexOf('mw');
+  const financingIndex = indexOf('usd million');
+  assert.notEqual(capacityIndex, -1);
+  assert.notEqual(financingIndex, -1);
   const result = buildColumnFigures({
     ledger,
     stance: { angle: 'Northline and Southline data center capacity and financing agreement' },
     headline: 'The Northline and Southline agreement ties data center capacity to financing',
     sectionCount: 6,
-    modelSpec: [{ type: 'stat-row', title: 'Northline and Southline agreement', claim_indexes: [indexOf('MW'), indexOf('million')], anchor: 1 }],
+    modelSpec: [{ type: 'stat-row', title: 'Northline and Southline agreement', claim_indexes: [capacityIndex, financingIndex], anchor: 1 }],
   });
   const [capacity, financing] = result.figures[0].items;
   assert.match(capacity.label, /approved 10 MW of battery capacity/);
@@ -1023,6 +1117,98 @@ test('a qualified range endpoint still keeps the range whole', () => {
     modelSpec: [{ type: 'stat-row', title: 'The campus capacity range', claim_indexes: [indexOf(10), indexOf(20)], anchor: 1 }],
   });
   for (const item of result.figures[0].items) assert.match(item.label, /between 10 MW and approximately 20 MW/);
+});
+
+test('figure values preserve comparison qualifiers across money, percentages, ranges and years', () => {
+  const examples = [
+    ['The service costs less than $1 million.', 'less than $1 million'],
+    ['The service costs no more than $1 million.', 'no more than $1 million'],
+    ['The system retains at least 74 percent throughput.', 'at least 74 percent'],
+    ['Capacity ranges between 10 MW and approximately 20 MW.', 'approximately 20 MW'],
+    ['The contract runs for more than 3 years.', 'more than 3 years'],
+    ['The 90th percentile researcher reached this level in 2026.', '90th percentile'],
+    ['Recent usage grew 1.8× per month.', '1.8×'],
+    ['Doubling times were 34 and 27 days.', '34 days'],
+    ['Doubling times were 34 and 27 days.', '27 days'],
+    ['The usage period ended in 2026.', '2026'],
+  ];
+  for (const [claim, expected] of examples) {
+    assert.ok(extractFigureNumbers(claim).some((number) => number.display === expected), claim);
+  }
+});
+
+test('actual Epoch usage claims retain source displays and complete figure context', () => {
+  const sourceText = [
+    'According to data published in a September 2026 post by OpenAI, the median researcher’s daily coding-agent usage, valued at API prices, rose from under $1 in January 2026 to $601 by mid-August.',
+    'Usage by power users grew at a similar rate, but spent substantially more, with the 90th percentile researcher spending over $7,000 per day by mid-August.',
+    'They do, however, show how quickly researchers increased their coding-agent usage and illustrate its scale: if a 90th-percentile researcher used $7,000 worth of inference at API prices every working day, that would amount to around $2 million per year, which is comparable to or greater than the cost of employing a researcher.',
+    'OpenAI’s post “Research acceleration: The view inside OpenAI” describes how its researchers’ use of coding agents changed from January to mid-August 2026.',
+    'We extracted the data embedded in OpenAI’s first two charts and fit trends to show how quickly usage grew for median and 90th percentile researchers.',
+    'In recent months, median and 90th percentile researchers have seen similar growth rates of 1.8× and 2.2× per month, or doubling times of 34 and 27 days, respectively.',
+  ].join(' ');
+  const ledger = buildClaimLedger({
+    cluster_id: 'epoch_usage_actual',
+    representative_source: {
+      source_url: 'https://epoch.ai/data-insights/coding-agent-use-at-openai',
+      source_name: 'Epoch AI',
+      title: 'Coding-agent use at OpenAI is doubling roughly every month',
+      cleaned_text: sourceText,
+    },
+    supporting_sources: [],
+  }, 'epoch_usage_actual');
+  const claims = numericLedgerClaims(ledger);
+  assert.equal(claims.length, 15);
+  const claimIndexes = claims.map((claim) => ledger.claims.findIndex((row) => row.claim_id === claim.claim_id));
+  const sourceVocabulary = ledger.claims.map((claim) => claim.claim_text).join(' ').toLowerCase();
+  const result = buildColumnFigures({
+    ledger,
+    stance: { angle: sourceVocabulary },
+    headline: sourceVocabulary,
+    sectionCount: 6,
+    modelSpec: ['Published usage baselines', 'Power-user usage scale', 'Growth rates and doubling times'].map((title, index) => ({
+      type: 'table',
+      title,
+      claim_indexes: claimIndexes.slice(index * 5, index * 5 + 5),
+      anchor: index + 1,
+    })),
+  });
+  const items = result.figures.flatMap((figure) => figure.items);
+  assert.equal(result.source, 'model_spec');
+  assert.equal(items.length, 15);
+  assert.deepEqual(items.map((item) => item.display), [
+    '2026', 'under $1', '$601', '90th percentile', 'over $7,000',
+    '90th percentile', '$7,000', 'around $2 million', '2026', '90th percentile',
+    '90th percentile', '1.8×', '2.2×', '34 days', '27 days',
+  ]);
+  assert.equal(items.some((item) => /\b(?:ordinal|year|times)\b/i.test(item.display)), false);
+  assert.match(items[8].label, /January to mid-August 2026/);
+  assert.equal(items[9].label, '“We extracted the data embedded in OpenAI’s first two charts and fit trends to show how quickly usage grew for median and 90th percentile researchers.”');
+  assert.equal(items[9].source, 'Epoch AI');
+  for (const item of items.filter((row) => row.unit === 'ordinal')) assert.match(item.label, /90th[- ]percentile researcher/i);
+  for (const item of items.filter((row) => row.unit === 'times')) assert.match(item.label, /median and 90th percentile researchers.*per month/i);
+  for (const item of items.filter((row) => row.unit === 'days')) assert.match(item.label, /doubling times.*34 and 27 days/i);
+});
+
+test('figure rows retain the full comparison period and a less-than qualifier', () => {
+  const claimText = 'In September 2026, the data center service cost less than $1 million compared with $4 million in June 2025.';
+  const ledger = { claims: [
+    { claim_id: 'current', claim_text: claimText, numeric_value: 1, unit: 'million', source_name: 'Example Filing', verification_status: 'verified_primary' },
+    { claim_id: 'prior', claim_text: claimText, numeric_value: 4, unit: 'million', source_name: 'Example Filing', verification_status: 'verified_primary' },
+  ] };
+  const result = buildColumnFigures({
+    ledger,
+    stance: { angle: 'Data center service costs in September 2026 and June 2025' },
+    headline: 'Data center service costs fell between June 2025 and September 2026',
+    sectionCount: 5,
+    modelSpec: [{ type: 'stat-row', title: 'The reported cost comparison', claim_indexes: [0, 1], anchor: 2 }],
+  });
+  const [current, prior] = result.figures[0].items;
+  assert.equal(current.display, 'less than $1 million');
+  assert.match(current.label, /September 2026/);
+  assert.match(current.label, /June 2025/);
+  assert.equal(prior.display, '$4 million');
+  assert.match(prior.label, /September 2026/);
+  assert.match(prior.label, /June 2025/);
 });
 
 test('the fallback figures never repeat claims whose labels were shortened to clauses', () => {

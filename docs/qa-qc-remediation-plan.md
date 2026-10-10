@@ -1,0 +1,10 @@
+QA/QC remediation acceptance checklist — baseline 2d128299, 2026-10-08 KST
+1. Isolated generation attempts preserve all existing work, keep shared lock ownership across image/review/publication, record attempts/failures, and permit next attempt after a failed job. Live login/readiness and a bounded unpublished generation verify real provider and figure behavior.
+2. Public cards retain source-specific meaning. Remove invented template implications; no source/extraction/product-fit gates weakened. Regress against Node Swap, Beaver and UK decommission examples. Numerics retain comparators and context in visible figures.
+3. One eligible public publication catalog covers articles and columns: archive, search, weekly digest, RSS, homepage dates/counts. New columns discoverable with real search + topic/type/source/date filters and pagination. Empty categories/regions do not index.
+4. Existing dependency security updates and lockfile pass npm audit prod, full tests/typecheck/build/content gates.
+5. Application validation covers application/API/config/package edits, releases depend on validation, postdeploy smoke asserts status/content. No paid API or generation on hosted CI.
+6. Mobile home prioritizes latest column/signals, initial feed is bounded, article gutters/tables/navigation and 320/390/768/desktop UI verified.
+7. Malaysia column receives newly generated unique native artwork after current evidence/eligibility checks; verify no cross-record hero reuse. Fix Korean entity substring false-positive (Studio MetaK != Meta), verify destination content.
+8. Review inactive admin API UX only if warranted: explicit unavailable response, no sensitive config names; no secret provisioning or auth weakening.
+Validation: targeted regression tests first, integration full suite+content gate, independent code review and live local browser scenarios, then reviewable deployment/activation artifacts. Existing dirty primary checkout stays preserved. No invented pass or narrowed criteria; unresolved issues remain open.

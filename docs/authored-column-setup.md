@@ -23,7 +23,7 @@ Mac 저장소에서 `npm run check:subscription`으로 준비 상태를 확인�
 `npm run generate:subscription`을 실행합니다. 기존 Mac Codex 작업이
 본문 생성, 고유한 네이티브 이미지 생성·검토·등록, 최종 품질 검사 순서를 수행합니다.
 명령 자체는 커밋·푸시하지 않습니다. 발행 권한이 있는 기존 작업만 검증 후 발행합니다.
-GitHub의 Validate News는 검증 전용이므로 수동 실행해도 칼럼을 생성하지 않습니다.
+GitHub의 Application Validation은 검증 전용이므로 수동 실행해도 칼럼을 생성하지 않습니다.
 
 기존 하루 세 번(00:05 / 08:05 / 16:05 KST) 일정은 Mac의 기존 자동화에 적용합니다.
 저장소 pull만으로 앱의 예약 설정이 설치되지는 않습니다. 새 작업을 중복 생성하지 마세요.

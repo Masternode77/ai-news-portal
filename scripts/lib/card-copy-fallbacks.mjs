@@ -1,210 +1,155 @@
 import { normalizeProperNouns } from './proper-noun-normalizer.mjs';
-
-const DECK_BY_ANGLE = {
-  cooling: 'puts thermal design and rack-density assumptions back into the capacity plan for AI facilities',
-  grid: 'shows where grid access, interconnection timing, and substation readiness can decide AI campus schedules',
-  power: 'ties AI buildout timing to power procurement, utility capacity, and energy-contract risk',
-  silicon: 'gives buyers a sharper read on accelerator supply, memory bandwidth, and performance-per-watt planning',
-  cloud: 'tracks how cloud and platform capacity is shifting as enterprise AI demand moves into production workloads',
-  policy: 'turns permitting, siting, or regulatory timing into a material constraint for AI infrastructure delivery',
-  capital: 'shows which AI infrastructure bets still attract financing when construction and power risks are visible',
-  capacity: 'marks where data center commitments are becoming real capacity decisions rather than demand forecasts',
-  operations: 'changes how operators sequence procurement, supplier commitments, and AI infrastructure delivery risk',
-};
-
-const TAKEAWAYS_BY_ANGLE = {
-  cooling: [
-    'changes how operators size cooling capacity, rack density, and data center fit-out risk',
-    'puts AI infrastructure planning closer to thermal limits, facility design, and customer ramp timing',
-    'gives capacity teams a source-specific read on heat rejection, rack density, and site utilization',
-  ],
-  grid: [
-    'changes how data center developers price interconnection timing, substation work, and campus readiness',
-    'puts AI infrastructure planning closer to utility queues, grid upgrades, and commissioning schedules',
-    'shows operators whether power delivery can keep pace with AI campus construction',
-  ],
-  power: [
-    'changes how operators line up power procurement, campus energization, and capacity commitments',
-    'puts AI infrastructure planning closer to utility capacity, energy contracts, and commissioning risk',
-    'gives buyers a sharper read on where power availability can delay usable AI capacity',
-  ],
-  silicon: [
-    'changes how buyers model accelerator supply, memory bandwidth, and AI infrastructure refresh timing',
-    'gives operators another supplier signal for GPU availability, capacity-per-watt, and procurement timing',
-    'puts AI infrastructure planning closer to chip allocation, buyer queues, and cloud margin pressure',
-  ],
-  cloud: [
-    'changes how platform teams reserve cloud capacity, storage, and production AI headroom',
-    'puts AI infrastructure planning closer to enterprise workload placement, resilience, and platform bottlenecks',
-    'gives buyers a source-specific read on whether cloud supply can absorb production AI demand',
-  ],
-  policy: [
-    'changes how developers price permitting, siting exposure, and data center delivery timing',
-    'puts AI infrastructure planning closer to regulatory calendars, community risk, and campus approvals',
-    'gives operators a clearer read on which projects can move through policy and siting constraints',
-  ],
-  capital: [
-    'changes how investors underwrite data center capital, power exposure, and construction timing',
-    'puts AI infrastructure planning closer to financing terms, lease risk, and developer execution capacity',
-    'gives operators a source-specific read on which AI infrastructure projects can still attract capital',
-  ],
-  capacity: [
-    'changes how operators translate data center commitments into procurement, power, and tenant timing',
-    'puts AI infrastructure planning closer to live capacity decisions, supplier allocation, and campus sequencing',
-    'shows buyers where AI demand is becoming usable data center capacity',
-  ],
-  operations: [
-    'changes how operators sequence procurement, supplier commitments, and AI infrastructure delivery risk',
-    'puts AI infrastructure planning closer to build schedules, buyer commitments, and cost assumptions',
-    'gives capacity teams a source-specific read on which operating constraint could move first',
-  ],
-};
-
-const TERMINAL_CUES = [
-  'supplier allocation',
-  'rack planning',
-  'buyer queues',
-  'refresh cycles',
-  'margin pressure',
-  'power budgets',
-  'campus sequencing',
-  'commissioning risk',
-  'lease timing',
-  'platform headroom',
-  'capital exposure',
-  'policy calendars',
-  'memory bandwidth',
-  'thermal envelopes',
-  'substation work',
-  'utility queues',
-  'developer risk',
-  'tenant commitments',
-  'cloud reserves',
-  'procurement timing',
-  'construction milestones',
-  'operating costs',
-  'interconnection dates',
-  'customer ramps',
-];
-
-const FOCUS_QUALIFIERS = [
-  'near-term',
-  'contracted',
-  'energized',
-  'supplier',
-  'buyer',
-  'facility',
-  'platform',
-  'campus',
-  'cloud',
-  'capital',
-  'policy',
-  'thermal',
-  'memory',
-  'power',
-  'delivery',
-  'commissioning',
-  'resilience',
-  'utilization',
-  'procurement',
-  'operating',
-  'interconnection',
-  'construction',
-  'workload',
-  'margin',
-];
-
-const FOCUS_NOUNS = [
-  'checkpoint',
-  'watchpoint',
-  'constraint',
-  'milestone',
-  'model',
-  'window',
-  'test',
-  'read',
-  'case',
-  'signal',
-  'dependency',
-  'exposure',
-];
+import { detectTruncationArtifacts } from './truncation-detector.mjs';
 
 function compact(value = '') {
-  return normalizeProperNouns(String(value || '').replace(/\s+/g, ' ').trim());
+  return normalizeProperNouns(String(value || '')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/&nbsp;/gi, ' ')
+    .replace(/&amp;/gi, '&')
+    .replace(/&quot;/gi, '"')
+    .replace(/&#39;|&apos;/gi, "'")
+    .replace(/\s+/g, ' ')
+    .trim());
 }
 
 function sentence(value = '') {
-  const text = compact(value);
+  const text = compact(value).replace(/\s+([,.;:!?])/g, '$1');
   if (!text) return '';
   return /[.!?]$/.test(text) ? text : `${text}.`;
 }
 
-function stableIndex(key = '', size = 1) {
-  if (size <= 1) return 0;
-  let hash = 2166136261;
-  for (const char of String(key)) {
-    hash ^= char.charCodeAt(0);
-    hash = Math.imul(hash, 16777619) >>> 0;
+const PROTECTED_PERIOD = '\uE000';
+
+function withProtectedAbbreviations(value = '') {
+  return String(value || '')
+    .replace(/\b(?:[A-Za-z]\.){2,}(?=\s+(?:[a-z(]|Department\b|Secretary\b))/g, (match) => match.replaceAll('.', PROTECTED_PERIOD))
+    .replace(/\b(?:Mr|Mrs|Ms|Dr|Prof|Sr|Jr|St)\.(?=\s+[A-Z])/gi, (match) => match.replace('.', PROTECTED_PERIOD));
+}
+
+function restoreProtectedPeriods(value = '') {
+  return String(value || '').replaceAll(PROTECTED_PERIOD, '.');
+}
+
+function abbreviationFragment(value = '') {
+  return /\b(?:[A-Za-z]\.){2,}$/.test(compact(value));
+}
+
+function completeSentences(value = '') {
+  const text = compact(value);
+  if (!text || !detectTruncationArtifacts(text).ok) return [];
+  const matches = withProtectedAbbreviations(text).match(/[^.!?]+[.!?](?=\s|$)/g) || [];
+  return matches.map(restoreProtectedPeriods).map(sentence).filter((value) => value && !abbreviationFragment(value));
+}
+
+function openingClause(value = '') {
+  const text = compact(value);
+  if (!text || !detectTruncationArtifacts(text).ok) return '';
+  const protectedText = withProtectedAbbreviations(text);
+  const first = (protectedText.match(/[^.!?]+[.!?](?=\s|$)/) || [protectedText])[0];
+  const candidate = sentence(restoreProtectedPeriods(first.split(/[,;]/)[0]));
+  return abbreviationFragment(candidate) ? '' : candidate;
+}
+
+function contentTokens(value = '') {
+  return new Set(normalizedKey(value).split(/\s+/).filter((token) => token.length >= 4));
+}
+
+function stripLeadingTitle(value = '', title = '') {
+  const text = compact(value);
+  const prefix = compact(title).replace(/[.!?]+$/g, '');
+  if (!prefix || !text.toLowerCase().startsWith(`${prefix.toLowerCase()} `)) return text;
+  return text.slice(prefix.length).trim();
+}
+
+function materiallyRepeats(value = '', excluded = '') {
+  const valueKey = normalizedKey(value);
+  const excludedKey = normalizedKey(excluded);
+  if (!valueKey || !excludedKey) return false;
+  if (valueKey === excludedKey || valueKey.includes(excludedKey) || excludedKey.includes(valueKey)) return true;
+  const valueTokens = contentTokens(value);
+  const excludedTokens = contentTokens(excluded);
+  if (!valueTokens.size || !excludedTokens.size) return false;
+  let shared = 0;
+  for (const token of valueTokens) if (excludedTokens.has(token)) shared += 1;
+  return shared / Math.min(valueTokens.size, excludedTokens.size) >= 0.7;
+}
+
+function sharesStoryAnchor(value = '', title = '') {
+  const valueTokens = contentTokens(value);
+  for (const token of contentTokens(title)) {
+    if (valueTokens.has(token)) return true;
   }
-  return hash % size;
+  return false;
 }
 
-function cueFor(article = {}, angle = 'operations') {
-  const key = [
-    article.id,
-    article.sourceUrl,
-    article.url,
+function evidenceCandidates(article = {}) {
+  const facts = article.expert_insight?.concrete_facts
+    || article.expertInsight?.concrete_facts
+    || article.evidence_pack?.concreteFacts
+    || [];
+  const exactSource = article.extraction_artifact?.cleaned_extracted_text
+    || article.cleaned_source_text
+    || article.source_evidence_text
+    || article.articleText
+    || article.contentText
+    || '';
+  const summary = compact(article.summary);
+  const sourceCandidates = [
+    ...completeSentences(article.snippet),
+    ...completeSentences(exactSource).slice(0, 8),
+    ...facts.map(compact),
+    openingClause(exactSource),
+  ].map((value) => stripLeadingTitle(value, article.title));
+  const anchored = sourceCandidates.filter((value) => sharesStoryAnchor(value, article.title));
+  const candidates = summary
+    ? [summary, ...anchored]
+    : (anchored.length ? anchored : sourceCandidates);
+  const seen = new Set();
+  return candidates.filter((value) => value
+    && value.length >= 30
+    && value.length <= 280
+    && !abbreviationFragment(value)
+    && detectTruncationArtifacts(value).ok)
+    .filter((value) => {
+      const key = normalizedKey(value);
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
+}
+
+function normalizedKey(value = '') {
+  return compact(value).toLowerCase().replace(/[^a-z0-9가-힣]+/g, ' ').trim();
+}
+
+function groundedFallback(article = {}, { exclude = '', title = '', emptyWhenMissing = false, qualifyAbstract = false } = {}) {
+  const candidate = evidenceCandidates(article)
+    .find((value) => !materiallyRepeats(value, exclude));
+  if (candidate) {
+    const completed = sentence(candidate);
+    if (qualifyAbstract && /^arxiv$/i.test(compact(article.source)) && /^(?:we|our|this (?:paper|work)|in this (?:paper|work))\b/i.test(completed)) {
+      return `From the abstract: ${completed}`;
+    }
+    return completed;
+  }
+  if (emptyWhenMissing) return '';
+  const source = compact(article.source || 'The source');
+  const subject = compact(title || article.title || 'the reported update').replace(/[.!?]+$/g, '');
+  return sentence(`${source} reports the source item titled “${subject}”`);
+}
+
+// Routing and tests use this classifier. Public fallback prose no longer
+// derives claims or implications from the selected angle.
+export function angleFor(article = {}) {
+  const text = compact([
     article.title,
-    article.source,
-    angle,
-  ].filter(Boolean).join('|');
-  return TERMINAL_CUES[stableIndex(key, TERMINAL_CUES.length)];
-}
-
-function sourceForTerminal(article = {}) {
-  const source = compact(article.source || '').replace(/[^\w\s-]/g, ' ');
-  return source.split(/\s+/).filter(Boolean).slice(0, 3).join(' ') || 'operator';
-}
-
-function focusFor(article = {}, angle = 'operations', variant = 'deck') {
-  const key = [
-    article.id,
-    article.sourceUrl,
-    article.url,
-    article.title,
-    article.source,
-    angle,
-    variant,
-    'focus',
-  ].filter(Boolean).join('|');
-  const qualifier = FOCUS_QUALIFIERS[stableIndex(key, FOCUS_QUALIFIERS.length)];
-  const noun = FOCUS_NOUNS[stableIndex(`${key}|noun`, FOCUS_NOUNS.length)];
-  return `${sourceForTerminal(article)} ${qualifier} ${noun}`;
-}
-
-function titleAnchorForTerminal(article = {}) {
-  const title = compact(article.title || '')
-    .replace(/[^\w\s-]/g, ' ')
-    .split(/\s+/)
-    .filter((word) => word && !/^(the|a|an|and|or|to|for|of|in|on|with|as|at|from|by|is|are|be|this|that)$/i.test(word));
-  return title.slice(-3).join(' ') || 'source item';
-}
-
-function articleContext(article = {}) {
-  return compact([
-    article.title,
-    article.source,
+    article.summary,
+    article.snippet,
     article.primary_category,
     article.category,
     article.infrastructure_layer,
-    article.summary,
-    article.snippet,
     ...(Array.isArray(article.tags) ? article.tags : []),
   ].filter(Boolean).join(' ')).toLowerCase();
-}
-
-export function angleFor(article = {}) {
-  const text = articleContext(article);
   if (/cooling|liquid|thermal|chiller|heat rejection|rack density/.test(text)) return 'cooling';
   if (/grid|interconnection|transmission|substation|ercot|queue/.test(text)) return 'grid';
   if (/power|utility|energy|nuclear|battery|mw|gw|load growth/.test(text)) return 'power';
@@ -216,30 +161,15 @@ export function angleFor(article = {}) {
   return 'operations';
 }
 
-export function deckForAngle(angle = 'operations', titleContext = 'This update', article = {}) {
-  const cue = cueFor(article, angle);
-  const focus = focusFor(article, angle, 'deck');
-  const titleAnchor = titleAnchorForTerminal(article);
-  const deck = DECK_BY_ANGLE[angle] || DECK_BY_ANGLE.operations;
-  return sentence(`${titleContext || 'This update'} ${deck}; the practical checkpoint is ${cue} for the ${focus} on ${titleAnchor}`);
+export function deckForAngle(_angle = 'operations', titleContext = 'This update', article = {}) {
+  return groundedFallback(article, { title: titleContext });
 }
 
 export function whyForFallback(article = {}, context = {}) {
-  const angle = context.angle || angleFor(article);
-  const subject = context.subject || 'This update';
-  const cue = cueFor(article, angle);
-  const takeaways = TAKEAWAYS_BY_ANGLE[angle] || TAKEAWAYS_BY_ANGLE.operations;
-  const key = [
-    article.id,
-    article.sourceUrl,
-    article.url,
-    article.title,
-    article.source,
-    angle,
-    context.layer,
-  ].filter(Boolean).join('|');
-  const takeaway = takeaways[stableIndex(key, takeaways.length)];
-  const focus = focusFor(article, angle, 'why');
-  const titleAnchor = titleAnchorForTerminal(article);
-  return sentence(`${subject} ${takeaway}; the exposed dependency is ${cue} for the ${focus} on ${titleAnchor}`);
+  return groundedFallback(article, {
+    exclude: context.deck,
+    title: context.subject || article.title,
+    emptyWhenMissing: true,
+    qualifyAbstract: true,
+  });
 }

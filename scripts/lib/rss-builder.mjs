@@ -7,6 +7,8 @@ import { canonicalArticlePath, safeHttpUrl } from './normalize.mjs';
 import { buildPublicPresentation } from './public-presentation.mjs';
 import { isPublicLongformArticle } from './public-surface-eligibility.mjs';
 import { currentSourceTextAuthorization } from './source-text-publication-authorization.mjs';
+import { buildColumnRssItems } from './column-surface.mjs';
+import { buildPublicPublicationCatalog } from './public-publication-catalog.mjs';
 
 function rssLinkFor(item = {}, options = {}) {
   if (isPublicLongformArticle(item, options)) return canonicalArticlePath(item.id);
@@ -92,6 +94,28 @@ export function buildRssItems(items = [], options = {}) {
   }
 
   return out;
+}
+
+function comparableRssLink(value = '', site = 'https://www.computecurrent.com') {
+  try {
+    const url = new URL(String(value || ''), site);
+    return url.origin === new URL(site).origin ? url.pathname : url.href;
+  } catch {
+    return '';
+  }
+}
+
+export function buildUnifiedRssItems({ articles = [], columns = [] } = {}, options = {}) {
+  const site = options.site || 'https://www.computecurrent.com';
+  const catalog = buildPublicPublicationCatalog({ articles, columns }, options);
+  const allowedLinks = new Set(catalog.flatMap((item) => [item.href, comparableRssLink(item.href, site)]).filter(Boolean));
+  return [
+    ...buildRssItems(articles, options),
+    ...buildColumnRssItems(columns, site),
+  ]
+    .filter((item) => allowedLinks.has(item.link) || allowedLinks.has(comparableRssLink(item.link, site)))
+    .sort((a, b) => new Date(b.pubDate || 0).getTime() - new Date(a.pubDate || 0).getTime())
+    .slice(0, 100);
 }
 
 export function rssMetadata() {

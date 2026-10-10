@@ -163,6 +163,14 @@ Astro.response.headers.set('Pragma', 'no-cache');
       setStatus(message);
     };
 
+    const showUnavailable = () => {
+      clearPrivateState();
+      loginPanel.hidden = true;
+      dashboardPanel.hidden = true;
+      logsPanel.hidden = true;
+      setStatus('Admin tools are temporarily unavailable.', 'error');
+    };
+
     const requestJson = async (url, options = {}) => {
       const method = String(options.method || 'GET').toUpperCase();
       const headers = { 'Content-Type': 'application/json', ...(options.headers || {}) };
@@ -170,7 +178,11 @@ Astro.response.headers.set('Pragma', 'no-cache');
       const response = await fetch(url, { ...options, headers });
       const payload = await response.json().catch(() => ({}));
       if (response.status === 401 || response.status === 403) showLogin('Your session is no longer available. Sign in again.');
-      if (!response.ok) throw new Error(payload.error || 'Request failed.');
+      if (!response.ok) {
+        const error = new Error(payload.error || 'Request failed.');
+        error.code = payload.code || '';
+        throw error;
+      }
       return payload;
     };
 
@@ -248,7 +260,11 @@ Astro.response.headers.set('Pragma', 'no-cache');
         const session = await requestJson('/api/admin/login');
         csrfToken = session.csrfToken || '';
         await loadDashboard();
-      } catch {
+      } catch (error) {
+        if (error.code === 'ADMIN_UNAVAILABLE') {
+          showUnavailable();
+          return;
+        }
         showLogin();
       }
     };
@@ -264,6 +280,7 @@ Astro.response.headers.set('Pragma', 'no-cache');
         csrfToken = payload.csrfToken || '';
         await loadDashboard();
       } catch (error) {
+        if (error.code === 'ADMIN_UNAVAILABLE') showUnavailable();
         setStatus(error.message, 'error');
       }
     });

@@ -1,28 +1,23 @@
-name: Validate News
+name: Application Validation
 
 # Generation runs in the existing Mac Codex task using subscription CLIs.
 # Hosted runners validate artifacts and never receive subscription credentials.
 on:
   push:
     branches: [main]
-    paths:
-      - 'src/data/**'
-      - 'public/generated/**'
-      - 'config/codex-image-manifest.json'
-      - 'scripts/**'
-      - 'tests/**'
-      - '.github/workflows/update-news.yml'
+  pull_request:
+    branches: [main]
   workflow_dispatch:
 
 permissions:
   contents: read
 
 concurrency:
-  group: ai-news-portal-news-validation-${{ github.ref }}
+  group: ai-news-portal-application-validation-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: false
 
 jobs:
-  validate-news:
+  validate-application:
     runs-on: ubuntu-latest
     timeout-minutes: 40
     env:
@@ -44,6 +39,8 @@ jobs:
           sudo apt-get install --no-install-recommends -y xsltproc
       - name: Install dependencies
         run: npm ci
+      - name: Audit production dependencies
+        run: npm audit --omit=dev --audit-level=high
       - name: Validate project
         run: npm run check
       - name: Synchronize current-state audit
@@ -55,7 +52,9 @@ jobs:
           PIPELINE_OFFLINE: '0'
         run: npm test
       - name: Run production content gate
-        run: npm run content:gate
+        # npm test has already built the exact checkout. Reuse that artifact so
+        # hosted validation runs the rendered audits without a duplicate build.
+        run: npm run content:gate:built
       - name: Verify final current-state audit
         run: |
           node ./scripts/audit-omo-ultra-current-state.mjs

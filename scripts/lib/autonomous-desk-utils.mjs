@@ -64,7 +64,10 @@ export function splitSentences(text = '') {
   return compact(stripHtml(text))
     .split(/(?<=[.!?])\s+/)
     .map((line) => sentence(line))
-    .filter((line) => line.length >= 45 && line.length <= 320)
+    // A long source sentence can still be the primary evidence for several
+    // related figures. Dropping it here made those figures impossible to
+    // prove later, so length remains only a lower-bound quality filter.
+    .filter((line) => line.length >= 45)
     .filter((line) => !boilerplateSentence(line))
     .filter((line) => !/(fuelin\.|clo\.|Hundreds o\.|\b[a-z]\.|\bU\.S\.|\bU\.K\.)$/i.test(line));
 }
@@ -137,13 +140,87 @@ export function inferInfrastructureLayer(text = '') {
 
 export function extractNumericClaims(text = '') {
   const source = compact(text);
-  const matches = [...source.matchAll(/\b(\d+(?:\.\d+)?)\s?(GW|MW|kW|billion|million|%|percent|years?|months?|days?|sq\.?\s?ft|megawatts?|gigawatts?)\b/gi)];
-  return matches.map((match, index) => ({
-    raw: compact(match[0]),
-    numeric_value: Number(match[1]),
-    unit: match[2],
-    index,
-  }));
+  const candidates = [];
+  const wordComparator = '(?:less\\s+than\\s+or\\s+equal(?:\\s+to)?|more\\s+than\\s+or\\s+equal(?:\\s+to)?|at\\s+least|at\\s+most|more\\s+than|less\\s+than|up\\s+to|under|over|around|roughly|approximately|about|nearly|almost|exactly)';
+  // Capture negative prefixes together with the modifier. Supported inversions
+  // are canonicalized by numeric-claim-policy; unsupported combinations then
+  // have no key and fail closed instead of matching an inner positive phrase.
+  const comparator = `(?:(?:(?:no|not)\\s+)?${wordComparator}\\s+|(?:(?:no|not)\\s+)?(?:<=|>=|<|>|~|≤|≥)\\s*)`;
+  const number = '(?:\\d{1,3}(?:,\\d{3})+|\\d+)(?:\\.\\d+)?';
+  const addMatches = (pattern, toClaim) => {
+    for (const match of source.matchAll(pattern)) {
+      const claim = toClaim(match);
+      candidates.push({
+        ...claim,
+        start: match.index,
+        end: match.index + match[0].length,
+      });
+    }
+  };
+  const numericValue = (value) => Number(String(value || '').replaceAll(',', ''));
+  const qualifier = (value) => compact(value).toLowerCase();
+
+  addMatches(
+    new RegExp(`(?<comparator>${comparator})?\\$(?<value>${number})\\s*(?<scale>trillion|billion|million|thousand|[TBMK])?\\b`, 'gi'),
+    (match) => {
+      const scale = String(match.groups.scale || '').toLowerCase();
+      const scaleName = ({ t: 'trillion', b: 'billion', m: 'million', k: 'thousand' })[scale] || scale;
+      return {
+        raw: compact(match[0]),
+        numeric_value: numericValue(match.groups.value),
+        unit: scaleName ? `USD ${scaleName}` : 'USD',
+        comparator: qualifier(match.groups.comparator),
+      };
+    },
+  );
+  addMatches(
+    new RegExp(`(?<comparator>${comparator})?(?<value>${number})\\s*(?<unit>GW|MW|kW|billion|million|%|percent|years?|months?|days?|sq\\.?\\s?ft|megawatts?|gigawatts?)\\b`, 'gi'),
+    (match) => ({
+      raw: compact(match[0]),
+      numeric_value: numericValue(match.groups.value),
+      unit: match.groups.unit,
+      comparator: qualifier(match.groups.comparator),
+    }),
+  );
+  addMatches(
+    new RegExp(`(?<comparator>${comparator})?(?<value>${number})\\s*(?:×|x\\b|times?\\b)`, 'gi'),
+    (match) => ({
+      raw: compact(match[0]),
+      numeric_value: numericValue(match.groups.value),
+      unit: 'times',
+      comparator: qualifier(match.groups.comparator),
+    }),
+  );
+  addMatches(
+    /\b(?<value>\d[\d,]*)(?:st|nd|rd|th)\b/gi,
+    (match) => ({ raw: compact(match[0]), numeric_value: numericValue(match.groups.value), unit: 'ordinal', comparator: '' }),
+  );
+  addMatches(
+    /\b(?<value>(?:19|20)\d{2})\b/g,
+    (match) => ({ raw: compact(match[0]), numeric_value: numericValue(match.groups.value), unit: 'year', comparator: '' }),
+  );
+
+  // In constructions such as "34 and 27 days", grammar supplies the unit
+  // only once. Record the first value with that same explicit source unit;
+  // the ordinary unit pattern above records the second value.
+  addMatches(
+    new RegExp(`\\b(?<first>${number})(?=\\s*(?:,|and|to|[-–—])\\s*${number}\\s*(?<unit>years?|months?|days?|GW|MW|kW|megawatts?|gigawatts?)\\b)`, 'gi'),
+    (match) => ({
+      raw: compact(match.groups.first),
+      numeric_value: numericValue(match.groups.first),
+      unit: match.groups.unit,
+      comparator: '',
+    }),
+  );
+
+  const selected = [];
+  for (const candidate of candidates.sort((a, b) => a.start - b.start || (b.end - b.start) - (a.end - a.start))) {
+    const overlaps = selected.some((item) => candidate.start < item.end && candidate.end > item.start);
+    if (!overlaps) selected.push(candidate);
+  }
+  return selected
+    .sort((a, b) => a.start - b.start)
+    .map(({ start, end, ...claim }, index) => ({ ...claim, index, source_index: start }));
 }
 
 export function routeLabelToType(route = '') {

@@ -25,6 +25,7 @@ import { selectHomepageVisualLead } from '../../scripts/lib/homepage-visual-lead
 import { activeRegistryFeeds, loadSourceRegistrySync } from '../../scripts/lib/source-registry.mjs';
 import { categoryKey, categoryShortLabel } from '../lib/category-visuals';
 import { buildColumnCards } from '../../scripts/lib/column-surface.mjs';
+import { buildPublicPublicationCatalog } from '../../scripts/lib/public-publication-catalog.mjs';
 
 const leadColumn = buildColumnCards(authoredColumns)[0] || null;
 const radarItems = headlinesFor(industryHeadlines, {
@@ -36,13 +37,14 @@ const radarItems = headlinesFor(industryHeadlines, {
 
 const boardTitle = SITE.name;
 const homepageArticles = process.env.HOMEPAGE_FIXTURE === 'empty' ? [] : [...latestNews, ...archivedNews];
-const feed = buildHomepageFeed(homepageArticles, { limit: 50, minimumVisible: 30 });
+const feed = buildHomepageFeed(homepageArticles, { limit: 15, minimumVisible: 15 });
+const publicationCatalog = buildPublicPublicationCatalog({ articles: homepageArticles, columns: authoredColumns });
 const authorizedSourceCount = activeRegistryFeeds(loadSourceRegistrySync(), new Date()).length;
 const rightsReviewSafeMode = authorizedSourceCount === 0 && feed.items.length === 0;
 const featuredSignal = feed.featured?.publicSignal || null;
-const dateFormatter = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-const longDateFormatter = new Intl.DateTimeFormat('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
-const topSources = Array.from(new Set(feed.items.map((entry) => entry.publicSignal?.source).filter(Boolean))).slice(0, 3);
+const dateFormatter = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
+const longDateFormatter = new Intl.DateTimeFormat('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
+const topSources = Array.from(new Set(publicationCatalog.map((entry) => entry.source).filter(Boolean))).slice(0, 3);
 const leadSignal = selectHomepageVisualLead(feed);
 const leadListExclusions = new Set([feed.featured?.publicSignal?.id, leadSignal?.id].filter(Boolean));
 const latestFeed = { ...feed, items: leadListExclusions.size ? feed.items.filter((item) => !leadListExclusions.has(item.publicSignal?.id)) : feed.items };
@@ -55,18 +57,17 @@ const articleDateMs = (article: Record<string, unknown> = {}) => {
   const stamp = new Date(String(article.analysisPublishedAt || article.publishedAt || article.updatedAt || 0)).getTime();
   return Number.isFinite(stamp) ? stamp : 0;
 };
-const eligibleAll = homepageArticles.filter(publicHomepageFeedEligible);
 const nowMs = Date.now();
 const weekMs = 7 * 24 * 60 * 60 * 1000;
-const publishedThisWeek = eligibleAll.filter((article) => nowMs - articleDateMs(article) <= weekMs).length;
-const uniqueSources = new Set(eligibleAll.map((article) => article.source).filter(Boolean)).size;
-const uniqueRegions = new Set(eligibleAll.map((article) => article.region).filter(Boolean)).size;
-const latestStampMs = eligibleAll.reduce((max, article) => Math.max(max, articleDateMs(article)), 0);
+const publishedThisWeek = publicationCatalog.filter((item) => nowMs - new Date(item.date).getTime() <= weekMs).length;
+const uniqueSources = new Set(publicationCatalog.map((item) => item.source).filter(Boolean)).size;
+const uniqueRegions = new Set(publicationCatalog.map((item) => item.region).filter(Boolean)).size;
+const latestStampMs = publicationCatalog.reduce((max, item) => Math.max(max, new Date(item.date).getTime() || 0), 0);
 const editionDate = longDateFormatter.format(latestStampMs ? new Date(latestStampMs) : new Date());
 const updatedLabel = latestStampMs ? `Latest publish · ${dateFormatter.format(new Date(latestStampMs))}` : '';
 const freshness = buildFreshnessPublicModel({
   cycles: editorialCycles,
-  rssItems: eligibleAll,
+  rssItems: homepageArticles.filter(publicHomepageFeedEligible),
   heartbeat: pipelineHeartbeat,
 });
 const lastSuccessfulUpdate = freshness.last_successful_pipeline_at
@@ -76,12 +77,17 @@ const lastSourceRecord = latestStampMs
   ? dateFormatter.format(new Date(latestStampMs))
   : 'not recorded';
 const sourceRecordStatus = `Source-linked feed current through ${lastSourceRecord}`;
-const currentLongFormStampMs = feed.items
-  .filter((item) => Boolean(item.publicSignal?.view_detail))
-  .reduce((max, article) => Math.max(max, articleDateMs(article)), 0);
-const latestAuthorizedLongFormAt = freshness.latest_published_analysis_at || (currentLongFormStampMs
-  ? new Date(currentLongFormStampMs).toISOString()
-  : '');
+const currentLongFormStampMs = publicationCatalog
+  .filter((item) => item.type === 'Analysis' || item.type === 'Column')
+  .reduce((max, item) => Math.max(max, new Date(item.date).getTime() || 0), 0);
+const freshnessLongFormStampMs = new Date(String(freshness.latest_published_analysis_at || 0)).getTime();
+const latestAuthorizedLongFormStampMs = Math.max(
+  Number.isFinite(freshnessLongFormStampMs) ? freshnessLongFormStampMs : 0,
+  currentLongFormStampMs,
+);
+const latestAuthorizedLongFormAt = latestAuthorizedLongFormStampMs
+  ? new Date(latestAuthorizedLongFormStampMs).toISOString()
+  : '';
 const longFormStatus = rightsReviewSafeMode
   ? 'Source-linked and long-form publication paused: 0 authorized sources'
   : latestAuthorizedLongFormAt
@@ -95,8 +101,8 @@ const pipelineStatus = freshness.state === 'failed_pipeline'
 const freshnessSummary = `Update schedule: every 8 hours · ${sourceRecordStatus} · ${longFormStatus} · ${pipelineStatus}`;
 
 const pulseMetrics = [
-  { label: 'Analyses this week', value: publishedThisWeek, hint: 'published in the last 7 days' },
-  { label: 'Stories on file', value: eligibleAll.length, hint: 'live and archived coverage' },
+  { label: 'Publications this week', value: publishedThisWeek, hint: 'published in the last 7 days' },
+  { label: 'Publications on file', value: publicationCatalog.length, hint: 'analysis, columns, briefs, and signals' },
   { label: 'Sources followed', value: uniqueSources, hint: 'outlets, filings, and primary posts' },
   { label: 'Regions covered', value: uniqueRegions, hint: 'markets in the current record' },
 ];
@@ -199,6 +205,7 @@ const structuredData = {
         <a href="/category/semiconductors/">Silicon</a>
         <a href="/category/capital-markets/">Capital</a>
         <a href="/archive/">Archive</a>
+        <a href="/search/">Search</a>
       </nav>
       <div class="masthead-actions">
         <a class="btn-ghost masthead-contact" href="/contact/">Contact</a>
@@ -206,6 +213,8 @@ const structuredData = {
       </div>
     </header>
   <div class="product-shell" style="padding-top:0;padding-bottom:0"><ProductNav /></div>
+
+    <ColumnHero column={leadColumn} />
 
     <TickerTape items={tickerItems} />
 
@@ -273,8 +282,6 @@ const structuredData = {
 
     <PulseBoard metrics={pulseMetrics} mix={coverageMix} updatedLabel={updatedLabel} />
 
-    <ColumnHero column={leadColumn} />
-
     <FeaturedArticle signal={featuredSignal} />
 
     <AdSlot variant="leaderboard" class="home-ad" />
@@ -286,6 +293,7 @@ const structuredData = {
       dek="Source-linked analysis and briefs from the AI infrastructure buildout."
       monetize={true}
     />
+    <div class="home-feed-more"><a class="btn-ghost" href="/archive/">Browse all publications</a></div>
 
     <IndustryRadar
       items={radarItems}

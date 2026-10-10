@@ -50,7 +50,11 @@ Astro.response.headers.set('Pragma', 'no-cache');
         },
       });
       const payload = await response.json().catch(() => ({}));
-      if (!response.ok) throw new Error(payload.error || 'Request failed.');
+      if (!response.ok) {
+        const error = new Error(payload.error || 'Request failed.');
+        error.code = payload.code || '';
+        throw error;
+      }
       return payload;
     };
 
@@ -58,7 +62,14 @@ Astro.response.headers.set('Pragma', 'no-cache');
       .then(() => {
         window.location.assign('/admin/dashboard/');
       })
-      .catch(() => setStatus('Sign in to continue.'));
+      .catch((error) => {
+        if (error.code === 'ADMIN_UNAVAILABLE') {
+          form.hidden = true;
+          setStatus('Admin tools are temporarily unavailable.', 'error');
+          return;
+        }
+        setStatus('Sign in to continue.');
+      });
 
     form?.addEventListener('submit', async (event) => {
       event.preventDefault();
@@ -70,6 +81,7 @@ Astro.response.headers.set('Pragma', 'no-cache');
         });
         window.location.assign('/admin/dashboard/');
       } catch (error) {
+        if (error.code === 'ADMIN_UNAVAILABLE') form.hidden = true;
         setStatus(error.message, 'error');
       }
     });

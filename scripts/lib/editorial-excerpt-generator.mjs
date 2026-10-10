@@ -1,8 +1,8 @@
 import { guardPublicCopy, hasForbiddenPublicPhrase, firstWords } from './copy-quality-guard.mjs';
+import { generateCardCopy } from './card-copy-quality-gate.mjs';
 import { extractNamedCompanies } from './expert-insight-engine.mjs';
 import { normalizeProperNouns } from './proper-noun-normalizer.mjs';
 import { routePublicLane } from './public-lane-router.mjs';
-import { analyzeSourceTextCompleteness } from './source-text-completeness.mjs';
 import { routeStoryArchetype } from './story-archetype-router.mjs';
 import { detectTruncationArtifacts } from './truncation-detector.mjs';
 
@@ -72,14 +72,6 @@ function hasSourceSpecificOverride(article = {}) {
     /paul tudor jones|sports ai|sumersports|sūmersports|football/i.test(text) ||
     /anthropic/i.test(text) && /legal/i.test(text) ||
     /dinosaur|fossil|stegosaurus/i.test(text);
-}
-
-function sourceQualityProblem(article = {}) {
-  const result = analyzeSourceTextCompleteness(article);
-  if (result.ok) return false;
-  return result.reasons.some((reason) =>
-    /boilerplate|navigation|copyright|truncated|source_evidence_length_below_280/.test(reason)
-  );
 }
 
 function sourceSpecificDeck(article = {}, route = routePublicLane(article), archetype = routeStoryArchetype(article)) {
@@ -174,13 +166,14 @@ function ensureUniqueDeck(deck = '', article = {}, recentDecks = []) {
 export function generateEditorialExcerpt(article = {}, options = {}) {
   const route = options.route || routePublicLane(article);
   const archetype = options.archetype || routeStoryArchetype(article);
-  const weakEvidence = sourceQualityProblem(article) && !hasSourceSpecificOverride(article);
-  let deck = weakEvidence
-    ? cleanSentence(`${primaryActor(article)} stays on the public watchlist until clean source evidence ties it to a concrete infrastructure decision`)
-    : sourceSpecificDeck(article, route, archetype);
-  let why = weakEvidence
-    ? cleanSentence('Compute Current is keeping the card short because the available source text contains clipped, boilerplate, or incomplete evidence that does not support a full infrastructure memo')
-    : sourceSpecificWhy(article, route, archetype);
+  const sourceSpecificOverride = hasSourceSpecificOverride(article);
+  const grounded = generateCardCopy(article);
+  let deck = sourceSpecificOverride
+    ? sourceSpecificDeck(article, route, archetype)
+    : grounded.deck;
+  let why = sourceSpecificOverride
+    ? sourceSpecificWhy(article, route, archetype)
+    : grounded.why_it_matters;
 
   if (!sourcePublicationIsSubject(article)) {
     const source = compact(article.source || '');
@@ -190,7 +183,9 @@ export function generateEditorialExcerpt(article = {}, options = {}) {
     }
   }
 
-  deck = ensureUniqueDeck(cleanSentence(deck), article, options.recentDecks || []);
+  deck = sourceSpecificOverride
+    ? ensureUniqueDeck(cleanSentence(deck), article, options.recentDecks || [])
+    : cleanSentence(deck);
   why = cleanSentence(why);
 
   const deckGuard = guardPublicCopy(deck);

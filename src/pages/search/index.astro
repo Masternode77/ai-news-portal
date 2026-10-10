@@ -1,0 +1,22 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import PublicationExplorer from '../../components/PublicationExplorer.astro';
+import latestNews from '../../data/latest-news.json';
+import archivedNews from '../../data/archived-news.json';
+import authoredColumns from '../../data/authored-columns.json';
+import { SITE } from '../../config/site';
+import { buildPublicPublicationCatalog } from '../../../scripts/lib/public-publication-catalog.mjs';
+
+const catalog = buildPublicPublicationCatalog({ articles: [...latestNews, ...archivedNews], columns: authoredColumns });
+---
+<Layout title={`Search publications | ${SITE.name}`} description="Search Compute Current public analysis, columns, briefs, and signals." canonicalPath="/search/">
+  <main class="policy-shell taxonomy-page publication-search-page">
+    <a class="back-link" href="/">Read the latest</a>
+    <section class="policy-page">
+      <p class="eyebrow">Search</p>
+      <h1>Find published intelligence</h1>
+      <p class="policy-lede">Explore columns, analysis, briefs, and source-linked signals by topic, source, and date.</p>
+    </section>
+    <PublicationExplorer catalog={catalog} pageSize={18} />
+  </main>
+</Layout>

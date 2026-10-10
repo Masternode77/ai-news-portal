@@ -7,7 +7,7 @@ import { buildColumnCards } from '../../../scripts/lib/column-surface.mjs';
 import charter from '../../../config/editorial/persona-charter.json';
 
 const cards = buildColumnCards(authoredColumns);
-const dateFormatter = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+const dateFormatter = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
 ---
 <Layout
   title={`${charter.column.name} | ${SITE.name}`}

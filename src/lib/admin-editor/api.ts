@@ -2,10 +2,12 @@ import { isJsonRecord, stringValue } from './contracts';
 
 export class AdminRequestError extends Error {
   readonly status: number;
+  readonly code: string;
 
-  constructor(status: number, message: string) {
+  constructor(status: number, message: string, code = '') {
     super(message);
     this.status = status;
+    this.code = code;
   }
 }
 
@@ -30,7 +32,8 @@ export const requestAdminJson = async (url: string, options: RequestOptions, csr
   const payload = await responsePayload(response);
   if (!response.ok) {
     const message = isJsonRecord(payload) ? stringValue(payload, 'error') : '';
-    throw new AdminRequestError(response.status, message || 'Request failed.');
+    const code = isJsonRecord(payload) ? stringValue(payload, 'code') : '';
+    throw new AdminRequestError(response.status, message || 'Request failed.', code);
   }
   return payload;
 };

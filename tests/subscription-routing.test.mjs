@@ -74,10 +74,11 @@ const evidence = {
   verified_claims: [],
 };
 const check = { claim: essay.body, source_url: evidence.primary_source.url, evidence_quote: evidence.source_text, supported: true };
-const approved = { approved: true, issues: [], source_checks: [check], numeric_checks: [check] };
+const numericCheck = { ...check, claim_id: 'essay.body.block1.number1' };
+const approved = { approved: true, issues: [], source_checks: [check], numeric_checks: [numericCheck] };
 
 function approvedReviewForRequest(request) {
-  const { essay: reviewedEssay, figures = [], evidence: reviewedEvidence } = JSON.parse(request.userPrompt);
+  const { essay: reviewedEssay, figures = [], evidence: reviewedEvidence, numeric_claim_manifest: manifest = [] } = JSON.parse(request.userPrompt);
   const source = reviewedEvidence.sources[0];
   const figureText=figures.flatMap((figure)=>[
     figure.title,
@@ -86,7 +87,8 @@ function approvedReviewForRequest(request) {
   ]).filter(Boolean);
   const reviewedText = [reviewedEssay.headline, reviewedEssay.deck, reviewedEssay.body, ...figureText].join('\n');
   const reviewedCheck = { claim: reviewedText, source_url: source.url, evidence_quote: source.text, supported: true };
-  return JSON.stringify({ approved: true, issues: [], source_checks: [reviewedCheck], numeric_checks: [reviewedCheck] });
+  const numericChecks = manifest.map((entry) => ({ ...reviewedCheck, claim_id: entry.claim_id, claim: entry.claim }));
+  return JSON.stringify({ approved: true, issues: [], source_checks: [reviewedCheck], numeric_checks: numericChecks });
 }
 
 function isEvidenceBriefRequest(request) {
@@ -430,7 +432,7 @@ test('Astra review payload includes visible figure copy and rejects an unsupport
       return JSON.stringify({
         approved:false,issues:['unsupported figure title'],
         source_checks:[check,{claim:figures[0].title,source_url:evidence.primary_source.url,evidence_quote:evidence.source_text,supported:false}],
-        numeric_checks:[check],
+        numeric_checks:[numericCheck],
       });
     },
   }),/evidence review rejected/);
@@ -455,8 +457,74 @@ test('Astra review rejects a visible figure number missing from numeric coverage
   }];
   await assert.rejects(reviewColumnEvidence({
     essay,evidence,figures,
-    callModel:async()=>JSON.stringify({...approved,source_checks:[check],numeric_checks:[check]}),
+    callModel:async()=>JSON.stringify({...approved,source_checks:[check],numeric_checks:[numericCheck]}),
   }),/evidence review rejected/);
+});
+
+test('Astra review tracks the same amount separately across headline, deck, body and figure fields', async () => {
+  const repeatedEssay={
+    headline:'Capacity reached 200 MW',
+    deck:'The filing reports 200 MW.',
+    body:'The source reports 200 MW.',
+  };
+  const repeatedFigures=[{
+    type:'stat-row',title:'200 MW comparison',anchor:1,source_note:'Epoch AI',
+    items:[{label:'Reported 200 MW',value:200,unit:'MW',display:'200 MW',source:'Epoch AI'}],
+  }];
+  const sourceUrl='https://example.com/repeated-capacity';
+  const sourceText='The source reports 200 MW.';
+  const repeatedEvidence={
+    primary_source:{url:sourceUrl},corroborating_sources:[],source_text:sourceText,
+    sources:[{url:sourceUrl,text:sourceText}],verified_claims:[],
+  };
+  const requests=[];
+  let rejection;
+  await assert.rejects(reviewColumnEvidence({
+    essay:repeatedEssay,evidence:repeatedEvidence,figures:repeatedFigures,
+    callModel:async request=>{
+      requests.push(request);
+      const payload=JSON.parse(request.userPrompt);
+      const [first]=payload.numeric_claim_manifest;
+      const sourceCheck={claim:repeatedEssay.body,source_url:sourceUrl,evidence_quote:sourceText,supported:true};
+      return JSON.stringify({
+        approved:true,issues:[],source_checks:[sourceCheck],
+        numeric_checks:[{...sourceCheck,claim_id:first.claim_id,claim:first.claim}],
+      });
+    },
+  }),error=>{
+    rejection=error;
+    return error instanceof EditorialReviewRejection && error.reasons.includes('numeric_claims_uncovered');
+  });
+  assert.equal(requests.length,2,'a protocol-only omission receives one bounded Astra re-review');
+  const firstPayload=JSON.parse(requests[0].userPrompt);
+  assert.deepEqual(firstPayload.numeric_claim_manifest.map(entry=>entry.field),[
+    'essay.headline','essay.deck','essay.body.block1','figures.1.title',
+    'figures.1.items.1.label','figures.1.items.1.display',
+  ]);
+  assert.ok(firstPayload.numeric_claim_manifest.every(entry=>entry.numeric_text==='200'));
+  assert.deepEqual(JSON.parse(requests[1].userPrompt).missing_numeric_claim_ids,
+    firstPayload.numeric_claim_manifest.slice(1).map(entry=>entry.claim_id));
+  assert.match(requests[1].systemPrompt,/previous response omitted these required numeric claim IDs/i);
+  assert.ok(rejection.uncoveredClaims.some(claim=>claim.includes('[essay.deck.number1] The filing reports 200 MW.')));
+  assert.ok(rejection.uncoveredClaims.some(claim=>claim.includes('[figures.1.items.1.display.number1] 200 MW')));
+  assert.ok(rejection.feedback.some(line=>line.includes('essay.deck.number1')));
+});
+
+test('a complete bounded Astra re-review clears a protocol-only numeric omission without rewriting the essay', async () => {
+  const requests=[];
+  const review=await reviewColumnEvidence({
+    essay,evidence,
+    callModel:async request=>{
+      requests.push(request);
+      if(requests.length===1){
+        return JSON.stringify({...approved,numeric_checks:[]});
+      }
+      return approvedReviewForRequest(request);
+    },
+  });
+  assert.equal(review.approved,true);
+  assert.equal(requests.length,2);
+  assert.deepEqual(JSON.parse(requests[1].userPrompt).missing_numeric_claim_ids,['essay.body.block1.number1']);
 });
 
 test('Astra-rejected model figure title allows one unchanged patch and rebuilds deterministically', async () => {
@@ -588,6 +656,8 @@ test('rejected cross-review feedback repairs the voice and requires a fresh acce
   const reviewRequests=[];
   const reviewIssues=Array.from({length:12},(_,index)=>`source mismatch ${index + 1}`);
   const unsupportedClaim='The developer waited two years in the interconnection queue before the utility granted a position, according to the filings.';
+  const unsupportedHeadline=JSON.parse(essayJson()).headline;
+  const unsupportedDeck=JSON.parse(essayJson()).deck;
   const state={};
   try {
     const result = await generateAuthoredColumn({
@@ -600,15 +670,35 @@ test('rejected cross-review feedback repairs the voice and requires a fresh acce
           assert.match(request.systemPrompt, /headline at 40-105 characters/);
           assert.match(request.systemPrompt, /deck at 80-240 characters/);
           assert.match(request.systemPrompt, /Exact unverified claim to remove or correct against the source: "The developer waited two years/);
+          assert.match(request.systemPrompt, /presenting the same premise as opinion, conditional analysis, counterargument, metaphor, or operator exposure does not repair it/i);
+          assert.match(request.systemPrompt, /source-bounded analysis/i);
+          const payload=JSON.parse(request.userPrompt);
+          assert.deepEqual(payload.review_findings.reasons,[
+            'approval_rejected','review_issues','source_checks_invalid','numeric_claims_uncovered',
+          ]);
+          assert.deepEqual(payload.review_findings.issues,reviewIssues);
+          assert.deepEqual(payload.review_findings.unsupported_claims,[
+            {claim:unsupportedClaim,matches:{headline:false,deck:false,body_block_indexes:[2]}},
+            {claim:unsupportedHeadline,matches:{headline:true,deck:false,body_block_indexes:[]}},
+            {claim:unsupportedDeck,matches:{headline:false,deck:true,body_block_indexes:[]}},
+          ],'structured findings locate current visible blocks');
+          assert.ok(payload.review_findings.uncovered_numeric_claims.length>0);
           return metadataRepairPatch();
         }
         return tasks.length===1 ? STANCE_JSON : essayJson();
       },
       reviewModel:withEvidenceBrief(async request => {
         reviewRequests.push(request);
-        return reviewRequests.length === 1
-          ? JSON.stringify({approved:false, issues:reviewIssues, source_checks:[{claim:unsupportedClaim,source_url:'https://example.com/northline-dakota',evidence_quote:'',supported:false}], numeric_checks:[]})
-          : approvedReviewForRequest(request);
+        if(reviewRequests.length!==1) return approvedReviewForRequest(request);
+        const payload=JSON.parse(request.userPrompt);
+        return JSON.stringify({
+          approved:false,
+          issues:reviewIssues,
+          source_checks:[unsupportedClaim,payload.essay.headline,payload.essay.deck].map(claim=>({
+            claim,source_url:'https://example.com/northline-dakota',evidence_quote:'',supported:false,
+          })),
+          numeric_checks:[],
+        });
       }),
     });
     assert.ok(result.column);
@@ -1014,6 +1104,6 @@ test('a checked 2000 claim cannot cover a separate unchecked 200 claim', async (
   const currentCheck = { ...check, claim:reviewed, evidence_quote:reviewed };
   await assert.rejects(reviewColumnEvidence({
     essay:currentEssay,evidence:currentEvidence,
-    callModel:async()=>JSON.stringify({...approved, source_checks:[currentCheck], numeric_checks:[currentCheck]}),
+    callModel:async()=>JSON.stringify({...approved, source_checks:[currentCheck], numeric_checks:[{...currentCheck,claim_id:'essay.body.block1.number1'}]}),
   }), /evidence review rejected/);
 });

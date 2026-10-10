@@ -66,7 +66,7 @@ invalid inventory.
 ## CSP risk acceptance
 
 The Vercel configuration deliberately uses static-compatible response headers and has a documented risk acceptance:
-Astro 7.2 static output can carry a validated compatible CSP, but this deployment has no enforced CSP for its selected
+Astro 7.3 static output can carry a validated compatible CSP, but this deployment has no enforced CSP for its selected
 AdSense/CMP architecture because it cannot issue a per-request nonce and no compatible policy has been validated. Do
 not add a report-only CSP without a configured collector. Add a report-only or enforced CSP only after moving to a
 per-request nonce-capable architecture or after validating a compatible policy against the static Astro output,

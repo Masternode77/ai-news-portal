@@ -3,11 +3,12 @@ import fs from 'node:fs';
 import test from 'node:test';
 import latestNews from '../src/data/latest-news.json' with { type: 'json' };
 import archivedNews from '../src/data/archived-news.json' with { type: 'json' };
+import authoredColumns from '../src/data/authored-columns.json' with { type: 'json' };
 import taxonomyPages from '../src/data/taxonomy-pages.json' with { type: 'json' };
-import { buildArchiveFeed } from '../scripts/lib/archive-feed-builder.mjs';
 import { buildHomepageFeed } from '../scripts/lib/homepage-feed-builder.mjs';
 import { isPublicProductFit } from '../scripts/lib/public-product-fit.mjs';
 import { currentSourceTextAuthorization } from '../scripts/lib/source-text-publication-authorization.mjs';
+import { buildPublicPublicationCatalog } from '../scripts/lib/public-publication-catalog.mjs';
 
 function sourceTaxonomyEligible(article = {}) {
   return Boolean(article?.id && article.archiveOnly !== true);
@@ -56,17 +57,18 @@ test('taxonomy report separates internal source partitions from rights-safe publ
   // Given: the checked-in source artifact and its current public-route report.
   const sourceIds = uniqueIds([...latestNews, ...archivedNews].filter(sourceTaxonomyEligible));
   const report = fs.readFileSync(new URL('../docs/taxonomy-pages-report.md', import.meta.url), 'utf8');
-  const publicArchiveCount = buildArchiveFeed([...latestNews, ...archivedNews], { page: 1, pageSize: 50 }).total;
-  const renderedTaxonomyRouteCount = [taxonomyPages.categories, taxonomyPages.companies, taxonomyPages.regions]
-    .flatMap((pages) => pages || [])
-    .filter((page) => buildHomepageFeed(page.items || [], { limit: 50, minimumVisible: 0 }).items.length > 0)
-    .length;
+  const catalog = buildPublicPublicationCatalog({ articles: [...latestNews, ...archivedNews], columns: authoredColumns });
+  const activeCategories = new Set(catalog.map((item) => item.categorySlug));
+  const activeRegions = new Set(catalog.map((item) => item.regionSlug));
+  const renderedTaxonomyRouteCount = (taxonomyPages.categories || []).filter((page) => activeCategories.has(page.slug)).length
+    + (taxonomyPages.regions || []).filter((page) => activeRegions.has(page.slug)).length
+    + (taxonomyPages.companies || []).filter((page) => buildHomepageFeed(page.items || [], { limit: 50, minimumVisible: 0 }).items.length > 0).length;
 
   // When: source inventory and reader-facing route facts are reported.
   // Then: internal partition counts cannot be mistaken for public route counts.
   assert.match(report, new RegExp(`Source artifact archive partitions: ${taxonomyPages.archive.length}`));
   assert.match(report, new RegExp(`Source artifact records: ${sourceIds.size}`));
-  assert.ok(report.includes(`Public archive route: \`/archive/\` (${publicArchiveCount} rendered eligible records)`));
+  assert.ok(report.includes(`Public archive route: \`/archive/\` (${catalog.length} rendered eligible records)`));
   assert.match(report, new RegExp(`Taxonomy detail routes with rendered eligible records: ${renderedTaxonomyRouteCount}`));
   assert.doesNotMatch(report, /^Archive pages:/m);
 });

@@ -1,16 +1,17 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import LatestAnalysisFeed from '../../components/LatestAnalysisFeed.astro';
+import PublicationExplorer from '../../components/PublicationExplorer.astro';
 import latestNews from '../../data/latest-news.json';
 import archivedNews from '../../data/archived-news.json';
+import authoredColumns from '../../data/authored-columns.json';
 import editorialCycles from '../../data/editorial-cycles.json';
 import pipelineHeartbeat from '../../data/pipeline-heartbeat.json';
 import { SITE } from '../../config/site';
-import { buildArchiveFeed } from '../../../scripts/lib/archive-feed-builder.mjs';
+import { buildPublicPublicationCatalog } from '../../../scripts/lib/public-publication-catalog.mjs';
 import { buildFreshnessPublicModel } from '../../../scripts/lib/freshness-public-model.mjs';
 
-const feed = buildArchiveFeed([...latestNews, ...archivedNews], { page: 1, pageSize: 50 });
-const dateFormatter = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+const catalog = buildPublicPublicationCatalog({ articles: [...latestNews, ...archivedNews], columns: authoredColumns });
+const dateFormatter = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
 const sourceRecordDate = (article: { analysisPublishedAt?: string; publishedAt?: string; updatedAt?: string }) =>
   new Date(String(article.analysisPublishedAt || article.publishedAt || article.updatedAt || 0)).getTime();
 const latestSourceRecordMs = [...latestNews, ...archivedNews].reduce((latest, article) => {
@@ -19,7 +20,7 @@ const latestSourceRecordMs = [...latestNews, ...archivedNews].reduce((latest, ar
 }, 0);
 const freshness = buildFreshnessPublicModel({
   cycles: editorialCycles,
-  rssItems: feed.items,
+  rssItems: [...latestNews, ...archivedNews],
   heartbeat: pipelineHeartbeat,
 });
 const lastSourceRecord = latestSourceRecordMs
@@ -29,15 +30,16 @@ const lastSuccessfulUpdate = freshness.last_successful_pipeline_at
   ? dateFormatter.format(new Date(freshness.last_successful_pipeline_at))
   : 'not recorded';
 const sourceRecordStatus = `Source-linked records current through ${lastSourceRecord}`;
-const currentLongFormStampMs = feed.items
-  .filter((item) => Boolean(item.publicSignal?.view_detail))
+const currentLongFormStampMs = catalog
+  .filter((item) => item.type === 'Analysis' || item.type === 'Column')
   .reduce((max, article) => {
-    const stamp = new Date(String(article.publicSignal?.date || 0)).getTime();
+    const stamp = new Date(String(article.date || 0)).getTime();
     return Number.isFinite(stamp) ? Math.max(max, stamp) : max;
   }, 0);
-const latestAuthorizedLongFormAt = freshness.latest_published_analysis_at || (currentLongFormStampMs
-  ? new Date(currentLongFormStampMs).toISOString()
-  : '');
+const freshestLongFormMs = Math.max(currentLongFormStampMs, new Date(freshness.latest_published_analysis_at || 0).getTime() || 0);
+const latestAuthorizedLongFormAt = freshestLongFormMs
+  ? new Date(freshestLongFormMs).toISOString()
+  : '';
 const longFormStatus = latestAuthorizedLongFormAt
   ? `Long-form publishing last authorized ${dateFormatter.format(new Date(latestAuthorizedLongFormAt))}`
   : 'Long-form publishing paused (0 authorized)';
@@ -55,6 +57,11 @@ const pipelineStatus = freshness.state === 'failed_pipeline'
       <h1>Publication archive</h1>
       <p class="policy-lede">Browse recent AI infrastructure intelligence, briefs, and source-linked analysis. {sourceRecordStatus}. {longFormStatus}. {pipelineStatus}.</p>
     </section>
-    <LatestAnalysisFeed feed={feed} title="Recent intelligence" eyebrow="Publication archive" dek="" />
+    <PublicationExplorer
+      catalog={catalog}
+      pageSize={18}
+      heading="Search the publication archive"
+      description="Find public analysis, columns, briefs, and signals by topic, type, source, or publication date."
+    />
   </main>
 </Layout>
