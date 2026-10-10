@@ -5,22 +5,27 @@ import {
   adsConfigured,
   adsEnabled,
   analyticsConfigured,
+  basicAnalyticsConsent,
   analyticsEnabled,
   googleCmpReady,
 } from '../lib/monetization';
 
-const effectiveDate = 'August 9, 2026';
+const effectiveDate = 'October 8, 2026';
 const advertisingStatus = adsEnabled
   ? 'Advertising is active only on eligible public content pages. This privacy page does not load advertising, analytics, or consent-management tags.'
   : adsConfigured
     ? 'A Google AdSense publisher ID is configured for ownership verification and ads.txt, but advertising is not active until the operator has completed and tested the certified Google CMP handoff.'
     : 'Google advertising is not configured for this deployment.';
-const analyticsStatus = analyticsEnabled
+const analyticsStatus = basicAnalyticsConsent
+  ? 'Google Analytics 4 loads only after you accept analytics cookies, and only on eligible public content pages. It does not load before a choice or after rejection.'
+  : analyticsEnabled
   ? 'Google Analytics 4 is active only on eligible public content pages to measure aggregated readership.'
   : analyticsConfigured
     ? 'A Google Analytics 4 measurement ID is configured, but Analytics is not active until the operator has completed and tested the certified Google CMP handoff.'
     : 'Google Analytics 4 is not configured for this deployment.';
-const cmpStatus = googleCmpReady
+const cmpStatus = basicAnalyticsConsent
+  ? 'The analytics-only choice does not enable advertising. All advertising consent signals remain denied; the certified advertising CMP is not marked ready.'
+  : googleCmpReady
   ? 'The operator has marked the certified Google CMP handoff as ready. That setting is reviewed separately from this privacy notice.'
   : 'The certified Google CMP handoff is not marked ready, so consent-requiring Google advertising and analytics tags remain disabled.';
 ---
@@ -60,7 +65,7 @@ const cmpStatus = googleCmpReady
         <h2>Analytics</h2>
         <p>
           {analyticsStatus} When active, Analytics is used to understand aggregate readership, including pages read,
-          approximate referral sources, and traffic patterns. Its use and the applicable notice depend on the
+          approximate referral sources, and traffic patterns. In certified CMP mode, its use and the applicable notice depend on the
           certified CMP configuration and the visitor&rsquo;s location.
         </p>
       </section>
@@ -79,14 +84,21 @@ const cmpStatus = googleCmpReady
 
       <section>
         <h2>Cookies and your choices</h2>
-        <p>
+        {basicAnalyticsConsent ? <p>
+          Use <strong>Analytics choices</strong> in the footer on any public page, including this one, to accept or reject analytics.
+          We store that preference in your browser for 180 days. Rejecting removes this site&rsquo;s first-party Google Analytics cookies;
+          if measurement is running, the page reloads to stop it. Without browser storage, the choice applies only to the current page.
+          Acceptance allows Google Analytics to use first-party cookies such as <code>_ga</code> to distinguish visits and measure page views.
+          This privacy page and other legal or utility pages do not load analytics or advertising tags.
+        </p> : null}
+        {!basicAnalyticsConsent ? <p>
           Where a certified Google consent message is active, it records choices and supports the applicable Google
           consent flow. Visitors in the EU/EEA, UK, or Switzerland can revisit a recorded choice by using the{' '}
           <strong>Privacy choices</strong> control in the footer of another public content page. This privacy page
           intentionally does not load the Google consent runtime. If that control is unavailable, the consent message
           may not apply to the visitor&rsquo;s location or may not be active; Google account controls remain available at
           the link above.
-        </p>
+        </p> : null}
         <p>{cmpStatus}</p>
       </section>
 

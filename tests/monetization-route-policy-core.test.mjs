@@ -46,8 +46,8 @@ async function loadPolicy(environment, inventory = [], currentDetails = inventor
 
 function buildWithEnvironment(outputDirectory, environment) {
   execFileSync(
-    path.join(projectRoot, 'node_modules/.bin/astro'),
-    ['build', '--outDir', outputDirectory],
+    process.execPath,
+    [path.join(projectRoot, 'node_modules/astro/bin/astro.mjs'), 'build', '--outDir', outputDirectory],
     {
       cwd: projectRoot,
       encoding: 'utf8',
@@ -161,7 +161,7 @@ test('monetization policy fails closed for invalid IDs and every non-true CMP-re
   assert.equal(readyPolicy.googleCmpReady, true);
 });
 
-test('layout uses globally denied Consent Mode v2 defaults and contains no local consent implementation', async () => {
+test('certified CMP layout branch uses globally denied defaults and delegates basic consent separately', async () => {
   // Given: the route-gated layout source and any remaining local consent component.
   const layout = await fs.readFile(layoutPath, 'utf8');
   const bannerExists = await fs.access(consentBannerPath).then(() => true, () => false);
@@ -176,6 +176,8 @@ test('layout uses globally denied Consent Mode v2 defaults and contains no local
   assert.match(layout, /ad_personalization:'denied'/);
   assert.match(layout, /analytics_storage:'denied'/);
   assert.match(layout, /ads_data_redaction/);
+  assert.match(layout, /\(monetizationActive \|\| analyticsActive\) && !basicAnalyticsConsent/);
+  assert.match(layout, /analyticsActive && !basicAnalyticsConsent/);
   assert.doesNotMatch(layout, /ad_storage:'granted'/);
   assert.doesNotMatch(source, /localStorage|ccConsentV1|data-consent-(?:accept|decline)|Allow all|Essential only/);
 });
@@ -219,4 +221,42 @@ test('synthetic builds omit Google tags until ready and emit each configured loa
   assert.equal((readyHome.match(/data-ad-client=/g) || []).length, 1);
   assert.match(readyHome, /ad_storage:'denied'/);
   assert.match(readyHome, /ads_data_redaction/);
+});
+
+test('basic analytics is explicit, excludes CMP controller and cannot enable advertising', async () => {
+  const environment = { PUBLIC_GA4_ID: 'G-TEST12345', PUBLIC_ANALYTICS_CONSENT_MODE: 'basic', PUBLIC_ADSENSE_CLIENT: 'ca-pub-1234567890', PUBLIC_ADSENSE_CONTENT_READY: 'true' };
+  const basic = await loadPolicy(environment, [verifiedPublicDetailFixture()]);
+  assert.equal(basic.basicAnalyticsConsent, true);
+  assert.equal(basic.analyticsEnabled, true);
+  assert.equal(basic.adsEnabled, false);
+  assert.equal(basic.isMonetizationActiveForRoute('/'), false);
+  for (const path of ['/privacy/', '/terms/', '/admin/', '/api/']) assert.equal(basic.isAnalyticsActiveForRoute(path), false);
+  const cmp = await loadPolicy({ ...environment, PUBLIC_GOOGLE_CMP_READY: 'true' });
+  assert.equal(cmp.basicAnalyticsConsent, false);
+  assert.equal(cmp.analyticsEnabled, true);
+  const invalid = await loadPolicy({ ...environment, PUBLIC_GA4_ID: 'invalid' });
+  assert.equal(invalid.basicAnalyticsConsent, false);
+  assert.equal(invalid.analyticsEnabled, false);
+});
+
+test('public editorial and research analytics coverage is independent from the advertising whitelist', async () => {
+  const content = ['/column/', '/column/up-to-3-pod-density-is-a-benchmark-not-a-ram-budget-cut-2026-10-06/', '/radar/', '/data/', '/data/capacity-ledger/', '/ko/', '/hubs/', '/hubs/texas/', '/entities/', '/entities/nvidia/', '/glossary/'];
+  const denied = ['/privacy/', '/terms/', '/about/', '/contact/', '/follow/', '/admin/', '/api/', '/sample/', '/subscribe/', '/newsletter/', '/ko/rss.xml'];
+  for (const mode of ['basic', 'cmp']) {
+    const policy = await loadPolicy({ PUBLIC_GA4_ID: 'G-TEST12345', PUBLIC_ANALYTICS_CONSENT_MODE: mode === 'basic' ? 'basic' : '', PUBLIC_GOOGLE_CMP_READY: mode === 'cmp' ? 'true' : 'false', PUBLIC_ADSENSE_CLIENT: 'ca-pub-1234567890', PUBLIC_ADSENSE_CONTENT_READY: 'true' }, [verifiedPublicDetailFixture()]);
+    for (const route of content) {
+      assert.equal(policy.isAnalyticsActiveForRoute(route), true, `${mode}: ${route} analytics`);
+      assert.equal(policy.isAdsActiveForRoute(route), false, `${mode}: ${route} ads`);
+      assert.equal(policy.isMonetizableRoute(route), false);
+    }
+    for (const route of denied) assert.equal(policy.isAnalyticsActiveForRoute(route), false, `${mode}: ${route} excluded`);
+  }
+});
+
+test('certified CMP analytics-only routes retain denied bootstrap before their loader', async () => {
+  const layout = await fs.readFile(layoutPath, 'utf8');
+  assert.match(layout, /\(monetizationActive \|\| analyticsActive\) && !basicAnalyticsConsent \? <script is:inline set:html=\{consentModeBootstrap\}/);
+  assert.ok(layout.indexOf('set:html={consentModeBootstrap}') < layout.indexOf('src={`https://www.googletagmanager.com'));
+  assert.ok(layout.indexOf("gtag('consent','default'") < layout.indexOf("gtag('config','${GA4_ID}'"));
+  assert.match(layout, /analytics_storage:'denied'/);
 });

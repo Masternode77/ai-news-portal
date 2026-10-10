@@ -2,7 +2,7 @@
 
 이 저장소는 광고·분석 설정과 실제 활성화를 분리합니다. 유효한 ID를 넣는 것은
 &ldquo;configured&rdquo; 상태일 뿐이며, Google 태그와 수동 광고 슬롯은 인증된 Google CMP
-메시지가 배포·테스트된 뒤에만 활성화할 수 있습니다.
+메시지가 배포·테스트된 뒤에 활성화할 수 있습니다. 광고 없는 GA4 전용 기본 동의 모드는 아래 별도 절차를 따릅니다.
 
 ## 1. 한눈에 보기
 
@@ -15,7 +15,7 @@
 | `PUBLIC_ADSENSE_SLOT_INFEED` | `2345678901` | 홈/아카이브 피드 중간 광고 (6번째·18번째 카드 뒤) |
 | `PUBLIC_ADSENSE_SLOT_ARTICLE` | `3456789012` | 기사 본문 하단 in-article 광고 |
 | `PUBLIC_ADSENSE_SLOT_BOX` | `4567890123` | 기사 페이지 최하단 박스 광고 |
-| `PUBLIC_GA4_ID` | `G-XXXXXXXXXX` | Google Analytics 4 측정 ID. CMP 준비 확인 전에는 로드하지 않음 |
+| `PUBLIC_GA4_ID` | `G-XXXXXXXXXX` | Google Analytics 4 측정 ID. 인증 CMP 또는 아래 basic 수락 후 로드 |
 
 설정 위치: **Vercel → Project → Settings → Environment Variables → Production**
 저장 후 **Redeploy** 해야 빌드에 반영됩니다. `PUBLIC_GOOGLE_CMP_READY=true`는 AdSense 계정과
@@ -82,3 +82,16 @@ article 바닥값을 별도로 확인하기 때문입니다.
 
 - 기사 하단 박스 광고 자리는 AdSense 미설정 시 **스폰서십 문의(하우스 광고)** 로 렌더링됩니다
   (`briefings@computecurrent.com` 연결). 광고 수익이나 심사 결과는 이 문서에서 예측하지 않습니다.
+
+## Analytics-only basic consent (no advertising)
+
+Set `PUBLIC_GA4_ID` to the verified web-stream ID and explicitly set `PUBLIC_ANALYTICS_CONSENT_MODE=basic` for an analytics-only self-managed choice. Keep `PUBLIC_GOOGLE_CMP_READY=false` and `PUBLIC_ADSENSE_CONTENT_READY=false`; this is not an advertising CMP attestation. A rebuild is required.
+
+The local banner offers equally prominent Accept analytics and Reject analytics. Before acceptance there is no Google loader, preconnect, request or cookieless ping. After acceptance, only analytics_storage is granted; ad_storage, ad_user_data and ad_personalization remain denied, with Google signals and ad personalization disabled. Preferences last 180 days in localStorage; invalid/expired/unavailable storage defaults to no consent. The footer reopens choices, including on policy pages. Rejecting clears `_ga`, `_ga_*`, `_gid`, and `_gat*` cookies at the current host and `.computecurrent.com`, then reloads an actively measured page. Cross-tab changes are observed. Policy/utility/private routes remain excluded from measurement.
+
+The existing certified CMP path takes precedence when `PUBLIC_GOOGLE_CMP_READY=true`; the basic controller then does not render. The self-managed option must not be used as a substitute for the certified advertising CMP. Advertising activation and content-review requirements above are unchanged.
+
+Verify fresh, rejected, accepted, return visit, footer revocation, cross-tab revocation and policy-page behavior in a real browser. Use a test measurement ID locally to avoid contaminating production data. For rollback remove the basic flag and rebuild; with CMP readiness false, tags are disabled again. Review the privacy notice and actual GA retention/account configuration before release.
+
+References: [Google Analytics consent setup](https://support.google.com/analytics/answer/14546213?hl=en), [Google consent implementation guide](https://developers.google.com/tag-platform/security/guides/consent).
+Analytics route coverage is separate from the advertising whitelist: home, archive, news, category, company and region routes plus column, radar, data, ko, hubs, entities and glossary public content. Legal/utility/private routes (including privacy, terms, about, contact, follow, admin, API, sample, subscribe and newsletter) remain unmeasured, as do feed/file endpoints. These analytics routes do not extend advertising eligibility. This applies to both basic and certified-CMP analytics modes.

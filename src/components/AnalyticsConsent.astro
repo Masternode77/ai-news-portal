@@ -1,0 +1,28 @@
+---
+import consentScript from '../scripts/basic-analytics-consent.js?raw';
+interface Props { readonly measurementId: string }
+const { measurementId } = Astro.props;
+---
+<footer id="cc-analytics-fallback" hidden><button class="privacy-choices-control" type="button" data-analytics-choices>Analytics choices</button></footer>
+<section id="cc-analytics-consent" class="analytics-consent" aria-labelledby="cc-analytics-title" data-measurement-id={measurementId} hidden>
+  <h2 id="cc-analytics-title" tabindex="-1">Analytics choices</h2>
+  <p>May we use Google Analytics cookies to understand which pages readers visit? Analytics stays off until you accept. Your choice does not enable advertising. You can change it anytime in the footer. <a href="/privacy/">Privacy policy</a></p>
+  <p data-analytics-status role="status" hidden></p>
+  <div class="analytics-consent-actions">
+    <button type="button" data-analytics-accept>Accept analytics</button>
+    <button type="button" data-analytics-reject>Reject analytics</button>
+  </div>
+</section>
+<script is:inline set:html={consentScript}></script>
+<style>
+  #cc-analytics-fallback { max-width: 980px; margin-inline: auto; padding: 24px 16px; }
+  .analytics-consent { position: fixed; z-index: 1000; inset: auto 16px 16px; margin-inline: auto; max-width: 980px; max-height: calc(100dvh - 32px); overflow: auto; padding: 24px; border: 1px solid var(--al-hairline-strong); border-radius: 18px; background: var(--al-bg); color: var(--al-text); box-shadow: 0 4px 22px rgba(0, 0, 0, 0.05); }
+  .analytics-consent[hidden] { display: none; }
+  .analytics-consent h2 { margin: 0 0 12px; font-size: 1.6rem; line-height: 1.1; }
+  .analytics-consent p { margin: 0 0 16px; font-size: 1rem; line-height: 1.6; }
+  .analytics-consent a { color: var(--al-blue-deep); text-decoration: underline; }
+  .analytics-consent-actions { display: flex; flex-wrap: wrap; gap: 16px; }
+  .analytics-consent button { flex: 1 1 160px; min-height: 44px; padding: 12px 16px; border: 1px solid var(--al-hairline-strong); border-radius: 18px; background: var(--al-soft); color: var(--al-text); font: inherit; cursor: pointer; }
+  .analytics-consent button:hover { border-color: var(--al-text); }
+  .analytics-consent :focus-visible { outline: 2px solid var(--al-blue-deep); outline-offset: 4px; }
+</style>

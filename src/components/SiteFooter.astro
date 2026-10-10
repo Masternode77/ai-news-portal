@@ -1,5 +1,6 @@
 ---
 import { SITE } from '../config/site';
+import { basicAnalyticsConsent } from '../lib/monetization';
 
 const year = 2026;
 const coverage = [
@@ -68,7 +69,8 @@ const showPrivacyChoices = Astro.url.pathname.replace(/\/$/, '') !== '/privacy';
     <span>© {year} {SITE.name}. Every analysis links its original source.</span>
     <span class="site-footer-domain">{SITE.domain}</span>
   </div>
-  {showPrivacyChoices ? (
+  {basicAnalyticsConsent ? <button class="privacy-choices-control" type="button" data-analytics-choices>Analytics choices</button> : null}
+  {showPrivacyChoices && !basicAnalyticsConsent ? (
     <>
       <button id="cc-privacy-choices" class="privacy-choices-control" type="button" hidden>
         Privacy choices
