@@ -16,7 +16,8 @@ import { isRenderedCorrection } from './editorial-corrections.mjs';
 // prepositional or participial use with no supplier ("based on provided
 // excerpts", "using supplied extracts", "based on supplied evidence"), or the
 // writer as recipient ("the evidence I was given", "we were provided
-// excerpts", "the excerpt was provided to us"). Prose that
+// excerpts", "the excerpt was provided to us", "I received excerpts"). Prose
+// that
 // names who supplied what ("the vendor provided excerpts of the contract",
 // "EIA provided excerpts from the filing", "The supplier provided evidence of
 // the delay") is ordinary attribution and passes;
@@ -26,7 +27,7 @@ import { isRenderedCorrection } from './editorial-corrections.mjs';
 // verb ("This provided excerpts from the filing to reviewers", "This provided
 // evidence that the forecast was conservative").
 const RULES = [
-  ['input_provenance', /\b(?:the|my|our|its|their)\s+(?:supplied|provided)\s+(?:extracts?|excerpts?|evidence|source\s+text)\b|\b(?:this|that)\s+(?:supplied|provided)\s+(?:extract|excerpt)\b|(?<=(?:^|[.!?:;]|\n)[\s"“”'‘’(\[>*#•\-–—]*(?:\(?\d{1,3}[.)]\s*)?)(?:supplied|provided)\s+(?:extracts?|excerpts?|evidence|source\s+text)\b|\b(?:using|based\s+on|from|with|of|on|via|per)\s+(?:supplied|provided)\s+(?:extracts?|excerpts?|evidence|source\s+text)\b|\b(?:extracts?|excerpts?|evidence|source\s+text)\s+(?:that\s+)?(?:I|we)\s+(?:was|were|have\s+been|had\s+been)\s+(?:given|supplied|provided|handed)\b|\b(?:I|we)\s+(?:was|were|have\s+been|had\s+been)\s+(?:given|supplied|provided|handed)\s+(?:the\s+|an?\s+|these\s+|those\s+|some\s+)?(?:extracts?|excerpts?|evidence|source\s+text)\b|\b(?:extracts?|excerpts?|evidence|source\s+text)\s+(?:was|were|has\s+been|have\s+been)\s+(?:given|supplied|provided|handed)\s+to\s+(?:me|us)\b|\b(?:anything|everything)\s+I\s+have\s+been\s+given\b/gi],
+  ['input_provenance', /\b(?:the|my|our|its|their)\s+(?:supplied|provided)\s+(?:extracts?|excerpts?|evidence|source\s+text)\b|\b(?:this|that)\s+(?:supplied|provided)\s+(?:extract|excerpt)\b|(?<=(?:^|[.!?:;]|\n)[\s"“”'‘’(\[>*#•\-–—]*(?:\(?\d{1,3}[.)]\s*)?)(?:supplied|provided)\s+(?:extracts?|excerpts?|evidence|source\s+text)\b|\b(?:using|based\s+on|from|with|of|on|via|per)\s+(?:supplied|provided)\s+(?:extracts?|excerpts?|evidence|source\s+text)\b|\b(?:extracts?|excerpts?|evidence|source\s+text)\s+(?:that\s+)?(?:I|we)\s+(?:was|were|have\s+been|had\s+been)\s+(?:given|supplied|provided|handed)\b|\b(?:I|we)\s+(?:was|were|have\s+been|had\s+been)\s+(?:given|supplied|provided|handed)\s+(?:the\s+|an?\s+|these\s+|those\s+|some\s+)?(?:extracts?|excerpts?|evidence|source\s+text)\b|\b(?:extracts?|excerpts?|evidence|source\s+text)\s+(?:was|were|has\s+been|have\s+been)\s+(?:given|supplied|provided|handed)\s+to\s+(?:me|us)\b|\b(?:I|we)\s+(?:received|obtained|got|collected)\s+(?:the\s+|an?\s+|these\s+|those\s+|some\s+)?(?:extracts?|excerpts?|evidence|source\s+text)\b|\b(?:anything|everything)\s+I\s+have\s+been\s+given\b/gi],
   ['writer_extract', /\b(?:the|an?)\s+extract\s+(?:I|we)\s+(?:have|received|was|were)\b/gi],
   ['process_assurance', /\bI\s+will\s+not\s+invent\s+(?:answers|facts|numbers)\b|\bI\s+am\s+committing\s+to\s+that\s+distinction\b|\bI\s+own\s+this\s+thesis\s+outright\b/gi],
   ['persona_scaffold', /\b(?:my|two|both)\s+standing\s+positions?\b|\bone\s+of\s+my\s+standing\s+positions?\b/gi],
@@ -102,12 +103,18 @@ export function readerCopySurfaces(candidate = {}) {
   // region, source and category are never read by the renderer (title comes
   // from card copy or the headline, the rest from top-level fields), so they
   // are not reader copy and stale values there cannot block the gate.
-  const presentation = persisted;
-  for (const field of ['deck', 'why_it_matters', 'image_alt']) {
-    add(`public_presentation.${field}`, presentation[field]);
+  // Only news records go through buildPublicPresentation(); the column page,
+  // column cards, RSS, catalog and newsletter read a column's top-level fields,
+  // so a column's legacy public_presentation never renders.
+  if (viaPresentation) {
+    for (const field of ['deck', 'why_it_matters', 'image_alt']) {
+      add(`public_presentation.${field}`, persisted[field]);
+    }
   }
   // Reader-impact labels render as visible pills on every card.
-  for (const [i, label] of (Array.isArray(presentation.reader_impact) ? presentation.reader_impact : []).entries()) {
+  // Reader-impact pills come from the same persisted presentation, which only
+  // news records render.
+  for (const [i, label] of (viaPresentation && Array.isArray(persisted.reader_impact) ? persisted.reader_impact : []).entries()) {
     add(`public_presentation.reader_impact[${i}]`, label);
   }
   // Card metadata chips: label, lens and lane render on signal cards, article
@@ -123,9 +130,11 @@ export function readerCopySurfaces(candidate = {}) {
   for (const field of ['public_signal_label', 'editorial_lens']) {
     add(`public_routing.${field}`, routing[field]);
   }
-  for (const field of ['region', 'source', 'category', 'primary_category']) {
-    add(field, candidate[field]);
-  }
+  // Every renderer (card copy, taxonomy display, structured data, catalog,
+  // column surfaces) selects primary_category before category, so the legacy
+  // category is a surface only when it is the selected fallback.
+  for (const field of ['region', 'source', 'primary_category']) add(field, candidate[field]);
+  if (!shown(candidate.primary_category)) add('category', candidate.category);
   // A column's thesis feeds the publication catalog's "why it matters" line
   // and the weekly digest.
   add('stance.thesis', candidate.stance?.thesis);

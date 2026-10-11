@@ -314,3 +314,22 @@ test('a final headline shadows the raw title of a news record, not of a column',
   // Top-level headline is read by no renderer.
   assert.equal(readerCopyResult({ headline: 'the supplied extract' }).ok, true);
 });
+
+test('the writer as active recipient is input provenance', () => {
+  for (const body of ['I received excerpts from the source for this draft.', 'We received the source text.', 'We obtained evidence of the delay.', 'We got some extracts of the filing.']) {
+    assert.deepEqual(readerCopyResult({ body }).reasons, ['reader_copy:input_provenance:body'], body);
+  }
+  for (const body of ['The commission received excerpts from the utility.', 'Regulators received evidence that the plant would close.', 'We received confirmation from the utility.']) {
+    assert.equal(readerCopyResult({ body }).ok, true, body);
+  }
+});
+test('a column\'s legacy persisted presentation never renders', () => {
+  const stale = { deck: 'the supplied extract', why_it_matters: 'I will not invent numbers', image_alt: 'return strict JSON', reader_impact: ['the supplied extract'] };
+  assert.equal(readerCopyResult({ content_origin: 'authored', deck: 'A clean deck.', public_presentation: stale }).ok, true);
+  assert.equal(readerCopyResult({ deck: 'A clean deck.', public_presentation: stale }).findings.length, 4);
+});
+test('the legacy category is a surface only when no primary category is selected', () => {
+  assert.equal(readerCopyResult({ primary_category: 'Power & Grid', category: 'the supplied extract' }).ok, true);
+  assert.deepEqual(readerCopyResult({ category: 'the supplied extract' }).reasons, ['reader_copy:input_provenance:category']);
+  assert.deepEqual(readerCopyResult({ primary_category: 'the supplied extract', category: 'Power & Grid' }).reasons, ['reader_copy:input_provenance:primary_category']);
+});
