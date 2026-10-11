@@ -246,7 +246,7 @@ function frameTokenCount(skeleton = []) {
 // the longer reading, so the comparison also tries every prefix that ends at
 // such an abbreviation and takes the strongest match; a reused frame cannot
 // hide behind either reading.
-const TERMINAL_ABBREVIATION_CANDIDATE = /\b(?:(?:[A-Za-z]\.){2,}|(?:Mr|Mrs|Ms|Dr|Prof|Sr|Jr|St|Inc|Co|Ltd|Corp|No|vs)\.)(?=\s+[A-Z])/g;
+const TERMINAL_ABBREVIATION_CANDIDATE = /\b(?:(?:[A-Za-z]\.){2,}|(?:Mr|Mrs|Ms|Dr|Prof|Sr|Jr|St|Inc|Co|Ltd|Corp|No|vs)\.)["'”’)\]]*(?=\s+[A-Z])/g;
 
 function leadReadings(sentence = '') {
   const text = String(sentence || '');

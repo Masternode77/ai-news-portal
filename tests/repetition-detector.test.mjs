@@ -131,6 +131,10 @@ test('a reused frame before a sentence-ending abbreviation is still compared', (
   const corporateA = 'I track data center capacity the way most people track chip supply, and the single most underpriced variable in the current buildout cycle is the land held by Northline Inc. Owners now hold positions for years.';
   const corporateB = 'I track grid interconnection the way most analysts track model releases, and the single most underpriced variable in the current buildout cycle is the queue built by Ridge Power Corp. Utilities have started publishing backlogs by county.';
   assert.ok(leadTemplateSimilarity(corporateA, corporateB) > LEAD_TEMPLATE_SIMILARITY_THRESHOLD, String(leadTemplateSimilarity(corporateA, corporateB)));
+
+  const quotedA = 'I track data center capacity the way most people track chip supply, and the single most underpriced variable in the current buildout cycle is what the filing calls “permitting in the U.S.” Owners now hold positions for years.';
+  const quotedB = 'I track grid interconnection the way most analysts track model releases, and the single most underpriced variable in the current buildout cycle is what the docket calls “the study queue in the U.S.” Utilities have started publishing backlogs by county.';
+  assert.ok(leadTemplateSimilarity(quotedA, quotedB) > LEAD_TEMPLATE_SIMILARITY_THRESHOLD, String(leadTemplateSimilarity(quotedA, quotedB)));
 });
 
 test('analyzeArticleRepetition blocks a lead that reuses a recent opening frame with other nouns', () => {
