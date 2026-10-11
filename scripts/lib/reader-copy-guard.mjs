@@ -11,7 +11,8 @@ import { isRenderedCorrection } from './editorial-corrections.mjs';
 // attributed supplier: a determiner directly before "supplied"/"provided"
 // ("the supplied extract"), a sentence that opens with it ("Provided excerpts
 // show", "Supplied source text does not include", also after a heading,
-// paragraph break, colon label, opening quote, bracket or list marker), a
+// paragraph break, colon label, opening quote, bracket, bullet or numbered
+// list marker), a
 // prepositional or participial use with no supplier ("based on provided
 // excerpts", "using supplied extracts", "based on supplied evidence"), or the
 // writer as recipient ("the evidence I was given", "we were provided
@@ -25,7 +26,7 @@ import { isRenderedCorrection } from './editorial-corrections.mjs';
 // verb ("This provided excerpts from the filing to reviewers", "This provided
 // evidence that the forecast was conservative").
 const RULES = [
-  ['input_provenance', /\b(?:the|my|our|its|their)\s+(?:supplied|provided)\s+(?:extracts?|excerpts?|evidence|source\s+text)\b|\b(?:this|that)\s+(?:supplied|provided)\s+(?:extract|excerpt)\b|(?<=(?:^|[.!?:;]|\n)[\s"“”'‘’(\[>*#•\-–—]*)(?:supplied|provided)\s+(?:extracts?|excerpts?|evidence|source\s+text)\b|\b(?:using|based\s+on|from|with|of|on|via|per)\s+(?:supplied|provided)\s+(?:extracts?|excerpts?|evidence|source\s+text)\b|\b(?:extracts?|excerpts?|evidence|source\s+text)\s+(?:that\s+)?(?:I|we)\s+(?:was|were|have\s+been|had\s+been)\s+(?:given|supplied|provided|handed)\b|\b(?:I|we)\s+(?:was|were|have\s+been|had\s+been)\s+(?:given|supplied|provided|handed)\s+(?:the\s+|an?\s+|these\s+|those\s+|some\s+)?(?:extracts?|excerpts?|evidence|source\s+text)\b|\b(?:extracts?|excerpts?|evidence|source\s+text)\s+(?:was|were|has\s+been|have\s+been)\s+(?:given|supplied|provided|handed)\s+to\s+(?:me|us)\b|\b(?:anything|everything)\s+I\s+have\s+been\s+given\b/gi],
+  ['input_provenance', /\b(?:the|my|our|its|their)\s+(?:supplied|provided)\s+(?:extracts?|excerpts?|evidence|source\s+text)\b|\b(?:this|that)\s+(?:supplied|provided)\s+(?:extract|excerpt)\b|(?<=(?:^|[.!?:;]|\n)[\s"“”'‘’(\[>*#•\-–—]*(?:\(?\d{1,3}[.)]\s*)?)(?:supplied|provided)\s+(?:extracts?|excerpts?|evidence|source\s+text)\b|\b(?:using|based\s+on|from|with|of|on|via|per)\s+(?:supplied|provided)\s+(?:extracts?|excerpts?|evidence|source\s+text)\b|\b(?:extracts?|excerpts?|evidence|source\s+text)\s+(?:that\s+)?(?:I|we)\s+(?:was|were|have\s+been|had\s+been)\s+(?:given|supplied|provided|handed)\b|\b(?:I|we)\s+(?:was|were|have\s+been|had\s+been)\s+(?:given|supplied|provided|handed)\s+(?:the\s+|an?\s+|these\s+|those\s+|some\s+)?(?:extracts?|excerpts?|evidence|source\s+text)\b|\b(?:extracts?|excerpts?|evidence|source\s+text)\s+(?:was|were|has\s+been|have\s+been)\s+(?:given|supplied|provided|handed)\s+to\s+(?:me|us)\b|\b(?:anything|everything)\s+I\s+have\s+been\s+given\b/gi],
   ['writer_extract', /\b(?:the|an?)\s+extract\s+(?:I|we)\s+(?:have|received|was|were)\b/gi],
   ['process_assurance', /\bI\s+will\s+not\s+invent\s+(?:answers|facts|numbers)\b|\bI\s+am\s+committing\s+to\s+that\s+distinction\b|\bI\s+own\s+this\s+thesis\s+outright\b/gi],
   ['persona_scaffold', /\b(?:my|two|both)\s+standing\s+positions?\b|\bone\s+of\s+my\s+standing\s+positions?\b/gi],
@@ -52,9 +53,6 @@ export function readerCopySurfaces(candidate = {}) {
   // buildPublicPresentation() select with `a || b`, so a whitespace-only
   // persisted value still wins and the top-level fallback stays hidden.
   const shown = (value) => Boolean(value);
-  for (const field of ['title', 'headline', 'summary', 'snippet', 'expertLensShort', 'metaDescription']) {
-    add(field, candidate[field]);
-  }
   // Precedence follows the renderers. Both the news and the column template
   // show expertLensFull.finalArticleBody and ignore a legacy top-level body
   // when both exist. News records then go through buildPublicPresentation,
@@ -64,6 +62,23 @@ export function readerCopySurfaces(candidate = {}) {
   // (column/[slug].astro and buildColumnCards read deck and imageAlt
   // directly), so their top-level fields always count.
   const viaPresentation = !isAuthoredColumn(candidate);
+  for (const field of ['title', 'headline']) add(field, candidate[field]);
+  // summary, snippet, expertLensShort and expertLensFull.metaDescription are
+  // deck fallbacks only: the news page's description chain
+  // (presentation.deck || expertLensFull.metaDescription || summary || snippet),
+  // the RSS description (presentation.deck || card deck || expertLensShort ||
+  // summary || snippet) and the catalog deck (signal.deck || deck || summary)
+  // all read them behind the deck, and a stored deck (persisted or top-level)
+  // always yields a non-empty presentation deck. A column prints summary as
+  // its page description (summary || deck), so summary always counts there.
+  // Top-level metaDescription is not read by any renderer.
+  const deckStored = shown(persisted.deck) || shown(candidate.deck);
+  if (!viaPresentation || !deckStored) add('summary', candidate.summary);
+  if (!deckStored) {
+    add('snippet', candidate.snippet);
+    add('expertLensShort', candidate.expertLensShort);
+    add('expertLensFull.metaDescription', full.metaDescription);
+  }
   if (!shown(full.finalArticleBody)) add('body', candidate.body);
   if (!viaPresentation || !shown(persisted.deck)) add('deck', candidate.deck);
   if (!viaPresentation || !shown(persisted.why_it_matters)) add('why_it_matters', candidate.why_it_matters);
@@ -71,7 +86,7 @@ export function readerCopySurfaces(candidate = {}) {
     add('imageAlt', candidate.imageAlt);
     add('image_alt', candidate.image_alt);
   }
-  for (const field of ['finalHeadline', 'metaDescription', 'finalArticleBody']) {
+  for (const field of ['finalHeadline', 'finalArticleBody']) {
     add(`expertLensFull.${field}`, full[field]);
   }
   // Persisted presentation copy that buildPublicPresentation can actually
@@ -137,9 +152,15 @@ export function readerCopySurfaces(candidate = {}) {
     if (!(Array.isArray(figure.items) && figure.items.length)) continue;
     add(`figures[${i}].title`, figure.title);
     add(`figures[${i}].source_note`, figure.source_note);
-    for (const [j, item] of (Array.isArray(figure.items) ? figure.items : []).entries()) {
+    // ColumnFigure prints label and display for stat-row and bar figures,
+    // label, display and source for a table, and no item fields for any
+    // other type (the caption still renders).
+    const itemFields = figure.type === 'table' ? ['label', 'display', 'source']
+      : figure.type === 'stat-row' || figure.type === 'bar' ? ['label', 'display']
+        : [];
+    for (const [j, item] of figure.items.entries()) {
       if (!item || typeof item !== 'object') continue;
-      for (const key of ['label', 'display', 'source']) add(`figures[${i}].items[${j}].${key}`, item[key]);
+      for (const key of itemFields) add(`figures[${i}].items[${j}].${key}`, item[key]);
     }
   }
   return surfaces;

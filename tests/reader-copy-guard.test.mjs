@@ -9,13 +9,14 @@ for (const phrase of ['the supplied extract', 'the extract I have', 'the extract
     assert.equal(readerCopyResult({ body: `The article says ${phrase}.` }).ok, false);
   });
 }
-for (const field of ['title', 'deck', 'summary', 'body', 'metaDescription', 'imageAlt']) {
+// Top-level metaDescription is not rendered by any template, so it is not in this list.
+for (const field of ['title', 'deck', 'summary', 'body', 'imageAlt']) {
   test(`checks public ${field}`, () => {
     assert.equal(readerCopyResult({ [field]: 'The supplied extract reports a benchmark.' }).ok, false);
   });
 }
 test('all figure surfaces participate, without inspecting private review data', () => {
-  const figure = { title: 'supplied extract', source_note: 'supplied extract', items: [{ label: 'supplied extract', display: 'supplied extract', source: 'supplied extract' }] };
+  const figure = { type: 'table', title: 'supplied extract', source_note: 'supplied extract', items: [{ label: 'supplied extract', display: 'supplied extract', source: 'supplied extract' }] };
   assert.equal(readerCopyResult({ content_origin: 'authored', figures: [figure] }).findings.length, 5);
   assert.equal(readerCopyResult({ source_text: 'supplied extract', authored_quality: { diagnostics: 'return strict JSON' } }).ok, true);
 });
@@ -30,7 +31,7 @@ test('does not mutate input or silently strengthen an absence claim', () => {
   assert.equal(JSON.stringify(candidate), before);
 });
 test('is deterministic and handles null figure entries', () => {
-  const candidate = { content_origin: 'authored', figures: [null, { items: [null, { label: 'the supplied extract' }] }] };
+  const candidate = { content_origin: 'authored', figures: [null, { type: 'bar', items: [null, { label: 'the supplied extract' }] }] };
   assert.deepEqual(readerCopyResult(candidate), readerCopyResult(candidate));
   assert.equal(readerCopySurfaces(candidate).length, 1);
 });
@@ -38,17 +39,17 @@ test('nested public prose and metadata are checked', () => {
   assert.equal(readerCopyResult({ expertLensFull: { metaDescription: 'the supplied extract', finalArticleBody: 'I will not invent facts' } }).findings.length, 2);
 });
 test('legacy figure damage is a triage warning, not a factual-error assertion', () => {
-  const candidate = { content_origin: 'authored', title: 'A specific headline', figures: [{ title: 'A specific headline', items: [{ label: 'The demand forecast states that these customers connect to the' }] }] };
+  const candidate = { content_origin: 'authored', title: 'A specific headline', figures: [{ type: 'stat-row', title: 'A specific headline', items: [{ label: 'The demand forecast states that these customers connect to the' }] }] };
   assert.equal(readerCopyResult(candidate).ok, true);
   assert.deepEqual(editorialReviewWarnings(candidate).map(x => x.code), ['figure_repeats_headline', 'figure_possible_clipping']);
 });
 test('generation quality gate rejects leakage in figure labels', () => {
-  const result = authoredColumnQualityResult({ body: 'A short fixture.', title: 'A specific hardware benchmark', deck: 'A source-supported description that separates benchmark results from production outcomes.', figures: [{ title: 'Measured benchmark', items: [{ label: 'the supplied extract' }] }] });
+  const result = authoredColumnQualityResult({ body: 'A short fixture.', title: 'A specific hardware benchmark', deck: 'A source-supported description that separates benchmark results from production outcomes.', figures: [{ type: 'table', title: 'Measured benchmark', items: [{ label: 'the supplied extract' }] }] });
   assert.ok(result.reasons.includes('reader_copy:input_provenance:figures[0].items[0].label'));
   assert.equal(result.metrics.reader_copy_issue_count, 1);
 });
 test('existing internal-language guard now covers figure labels', () => {
-  const result = authoredColumnQualityResult({ body: 'A short fixture.', title: 'A specific hardware benchmark', deck: 'A source-supported description that separates benchmark results from production outcomes.', figures: [{ title: 'Measured benchmark', items: [{ label: 'extraction QA' }] }] });
+  const result = authoredColumnQualityResult({ body: 'A short fixture.', title: 'A specific hardware benchmark', deck: 'A source-supported description that separates benchmark results from production outcomes.', figures: [{ type: 'table', title: 'Measured benchmark', items: [{ label: 'extraction QA' }] }] });
   assert.ok(result.reasons.includes('internal_language_detected'));
 });
 test('charter uses source-bounded questions rather than universal conclusions', () => {
@@ -258,7 +259,7 @@ test('unattributed evidence and source-text forms are input provenance too', () 
 });
 
 test('figures are a column surface only, and only when they render', () => {
-  const figure = { title: 'the supplied extract', items: [{ label: 'the supplied extract' }] };
+  const figure = { type: 'bar', title: 'the supplied extract', items: [{ label: 'the supplied extract' }] };
   // news/[id].astro never renders figures.
   assert.equal(readerCopyResult({ figures: [figure] }).ok, true);
   // ColumnFigure emits nothing for a figure without items.
@@ -276,4 +277,32 @@ test('the writer as passive recipient is input provenance', () => {
   for (const body of ['EIA provided excerpts from the filing.', 'The utility was provided excerpts by the regulator.', 'Excerpts were provided to the commission.', 'We were told the plant would close.']) {
     assert.equal(readerCopyResult({ body }).ok, true, body);
   }
+});
+
+test('figure item fields follow the figure type ColumnFigure renders', () => {
+  const item = { label: 'Clean label', display: '1 GW', source: 'the supplied extract' };
+  // stat-row and bar print label and display only; a table prints the source column too; an unknown type prints no item fields.
+  assert.equal(readerCopyResult({ content_origin: 'authored', figures: [{ type: 'stat-row', title: 'Approved load', items: [item] }, { type: 'bar', title: 'Approved load', items: [item] }] }).ok, true);
+  assert.deepEqual(readerCopyResult({ content_origin: 'authored', figures: [{ type: 'table', title: 'Approved load', items: [item] }] }).reasons, ['reader_copy:input_provenance:figures[0].items[0].source']);
+  assert.deepEqual(readerCopyResult({ content_origin: 'authored', figures: [{ type: 'sparkline', title: 'the supplied extract', items: [{ label: 'the supplied extract', display: 'return strict JSON' }] }] }).reasons, ['reader_copy:input_provenance:figures[0].title']);
+});
+test('numbered list prefixes are sentence starts too', () => {
+  for (const body of ['1) Provided excerpts show a rise.', '(2) Supplied extracts show a rise.', 'Heading\n\n3) Provided evidence shows a rise.', '12. Provided excerpts show a rise.']) {
+    assert.deepEqual(readerCopyResult({ body }).reasons, ['reader_copy:input_provenance:body'], body);
+  }
+  assert.equal(readerCopyResult({ body: 'In 2024 the utility provided excerpts to the board.' }).ok, true);
+});
+test('deck fallbacks are reader copy only when no deck is stored', () => {
+  const fallbacks = { summary: 'the supplied extract', snippet: 'I will not invent numbers', expertLensShort: 'return strict JSON', expertLensFull: { metaDescription: 'the extract I have' } };
+  assert.equal(readerCopyResult({ ...fallbacks, deck: 'A clean deck.' }).ok, true);
+  assert.equal(readerCopyResult({ ...fallbacks, public_presentation: { deck: 'A clean persisted deck.' } }).ok, true);
+  assert.deepEqual(readerCopyResult(fallbacks).reasons, [
+    'reader_copy:input_provenance:summary',
+    'reader_copy:process_assurance:snippet',
+    'reader_copy:instruction_scaffold:expertLensShort',
+    'reader_copy:writer_extract:expertLensFull.metaDescription',
+  ]);
+  // A column prints its summary as the page description even with a deck; top-level metaDescription is never rendered.
+  assert.deepEqual(readerCopyResult({ content_origin: 'authored', deck: 'A clean deck.', summary: 'the supplied extract' }).reasons, ['reader_copy:input_provenance:summary']);
+  assert.equal(readerCopyResult({ metaDescription: 'the supplied extract' }).ok, true);
 });
