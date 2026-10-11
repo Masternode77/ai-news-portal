@@ -9,9 +9,12 @@
 // ("the evidence I was given"). Prose that
 // names who supplied what ("the vendor provided excerpts of the contract",
 // "EIA provided excerpts from the filing") is ordinary attribution and passes;
-// so do "Abstract Excerpt:" labels and the verb "to extract value".
+// so do "Abstract Excerpt:" labels and the verb "to extract value". With
+// "evidence"/"source text" only a possessive or "the" counts, because a
+// demonstrative reads as a subject with a verb ("This provided evidence that
+// the forecast was conservative").
 const RULES = [
-  ['input_provenance', /\b(?:the|this|that|these|those|my|our|its|their|any|all)\s+(?:supplied|provided)\s+(?:extracts?|excerpts?|evidence|source\s+text)\b|(?<=^|[.!?]\s+|\n)(?:supplied|provided)\s+(?:extracts?|excerpts?)\b|\b(?:extracts?|excerpts?|evidence|source\s+text)\s+(?:that\s+)?(?:I|we)\s+(?:was|were|have\s+been|had\s+been)\s+(?:given|supplied|provided|handed)\b|\b(?:anything|everything)\s+I\s+have\s+been\s+given\b/gi],
+  ['input_provenance', /\b(?:the|this|that|these|those|my|our|its|their)\s+(?:supplied|provided)\s+(?:extracts?|excerpts?)\b|\b(?:the|my|our|its|their)\s+(?:supplied|provided)\s+(?:evidence|source\s+text)\b|(?<=^|[.!?]\s+|\n)(?:supplied|provided)\s+(?:extracts?|excerpts?)\b|\b(?:extracts?|excerpts?|evidence|source\s+text)\s+(?:that\s+)?(?:I|we)\s+(?:was|were|have\s+been|had\s+been)\s+(?:given|supplied|provided|handed)\b|\b(?:anything|everything)\s+I\s+have\s+been\s+given\b/gi],
   ['writer_extract', /\b(?:the|an?)\s+extract\s+(?:I|we)\s+(?:have|received|was|were)\b/gi],
   ['process_assurance', /\bI\s+will\s+not\s+invent\s+(?:answers|facts|numbers)\b|\bI\s+am\s+committing\s+to\s+that\s+distinction\b|\bI\s+own\s+this\s+thesis\s+outright\b/gi],
   ['persona_scaffold', /\b(?:my|two|both)\s+standing\s+positions?\b|\bone\s+of\s+my\s+standing\s+positions?\b/gi],

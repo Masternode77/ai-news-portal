@@ -63,7 +63,8 @@ Change made to `input_provenance`:
 
 | Case | Previous rule | Tightened rule |
 | --- | --- | --- |
-| "the supplied extract", "THE PROVIDED EXCERPT", "the supplied evidence", "this provided excerpt" | flagged | flagged (determiner directly before supplied/provided) |
+| "the supplied extract", "THE PROVIDED EXCERPT", "the supplied evidence", "this provided excerpt" | flagged | flagged (determiner directly before supplied/provided; with "evidence"/"source text" only "the" or a possessive) |
+| "This provided evidence that the forecast was conservative." (demonstrative subject + verb) | flagged (false positive) | passes |
 | "Provided excerpts show a rise." (sentence-initial, no subject, including after a heading or paragraph break) | flagged | flagged |
 | "the evidence I was given", "the source text we have been given", "anything I have been given" | partly flagged | flagged (writer as recipient) |
 | "the vendor provided excerpts of the contract", "EIA provided excerpts from the filing", "the utility supplied extracts of its load forecast" | **flagged (false positive)** | passes (attributed supplier) |
@@ -123,3 +124,4 @@ The automated Codex review of the pull request raised three points, each verifie
 5. A third pass noted that `articleImageAlt()` renders `imageAlt || image_alt`; the snake_case spelling is now a reader surface too.
 6. A fourth pass noted that column routes are selected by `authoredColumnPublicEligible`, which does not read `articlePagePublished`; the audit now scopes columns with that predicate (union with the flag) so a legacy or imported column without the news flag is still audited.
 7. The same pass noted that `public_presentation.reader_impact` labels render as pills on every card; they are now reader surfaces and part of the rendered-card projection.
+8. A fifth pass showed that "This provided evidence that…" (demonstrative subject + verb) matched the determiner form. With "evidence"/"source text" the rule now accepts only "the" or a possessive determiner; the extract/excerpt nouns keep the full determiner list.

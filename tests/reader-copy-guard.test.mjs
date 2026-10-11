@@ -145,3 +145,17 @@ test('reader-impact pills are reader copy', () => {
   const result = readerCopyResult({ public_presentation: { reader_impact: ['Operators', 'the supplied extract', 'Investors'] } });
   assert.deepEqual(result.reasons, ['reader_copy:input_provenance:public_presentation.reader_impact[1]']);
 });
+for (const prose of [
+  'This provided evidence that the load forecast was conservative.',
+  'That supplied evidence of a tighter market than the utility expected.',
+  'All provided evidence of delays in the interconnection queue.',
+]) {
+  test(`allows "provided"/"supplied" as a verb after a demonstrative: ${JSON.stringify(prose)}`, () => {
+    assert.equal(readerCopyResult({ body: prose }).ok, true);
+  });
+}
+test('the adjective construction with evidence is still flagged', () => {
+  for (const phrase of ['the supplied evidence stops in 2027', 'our provided source text omits the table', 'their supplied evidence']) {
+    assert.deepEqual(readerCopyResult({ body: phrase }).reasons, ['reader_copy:input_provenance:body'], phrase);
+  }
+});
