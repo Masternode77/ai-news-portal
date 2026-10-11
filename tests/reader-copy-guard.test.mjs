@@ -128,12 +128,12 @@ test('persisted presentation copy the renderer can consume is reader copy', () =
     deck: 'A clean deck.',
     public_presentation: { title: 'the extract I have', deck: 'The supplied extract reports a benchmark.', why_it_matters: 'I will not invent numbers.', image_alt: 'return strict JSON', lane_title: 'the supplied extract', region: 'the supplied extract', source: 'the supplied extract', category: 'the supplied extract' },
   });
-  // Persisted title, region, source and category are never rendered (buildPublicPresentation derives them elsewhere).
+  // Persisted title, region, source and category are never rendered (buildPublicPresentation derives them
+  // elsewhere), and the persisted lane title is permanently shadowed by the route.
   assert.deepEqual(result.reasons, [
     'reader_copy:input_provenance:public_presentation.deck',
     'reader_copy:process_assurance:public_presentation.why_it_matters',
     'reader_copy:instruction_scaffold:public_presentation.image_alt',
-    'reader_copy:input_provenance:public_presentation.lane_title',
   ]);
 });
 test('both spellings of the image alt field are reader copy', () => {
@@ -174,11 +174,8 @@ test('card metadata chips are reader copy', () => {
     public_presentation: { signal_label: 'Analysis', editorial_lens: 'I will not invent numbers', lane_title: 'the supplied extract' },
     public_routing: { public_signal_label: 'Signal', editorial_lens: 'return strict JSON', laneTitle: 'Operator Alerts' },
   });
-  assert.deepEqual(result.reasons, [
-    'reader_copy:process_assurance:public_presentation.editorial_lens',
-    'reader_copy:input_provenance:public_presentation.lane_title',
-    'reader_copy:instruction_scaffold:public_routing.editorial_lens',
-  ]);
+  // The route always carries a label, lens and lane, so the persisted presentation chips never render.
+  assert.deepEqual(result.reasons, ['reader_copy:instruction_scaffold:public_routing.editorial_lens']);
 });
 test('unattributed prepositional and participial uses are still input provenance', () => {
   for (const body of ['This analysis is based on provided excerpts of the filing.', 'Using supplied extracts, the figures were rebuilt.', 'The numbers come from provided excerpts.', 'A reading drawn with supplied extracts only.']) {

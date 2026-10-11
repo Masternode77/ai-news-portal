@@ -61,21 +61,21 @@ export function auditReaderCopy(collections, { homepageSignals = [] } = {}) {
     return readerCopyResult({
       title: built.title, deck: built.deck, why_it_matters: built.why_it_matters, imageAlt: built.image_alt,
       region: built.region, source: built.source,
-      public_presentation: {
-        reader_impact: built.reader_impact,
-        signal_label: built.signal_label, editorial_lens: built.editorial_lens, lane_title: built.lane_title,
-      },
+      public_presentation: { reader_impact: built.reader_impact },
+      public_routing: { public_signal_label: built.signal_label, editorial_lens: built.editorial_lens, laneTitle: built.lane_title },
     });
   };
+  // Hub and entity pages (src/pages/hubs/[slug].astro, src/pages/entities/
+  // [slug].astro) list feed records by their raw title and source, not by the
+  // card copy, so a card-only record renders those two stored fields as well.
+  const hubListCopyResult = (record) => readerCopyResult({ title: record.title, source: record.source });
   // Every textual field the card components render, mapped onto the guard's
   // presentation surfaces.
   const cardCopyResult = (signal) => readerCopyResult({
     title: signal.title, deck: signal.deck, why_it_matters: signal.why_it_matters, imageAlt: signal.image_alt,
     region: signal.region, source: signal.source, category: signal.category,
-    public_presentation: {
-      reader_impact: signal.reader_impact,
-      signal_label: signal.signal_label, editorial_lens: signal.editorial_lens, lane_title: signal.lane_title,
-    },
+    public_presentation: { reader_impact: signal.reader_impact },
+    public_routing: { public_signal_label: signal.signal_label, editorial_lens: signal.editorial_lens, laneTitle: signal.lane_title },
   });
   // A column page exists whenever the column route's own predicate accepts the
   // record (`authoredColumnPublicEligible`, which does not read the news-article
@@ -108,7 +108,7 @@ export function auditReaderCopy(collections, { homepageSignals = [] } = {}) {
     return {
       id: signal.id, collection: record?.collection || null, title: signal.title, path: '/',
       publishedAt: record?.publishedAt || null,
-      readerCopy: record ? mergeCopyResults(cardCopyResult(signal), presentationCopyResult(record)) : cardCopyResult(signal),
+      readerCopy: record ? mergeCopyResults(cardCopyResult(signal), presentationCopyResult(record), hubListCopyResult(record)) : cardCopyResult(signal),
     };
   });
   return {

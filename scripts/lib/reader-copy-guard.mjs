@@ -80,11 +80,11 @@ export function readerCopySurfaces(candidate = {}) {
     add(`public_presentation.reader_impact[${i}]`, label);
   }
   // Card metadata chips: label, lens and lane render on signal cards, article
-  // cards and the featured card; the route object is the preferred source and
-  // the persisted presentation value is the fallback.
-  for (const field of ['signal_label', 'editorial_lens', 'lane_title']) {
-    add(`public_presentation.${field}`, presentation[field]);
-  }
+  // cards and the featured card from the route object. normalizedRoute()
+  // always supplies a non-empty label, lens and lane (with hardcoded
+  // fallbacks) before buildPublicPresentation() reads the persisted
+  // public_presentation.signal_label|editorial_lens|lane_title, so those
+  // persisted values never render and are not surfaces.
   const routing = candidate.public_routing || {};
   for (const field of ['public_signal_label', 'editorial_lens', 'laneTitle']) {
     add(`public_routing.${field}`, routing[field]);

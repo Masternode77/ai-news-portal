@@ -106,7 +106,7 @@ test('rendered card metadata chips are part of the card audit', () => {
   const rendered = { id: 'signal', title: 'A signal card', deck: 'Clean rendered deck.', why_it_matters: 'Clean.', image_alt: 'Clean visual', reader_impact: ['Operators'], signal_label: 'Signal', editorial_lens: 'I will not invent numbers', lane_title: 'Operator Alerts', region: 'US', source: 'the supplied extract', category: 'Power & Grid' };
   const report = auditReaderCopy({ latest: [card] }, { homepageSignals: [rendered] });
   assert.deepEqual(report.cards[0].readerCopy.reasons, [
-    'reader_copy:process_assurance:public_presentation.editorial_lens',
+    'reader_copy:process_assurance:public_routing.editorial_lens',
     'reader_copy:input_provenance:source',
   ]);
   for (const field of ['signal_label', 'editorial_lens', 'lane_title', 'region', 'source', 'category']) {
@@ -159,4 +159,17 @@ test('a column with a leaked direct deck is flagged even when a clean presentati
   const report = auditReaderCopy({ 'authored-columns': [column] });
   assert.equal(report.readerCopyFlaggedArticles, 1);
   assert.deepEqual(report.articles[0].readerCopy.reasons, ['reader_copy:input_provenance:deck']);
+});
+
+test('a card-only record is audited on the raw title and source that hub and entity lists render', () => {
+  const card = {
+    id: 'signal', articlePagePublished: false, signalCardOnly: true, homepagePublished: true,
+    title: 'The supplied extract reports a benchmark', source: 'HPCwire',
+    expertLensFull: { finalHeadline: 'A clean headline' }, public_presentation: { deck: 'A clean persisted deck.' },
+  };
+  const rendered = { id: 'signal', title: 'A clean headline', deck: 'A clean persisted deck.', why_it_matters: 'Clean.', image_alt: 'Clean visual' };
+  const report = auditReaderCopy({ latest: [card] }, { homepageSignals: [rendered] });
+  assert.deepEqual(report.cards[0].readerCopy.reasons, ['reader_copy:input_provenance:title']);
+  const leakedSource = auditReaderCopy({ latest: [{ ...card, title: 'A clean title', source: 'the supplied extract' }] }, { homepageSignals: [rendered] });
+  assert.deepEqual(leakedSource.cards[0].readerCopy.reasons, ['reader_copy:input_provenance:source']);
 });
