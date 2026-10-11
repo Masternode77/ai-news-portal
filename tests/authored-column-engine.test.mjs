@@ -58,6 +58,27 @@ function fixtureLedger() {
   }, article.id);
 }
 
+function epochUsageLedger() {
+  const sourceText = [
+    'According to data published in a September 2026 post by OpenAI, the median researcher’s daily coding-agent usage, valued at API prices, rose from under $1 in January 2026 to $601 by mid-August.',
+    'Usage by power users grew at a similar rate, but spent substantially more, with the 90th percentile researcher spending over $7,000 per day by mid-August.',
+    'They do, however, show how quickly researchers increased their coding-agent usage and illustrate its scale: if a 90th-percentile researcher used $7,000 worth of inference at API prices every working day, that would amount to around $2 million per year, which is comparable to or greater than the cost of employing a researcher.',
+    'OpenAI’s post “Research acceleration: The view inside OpenAI” describes how its researchers’ use of coding agents changed from January to mid-August 2026.',
+    'We extracted the data embedded in OpenAI’s first two charts and fit trends to show how quickly usage grew for median and 90th percentile researchers.',
+    'In recent months, median and 90th percentile researchers have seen similar growth rates of 1.8× and 2.2× per month, or doubling times of 34 and 27 days, respectively.',
+  ].join(' ');
+  return buildClaimLedger({
+    cluster_id: 'epoch_usage_actual',
+    representative_source: {
+      source_url: 'https://epoch.ai/data-insights/coding-agent-use-at-openai',
+      source_name: 'Epoch AI',
+      title: 'Coding-agent use at OpenAI is doubling roughly every month',
+      cleaned_text: sourceText,
+    },
+    supporting_sources: [],
+  }, 'epoch_usage_actual');
+}
+
 function structuredEssay() {
   const { body, ...essay } = JSON.parse(essayJson());
   const opening_paragraphs = [];
@@ -128,6 +149,41 @@ test('structured draft and revision pass the existing quality gates end to end',
     assert.equal(result.column.expertLensFull.finalArticleBody, JSON.parse(essayJson()).body);
     assert.equal(result.column.authored_quality.metrics.sections, structuredEssay().sections.length);
     assert.equal(calls, 3);
+  } finally {
+    delete process.env.AUTHORED_MIN_WORDS;
+    delete process.env.AUTHORED_MIN_CHARS;
+  }
+});
+
+test('an overlong deck is repaired to one complete summary before authored metadata is stored', async () => {
+  resetLlmUsageForTests();
+  process.env.AUTHORED_MIN_WORDS = '700';
+  process.env.AUTHORED_MIN_CHARS = '4200';
+  const overlongDeck = "Epoch AI's fit shows OpenAI researchers roughly doubling coding-agent use every month, but the dollars are API list prices, so cost, payback and saleable capacity stay open questions.";
+  const repairedDeck = 'Epoch AI shows OpenAI researchers doubling coding-agent use monthly, while API list prices leave cost, payback and saleable capacity unresolved.';
+  assert.ok(overlongDeck.length > 170);
+  assert.ok(repairedDeck.length >= 80 && repairedDeck.length <= 170);
+  try {
+    let calls = 0;
+    const result = await generateAuthoredColumn({
+      candidates: [fixtureArticle()], sources: FIXTURE_SOURCES, state: {},
+      now: new Date('2026-10-04T09:00:00Z'),
+      callModel: async request => {
+        calls += 1;
+        if (calls === 1) return STANCE_JSON;
+        if (calls < 4) return JSON.stringify({ ...structuredEssay(), deck: overlongDeck });
+        assert.match(request.systemPrompt, /complete standfirst sentence no longer than 170 characters/);
+        return JSON.stringify({ ...structuredEssay(), deck: repairedDeck });
+      },
+    });
+    assert.ok(result.column, JSON.stringify(result));
+    assert.equal(calls, 4);
+    assert.equal(result.column.deck, repairedDeck);
+    assert.equal(result.column.summary, repairedDeck);
+    assert.equal(result.column.expertLensFull.metaDescription, repairedDeck);
+    assert.ok(result.column.authored_quality.ok);
+    assert.ok(result.column.summary.length <= 170);
+    assert.doesNotMatch(result.column.summary, /…|\.\.\.$/);
   } finally {
     delete process.env.AUTHORED_MIN_WORDS;
     delete process.env.AUTHORED_MIN_CHARS;
@@ -689,7 +745,7 @@ test('verificationFeedback translates reason codes into actionable directives', 
   assert.match(feedback[3], /different device/);
   assert.match(feedback[4], /2\.5 GW,40 percent/);
   assert.match(feedback[5], /own words/);
-  assert.match(feedback[6], /80 and 240 characters/);
+  assert.match(feedback[6], /80 and 170 characters/);
   assert.equal(feedback[7], 'some_unknown_code');
   const [density] = verificationFeedback(['insight_density_below_0.75']);
   assert.match(density, /constraints, allocation choices and milestones/);
@@ -1138,24 +1194,7 @@ test('figure values preserve comparison qualifiers across money, percentages, ra
 });
 
 test('actual Epoch usage claims retain source displays and complete figure context', () => {
-  const sourceText = [
-    'According to data published in a September 2026 post by OpenAI, the median researcher’s daily coding-agent usage, valued at API prices, rose from under $1 in January 2026 to $601 by mid-August.',
-    'Usage by power users grew at a similar rate, but spent substantially more, with the 90th percentile researcher spending over $7,000 per day by mid-August.',
-    'They do, however, show how quickly researchers increased their coding-agent usage and illustrate its scale: if a 90th-percentile researcher used $7,000 worth of inference at API prices every working day, that would amount to around $2 million per year, which is comparable to or greater than the cost of employing a researcher.',
-    'OpenAI’s post “Research acceleration: The view inside OpenAI” describes how its researchers’ use of coding agents changed from January to mid-August 2026.',
-    'We extracted the data embedded in OpenAI’s first two charts and fit trends to show how quickly usage grew for median and 90th percentile researchers.',
-    'In recent months, median and 90th percentile researchers have seen similar growth rates of 1.8× and 2.2× per month, or doubling times of 34 and 27 days, respectively.',
-  ].join(' ');
-  const ledger = buildClaimLedger({
-    cluster_id: 'epoch_usage_actual',
-    representative_source: {
-      source_url: 'https://epoch.ai/data-insights/coding-agent-use-at-openai',
-      source_name: 'Epoch AI',
-      title: 'Coding-agent use at OpenAI is doubling roughly every month',
-      cleaned_text: sourceText,
-    },
-    supporting_sources: [],
-  }, 'epoch_usage_actual');
+  const ledger = epochUsageLedger();
   const claims = numericLedgerClaims(ledger);
   assert.equal(claims.length, 15);
   const claimIndexes = claims.map((claim) => ledger.claims.findIndex((row) => row.claim_id === claim.claim_id));
@@ -1187,6 +1226,112 @@ test('actual Epoch usage claims retain source displays and complete figure conte
   for (const item of items.filter((row) => row.unit === 'ordinal')) assert.match(item.label, /90th[- ]percentile researcher/i);
   for (const item of items.filter((row) => row.unit === 'times')) assert.match(item.label, /median and 90th percentile researchers.*per month/i);
   for (const item of items.filter((row) => row.unit === 'days')) assert.match(item.label, /doubling times.*34 and 27 days/i);
+});
+
+test('Epoch figures keep one complete useful comparison instead of year and ordinal rows', () => {
+  const ledger = epochUsageLedger();
+  const result = buildColumnFigures({
+    ledger,
+    stance: {
+      thesis: "Epoch AI's fit shows OpenAI researchers roughly doubling coding-agent use every month, but API list prices leave cost and payback open.",
+      angle: "OpenAI's monthly-doubling coding-agent usage is measured at API list prices, not at cost",
+    },
+    headline: "OpenAI's monthly-doubling coding-agent usage is measured at API list prices, not at cost",
+    sectionCount: 6,
+  });
+  assert.equal(result.source, 'deterministic');
+  const items = result.figures.flatMap((figure) => figure.items);
+  assert.equal(items.length, 1, JSON.stringify(items));
+  assert.equal(items[0].display, '$601');
+  assert.equal(items[0].source, 'Epoch AI');
+  assert.match(items[0].label, /under \$1 in January 2026 to \$601 by mid-August/);
+  assert.ok(items.every((item) => !['year', 'ordinal'].includes(item.unit.toLowerCase())), JSON.stringify(items));
+  assert.equal(new Set(items.map((item) => item.label)).size, items.length, JSON.stringify(items));
+});
+
+test('a publication name cannot anchor an unrelated claim from the same roundup', () => {
+  const ledger = buildClaimLedger({
+    cluster_id: 'roundup_subject_boundary',
+    representative_source: {
+      source_url: 'https://example.com/roundup',
+      source_name: 'Reuters',
+      title: 'Reuters infrastructure roundup',
+      cleaned_text: [
+        'OpenAI researchers reached $601 in daily coding-agent usage at API list prices.',
+        'Nebius separately announced a 400 MW compute investment for an unrelated campus.',
+      ].join(' '),
+    },
+    supporting_sources: [],
+  }, 'roundup_subject_boundary');
+  const result = buildColumnFigures({
+    ledger,
+    stance: { angle: 'Reuters reports OpenAI coding-agent usage at API list prices' },
+    headline: 'Reuters reports OpenAI coding-agent usage at API list prices',
+    sectionCount: 5,
+  });
+  const items = result.figures.flatMap((figure) => figure.items);
+  assert.ok(items.some((item) => item.display === '$601'), JSON.stringify(result));
+  assert.ok(items.every((item) => item.display !== '400 MW'), JSON.stringify(result));
+});
+
+test('identical statements from separate primary sources keep both provenances', () => {
+  const statement = 'Northline secured 200 MW for the Dakota data center campus.';
+  const ledger = { claims: [
+    { claim_id: 'source-a', claim_text: statement, numeric_value: 200, unit: 'MW', source_name: 'Grid Journal', source_url: 'https://a.example/report', verification_status: 'verified_primary' },
+    { claim_id: 'source-b', claim_text: statement, numeric_value: 200, unit: 'MW', source_name: 'Utility Record', source_url: 'https://b.example/filing', verification_status: 'verified_primary' },
+  ] };
+  const result = buildColumnFigures({
+    ledger,
+    stance: { angle: 'Northline secured capacity for the Dakota campus' },
+    headline: 'Northline secured capacity for the Dakota campus',
+    sectionCount: 5,
+  });
+  const items = result.figures.flatMap((figure) => figure.items);
+  assert.deepEqual(items.map((item) => item.source).sort(), ['Grid Journal', 'Utility Record']);
+});
+
+test('date and ordinal figures remain eligible when the story has no substantive metric', () => {
+  const ledger = buildClaimLedger({
+    cluster_id: 'date_ordinal_story',
+    representative_source: {
+      source_url: 'https://example.com/date-ordinal',
+      source_name: 'Example Filing',
+      title: 'The 90th percentile review moved from 2025 to 2026',
+      cleaned_text: 'The 90th percentile review moved from 2025 to 2026 after the filing calendar changed for the program.',
+    },
+    supporting_sources: [],
+  }, 'date_ordinal_story');
+  const result = buildColumnFigures({
+    ledger,
+    stance: { angle: 'The filing calendar changed the review schedule' },
+    headline: 'The filing calendar changed the review schedule',
+    sectionCount: 5,
+  });
+  const items = result.figures.flatMap((figure) => figure.items);
+  assert.ok(items.length >= 1, JSON.stringify(result));
+  assert.ok(items.some((item) => ['year', 'ordinal'].includes(item.unit.toLowerCase())), JSON.stringify(items));
+});
+
+test('one substantive metric suppresses surrounding year rows', () => {
+  const ledger = buildClaimLedger({
+    cluster_id: 'single_metric_with_years',
+    representative_source: {
+      source_url: 'https://example.com/single-metric',
+      source_name: 'Example Filing',
+      title: 'Northline usage review',
+      cleaned_text: 'In 2025, Northline recorded $601 in daily usage and reviewed the result again in 2026.',
+    },
+    supporting_sources: [],
+  }, 'single_metric_with_years');
+  const result = buildColumnFigures({
+    ledger,
+    stance: { angle: 'Northline daily usage anchors the review' },
+    headline: 'Northline daily usage anchors the review',
+    sectionCount: 5,
+  });
+  const items = result.figures.flatMap((figure) => figure.items);
+  assert.deepEqual(items.map((item) => item.display), ['$601'], JSON.stringify(items));
+  assert.match(items[0].label, /Northline recorded \$601 in daily usage/);
 });
 
 test('figure rows retain the full comparison period and a less-than qualifier', () => {
