@@ -11,12 +11,13 @@
 // ("the evidence I was given"). Prose that
 // names who supplied what ("the vendor provided excerpts of the contract",
 // "EIA provided excerpts from the filing") is ordinary attribution and passes;
-// so do "Abstract Excerpt:" labels and the verb "to extract value". With
-// "evidence"/"source text" only a possessive or "the" counts, because a
-// demonstrative reads as a subject with a verb ("This provided evidence that
-// the forecast was conservative").
+// so do "Abstract Excerpt:" labels and the verb "to extract value". A
+// demonstrative counts only before a singular extract/excerpt ("this provided
+// excerpt"); before a plural or before "evidence" it reads as a subject with a
+// verb ("This provided excerpts from the filing to reviewers", "This provided
+// evidence that the forecast was conservative").
 const RULES = [
-  ['input_provenance', /\b(?:the|this|that|these|those|my|our|its|their)\s+(?:supplied|provided)\s+(?:extracts?|excerpts?)\b|\b(?:the|my|our|its|their)\s+(?:supplied|provided)\s+(?:evidence|source\s+text)\b|(?<=(?:^|[.!?:;]|\n)[\s"“”'‘’(\[>*#•\-–—]*)(?:supplied|provided)\s+(?:extracts?|excerpts?)\b|\b(?:using|based\s+on|from|with|of|on|via|per)\s+(?:supplied|provided)\s+(?:extracts?|excerpts?)\b|\b(?:extracts?|excerpts?|evidence|source\s+text)\s+(?:that\s+)?(?:I|we)\s+(?:was|were|have\s+been|had\s+been)\s+(?:given|supplied|provided|handed)\b|\b(?:anything|everything)\s+I\s+have\s+been\s+given\b/gi],
+  ['input_provenance', /\b(?:the|my|our|its|their)\s+(?:supplied|provided)\s+(?:extracts?|excerpts?|evidence|source\s+text)\b|\b(?:this|that)\s+(?:supplied|provided)\s+(?:extract|excerpt)\b|(?<=(?:^|[.!?:;]|\n)[\s"“”'‘’(\[>*#•\-–—]*)(?:supplied|provided)\s+(?:extracts?|excerpts?)\b|\b(?:using|based\s+on|from|with|of|on|via|per)\s+(?:supplied|provided)\s+(?:extracts?|excerpts?)\b|\b(?:extracts?|excerpts?|evidence|source\s+text)\s+(?:that\s+)?(?:I|we)\s+(?:was|were|have\s+been|had\s+been)\s+(?:given|supplied|provided|handed)\b|\b(?:anything|everything)\s+I\s+have\s+been\s+given\b/gi],
   ['writer_extract', /\b(?:the|an?)\s+extract\s+(?:I|we)\s+(?:have|received|was|were)\b/gi],
   ['process_assurance', /\bI\s+will\s+not\s+invent\s+(?:answers|facts|numbers)\b|\bI\s+am\s+committing\s+to\s+that\s+distinction\b|\bI\s+own\s+this\s+thesis\s+outright\b/gi],
   ['persona_scaffold', /\b(?:my|two|both)\s+standing\s+positions?\b|\bone\s+of\s+my\s+standing\s+positions?\b/gi],
@@ -44,20 +45,24 @@ export function readerCopySurfaces(candidate = {}) {
   for (const field of ['finalHeadline', 'metaDescription', 'finalArticleBody']) {
     add(`expertLensFull.${field}`, full[field]);
   }
-  // Persisted presentation copy wins over the top-level fields when a card or
-  // detail page is rendered (buildPublicPresentation), so it is reader copy too.
+  // Persisted presentation copy that buildPublicPresentation can actually
+  // render: deck, why-it-matters and image alt win over the top-level fields;
+  // label, lens and lane are fallbacks behind the route. The persisted title,
+  // region, source and category are never read by the renderer (title comes
+  // from card copy or the headline, the rest from top-level fields), so they
+  // are not reader copy and stale values there cannot block the gate.
   const presentation = candidate.public_presentation || {};
-  for (const field of ['title', 'deck', 'why_it_matters', 'image_alt']) {
+  for (const field of ['deck', 'why_it_matters', 'image_alt']) {
     add(`public_presentation.${field}`, presentation[field]);
   }
   // Reader-impact labels render as visible pills on every card.
   for (const [i, label] of (Array.isArray(presentation.reader_impact) ? presentation.reader_impact : []).entries()) {
     add(`public_presentation.reader_impact[${i}]`, label);
   }
-  // Card metadata chips: label, lens, lane, region, source and category text
-  // render on signal cards, article cards and the featured card. The route
-  // object is the preferred source for label, lens and lane.
-  for (const field of ['signal_label', 'editorial_lens', 'lane_title', 'region', 'source', 'category']) {
+  // Card metadata chips: label, lens and lane render on signal cards, article
+  // cards and the featured card; the route object is the preferred source and
+  // the persisted presentation value is the fallback.
+  for (const field of ['signal_label', 'editorial_lens', 'lane_title']) {
     add(`public_presentation.${field}`, presentation[field]);
   }
   const routing = candidate.public_routing || {};

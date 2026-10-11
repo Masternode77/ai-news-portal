@@ -106,7 +106,7 @@ test('rendered card metadata chips are part of the card audit', () => {
   const report = auditReaderCopy({ latest: [card] }, { homepageSignals: [rendered] });
   assert.deepEqual(report.cards[0].readerCopy.reasons, [
     'reader_copy:process_assurance:public_presentation.editorial_lens',
-    'reader_copy:input_provenance:public_presentation.source',
+    'reader_copy:input_provenance:source',
   ]);
   for (const field of ['signal_label', 'editorial_lens', 'lane_title', 'region', 'source', 'category']) {
     assert.ok(publicCardSignalsFor([]).every((signal) => field in signal));

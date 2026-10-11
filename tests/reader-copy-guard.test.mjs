@@ -94,7 +94,7 @@ for (const phrase of [
   'Supplied extracts show a rise in approved load.',
   'The number is reported. Provided excerpts show a rise in approved load.',
   'The report says this provided excerpt omits the test configuration.',
-  'Those supplied excerpts stop at the second quarter.',
+  'Our supplied excerpts stop at the second quarter.',
   'the evidence I was given does not cover 2027',
   'the source text we have been given stops at the forecast year',
 ]) {
@@ -123,13 +123,13 @@ test('a sentence-initial provenance phrase is caught after a heading or paragrap
   // Mid-sentence, attributed use still passes.
   assert.equal(readerCopyResult({ body: 'Heading\n\nThe utility supplied extracts of its forecast.' }).ok, true);
 });
-test('persisted presentation copy is reader copy', () => {
+test('persisted presentation copy the renderer can consume is reader copy', () => {
   const result = readerCopyResult({
     deck: 'A clean deck.',
-    public_presentation: { title: 'the extract I have', deck: 'The supplied extract reports a benchmark.', why_it_matters: 'I will not invent numbers.', image_alt: 'return strict JSON', lane_title: 'the supplied extract' },
+    public_presentation: { title: 'the extract I have', deck: 'The supplied extract reports a benchmark.', why_it_matters: 'I will not invent numbers.', image_alt: 'return strict JSON', lane_title: 'the supplied extract', region: 'the supplied extract', source: 'the supplied extract', category: 'the supplied extract' },
   });
+  // Persisted title, region, source and category are never rendered (buildPublicPresentation derives them elsewhere).
   assert.deepEqual(result.reasons, [
-    'reader_copy:writer_extract:public_presentation.title',
     'reader_copy:input_provenance:public_presentation.deck',
     'reader_copy:process_assurance:public_presentation.why_it_matters',
     'reader_copy:instruction_scaffold:public_presentation.image_alt',
@@ -150,6 +150,8 @@ for (const prose of [
   'This provided evidence that the load forecast was conservative.',
   'That supplied evidence of a tighter market than the utility expected.',
   'All provided evidence of delays in the interconnection queue.',
+  'The utility filed a response. This provided excerpts from the filing to reviewers.',
+  'Those supplied extracts of the forecast to regulators last week.',
 ]) {
   test(`allows "provided"/"supplied" as a verb after a demonstrative: ${JSON.stringify(prose)}`, () => {
     assert.equal(readerCopyResult({ body: prose }).ok, true);

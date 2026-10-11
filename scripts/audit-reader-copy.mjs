@@ -50,10 +50,10 @@ export function auditReaderCopy(collections, { homepageSignals = [] } = {}) {
   // presentation surfaces.
   const cardCopyResult = (signal) => readerCopyResult({
     title: signal.title, deck: signal.deck, why_it_matters: signal.why_it_matters, imageAlt: signal.image_alt,
+    region: signal.region, source: signal.source, category: signal.category,
     public_presentation: {
       reader_impact: signal.reader_impact,
       signal_label: signal.signal_label, editorial_lens: signal.editorial_lens, lane_title: signal.lane_title,
-      region: signal.region, source: signal.source, category: signal.category,
     },
   });
   // A column page exists whenever the column route's own predicate accepts the
