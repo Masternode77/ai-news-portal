@@ -362,3 +362,21 @@ test('routing chips and tag pills are news surfaces only', () => {
   assert.equal(readerCopyResult({ content_origin: 'authored', ...metadata }).ok, true);
   assert.equal(readerCopyResult(metadata).findings.length, 3);
 });
+
+test('contracted writer-recipient phrases are input provenance', () => {
+  for (const body of ["I've been provided with excerpts from the filing.", "We've received the source text.", 'We’d been given evidence of the delay.', "We'd collected some extracts."]) {
+    assert.deepEqual(readerCopyResult({ body }).reasons, ['reader_copy:input_provenance:body'], body);
+  }
+  assert.equal(readerCopyResult({ body: "The utility's filing provided excerpts to the board." }).ok, true);
+});
+test('the detail route keeps only what the news page renders', () => {
+  const cardOnly = { why_it_matters: 'the supplied extract', region: 'return strict JSON', public_presentation: { why_it_matters: 'I will not invent numbers', reader_impact: ['the supplied extract'] }, public_routing: { public_signal_label: 'the supplied extract', editorial_lens: 'the extract I have' } };
+  assert.equal(readerCopyResult(cardOnly, { route: 'detail' }).ok, true);
+  // Five on the default route: the persisted why-it-matters shadows the top-level one.
+  assert.equal(readerCopyResult(cardOnly).findings.length, 5);
+  // What the page does render is still checked on the detail route.
+  const rendered = { title: 'the supplied extract', deck: 'I will not invent numbers', imageAlt: 'return strict JSON', source: 'the supplied extract', primary_category: 'the extract I have', tags: ['the supplied extract'], corrections: [{ date: '2026-10-11', summary: 'the supplied extract' }], expertLensFull: { finalArticleBody: 'the supplied extract' } };
+  assert.equal(readerCopyResult(rendered, { route: 'detail' }).findings.length, 8);
+  // A column renders its own fields on its page, so the route option changes nothing.
+  assert.equal(readerCopyResult({ content_origin: 'authored', why_it_matters: 'the supplied extract' }, { route: 'detail' }).ok, false);
+});

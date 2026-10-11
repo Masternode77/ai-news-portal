@@ -80,9 +80,12 @@ export function auditReaderCopy(collections, { homepageSignals = [], routeOption
   // Authored columns bypass that layer: column/[slug].astro and
   // buildColumnCards() read title, deck, imageAlt and stance.thesis straight
   // off the record, which readerCopyResult(record) already covers.
-  const presentationCopyResult = (record) => {
+  // With `detailOnly`, only the built title, deck and image alt count: those
+  // are the presentation fields news/[id].astro renders when no card exists.
+  const presentationCopyResult = (record, { detailOnly = false } = {}) => {
     if (isColumn(record)) return { ok: true, findings: [], reasons: [] };
     const built = buildPublicPresentation(record);
+    if (detailOnly) return readerCopyResult({ title: built.title, deck: built.deck, imageAlt: built.image_alt });
     return readerCopyResult({
       title: built.title, deck: built.deck, why_it_matters: built.why_it_matters, imageAlt: built.image_alt,
       region: built.region, source: built.source,
@@ -112,7 +115,14 @@ export function auditReaderCopy(collections, { homepageSignals = [], routeOption
   const articles = records.map(record => {
     const body = record.expertLensFull?.finalArticleBody || record.body || '';
     const signals = signalsById.get(record.id) || [];
-    const copy = mergeCopyResults(readerCopyResult(record), presentationCopyResult(record), ...signals.map(cardCopyResult), ...(signals.length ? [hubListCopyResult(record)] : []));
+    // A page without a card renders only the detail route; with a card the
+    // record's card fields render too.
+    const copy = mergeCopyResults(
+      readerCopyResult(record, { route: signals.length ? 'all' : 'detail' }),
+      presentationCopyResult(record, { detailOnly: signals.length === 0 }),
+      ...signals.map(cardCopyResult),
+      ...(signals.length ? [hubListCopyResult(record)] : []),
+    );
     return {
       id: record.id, collection: record.collection, title: record.title,
       path: isColumn(record) ? `/column/${record.slug}/` : `/news/${record.slug || record.id}/`,

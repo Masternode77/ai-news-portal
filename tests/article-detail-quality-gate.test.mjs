@@ -127,3 +127,19 @@ test('detail gate ignores a legacy top-level body shadowed by the rendered final
   });
   assert.equal(result.ok, true, result.reasons.join(','));
 });
+
+test('detail gate ignores card-only fields the detail page never renders', () => {
+  const paragraph = 'China’s spot power trading pilot gives large data centers a different operating lever because load flexibility can change how operators manage procurement exposure, while power teams watch participation volumes, price dispersion, utility milestones, and repeatable procurement advantage.';
+  const body = Array.from({ length: 5 }, (_, section) => [`Operating Decision ${section + 1}`, `${paragraph} ${paragraph}`, `${paragraph} ${paragraph}`].join('\n\n')).join('\n\n');
+  const base = {
+    id: 'card-fields',
+    title: 'China data centers tap spot power trading',
+    infrastructure_relevance_score: 0.9,
+    articleText: `${'China spot power trading creates a grid-market operating lever for large data centers and virtual power plant participation. '.repeat(25)}Final sentence complete.`,
+    expertLensFull: { finalArticleBody: body },
+  };
+  const result = articleDetailQualityResult({ ...base, why_it_matters: 'The supplied extract reports a benchmark.', region: 'the supplied extract', public_presentation: { reader_impact: ['the supplied extract'] } });
+  assert.equal(result.ok, true, result.reasons.join(','));
+  // The deck is rendered, so a leak there still fails the route.
+  assert.ok(articleDetailQualityResult({ ...base, deck: 'The supplied extract reports a benchmark.' }).reasons.includes('reader_copy:input_provenance:deck'));
+});

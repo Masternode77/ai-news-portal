@@ -230,3 +230,14 @@ test('every rendered variant of a card is audited, not only the first', () => {
   // Identical variants collapse to one.
   assert.equal(publicCardSignalsFor([]).length, 0);
 });
+
+test('a page without a card is audited on the detail route only', () => {
+  const page = { id: 'page', slug: 'page', articlePagePublished: true, homepagePublished: false, title: 'A page', why_it_matters: 'The supplied extract reports a benchmark.', public_presentation: { deck: 'A clean persisted deck.', reader_impact: ['the supplied extract'] }, expertLensFull: { finalArticleBody: 'A clean final body.' } };
+  const pageOnly = auditReaderCopy({ latest: [page] });
+  assert.equal(pageOnly.readerCopyFlaggedArticles, 0, pageOnly.articles[0].readerCopy.reasons.join('|'));
+  // With a feed card the record's card fields render, so the same leaks count.
+  const rendered = { id: 'page', title: 'A page', deck: 'A clean persisted deck.', why_it_matters: 'Clean.', image_alt: 'Clean visual' };
+  const carded = auditReaderCopy({ latest: [{ ...page, homepagePublished: true }] }, { homepageSignals: [rendered] });
+  assert.ok(carded.articles[0].readerCopy.reasons.includes('reader_copy:input_provenance:why_it_matters'));
+  assert.ok(carded.articles[0].readerCopy.reasons.includes('reader_copy:input_provenance:public_presentation.reader_impact[0]'));
+});

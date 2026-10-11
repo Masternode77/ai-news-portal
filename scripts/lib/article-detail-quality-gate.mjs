@@ -36,10 +36,11 @@ export function articleDetailQualityResult(article = {}, options = {}) {
   const templateGuard = guardPublicTemplatePhrases(copyGuard.text || text);
   const boilerplate = detectBoilerplate(text);
   const truncation = detectTruncationArtifacts(text);
-  // Reader copy (title, deck, summary, body, figures, correction notes) must
-  // not carry writer-only language. `articleText`/`rawText` hold source
-  // evidence and are deliberately outside the guard's allowlist.
-  const readerCopy = readerCopyResult(article);
+  // Reader copy the detail page renders (headline, deck, image alt, body,
+  // tags, source, category, correction notes) must not carry writer-only
+  // language; card-only fields are the card audit's business, and
+  // `articleText`/`rawText` hold source evidence outside the allowlist.
+  const readerCopy = readerCopyResult(article, { route: 'detail' });
   const bodyBlocks = cleanArticleBodyBlocks(article.expertLensFull?.finalArticleBody || article.articleText || '');
   const length = blogLengthResult(bodyBlocks.join('\n\n'), article.blog_route || article.publishing_route || 'standard_blog');
   const reasons = [];
