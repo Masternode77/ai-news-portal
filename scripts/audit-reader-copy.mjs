@@ -46,12 +46,17 @@ export function auditReaderCopy(collections, { homepageSignals = [] } = {}) {
       if (!unique.has(record.id)) unique.set(record.id, { ...record, collection });
     }
   }
+  const isColumn = (record) => record.collection === 'authored-columns' || isAuthoredColumn(record);
   const signalsById = new Map(homepageSignals.filter((signal) => signal?.id).map((signal) => [signal.id, signal]));
   // The presentation the page header and any card actually render, built the
   // same way src/pages/news/[id].astro and buildHomepageFeed build it. This
   // honors field precedence (persisted deck over top-level deck, synthesized
   // deck from source text when neither exists) instead of auditing raw fields.
+  // Authored columns bypass that layer: column/[slug].astro and
+  // buildColumnCards() read title, deck, imageAlt and stance.thesis straight
+  // off the record, which readerCopyResult(record) already covers.
   const presentationCopyResult = (record) => {
+    if (isColumn(record)) return { ok: true, findings: [], reasons: [] };
     const built = buildPublicPresentation(record);
     return readerCopyResult({
       title: built.title, deck: built.deck, why_it_matters: built.why_it_matters, imageAlt: built.image_alt,
@@ -75,7 +80,6 @@ export function auditReaderCopy(collections, { homepageSignals = [] } = {}) {
   // A column page exists whenever the column route's own predicate accepts the
   // record (`authoredColumnPublicEligible`, which does not read the news-article
   // flag); a news page exists when `articlePagePublished` is true.
-  const isColumn = (record) => record.collection === 'authored-columns' || isAuthoredColumn(record);
   const hasReaderPage = (record) => record.articlePagePublished === true || (isColumn(record) && authoredColumnPublicEligible(record));
   const records = [...unique.values()].filter(hasReaderPage);
   const articles = records.map(record => {

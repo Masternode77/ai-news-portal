@@ -215,3 +215,10 @@ test('a fallback field shadowed by the rendered value is not reader copy', () =>
   assert.equal(readerCopyResult({ deck: 'the supplied extract', why_it_matters: 'I will not invent numbers', imageAlt: 'return strict JSON', public_presentation: { deck: 'Clean.', why_it_matters: 'Clean.', image_alt: 'Clean visual' } }).ok, true);
   assert.deepEqual(readerCopyResult({ deck: 'the supplied extract', public_presentation: { deck: '   ' } }).reasons, ['reader_copy:input_provenance:deck']);
 });
+
+test('column records keep their direct deck and image alt even when a presentation value exists', () => {
+  const column = { content_origin: 'authored', deck: 'the supplied extract', imageAlt: 'return strict JSON', public_presentation: { deck: 'Clean.', image_alt: 'Clean visual' } };
+  assert.deepEqual(readerCopyResult(column).reasons, ['reader_copy:input_provenance:deck', 'reader_copy:instruction_scaffold:imageAlt']);
+  // The final body still shadows a legacy body for a column, as on the column page.
+  assert.equal(readerCopyResult({ content_origin: 'authored', body: 'the supplied extract', expertLensFull: { finalArticleBody: 'Clean.' } }).ok, true);
+});

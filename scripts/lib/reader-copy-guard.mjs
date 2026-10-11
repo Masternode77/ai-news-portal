@@ -1,3 +1,5 @@
+import { isAuthoredColumn } from './authored-column-identity.mjs';
+
 // Reader-facing copy only. This detector never rewrites text or certifies facts.
 // Keep input-provenance rules specific: "prompt", "model" and uncertainty are
 // legitimate subjects in AI reporting, not evidence of a leaked instruction.
@@ -44,15 +46,19 @@ export function readerCopySurfaces(candidate = {}) {
   for (const field of ['title', 'headline', 'summary', 'snippet', 'expertLensShort', 'metaDescription']) {
     add(field, candidate[field]);
   }
-  // Precedence follows the renderers: the news template shows
-  // expertLensFull.finalArticleBody and ignores a legacy top-level body when
-  // both exist; buildPublicPresentation prefers the persisted deck,
-  // why-it-matters and image alt over the top-level fields. A shadowed
-  // fallback is not reader copy, so stale text there cannot fail a gate.
+  // Precedence follows the renderers. Both the news and the column template
+  // show expertLensFull.finalArticleBody and ignore a legacy top-level body
+  // when both exist. News records then go through buildPublicPresentation,
+  // which prefers the persisted deck, why-it-matters and image alt over the
+  // top-level fields; a shadowed fallback is not reader copy there, so stale
+  // text in it cannot fail a gate. Authored columns bypass that layer
+  // (column/[slug].astro and buildColumnCards read deck and imageAlt
+  // directly), so their top-level fields always count.
+  const viaPresentation = !isAuthoredColumn(candidate);
   if (!present(full.finalArticleBody)) add('body', candidate.body);
-  if (!present(persisted.deck)) add('deck', candidate.deck);
-  if (!present(persisted.why_it_matters)) add('why_it_matters', candidate.why_it_matters);
-  if (!present(persisted.image_alt)) {
+  if (!viaPresentation || !present(persisted.deck)) add('deck', candidate.deck);
+  if (!viaPresentation || !present(persisted.why_it_matters)) add('why_it_matters', candidate.why_it_matters);
+  if (!viaPresentation || !present(persisted.image_alt)) {
     add('imageAlt', candidate.imageAlt);
     add('image_alt', candidate.image_alt);
   }

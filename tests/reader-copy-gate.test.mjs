@@ -149,3 +149,14 @@ test('the audit checks the presentation each page and card actually renders', ()
   const shadowedCard = auditReaderCopy({ latest: [card] }, { homepageSignals: [rendered] });
   assert.equal(shadowedCard.readerCopyFlaggedCards, 0, shadowedCard.cards[0].readerCopy.reasons.join('|'));
 });
+
+test('a column with a leaked direct deck is flagged even when a clean presentation deck exists', () => {
+  const column = {
+    id: 'col', slug: 'col', collection: 'authored-columns', content_origin: 'authored', title: 'A column', draft: false, authored_quality: { ok: true },
+    deck: 'The supplied extract reports a benchmark.', public_presentation: { deck: 'A clean persisted deck.' },
+    expertLensFull: { finalArticleBody: 'A clean final body.' },
+  };
+  const report = auditReaderCopy({ 'authored-columns': [column] });
+  assert.equal(report.readerCopyFlaggedArticles, 1);
+  assert.deepEqual(report.articles[0].readerCopy.reasons, ['reader_copy:input_provenance:deck']);
+});
