@@ -2,6 +2,7 @@ import { detectBoilerplate } from './boilerplate-detector.mjs';
 import { analyzeSourceTextCompleteness } from './source-text-completeness.mjs';
 import { detectTruncationArtifacts, sentenceCompletionScore } from './truncation-detector.mjs';
 import { createExtractionArtifact } from './extraction-artifact.mjs';
+import { RELATED_STORY_CONTAMINATION_REASON, detectRelatedStoryContamination } from './related-story-contamination.mjs';
 
 export const PUBLIC_ARTICLE_MIN_CLEAN_CHARS = 500;
 export const LONGFORM_MIN_CLEAN_CHARS = 1200;
@@ -40,6 +41,12 @@ export function analyzeSourceExtractionFailClosed(article = {}) {
     rawText,
   });
   const completion = sentenceCompletionScore(cleaned_source_text || rawText);
+  // An extract made of sidebar teasers passes every check above; its shape is
+  // a hard block for generated copy (the item may stay a source-linked card).
+  const relatedStoryContamination = detectRelatedStoryContamination({
+    title: article.title,
+    text: cleaned_source_text || rawText,
+  });
   const reasons = [];
   const longformBlockReasons = persistedLongformBlockReasons(article);
   const longformExtractionBlocked = longformBlockReasons.length > 0;
@@ -49,6 +56,7 @@ export function analyzeSourceExtractionFailClosed(article = {}) {
   if (boilerplate.nav_or_cta_detected && cleaned_source_text.length < LONGFORM_MIN_CLEAN_CHARS) {
     reasons.push('nav_or_cta_detected_with_weak_evidence');
   }
+  if (relatedStoryContamination.detected) reasons.push(RELATED_STORY_CONTAMINATION_REASON);
   if (!truncation.ok) reasons.push(...truncation.artifacts);
   if (completion < 0.92) reasons.push(`sentence_completion_score_below_0.92:${completion}`);
   if (cleaned_source_text.length < PUBLIC_ARTICLE_MIN_CLEAN_CHARS) {
@@ -64,6 +72,7 @@ export function analyzeSourceExtractionFailClosed(article = {}) {
   const canPublishLocalArticle = cleaned_source_text.length >= PUBLIC_ARTICLE_MIN_CLEAN_CHARS
     && !boilerplate.copyright_footer_detected
     && boilerplate.boilerplate_ratio <= 0.08
+    && !relatedStoryContamination.detected
     && truncation.ok
     && completion >= 0.92;
   const canGenerateLongform = canPublishLocalArticle
@@ -77,6 +86,7 @@ export function analyzeSourceExtractionFailClosed(article = {}) {
     boilerplate_ratio: boilerplate.boilerplate_ratio,
     copyright_footer_detected: boilerplate.copyright_footer_detected,
     nav_or_cta_detected: boilerplate.nav_or_cta_detected,
+    related_story_contamination_detected: relatedStoryContamination.detected,
     sentence_completion_score: completion,
     block_reasons: uniqueReasons.filter((reason) => !longformBlockReasons.includes(reason)),
     longform_block_reasons: longformBlockReasons,
@@ -91,6 +101,7 @@ export function analyzeSourceExtractionFailClosed(article = {}) {
     cleaned_source_length: cleaned_source_text.length,
     boilerplate,
     truncation,
+    related_story_contamination: relatedStoryContamination,
     sentence_completion_score: completion,
     source_completeness: sourceCompleteness,
     reasons: uniqueReasons,
