@@ -11,10 +11,11 @@
 // opens with another story's headline glued onto its lead-in sentence, or is
 // a bare headline. The extract is contaminated when at least three clipped
 // fragments run back to back, or when at least four teaser-shaped segments
-// make up half or more of it and at least one of them is clipped. Without an
+// make up half or more of it and at least two of them are clipped. Without an
 // ellipsis a glued headline is indistinguishable from a sub-heading that the
-// no-paragraph extraction fallback flattened onto its section, so headline
-// shapes only ever add weight to clipped evidence. The verdict is a hard
+// no-paragraph extraction fallback flattened onto its section, and one
+// ellipsis can be a quotation, so headline shapes only ever add weight to
+// repeated clipped evidence. The verdict is a hard
 // extraction block: the item may remain a signal card that links to the
 // source, but it never feeds generated copy.
 //
@@ -27,6 +28,7 @@ export const RELATED_STORY_CONTAMINATION_REASON = 'related_story_contamination';
 export const MIN_TEASER_FRAGMENTS = 4;
 export const TEASER_FRAGMENT_RATIO_THRESHOLD = 0.5;
 export const MIN_CONSECUTIVE_CLIPPED_FRAGMENTS = 3;
+export const MIN_CLIPPED_FRAGMENTS_FOR_RATIO_RULE = 2;
 export const HEADLINE_RUN_MIN_TOKENS = 5;
 export const HEADLINE_GLUED_MAX_WORDS = 40;
 const BARE_HEADLINE_MAX_WORDS = 18;
@@ -259,7 +261,9 @@ export function detectRelatedStoryContamination({ title = '', text = '' } = {}) 
   const teaserRatio = ratio(teasers.length, profiles.length);
   const consecutiveClipped = longestRun(profiles, (profile) => profile.clipped);
   const detected = consecutiveClipped >= MIN_CONSECUTIVE_CLIPPED_FRAGMENTS
-    || (clipped.length > 0 && teasers.length >= MIN_TEASER_FRAGMENTS && teaserRatio >= TEASER_FRAGMENT_RATIO_THRESHOLD);
+    || (clipped.length >= MIN_CLIPPED_FRAGMENTS_FOR_RATIO_RULE
+      && teasers.length >= MIN_TEASER_FRAGMENTS
+      && teaserRatio >= TEASER_FRAGMENT_RATIO_THRESHOLD);
 
   return {
     detected,

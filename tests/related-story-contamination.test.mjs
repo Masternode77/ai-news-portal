@@ -127,22 +127,23 @@ test('decodes HTML entities before judging clipped fragments', () => {
   assert.ok(longformGate.block_reasons.includes(RELATED_STORY_CONTAMINATION_REASON));
 });
 
-test('lets headline-glued teasers tip the verdict once a single clipped fragment is present', () => {
+test('lets headline-glued teasers tip the verdict once two clipped fragments are present', () => {
   const fixture = loadFixture('hpcwire-qunnect-monarch.json');
   const decoded = decodeHtmlEntities(fixture.articleText);
-  // Keep one entity-encoded ellipsis (invisible to the truncation check) and
-  // turn every other teaser into a period-terminated sentence.
-  let kept = false;
+  // Keep two non-adjacent entity-encoded ellipses (invisible to the
+  // truncation check) and turn every other teaser into a period-terminated
+  // sentence.
+  let seen = 0;
   const mostlyUnclipped = decoded.replace(/\.{3,}|…/g, () => {
-    if (kept) return '.';
-    kept = true;
-    return '&hellip;';
+    seen += 1;
+    return seen === 1 || seen === 5 ? '&hellip;' : '.';
   });
   assert.ok(!/\.{3}|…/.test(mostlyUnclipped));
 
   const contamination = detectRelatedStoryContamination({ title: fixture.title, text: mostlyUnclipped });
   assert.equal(contamination.detected, true);
-  assert.equal(contamination.clipped_fragment_count, 1);
+  assert.equal(contamination.clipped_fragment_count, 2);
+  assert.ok(contamination.consecutive_clipped_fragments < 3);
   assert.ok(contamination.headline_glued_count >= 4);
   assert.ok(contamination.teaser_fragment_ratio >= 0.5);
 
@@ -175,6 +176,12 @@ test('does not flag an article whose sub-headings were flattened onto short sect
   assert.equal(contamination.clipped_fragment_count, 0);
   assert.ok(contamination.headline_glued_count >= 4);
   assert.ok(contamination.teaser_fragment_ratio >= 0.5);
+
+  // One encoded ellipsis inside a quotation is not sidebar evidence either.
+  const quoted = `${flattened} The planning chief said the corridor "will be built&hellip; whatever the docket decides" before the winter case.`;
+  const withQuote = detectRelatedStoryContamination({ title: 'Lakeside campus timeline', text: quoted });
+  assert.equal(withQuote.detected, false);
+  assert.equal(withQuote.clipped_fragment_count, 1);
 });
 
 test('does not flag a feed body whose sub-headings are glued to full paragraphs', () => {
