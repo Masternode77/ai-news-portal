@@ -7,6 +7,7 @@ import LongformArticleBody from '../../components/LongformArticleBody.astro';
 import AIDisclosureFooter from '../../components/AIDisclosureFooter.astro';
 import AdSlot from '../../components/monetize/AdSlot.astro';
 import ColumnFigure from '../../components/ColumnFigure.astro';
+import EditorialCorrectionNote from '../../components/EditorialCorrectionNote.astro';
 import authoredColumns from '../../data/authored-columns.json';
 import { SITE } from '../../config/site';
 import { buildColumnStructuredData, serializeJsonForScript } from '../../lib/seo-safeguards.js';
@@ -106,6 +107,8 @@ const sources = (columnRecord.sources || [])
             ? <LongformArticleBody blocks={entry.blocks} ledeParagraph={index === 0} />
             : <ColumnFigure figure={entry.figure} />
         )}
+
+        <EditorialCorrectionNote record={columnRecord} />
 
         <AdSlot variant="article" />
 
