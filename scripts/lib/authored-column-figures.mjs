@@ -201,6 +201,36 @@ export function relevantClaims(claims = [], { headline = '', stance = {} } = {})
     .map((entry) => entry.claim);
 }
 
+const CONTEXT_ONLY_UNITS = new Set(['year', 'ordinal']);
+
+// When a source supplies decision-useful quantities, dates and ordinals stay
+// in the row labels as context instead of occupying the figure-value column.
+// Claims from the same source that render with the same row label are one
+// visible statement; keep its last substantive metric so the table does not
+// repeat an identical long row. Separate-source provenance and clause-specific
+// comparisons retain their rows. Date/ordinal-only stories retain theirs.
+function preferredMetricClaims(claims = []) {
+  const enriched = claims.map((claim) => withFigureNumber(claim) || claim);
+  const numeric = enriched.filter((claim) => Number.isFinite(Number(claim.numeric_value)) && String(claim.unit || '').trim());
+  const substantive = numeric.filter((claim) => !CONTEXT_ONLY_UNITS.has(unitKey(claim.unit)));
+  if (substantive.length === 0) return enriched;
+
+  const preferredByStatement = new Map();
+  for (const claim of substantive) {
+    const sourceKey = String(claim.source_url || claim.source_name || '').trim().toLowerCase();
+    const key = `${sourceKey}\u0000${attributedSourceExcerpt(numberAlignedLabel(claim)).toLowerCase()}`;
+    const prior = preferredByStatement.get(key);
+    if (!prior || Number(claim.figure_index ?? -1) >= Number(prior.figure_index ?? -1)) {
+      preferredByStatement.set(key, claim);
+    }
+  }
+  const selectedIds = new Set([...preferredByStatement.values()].map((claim) => claim.claim_id));
+  return enriched.filter((claim) => {
+    const isNumeric = Number.isFinite(Number(claim.numeric_value)) && String(claim.unit || '').trim();
+    return !isNumeric || selectedIds.has(claim.claim_id);
+  });
+}
+
 // A sentence often carries several numbers ("China recorded $3.8 billion ...
 // yet Malaysia recorded only $0.6 billion"). A claim parsed by the strict
 // extractor keeps its value and unit, but its label must window around its
@@ -553,7 +583,7 @@ function evidencePackFigure({ facts = [], factSource = '', stance, headline, sec
 export function buildColumnFigures({ ledger = {}, stance = {}, headline = '', sectionCount = 5, modelSpec = null, facts = [], factSource = '' } = {}) {
   const baseClaims = verifiedPrimaryClaims(ledger);
   const relevantIds = new Set(relevantClaims(baseClaims, { headline, stance }).map((claim) => claim.claim_id));
-  const claims = relevantClaims(numericLedgerClaims(ledger), { headline, stance });
+  const claims = preferredMetricClaims(relevantClaims(numericLedgerClaims(ledger), { headline, stance }));
 
   if (Array.isArray(modelSpec) && modelSpec.length >= 1 && modelSpec.length <= MAX_FIGURES) {
     const fromSpec = modelSpec.map((spec) => validSpecFigure(spec, baseClaims, relevantIds, sectionCount));
@@ -562,19 +592,13 @@ export function buildColumnFigures({ ledger = {}, stance = {}, headline = '', se
     }
   }
 
-  if (claims.length >= 2) {
+  if (claims.length >= 1) {
     return { figures: deterministicFigures({ claims, stance, headline, sectionCount }), source: 'deterministic' };
   }
 
   const factTable = factTableFigure({ ledger, stance, headline, sectionCount });
   if (factTable) {
     const figures = [factTable];
-    if (claims.length === 1) {
-      const statTitle = claimTitle(claims[0].claim_text);
-      if (titleOk(statTitle) && statTitle.toLowerCase() !== factTable.title.toLowerCase()) {
-        figures.push(buildFigure('stat-row', statTitle, claims, 4, sectionCount));
-      }
-    }
     return { figures, source: 'fact_table' };
   }
 

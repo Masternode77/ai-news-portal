@@ -92,16 +92,34 @@ test('publication catalog pagination is deterministic and bounded', () => {
   assert.equal(page.items[0].id, 'col-12');
 });
 
-test('current public catalog carries all 21 eligible authored columns and no private column', () => {
+test('current public catalog grows with eligible authored columns and excludes private additions', () => {
   const articles = [
     ...JSON.parse(fs.readFileSync('src/data/latest-news.json', 'utf8')),
     ...JSON.parse(fs.readFileSync('src/data/archived-news.json', 'utf8')),
   ];
   const columns = JSON.parse(fs.readFileSync('src/data/authored-columns.json', 'utf8'));
-  const catalog = buildPublicPublicationCatalog({ articles, columns });
+  const addedColumn = {
+    ...publishedColumn,
+    id: 'col-growth-regression',
+    slug: 'grid-capacity-growth-regression-2026-10-09',
+    title: 'A newly published column expands the public catalog',
+    publishedAt: '2026-10-09T01:00:00.000Z',
+  };
+  const privateAddition = {
+    ...addedColumn,
+    id: 'col-growth-private',
+    slug: 'grid-capacity-private-2026-10-09',
+    draft: true,
+    public_status: 'draft',
+  };
+  const expectedPublicColumnIds = new Set([...columns, addedColumn].map((column) => column.id));
+  const catalog = buildPublicPublicationCatalog({
+    articles,
+    columns: [...columns, addedColumn, privateAddition],
+  });
   const publicColumnIds = new Set(catalog.filter((item) => item.type === 'Column').map((item) => item.id));
 
-  assert.equal(columns.length, 21);
-  assert.equal(publicColumnIds.size, 21);
-  assert.ok(columns.every((column) => publicColumnIds.has(column.id)));
+  assert.equal(publicColumnIds.size, expectedPublicColumnIds.size);
+  assert.deepEqual([...publicColumnIds].sort(), [...expectedPublicColumnIds].sort());
+  assert.equal(publicColumnIds.has(privateAddition.id), false);
 });

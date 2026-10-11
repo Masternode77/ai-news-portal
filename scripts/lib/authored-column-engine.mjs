@@ -524,11 +524,11 @@ const FEEDBACK_HINTS = [
   [/^source_summary_ratio_above_/, () =>
     'Reduce the space spent retelling the source chronology and benchmark results. Keep essential facts, qualifiers and numeric attribution, then develop the operator decision: competing interpretations, criteria for acting, and measurements that would distinguish them. Use your own argument and wording. Do not add unsupported mechanisms or economic claims to make the prose less like a summary.'],
   [/^deck_length_out_of_range$/, () =>
-    'Rewrite the deck as a single standfirst sentence between 80 and 240 characters.'],
+    'Rewrite the deck as a complete single standfirst sentence between 80 and 170 characters.'],
   [/^title_length_out_of_range$/, () =>
     'Rewrite the headline to between 40 and 105 characters, specific and first-person friendly.'],
   [/^summary_above_170_chars$/, () =>
-    'Shorten the deck so its first 170 characters stand alone as a summary.'],
+    'Rewrite the deck as a complete standfirst sentence no longer than 170 characters.'],
   [/^words_below_(\d+)$/, (match) =>
     `Lengthen the essay to at least ${match[1]} words by deepening the analysis — no padding or repetition.`],
   [/^words_above_(\d+)$|^body_above_(\d+)_chars$/, () =>
@@ -900,7 +900,7 @@ async function draftPass({ charter, selection, ledger, evidenceBrief, stance, re
     systemPrompt: [
       personaSystemPrompt(charter),
       'Task: write the full column as strict JSON only:',
-      '{ "headline": string (40-105 chars), "deck": string (one standfirst sentence, 80-240 chars), "opening_paragraphs": string[], "sections": [{ "heading": string, "paragraphs": string[] }], "figures": FigureSpec[] }',
+      '{ "headline": string (40-105 chars), "deck": string (one complete standfirst sentence, 80-170 chars), "opening_paragraphs": string[], "sections": [{ "heading": string, "paragraphs": string[] }], "figures": FigureSpec[] }',
       'FigureSpec (1 to 3 of them, drawn ONLY from the verified_claims array): { "type": "stat-row"|"table"|"bar", "title": string (8-60 chars, specific to this argument — never a generic label like "By the numbers"), "claim_indexes": int[] (0-based indexes into verified_claims; a bar needs 3+ claims sharing one unit), "anchor": int (the figure renders after this section, 1-based) }',
       'Essay contract:',
       '- Return exactly 4 to 6 objects in sections, each with its own heading and at least one substantive paragraph. The complete essay must have at least six substantive paragraphs. Put any unheaded opening paragraphs in opening_paragraphs (an empty array is allowed). Do not return a body string: the publisher assembles the paragraph arrays and headings with blank lines.',
@@ -952,7 +952,7 @@ async function voicePass({ charter, draft, evidence, feedback = [], callModel })
       'Preserve source qualifiers and attribution while consolidating. Do not game the measurement through synonym substitution or attribution deletion, and do not invent facts, mechanisms or economics to replace source summary.',
       ...(failedSourceSummary ? ['The previous deterministic source-summary check failed. Use the current exact counts and flagged blocks, which describe the draft in this request, rather than relying on a generic rewrite.'] : []),
       feedback.length
-        ? `The previous version failed these checks — fix every one without weakening the argument: ${feedback.join(' | ')}. Keep the headline at 40-105 characters and the deck at 80-240 characters; put detailed qualifications in the body.`
+        ? `The previous version failed these checks — fix every one without weakening the argument: ${feedback.join(' | ')}. Keep the headline at 40-105 characters and the deck as a complete sentence of 80-170 characters; put detailed qualifications in the body.`
         : 'Polish only; keep structure and headings.',
     ].join('\n'),
     userPrompt: JSON.stringify({ ...draft, source_summary_diagnostics: summaryDiagnostics, evidence, verified_claims: evidence.verified_claims }),
@@ -999,7 +999,7 @@ async function editorialRepairPass({ charter, draft, evidence, reviewFeedback = 
       allowUnchanged
         ? 'A rejected model figure will be replaced automatically from verified claims. For this one pending reset, keep the headline and deck unchanged and return edits: [] only if replacing that figure fully resolves all findings; otherwise repair the affected copy. Every factual and numeric replacement must remain grounded in evidence and verified_claims.'
         : 'Use an empty edits array only when changing the headline or deck fully resolves the feedback. Every factual and numeric replacement must remain grounded in evidence and verified_claims.',
-      'Keep the headline at 40-105 characters and the deck at 80-240 characters; put detailed qualifications in an edited body block.',
+      'Keep the headline at 40-105 characters and the deck as a complete sentence of 80-170 characters; put detailed qualifications in an edited body block.',
       'Review findings describe the previously reviewed version and may already be resolved in the current draft. Current deterministic failures and diagnostics describe the exact draft in body_blocks and take precedence for this repair.',
       'Use review_findings to locate each unsupported claim in the current headline, deck, or zero-based body_block_indexes. When a matching block still carries an unsupported factual premise, edit that block and remove the premise itself; presenting the same premise as opinion, conditional analysis, counterargument, metaphor, or operator exposure does not repair it.',
       'Replace removed material only with source-bounded analysis: a decision criterion supported by evidence, a concrete unanswered measurement, or an explanation of how different observed results would change the decision. Do not invent persistence, profitability, representativeness, physical capacity demand, motives, costs, or affected parties.',
@@ -1027,6 +1027,7 @@ function columnRecord({ charter, selection, stance, essay, quality, figures = []
   const publishedAt = now.toISOString();
   const dateSlug = publishedAt.slice(0, 10);
   const slug = `${slugify(essay.headline).slice(0, 64).replace(/-+$/, '')}-${dateSlug}`;
+  const completeDeck = String(essay.deck || '').replace(/\s+/g, ' ').trim();
   const primaryImage = [selection.article.generatedImage, selection.article.heroImage, selection.article.thumbnailImage]
     .find((image) => typeof image === 'string' && image.startsWith('/generated/'))
     || '/generated/fallbacks/ai-infrastructure.svg';
@@ -1037,11 +1038,11 @@ function columnRecord({ charter, selection, stance, essay, quality, figures = []
     public_content_tier: AUTHORED_COLUMN_TIER,
     slug,
     title: truncate(essay.headline, 110),
-    deck: truncate(essay.deck, 260),
-    summary: truncate(essay.deck, 170),
+    deck: completeDeck,
+    summary: completeDeck,
     expertLensFull: {
       finalHeadline: truncate(essay.headline, 110),
-      metaDescription: truncate(essay.deck, 170),
+      metaDescription: completeDeck,
       finalArticleBody: essay.body,
       sourceLink: '',
     },
@@ -1319,7 +1320,7 @@ async function attemptColumnForSelection({
         body: essay.body,
         title: essay.headline,
         deck: essay.deck || '',
-        summary: truncate(essay.deck || '', 170),
+        summary: essay.deck || '',
         thesis: publicationStance.thesis,
         ledgerClaims: ledger.claims,
         sourceText,

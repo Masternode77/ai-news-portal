@@ -9,6 +9,7 @@ import { buildHomepageFeed } from '../scripts/lib/homepage-feed-builder.mjs';
 import { isPublicProductFit } from '../scripts/lib/public-product-fit.mjs';
 import { currentSourceTextAuthorization } from '../scripts/lib/source-text-publication-authorization.mjs';
 import { buildPublicPublicationCatalog } from '../scripts/lib/public-publication-catalog.mjs';
+import { buildTaxonomyReport, renderedTaxonomyDetailRouteCount } from '../scripts/rebuild-taxonomy-pages.mjs';
 
 function sourceTaxonomyEligible(article = {}) {
   return Boolean(article?.id && article.archiveOnly !== true);
@@ -71,4 +72,66 @@ test('taxonomy report separates internal source partitions from rights-safe publ
   assert.ok(report.includes(`Public archive route: \`/archive/\` (${catalog.length} rendered eligible records)`));
   assert.match(report, new RegExp(`Taxonomy detail routes with rendered eligible records: ${renderedTaxonomyRouteCount}`));
   assert.doesNotMatch(report, /^Archive pages:/m);
+});
+
+test('taxonomy report archive count grows with eligible authored columns only', () => {
+  const addedColumn = {
+    ...authoredColumns[0],
+    id: 'taxonomy-growth-column',
+    slug: 'taxonomy-growth-column-2026-10-09',
+    title: 'A new public column expands the archive route',
+    publishedAt: '2026-10-09T01:00:00.000Z',
+  };
+  const privateAddition = {
+    ...addedColumn,
+    id: 'taxonomy-private-column',
+    slug: 'taxonomy-private-column-2026-10-09',
+    draft: true,
+    public_status: 'draft',
+  };
+  const catalog = buildPublicPublicationCatalog({
+    articles: [...latestNews, ...archivedNews],
+    columns: [...authoredColumns, addedColumn, privateAddition],
+  });
+  const renderedTaxonomyRoutes = renderedTaxonomyDetailRouteCount(taxonomyPages, catalog);
+  const report = buildTaxonomyReport({
+    taxonomy: taxonomyPages,
+    sourceArtifactRecordCount: uniqueIds([...latestNews, ...archivedNews].filter(sourceTaxonomyEligible)).size,
+    publicCatalog: catalog,
+    renderedTaxonomyRoutes,
+  });
+
+  assert.ok(catalog.some((item) => item.id === addedColumn.id));
+  assert.equal(catalog.some((item) => item.id === privateAddition.id), false);
+  assert.ok(report.includes(`Public archive route: \`/archive/\` (${catalog.length} rendered eligible records)`));
+});
+
+test('taxonomy route count includes category and region routes populated only by a public column', () => {
+  const addedColumn = {
+    ...authoredColumns[0],
+    id: 'taxonomy-column-only-route',
+    slug: 'taxonomy-column-only-route-2026-10-09',
+    title: 'A public column opens category and region routes',
+    primary_category: 'Column Only Capacity',
+    region: 'Column Only Region',
+    publishedAt: '2026-10-09T02:00:00.000Z',
+  };
+  const privateAddition = {
+    ...addedColumn,
+    id: 'taxonomy-private-only-route',
+    slug: 'taxonomy-private-only-route-2026-10-09',
+    draft: true,
+    public_status: 'draft',
+  };
+  const catalog = buildPublicPublicationCatalog({ columns: [addedColumn, privateAddition] });
+  const [publicColumn] = catalog;
+  const taxonomy = {
+    categories: [{ slug: publicColumn.categorySlug, items: [] }],
+    regions: [{ slug: publicColumn.regionSlug, items: [] }],
+    companies: [],
+  };
+
+  assert.equal(catalog.length, 1);
+  assert.equal(catalog[0].id, addedColumn.id);
+  assert.equal(renderedTaxonomyDetailRouteCount(taxonomy, catalog), 2);
 });

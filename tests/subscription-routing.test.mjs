@@ -403,7 +403,7 @@ test('final essay headline and full deck replace the initial stance in metadata 
   process.env.AUTHORED_MIN_WORDS='700';
   process.env.AUTHORED_MIN_CHARS='4200';
   const finalEssay=JSON.parse(essayJson());
-  finalEssay.deck='Northline Power secured 200 MW for its Dakota AI campus, and I think the anchor tenant bought schedule risk that remains conditional on the utility completing the substation and meeting the source reported energization target.';
+  finalEssay.deck="Northline Power secured 200 MW for its Dakota AI campus, while the anchor tenant's schedule risk remains conditional on utility substation completion.";
   const initialStance={
     thesis:'The source guarantees a universal economic windfall.',
     angle:'Guaranteed Profit From Every Idle Megawatt',
@@ -423,8 +423,13 @@ test('final essay headline and full deck replace the initial stance in metadata 
       },
     });
     assert.ok(result.column);
+    assert.equal(result.column.title,finalEssay.headline);
+    assert.equal(result.column.deck,finalEssay.deck);
+    assert.equal(result.column.summary,finalEssay.deck);
+    assert.equal(result.column.expertLensFull.finalHeadline,finalEssay.headline);
+    assert.equal(result.column.expertLensFull.metaDescription,finalEssay.deck);
     assert.equal(result.column.stance.thesis,finalEssay.deck);
-    assert.equal(result.column.stance.thesis.length,226);
+    assert.equal(result.column.stance.thesis.length,150);
     assert.equal(result.column.stance.angle,finalEssay.headline);
     assert.deepEqual(result.column.stance.standing_position_ids,initialStance.standing_position_ids);
     assert.ok(result.column.figures.length>0);
@@ -692,7 +697,7 @@ test('rejected cross-review feedback repairs the voice and requires a fresh acce
         if (tasks.length === 4) {
           assert.match(request.systemPrompt, /Astra review issue: source mismatch 12/);
           assert.match(request.systemPrompt, /headline at 40-105 characters/);
-          assert.match(request.systemPrompt, /deck at 80-240 characters/);
+          assert.match(request.systemPrompt, /deck as a complete sentence of 80-170 characters/);
           assert.match(request.systemPrompt, /Exact unverified claim to remove or correct against the source: "The developer waited two years/);
           assert.match(request.systemPrompt, /presenting the same premise as opinion, conditional analysis, counterargument, metaphor, or operator exposure does not repair it/i);
           assert.match(request.systemPrompt, /source-bounded analysis/i);
