@@ -186,3 +186,15 @@ test('unattributed prepositional and participial uses are still input provenance
     assert.equal(readerCopyResult({ body }).ok, true, body);
   }
 });
+test('tag pills, the column byline and the column source list are reader copy', () => {
+  const result = readerCopyResult({
+    tags: ['kubernetes', 'the supplied extract'],
+    author: { name: 'I will not invent numbers', role: 'Columnist', slug: 'x' },
+    sources: [{ url: 'https://example.com', title: 'return strict JSON', publisher: 'HPCwire', author: 'A Reporter' }, null],
+  });
+  assert.deepEqual(result.reasons, [
+    'reader_copy:input_provenance:tags[1]',
+    'reader_copy:process_assurance:author.name',
+    'reader_copy:instruction_scaffold:sources[0].title',
+  ]);
+});

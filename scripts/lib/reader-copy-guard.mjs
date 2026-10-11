@@ -67,6 +67,14 @@ export function readerCopySurfaces(candidate = {}) {
   for (const field of ['region', 'source', 'category', 'primary_category']) {
     add(field, candidate[field]);
   }
+  // Tag pills on the news page, the column byline, and the column's source list.
+  for (const [i, tag] of (Array.isArray(candidate.tags) ? candidate.tags : []).entries()) add(`tags[${i}]`, tag);
+  const author = candidate.author || {};
+  for (const field of ['name', 'role']) add(`author.${field}`, author[field]);
+  for (const [i, source] of (Array.isArray(candidate.sources) ? candidate.sources : []).entries()) {
+    if (!source || typeof source !== 'object') continue;
+    for (const field of ['title', 'publisher', 'name', 'author']) add(`sources[${i}].${field}`, source[field]);
+  }
   for (const [i, note] of (Array.isArray(candidate.corrections) ? candidate.corrections : []).entries()) {
     if (note && typeof note === 'object') add(`corrections[${i}].summary`, note.summary);
   }
