@@ -38,10 +38,24 @@ export function readerCopySurfaces(candidate = {}) {
     if (typeof text === 'string' && text.trim()) surfaces.push({ field, text });
   };
   // `articleImageAlt()` renders `imageAlt || image_alt`, so both spellings count.
-  for (const field of ['title', 'headline', 'deck', 'summary', 'snippet', 'why_it_matters', 'expertLensShort', 'metaDescription', 'body', 'imageAlt', 'image_alt']) {
+  const full = candidate.expertLensFull || {};
+  const persisted = candidate.public_presentation || {};
+  const present = (value) => typeof value === 'string' && value.trim().length > 0;
+  for (const field of ['title', 'headline', 'summary', 'snippet', 'expertLensShort', 'metaDescription']) {
     add(field, candidate[field]);
   }
-  const full = candidate.expertLensFull || {};
+  // Precedence follows the renderers: the news template shows
+  // expertLensFull.finalArticleBody and ignores a legacy top-level body when
+  // both exist; buildPublicPresentation prefers the persisted deck,
+  // why-it-matters and image alt over the top-level fields. A shadowed
+  // fallback is not reader copy, so stale text there cannot fail a gate.
+  if (!present(full.finalArticleBody)) add('body', candidate.body);
+  if (!present(persisted.deck)) add('deck', candidate.deck);
+  if (!present(persisted.why_it_matters)) add('why_it_matters', candidate.why_it_matters);
+  if (!present(persisted.image_alt)) {
+    add('imageAlt', candidate.imageAlt);
+    add('image_alt', candidate.image_alt);
+  }
   for (const field of ['finalHeadline', 'metaDescription', 'finalArticleBody']) {
     add(`expertLensFull.${field}`, full[field]);
   }
@@ -51,7 +65,7 @@ export function readerCopySurfaces(candidate = {}) {
   // region, source and category are never read by the renderer (title comes
   // from card copy or the headline, the rest from top-level fields), so they
   // are not reader copy and stale values there cannot block the gate.
-  const presentation = candidate.public_presentation || {};
+  const presentation = persisted;
   for (const field of ['deck', 'why_it_matters', 'image_alt']) {
     add(`public_presentation.${field}`, presentation[field]);
   }

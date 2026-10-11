@@ -9,6 +9,7 @@ import { readerCopyResult, editorialReviewWarnings } from './lib/reader-copy-gua
 import { buildHomepageFeed } from './lib/homepage-feed-builder.mjs';
 import { buildArchiveFeed } from './lib/archive-feed-builder.mjs';
 import { authoredColumnPublicEligible, isAuthoredColumn } from './lib/authored-column-policy.mjs';
+import { buildPublicPresentation } from './lib/public-presentation.mjs';
 
 const CARD_FIELDS = ['id', 'title', 'deck', 'why_it_matters', 'image_alt', 'reader_impact', 'signal_label', 'editorial_lens', 'lane_title', 'region', 'source', 'category'];
 
@@ -46,6 +47,21 @@ export function auditReaderCopy(collections, { homepageSignals = [] } = {}) {
     }
   }
   const signalsById = new Map(homepageSignals.filter((signal) => signal?.id).map((signal) => [signal.id, signal]));
+  // The presentation the page header and any card actually render, built the
+  // same way src/pages/news/[id].astro and buildHomepageFeed build it. This
+  // honors field precedence (persisted deck over top-level deck, synthesized
+  // deck from source text when neither exists) instead of auditing raw fields.
+  const presentationCopyResult = (record) => {
+    const built = buildPublicPresentation(record);
+    return readerCopyResult({
+      title: built.title, deck: built.deck, why_it_matters: built.why_it_matters, imageAlt: built.image_alt,
+      region: built.region, source: built.source,
+      public_presentation: {
+        reader_impact: built.reader_impact,
+        signal_label: built.signal_label, editorial_lens: built.editorial_lens, lane_title: built.lane_title,
+      },
+    });
+  };
   // Every textual field the card components render, mapped onto the guard's
   // presentation surfaces.
   const cardCopyResult = (signal) => readerCopyResult({
@@ -65,7 +81,7 @@ export function auditReaderCopy(collections, { homepageSignals = [] } = {}) {
   const articles = records.map(record => {
     const body = record.expertLensFull?.finalArticleBody || record.body || '';
     const signal = signalsById.get(record.id);
-    const copy = signal ? mergeCopyResults(readerCopyResult(record), cardCopyResult(signal)) : readerCopyResult(record);
+    const copy = mergeCopyResults(readerCopyResult(record), presentationCopyResult(record), ...(signal ? [cardCopyResult(signal)] : []));
     return {
       id: record.id, collection: record.collection, title: record.title,
       path: isColumn(record) ? `/column/${record.slug}/` : `/news/${record.slug || record.id}/`,
@@ -78,24 +94,17 @@ export function auditReaderCopy(collections, { homepageSignals = [] } = {}) {
   });
   // Cards without an article page (signal cards, briefs on the homepage,
   // archive, category, region and search pages) render the same
-  // title/deck/why-it-matters copy; check the rendered card and the stored
-  // fields that feed it. A body or figure nobody can reach is not reader
-  // copy for a card-only record, so those fields are left out here.
-  const cardRecordCopyResult = (record) => readerCopyResult({
-    title: record.title, headline: record.headline, deck: record.deck, summary: record.summary, snippet: record.snippet,
-    why_it_matters: record.why_it_matters, expertLensShort: record.expertLensShort, metaDescription: record.metaDescription,
-    imageAlt: record.imageAlt, image_alt: record.image_alt,
-    expertLensFull: { finalHeadline: record.expertLensFull?.finalHeadline, metaDescription: record.expertLensFull?.metaDescription },
-    public_presentation: record.public_presentation, public_routing: record.public_routing,
-    region: record.region, source: record.source, category: record.category, primary_category: record.primary_category,
-  });
+  // title/deck/why-it-matters copy; check the rendered card and the
+  // presentation built from the stored record. A body, figure or correction
+  // note nobody can reach is not reader copy for a card-only record, and a
+  // top-level field shadowed by a persisted presentation value is not either.
   const articleIds = new Set(articles.map((article) => article.id));
   const cards = [...signalsById.values()].filter((signal) => !articleIds.has(signal.id)).map((signal) => {
     const record = unique.get(signal.id);
     return {
       id: signal.id, collection: record?.collection || null, title: signal.title, path: '/',
       publishedAt: record?.publishedAt || null,
-      readerCopy: record ? mergeCopyResults(cardCopyResult(signal), cardRecordCopyResult(record)) : cardCopyResult(signal),
+      readerCopy: record ? mergeCopyResults(cardCopyResult(signal), presentationCopyResult(record)) : cardCopyResult(signal),
     };
   });
   return {

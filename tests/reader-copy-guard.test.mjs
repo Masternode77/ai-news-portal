@@ -209,3 +209,9 @@ test('a colon label before the phrase is a sentence boundary', () => {
 test('the column thesis is reader copy', () => {
   assert.deepEqual(readerCopyResult({ stance: { thesis: 'I will not invent numbers.' } }).reasons, ['reader_copy:process_assurance:stance.thesis']);
 });
+test('a fallback field shadowed by the rendered value is not reader copy', () => {
+  assert.equal(readerCopyResult({ body: 'the supplied extract', expertLensFull: { finalArticleBody: 'A clean final body.' } }).ok, true);
+  assert.deepEqual(readerCopyResult({ body: 'the supplied extract' }).reasons, ['reader_copy:input_provenance:body']);
+  assert.equal(readerCopyResult({ deck: 'the supplied extract', why_it_matters: 'I will not invent numbers', imageAlt: 'return strict JSON', public_presentation: { deck: 'Clean.', why_it_matters: 'Clean.', image_alt: 'Clean visual' } }).ok, true);
+  assert.deepEqual(readerCopyResult({ deck: 'the supplied extract', public_presentation: { deck: '   ' } }).reasons, ['reader_copy:input_provenance:deck']);
+});

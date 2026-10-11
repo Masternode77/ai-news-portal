@@ -113,3 +113,17 @@ test('detail gate rejects writer-only reader copy without inspecting source evid
   assert.equal(leakedNote.ok, false);
   assert.ok(leakedNote.reasons.includes('reader_copy:writer_extract:corrections[0].summary'));
 });
+
+test('detail gate ignores a legacy top-level body shadowed by the rendered final body', () => {
+  const paragraph = 'China’s spot power trading pilot gives large data centers a different operating lever because load flexibility can change how operators manage procurement exposure, while power teams watch participation volumes, price dispersion, utility milestones, and repeatable procurement advantage.';
+  const body = Array.from({ length: 5 }, (_, section) => [`Operating Decision ${section + 1}`, `${paragraph} ${paragraph}`, `${paragraph} ${paragraph}`].join('\n\n')).join('\n\n');
+  const result = articleDetailQualityResult({
+    id: 'shadowed-body',
+    title: 'China data centers tap spot power trading',
+    infrastructure_relevance_score: 0.9,
+    articleText: `${'China spot power trading creates a grid-market operating lever for large data centers and virtual power plant participation. '.repeat(25)}Final sentence complete.`,
+    body: 'The supplied extract reports a benchmark.',
+    expertLensFull: { finalArticleBody: body },
+  });
+  assert.equal(result.ok, true, result.reasons.join(','));
+});

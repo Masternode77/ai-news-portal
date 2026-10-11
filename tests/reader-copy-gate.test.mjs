@@ -43,10 +43,11 @@ test('homepage cards without an article page are audited as reader copy', () => 
   assert.equal(report.homepageCards, 1);
   assert.equal(report.readerCopyFlaggedCards, 1);
   assert.deepEqual(report.cards[0].readerCopy.reasons, ['reader_copy:input_provenance:deck']);
-  // The stored record behind a clean rendered card is checked too (persisted presentation copy).
+  // The presentation built from the stored record behind a clean rendered card is checked too
+  // (the persisted deck wins over the top-level deck, and is reported as the rendered deck).
   const stored = { ...card, public_presentation: { deck: 'I will not invent numbers.' } };
   const storedReport = auditReaderCopy({ latest: [stored] }, { homepageSignals: [{ ...rendered, deck: 'Clean rendered deck.' }] });
-  assert.deepEqual(storedReport.cards[0].readerCopy.reasons, ['reader_copy:process_assurance:public_presentation.deck']);
+  assert.deepEqual(storedReport.cards[0].readerCopy.reasons, ['reader_copy:process_assurance:deck']);
   // A card that also has a published article page is reported once, as an article.
   const article = { ...card, articlePagePublished: true, expertLensFull: { finalArticleBody: 'Clean body.' } };
   const articleReport = auditReaderCopy({ latest: [article] }, { homepageSignals: [rendered] });
@@ -123,10 +124,28 @@ test('a card-only record is audited on the fields that feed the card, not on an 
   const rendered = { id: 'signal', title: 'A signal card', deck: 'Clean rendered deck.', why_it_matters: 'Clean.', image_alt: 'Clean visual' };
   const clean = auditReaderCopy({ latest: [card] }, { homepageSignals: [rendered] });
   assert.equal(clean.readerCopyFlaggedCards, 0);
-  // A stored field that does feed the card is still checked.
+  // A stored field that does feed the card is still checked, through the presentation built from it
+  // (the final headline becomes the card title and the derived image alt).
   const leaked = auditReaderCopy({ latest: [{ ...card, expertLensFull: { ...card.expertLensFull, finalHeadline: 'the supplied extract' } }] }, { homepageSignals: [rendered] });
-  assert.deepEqual(leaked.cards[0].readerCopy.reasons, ['reader_copy:input_provenance:expertLensFull.finalHeadline']);
+  assert.deepEqual(leaked.cards[0].readerCopy.reasons, ['reader_copy:input_provenance:title', 'reader_copy:input_provenance:imageAlt']);
   // The same record with an article page is audited in full.
   const page = auditReaderCopy({ latest: [{ ...card, articlePagePublished: true }] }, { homepageSignals: [rendered] });
   assert.ok(page.articles[0].readerCopy.reasons.includes('reader_copy:writer_extract:expertLensFull.finalArticleBody'));
+});
+
+test('the audit checks the presentation each page and card actually renders', () => {
+  const base = { id: 'page-only', slug: 'page-only', articlePagePublished: true, homepagePublished: false, title: 'A page-only article', expertLensFull: { finalArticleBody: 'A clean final body.' } };
+  // A persisted deck leaking writer-only language is caught without any feed signal.
+  const leaked = auditReaderCopy({ latest: [{ ...base, public_presentation: { deck: 'The supplied extract reports a benchmark.' } }] });
+  assert.ok(leaked.articles[0].readerCopy.reasons.includes('reader_copy:input_provenance:deck'));
+  // So is a deck the renderer synthesizes from source text when no deck is stored (page outside the feeds).
+  const synthesized = auditReaderCopy({ latest: [{ ...base, title: 'Grid delivery sets the schedule for a 300 MW campus', articleText: 'The supplied extract reports a 300 MW interconnection delay for the campus. Utility planners expect delivery in 2029. '.repeat(6) }] });
+  assert.deepEqual(synthesized.articles[0].readerCopy.reasons, ['reader_copy:input_provenance:deck']);
+  // A stale top-level deck shadowed by a clean persisted deck is not reader copy, for a page or for a card-only record.
+  const shadowedPage = auditReaderCopy({ latest: [{ ...base, deck: 'The supplied extract reports a benchmark.', public_presentation: { deck: 'A clean persisted deck for readers.' } }] });
+  assert.equal(shadowedPage.readerCopyFlaggedArticles, 0, shadowedPage.articles[0].readerCopy.reasons.join('|'));
+  const card = { id: 'signal', articlePagePublished: false, signalCardOnly: true, homepagePublished: true, title: 'A signal card', deck: 'The supplied extract reports a benchmark.', public_presentation: { deck: 'A clean persisted deck for readers.' } };
+  const rendered = { id: 'signal', title: 'A signal card', deck: 'A clean persisted deck for readers.', why_it_matters: 'Clean.', image_alt: 'Clean visual' };
+  const shadowedCard = auditReaderCopy({ latest: [card] }, { homepageSignals: [rendered] });
+  assert.equal(shadowedCard.readerCopyFlaggedCards, 0, shadowedCard.cards[0].readerCopy.reasons.join('|'));
 });
