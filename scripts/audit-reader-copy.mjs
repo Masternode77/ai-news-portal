@@ -8,8 +8,9 @@ import { fileURLToPath } from 'node:url';
 import { readerCopyResult, editorialReviewWarnings } from './lib/reader-copy-guard.mjs';
 import { buildHomepageFeed } from './lib/homepage-feed-builder.mjs';
 import { buildArchiveFeed } from './lib/archive-feed-builder.mjs';
+import { authoredColumnPublicEligible, isAuthoredColumn } from './lib/authored-column-policy.mjs';
 
-const CARD_FIELDS = ['id', 'title', 'deck', 'why_it_matters', 'image_alt'];
+const CARD_FIELDS = ['id', 'title', 'deck', 'why_it_matters', 'image_alt', 'reader_impact'];
 
 /**
  * Every card a reader can reach, as the feed builders render it: the full
@@ -45,15 +46,23 @@ export function auditReaderCopy(collections, { homepageSignals = [] } = {}) {
     }
   }
   const signalsById = new Map(homepageSignals.filter((signal) => signal?.id).map((signal) => [signal.id, signal]));
-  const cardCopyResult = (signal) => readerCopyResult({ title: signal.title, deck: signal.deck, why_it_matters: signal.why_it_matters, imageAlt: signal.image_alt });
-  const records = [...unique.values()].filter(record => record.articlePagePublished === true);
+  const cardCopyResult = (signal) => readerCopyResult({
+    title: signal.title, deck: signal.deck, why_it_matters: signal.why_it_matters, imageAlt: signal.image_alt,
+    public_presentation: { reader_impact: signal.reader_impact },
+  });
+  // A column page exists whenever the column route's own predicate accepts the
+  // record (`authoredColumnPublicEligible`, which does not read the news-article
+  // flag); a news page exists when `articlePagePublished` is true.
+  const isColumn = (record) => record.collection === 'authored-columns' || isAuthoredColumn(record);
+  const hasReaderPage = (record) => record.articlePagePublished === true || (isColumn(record) && authoredColumnPublicEligible(record));
+  const records = [...unique.values()].filter(hasReaderPage);
   const articles = records.map(record => {
     const body = record.expertLensFull?.finalArticleBody || record.body || '';
     const signal = signalsById.get(record.id);
     const copy = signal ? mergeCopyResults(readerCopyResult(record), cardCopyResult(signal)) : readerCopyResult(record);
     return {
       id: record.id, collection: record.collection, title: record.title,
-      path: record.collection === 'authored-columns' ? `/column/${record.slug}/` : `/news/${record.slug || record.id}/`,
+      path: isColumn(record) ? `/column/${record.slug}/` : `/news/${record.slug || record.id}/`,
       publishedAt: record.publishedAt || null,
       words: body.trim() ? body.trim().split(/\s+/).length : 0,
       sourceCount: Array.isArray(record.sources) ? record.sources.length : Number(Boolean(record.sourceUrl || record.url)),
@@ -75,7 +84,7 @@ export function auditReaderCopy(collections, { homepageSignals = [] } = {}) {
     };
   });
   return {
-    scope: 'Stored records with articlePagePublished=true plus every card the homepage and archive feeds render; reconcile with live sitemap separately.',
+    scope: 'Stored records with a reader page (articlePagePublished=true, or a column accepted by authoredColumnPublicEligible) plus every card the homepage and archive feeds render; reconcile with live sitemap separately.',
     interpretation: 'Deterministic copy findings and review signals are not factual-error verdicts. A clean result does not certify accuracy.',
     collectionCounts, uniqueRecords: unique.size, publishedRecords: articles.length,
     publishedWords: articles.reduce((sum, article) => sum + article.words, 0),

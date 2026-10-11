@@ -45,6 +45,10 @@ export function readerCopySurfaces(candidate = {}) {
   for (const field of ['title', 'deck', 'why_it_matters', 'image_alt']) {
     add(`public_presentation.${field}`, presentation[field]);
   }
+  // Reader-impact labels render as visible pills on every card.
+  for (const [i, label] of (Array.isArray(presentation.reader_impact) ? presentation.reader_impact : []).entries()) {
+    add(`public_presentation.reader_impact[${i}]`, label);
+  }
   for (const [i, note] of (Array.isArray(candidate.corrections) ? candidate.corrections : []).entries()) {
     if (note && typeof note === 'object') add(`corrections[${i}].summary`, note.summary);
   }

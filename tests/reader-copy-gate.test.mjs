@@ -76,3 +76,26 @@ test('strict mode fails only when a published record is flagged', (t) => {
   // Without --strict the same inventory is reported, not failed.
   assert.equal(main(['--out', 'report.json'], cwd), 0);
 });
+
+test('columns are scoped by the column route predicate, not the news-article flag', () => {
+  const column = {
+    id: 'col_legacy', slug: 'legacy', title: 'A legacy column without the news flag', content_origin: 'authored',
+    draft: false, public_status: 'published', authored_quality: { ok: true },
+    expertLensFull: { finalArticleBody: 'The extract I have does not report production latency.' },
+  };
+  const report = auditReaderCopy({ 'authored-columns': [column] });
+  assert.equal(report.publishedRecords, 1);
+  assert.equal(report.articles[0].path, '/column/legacy/');
+  assert.deepEqual(report.articles[0].readerCopy.reasons, ['reader_copy:writer_extract:expertLensFull.finalArticleBody']);
+  // A draft column has no page and is not audited; a news record still needs the flag.
+  assert.equal(auditReaderCopy({ 'authored-columns': [{ ...column, draft: true }] }).publishedRecords, 0);
+  assert.equal(auditReaderCopy({ latest: [{ ...column, content_origin: undefined, slug: undefined }] }).publishedRecords, 0);
+});
+
+test('rendered reader-impact pills are part of the card audit', () => {
+  const card = { id: 'signal', articlePagePublished: false, signalCardOnly: true, homepagePublished: true, title: 'A signal card', deck: 'A clean stored deck.' };
+  const rendered = { id: 'signal', title: 'A signal card', deck: 'Clean rendered deck.', why_it_matters: 'Clean.', image_alt: 'Clean visual', reader_impact: ['Operators', 'I will not invent numbers'] };
+  const report = auditReaderCopy({ latest: [card] }, { homepageSignals: [rendered] });
+  assert.deepEqual(report.cards[0].readerCopy.reasons, ['reader_copy:process_assurance:public_presentation.reader_impact[1]']);
+  assert.ok(publicCardSignalsFor([]).every((signal) => 'reader_impact' in signal));
+});

@@ -141,3 +141,7 @@ test('both spellings of the image alt field are reader copy', () => {
     'reader_copy:instruction_scaffold:image_alt',
   ]);
 });
+test('reader-impact pills are reader copy', () => {
+  const result = readerCopyResult({ public_presentation: { reader_impact: ['Operators', 'the supplied extract', 'Investors'] } });
+  assert.deepEqual(result.reasons, ['reader_copy:input_provenance:public_presentation.reader_impact[1]']);
+});
