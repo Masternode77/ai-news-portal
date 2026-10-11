@@ -7,6 +7,7 @@ import SourceAttribution from '../../components/SourceAttribution.astro';
 import AIDisclosureFooter from '../../components/AIDisclosureFooter.astro';
 import AdSlot from '../../components/monetize/AdSlot.astro';
 import RelatedArticles from '../../components/RelatedArticles.astro';
+import EditorialCorrectionNote from '../../components/EditorialCorrectionNote.astro';
 import latestNews from '../../data/latest-news.json';
 import archivedNews from '../../data/archived-news.json';
 import { SITE } from '../../config/site';
@@ -131,6 +132,8 @@ const structuredData = buildArticleStructuredData({
         />
 
         {articleBodyBlocks.length ? <LongformArticleBody blocks={articleBodyBlocks} /> : null}
+
+        <EditorialCorrectionNote record={articleRecord} />
 
         <AdSlot variant="article" />
 

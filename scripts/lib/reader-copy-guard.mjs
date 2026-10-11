@@ -23,6 +23,9 @@ export function readerCopySurfaces(candidate = {}) {
   for (const field of ['finalHeadline', 'metaDescription', 'finalArticleBody']) {
     add(`expertLensFull.${field}`, full[field]);
   }
+  for (const [i, note] of (Array.isArray(candidate.corrections) ? candidate.corrections : []).entries()) {
+    if (note && typeof note === 'object') add(`corrections[${i}].summary`, note.summary);
+  }
   for (const [i, figure] of (Array.isArray(candidate.figures) ? candidate.figures : []).entries()) {
     if (!figure || typeof figure !== 'object') continue;
     add(`figures[${i}].title`, figure.title);

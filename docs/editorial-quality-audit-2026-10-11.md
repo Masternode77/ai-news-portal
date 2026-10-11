@@ -105,3 +105,38 @@ LLM_PROVIDER=disabled PIPELINE_OFFLINE=1 npm run content:gate
 ```
 
 The change is intended for a review branch/PR, not a direct production deployment. A code commit is not proof of merge, deployment, automation activation or historical content repair. The strongest next operational action is source-specific correction of the P0 pieces, followed by completion of the publication validation and an explicit production release.
+
+## Independent verification addendum — 2026-10-11
+
+A second review re-ran this audit's checks against commit `396bd6f` (this PR's head) with `LLM_PROVIDER=disabled`. The Korean companion document `docs/editorial-correction-plan-2026-10-11-ko.md` carries the full comparison table, the revised priorities and the per-article correction log. The points that change this document's findings are recorded here.
+
+### Confirmed
+
+- Record counts (22 columns, 45 latest-news, 1,020 archived, 1,087 unique, 27 with `articlePagePublished=true`), the 38,156-word total, the Kubernetes `supplied extract` count (11), the coding-agent `the extract I have` count (4), the zero Arabic numerals in the five EIA bodies, and the 5-flagged / 15-warning scanner result all reproduce exactly.
+- The focused suite passed 130/130 and the reader-copy file 27/27 on re-run.
+- The P0 substantive findings (lease accounting, Gilroy chronology, Texas permitting agency, Taalas signing versus payment, CDU rating versus rack power, rendering as an inference proxy) are present in the stored bodies as described.
+
+### Corrections to this audit's own findings
+
+- **Accounting standard.** The NVIDIA financing column's counterparties are US cloud providers reporting under US GAAP. ASC 842, not IFRS 16, is the primary standard, and it also recognizes a right-of-use asset and lease liability for operating leases; "capital lease" is ASC 840 vocabulary (now "finance lease"). IFRS 16 remains a supporting citation.
+- **ERCOT chronology.** The column was published on 2026-09-16 from an EIA item dated 2026-09-03, which mentions a "recent moratorium on new data center interconnections". The 2026-09-21 TCEQ directive cited above post-dates the column and must not be written into it. The correction limits the column to the EIA sentence and removes the invented deadline and the rationing conclusion.
+- **800 VDC.** The body already states that the hybrid rack "does not eliminate the power queue". The defects are the headline, deck, unsourced interconnection lead-time and input-voltage figures, and "native 800 VDC substations"; they were corrected without rewriting the argument.
+
+### Findings this audit missed
+
+1. **Contaminated source extracts.** `cleaned_source_text` for the NVIDIA financing (`9ccadbbb854d8c11`), Qunnect/Monarch (`0a214f44a3ae4610`) and Eaton/Infleqtion (`2cc01594647686aa`) records is a block of HPCwire sidebar teasers, not the article, and extraction QA passed it (boilerplate ratio 0, sentence completion 1). The NVIDIA column's facts are supported only by the feed `contentText`; the quantum column's figures carried Oratomic and Hyperion fragments as evidence. Extraction QA needs a related-story teaser check before long-form generation.
+2. **Thin and roundup sources.** The Switch IPO column (1,337 words) rests on a 191-character Bloomberg sentence and asserted facility tiers, utility relationships and company history that the source does not contain; it is treated as P0 for unsupported claims. The Samsung column's source is a "Chip Industry Week in Review" roundup whose stored extract does not contain the zHBM, zNAND-O, BV-NAND, Kioxia or NEO details; those remain attributed to the roundup pending re-verification against the full article.
+3. **Gilroy.** "Broke ground in July 2026" and "started construction last month" are not in the stored Tom's Hardware extract, and "30 miles southwest of San Jose" is the wrong direction (Gilroy is south-southeast of San Jose). Both were removed.
+4. **Repeated opening device.** "I track data center capacity the way most people/analysts track chip supply..." appears in the Gilroy, Switch and sandbox columns. Cross-column lead similarity is not caught by the repetition detector.
+5. **Persona and invented-history language** beyond the scanner's regexes: "I have argued for two years", "I have argued before", "I have written before", "the first integrated GPU I have seen", "Two Standing Positions Apply Directly", "I argue from two standing positions", "This position rests on two standing views", "The standing position I argue from". All were replaced.
+6. **EIA bodies derive from `config/eiaRestorationArticles.json`.** Editing `latest-news.json` alone would be reverted by the restoration script; both were edited together.
+
+### Historic remediation applied in this PR
+
+- 19 columns and all 5 EIA articles were corrected by exact sentence-level replacement from the stored source evidence only; no body was regenerated, no article was unpublished, and `publishedAt`, slugs and images are unchanged. Three columns (Malaysia, EU ratings, cooling procurement) needed no change.
+- Each corrected record carries `corrections: [{ date, summary }]` and a refreshed `updatedAt`. Column and news pages render a "Corrections and updates" block after the body (`src/components/EditorialCorrectionNote.astro`), NewsArticle structured data carries `correction`, and the reader-copy guard treats correction summaries as public copy.
+- After the edits the reader-copy audit reports 0 flagged articles and 0 review warnings across the 27 published records, and every column passes the authored-column quality checks except the ledger-backed numeric check, which cannot be re-run because stored records do not carry their generation ledger.
+
+### Still requiring network access
+
+Live sitemap and production-deployment reconciliation (Vercel API access was refused with 403 in the review session), full-text comparison for the HPCwire, Tom's Hardware, Semiconductor Engineering and Bloomberg sources, the Texas governor's order and the Pecos County TCEQ permit record.
