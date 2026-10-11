@@ -79,14 +79,23 @@ export function auditReaderCopy(collections, { homepageSignals = [] } = {}) {
   // Cards without an article page (signal cards, briefs on the homepage,
   // archive, category, region and search pages) render the same
   // title/deck/why-it-matters copy; check the rendered card and the stored
-  // record behind it.
+  // fields that feed it. A body or figure nobody can reach is not reader
+  // copy for a card-only record, so those fields are left out here.
+  const cardRecordCopyResult = (record) => readerCopyResult({
+    title: record.title, headline: record.headline, deck: record.deck, summary: record.summary, snippet: record.snippet,
+    why_it_matters: record.why_it_matters, expertLensShort: record.expertLensShort, metaDescription: record.metaDescription,
+    imageAlt: record.imageAlt, image_alt: record.image_alt,
+    expertLensFull: { finalHeadline: record.expertLensFull?.finalHeadline, metaDescription: record.expertLensFull?.metaDescription },
+    public_presentation: record.public_presentation, public_routing: record.public_routing,
+    region: record.region, source: record.source, category: record.category, primary_category: record.primary_category,
+  });
   const articleIds = new Set(articles.map((article) => article.id));
   const cards = [...signalsById.values()].filter((signal) => !articleIds.has(signal.id)).map((signal) => {
     const record = unique.get(signal.id);
     return {
       id: signal.id, collection: record?.collection || null, title: signal.title, path: '/',
       publishedAt: record?.publishedAt || null,
-      readerCopy: record ? mergeCopyResults(cardCopyResult(signal), readerCopyResult(record)) : cardCopyResult(signal),
+      readerCopy: record ? mergeCopyResults(cardCopyResult(signal), cardRecordCopyResult(record)) : cardCopyResult(signal),
     };
   });
   return {

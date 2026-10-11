@@ -198,3 +198,12 @@ test('tag pills, the column byline and the column source list are reader copy', 
     'reader_copy:instruction_scaffold:sources[0].title',
   ]);
 });
+test('a colon label before the phrase is a sentence boundary', () => {
+  for (const body of ['Evidence note: Provided excerpts show a rise.', 'Method; supplied extracts were compared.']) {
+    assert.deepEqual(readerCopyResult({ body }).reasons, ['reader_copy:input_provenance:body'], body);
+  }
+  assert.equal(readerCopyResult({ body: 'Source: EIA provided excerpts from the filing.' }).ok, true);
+});
+test('the column thesis is reader copy', () => {
+  assert.deepEqual(readerCopyResult({ stance: { thesis: 'I will not invent numbers.' } }).reasons, ['reader_copy:process_assurance:stance.thesis']);
+});

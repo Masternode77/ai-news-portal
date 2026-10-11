@@ -112,3 +112,21 @@ test('rendered card metadata chips are part of the card audit', () => {
     assert.ok(publicCardSignalsFor([]).every((signal) => field in signal));
   }
 });
+
+test('a card-only record is audited on the fields that feed the card, not on an unreachable body', () => {
+  const card = {
+    id: 'signal', articlePagePublished: false, signalCardOnly: true, homepagePublished: true, title: 'A signal card', deck: 'A clean stored deck.',
+    body: 'The supplied extract reports a benchmark.',
+    expertLensFull: { finalHeadline: 'A clean headline', finalArticleBody: 'The extract I have does not report latency.' },
+    figures: [{ title: 'the supplied extract' }], corrections: [{ date: '2026-10-11', summary: 'return strict JSON' }],
+  };
+  const rendered = { id: 'signal', title: 'A signal card', deck: 'Clean rendered deck.', why_it_matters: 'Clean.', image_alt: 'Clean visual' };
+  const clean = auditReaderCopy({ latest: [card] }, { homepageSignals: [rendered] });
+  assert.equal(clean.readerCopyFlaggedCards, 0);
+  // A stored field that does feed the card is still checked.
+  const leaked = auditReaderCopy({ latest: [{ ...card, expertLensFull: { ...card.expertLensFull, finalHeadline: 'the supplied extract' } }] }, { homepageSignals: [rendered] });
+  assert.deepEqual(leaked.cards[0].readerCopy.reasons, ['reader_copy:input_provenance:expertLensFull.finalHeadline']);
+  // The same record with an article page is audited in full.
+  const page = auditReaderCopy({ latest: [{ ...card, articlePagePublished: true }] }, { homepageSignals: [rendered] });
+  assert.ok(page.articles[0].readerCopy.reasons.includes('reader_copy:writer_extract:expertLensFull.finalArticleBody'));
+});

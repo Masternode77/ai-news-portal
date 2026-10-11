@@ -5,8 +5,8 @@
 // `input_provenance` fires only when an extract, excerpt or evidence has no
 // attributed supplier: a determiner directly before "supplied"/"provided"
 // ("the supplied extract"), a sentence that opens with it ("Provided excerpts
-// show", also after a heading, paragraph break, opening quote, bracket or
-// list marker), a prepositional or participial use with no supplier ("based
+// show", also after a heading, paragraph break, colon label, opening quote,
+// bracket or list marker), a prepositional or participial use with no supplier ("based
 // on provided excerpts", "using supplied extracts"), or the writer as recipient
 // ("the evidence I was given"). Prose that
 // names who supplied what ("the vendor provided excerpts of the contract",
@@ -16,7 +16,7 @@
 // demonstrative reads as a subject with a verb ("This provided evidence that
 // the forecast was conservative").
 const RULES = [
-  ['input_provenance', /\b(?:the|this|that|these|those|my|our|its|their)\s+(?:supplied|provided)\s+(?:extracts?|excerpts?)\b|\b(?:the|my|our|its|their)\s+(?:supplied|provided)\s+(?:evidence|source\s+text)\b|(?<=(?:^|[.!?]|\n)[\s"“”'‘’(\[>*#•\-–—]*)(?:supplied|provided)\s+(?:extracts?|excerpts?)\b|\b(?:using|based\s+on|from|with|of|on|via|per)\s+(?:supplied|provided)\s+(?:extracts?|excerpts?)\b|\b(?:extracts?|excerpts?|evidence|source\s+text)\s+(?:that\s+)?(?:I|we)\s+(?:was|were|have\s+been|had\s+been)\s+(?:given|supplied|provided|handed)\b|\b(?:anything|everything)\s+I\s+have\s+been\s+given\b/gi],
+  ['input_provenance', /\b(?:the|this|that|these|those|my|our|its|their)\s+(?:supplied|provided)\s+(?:extracts?|excerpts?)\b|\b(?:the|my|our|its|their)\s+(?:supplied|provided)\s+(?:evidence|source\s+text)\b|(?<=(?:^|[.!?:;]|\n)[\s"“”'‘’(\[>*#•\-–—]*)(?:supplied|provided)\s+(?:extracts?|excerpts?)\b|\b(?:using|based\s+on|from|with|of|on|via|per)\s+(?:supplied|provided)\s+(?:extracts?|excerpts?)\b|\b(?:extracts?|excerpts?|evidence|source\s+text)\s+(?:that\s+)?(?:I|we)\s+(?:was|were|have\s+been|had\s+been)\s+(?:given|supplied|provided|handed)\b|\b(?:anything|everything)\s+I\s+have\s+been\s+given\b/gi],
   ['writer_extract', /\b(?:the|an?)\s+extract\s+(?:I|we)\s+(?:have|received|was|were)\b/gi],
   ['process_assurance', /\bI\s+will\s+not\s+invent\s+(?:answers|facts|numbers)\b|\bI\s+am\s+committing\s+to\s+that\s+distinction\b|\bI\s+own\s+this\s+thesis\s+outright\b/gi],
   ['persona_scaffold', /\b(?:my|two|both)\s+standing\s+positions?\b|\bone\s+of\s+my\s+standing\s+positions?\b/gi],
@@ -67,6 +67,9 @@ export function readerCopySurfaces(candidate = {}) {
   for (const field of ['region', 'source', 'category', 'primary_category']) {
     add(field, candidate[field]);
   }
+  // A column's thesis feeds the publication catalog's "why it matters" line
+  // and the weekly digest.
+  add('stance.thesis', candidate.stance?.thesis);
   // Tag pills on the news page, the column byline, and the column's source list.
   for (const [i, tag] of (Array.isArray(candidate.tags) ? candidate.tags : []).entries()) add(`tags[${i}]`, tag);
   const author = candidate.author || {};
