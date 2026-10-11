@@ -18,7 +18,7 @@ Decision record for `scripts/lib/reader-copy-guard.mjs` (PR #47, extended in PR 
 | Gate | `content:gate:built` runs it after `audit:public`, `audit:images` and `audit:admin`; `content:gate` inherits it |
 | CI | `.github/workflows/update-news.yml`, job `validate-application`, step "Run production content gate" (`npm run content:gate:built`), unchanged |
 | Mac runner | `SUBSCRIPTION_NEWS_STEPS` runs the strict audit directly after `rebuild:taxonomy-pages`, before `npm test` and `npm run content:gate` |
-| Scope | Stored records with `articlePagePublished === true` across `authored-columns`, `latest-news`, `archived-news` (de-duplicated by id), plus every homepage card `buildHomepageFeed` renders from `latest-news` and `archived-news` (signal cards and briefs without an article page), checked as the rendered card copy and as the stored record behind it |
+| Scope | Stored records with `articlePagePublished === true` across `authored-columns`, `latest-news`, `archived-news` (de-duplicated by id), plus every card the homepage and archive feeds render from `latest-news` and `archived-news` (`publicCardSignalsFor`: the uncapped `buildHomepageFeed` set and the `buildArchiveFeed` set behind `/archive/`, category, region and search pages), checked as the rendered card copy and as the stored record behind it |
 | Failure | Exit 1 with a JSON report naming the record, field and matched text; nothing is rewritten or hidden |
 
 Why yes, and why now:
@@ -101,7 +101,7 @@ Run on this branch in a hosted container with `LLM_PROVIDER=disabled` (Node 22.2
 
 | Check | Result |
 | --- | --- |
-| `node scripts/audit-reader-copy.mjs --strict` | 27 published records, 39,773 words, 0 flagged, 0 review warnings; 41 homepage cards without an article page, 0 flagged; exit 0 |
+| `node scripts/audit-reader-copy.mjs --strict` | 27 published records, 39,773 words, 0 flagged, 0 review warnings; every homepage- or archive-visible card without an article page (see `homepageCards` in the report), 0 flagged; exit 0 |
 | `npm run check` | 0 errors, 0 warnings |
 | `npm run test:node:source` (`PIPELINE_OFFLINE=0`) | 949/949 passed (includes the new and extended reader-copy, long-form, detail-gate, EIA and subscription-runner tests) |
 | `test:quality-gate`, `test:relevance`, `test:taxonomy`, `test:repetition` (`PIPELINE_OFFLINE=0`) | all passed |
@@ -118,4 +118,5 @@ The automated Codex review of the pull request raised three points, each verifie
 
 1. `public_presentation.title|deck|why_it_matters|image_alt` are persisted copy that `buildPublicPresentation` prefers over the top-level fields; they are now reader surfaces.
 2. Whitespace normalization collapsed paragraph breaks, so a sentence-initial "Provided excerpts show" after an unpunctuated heading escaped the tightened rule. Normalization now keeps line breaks and the rule treats a line break as a sentence start.
-3. The strict audit only looked at records with an article page, while the homepage also renders signal cards and briefs. The audit now also checks every card `buildHomepageFeed` renders (rendered copy and stored record), reports `homepageCards` / `readerCopyFlaggedCards`, and fails strict mode on either count.
+3. The strict audit only looked at records with an article page, while the homepage also renders signal cards and briefs. The audit now also checks every card the feeds render (rendered copy and stored record), reports `homepageCards` / `readerCopyFlaggedCards`, and fails strict mode on either count.
+4. A second pass noted that capping the card set at the homepage's 50 items would skip older cards still visible on `/archive/`, category, region and search pages. The card set is now the union of the uncapped homepage feed and the full archive feed.

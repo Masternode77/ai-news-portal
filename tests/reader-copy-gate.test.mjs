@@ -3,7 +3,8 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
-import { auditReaderCopy, homepageSignalsFor, main } from '../scripts/audit-reader-copy.mjs';
+import { auditReaderCopy, publicCardSignalsFor, main } from '../scripts/audit-reader-copy.mjs';
+import { buildArchiveFeed } from '../scripts/lib/archive-feed-builder.mjs';
 
 const read = (relativePath) => fs.readFileSync(new URL(`../${relativePath}`, import.meta.url), 'utf8');
 const COLLECTIONS = ['authored-columns', 'latest-news', 'archived-news'];
@@ -19,8 +20,12 @@ test('the built content gate runs the strict reader-copy audit', () => {
 
 test('every committed published record and rendered homepage card passes the strict reader-copy audit', () => {
   const collections = Object.fromEntries(COLLECTIONS.map((name) => [name, JSON.parse(read(`src/data/${name}.json`))]));
-  const homepageSignals = homepageSignalsFor([...collections['latest-news'], ...collections['archived-news']]);
-  assert.ok(homepageSignals.length >= 30, `homepage renders ${homepageSignals.length} cards`);
+  const records = [...collections['latest-news'], ...collections['archived-news']];
+  const homepageSignals = publicCardSignalsFor(records);
+  assert.ok(homepageSignals.length >= 30, `feeds render ${homepageSignals.length} cards`);
+  // The card set is not capped at the homepage's 50 items: it covers the archive feed too.
+  const archiveTotal = buildArchiveFeed(records, { page: 1, pageSize: Math.max(records.length, 1) }).items.length;
+  assert.ok(homepageSignals.length >= archiveTotal, `${homepageSignals.length} cards audited for ${archiveTotal} archive-visible cards`);
   const report = auditReaderCopy(collections, { homepageSignals });
   assert.ok(report.publishedRecords > 0);
   assert.ok(report.homepageCards > 0);

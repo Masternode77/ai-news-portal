@@ -7,15 +7,25 @@ import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { readerCopyResult, editorialReviewWarnings } from './lib/reader-copy-guard.mjs';
 import { buildHomepageFeed } from './lib/homepage-feed-builder.mjs';
+import { buildArchiveFeed } from './lib/archive-feed-builder.mjs';
 
 const CARD_FIELDS = ['id', 'title', 'deck', 'why_it_matters', 'image_alt'];
 
-/** The card copy the homepage actually renders, as `buildHomepageFeed` produces it. */
-export function homepageSignalsFor(records = [], options = {}) {
-  return buildHomepageFeed(records, { limit: 50, minimumVisible: 30, ...options }).items
-    .map((item) => item.publicSignal)
-    .filter((signal) => signal?.id)
-    .map((signal) => Object.fromEntries(CARD_FIELDS.map((field) => [field, signal[field]])));
+/**
+ * Every card a reader can reach, as the feed builders render it: the full
+ * homepage-eligible set (no 50-card cap) plus the archive-eligible set that
+ * `/archive/`, category, region and search pages expose through
+ * `buildPublicPublicationCatalog`. Signals are de-duplicated by id.
+ */
+export function publicCardSignalsFor(records = [], options = {}) {
+  const homepage = buildHomepageFeed(records, { ...options, limit: Math.max(records.length, 1), minimumVisible: 0 }).items;
+  const archive = buildArchiveFeed(records, { ...options, page: 1, pageSize: Math.max(records.length, 1) }).items;
+  const signals = new Map();
+  for (const item of [...homepage, ...archive]) {
+    const signal = item?.publicSignal;
+    if (signal?.id && !signals.has(signal.id)) signals.set(signal.id, Object.fromEntries(CARD_FIELDS.map((field) => [field, signal[field]])));
+  }
+  return [...signals.values()];
 }
 
 function mergeCopyResults(...results) {
@@ -51,9 +61,10 @@ export function auditReaderCopy(collections, { homepageSignals = [] } = {}) {
       readerCopy: copy, reviewWarnings: editorialReviewWarnings(record),
     };
   });
-  // Homepage cards without an article page (signal cards, briefs) render the
-  // same title/deck/why-it-matters copy; check the rendered card and the
-  // stored record behind it.
+  // Cards without an article page (signal cards, briefs on the homepage,
+  // archive, category, region and search pages) render the same
+  // title/deck/why-it-matters copy; check the rendered card and the stored
+  // record behind it.
   const articleIds = new Set(articles.map((article) => article.id));
   const cards = [...signalsById.values()].filter((signal) => !articleIds.has(signal.id)).map((signal) => {
     const record = unique.get(signal.id);
@@ -64,7 +75,7 @@ export function auditReaderCopy(collections, { homepageSignals = [] } = {}) {
     };
   });
   return {
-    scope: 'Stored records with articlePagePublished=true plus the homepage cards buildHomepageFeed renders; reconcile with live sitemap separately.',
+    scope: 'Stored records with articlePagePublished=true plus every card the homepage and archive feeds render; reconcile with live sitemap separately.',
     interpretation: 'Deterministic copy findings and review signals are not factual-error verdicts. A clean result does not certify accuracy.',
     collectionCounts, uniqueRecords: unique.size, publishedRecords: articles.length,
     publishedWords: articles.reduce((sum, article) => sum + article.words, 0),
@@ -88,7 +99,7 @@ export function main(args = process.argv.slice(2), cwd = process.cwd()) {
   const collections = Object.fromEntries(['authored-columns', 'latest-news', 'archived-news'].map(name => [name, JSON.parse(fs.readFileSync(path.join(cwd, 'src/data', `${name}.json`), 'utf8'))]));
   let commit = null;
   try { commit = execFileSync('git', ['rev-parse', 'HEAD'], { cwd, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim(); } catch { /* A source export may not contain .git. */ }
-  const homepageSignals = homepageSignalsFor([...collections['latest-news'], ...collections['archived-news']]);
+  const homepageSignals = publicCardSignalsFor([...collections['latest-news'], ...collections['archived-news']]);
   const report = { generatedAt: new Date().toISOString(), commit, ...auditReaderCopy(collections, { homepageSignals }) };
   const serialized = `${JSON.stringify(report, null, 2)}\n`;
   if (out) {
