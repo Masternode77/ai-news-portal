@@ -109,7 +109,7 @@ test('rendered card metadata chips are part of the card audit', () => {
     'reader_copy:process_assurance:public_routing.editorial_lens',
     'reader_copy:input_provenance:source',
   ]);
-  for (const field of ['signal_label', 'editorial_lens', 'lane_title', 'region', 'source', 'category']) {
+  for (const field of ['signal_label', 'editorial_lens', 'region', 'source', 'category']) {
     assert.ok(publicCardSignalsFor([]).every((signal) => field in signal));
   }
 });

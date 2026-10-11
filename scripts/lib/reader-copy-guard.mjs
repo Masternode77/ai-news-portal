@@ -1,4 +1,6 @@
 import { isAuthoredColumn } from './authored-column-identity.mjs';
+import { safeHttpUrl } from './normalize.mjs';
+import { epochArticleTarget } from './epoch-ai.mjs';
 
 // Reader-facing copy only. This detector never rewrites text or certifies facts.
 // Keep input-provenance rules specific: "prompt", "model" and uncertainty are
@@ -86,9 +88,12 @@ export function readerCopySurfaces(candidate = {}) {
   // always supplies a non-empty label, lens and lane (with hardcoded
   // fallbacks) before buildPublicPresentation() reads the persisted
   // public_presentation.signal_label|editorial_lens|lane_title, so those
-  // persisted values never render and are not surfaces.
+  // persisted values never render and are not surfaces. No component renders
+  // the lane title either (the homepage lane strip is a hardcoded list), so
+  // public_routing.laneTitle is not a surface; a deck it helps generate is
+  // audited as the deck.
   const routing = candidate.public_routing || {};
-  for (const field of ['public_signal_label', 'editorial_lens', 'laneTitle']) {
+  for (const field of ['public_signal_label', 'editorial_lens']) {
     add(`public_routing.${field}`, routing[field]);
   }
   for (const field of ['region', 'source', 'category', 'primary_category']) {
@@ -101,9 +106,15 @@ export function readerCopySurfaces(candidate = {}) {
   for (const [i, tag] of (Array.isArray(candidate.tags) ? candidate.tags : []).entries()) add(`tags[${i}]`, tag);
   const author = candidate.author || {};
   for (const field of ['name', 'role']) add(`author.${field}`, author[field]);
+  // column/[slug].astro keeps only sources with a safe http(s) URL and a name,
+  // links `title || name`, prints `name`, and shows `author` only in the Epoch
+  // AI licence line (SourceLicense). `publisher` is never rendered.
   for (const [i, source] of (Array.isArray(candidate.sources) ? candidate.sources : []).entries()) {
     if (!source || typeof source !== 'object') continue;
-    for (const field of ['title', 'publisher', 'name', 'author']) add(`sources[${i}].${field}`, source[field]);
+    const url = safeHttpUrl(source.url);
+    if (!url || !present(source.name)) continue;
+    for (const field of ['title', 'name']) add(`sources[${i}].${field}`, source[field]);
+    if (epochArticleTarget(url)) add(`sources[${i}].author`, source.author);
   }
   for (const [i, note] of (Array.isArray(candidate.corrections) ? candidate.corrections : []).entries()) {
     if (note && typeof note === 'object') add(`corrections[${i}].summary`, note.summary);

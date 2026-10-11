@@ -189,13 +189,26 @@ test('tag pills, the column byline and the column source list are reader copy', 
   const result = readerCopyResult({
     tags: ['kubernetes', 'the supplied extract'],
     author: { name: 'I will not invent numbers', role: 'Columnist', slug: 'x' },
-    sources: [{ url: 'https://example.com', title: 'return strict JSON', publisher: 'HPCwire', author: 'A Reporter' }, null],
+    sources: [
+      { url: 'https://example.com/report', name: 'HPCwire', title: 'return strict JSON', publisher: 'the supplied extract', author: 'I will not invent numbers' },
+      // Dropped by the column page: no name, or no safe http(s) URL.
+      { url: 'https://example.com/other', title: 'the supplied extract' },
+      { url: 'javascript:alert(1)', name: 'the supplied extract', title: 'the supplied extract' },
+      // Author renders only in the Epoch AI licence line.
+      { url: 'https://epoch.ai/gradient-updates/compute-trends', name: 'Epoch AI', title: 'Compute trends', author: 'return strict JSON' },
+      null,
+    ],
   });
+  // publisher is never rendered; author only for an Epoch AI source.
   assert.deepEqual(result.reasons, [
     'reader_copy:input_provenance:tags[1]',
     'reader_copy:process_assurance:author.name',
     'reader_copy:instruction_scaffold:sources[0].title',
+    'reader_copy:instruction_scaffold:sources[3].author',
   ]);
+});
+test('the lane title is not rendered and is not a surface', () => {
+  assert.equal(readerCopyResult({ public_routing: { public_signal_label: 'Signal', editorial_lens: 'Clean.', laneTitle: 'the supplied extract' } }).ok, true);
 });
 test('a colon label before the phrase is a sentence boundary', () => {
   for (const body of ['Evidence note: Provided excerpts show a rise.', 'Method; supplied extracts were compared.']) {

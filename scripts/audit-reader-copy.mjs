@@ -11,7 +11,7 @@ import { buildArchiveFeed } from './lib/archive-feed-builder.mjs';
 import { authoredColumnPublicEligible, isAuthoredColumn } from './lib/authored-column-policy.mjs';
 import { buildPublicPresentation } from './lib/public-presentation.mjs';
 
-const CARD_FIELDS = ['id', 'title', 'deck', 'why_it_matters', 'image_alt', 'reader_impact', 'signal_label', 'editorial_lens', 'lane_title', 'region', 'source', 'category'];
+const CARD_FIELDS = ['id', 'title', 'deck', 'why_it_matters', 'image_alt', 'reader_impact', 'signal_label', 'editorial_lens', 'region', 'source', 'category'];
 
 /**
  * Every card a reader can reach, as the feed builders render it: the full
@@ -62,7 +62,7 @@ export function auditReaderCopy(collections, { homepageSignals = [] } = {}) {
       title: built.title, deck: built.deck, why_it_matters: built.why_it_matters, imageAlt: built.image_alt,
       region: built.region, source: built.source,
       public_presentation: { reader_impact: built.reader_impact },
-      public_routing: { public_signal_label: built.signal_label, editorial_lens: built.editorial_lens, laneTitle: built.lane_title },
+      public_routing: { public_signal_label: built.signal_label, editorial_lens: built.editorial_lens },
     });
   };
   // Hub and entity pages (src/pages/hubs/[slug].astro, src/pages/entities/
@@ -75,7 +75,7 @@ export function auditReaderCopy(collections, { homepageSignals = [] } = {}) {
     title: signal.title, deck: signal.deck, why_it_matters: signal.why_it_matters, imageAlt: signal.image_alt,
     region: signal.region, source: signal.source, category: signal.category,
     public_presentation: { reader_impact: signal.reader_impact },
-    public_routing: { public_signal_label: signal.signal_label, editorial_lens: signal.editorial_lens, laneTitle: signal.lane_title },
+    public_routing: { public_signal_label: signal.signal_label, editorial_lens: signal.editorial_lens },
   });
   // A column page exists whenever the column route's own predicate accepts the
   // record (`authoredColumnPublicEligible`, which does not read the news-article
