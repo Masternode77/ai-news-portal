@@ -18,7 +18,7 @@
 // Calibrated on 2026-10-11 against every stored article text: all HPCwire
 // extracts of that era are caught; feed bodies whose sub-headings are glued to
 // the following paragraph by HTML flattening are not (those segments run past
-// the teaser length, and a feed body's clipped tail is never counted).
+// the teaser length, and a feed body's lone clipped tail is not counted).
 
 export const RELATED_STORY_CONTAMINATION_REASON = 'related_story_contamination';
 export const MIN_TEASER_FRAGMENTS = 4;
@@ -238,14 +238,14 @@ function ratio(numerator, denominator) {
 
 export function detectRelatedStoryContamination({ title = '', text = '' } = {}) {
   const decoded = compact(decodeHtmlEntities(text));
-  // A feed body legitimately ends in an ellipsis; that clipped tail says
-  // nothing about the extract's shape, so it is profiled but never counted.
-  const trailingClipped = CLIPPED_TERMINAL.test(decoded);
-  const segments = splitSegments(trailingClipped ? decoded.replace(CLIPPED_TERMINAL, '') : decoded);
   const normalizedTitle = normalizeForComparison(title);
-  const profiles = segments.map((segment) => profileSegment(segment, normalizedTitle));
-  if (trailingClipped && profiles.length) {
-    const tail = profiles[profiles.length - 1];
+  const profiles = splitSegments(decoded).map((segment) => profileSegment(segment, normalizedTitle));
+  // A feed body legitimately ends in an ellipsis. When that tail is the only
+  // clipped segment it says nothing about the extract's shape and is not
+  // counted; a tail that closes a run of clipped teasers is one of them.
+  const tail = profiles[profiles.length - 1];
+  const feedTail = Boolean(tail?.clipped) && profiles.every((profile) => profile === tail || !profile.clipped);
+  if (feedTail) {
     profiles[profiles.length - 1] = { ...tail, clipped: false, headline_glued: false, bare_headline: false, teaser: false, feed_tail: true };
   }
   const teasers = profiles.filter((profile) => profile.teaser);

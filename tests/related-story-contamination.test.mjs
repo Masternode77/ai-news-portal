@@ -159,6 +159,35 @@ test('does not flag a feed body whose sub-headings are glued to full paragraphs'
   assert.equal(contamination.clipped_fragment_count, 0);
 });
 
+test('counts a clipped tail that closes a short sidebar run after a real body', () => {
+  const body = [
+    'Lakeside Utility signed a 400 MW interconnection agreement with the developer of a data center campus on the north shore.',
+    'The agreement names the substation, the transmission corridor, and the transformer delivery dates that control the first phase.',
+    'The developer will fund the substation upgrade and recover the cost through a large-load tariff approved in June.',
+    'Colocation customers on the campus will accept curtailment during grid emergencies, which shortened the study timeline.',
+    'The second phase depends on equipment that has not yet been ordered, so transformer deliveries remain the decision point.',
+  ].join(' ');
+  const sidebar = [
+    'Ridgeway Transmission has filed a corridor plan that would add two 345 kV lines to the&hellip;',
+    'The state utility said nine suppliers answered its tender for 600 MWh of storage, with awards&hellip;',
+    'Developers who signed firm service agreements before the tariff docket opened are finding that&hellip;',
+  ].join(' ');
+  const title = 'Lakeside Utility Signs 400 MW Interconnection Agreement';
+
+  const contamination = detectRelatedStoryContamination({ title, text: `${body} ${sidebar}` });
+  assert.equal(contamination.detected, true);
+  assert.equal(contamination.clipped_fragment_count, 3);
+  assert.equal(contamination.consecutive_clipped_fragments, 3);
+
+  const longformGate = sourceExtractionPassesLongformGate({ title, articleText: `${body} ${sidebar}` });
+  assert.equal(longformGate.ok, false);
+  assert.ok(longformGate.block_reasons.includes(RELATED_STORY_CONTAMINATION_REASON));
+
+  // A feed body whose only clipped segment is its own truncated tail stays clean.
+  const feedBody = `${body} The regulator said the tariff docket would re\u2026`;
+  assert.equal(detectRelatedStoryContamination({ title, text: feedBody }).detected, false);
+});
+
 test('does not mistake an extract that repeats its own headline for sidebar teasers', () => {
   const title = 'Ridgeway Transmission Opens 400 MW Substation for Lakeside Data Center Campus';
   const text = `${title} matters most for capacity planning, supplier leverage, and the timing of hardware refresh cycles. `.repeat(6);
