@@ -187,12 +187,14 @@ function cosineSimilarity(leftText = '', rightText = '') {
 const PROTECTED_PERIOD = '\uE000';
 const DOTTED_ABBREVIATION = /\b(?:[A-Za-z]\.){2,}(?!\w)/g;
 const TITLE_ABBREVIATION = /\b(?:Mr|Mrs|Ms|Dr|Prof|Sr|Jr|St|Inc|Co|Ltd|Corp|No|vs)\.(?=\s)/g;
+// Terminal punctuation may sit inside closing quotes or brackets.
+const SENTENCE_BOUNDARY = /(?<=[.!?]["'”’)\]]*)\s+/;
 
 export function firstSentenceOfParagraph(paragraph = '') {
   const protectedText = String(paragraph || '')
     .replace(DOTTED_ABBREVIATION, (match) => match.replaceAll('.', PROTECTED_PERIOD))
     .replace(TITLE_ABBREVIATION, (match) => match.replace('.', PROTECTED_PERIOD));
-  const first = protectedText.split(/(?<=[.!?])\s+/)[0] || '';
+  const first = protectedText.split(SENTENCE_BOUNDARY)[0] || '';
   return first.replaceAll(PROTECTED_PERIOD, '.').trim();
 }
 
@@ -238,12 +240,13 @@ function frameTokenCount(skeleton = []) {
   return skeleton.filter((token) => token !== '_').length;
 }
 
-// A dotted abbreviation followed by a capitalised word is ambiguous without a
-// lexicon: "the U.S. Energy Information Administration" continues the sentence,
-// "in the U.S. Owners now" ends it. The extractor keeps the longer reading, so
-// the comparison also tries every prefix that ends at such an abbreviation and
-// takes the strongest match; a reused frame cannot hide behind either reading.
-const TERMINAL_ABBREVIATION_CANDIDATE = /\b(?:[A-Za-z]\.){2,}(?=\s+[A-Z])/g;
+// A protected abbreviation followed by a capitalised word is ambiguous without
+// a lexicon: "the U.S. Energy Information Administration" and "Northline Inc.
+// Owners" look alike, but only the second ends a sentence. The extractor keeps
+// the longer reading, so the comparison also tries every prefix that ends at
+// such an abbreviation and takes the strongest match; a reused frame cannot
+// hide behind either reading.
+const TERMINAL_ABBREVIATION_CANDIDATE = /\b(?:(?:[A-Za-z]\.){2,}|(?:Mr|Mrs|Ms|Dr|Prof|Sr|Jr|St|Inc|Co|Ltd|Corp|No|vs)\.)(?=\s+[A-Z])/g;
 
 function leadReadings(sentence = '') {
   const text = String(sentence || '');

@@ -102,6 +102,8 @@ test('firstSentenceOfParagraph does not end a sentence inside a dotted abbreviat
   );
   assert.equal(firstSentenceOfParagraph('Dr. Patel of Northline Inc. said e.g. the queue moved. Next.'), 'Dr. Patel of Northline Inc. said e.g. the queue moved.');
   assert.equal(firstSentenceOfParagraph('$601 a day. That is the figure.'), '$601 a day.');
+  assert.equal(firstSentenceOfParagraph('The filing calls it “the single most underpriced variable.” Owners now disagree.'), 'The filing calls it “the single most underpriced variable.”');
+  assert.equal(firstSentenceOfParagraph('The order (and its appendix). The next line.'), 'The order (and its appendix).');
   assert.equal(firstSentenceOfParagraph(''), '');
 });
 
@@ -125,6 +127,10 @@ test('a reused frame before a sentence-ending abbreviation is still compared', (
   assert.equal(leadSentence(terminalA), terminalA, 'the abbreviation-protected reading keeps both sentences');
   assert.ok(leadTemplateSimilarity(terminalA, terminalB) > LEAD_TEMPLATE_SIMILARITY_THRESHOLD, String(leadTemplateSimilarity(terminalA, terminalB)));
   assert.ok(leadTemplateSimilarity(terminalA, CORRECTED_LEADS.zoning) <= LEAD_TEMPLATE_SIMILARITY_THRESHOLD);
+
+  const corporateA = 'I track data center capacity the way most people track chip supply, and the single most underpriced variable in the current buildout cycle is the land held by Northline Inc. Owners now hold positions for years.';
+  const corporateB = 'I track grid interconnection the way most analysts track model releases, and the single most underpriced variable in the current buildout cycle is the queue built by Ridge Power Corp. Utilities have started publishing backlogs by county.';
+  assert.ok(leadTemplateSimilarity(corporateA, corporateB) > LEAD_TEMPLATE_SIMILARITY_THRESHOLD, String(leadTemplateSimilarity(corporateA, corporateB)));
 });
 
 test('analyzeArticleRepetition blocks a lead that reuses a recent opening frame with other nouns', () => {
