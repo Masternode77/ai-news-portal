@@ -188,6 +188,8 @@ test('unattributed prepositional and participial uses are still input provenance
   }
 });
 test('tag pills, the column byline and the column source list are reader copy', () => {
+  // Tag pills render on the news page; the byline and source list on the column page.
+  assert.deepEqual(readerCopyResult({ tags: ['kubernetes', 'the supplied extract'] }).reasons, ['reader_copy:input_provenance:tags[1]']);
   const result = readerCopyResult({
     content_origin: 'authored',
     tags: ['kubernetes', 'the supplied extract'],
@@ -203,8 +205,8 @@ test('tag pills, the column byline and the column source list are reader copy', 
     ],
   });
   // publisher is never rendered; author only for an Epoch AI source.
+  // A column's tags are never displayed, so only the byline and source list count here.
   assert.deepEqual(result.reasons, [
-    'reader_copy:input_provenance:tags[1]',
     'reader_copy:process_assurance:author.name',
     'reader_copy:instruction_scaffold:sources[0].title',
     'reader_copy:instruction_scaffold:sources[3].author',
@@ -347,4 +349,16 @@ test('a passive recipient with "with" is input provenance', () => {
     assert.deepEqual(readerCopyResult({ body }).reasons, ['reader_copy:input_provenance:body'], body);
   }
   assert.equal(readerCopyResult({ body: 'The commission was provided with excerpts by the utility.' }).ok, true);
+});
+
+test('perfect-tense active recipient disclosures are input provenance', () => {
+  for (const body of ['I have received excerpts from the filing.', 'We have obtained the source text.', 'We had collected some evidence of the delay.', 'We have gotten the extracts.']) {
+    assert.deepEqual(readerCopyResult({ body }).reasons, ['reader_copy:input_provenance:body'], body);
+  }
+  assert.equal(readerCopyResult({ body: 'The commission has received excerpts from the utility.' }).ok, true);
+});
+test('routing chips and tag pills are news surfaces only', () => {
+  const metadata = { public_routing: { public_signal_label: 'the supplied extract', editorial_lens: 'I will not invent numbers' }, tags: ['return strict JSON'] };
+  assert.equal(readerCopyResult({ content_origin: 'authored', ...metadata }).ok, true);
+  assert.equal(readerCopyResult(metadata).findings.length, 3);
 });
