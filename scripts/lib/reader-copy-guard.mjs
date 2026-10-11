@@ -7,19 +7,21 @@ import { isAuthoredColumn } from './authored-column-identity.mjs';
 // `input_provenance` fires only when an extract, excerpt or evidence has no
 // attributed supplier: a determiner directly before "supplied"/"provided"
 // ("the supplied extract"), a sentence that opens with it ("Provided excerpts
-// show", also after a heading, paragraph break, colon label, opening quote,
-// bracket or list marker), a prepositional or participial use with no supplier ("based
-// on provided excerpts", "using supplied extracts"), or the writer as recipient
-// ("the evidence I was given"). Prose that
+// show", "Supplied source text does not include", also after a heading,
+// paragraph break, colon label, opening quote, bracket or list marker), a
+// prepositional or participial use with no supplier ("based on provided
+// excerpts", "using supplied extracts", "based on supplied evidence"), or the
+// writer as recipient ("the evidence I was given"). Prose that
 // names who supplied what ("the vendor provided excerpts of the contract",
-// "EIA provided excerpts from the filing") is ordinary attribution and passes;
+// "EIA provided excerpts from the filing", "The supplier provided evidence of
+// the delay") is ordinary attribution and passes;
 // so do "Abstract Excerpt:" labels and the verb "to extract value". A
 // demonstrative counts only before a singular extract/excerpt ("this provided
 // excerpt"); before a plural or before "evidence" it reads as a subject with a
 // verb ("This provided excerpts from the filing to reviewers", "This provided
 // evidence that the forecast was conservative").
 const RULES = [
-  ['input_provenance', /\b(?:the|my|our|its|their)\s+(?:supplied|provided)\s+(?:extracts?|excerpts?|evidence|source\s+text)\b|\b(?:this|that)\s+(?:supplied|provided)\s+(?:extract|excerpt)\b|(?<=(?:^|[.!?:;]|\n)[\s"“”'‘’(\[>*#•\-–—]*)(?:supplied|provided)\s+(?:extracts?|excerpts?)\b|\b(?:using|based\s+on|from|with|of|on|via|per)\s+(?:supplied|provided)\s+(?:extracts?|excerpts?)\b|\b(?:extracts?|excerpts?|evidence|source\s+text)\s+(?:that\s+)?(?:I|we)\s+(?:was|were|have\s+been|had\s+been)\s+(?:given|supplied|provided|handed)\b|\b(?:anything|everything)\s+I\s+have\s+been\s+given\b/gi],
+  ['input_provenance', /\b(?:the|my|our|its|their)\s+(?:supplied|provided)\s+(?:extracts?|excerpts?|evidence|source\s+text)\b|\b(?:this|that)\s+(?:supplied|provided)\s+(?:extract|excerpt)\b|(?<=(?:^|[.!?:;]|\n)[\s"“”'‘’(\[>*#•\-–—]*)(?:supplied|provided)\s+(?:extracts?|excerpts?|evidence|source\s+text)\b|\b(?:using|based\s+on|from|with|of|on|via|per)\s+(?:supplied|provided)\s+(?:extracts?|excerpts?|evidence|source\s+text)\b|\b(?:extracts?|excerpts?|evidence|source\s+text)\s+(?:that\s+)?(?:I|we)\s+(?:was|were|have\s+been|had\s+been)\s+(?:given|supplied|provided|handed)\b|\b(?:anything|everything)\s+I\s+have\s+been\s+given\b/gi],
   ['writer_extract', /\b(?:the|an?)\s+extract\s+(?:I|we)\s+(?:have|received|was|were)\b/gi],
   ['process_assurance', /\bI\s+will\s+not\s+invent\s+(?:answers|facts|numbers)\b|\bI\s+am\s+committing\s+to\s+that\s+distinction\b|\bI\s+own\s+this\s+thesis\s+outright\b/gi],
   ['persona_scaffold', /\b(?:my|two|both)\s+standing\s+positions?\b|\bone\s+of\s+my\s+standing\s+positions?\b/gi],

@@ -219,3 +219,12 @@ test('column records keep their direct deck and image alt even when a presentati
   // The final body still shadows a legacy body for a column, as on the column page.
   assert.equal(readerCopyResult({ content_origin: 'authored', body: 'the supplied extract', expertLensFull: { finalArticleBody: 'Clean.' } }).ok, true);
 });
+
+test('unattributed evidence and source-text forms are input provenance too', () => {
+  for (const body of ['Provided evidence shows the delay.', 'Supplied source text does not include the date.', 'Heading\n\nProvided evidence shows the delay.', 'The figure is based on supplied evidence.', 'A reading drawn from provided source text.']) {
+    assert.deepEqual(readerCopyResult({ body }).reasons, ['reader_copy:input_provenance:body'], body);
+  }
+  for (const body of ['The supplier provided evidence of the delay.', 'Utilities provided evidence to the commission.', 'The filing drew on evidence supplied by the utility.', 'This provided evidence that the forecast was conservative.']) {
+    assert.equal(readerCopyResult({ body }).ok, true, body);
+  }
+});
