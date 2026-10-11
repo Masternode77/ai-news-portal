@@ -46,7 +46,10 @@ export function readerCopySurfaces(candidate = {}) {
   // `articleImageAlt()` renders `imageAlt || image_alt`, so both spellings count.
   const full = candidate.expertLensFull || {};
   const persisted = candidate.public_presentation || {};
-  const present = (value) => typeof value === 'string' && value.trim().length > 0;
+  // Renderer truthiness, not trimmed presence: the templates and
+  // buildPublicPresentation() select with `a || b`, so a whitespace-only
+  // persisted value still wins and the top-level fallback stays hidden.
+  const shown = (value) => Boolean(value);
   for (const field of ['title', 'headline', 'summary', 'snippet', 'expertLensShort', 'metaDescription']) {
     add(field, candidate[field]);
   }
@@ -59,10 +62,10 @@ export function readerCopySurfaces(candidate = {}) {
   // (column/[slug].astro and buildColumnCards read deck and imageAlt
   // directly), so their top-level fields always count.
   const viaPresentation = !isAuthoredColumn(candidate);
-  if (!present(full.finalArticleBody)) add('body', candidate.body);
-  if (!viaPresentation || !present(persisted.deck)) add('deck', candidate.deck);
-  if (!viaPresentation || !present(persisted.why_it_matters)) add('why_it_matters', candidate.why_it_matters);
-  if (!viaPresentation || !present(persisted.image_alt)) {
+  if (!shown(full.finalArticleBody)) add('body', candidate.body);
+  if (!viaPresentation || !shown(persisted.deck)) add('deck', candidate.deck);
+  if (!viaPresentation || !shown(persisted.why_it_matters)) add('why_it_matters', candidate.why_it_matters);
+  if (!viaPresentation || !shown(persisted.image_alt)) {
     add('imageAlt', candidate.imageAlt);
     add('image_alt', candidate.image_alt);
   }
@@ -108,12 +111,16 @@ export function readerCopySurfaces(candidate = {}) {
   for (const field of ['name', 'role']) add(`author.${field}`, author[field]);
   // column/[slug].astro keeps only sources with a safe http(s) URL and a name,
   // links `title || name`, prints `name`, and shows `author` only in the Epoch
-  // AI licence line (SourceLicense). `publisher` is never rendered.
+  // AI licence line (SourceLicense). `publisher` is never rendered. The
+  // publication catalog (columnPublications) also prints the first source's
+  // name on PublicationCard whatever its URL, so sources[0].name always counts.
   for (const [i, source] of (Array.isArray(candidate.sources) ? candidate.sources : []).entries()) {
     if (!source || typeof source !== 'object') continue;
     const url = safeHttpUrl(source.url);
-    if (!url || !present(source.name)) continue;
-    for (const field of ['title', 'name']) add(`sources[${i}].${field}`, source[field]);
+    const kept = Boolean(url) && shown(source.name);
+    if (i === 0 || kept) add(`sources[${i}].name`, source.name);
+    if (!kept) continue;
+    add(`sources[${i}].title`, source.title);
     if (epochArticleTarget(url)) add(`sources[${i}].author`, source.author);
   }
   for (const [i, note] of (Array.isArray(candidate.corrections) ? candidate.corrections : []).entries()) {

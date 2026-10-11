@@ -207,6 +207,16 @@ test('tag pills, the column byline and the column source list are reader copy', 
     'reader_copy:instruction_scaffold:sources[3].author',
   ]);
 });
+test('the first source name feeds the publication catalog whatever its URL', () => {
+  const result = readerCopyResult({
+    sources: [
+      { url: 'not a url', name: 'the supplied extract', title: 'return strict JSON' },
+      { url: 'not a url', name: 'the supplied extract', title: 'return strict JSON' },
+    ],
+  });
+  // sources[0].name renders on PublicationCard; nothing else from a dropped entry does.
+  assert.deepEqual(result.reasons, ['reader_copy:input_provenance:sources[0].name']);
+});
 test('the lane title is not rendered and is not a surface', () => {
   assert.equal(readerCopyResult({ public_routing: { public_signal_label: 'Signal', editorial_lens: 'Clean.', laneTitle: 'the supplied extract' } }).ok, true);
 });
@@ -223,7 +233,11 @@ test('a fallback field shadowed by the rendered value is not reader copy', () =>
   assert.equal(readerCopyResult({ body: 'the supplied extract', expertLensFull: { finalArticleBody: 'A clean final body.' } }).ok, true);
   assert.deepEqual(readerCopyResult({ body: 'the supplied extract' }).reasons, ['reader_copy:input_provenance:body']);
   assert.equal(readerCopyResult({ deck: 'the supplied extract', why_it_matters: 'I will not invent numbers', imageAlt: 'return strict JSON', public_presentation: { deck: 'Clean.', why_it_matters: 'Clean.', image_alt: 'Clean visual' } }).ok, true);
-  assert.deepEqual(readerCopyResult({ deck: 'the supplied extract', public_presentation: { deck: '   ' } }).reasons, ['reader_copy:input_provenance:deck']);
+  // The renderer selects with `persisted.deck || deck`, so a whitespace-only persisted deck still hides the top-level one;
+  // an empty string or a missing value does not.
+  assert.equal(readerCopyResult({ deck: 'the supplied extract', public_presentation: { deck: '   ' } }).ok, true);
+  assert.deepEqual(readerCopyResult({ deck: 'the supplied extract', public_presentation: { deck: '' } }).reasons, ['reader_copy:input_provenance:deck']);
+  assert.equal(readerCopyResult({ body: 'the supplied extract', expertLensFull: { finalArticleBody: ' ' } }).ok, true);
 });
 
 test('column records keep their direct deck and image alt even when a presentation value exists', () => {
