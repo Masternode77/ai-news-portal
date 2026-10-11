@@ -117,6 +117,16 @@ test('a reused frame behind an abbreviation is still compared', () => {
   assert.ok(result.reasons.includes(`lead_template_similarity>${LEAD_TEMPLATE_SIMILARITY_THRESHOLD}`), result.reasons.join('|'));
 });
 
+test('a reused frame before a sentence-ending abbreviation is still compared', () => {
+  // Without a lexicon the extractor keeps "U.S. Owners now ..." as one
+  // sentence; the comparison must still see the frame that ends at "U.S.".
+  const terminalA = 'I track data center capacity the way most people track chip supply, and the single most underpriced variable in the current buildout cycle is permitting in the U.S. Owners now hold positions for years.';
+  const terminalB = 'I track grid interconnection the way most analysts track model releases, and the single most underpriced variable in the current buildout cycle is the study queue in the U.S. Utilities have started publishing backlogs by county.';
+  assert.equal(leadSentence(terminalA), terminalA, 'the abbreviation-protected reading keeps both sentences');
+  assert.ok(leadTemplateSimilarity(terminalA, terminalB) > LEAD_TEMPLATE_SIMILARITY_THRESHOLD, String(leadTemplateSimilarity(terminalA, terminalB)));
+  assert.ok(leadTemplateSimilarity(terminalA, CORRECTED_LEADS.zoning) <= LEAD_TEMPLATE_SIMILARITY_THRESHOLD);
+});
+
 test('analyzeArticleRepetition blocks a lead that reuses a recent opening frame with other nouns', () => {
   const recent = [
     article('gilroy', ORIGINAL_LEADS.zoning, { publishedAt: '2026-08-20T00:00:00.000Z' }),

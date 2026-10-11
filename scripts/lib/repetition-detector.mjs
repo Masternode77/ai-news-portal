@@ -238,14 +238,40 @@ function frameTokenCount(skeleton = []) {
   return skeleton.filter((token) => token !== '_').length;
 }
 
-// Longest-common-subsequence ratio between two lead skeletons, 0..1. Returns 0
-// when either skeleton has too few frame words to describe a construction.
-export function leadTemplateSimilarity(leftSentence = '', rightSentence = '') {
+// A dotted abbreviation followed by a capitalised word is ambiguous without a
+// lexicon: "the U.S. Energy Information Administration" continues the sentence,
+// "in the U.S. Owners now" ends it. The extractor keeps the longer reading, so
+// the comparison also tries every prefix that ends at such an abbreviation and
+// takes the strongest match; a reused frame cannot hide behind either reading.
+const TERMINAL_ABBREVIATION_CANDIDATE = /\b(?:[A-Za-z]\.){2,}(?=\s+[A-Z])/g;
+
+function leadReadings(sentence = '') {
+  const text = String(sentence || '');
+  const readings = [text];
+  for (const match of text.matchAll(TERMINAL_ABBREVIATION_CANDIDATE)) {
+    readings.push(text.slice(0, match.index + match[0].length));
+  }
+  return readings;
+}
+
+function skeletonSimilarity(leftSentence = '', rightSentence = '') {
   const left = leadTemplateSkeleton(leftSentence);
   const right = leadTemplateSkeleton(rightSentence);
   if (frameTokenCount(left) < LEAD_TEMPLATE_MIN_FRAME_TOKENS) return 0;
   if (frameTokenCount(right) < LEAD_TEMPLATE_MIN_FRAME_TOKENS) return 0;
   return sequenceSimilarity(left, right);
+}
+
+// Longest-common-subsequence ratio between two lead skeletons, 0..1. Returns 0
+// when either skeleton has too few frame words to describe a construction.
+export function leadTemplateSimilarity(leftSentence = '', rightSentence = '') {
+  let max = 0;
+  for (const left of leadReadings(leftSentence)) {
+    for (const right of leadReadings(rightSentence)) {
+      max = Math.max(max, skeletonSimilarity(left, right));
+    }
+  }
+  return max;
 }
 
 function conclusion(article = {}) {
