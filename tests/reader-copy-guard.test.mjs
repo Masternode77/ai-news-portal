@@ -135,3 +135,9 @@ test('persisted presentation copy is reader copy', () => {
     'reader_copy:instruction_scaffold:public_presentation.image_alt',
   ]);
 });
+test('both spellings of the image alt field are reader copy', () => {
+  assert.deepEqual(readerCopyResult({ imageAlt: 'the supplied extract', image_alt: 'return strict JSON' }).reasons, [
+    'reader_copy:input_provenance:imageAlt',
+    'reader_copy:instruction_scaffold:image_alt',
+  ]);
+});

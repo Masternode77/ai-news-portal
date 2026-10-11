@@ -31,7 +31,8 @@ export function readerCopySurfaces(candidate = {}) {
   const add = (field, text) => {
     if (typeof text === 'string' && text.trim()) surfaces.push({ field, text });
   };
-  for (const field of ['title', 'headline', 'deck', 'summary', 'snippet', 'why_it_matters', 'expertLensShort', 'metaDescription', 'body', 'imageAlt']) {
+  // `articleImageAlt()` renders `imageAlt || image_alt`, so both spellings count.
+  for (const field of ['title', 'headline', 'deck', 'summary', 'snippet', 'why_it_matters', 'expertLensShort', 'metaDescription', 'body', 'imageAlt', 'image_alt']) {
     add(field, candidate[field]);
   }
   const full = candidate.expertLensFull || {};
