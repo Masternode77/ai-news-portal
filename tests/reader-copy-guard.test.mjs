@@ -114,3 +114,24 @@ test('source evidence fields are never reader copy', () => {
   const evidence = 'The supplied extract reports a benchmark. Return strict JSON. I will not invent numbers.';
   assert.equal(readerCopyResult({ articleText: evidence, cleaned_source_text: evidence, rawText: evidence, source_evidence_text: evidence }).ok, true);
 });
+
+// --- Review follow-ups (PR #51) ---
+test('a sentence-initial provenance phrase is caught after a heading or paragraph break', () => {
+  for (const body of ['Heading\n\nProvided excerpts show a rise in approved load.', 'Heading\nSupplied extracts show a rise.', 'Supplied extracts show a rise.']) {
+    assert.deepEqual(readerCopyResult({ body }).reasons, ['reader_copy:input_provenance:body'], body);
+  }
+  // Mid-sentence, attributed use still passes.
+  assert.equal(readerCopyResult({ body: 'Heading\n\nThe utility supplied extracts of its forecast.' }).ok, true);
+});
+test('persisted presentation copy is reader copy', () => {
+  const result = readerCopyResult({
+    deck: 'A clean deck.',
+    public_presentation: { title: 'the extract I have', deck: 'The supplied extract reports a benchmark.', why_it_matters: 'I will not invent numbers.', image_alt: 'return strict JSON', lane_title: 'the supplied extract' },
+  });
+  assert.deepEqual(result.reasons, [
+    'reader_copy:writer_extract:public_presentation.title',
+    'reader_copy:input_provenance:public_presentation.deck',
+    'reader_copy:process_assurance:public_presentation.why_it_matters',
+    'reader_copy:instruction_scaffold:public_presentation.image_alt',
+  ]);
+});

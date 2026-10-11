@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
-import { auditReaderCopy, main } from '../scripts/audit-reader-copy.mjs';
+import { auditReaderCopy, homepageSignalsFor, main } from '../scripts/audit-reader-copy.mjs';
 
 const read = (relativePath) => fs.readFileSync(new URL(`../${relativePath}`, import.meta.url), 'utf8');
 const COLLECTIONS = ['authored-columns', 'latest-news', 'archived-news'];
@@ -17,13 +17,36 @@ test('the built content gate runs the strict reader-copy audit', () => {
   assert.match(read('.github/workflows/update-news.yml'), /npm run content:gate:built/);
 });
 
-test('every committed published record passes the strict reader-copy audit', () => {
-  const report = auditReaderCopy(Object.fromEntries(COLLECTIONS.map((name) => [name, JSON.parse(read(`src/data/${name}.json`))])));
+test('every committed published record and rendered homepage card passes the strict reader-copy audit', () => {
+  const collections = Object.fromEntries(COLLECTIONS.map((name) => [name, JSON.parse(read(`src/data/${name}.json`))]));
+  const homepageSignals = homepageSignalsFor([...collections['latest-news'], ...collections['archived-news']]);
+  assert.ok(homepageSignals.length >= 30, `homepage renders ${homepageSignals.length} cards`);
+  const report = auditReaderCopy(collections, { homepageSignals });
   assert.ok(report.publishedRecords > 0);
+  assert.ok(report.homepageCards > 0);
   assert.deepEqual(
-    report.articles.filter((article) => !article.readerCopy.ok).map((article) => `${article.id}: ${article.readerCopy.reasons.join('|')}`),
+    [...report.articles, ...report.cards].filter((entry) => !entry.readerCopy.ok).map((entry) => `${entry.id}: ${entry.readerCopy.reasons.join('|')}`),
     [],
   );
+});
+
+test('homepage cards without an article page are audited as reader copy', () => {
+  const card = { id: 'signal', articlePagePublished: false, signalCardOnly: true, homepagePublished: true, title: 'A signal card', deck: 'A clean stored deck.' };
+  const rendered = { id: 'signal', title: 'A signal card', deck: 'The supplied extract reports a benchmark.', why_it_matters: 'Clean.', image_alt: 'Clean visual' };
+  const report = auditReaderCopy({ latest: [card] }, { homepageSignals: [rendered] });
+  assert.equal(report.publishedRecords, 0);
+  assert.equal(report.homepageCards, 1);
+  assert.equal(report.readerCopyFlaggedCards, 1);
+  assert.deepEqual(report.cards[0].readerCopy.reasons, ['reader_copy:input_provenance:deck']);
+  // The stored record behind a clean rendered card is checked too (persisted presentation copy).
+  const stored = { ...card, public_presentation: { deck: 'I will not invent numbers.' } };
+  const storedReport = auditReaderCopy({ latest: [stored] }, { homepageSignals: [{ ...rendered, deck: 'Clean rendered deck.' }] });
+  assert.deepEqual(storedReport.cards[0].readerCopy.reasons, ['reader_copy:process_assurance:public_presentation.deck']);
+  // A card that also has a published article page is reported once, as an article.
+  const article = { ...card, articlePagePublished: true, expertLensFull: { finalArticleBody: 'Clean body.' } };
+  const articleReport = auditReaderCopy({ latest: [article] }, { homepageSignals: [rendered] });
+  assert.equal(articleReport.homepageCards, 0);
+  assert.deepEqual(articleReport.articles[0].readerCopy.reasons, ['reader_copy:input_provenance:deck']);
 });
 
 test('strict mode fails only when a published record is flagged', (t) => {

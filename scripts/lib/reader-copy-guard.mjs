@@ -5,12 +5,13 @@
 // `input_provenance` fires only when an extract, excerpt or evidence has no
 // attributed supplier: a determiner directly before "supplied"/"provided"
 // ("the supplied extract"), a sentence that opens with it ("Provided excerpts
-// show"), or the writer as recipient ("the evidence I was given"). Prose that
+// show", also after a heading or paragraph break), or the writer as recipient
+// ("the evidence I was given"). Prose that
 // names who supplied what ("the vendor provided excerpts of the contract",
 // "EIA provided excerpts from the filing") is ordinary attribution and passes;
 // so do "Abstract Excerpt:" labels and the verb "to extract value".
 const RULES = [
-  ['input_provenance', /\b(?:the|this|that|these|those|my|our|its|their|any|all)\s+(?:supplied|provided)\s+(?:extracts?|excerpts?|evidence|source\s+text)\b|(?<=^|[.!?]\s+)(?:supplied|provided)\s+(?:extracts?|excerpts?)\b|\b(?:extracts?|excerpts?|evidence|source\s+text)\s+(?:that\s+)?(?:I|we)\s+(?:was|were|have\s+been|had\s+been)\s+(?:given|supplied|provided|handed)\b|\b(?:anything|everything)\s+I\s+have\s+been\s+given\b/gi],
+  ['input_provenance', /\b(?:the|this|that|these|those|my|our|its|their|any|all)\s+(?:supplied|provided)\s+(?:extracts?|excerpts?|evidence|source\s+text)\b|(?<=^|[.!?]\s+|\n)(?:supplied|provided)\s+(?:extracts?|excerpts?)\b|\b(?:extracts?|excerpts?|evidence|source\s+text)\s+(?:that\s+)?(?:I|we)\s+(?:was|were|have\s+been|had\s+been)\s+(?:given|supplied|provided|handed)\b|\b(?:anything|everything)\s+I\s+have\s+been\s+given\b/gi],
   ['writer_extract', /\b(?:the|an?)\s+extract\s+(?:I|we)\s+(?:have|received|was|were)\b/gi],
   ['process_assurance', /\bI\s+will\s+not\s+invent\s+(?:answers|facts|numbers)\b|\bI\s+am\s+committing\s+to\s+that\s+distinction\b|\bI\s+own\s+this\s+thesis\s+outright\b/gi],
   ['persona_scaffold', /\b(?:my|two|both)\s+standing\s+positions?\b|\bone\s+of\s+my\s+standing\s+positions?\b/gi],
@@ -37,6 +38,12 @@ export function readerCopySurfaces(candidate = {}) {
   for (const field of ['finalHeadline', 'metaDescription', 'finalArticleBody']) {
     add(`expertLensFull.${field}`, full[field]);
   }
+  // Persisted presentation copy wins over the top-level fields when a card or
+  // detail page is rendered (buildPublicPresentation), so it is reader copy too.
+  const presentation = candidate.public_presentation || {};
+  for (const field of ['title', 'deck', 'why_it_matters', 'image_alt']) {
+    add(`public_presentation.${field}`, presentation[field]);
+  }
   for (const [i, note] of (Array.isArray(candidate.corrections) ? candidate.corrections : []).entries()) {
     if (note && typeof note === 'object') add(`corrections[${i}].summary`, note.summary);
   }
@@ -55,9 +62,12 @@ export function readerCopySurfaces(candidate = {}) {
 export function readerCopyResult(candidate = {}) {
   const findings = [];
   for (const { field, text } of readerCopySurfaces(candidate)) {
-    // Normalize whitespace, not meaning. No destructive sanitization or silent
-    // substitution of "the publication" for an incomplete source extraction.
-    const normalized = text.normalize('NFKC').replace(/\s+/g, ' ');
+    // Normalize whitespace, not meaning. Runs of spaces collapse to one space
+    // and every line break collapses to one "\n", so a paragraph or heading
+    // boundary still counts as a sentence start for the rules above. No
+    // destructive sanitization or silent substitution of "the publication"
+    // for an incomplete source extraction.
+    const normalized = text.normalize('NFKC').replace(/[^\S\n]+/g, ' ').replace(/\s*\n\s*/g, '\n');
     for (const [code, pattern] of RULES) {
       for (const match of normalized.matchAll(new RegExp(pattern.source, pattern.flags))) {
         findings.push({

@@ -18,7 +18,7 @@ Decision record for `scripts/lib/reader-copy-guard.mjs` (PR #47, extended in PR 
 | Gate | `content:gate:built` runs it after `audit:public`, `audit:images` and `audit:admin`; `content:gate` inherits it |
 | CI | `.github/workflows/update-news.yml`, job `validate-application`, step "Run production content gate" (`npm run content:gate:built`), unchanged |
 | Mac runner | `SUBSCRIPTION_NEWS_STEPS` runs the strict audit directly after `rebuild:taxonomy-pages`, before `npm test` and `npm run content:gate` |
-| Scope | Stored records with `articlePagePublished === true` across `authored-columns`, `latest-news`, `archived-news` (de-duplicated by id) |
+| Scope | Stored records with `articlePagePublished === true` across `authored-columns`, `latest-news`, `archived-news` (de-duplicated by id), plus every homepage card `buildHomepageFeed` renders from `latest-news` and `archived-news` (signal cards and briefs without an article page), checked as the rendered card copy and as the stored record behind it |
 | Failure | Exit 1 with a JSON report naming the record, field and matched text; nothing is rewritten or hidden |
 
 Why yes, and why now:
@@ -43,7 +43,7 @@ Before this change the guard ran only inside `authoredColumnQualityResult`. Now:
 | Subscription runner (`scripts/run-subscription-news.mjs`) | Dedicated step `node scripts/audit-reader-copy.mjs --strict` on the final inventory, then again inside `npm run content:gate` | Run stops before `npm test`; local partial output preserved, nothing committed | `tests/subscription-news-runner.test.mjs` |
 | Hosted validation and release | `npm run content:gate:built` → `npm run audit:reader-copy` | Job fails | `tests/reader-copy-gate.test.mjs` (package wiring, committed corpus, strict exit codes) |
 
-Reader surfaces checked by `readerCopySurfaces()`: `title`, `headline`, `deck`, `summary`, `snippet`, `why_it_matters`, `expertLensShort`, `metaDescription`, `body`, `imageAlt`, `expertLensFull.finalHeadline`, `expertLensFull.metaDescription`, `expertLensFull.finalArticleBody`, every `figures[].title`, `figures[].source_note`, `figures[].items[].label|display|source`, and every `corrections[].summary`. `snippet`, `why_it_matters` and `expertLensShort` are new in this change: they render on cards and detail pages next to the deck, and the detail gate already treated them as public text. Source evidence fields (`articleText`, `rawText`, `cleaned_source_text`, `source_evidence_text`) are never inspected, so a publisher's own wording cannot trip the guard.
+Reader surfaces checked by `readerCopySurfaces()`: `title`, `headline`, `deck`, `summary`, `snippet`, `why_it_matters`, `expertLensShort`, `metaDescription`, `body`, `imageAlt`, `expertLensFull.finalHeadline`, `expertLensFull.metaDescription`, `expertLensFull.finalArticleBody`, `public_presentation.title|deck|why_it_matters|image_alt`, every `figures[].title`, `figures[].source_note`, `figures[].items[].label|display|source`, and every `corrections[].summary`. `snippet`, `why_it_matters`, `expertLensShort` and the persisted `public_presentation` fields are new in this change: they render on cards and detail pages next to the deck (`buildPublicPresentation` prefers the persisted presentation values over the top-level fields), and the detail gate already treated the top-level ones as public text. Source evidence fields (`articleText`, `rawText`, `cleaned_source_text`, `source_evidence_text`) are never inspected, so a publisher's own wording cannot trip the guard.
 
 ## 3. Rule review against stored bodies
 
@@ -64,7 +64,7 @@ Change made to `input_provenance`:
 | Case | Previous rule | Tightened rule |
 | --- | --- | --- |
 | "the supplied extract", "THE PROVIDED EXCERPT", "the supplied evidence", "this provided excerpt" | flagged | flagged (determiner directly before supplied/provided) |
-| "Provided excerpts show a rise." (sentence-initial, no subject) | flagged | flagged |
+| "Provided excerpts show a rise." (sentence-initial, no subject, including after a heading or paragraph break) | flagged | flagged |
 | "the evidence I was given", "the source text we have been given", "anything I have been given" | partly flagged | flagged (writer as recipient) |
 | "the vendor provided excerpts of the contract", "EIA provided excerpts from the filing", "the utility supplied extracts of its load forecast" | **flagged (false positive)** | passes (attributed supplier) |
 | "The supplier provided evidence of performance." | passes | passes |
@@ -101,7 +101,7 @@ Run on this branch in a hosted container with `LLM_PROVIDER=disabled` (Node 22.2
 
 | Check | Result |
 | --- | --- |
-| `node scripts/audit-reader-copy.mjs --strict` | 27 published records, 39,773 words, 0 flagged, 0 review warnings, exit 0 |
+| `node scripts/audit-reader-copy.mjs --strict` | 27 published records, 39,773 words, 0 flagged, 0 review warnings; 41 homepage cards without an article page, 0 flagged; exit 0 |
 | `npm run check` | 0 errors, 0 warnings |
 | `npm run test:node:source` (`PIPELINE_OFFLINE=0`) | 949/949 passed (includes the new and extended reader-copy, long-form, detail-gate, EIA and subscription-runner tests) |
 | `test:quality-gate`, `test:relevance`, `test:taxonomy`, `test:repetition` (`PIPELINE_OFFLINE=0`) | all passed |
@@ -111,3 +111,11 @@ Run on this branch in a hosted container with `LLM_PROVIDER=disabled` (Node 22.2
 | `node scripts/audit-omo-ultra-current-state.mjs` | regenerated report unchanged |
 
 Not done here: production deployment, release approval, or any live-site check beyond confirming that production currently serves `main` at `bbc9a09`.
+
+## 7. Review follow-up (same day)
+
+The automated Codex review of the pull request raised three points, each verified against the code and fixed in the same change:
+
+1. `public_presentation.title|deck|why_it_matters|image_alt` are persisted copy that `buildPublicPresentation` prefers over the top-level fields; they are now reader surfaces.
+2. Whitespace normalization collapsed paragraph breaks, so a sentence-initial "Provided excerpts show" after an unpunctuated heading escaped the tightened rule. Normalization now keeps line breaks and the rule treats a line break as a sentence start.
+3. The strict audit only looked at records with an article page, while the homepage also renders signal cards and briefs. The audit now also checks every card `buildHomepageFeed` renders (rendered copy and stored record), reports `homepageCards` / `readerCopyFlaggedCards`, and fails strict mode on either count.
