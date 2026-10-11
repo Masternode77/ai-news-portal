@@ -917,7 +917,10 @@
     "d4f156c55959b5d6",
     "5f46b11788153b65",
     "6beffabd14bbab23",
-    "4588d7c08ebae066"
+    "4588d7c08ebae066",
+    "5da2d640a669f977",
+    "577caf2e55b46c65",
+    "1802829fbc3f6e75"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -49775,28 +49778,696 @@
       "slotPublications": {
         "0": true
       }
+    },
+    "2026-10-11": {
+      "date": "2026-10-11",
+      "createdAt": "2026-10-11T03:41:53.057Z",
+      "refreshedAt": "2026-10-11T03:41:53.057Z",
+      "candidateWindowHours": 24,
+      "curatedItems": [
+        {
+          "id": "5da2d640a669f977",
+          "sourceRegistryId": "doe-newsroom",
+          "source": "U.S. Department of Energy",
+          "url": "https://www.energy.gov/articles/energy-department-supports-fercs-call-pjm-protect-ratepayers-and-build-more-reliable-power",
+          "title": "Energy Department Supports FERC’s Call for PJM to Protect Ratepayers and Build More Reliable Power",
+          "snippet": "DOE urges PJM to require large new electricity users to pay for the generation and infrastructure needed to serve them.",
+          "contentText": "DOE urges PJM to require large new electricity users to pay for the generation and infrastructure needed to serve them.",
+          "publishedAt": "2026-10-09T21:45:59.000Z",
+          "sourceImage": null,
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "Power & Grid",
+          "ai_topic_score": 0,
+          "ai_topic_reasons": [
+            "ai_not_in_title"
+          ],
+          "category": "Power & Grid",
+          "primary_category": "Power & Grid",
+          "secondary_category": "Interconnection and power procurement",
+          "infrastructure_layer": "Power",
+          "affected_stakeholders": [
+            "data center operators",
+            "utilities",
+            "cloud capacity teams",
+            "investors"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.47,
+          "taxonomy_confidence": 0.8,
+          "taxonomy_reasons": [
+            "power",
+            "grid",
+            "electricity"
+          ],
+          "direct_ai_infrastructure_relevance": 0,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0.537,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.346,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "power_grid_relevance:0.54(power, electricity)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0.537,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.346,
+            "infrastructure_relevance_tier": "archive_only",
+            "infrastructure_relevance_action": "archive_only",
+            "infrastructure_relevance_reasons": [
+              "power_grid_relevance:0.54(power, electricity)"
+            ],
+            "infrastructureRelevanceAction": "archive_only",
+            "articlePagePublished": false,
+            "homepagePublished": false,
+            "archiveOnly": true,
+            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+          },
+          "score": 34
+        },
+        {
+          "id": "577caf2e55b46c65",
+          "sourceRegistryId": "google-cloud-ai-releases",
+          "source": "Google Cloud AI",
+          "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/release-notes#October_07_2026",
+          "title": "Google Cloud AI: Anthropic's Claude Haiku 5.5",
+          "snippet": "Feature Anthropic's Claude Haiku 5.5 Claude Haiku 5.5 is available in Model Garden. Fixed CodeMender updates (v0.13.0) This release introduces updates to CodeMender: Consistent finding deduplication : Improved finding d…",
+          "contentText": "Feature Anthropic's Claude Haiku 5.5 Claude Haiku 5.5 is available in Model Garden. Fixed CodeMender updates (v0.13.0) This release introduces updates to CodeMender: Consistent finding deduplication : Improved finding deduplication consistency across repeated cm find , --deep , --diff , and --parallel scans. Bug fixes : Fixed an issue where deduplicated findings could appear in cm report --status DISMISSED . Improved local state reliability during concurrent cm find --diff and cm find --deep scans. Updated streaming error handling so non-retryable errors fail immediately instead of retrying. Ensured local session state and logs are saved cleanly when a session is interrupted ( Ctrl+C ). For more information, see the CodeMender documentation .",
+          "publishedAt": "2026-10-07T07:00:00.000Z",
+          "sourceImage": null,
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "ai_topic_score": 1,
+          "ai_topic_reasons": [
+            "anthropic",
+            "gemini",
+            "claude",
+            "ai"
+          ],
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Product / Platform Update",
+          "urgency_score": 0.28,
+          "taxonomy_confidence": 0.65,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 0.22,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0.324,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.306,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.22",
+            "cloud_capacity_relevance:0.32(google cloud)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.22,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0.324,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.306,
+            "infrastructure_relevance_tier": "archive_only",
+            "infrastructure_relevance_action": "archive_only",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:0.22",
+              "cloud_capacity_relevance:0.32(google cloud)"
+            ],
+            "infrastructureRelevanceAction": "archive_only",
+            "articlePagePublished": false,
+            "homepagePublished": false,
+            "archiveOnly": true,
+            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+          },
+          "score": 58
+        },
+        {
+          "id": "1802829fbc3f6e75",
+          "sourceRegistryId": "google-cloud-ai-releases",
+          "source": "Google Cloud AI",
+          "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/release-notes#October_06_2026",
+          "title": "Google Cloud AI: Gemini Nano Banana 2.1",
+          "snippet": "Feature Gemini Nano Banana 2.1 Gemini Nano Banana 2.1 ( gemini-nano-banana-2.1 ) is available in General Availability (GA) . Gemini Nano Banana 2.1 is optimized for high-speed multimodal image generation and editing, of…",
+          "contentText": "Feature Gemini Nano Banana 2.1 Gemini Nano Banana 2.1 ( gemini-nano-banana-2.1 ) is available in General Availability (GA) . Gemini Nano Banana 2.1 is optimized for high-speed multimodal image generation and editing, offering improved visual quality, prompt adherence, and text rendering across 1K , 2K , and 4K output resolutions.",
+          "publishedAt": "2026-10-06T07:00:00.000Z",
+          "sourceImage": null,
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "ai_topic_score": 0.567,
+          "ai_topic_reasons": [
+            "gemini",
+            "ai"
+          ],
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.28,
+          "taxonomy_confidence": 0.65,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 0.22,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0.324,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.306,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.22",
+            "cloud_capacity_relevance:0.32(google cloud)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.22,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0.324,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.306,
+            "infrastructure_relevance_tier": "archive_only",
+            "infrastructure_relevance_action": "archive_only",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:0.22",
+              "cloud_capacity_relevance:0.32(google cloud)"
+            ],
+            "infrastructureRelevanceAction": "archive_only",
+            "articlePagePublished": false,
+            "homepagePublished": false,
+            "archiveOnly": true,
+            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+          },
+          "score": 40
+        },
+        {
+          "id": "4de37e1755447bfc",
+          "sourceRegistryId": "kubernetes-blog",
+          "source": "Kubernetes Blog",
+          "url": "https://kubernetes.io/blog/2026/10/06/kubernetes-cgroups-v2-shift/",
+          "title": "The Shift to cgroup v2 in Kubernetes: What You Need to Know",
+          "snippet": "In Linux, cgroups (control groups) are a kernel feature used for managing system resources. Kubernetes uses cgroups to allocate resources like CPU and memory to containers, ensuring that applications run smoothly withou…",
+          "contentText": "In Linux, cgroups (control groups) are a kernel feature used for managing system resources. Kubernetes uses cgroups to allocate resources like CPU and memory to containers, ensuring that applications run smoothly without interfering with each other. With the release of Kubernetes v1.31, support for v1 cgroup management moved into maintenance mode . Support for v2 cgroup management has been stable since Kubernetes v1.25. Compared with cgroup v1, cgroup v2 provides a single unified hierarchy, a more consistent interface, and a stronger foundation for resource isolation and modern resource-management features. Deprecation of cgroup v1 Kubernetes has deprecated cgroup v1 . Starting with Kubernetes v1.35, failCgroupV1 defaults to true , so the kubelet does not start on a cgroup v1 node by defa…",
+          "publishedAt": "2026-10-06T18:00:00.000Z",
+          "sourceImage": null,
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "Hyperscalers & Cloud",
+          "ai_topic_score": 0,
+          "ai_topic_reasons": [
+            "ai_not_in_title"
+          ],
+          "category": "Enterprise AI Infrastructure",
+          "primary_category": "Enterprise AI Infrastructure",
+          "secondary_category": "Enterprise deployment operations",
+          "infrastructure_layer": "Enterprise Platform",
+          "affected_stakeholders": [
+            "enterprise IT",
+            "cloud buyers",
+            "platform teams",
+            "software vendors"
+          ],
+          "article_type": "Product / Platform Update",
+          "urgency_score": 0.25,
+          "taxonomy_confidence": 0.61,
+          "taxonomy_reasons": [
+            "kubernetes"
+          ],
+          "direct_ai_infrastructure_relevance": 0,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0.297,
+          "infrastructure_relevance_score": 0.207,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "enterprise_ai_infrastructure_relevance:0.30(kubernetes)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0.297,
+            "infrastructure_relevance_score": 0.207,
+            "infrastructure_relevance_tier": "archive_only",
+            "infrastructure_relevance_action": "archive_only",
+            "infrastructure_relevance_reasons": [
+              "enterprise_ai_infrastructure_relevance:0.30(kubernetes)"
+            ],
+            "infrastructureRelevanceAction": "archive_only",
+            "articlePagePublished": false,
+            "homepagePublished": false,
+            "archiveOnly": true,
+            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+          },
+          "score": 25
+        },
+        {
+          "id": "7d207adc79dda307",
+          "sourceRegistryId": "google-cloud-compute-releases",
+          "source": "Google Cloud Compute Engine",
+          "url": "https://docs.cloud.google.com/compute/docs/release-notes#October_06_2026",
+          "title": "Google Cloud Compute Engine: Generally available : When you reserve compute resources for H4D instances through your account team, you can include a Hyperdisk pool in t…",
+          "snippet": "Feature Generally available: When you reserve compute resources for H4D instances through your account team, you can include a Hyperdisk pool in the same request or in a subsequent request. This option helps ensure that…",
+          "contentText": "Feature Generally available : When you reserve compute resources for H4D instances through your account team, you can include a Hyperdisk pool in the same request or in a subsequent request. This option helps ensure that your high performance computing (HPC) workloads have the storage resources that they require close to your compute instances. For more information, see Reserve capacity through your account team .",
+          "publishedAt": "2026-10-06T07:00:00.000Z",
+          "sourceImage": null,
+          "region": "APAC",
+          "language": "en",
+          "defaultCategory": "Hyperscalers & Cloud",
+          "ai_topic_score": 0,
+          "ai_topic_reasons": [
+            "ai_not_in_title"
+          ],
+          "category": "Cloud Capacity",
+          "primary_category": "Cloud Capacity",
+          "secondary_category": "Hyperscale regions and accelerator availability",
+          "infrastructure_layer": "Cloud Platform",
+          "affected_stakeholders": [
+            "hyperscalers",
+            "cloud buyers",
+            "enterprise IT",
+            "operators"
+          ],
+          "article_type": "Capacity Expansion",
+          "urgency_score": 0.35,
+          "taxonomy_confidence": 0.61,
+          "taxonomy_reasons": [
+            "google cloud"
+          ],
+          "direct_ai_infrastructure_relevance": 0.2,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0.324,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0.18,
+          "infrastructure_relevance_score": 0.267,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "cloud_capacity_relevance:0.32(google cloud)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.2,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0.324,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0.18,
+            "infrastructure_relevance_score": 0.267,
+            "infrastructure_relevance_tier": "archive_only",
+            "infrastructure_relevance_action": "archive_only",
+            "infrastructure_relevance_reasons": [
+              "cloud_capacity_relevance:0.32(google cloud)"
+            ],
+            "infrastructureRelevanceAction": "archive_only",
+            "articlePagePublished": false,
+            "homepagePublished": false,
+            "archiveOnly": true,
+            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+          },
+          "score": 27
+        },
+        {
+          "id": "8201c7a1ee43cf94",
+          "sourceRegistryId": "arxiv-cs-dc",
+          "source": "arXiv",
+          "url": "https://arxiv.org/abs/2610.04093",
+          "title": "Beyond Masked Sparsity: SNACK Enables Truly Sparse Neural Networks on GPU",
+          "snippet": "arXiv:2610.04093v1 Announce Type: cross Abstract: Deep neural networks continue to grow in parameter count, driving up training and inference cost on GPUs. Sparse neural networks and Dynamic Sparse Training (DST) promis…",
+          "contentText": "arXiv:2610.04093v1 Announce Type: cross Abstract: Deep neural networks continue to grow in parameter count, driving up training and inference cost on GPUs. Sparse neural networks and Dynamic Sparse Training (DST) promise to reduce these costs, but most implementations rely on binary masks over dense tensors and recover little of the theoretical compute, memory, or energy savings. We propose SNACK, a truly sparse GPU layer that stores and computes only non-zero connections. SNACK exposes a simple PyTorch API for restructuring connections and backpropagating gradients entirely in the sparse paradigm, and ships SNACK-COO, a custom COO-format SpMM CUDA kernel with a batch-to-Streaming-Multiprocessor mapping tuned for the small-batch, high-sparsity regime typical of large-model training and si…",
+          "publishedAt": "2026-10-06T04:00:00.000Z",
+          "sourceImage": null,
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure",
+          "source_text_scope": "abstract",
+          "ai_topic_score": 1,
+          "ai_topic_reasons": [
+            "model training",
+            "inference",
+            "gpu",
+            "gpus"
+          ],
+          "category": "Semiconductors",
+          "primary_category": "Semiconductors",
+          "secondary_category": "Accelerators, memory, and advanced packaging",
+          "infrastructure_layer": "Silicon",
+          "affected_stakeholders": [
+            "semiconductor suppliers",
+            "hyperscalers",
+            "server OEMs",
+            "investors"
+          ],
+          "article_type": "Supply Chain",
+          "urgency_score": 0.25,
+          "taxonomy_confidence": 0.61,
+          "taxonomy_reasons": [
+            "gpu"
+          ],
+          "direct_ai_infrastructure_relevance": 0,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.297,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.207,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "semiconductor_relevance:0.30(gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.297,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.207,
+            "infrastructure_relevance_tier": "archive_only",
+            "infrastructure_relevance_action": "archive_only",
+            "infrastructure_relevance_reasons": [
+              "semiconductor_relevance:0.30(gpu)"
+            ],
+            "infrastructureRelevanceAction": "archive_only",
+            "articlePagePublished": false,
+            "homepagePublished": false,
+            "archiveOnly": true,
+            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+          },
+          "score": 58
+        },
+        {
+          "id": "839cc75597b4bcc8",
+          "sourceRegistryId": "doe-newsroom",
+          "source": "U.S. Department of Energy",
+          "url": "https://www.energy.gov/articles/energy-department-announces-alaska-railbelt-transmission-project-receive-defense",
+          "title": "Energy Department Announces Alaska Railbelt Transmission Project to Receive Defense Production Act Funding, Securing Alaska Military Installations and Local Communities",
+          "snippet": "The U.S. Department of Energy today announced its intent to deploy Defense Production Act funding to develop a second high-voltage connection between Southcentral and Interior Alaska, strengthening grid infrastructure e…",
+          "contentText": "The U.S. Department of Energy today announced its intent to deploy Defense Production Act funding to develop a second high-voltage connection between Southcentral and Interior Alaska, strengthening grid infrastructure essential to national defense.",
+          "publishedAt": "2026-10-05T17:05:00.000Z",
+          "sourceImage": null,
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "Power & Grid",
+          "ai_topic_score": 0,
+          "ai_topic_reasons": [
+            "ai_not_in_title"
+          ],
+          "category": "Power & Grid",
+          "primary_category": "Power & Grid",
+          "secondary_category": "Interconnection and power procurement",
+          "infrastructure_layer": "Power",
+          "affected_stakeholders": [
+            "data center operators",
+            "utilities",
+            "cloud capacity teams",
+            "investors"
+          ],
+          "article_type": "Financing / M&A",
+          "urgency_score": 0.61,
+          "taxonomy_confidence": 0.82,
+          "taxonomy_reasons": [
+            "power",
+            "grid",
+            "transmission"
+          ],
+          "direct_ai_infrastructure_relevance": 0,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0.658,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0.378,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.535,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "power_grid_relevance:0.66(grid, transmission)",
+            "capital_markets_relevance:0.38(funding)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0.658,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0.378,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.535,
+            "infrastructure_relevance_tier": "archive_only",
+            "infrastructure_relevance_action": "archive_only",
+            "infrastructure_relevance_reasons": [
+              "power_grid_relevance:0.66(grid, transmission)",
+              "capital_markets_relevance:0.38(funding)"
+            ],
+            "infrastructureRelevanceAction": "archive_only",
+            "articlePagePublished": false,
+            "homepagePublished": false,
+            "archiveOnly": true,
+            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+          },
+          "score": 38
+        },
+        {
+          "id": "23d67cc0547316b9",
+          "sourceRegistryId": "arxiv-cs-dc",
+          "source": "arXiv",
+          "url": "https://arxiv.org/abs/2610.04956",
+          "title": "From Overloaded to Guaranteed: High-Throughput Multi-SLO Enforcement for LoRA-Assisted On-Premise LLM Deployment",
+          "snippet": "arXiv:2610.04956v1 Announce Type: cross Abstract: As Large Language Models (LLMs) become essential in privacy-sensitive sectors like hospitals and government agencies, the on-premise LLM servers offer a cost-effective a…",
+          "contentText": "arXiv:2610.04956v1 Announce Type: cross Abstract: As Large Language Models (LLMs) become essential in privacy-sensitive sectors like hospitals and government agencies, the on-premise LLM servers offer a cost-effective and secure alternative to public cloud services. However, these resource-constrained servers struggle to guarantee heterogeneous Service Level Objectives (SLOs) when serving multiple LoRA-adapted services simultaneously. Existing serving frameworks suffer from severe SLO violations due to the computational overhead of LoRA layers and the rigid nature of batch scheduling. To address this, we propose HALO, a scheduling method tailored for LoRA-assisted on-premise LLM deployment. HALO introduces two key innovations: a spatial multiplexing strategy that overlaps Base and LoRA co…",
+          "publishedAt": "2026-10-06T04:00:00.000Z",
+          "sourceImage": null,
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure",
+          "source_text_scope": "abstract",
+          "ai_topic_score": 1,
+          "ai_topic_reasons": [
+            "large language models",
+            "llm",
+            "llms"
+          ],
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Product / Platform Update",
+          "urgency_score": 0.23,
+          "taxonomy_confidence": 0.57,
+          "taxonomy_reasons": [
+            "ai infrastructure"
+          ],
+          "direct_ai_infrastructure_relevance": 0.22,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.163,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.22"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.22,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.163,
+            "infrastructure_relevance_tier": "archive_only",
+            "infrastructure_relevance_action": "archive_only",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:0.22"
+            ],
+            "infrastructureRelevanceAction": "archive_only",
+            "articlePagePublished": false,
+            "homepagePublished": false,
+            "archiveOnly": true,
+            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+          },
+          "score": 50
+        },
+        {
+          "id": "99d2eb059f99ac04",
+          "sourceRegistryId": "epoch-ai-data-insights",
+          "source": "Epoch AI",
+          "url": "https://epoch.ai/data-insights/cyber-incidents-flat-since-fable-5",
+          "title": "US adults are no more likely to face cyber incidents than when Claude Fable 5 launched",
+          "snippet": "June and September polls from Epoch AI/Ipsos show no detectable increase in the share of US adults experiencing cyber incidents",
+          "contentText": "June and September polls from Epoch AI/Ipsos show no detectable increase in the share of US adults experiencing cyber incidents",
+          "publishedAt": "2026-10-07T12:00:00.000Z",
+          "sourceImage": null,
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "pool_max_age_days": 21,
+          "ai_topic_score": 0.504,
+          "ai_topic_reasons": [
+            "claude",
+            "ai",
+            "ai_not_in_title"
+          ],
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.18,
+          "taxonomy_confidence": 0.61,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 0,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "no_strong_compute_current_infrastructure_match"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0,
+            "infrastructure_relevance_tier": "archive_only",
+            "infrastructure_relevance_action": "archive_only",
+            "infrastructure_relevance_reasons": [
+              "no_strong_compute_current_infrastructure_match"
+            ],
+            "infrastructureRelevanceAction": "archive_only",
+            "articlePagePublished": false,
+            "homepagePublished": false,
+            "archiveOnly": true,
+            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+          },
+          "score": 30
+        }
+      ],
+      "curatedIds": [
+        "5da2d640a669f977",
+        "577caf2e55b46c65",
+        "1802829fbc3f6e75",
+        "4de37e1755447bfc",
+        "7d207adc79dda307",
+        "8201c7a1ee43cf94",
+        "839cc75597b4bcc8",
+        "23d67cc0547316b9",
+        "99d2eb059f99ac04"
+      ],
+      "publishedIds": [
+        "5da2d640a669f977",
+        "577caf2e55b46c65",
+        "1802829fbc3f6e75"
+      ],
+      "visibleIds": [
+        "5da2d640a669f977"
+      ],
+      "slotPublications": {
+        "1": true
+      }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-08-30T12:50:11.866Z",
-      "day": "2026-08-30",
-      "slot": 2,
-      "publishedCount": 0,
-      "authoredColumn": {
-        "published": false,
-        "reason": "no_qualifying_story"
-      },
-      "llmUsage": {
-        "calls": 1,
-        "failures": 0,
-        "prompt_tokens": 102,
-        "completion_tokens": 6,
-        "total_tokens": 108,
-        "token_budget": 60000,
-        "call_budget": 40
-      }
-    },
     {
       "at": "2026-08-30T18:31:40.328Z",
       "day": "2026-08-31",
@@ -54503,11 +55174,198 @@
         "token_budget": 120000,
         "call_budget": 60
       }
+    },
+    {
+      "at": "2026-10-11T03:41:53.057Z",
+      "day": "2026-10-11",
+      "slot": 1,
+      "publishedCount": 0,
+      "signalCardCount": 1,
+      "archiveOnlyCount": 2,
+      "processedIds": [
+        "5da2d640a669f977",
+        "577caf2e55b46c65",
+        "1802829fbc3f6e75"
+      ],
+      "blockedCount": 0,
+      "blockedItems": [],
+      "archiveOnlyItems": [
+        {
+          "id": "577caf2e55b46c65",
+          "title": "Google Cloud AI: Anthropic's Claude Haiku 5.5",
+          "infrastructure_relevance_score": 0.306,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.22",
+            "cloud_capacity_relevance:0.32(google cloud)"
+          ],
+          "extraction_quality_score": 0.19,
+          "source_domain_adapter": "googlecloud",
+          "content_length": 81,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": false,
+          "expert_insight_missing_fields": [
+            "concrete_facts",
+            "named_companies",
+            "infrastructure_layer",
+            "bottleneck_type",
+            "who_gains_leverage",
+            "who_takes_execution_risk",
+            "timing_dependency",
+            "counterargument",
+            "next_observable_signal"
+          ],
+          "reason": "infrastructure_relevance_below_signal_threshold"
+        },
+        {
+          "id": "1802829fbc3f6e75",
+          "title": "Google Cloud AI: Gemini Nano Banana 2.1",
+          "infrastructure_relevance_score": 0.306,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.22",
+            "cloud_capacity_relevance:0.32(google cloud)"
+          ],
+          "extraction_quality_score": 0.63,
+          "source_domain_adapter": "googlecloud",
+          "content_length": 331,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": false,
+          "expert_insight_missing_fields": [
+            "concrete_facts",
+            "named_companies",
+            "infrastructure_layer",
+            "bottleneck_type",
+            "who_gains_leverage",
+            "who_takes_execution_risk",
+            "timing_dependency",
+            "counterargument",
+            "next_observable_signal"
+          ],
+          "reason": "infrastructure_relevance_below_signal_threshold"
+        }
+      ],
+      "authoredColumn": {
+        "published": true,
+        "slug": "i-read-openai-s-monthly-doubling-coding-agent-curve-as-demand-no-2026-10-11",
+        "selectionDiagnostics": {
+          "total_candidates": 105,
+          "counts": {
+            "invalid_identity": 0,
+            "text_rights_unauthorized": 0,
+            "abstract_only": 44,
+            "extraction_ineligible": 33,
+            "expert_insight_incomplete": 1,
+            "relevance_below_threshold": 9,
+            "already_covered": 4,
+            "stale_story": 13,
+            "digest_roundup": 0,
+            "unclean_evidence": 0,
+            "insufficient_facts": 0,
+            "qualifying": 1
+          },
+          "selected_id": "8c015ec83cbadc52",
+          "selected_beat": "ai_business",
+          "selection_reason": "highest_evidence_score",
+          "by_beat": {
+            "ai_business": {
+              "candidates": 20,
+              "qualifying": 1,
+              "rejections": {
+                "abstract_only": 11,
+                "extraction_ineligible": 8
+              }
+            },
+            "data_center_operators": {
+              "candidates": 12,
+              "qualifying": 0,
+              "rejections": {
+                "already_covered": 1,
+                "abstract_only": 1,
+                "stale_story": 3,
+                "extraction_ineligible": 6,
+                "relevance_below_threshold": 1
+              }
+            },
+            "compute_hardware": {
+              "candidates": 19,
+              "qualifying": 0,
+              "rejections": {
+                "abstract_only": 19
+              }
+            },
+            "power_cooling": {
+              "candidates": 43,
+              "qualifying": 0,
+              "rejections": {
+                "expert_insight_incomplete": 1,
+                "relevance_below_threshold": 7,
+                "abstract_only": 10,
+                "already_covered": 1,
+                "stale_story": 10,
+                "extraction_ineligible": 14
+              }
+            },
+            "policy": {
+              "candidates": 6,
+              "qualifying": 0,
+              "rejections": {
+                "already_covered": 2,
+                "extraction_ineligible": 4
+              }
+            },
+            "other_infrastructure": {
+              "candidates": 5,
+              "qualifying": 0,
+              "rejections": {
+                "abstract_only": 3,
+                "relevance_below_threshold": 1,
+                "extraction_ineligible": 1
+              }
+            }
+          },
+          "recent_coverage": {
+            "counts": {
+              "ai_business": 0,
+              "data_center_operators": 1,
+              "compute_hardware": 1,
+              "power_cooling": 1,
+              "policy": 1,
+              "other_infrastructure": 0
+            },
+            "lastBeat": "data_center_operators",
+            "total": 4
+          },
+          "attempts": [
+            {
+              "id": "8c015ec83cbadc52",
+              "outcome": "published"
+            }
+          ]
+        }
+      },
+      "llmUsage": {
+        "calls": 13,
+        "failures": 0,
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "total_tokens": 0,
+        "token_budget": 120000,
+        "call_budget": 60
+      }
     }
   ],
-  "lastRunAt": "2026-10-06T17:12:20.309Z",
+  "lastRunAt": "2026-10-11T03:41:53.057Z",
   "authored": {
-    "lastColumnAt": "2026-10-06T16:48:10.001Z",
+    "lastColumnAt": "2026-10-11T03:41:53.057Z",
     "columnsByDay": {
       "2026-08-17": 2,
       "2026-08-18": 1,
@@ -54521,111 +55379,112 @@
       "2026-09-08": 1,
       "2026-09-16": 1,
       "2026-10-04": 2,
-      "2026-10-06": 1
+      "2026-10-06": 1,
+      "2026-10-11": 1
     },
     "recentStoryKeys": [
       {
-        "key": "https://ec.europa.eu/commission/presscorner/detail/en/ip_26_1667",
-        "at": "2026-10-04T10:31:52.065Z"
-      },
-      {
-        "key": "https://epoch.ai/data-insights/malaysia-china-chip-smuggling",
-        "at": "2026-10-04T22:05:30.235Z"
-      },
-      {
-        "key": "https://kubernetes.io/blog/2026/10/05/scaling-kubernetes-workloads-with-node-swap/",
-        "at": "2026-10-06T16:48:10.001Z"
+        "key": "https://epoch.ai/data-insights/openai-coding-agent-spending",
+        "at": "2026-10-11T03:41:53.057Z"
       }
     ],
     "lastFailure": null,
     "lastSelection": {
-      "at": "2026-10-06T16:48:10.001Z",
+      "at": "2026-10-11T03:41:53.057Z",
       "outcome": "selected",
-      "selectedId": "d4f156c55959b5d6",
+      "selectedId": "8c015ec83cbadc52",
       "diagnostics": {
-        "total_candidates": 45,
+        "total_candidates": 105,
         "counts": {
           "invalid_identity": 0,
           "text_rights_unauthorized": 0,
-          "abstract_only": 24,
-          "extraction_ineligible": 1,
-          "expert_insight_incomplete": 0,
-          "relevance_below_threshold": 4,
-          "already_covered": 2,
+          "abstract_only": 44,
+          "extraction_ineligible": 33,
+          "expert_insight_incomplete": 1,
+          "relevance_below_threshold": 9,
+          "already_covered": 4,
           "stale_story": 13,
           "digest_roundup": 0,
           "unclean_evidence": 0,
           "insufficient_facts": 0,
           "qualifying": 1
         },
-        "selected_id": "d4f156c55959b5d6",
-        "selected_beat": "data_center_operators",
+        "selected_id": "8c015ec83cbadc52",
+        "selected_beat": "ai_business",
         "selection_reason": "highest_evidence_score",
         "by_beat": {
           "ai_business": {
-            "candidates": 5,
-            "qualifying": 0,
+            "candidates": 20,
+            "qualifying": 1,
             "rejections": {
-              "abstract_only": 5
+              "abstract_only": 11,
+              "extraction_ineligible": 8
             }
           },
           "data_center_operators": {
-            "candidates": 5,
-            "qualifying": 1,
-            "rejections": {
-              "stale_story": 3,
-              "abstract_only": 1
-            }
-          },
-          "compute_hardware": {
-            "candidates": 10,
-            "qualifying": 0,
-            "rejections": {
-              "abstract_only": 10
-            }
-          },
-          "power_cooling": {
-            "candidates": 23,
+            "candidates": 12,
             "qualifying": 0,
             "rejections": {
               "already_covered": 1,
+              "abstract_only": 1,
+              "stale_story": 3,
+              "extraction_ineligible": 6,
+              "relevance_below_threshold": 1
+            }
+          },
+          "compute_hardware": {
+            "candidates": 19,
+            "qualifying": 0,
+            "rejections": {
+              "abstract_only": 19
+            }
+          },
+          "power_cooling": {
+            "candidates": 43,
+            "qualifying": 0,
+            "rejections": {
+              "expert_insight_incomplete": 1,
+              "relevance_below_threshold": 7,
+              "abstract_only": 10,
+              "already_covered": 1,
               "stale_story": 10,
-              "extraction_ineligible": 1,
-              "relevance_below_threshold": 4,
-              "abstract_only": 7
+              "extraction_ineligible": 14
             }
           },
           "policy": {
-            "candidates": 1,
+            "candidates": 6,
             "qualifying": 0,
             "rejections": {
-              "already_covered": 1
+              "already_covered": 2,
+              "extraction_ineligible": 4
             }
           },
           "other_infrastructure": {
-            "candidates": 1,
+            "candidates": 5,
             "qualifying": 0,
             "rejections": {
-              "abstract_only": 1
+              "abstract_only": 3,
+              "relevance_below_threshold": 1,
+              "extraction_ineligible": 1
             }
           }
         },
         "recent_coverage": {
           "counts": {
             "ai_business": 0,
-            "data_center_operators": 0,
+            "data_center_operators": 1,
             "compute_hardware": 1,
-            "power_cooling": 2,
+            "power_cooling": 1,
             "policy": 1,
             "other_infrastructure": 0
           },
-          "lastBeat": "compute_hardware",
+          "lastBeat": "data_center_operators",
           "total": 4
         }
       },
       "attempts": [
         {
-          "id": "d4f156c55959b5d6",
+          "id": "8c015ec83cbadc52",
           "outcome": "published"
         }
       ]

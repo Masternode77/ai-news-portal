@@ -1,6 +1,6 @@
 # Taxonomy Source Artifact and Public Route Report
 
-Source snapshot at: 2026-10-06T04:00:00.000Z
+Source snapshot at: 2026-10-09T21:45:59.000Z
 
 ## Source artifact inventory
 
@@ -9,10 +9,10 @@ Source artifact category partitions: 9
 Source artifact company partitions: 16
 Source artifact region partitions: 7
 Source artifact archive partitions: 22
-Source artifact records: 515
+Source artifact records: 516
 
 ## Current reader-facing route state
 
-Public archive route: `/archive/` (63 rendered eligible records)
+Public archive route: `/archive/` (64 rendered eligible records)
 Taxonomy detail routes with rendered eligible records: 16
 Static taxonomy route shells: 32 (not counts of rendered eligible records)
