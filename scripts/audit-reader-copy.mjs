@@ -10,6 +10,8 @@ import { buildHomepageFeed } from './lib/homepage-feed-builder.mjs';
 import { buildArchiveFeed } from './lib/archive-feed-builder.mjs';
 import { authoredColumnPublicEligible, isAuthoredColumn } from './lib/authored-column-policy.mjs';
 import { buildPublicPresentation } from './lib/public-presentation.mjs';
+import { publicLongformRouteGates } from './lib/public-surface-eligibility.mjs';
+import { articleDetailQualityResult } from './lib/article-detail-quality-gate.mjs';
 
 const CARD_FIELDS = ['id', 'title', 'deck', 'why_it_matters', 'image_alt', 'reader_impact', 'signal_label', 'editorial_lens', 'region', 'source', 'category'];
 
@@ -35,7 +37,18 @@ function mergeCopyResults(...results) {
   return { ok: findings.length === 0, findings, reasons: [...new Set(results.flatMap((result) => result.reasons))] };
 }
 
-export function auditReaderCopy(collections, { homepageSignals = [] } = {}) {
+// A news record has a page when every route gate except the reader-copy
+// check passes (`newsPageEligible`). A record the detail gate rejects only
+// for reader copy stays in scope so the leak is reported rather than hidden;
+// one hidden by a non-copy gate (quarantined, archive-only, noindex, product
+// fit, source authorization) has no page and is not audited.
+export function defaultNewsPageEligible(record, routeOptions = {}) {
+  if (!publicLongformRouteGates(record, routeOptions)) return false;
+  const quality = articleDetailQualityResult(record, routeOptions);
+  return quality.ok || quality.reasons.every((reason) => reason.startsWith('reader_copy:'));
+}
+
+export function auditReaderCopy(collections, { homepageSignals = [], routeOptions = {}, newsPageEligible = (record) => defaultNewsPageEligible(record, routeOptions) } = {}) {
   const unique = new Map();
   const collectionCounts = {};
   for (const [collection, records] of Object.entries(collections)) {
@@ -79,8 +92,8 @@ export function auditReaderCopy(collections, { homepageSignals = [] } = {}) {
   });
   // A column page exists whenever the column route's own predicate accepts the
   // record (`authoredColumnPublicEligible`, which does not read the news-article
-  // flag); a news page exists when `articlePagePublished` is true.
-  const hasReaderPage = (record) => record.articlePagePublished === true || (isColumn(record) && authoredColumnPublicEligible(record));
+  // flag); a news page exists when the news route's gates accept it.
+  const hasReaderPage = (record) => (isColumn(record) ? authoredColumnPublicEligible(record) : newsPageEligible(record));
   const records = [...unique.values()].filter(hasReaderPage);
   const articles = records.map(record => {
     const body = record.expertLensFull?.finalArticleBody || record.body || '';

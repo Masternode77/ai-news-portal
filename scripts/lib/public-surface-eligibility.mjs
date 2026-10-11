@@ -4,7 +4,10 @@ import { hasPublishedArticlePage } from './article-publication-state.mjs';
 import { isPublicProductFit } from './public-product-fit.mjs';
 import { currentSourceTextAuthorization } from './source-text-publication-authorization.mjs';
 
-export function isPublicLongformArticle(article = {}, options = {}) {
+// Every route gate except the detail-quality gate (which includes the
+// reader-copy check). The reader-copy audit uses this to decide whether a
+// news record has a page at all before it inspects the copy on that page.
+export function publicLongformRouteGates(article = {}, options = {}) {
   return Boolean(
     article?.id
       && hasPublishedArticlePage(article)
@@ -16,7 +19,10 @@ export function isPublicLongformArticle(article = {}, options = {}) {
       && article.archiveOnly !== true
       && isPublicProductFit(article)
       && !shouldNoindexArticle(article)
-      && articleDetailQualityEligible(article)
       && currentSourceTextAuthorization(article, article.extraction_artifact, options).ok
   );
+}
+
+export function isPublicLongformArticle(article = {}, options = {}) {
+  return publicLongformRouteGates(article, options) && articleDetailQualityEligible(article);
 }

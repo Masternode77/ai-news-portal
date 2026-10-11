@@ -190,7 +190,8 @@ export function authoredColumnQualityResult({
   }
 
   // 3-5. Language guards (banned phrases, public copy, template language)
-  const readerCandidate = { title, deck, summary, body, figures };
+  // Marked as a column so the guard audits figures (a column-only surface).
+  const readerCandidate = { content_origin: 'authored', title, deck, summary, body, figures };
   const readerCopy = readerCopyResult(readerCandidate);
   if (!readerCopy.ok) reasons.push(...readerCopy.reasons);
   // Figure labels, displayed values and attribution are public copy too.

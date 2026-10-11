@@ -1,6 +1,7 @@
 import { isAuthoredColumn } from './authored-column-identity.mjs';
 import { safeHttpUrl } from './normalize.mjs';
 import { epochArticleTarget } from './epoch-ai.mjs';
+import { isRenderedCorrection } from './editorial-corrections.mjs';
 
 // Reader-facing copy only. This detector never rewrites text or certifies facts.
 // Keep input-provenance rules specific: "prompt", "model" and uncertainty are
@@ -13,7 +14,8 @@ import { epochArticleTarget } from './epoch-ai.mjs';
 // paragraph break, colon label, opening quote, bracket or list marker), a
 // prepositional or participial use with no supplier ("based on provided
 // excerpts", "using supplied extracts", "based on supplied evidence"), or the
-// writer as recipient ("the evidence I was given"). Prose that
+// writer as recipient ("the evidence I was given", "we were provided
+// excerpts", "the excerpt was provided to us"). Prose that
 // names who supplied what ("the vendor provided excerpts of the contract",
 // "EIA provided excerpts from the filing", "The supplier provided evidence of
 // the delay") is ordinary attribution and passes;
@@ -23,7 +25,7 @@ import { epochArticleTarget } from './epoch-ai.mjs';
 // verb ("This provided excerpts from the filing to reviewers", "This provided
 // evidence that the forecast was conservative").
 const RULES = [
-  ['input_provenance', /\b(?:the|my|our|its|their)\s+(?:supplied|provided)\s+(?:extracts?|excerpts?|evidence|source\s+text)\b|\b(?:this|that)\s+(?:supplied|provided)\s+(?:extract|excerpt)\b|(?<=(?:^|[.!?:;]|\n)[\s"“”'‘’(\[>*#•\-–—]*)(?:supplied|provided)\s+(?:extracts?|excerpts?|evidence|source\s+text)\b|\b(?:using|based\s+on|from|with|of|on|via|per)\s+(?:supplied|provided)\s+(?:extracts?|excerpts?|evidence|source\s+text)\b|\b(?:extracts?|excerpts?|evidence|source\s+text)\s+(?:that\s+)?(?:I|we)\s+(?:was|were|have\s+been|had\s+been)\s+(?:given|supplied|provided|handed)\b|\b(?:anything|everything)\s+I\s+have\s+been\s+given\b/gi],
+  ['input_provenance', /\b(?:the|my|our|its|their)\s+(?:supplied|provided)\s+(?:extracts?|excerpts?|evidence|source\s+text)\b|\b(?:this|that)\s+(?:supplied|provided)\s+(?:extract|excerpt)\b|(?<=(?:^|[.!?:;]|\n)[\s"“”'‘’(\[>*#•\-–—]*)(?:supplied|provided)\s+(?:extracts?|excerpts?|evidence|source\s+text)\b|\b(?:using|based\s+on|from|with|of|on|via|per)\s+(?:supplied|provided)\s+(?:extracts?|excerpts?|evidence|source\s+text)\b|\b(?:extracts?|excerpts?|evidence|source\s+text)\s+(?:that\s+)?(?:I|we)\s+(?:was|were|have\s+been|had\s+been)\s+(?:given|supplied|provided|handed)\b|\b(?:I|we)\s+(?:was|were|have\s+been|had\s+been)\s+(?:given|supplied|provided|handed)\s+(?:the\s+|an?\s+|these\s+|those\s+|some\s+)?(?:extracts?|excerpts?|evidence|source\s+text)\b|\b(?:extracts?|excerpts?|evidence|source\s+text)\s+(?:was|were|has\s+been|have\s+been)\s+(?:given|supplied|provided|handed)\s+to\s+(?:me|us)\b|\b(?:anything|everything)\s+I\s+have\s+been\s+given\b/gi],
   ['writer_extract', /\b(?:the|an?)\s+extract\s+(?:I|we)\s+(?:have|received|was|were)\b/gi],
   ['process_assurance', /\bI\s+will\s+not\s+invent\s+(?:answers|facts|numbers)\b|\bI\s+am\s+committing\s+to\s+that\s+distinction\b|\bI\s+own\s+this\s+thesis\s+outright\b/gi],
   ['persona_scaffold', /\b(?:my|two|both)\s+standing\s+positions?\b|\bone\s+of\s+my\s+standing\s+positions?\b/gi],
@@ -123,11 +125,16 @@ export function readerCopySurfaces(candidate = {}) {
     add(`sources[${i}].title`, source.title);
     if (epochArticleTarget(url)) add(`sources[${i}].author`, source.author);
   }
+  // correctionNotes() renders only dated notes (YYYY-MM-DD) with a summary.
   for (const [i, note] of (Array.isArray(candidate.corrections) ? candidate.corrections : []).entries()) {
-    if (note && typeof note === 'object') add(`corrections[${i}].summary`, note.summary);
+    if (isRenderedCorrection(note)) add(`corrections[${i}].summary`, note.summary);
   }
-  for (const [i, figure] of (Array.isArray(candidate.figures) ? candidate.figures : []).entries()) {
+  // Figures render only on the column page (ColumnFigure); news/[id].astro
+  // never reads them, and ColumnFigure emits nothing for a figure without
+  // items.
+  for (const [i, figure] of (Array.isArray(candidate.figures) && viaPresentation === false ? candidate.figures : []).entries()) {
     if (!figure || typeof figure !== 'object') continue;
+    if (!(Array.isArray(figure.items) && figure.items.length)) continue;
     add(`figures[${i}].title`, figure.title);
     add(`figures[${i}].source_note`, figure.source_note);
     for (const [j, item] of (Array.isArray(figure.items) ? figure.items : []).entries()) {
@@ -174,7 +181,8 @@ export function editorialReviewWarnings(candidate = {}) {
   for (const [i, figure] of (Array.isArray(candidate.figures) ? candidate.figures : []).entries()) {
     if (!figure || typeof figure !== 'object') continue;
     if (figure.title === title) warnings.push({ code: 'figure_repeats_headline', field: `figures[${i}].title` });
-    for (const { field, text } of readerCopySurfaces({ figures: [figure] })) {
+    // Figures are a column surface; mark the probe as a column so they count.
+    for (const { field, text } of readerCopySurfaces({ content_origin: 'authored', figures: [figure] })) {
       const publicField = field.replace('figures[0]', `figures[${i}]`);
       if (/…|\.{3}/.test(text)) warnings.push({ code: 'figure_excerpt_ellipsis', field: publicField });
       if (/\.(title|label)$/.test(field) && text.trim().split(/\s+/).length >= 8

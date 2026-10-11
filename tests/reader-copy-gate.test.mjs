@@ -3,7 +3,13 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
-import { auditReaderCopy, publicCardSignalsFor, main } from '../scripts/audit-reader-copy.mjs';
+import { auditReaderCopy as auditWithRouteGates, defaultNewsPageEligible, publicCardSignalsFor, main } from '../scripts/audit-reader-copy.mjs';
+import { authorizedAdminSourceRegistry, canonicalAdminArticle } from './fixtures/admin-publication-integrity.mjs';
+
+// Most tests below exercise copy surfaces on minimal news fixtures; they treat
+// the page flag as the page predicate. The route gates themselves are covered
+// by the dedicated test at the end.
+const auditReaderCopy = (collections, options = {}) => auditWithRouteGates(collections, { newsPageEligible: (record) => record.articlePagePublished === true, ...options });
 import { buildArchiveFeed } from '../scripts/lib/archive-feed-builder.mjs';
 
 const read = (relativePath) => fs.readFileSync(new URL(`../${relativePath}`, import.meta.url), 'utf8');
@@ -62,14 +68,15 @@ test('strict mode fails only when a published record is flagged', (t) => {
   const write = (records) => {
     for (const name of COLLECTIONS) fs.writeFileSync(path.join(cwd, 'src/data', `${name}.json`), JSON.stringify(records[name] || []));
   };
-  const clean = { id: 'clean', slug: 'clean', articlePagePublished: true, title: 'A specific headline', expertLensFull: { finalArticleBody: 'EIA provided excerpts from the filing.' } };
-  write({ 'latest-news': [clean] });
+  // main() applies the real route gates, so the fixtures are columns (whose gate is self-contained).
+  const clean = { id: 'clean', slug: 'clean', content_origin: 'authored', authored_quality: { ok: true }, title: 'A specific headline', expertLensFull: { finalArticleBody: 'EIA provided excerpts from the filing.' } };
+  write({ 'authored-columns': [clean] });
   assert.equal(main(['--strict', '--out', 'report.json'], cwd), 0);
   const cleanReport = JSON.parse(fs.readFileSync(path.join(cwd, 'report.json'), 'utf8'));
   assert.equal(cleanReport.readerCopyFlaggedArticles, 0);
 
-  const leaked = { ...clean, id: 'leaked', corrections: [{ date: '2026-10-11', summary: 'Rebuilt from the supplied extract.' }] };
-  write({ 'latest-news': [clean], 'archived-news': [leaked, { ...leaked, id: 'private', articlePagePublished: false }] });
+  const leaked = { ...clean, id: 'leaked', slug: 'leaked', corrections: [{ date: '2026-10-11', summary: 'Rebuilt from the supplied extract.' }] };
+  write({ 'authored-columns': [clean, leaked, { ...leaked, id: 'private', slug: 'private', draft: true }] });
   assert.equal(main(['--strict', '--out', 'report.json'], cwd), 1);
   const report = JSON.parse(fs.readFileSync(path.join(cwd, 'report.json'), 'utf8'));
   assert.equal(report.readerCopyFlaggedArticles, 1);
@@ -172,4 +179,27 @@ test('a card-only record is audited on the raw title and source that hub and ent
   assert.deepEqual(report.cards[0].readerCopy.reasons, ['reader_copy:input_provenance:title']);
   const leakedSource = auditReaderCopy({ latest: [{ ...card, title: 'A clean title', source: 'the supplied extract' }] }, { homepageSignals: [rendered] });
   assert.deepEqual(leakedSource.cards[0].readerCopy.reasons, ['reader_copy:input_provenance:source']);
+});
+
+test('a news record is in scope only when the route gates other than reader copy accept it', () => {
+  const routeOptions = { sourceRegistry: authorizedAdminSourceRegistry(), now: '2026-08-10T00:00:00.000Z' };
+  const published = canonicalAdminArticle({ published: true });
+  assert.equal(defaultNewsPageEligible(published, routeOptions), true);
+  // Hidden by a non-copy gate: no page, not audited even with a leaked body.
+  for (const hidden of [
+    { ...published, public_status: 'quarantined' },
+    { ...published, archiveOnly: true },
+    { ...published, signalCardOnly: true },
+    { id: 'flag-only', articlePagePublished: true, title: 'No source authorization', expertLensFull: { finalArticleBody: 'The supplied extract reports a benchmark.' } },
+  ]) {
+    const leakedHidden = { ...hidden, expertLensFull: { ...hidden.expertLensFull, finalArticleBody: `${hidden.expertLensFull.finalArticleBody}\n\nThe supplied extract reports a benchmark.` } };
+    assert.equal(defaultNewsPageEligible(leakedHidden, routeOptions), false);
+    assert.equal(auditWithRouteGates({ latest: [leakedHidden] }, { routeOptions }).publishedRecords, 0);
+  }
+  // Rejected only for reader copy: still in scope, and flagged.
+  const leaked = { ...published, public_presentation: { ...(published.public_presentation || {}), deck: 'The supplied extract reports a benchmark.' } };
+  assert.equal(defaultNewsPageEligible(leaked, routeOptions), true);
+  const report = auditWithRouteGates({ latest: [leaked] }, { routeOptions });
+  assert.equal(report.publishedRecords, 1);
+  assert.ok(report.articles[0].readerCopy.reasons.includes('reader_copy:input_provenance:deck'), report.articles[0].readerCopy.reasons.join('|'));
 });

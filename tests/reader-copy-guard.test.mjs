@@ -16,7 +16,7 @@ for (const field of ['title', 'deck', 'summary', 'body', 'metaDescription', 'ima
 }
 test('all figure surfaces participate, without inspecting private review data', () => {
   const figure = { title: 'supplied extract', source_note: 'supplied extract', items: [{ label: 'supplied extract', display: 'supplied extract', source: 'supplied extract' }] };
-  assert.equal(readerCopyResult({ figures: [figure] }).findings.length, 5);
+  assert.equal(readerCopyResult({ content_origin: 'authored', figures: [figure] }).findings.length, 5);
   assert.equal(readerCopyResult({ source_text: 'supplied extract', authored_quality: { diagnostics: 'return strict JSON' } }).ok, true);
 });
 test('allows real AI terminology and evidence limitations', () => {
@@ -30,7 +30,7 @@ test('does not mutate input or silently strengthen an absence claim', () => {
   assert.equal(JSON.stringify(candidate), before);
 });
 test('is deterministic and handles null figure entries', () => {
-  const candidate = { figures: [null, { items: [null, { label: 'the supplied extract' }] }] };
+  const candidate = { content_origin: 'authored', figures: [null, { items: [null, { label: 'the supplied extract' }] }] };
   assert.deepEqual(readerCopyResult(candidate), readerCopyResult(candidate));
   assert.equal(readerCopySurfaces(candidate).length, 1);
 });
@@ -38,7 +38,7 @@ test('nested public prose and metadata are checked', () => {
   assert.equal(readerCopyResult({ expertLensFull: { metaDescription: 'the supplied extract', finalArticleBody: 'I will not invent facts' } }).findings.length, 2);
 });
 test('legacy figure damage is a triage warning, not a factual-error assertion', () => {
-  const candidate = { title: 'A specific headline', figures: [{ title: 'A specific headline', items: [{ label: 'The demand forecast states that these customers connect to the' }] }] };
+  const candidate = { content_origin: 'authored', title: 'A specific headline', figures: [{ title: 'A specific headline', items: [{ label: 'The demand forecast states that these customers connect to the' }] }] };
   assert.equal(readerCopyResult(candidate).ok, true);
   assert.deepEqual(editorialReviewWarnings(candidate).map(x => x.code), ['figure_repeats_headline', 'figure_possible_clipping']);
 });
@@ -62,7 +62,8 @@ test('charter uses source-bounded questions rather than universal conclusions', 
 test('audit separates published bodies, source-only records and duplicate IDs', async () => {
   const { auditReaderCopy } = await import('../scripts/audit-reader-copy.mjs');
   const live = { id: 'live', articlePagePublished: true, title: 'Live', body: 'the supplied extract' };
-  const result = auditReaderCopy({ latest: [live], archived: [live, { id: 'private', articlePagePublished: false, body: 'the supplied extract' }] });
+  // The page flag stands in for the route gates here; the gates have their own test in reader-copy-gate.test.mjs.
+  const result = auditReaderCopy({ latest: [live], archived: [live, { id: 'private', articlePagePublished: false, body: 'the supplied extract' }] }, { newsPageEligible: (record) => record.articlePagePublished === true });
   assert.equal(result.uniqueRecords, 2);
   assert.equal(result.publishedRecords, 1);
   assert.equal(result.readerCopyFlaggedArticles, 1);
@@ -252,6 +253,27 @@ test('unattributed evidence and source-text forms are input provenance too', () 
     assert.deepEqual(readerCopyResult({ body }).reasons, ['reader_copy:input_provenance:body'], body);
   }
   for (const body of ['The supplier provided evidence of the delay.', 'Utilities provided evidence to the commission.', 'The filing drew on evidence supplied by the utility.', 'This provided evidence that the forecast was conservative.']) {
+    assert.equal(readerCopyResult({ body }).ok, true, body);
+  }
+});
+
+test('figures are a column surface only, and only when they render', () => {
+  const figure = { title: 'the supplied extract', items: [{ label: 'the supplied extract' }] };
+  // news/[id].astro never renders figures.
+  assert.equal(readerCopyResult({ figures: [figure] }).ok, true);
+  // ColumnFigure emits nothing for a figure without items.
+  assert.equal(readerCopyResult({ content_origin: 'authored', figures: [{ title: 'the supplied extract', items: [] }, { title: 'the supplied extract' }] }).ok, true);
+  assert.deepEqual(readerCopyResult({ content_origin: 'authored', figures: [figure] }).reasons, ['reader_copy:input_provenance:figures[0].title', 'reader_copy:input_provenance:figures[0].items[0].label']);
+});
+test('only dated correction notes are reader copy', () => {
+  assert.equal(readerCopyResult({ corrections: [{ summary: 'the supplied extract' }, { date: 'yesterday', summary: 'the supplied extract' }, { date: '2026-10-11', summary: '   ' }] }).ok, true);
+  assert.deepEqual(readerCopyResult({ corrections: [{ date: '2026-10-11', summary: 'the supplied extract' }] }).reasons, ['reader_copy:input_provenance:corrections[0].summary']);
+});
+test('the writer as passive recipient is input provenance', () => {
+  for (const body of ['We were provided excerpts from the filing.', 'I was supplied the source text.', 'The excerpt was provided to us.', 'We were given evidence of the delay.', 'We have been handed some extracts.']) {
+    assert.deepEqual(readerCopyResult({ body }).reasons, ['reader_copy:input_provenance:body'], body);
+  }
+  for (const body of ['EIA provided excerpts from the filing.', 'The utility was provided excerpts by the regulator.', 'Excerpts were provided to the commission.', 'We were told the plant would close.']) {
     assert.equal(readerCopyResult({ body }).ok, true, body);
   }
 });

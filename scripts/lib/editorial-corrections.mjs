@@ -5,10 +5,18 @@
 // prose. Nothing here rewrites or hides an article.
 const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/;
 
+// The entries correctionNotes() keeps: an object with a YYYY-MM-DD date and a
+// non-blank summary. Anything else never reaches a reader.
+export function isRenderedCorrection(entry) {
+  return Boolean(entry && typeof entry === 'object'
+    && typeof entry.date === 'string' && ISO_DATE.test(entry.date)
+    && typeof entry.summary === 'string' && entry.summary.trim());
+}
+
 export function correctionNotes(record = {}) {
   const entries = Array.isArray(record?.corrections) ? record.corrections : [];
   return entries
-    .filter((entry) => entry && typeof entry === 'object')
+    .filter(isRenderedCorrection)
     .map((entry) => ({
       date: typeof entry.date === 'string' && ISO_DATE.test(entry.date) ? entry.date : '',
       summary: typeof entry.summary === 'string' ? entry.summary.replace(/\s+/g, ' ').trim() : '',
