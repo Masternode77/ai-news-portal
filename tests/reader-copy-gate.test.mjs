@@ -203,3 +203,14 @@ test('a news record is in scope only when the route gates other than reader copy
   assert.equal(report.publishedRecords, 1);
   assert.ok(report.articles[0].readerCopy.reasons.includes('reader_copy:input_provenance:deck'), report.articles[0].readerCopy.reasons.join('|'));
 });
+
+test('a page record with a feed card is audited on the raw title the hub lists render', () => {
+  const page = { id: 'page', slug: 'page', articlePagePublished: true, homepagePublished: false, title: 'The supplied extract reports a benchmark', expertLensFull: { finalHeadline: 'A clean headline', finalArticleBody: 'A clean final body.' }, public_presentation: { deck: 'A clean persisted deck.' } };
+  // Page-only: nothing prints the raw title, the final headline wins everywhere.
+  const pageOnly = auditReaderCopy({ latest: [page] });
+  assert.equal(pageOnly.readerCopyFlaggedArticles, 0, pageOnly.articles[0].readerCopy.reasons.join('|'));
+  // The same record with a feed card appears in hub and entity lists by its raw title.
+  const rendered = { id: 'page', title: 'A clean headline', deck: 'A clean persisted deck.', why_it_matters: 'Clean.', image_alt: 'Clean visual' };
+  const listed = auditReaderCopy({ latest: [{ ...page, homepagePublished: true }] }, { homepageSignals: [rendered] });
+  assert.deepEqual(listed.articles[0].readerCopy.reasons, ['reader_copy:input_provenance:title']);
+});

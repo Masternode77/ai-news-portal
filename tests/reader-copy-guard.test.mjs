@@ -306,3 +306,11 @@ test('deck fallbacks are reader copy only when no deck is stored', () => {
   assert.deepEqual(readerCopyResult({ content_origin: 'authored', deck: 'A clean deck.', summary: 'the supplied extract' }).reasons, ['reader_copy:input_provenance:summary']);
   assert.equal(readerCopyResult({ metaDescription: 'the supplied extract' }).ok, true);
 });
+
+test('a final headline shadows the raw title of a news record, not of a column', () => {
+  assert.equal(readerCopyResult({ title: 'the supplied extract', expertLensFull: { finalHeadline: 'A clean headline' } }).ok, true);
+  assert.deepEqual(readerCopyResult({ title: 'the supplied extract' }).reasons, ['reader_copy:input_provenance:title']);
+  assert.deepEqual(readerCopyResult({ content_origin: 'authored', title: 'the supplied extract', expertLensFull: { finalHeadline: 'A clean headline' } }).reasons, ['reader_copy:input_provenance:title']);
+  // Top-level headline is read by no renderer.
+  assert.equal(readerCopyResult({ headline: 'the supplied extract' }).ok, true);
+});

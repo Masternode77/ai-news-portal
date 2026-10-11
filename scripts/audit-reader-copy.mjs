@@ -80,7 +80,9 @@ export function auditReaderCopy(collections, { homepageSignals = [], routeOption
   };
   // Hub and entity pages (src/pages/hubs/[slug].astro, src/pages/entities/
   // [slug].astro) list feed records by their raw title and source, not by the
-  // card copy, so a card-only record renders those two stored fields as well.
+  // card copy, so every record with a feed card (page or card-only) renders
+  // those two stored fields as well, even when a final headline shadows the
+  // raw title everywhere else.
   const hubListCopyResult = (record) => readerCopyResult({ title: record.title, source: record.source });
   // Every textual field the card components render, mapped onto the guard's
   // presentation surfaces.
@@ -98,7 +100,7 @@ export function auditReaderCopy(collections, { homepageSignals = [], routeOption
   const articles = records.map(record => {
     const body = record.expertLensFull?.finalArticleBody || record.body || '';
     const signal = signalsById.get(record.id);
-    const copy = mergeCopyResults(readerCopyResult(record), presentationCopyResult(record), ...(signal ? [cardCopyResult(signal)] : []));
+    const copy = mergeCopyResults(readerCopyResult(record), presentationCopyResult(record), ...(signal ? [cardCopyResult(signal), hubListCopyResult(record)] : []));
     return {
       id: record.id, collection: record.collection, title: record.title,
       path: isColumn(record) ? `/column/${record.slug}/` : `/news/${record.slug || record.id}/`,

@@ -62,7 +62,14 @@ export function readerCopySurfaces(candidate = {}) {
   // (column/[slug].astro and buildColumnCards read deck and imageAlt
   // directly), so their top-level fields always count.
   const viaPresentation = !isAuthoredColumn(candidate);
-  for (const field of ['title', 'headline']) add(field, candidate[field]);
+  // displayHeadline(), generateCardCopy()/buildPublicPresentation() (and so
+  // the page title, structured data, RSS, catalog, ticker and newsletter) all
+  // read expertLensFull.finalHeadline before the raw title, so a final
+  // headline shadows the raw title for a news record. The hub and entity
+  // lists print a feed record's raw title; the audit covers that from the
+  // feed. A column page prints its title directly. Top-level `headline` is
+  // read by no renderer.
+  if (!viaPresentation || !shown(full.finalHeadline)) add('title', candidate.title);
   // summary, snippet, expertLensShort and expertLensFull.metaDescription are
   // deck fallbacks only: the news page's description chain
   // (presentation.deck || expertLensFull.metaDescription || summary || snippet),
