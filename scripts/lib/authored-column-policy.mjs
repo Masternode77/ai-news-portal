@@ -25,6 +25,7 @@ export const AUTHORED_MIN_INSIGHT_DENSITY_DEFAULT = 0.75;
 import { unsupportedClaimGuard } from './unsupported-claim-guard.mjs';
 import {
   analyzeArticleRepetition,
+  firstSentenceOfParagraph,
   leadTemplateSimilarity,
   LEAD_TEMPLATE_SIMILARITY_THRESHOLD,
 } from './repetition-detector.mjs';
@@ -78,7 +79,7 @@ function firstSentenceOf(body = '') {
     .map((block) => block.trim())
     .find((block) => block && !headings.has(block));
   if (!firstParagraph) return '';
-  return (firstParagraph.split(/(?<=[.!?])\s+/)[0] || '').trim();
+  return firstSentenceOfParagraph(firstParagraph);
 }
 
 function envNumber(name, fallback) {

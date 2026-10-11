@@ -854,6 +854,25 @@ test('quality policy rejects a lead that rebuilds a recent opening frame with ot
   assert.equal(detectorHint, hint);
 });
 
+test('recent column leads keep sentences that open with a dotted abbreviation', () => {
+  const lead = 'The U.S. Energy Information Administration reported that Brent traded in a wide range in the second quarter.';
+  const [recentLead] = recentLeadsFromColumns([{ expertLensFull: { finalArticleBody: `A Heading\n\n${lead} A second sentence follows.` } }]);
+  assert.equal(recentLead, lead);
+
+  const usTemplate = 'The U.S. Energy Information Administration says the way most operators read the queue is wrong, and the single most underpriced variable in the current buildout cycle is transformer lead time.';
+  const usVariant = 'The U.S. Federal Energy Regulatory Commission says the way most developers read the docket is wrong, and the single most underpriced variable in the current buildout cycle is study backlog.';
+  const fixtureLead = essayBody().split('\n\n')[1].split(/(?<=[.!?])\s+/)[0];
+  const result = authoredColumnQualityResult({
+    body: essayBody().replace(fixtureLead, usVariant),
+    title: 'The Dakota Grid Deal Is A Utility Execution Story Now',
+    deck: 'Northline Power secured 200 MW for its Dakota AI campus, and the anchor tenant just bought schedule risk priced as energy risk.',
+    ledgerClaims: [],
+    sourceText: SOURCE_TEXT,
+    recentLeads: [usTemplate],
+  });
+  assert.ok(result.reasons.includes('lead_template_repeats_recent_column'), result.reasons.join('|'));
+});
+
 test('quality policy enforces the figure mandate when figures are provided', () => {
   const base = {
     body: essayBody(),

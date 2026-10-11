@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import {
   analyzeArticleRepetition,
+  firstSentenceOfParagraph,
   leadSentence,
   leadTemplateSimilarity,
   leadTemplateSkeleton,
@@ -92,6 +93,28 @@ test('leadSentence skips headings and returns the first sentence of the opening 
   const body = ['The Permit Clock', `${ORIGINAL_LEADS.zoning} A second sentence follows.`, 'More prose.'].join('\n\n');
   assert.equal(leadSentence(body), ORIGINAL_LEADS.zoning);
   assert.equal(leadSentence(''), '');
+});
+
+test('firstSentenceOfParagraph does not end a sentence inside a dotted abbreviation', () => {
+  assert.equal(
+    firstSentenceOfParagraph('The U.S. Energy Information Administration reported that load rose. The next week fell.'),
+    'The U.S. Energy Information Administration reported that load rose.'
+  );
+  assert.equal(firstSentenceOfParagraph('Dr. Patel of Northline Inc. said e.g. the queue moved. Next.'), 'Dr. Patel of Northline Inc. said e.g. the queue moved.');
+  assert.equal(firstSentenceOfParagraph('$601 a day. That is the figure.'), '$601 a day.');
+  assert.equal(firstSentenceOfParagraph(''), '');
+});
+
+test('a reused frame behind an abbreviation is still compared', () => {
+  const usLeadA = 'The U.S. Energy Information Administration says the way most operators read the queue is wrong, and the single most underpriced variable in the current buildout cycle is transformer lead time.';
+  const usLeadB = 'The U.S. Federal Energy Regulatory Commission says the way most developers read the docket is wrong, and the single most underpriced variable in the current buildout cycle is study backlog.';
+  assert.equal(leadSentence(`${usLeadA} A second sentence follows.`), usLeadA);
+  assert.ok(leadTemplateSimilarity(usLeadA, usLeadB) > LEAD_TEMPLATE_SIMILARITY_THRESHOLD);
+  const result = analyzeArticleRepetition(
+    article('ferc', usLeadB, { publishedAt: '2026-09-02T00:00:00.000Z', headings: ['The Docket Clock', 'Who Waits', 'What Clears It'] }),
+    [article('eia', usLeadA, { publishedAt: '2026-09-01T00:00:00.000Z' })]
+  );
+  assert.ok(result.reasons.includes(`lead_template_similarity>${LEAD_TEMPLATE_SIMILARITY_THRESHOLD}`), result.reasons.join('|'));
 });
 
 test('analyzeArticleRepetition blocks a lead that reuses a recent opening frame with other nouns', () => {

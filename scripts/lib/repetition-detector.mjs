@@ -181,11 +181,26 @@ function cosineSimilarity(leftText = '', rightText = '') {
   return dot / (Math.sqrt(leftNorm) * Math.sqrt(rightNorm));
 }
 
+// Sentence boundaries must not fire inside dotted abbreviations: a lead that
+// opens "The U.S. Energy Information Administration reported" is one sentence,
+// and cutting it at "U.S." would leave nothing for the template comparison.
+const PROTECTED_PERIOD = '\uE000';
+const DOTTED_ABBREVIATION = /\b(?:[A-Za-z]\.){2,}(?!\w)/g;
+const TITLE_ABBREVIATION = /\b(?:Mr|Mrs|Ms|Dr|Prof|Sr|Jr|St|Inc|Co|Ltd|Corp|No|vs)\.(?=\s)/g;
+
+export function firstSentenceOfParagraph(paragraph = '') {
+  const protectedText = String(paragraph || '')
+    .replace(DOTTED_ABBREVIATION, (match) => match.replaceAll('.', PROTECTED_PERIOD))
+    .replace(TITLE_ABBREVIATION, (match) => match.replace('.', PROTECTED_PERIOD));
+  const first = protectedText.split(/(?<=[.!?])\s+/)[0] || '';
+  return first.replaceAll(PROTECTED_PERIOD, '.').trim();
+}
+
 // The first sentence of the first non-heading paragraph: the opening device.
 export function leadSentence(body = '') {
   const firstParagraph = normalizeEditorialParagraphs(body).find((paragraph) => !isHeadingLine(paragraph));
   if (!firstParagraph) return '';
-  return (firstParagraph.split(/(?<=[.!?])\s+/)[0] || '').trim();
+  return firstSentenceOfParagraph(firstParagraph);
 }
 
 function leadTokens(text = '') {
