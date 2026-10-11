@@ -11,9 +11,12 @@
 // opens with another story's headline glued onto its lead-in sentence, or is
 // a bare headline. The extract is contaminated when at least three clipped
 // fragments run back to back, or when at least four teaser-shaped segments
-// make up half or more of it. The verdict is a hard extraction block: the item
-// may remain a signal card that links to the source, but it never feeds
-// generated copy.
+// make up half or more of it and at least one of them is clipped. Without an
+// ellipsis a glued headline is indistinguishable from a sub-heading that the
+// no-paragraph extraction fallback flattened onto its section, so headline
+// shapes only ever add weight to clipped evidence. The verdict is a hard
+// extraction block: the item may remain a signal card that links to the
+// source, but it never feeds generated copy.
 //
 // Calibrated on 2026-10-11 against every stored article text: all HPCwire
 // extracts of that era are caught; feed bodies whose sub-headings are glued to
@@ -256,7 +259,7 @@ export function detectRelatedStoryContamination({ title = '', text = '' } = {}) 
   const teaserRatio = ratio(teasers.length, profiles.length);
   const consecutiveClipped = longestRun(profiles, (profile) => profile.clipped);
   const detected = consecutiveClipped >= MIN_CONSECUTIVE_CLIPPED_FRAGMENTS
-    || (teasers.length >= MIN_TEASER_FRAGMENTS && teaserRatio >= TEASER_FRAGMENT_RATIO_THRESHOLD);
+    || (clipped.length > 0 && teasers.length >= MIN_TEASER_FRAGMENTS && teaserRatio >= TEASER_FRAGMENT_RATIO_THRESHOLD);
 
   return {
     detected,

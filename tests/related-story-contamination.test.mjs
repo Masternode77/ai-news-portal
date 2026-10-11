@@ -127,21 +127,54 @@ test('decodes HTML entities before judging clipped fragments', () => {
   assert.ok(longformGate.block_reasons.includes(RELATED_STORY_CONTAMINATION_REASON));
 });
 
-test('catches headline-glued teasers when no ellipsis survives', () => {
+test('lets headline-glued teasers tip the verdict once a single clipped fragment is present', () => {
   const fixture = loadFixture('hpcwire-qunnect-monarch.json');
-  const unclipped = decodeHtmlEntities(fixture.articleText).replace(/\.{3,}/g, '.').replace(/…/g, '.');
-  assert.ok(!/\.{3}|…/.test(unclipped));
+  const decoded = decodeHtmlEntities(fixture.articleText);
+  // Keep one entity-encoded ellipsis (invisible to the truncation check) and
+  // turn every other teaser into a period-terminated sentence.
+  let kept = false;
+  const mostlyUnclipped = decoded.replace(/\.{3,}|…/g, () => {
+    if (kept) return '.';
+    kept = true;
+    return '&hellip;';
+  });
+  assert.ok(!/\.{3}|…/.test(mostlyUnclipped));
 
-  const contamination = detectRelatedStoryContamination({ title: fixture.title, text: unclipped });
+  const contamination = detectRelatedStoryContamination({ title: fixture.title, text: mostlyUnclipped });
   assert.equal(contamination.detected, true);
-  assert.equal(contamination.clipped_fragment_count, 0);
+  assert.equal(contamination.clipped_fragment_count, 1);
   assert.ok(contamination.headline_glued_count >= 4);
   assert.ok(contamination.teaser_fragment_ratio >= 0.5);
 
-  const longformGate = sourceExtractionPassesLongformGate({ ...fixture, articleText: unclipped });
+  const longformGate = sourceExtractionPassesLongformGate({ ...fixture, articleText: mostlyUnclipped });
   assert.equal(longformGate.ok, false);
   assert.ok(longformGate.block_reasons.includes(RELATED_STORY_CONTAMINATION_REASON));
   assert.ok(!longformGate.block_reasons.includes('ellipsis_truncation_artifact'));
+
+  // With no ellipsis at all the same text is indistinguishable from flattened
+  // sub-headings, so the shape check deliberately stays silent.
+  const unclipped = decoded.replace(/\.{3,}|…/g, '.');
+  const silent = detectRelatedStoryContamination({ title: fixture.title, text: unclipped });
+  assert.equal(silent.detected, false);
+  assert.ok(silent.headline_glued_count >= 4);
+});
+
+test('does not flag an article whose sub-headings were flattened onto short sections', () => {
+  // The no-paragraph extraction fallback glues each heading to its section.
+  const sections = [
+    ['Why Transformer Lead Times Decide The Schedule', 'the utility said transformer deliveries now run past thirty months for the largest units.'],
+    ['How The Tariff Docket Changed Campus Financing', 'developers who signed before the docket opened keep the older rate for ten years.'],
+    ['What Flexible Load Agreements Give Operators', 'the three operators accepted curtailment in exchange for earlier energization dates.'],
+    ['Where The Second Phase Equipment Comes From', 'the second phase depends on switchgear that has not yet been ordered from the supplier.'],
+    ['When Regulators Expect The Study Results', 'the interconnection study results are due before the winter peak case is finalized.'],
+  ];
+  const flattened = sections.map(([heading, sentence]) => `${heading} ${sentence}`).join(' ');
+
+  const contamination = detectRelatedStoryContamination({ title: 'Lakeside campus timeline', text: flattened });
+  assert.equal(contamination.detected, false);
+  assert.equal(contamination.clipped_fragment_count, 0);
+  assert.ok(contamination.headline_glued_count >= 4);
+  assert.ok(contamination.teaser_fragment_ratio >= 0.5);
 });
 
 test('does not flag a feed body whose sub-headings are glued to full paragraphs', () => {
