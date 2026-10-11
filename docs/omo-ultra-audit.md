@@ -27,7 +27,7 @@ Audit output omits `git status` so running this writer cannot make its own repor
 - Renderer: `src/pages/news/[id].astro` builds static paths from latest/archive JSON and filters with `isPublicLongformArticle`.
 - It uses `ArticleHeader`, `LongformArticleBody`, `SourceAttribution`, `AIDisclosureFooter`, and related cards.
 - Internal metadata is partially guarded by `guardPublicCopy`, `cleanArticleBodyBlocks`, and `forbiddenPublicPhraseMatches`.
-- Evidence: route source length 6086 bytes.
+- Evidence: route source length 6232 bytes.
 
 ## Article Data Store
 

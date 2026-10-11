@@ -1,0 +1,21 @@
+---
+// Corrections and updates recorded against a published article. Rendered
+// only when the record carries at least one dated note.
+import { correctionNotes, formatCorrectionDate } from '../../scripts/lib/editorial-corrections.mjs';
+
+const { record } = Astro.props;
+const notes = correctionNotes(record);
+---
+{notes.length ? (
+  <section class="detail-section editorial-corrections" aria-label="Corrections and updates">
+    <h2>Corrections and updates</h2>
+    <ul>
+      {notes.map((note) => (
+        <li>
+          <time datetime={note.date}>{formatCorrectionDate(note.date)}</time>
+          <span>{note.summary}</span>
+        </li>
+      ))}
+    </ul>
+  </section>
+) : null}
