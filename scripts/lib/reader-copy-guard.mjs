@@ -1,8 +1,16 @@
 // Reader-facing copy only. This detector never rewrites text or certifies facts.
 // Keep input-provenance rules specific: "prompt", "model" and uncertainty are
 // legitimate subjects in AI reporting, not evidence of a leaked instruction.
+//
+// `input_provenance` fires only when an extract, excerpt or evidence has no
+// attributed supplier: a determiner directly before "supplied"/"provided"
+// ("the supplied extract"), a sentence that opens with it ("Provided excerpts
+// show"), or the writer as recipient ("the evidence I was given"). Prose that
+// names who supplied what ("the vendor provided excerpts of the contract",
+// "EIA provided excerpts from the filing") is ordinary attribution and passes;
+// so do "Abstract Excerpt:" labels and the verb "to extract value".
 const RULES = [
-  ['input_provenance', /\b(?:supplied|provided)\s+(?:extracts?|excerpts?)\b|\bthe\s+supplied\s+(?:evidence|source\s+text)\b|\b(?:anything|everything)\s+I\s+have\s+been\s+given\b/gi],
+  ['input_provenance', /\b(?:the|this|that|these|those|my|our|its|their|any|all)\s+(?:supplied|provided)\s+(?:extracts?|excerpts?|evidence|source\s+text)\b|(?<=^|[.!?]\s+)(?:supplied|provided)\s+(?:extracts?|excerpts?)\b|\b(?:extracts?|excerpts?|evidence|source\s+text)\s+(?:that\s+)?(?:I|we)\s+(?:was|were|have\s+been|had\s+been)\s+(?:given|supplied|provided|handed)\b|\b(?:anything|everything)\s+I\s+have\s+been\s+given\b/gi],
   ['writer_extract', /\b(?:the|an?)\s+extract\s+(?:I|we)\s+(?:have|received|was|were)\b/gi],
   ['process_assurance', /\bI\s+will\s+not\s+invent\s+(?:answers|facts|numbers)\b|\bI\s+am\s+committing\s+to\s+that\s+distinction\b|\bI\s+own\s+this\s+thesis\s+outright\b/gi],
   ['persona_scaffold', /\b(?:my|two|both)\s+standing\s+positions?\b|\bone\s+of\s+my\s+standing\s+positions?\b/gi],
@@ -10,13 +18,19 @@ const RULES = [
   ['instruction_scaffold', /\breturn\s+(?:only\s+)?strict\s+JSON\b|\bdo\s+not\s+return\s+a\s+body\s+string\b/gi],
 ];
 
-/** An allowlist of public fields; private source/review objects stay private. */
+/**
+ * An allowlist of public fields; private source/review objects stay private.
+ * `snippet`, `why_it_matters` and `expertLensShort` render on cards and detail
+ * pages next to the deck, so they are reader copy too. Source evidence fields
+ * (`articleText`, `cleaned_source_text`, `rawText`) are never inspected: a
+ * publisher may legitimately write "excerpts" or "provided" in its own text.
+ */
 export function readerCopySurfaces(candidate = {}) {
   const surfaces = [];
   const add = (field, text) => {
     if (typeof text === 'string' && text.trim()) surfaces.push({ field, text });
   };
-  for (const field of ['title', 'headline', 'deck', 'summary', 'metaDescription', 'body', 'imageAlt']) {
+  for (const field of ['title', 'headline', 'deck', 'summary', 'snippet', 'why_it_matters', 'expertLensShort', 'metaDescription', 'body', 'imageAlt']) {
     add(field, candidate[field]);
   }
   const full = candidate.expertLensFull || {};

@@ -18,9 +18,11 @@ import {
 } from '../scripts/lib/homepage-blog-surface-policy.mjs';
 import {
   buildEiaRestorationInventory,
+  eiaRestorationReaderCopyFindings,
   eiaRestorationSpecs,
 } from '../scripts/lib/eia-restoration-inventory.mjs';
 import { articleDetailQualityResult } from '../scripts/lib/article-detail-quality-gate.mjs';
+import { readerCopyResult } from '../scripts/lib/reader-copy-guard.mjs';
 import { buildHomepageFeed } from '../scripts/lib/homepage-feed-builder.mjs';
 import { buildRssItems } from '../scripts/lib/rss-builder.mjs';
 import { buildSitemapEntries } from '../scripts/lib/sitemap-builder.mjs';
@@ -400,4 +402,28 @@ test('restoration fails closed when neither live nor verified committed text exi
       /source extraction unavailable: .*live fetch failed \(timeout\) and the committed inventory holds no verified text/,
     );
   }
+});
+
+test('EIA restoration specs are checked as reader copy before any record is built', () => {
+  // The committed config is clean and every built public record passes the guard.
+  assert.deepEqual(eiaRestorationReaderCopyFindings(), []);
+  const records = eiaRecords();
+  assert.equal(records.filter((record) => record.articlePagePublished).length, 5);
+  assert.ok(records.every((record) => readerCopyResult(record).ok));
+  assert.ok(records.filter((record) => record.articlePagePublished)
+    .every((record) => articleDetailQualityResult(record).readerCopy.findings.length === 0));
+
+  // A spec edit that leaks drafting-process language fails the build, before persistence.
+  const tampered = eiaRestorationSpecs();
+  const longform = tampered.find((spec) => spec.kind === 'longform');
+  const signal = tampered.find((spec) => spec.kind !== 'longform');
+  longform.body.push('The supplied extract does not report the 2027 figure.');
+  signal.deck = `${signal.deck} I will not invent numbers here.`;
+  assert.deepEqual(
+    eiaRestorationReaderCopyFindings(tampered).map((finding) => `${finding.id}:${finding.code}:${finding.field}`),
+    [`${longform.id}:input_provenance:body`, `${signal.id}:process_assurance:deck`],
+  );
+  assert.throws(() => buildEiaRestorationInventory({}, { specs: tampered }), /writer-only copy: eia-[a-z-]+:input_provenance:body/);
+  // The committed specs are untouched by the tampered clone.
+  assert.deepEqual(eiaRestorationReaderCopyFindings(), []);
 });

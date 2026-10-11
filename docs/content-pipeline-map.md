@@ -291,7 +291,7 @@ Archive management is in `scripts/lib/archive-store.mjs`.
 Scheduled publish path:
 
 - The existing Mac automation owns the single generation schedule; follow `docs/subscription-generation.md` for activation and its publication gates.
-- The Mac runner runs `npm run check`, `npm run pipeline`, taxonomy regeneration, `npm test`, and `npm run content:gate`; the content gate performs the production build.
+- The Mac runner runs `npm run check`, `npm run pipeline`, taxonomy regeneration, the strict reader-copy audit (`node scripts/audit-reader-copy.mjs --strict`), `npm test`, and `npm run content:gate`; the content gate performs the production build and ends with the same strict reader-copy audit (`npm run audit:reader-copy`, see `docs/reader-copy-gate-decision-2026-10-11.md`).
 - After native artwork and final review, the authorized Mac automation commits and pushes related changes to `main` for:
   - `src/data/latest-news.json`
   - `src/data/archived-news.json`

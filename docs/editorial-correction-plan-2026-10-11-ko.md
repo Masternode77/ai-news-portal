@@ -82,7 +82,7 @@
 ## 7. 후속 엔진 작업 (이 PR 범위 밖)
 
 1. 추출 QA에 관련기사 teaser 오염 검사를 추가하고, 오염 시 장문 생성을 차단한다.
-2. reader-copy 가드를 EIA 복원 경로와 subscription 경로에도 연결하고, 오탐 샘플 검토 후 `--strict`를 운영 게이트에 넣는다.
+2. reader-copy 가드를 EIA 복원 경로와 subscription 경로에도 연결하고, 오탐 샘플 검토 후 `--strict`를 운영 게이트에 넣는다. → 2026-10-11 별도 변경으로 완료. 적용 범위·규칙 검토·게이트 편입 결정은 `docs/reader-copy-gate-decision-2026-10-11.md`에 기록.
 3. 칼럼 간 lead 문장 유사도를 반복 검출기에 추가한다.
 4. 보고서 4절의 claim ledger(상태 값 포함)와 근거량 기반 길이 정책은 그대로 유효하다.
 

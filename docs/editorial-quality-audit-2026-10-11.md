@@ -86,7 +86,7 @@ PR #46 already introduced complete deck/summary handling, improved numeric figur
 3. **Figure utility:** extend `authored-column-figures.mjs` and `ColumnFigure.astro` with units, comparator, period and complete labels. Reject related-story contamination before the claim ledger. Make a no-figure route possible only through an explicit policy/test change; this patch does not remove the existing 1–3 figure contract.
 4. **Semantic review:** add a separate reader/editing review alongside factual review. A genuine counterargument must weaken the thesis. A hypothetical winner, deadline or mechanism cannot be promoted into evidence by adding “I think.” Keep model-reported confidence separate from validation results.
 5. **Historic remediation:** correct P0 articles from their cited primary sources, record correction notes and updated timestamps, rerun current validation, and then reconcile rendered pages. Do not globally delete leak phrases, silently sanitize unsupported claims, or mass-unpublish historical content based on a lexical scan.
-6. **Broader publication surfaces:** the new generation hook is in the authored-column policy. Apply the same public-copy contract to other writing paths and final built output in a separate tested integration, with an explicit migration plan for historical findings. The new CLI reports existing records but is not installed as an unconditional site-wide strict gate.
+6. **Broader publication surfaces:** the new generation hook is in the authored-column policy. Apply the same public-copy contract to other writing paths and final built output in a separate tested integration, with an explicit migration plan for historical findings. The new CLI reports existing records but is not installed as an unconditional site-wide strict gate. *Follow-up 2026-10-11: done in a separate change; see `docs/reader-copy-gate-decision-2026-10-11.md` for the coverage map, the rule review and the decision to run `--strict` inside `content:gate:built`.*
 
 ## Validation and release status
 
@@ -140,3 +140,7 @@ A second review re-ran this audit's checks against commit `396bd6f` (this PR's h
 ### Still requiring network access
 
 Live sitemap and production-deployment reconciliation (Vercel API access was refused with 403 in the review session), full-text comparison for the HPCwire, Tom's Hardware, Semiconductor Engineering and Bloomberg sources, the Texas governor's order and the Pecos County TCEQ permit record.
+
+## Follow-up — reader-copy gate installed (2026-10-11)
+
+Recorded in `docs/reader-copy-gate-decision-2026-10-11.md`: the guard now also runs inside `longformQualityResult`, `articleDetailQualityResult` (and therefore every final-publication integrity check), the EIA restoration spec builder and the subscription runner; the `input_provenance` rule was tightened after a review of all stored bodies; and `node scripts/audit-reader-copy.mjs --strict` (`npm run audit:reader-copy`) is the last step of `content:gate:built`. The strict audit is clean on the 27 published records, so the gate introduces no historical backlog.

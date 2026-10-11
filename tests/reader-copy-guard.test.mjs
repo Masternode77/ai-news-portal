@@ -71,3 +71,46 @@ test('audit fails clearly on malformed collections', async () => {
   const { auditReaderCopy } = await import('../scripts/audit-reader-copy.mjs');
   assert.throws(() => auditReaderCopy({ latest: {} }), /must be an array/);
 });
+
+// --- Rule review against real published prose (2026-10-11 follow-up) ---
+// Attribution of who supplied an extract or excerpt is ordinary reporting and
+// must pass; an unattributed "the supplied extract" or the writer as recipient
+// is drafting-process language and must fail.
+for (const prose of [
+  'The vendor provided excerpts of the contract to the county board.',
+  'EIA provided excerpts from the filing in its weekly note.',
+  'The utility supplied extracts of its load forecast to regulators.',
+  'Abstract Excerpt: this paper presents a failure-analysis method for 3D ICs.',
+  'What follows are excerpts of that discussion.',
+  'Operators who secured firm capacity early will extract value from those who did not.',
+  'Documents the developer provided show the substation schedule.',
+  'The evidence the utility supplied was partial, and the filing says so.',
+]) {
+  test(`allows attributed source handling: ${JSON.stringify(prose)}`, () => {
+    assert.equal(readerCopyResult({ body: prose }).ok, true);
+  });
+}
+for (const phrase of [
+  'Supplied extracts show a rise in approved load.',
+  'The number is reported. Provided excerpts show a rise in approved load.',
+  'The report says this provided excerpt omits the test configuration.',
+  'Those supplied excerpts stop at the second quarter.',
+  'the evidence I was given does not cover 2027',
+  'the source text we have been given stops at the forecast year',
+]) {
+  test(`rejects unattributed input provenance: ${JSON.stringify(phrase)}`, () => {
+    const result = readerCopyResult({ body: phrase });
+    assert.equal(result.ok, false);
+    assert.deepEqual([...new Set(result.findings.map((finding) => finding.code))], ['input_provenance']);
+  });
+}
+test('card copy next to the deck is reader copy', () => {
+  for (const field of ['snippet', 'why_it_matters', 'expertLensShort']) {
+    const result = readerCopyResult({ [field]: 'The supplied extract reports a benchmark.' });
+    assert.deepEqual(result.reasons, [`reader_copy:input_provenance:${field}`]);
+  }
+});
+test('source evidence fields are never reader copy', () => {
+  const evidence = 'The supplied extract reports a benchmark. Return strict JSON. I will not invent numbers.';
+  assert.equal(readerCopyResult({ articleText: evidence, cleaned_source_text: evidence, rawText: evidence, source_evidence_text: evidence }).ok, true);
+});

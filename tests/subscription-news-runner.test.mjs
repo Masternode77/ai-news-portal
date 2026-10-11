@@ -168,3 +168,14 @@ test('command driver observes actual child exit and cancellation', async () => {
     clearTimeout(timer);
   }
 });
+
+test('subscription steps audit reader copy on the final inventory before the test and gate steps', () => {
+  const commands = SUBSCRIPTION_NEWS_STEPS.map(([command, args]) => `${command} ${args.join(' ')}`);
+  const audit = commands.indexOf('node scripts/audit-reader-copy.mjs --strict');
+  assert.ok(audit > -1);
+  assert.ok(audit > commands.indexOf('node scripts/pipeline.mjs'));
+  assert.ok(audit > commands.indexOf('node scripts/restore-eia-public-inventory.mjs'));
+  assert.ok(audit > commands.indexOf('npm run rebuild:taxonomy-pages'));
+  assert.ok(audit < commands.indexOf('npm test'));
+  assert.ok(audit < commands.indexOf('npm run content:gate'));
+});
