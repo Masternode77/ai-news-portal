@@ -133,6 +133,7 @@ test('persisted presentation copy is reader copy', () => {
     'reader_copy:input_provenance:public_presentation.deck',
     'reader_copy:process_assurance:public_presentation.why_it_matters',
     'reader_copy:instruction_scaffold:public_presentation.image_alt',
+    'reader_copy:input_provenance:public_presentation.lane_title',
   ]);
 });
 test('both spellings of the image alt field are reader copy', () => {
@@ -158,4 +159,22 @@ test('the adjective construction with evidence is still flagged', () => {
   for (const phrase of ['the supplied evidence stops in 2027', 'our provided source text omits the table', 'their supplied evidence']) {
     assert.deepEqual(readerCopyResult({ body: phrase }).reasons, ['reader_copy:input_provenance:body'], phrase);
   }
+});
+test('a sentence-initial provenance phrase is caught after opening quotes, brackets and list markers', () => {
+  for (const body of ['“Provided excerpts show a rise.”', '- Provided excerpts show a rise.', 'Heading\n> Provided excerpts show a rise.', '(Supplied extracts omit the table.)', 'Load grew. "Provided excerpts show why."']) {
+    assert.deepEqual(readerCopyResult({ body }).reasons, ['reader_copy:input_provenance:body'], body);
+  }
+  assert.equal(readerCopyResult({ body: '“The utility supplied extracts of its forecast,” the filing says.' }).ok, true);
+});
+test('card metadata chips are reader copy', () => {
+  const result = readerCopyResult({
+    region: 'US', source: 'HPCwire', category: 'Power & Grid',
+    public_presentation: { signal_label: 'Analysis', editorial_lens: 'I will not invent numbers', lane_title: 'the supplied extract' },
+    public_routing: { public_signal_label: 'Signal', editorial_lens: 'return strict JSON', laneTitle: 'Operator Alerts' },
+  });
+  assert.deepEqual(result.reasons, [
+    'reader_copy:process_assurance:public_presentation.editorial_lens',
+    'reader_copy:input_provenance:public_presentation.lane_title',
+    'reader_copy:instruction_scaffold:public_routing.editorial_lens',
+  ]);
 });

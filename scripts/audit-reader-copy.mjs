@@ -10,7 +10,7 @@ import { buildHomepageFeed } from './lib/homepage-feed-builder.mjs';
 import { buildArchiveFeed } from './lib/archive-feed-builder.mjs';
 import { authoredColumnPublicEligible, isAuthoredColumn } from './lib/authored-column-policy.mjs';
 
-const CARD_FIELDS = ['id', 'title', 'deck', 'why_it_matters', 'image_alt', 'reader_impact'];
+const CARD_FIELDS = ['id', 'title', 'deck', 'why_it_matters', 'image_alt', 'reader_impact', 'signal_label', 'editorial_lens', 'lane_title', 'region', 'source', 'category'];
 
 /**
  * Every card a reader can reach, as the feed builders render it: the full
@@ -46,9 +46,15 @@ export function auditReaderCopy(collections, { homepageSignals = [] } = {}) {
     }
   }
   const signalsById = new Map(homepageSignals.filter((signal) => signal?.id).map((signal) => [signal.id, signal]));
+  // Every textual field the card components render, mapped onto the guard's
+  // presentation surfaces.
   const cardCopyResult = (signal) => readerCopyResult({
     title: signal.title, deck: signal.deck, why_it_matters: signal.why_it_matters, imageAlt: signal.image_alt,
-    public_presentation: { reader_impact: signal.reader_impact },
+    public_presentation: {
+      reader_impact: signal.reader_impact,
+      signal_label: signal.signal_label, editorial_lens: signal.editorial_lens, lane_title: signal.lane_title,
+      region: signal.region, source: signal.source, category: signal.category,
+    },
   });
   // A column page exists whenever the column route's own predicate accepts the
   // record (`authoredColumnPublicEligible`, which does not read the news-article

@@ -99,3 +99,16 @@ test('rendered reader-impact pills are part of the card audit', () => {
   assert.deepEqual(report.cards[0].readerCopy.reasons, ['reader_copy:process_assurance:public_presentation.reader_impact[1]']);
   assert.ok(publicCardSignalsFor([]).every((signal) => 'reader_impact' in signal));
 });
+
+test('rendered card metadata chips are part of the card audit', () => {
+  const card = { id: 'signal', articlePagePublished: false, signalCardOnly: true, homepagePublished: true, title: 'A signal card', deck: 'A clean stored deck.' };
+  const rendered = { id: 'signal', title: 'A signal card', deck: 'Clean rendered deck.', why_it_matters: 'Clean.', image_alt: 'Clean visual', reader_impact: ['Operators'], signal_label: 'Signal', editorial_lens: 'I will not invent numbers', lane_title: 'Operator Alerts', region: 'US', source: 'the supplied extract', category: 'Power & Grid' };
+  const report = auditReaderCopy({ latest: [card] }, { homepageSignals: [rendered] });
+  assert.deepEqual(report.cards[0].readerCopy.reasons, [
+    'reader_copy:process_assurance:public_presentation.editorial_lens',
+    'reader_copy:input_provenance:public_presentation.source',
+  ]);
+  for (const field of ['signal_label', 'editorial_lens', 'lane_title', 'region', 'source', 'category']) {
+    assert.ok(publicCardSignalsFor([]).every((signal) => field in signal));
+  }
+});
