@@ -6,6 +6,7 @@
 // Every check reuses an existing guard module where one exists. There is
 // deliberately no fallback: a column that fails here is not published.
 import { bannedPhraseMatches } from './banned-phrases.mjs';
+import { readerCopyResult, readerCopySurfaces } from './reader-copy-guard.mjs';
 import { guardPublicCopy } from './copy-quality-guard.mjs';
 import { guardPublicTemplatePhrases } from './public-template-phrase-guard.mjs';
 import { hasInternalPublicLanguage } from './internal-language-guard.mjs';
@@ -194,7 +195,11 @@ export function authoredColumnQualityResult({
   }
 
   // 3-5. Language guards (banned phrases, public copy, template language)
-  const fullText = [title, deck, summary, body].filter(Boolean).join('\n\n');
+  const readerCandidate = { title, deck, summary, body, figures };
+  const readerCopy = readerCopyResult(readerCandidate);
+  if (!readerCopy.ok) reasons.push(...readerCopy.reasons);
+  // Figure labels, displayed values and attribution are public copy too.
+  const fullText = readerCopySurfaces(readerCandidate).map(({ text }) => text).join('\n\n');
   const banned = bannedPhraseMatches(fullText);
   if (banned.length) reasons.push(`banned_phrases:${banned.slice(0, 3).join('|')}`);
   const copyGuard = guardPublicCopy(body);
@@ -263,6 +268,7 @@ export function authoredColumnQualityResult({
       copyright_overlap_score: copyright.overlap_score ?? 0,
       unsupported_claim_count: claims.unsupportedNumbers?.length ?? 0,
       banned_phrase_count: banned.length,
+      reader_copy_issue_count: readerCopy.findings.length,
       repeated_sentence_ratio: Number((repetition.repeated_sentence_ratio ?? 0).toFixed(3)),
       heading_sequence_similarity: Number((repetition.heading_sequence_similarity ?? 0).toFixed(3)),
       conclusion_similarity: Number((repetition.conclusion_similarity ?? 0).toFixed(3)),
