@@ -178,3 +178,11 @@ test('card metadata chips are reader copy', () => {
     'reader_copy:instruction_scaffold:public_routing.editorial_lens',
   ]);
 });
+test('unattributed prepositional and participial uses are still input provenance', () => {
+  for (const body of ['This analysis is based on provided excerpts of the filing.', 'Using supplied extracts, the figures were rebuilt.', 'The numbers come from provided excerpts.', 'A reading drawn with supplied extracts only.']) {
+    assert.deepEqual(readerCopyResult({ body }).reasons, ['reader_copy:input_provenance:body'], body);
+  }
+  for (const body of ['EIA provided excerpts from the filing.', 'The vendor provided excerpts of the contract to the board.', 'The utility supplied extracts of its load forecast to regulators.']) {
+    assert.equal(readerCopyResult({ body }).ok, true, body);
+  }
+});

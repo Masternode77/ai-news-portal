@@ -66,6 +66,7 @@ Change made to `input_provenance`:
 | "the supplied extract", "THE PROVIDED EXCERPT", "the supplied evidence", "this provided excerpt" | flagged | flagged (determiner directly before supplied/provided; with "evidence"/"source text" only "the" or a possessive) |
 | "This provided evidence that the forecast was conservative." (demonstrative subject + verb) | flagged (false positive) | passes |
 | "Provided excerpts show a rise." (sentence-initial, no subject, including after a heading or paragraph break) | flagged | flagged |
+| "based on provided excerpts", "using supplied extracts", "from provided excerpts" (preposition or participle, no supplier) | flagged | flagged |
 | "the evidence I was given", "the source text we have been given", "anything I have been given" | partly flagged | flagged (writer as recipient) |
 | "the vendor provided excerpts of the contract", "EIA provided excerpts from the filing", "the utility supplied extracts of its load forecast" | **flagged (false positive)** | passes (attributed supplier) |
 | "The supplier provided evidence of performance." | passes | passes |
@@ -127,3 +128,4 @@ The automated Codex review of the pull request raised three points, each verifie
 8. A fifth pass showed that "This provided evidence that…" (demonstrative subject + verb) matched the determiner form. With "evidence"/"source text" the rule now accepts only "the" or a possessive determiner; the extract/excerpt nouns keep the full determiner list.
 9. A sixth pass noted that an opening quote, bracket or list marker (`“Provided excerpts…`, `- Provided excerpts…`, `> Provided excerpts…`) defeated the sentence-start branch; the lookbehind now allows those characters between the boundary and the phrase.
 10. The same pass noted that card components also render `signal_label`, `editorial_lens`, `region`, `source` and `category` chips; they are now reader surfaces (presentation, routing and top-level fields) and part of the rendered-card projection.
+11. A seventh pass noted that the tightened rule had dropped unattributed prepositional and participial uses ("based on provided excerpts", "using supplied extracts") that the original rule caught; a preposition/participle alternative restores them while attributed subjects still pass.
