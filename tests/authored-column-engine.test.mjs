@@ -813,6 +813,47 @@ test('quality policy rejects headings and leads that echo recent columns', () =>
   assert.ok(!fresh.reasons.includes('lead_repeats_recent_column'));
 });
 
+test('quality policy rejects a lead that rebuilds a recent opening frame with other nouns', () => {
+  // The 2026-08 openings that token overlap let through: the Jaccard check
+  // only sees the shared nouns, and these share almost none.
+  const zoningLead = 'I track data center capacity the way most people track chip supply or power queues, and the single most underpriced variable in the current buildout cycle is zoning lead time.';
+  const interconnectionLead = 'I track data center capacity the way most analysts track chip supply, and the single most underpriced variable in the current buildout cycle is interconnection lead time.';
+  const isolationLead = 'I track infrastructure constraints the way most analysts track model benchmarks, and the single most underpriced variable in the current deployment cycle is isolation-layer failure.';
+  const correctedZoningLead = "Zoning lead time is the variable I think the current buildout cycle underprices most, and Amazon's Gilroy project is the reason I keep returning to it.";
+  const fixtureLead = essayBody().split('\n\n')[1].split(/(?<=[.!?])\s+/)[0];
+  const withLead = (lead) => essayBody().replace(fixtureLead, lead);
+  const base = {
+    title: 'The Dakota Grid Deal Is A Utility Execution Story Now',
+    deck: 'Northline Power secured 200 MW for its Dakota AI campus, and the anchor tenant just bought schedule risk priced as energy risk.',
+    ledgerClaims: [],
+    sourceText: SOURCE_TEXT,
+  };
+
+  const templated = authoredColumnQualityResult({
+    ...base,
+    body: withLead(isolationLead),
+    recentLeads: [zoningLead, interconnectionLead],
+  });
+  assert.ok(templated.reasons.includes('lead_template_repeats_recent_column'), templated.reasons.join('|'));
+  assert.ok(!templated.reasons.includes('lead_repeats_recent_column'), 'token overlap alone does not catch the swapped-noun frame');
+  assert.ok(templated.metrics.lead_template_max > 0.8, String(templated.metrics.lead_template_max));
+  assert.ok(templated.metrics.lead_reuse_max < 0.7, String(templated.metrics.lead_reuse_max));
+
+  const corrected = authoredColumnQualityResult({
+    ...base,
+    body: withLead(correctedZoningLead),
+    recentLeads: [zoningLead, interconnectionLead, isolationLead],
+  });
+  assert.ok(!corrected.reasons.includes('lead_template_repeats_recent_column'), corrected.reasons.join('|'));
+  assert.ok(!corrected.reasons.includes('lead_repeats_recent_column'), corrected.reasons.join('|'));
+  assert.ok(corrected.metrics.lead_template_max <= 0.8, String(corrected.metrics.lead_template_max));
+
+  const [hint] = verificationFeedback(['lead_template_repeats_recent_column']);
+  assert.match(hint, /change the construction itself/);
+  const [detectorHint] = verificationFeedback(['lead_template_similarity>0.8']);
+  assert.equal(detectorHint, hint);
+});
+
 test('quality policy enforces the figure mandate when figures are provided', () => {
   const base = {
     body: essayBody(),

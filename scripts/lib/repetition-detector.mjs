@@ -7,6 +7,18 @@ import { hasPublishedArticlePage } from './article-publication-state.mjs';
 export const REPETITION_SENTENCE_RATIO_THRESHOLD = 0.12;
 export const HEADING_SEQUENCE_SIMILARITY_THRESHOLD = 0.75;
 export const CONCLUSION_SIMILARITY_THRESHOLD = 0.7;
+// Lead-template reuse: the opening sentence rebuilt from the same frame with
+// different nouns swapped in ("I track X the way most people track Y, and the
+// single most underpriced variable in the current Z cycle is W"). Token
+// overlap misses it because the nouns differ, so the first sentence is reduced
+// to a skeleton of function words with content runs collapsed to placeholders
+// and the skeletons are compared as sequences. On the published columns the
+// three original variants score 0.889-1.0 against each other, the corrected
+// openings score at most 0.56 against them, and no two live column leads
+// score above 0.64. Skeletons with fewer than LEAD_TEMPLATE_MIN_FRAME_TOKENS
+// frame words carry too little structure to compare and score 0.
+export const LEAD_TEMPLATE_SIMILARITY_THRESHOLD = 0.8;
+export const LEAD_TEMPLATE_MIN_FRAME_TOKENS = 6;
 export const RECENT_ARTICLE_LIMIT = 50;
 export const BANNED_PHRASE_WINDOW = 10;
 
@@ -42,6 +54,19 @@ const STOP_WORDS = new Set([
   'should',
 ]);
 
+// Function words that carry a sentence's construction rather than its subject.
+// Everything else is treated as swappable content when building a lead skeleton.
+const LEAD_FRAME_TOKENS = new Set(`
+a an the this that these those it its i we you he she they them me us my our your his her their
+and or but nor so yet if then than as because while when where what which who whom whose how why
+in on at to of for with by from into onto over under about across through between among against
+without within before after during until since up out off
+is are was were be been being am do does did has have had can could will would shall should may
+might must not no never only just also even still already again once ever
+most more less much many few single every each all any some same other another such both either
+neither way here there now
+`.split(/\s+/).filter(Boolean));
+
 function normalizedText(text = '') {
   return sanitizeGeneratedText(text)
     .toLowerCase()
@@ -70,16 +95,18 @@ function splitParagraphs(text = '') {
     .filter((paragraph) => paragraph.length >= 45);
 }
 
+function isHeadingLine(line = '') {
+  const trimmed = line.trim();
+  if (KNOWN_HEADINGS.has(trimmed)) return true;
+  if (trimmed.length > 72) return false;
+  if (/[.!?]$/.test(trimmed)) return false;
+  return /^[A-Z0-9][A-Za-z0-9 &:/+-]+$/.test(trimmed);
+}
+
 function headingSequence(article = {}) {
   const body = articleBody(article);
   const bodyLines = normalizeEditorialParagraphs(body);
-  const sequence = bodyLines.filter((line) => {
-    const trimmed = line.trim();
-    if (KNOWN_HEADINGS.has(trimmed)) return true;
-    if (trimmed.length > 72) return false;
-    if (/[.!?]$/.test(trimmed)) return false;
-    return /^[A-Z0-9][A-Za-z0-9 &:/+-]+$/.test(trimmed);
-  });
+  const sequence = bodyLines.filter(isHeadingLine);
 
   if (sequence.length) return sequence;
   return article.articleBlueprint?.sectionHeadings || article.expertLensFull?.blueprint?.sectionHeadings || [];
@@ -154,6 +181,58 @@ function cosineSimilarity(leftText = '', rightText = '') {
   return dot / (Math.sqrt(leftNorm) * Math.sqrt(rightNorm));
 }
 
+// The first sentence of the first non-heading paragraph: the opening device.
+export function leadSentence(body = '') {
+  const firstParagraph = normalizeEditorialParagraphs(body).find((paragraph) => !isHeadingLine(paragraph));
+  if (!firstParagraph) return '';
+  return (firstParagraph.split(/(?<=[.!?])\s+/)[0] || '').trim();
+}
+
+function leadTokens(text = '') {
+  return String(text || '')
+    .toLowerCase()
+    .replace(/[“”]/g, '"')
+    .replace(/[‘’]/g, "'")
+    .replace(/[^a-z0-9'\s-]/g, ' ')
+    .split(/\s+/)
+    .map((token) => token.replace(/^[^a-z0-9]+|[^a-z0-9]+$/g, ''))
+    .filter(Boolean);
+}
+
+// Keeps the frame words of a sentence in order and collapses each run of
+// content words into a single placeholder, so "I track data center capacity
+// the way most people track chip supply" and "I track infrastructure
+// constraints the way most analysts track model benchmarks" share the skeleton
+// "i _ the way most _".
+export function leadTemplateSkeleton(sentence = '') {
+  const skeleton = [];
+  let placeholderOpen = false;
+  for (const token of leadTokens(sentence)) {
+    if (LEAD_FRAME_TOKENS.has(token)) {
+      skeleton.push(token);
+      placeholderOpen = false;
+    } else if (!placeholderOpen) {
+      skeleton.push('_');
+      placeholderOpen = true;
+    }
+  }
+  return skeleton;
+}
+
+function frameTokenCount(skeleton = []) {
+  return skeleton.filter((token) => token !== '_').length;
+}
+
+// Longest-common-subsequence ratio between two lead skeletons, 0..1. Returns 0
+// when either skeleton has too few frame words to describe a construction.
+export function leadTemplateSimilarity(leftSentence = '', rightSentence = '') {
+  const left = leadTemplateSkeleton(leftSentence);
+  const right = leadTemplateSkeleton(rightSentence);
+  if (frameTokenCount(left) < LEAD_TEMPLATE_MIN_FRAME_TOKENS) return 0;
+  if (frameTokenCount(right) < LEAD_TEMPLATE_MIN_FRAME_TOKENS) return 0;
+  return sequenceSimilarity(left, right);
+}
+
 function conclusion(article = {}) {
   const paragraphs = normalizeEditorialParagraphs(articleBody(article))
     .filter((paragraph) => paragraph.length >= 45);
@@ -217,6 +296,7 @@ export function analyzeArticleRepetition(article = {}, recentRecords = []) {
   const headings = headingSequence(article);
   const draftNgrams = ngrams(tokenize(body));
   const draftConclusion = conclusion(article);
+  const draftLead = leadSentence(body);
   const recentWindow = recent.slice(0, BANNED_PHRASE_WINDOW - 1);
   const bannedCounts = bannedPhraseCounts(article, recentWindow);
   const repeatedBannedPhrases = Object.entries(bannedCounts.draft)
@@ -234,6 +314,7 @@ export function analyzeArticleRepetition(article = {}, recentRecords = []) {
     ngram_overlap: maxByRecent(article, recent, (record) => setOverlapRatio(draftNgrams, ngrams(tokenize(articleBody(record))))),
     blueprint_repetition: blueprintRepetition(article, recent),
     conclusion_similarity: maxByRecent(article, recent, (record) => cosineSimilarity(draftConclusion, conclusion(record))),
+    lead_template_similarity: maxByRecent(article, recent, (record) => leadTemplateSimilarity(draftLead, leadSentence(articleBody(record)))),
   };
 
   const reasons = [];
@@ -249,6 +330,9 @@ export function analyzeArticleRepetition(article = {}, recentRecords = []) {
   if (metrics.conclusion_similarity > CONCLUSION_SIMILARITY_THRESHOLD) {
     reasons.push(`conclusion_similarity>${CONCLUSION_SIMILARITY_THRESHOLD}`);
   }
+  if (metrics.lead_template_similarity > LEAD_TEMPLATE_SIMILARITY_THRESHOLD) {
+    reasons.push(`lead_template_similarity>${LEAD_TEMPLATE_SIMILARITY_THRESHOLD}`);
+  }
   if (metrics.blueprint_repetition > 2) {
     reasons.push('blueprint_repetition>2');
   }
@@ -258,6 +342,7 @@ export function analyzeArticleRepetition(article = {}, recentRecords = []) {
     repeated_sentence_count: repeatedSentences.length,
     repeated_paragraph_count: repeatedParagraphs.length,
     heading_sequence: headings,
+    lead_template_skeleton: leadTemplateSkeleton(draftLead).join(' '),
     blocked: reasons.length > 0,
     reasons,
   };
