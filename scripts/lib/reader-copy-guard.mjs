@@ -16,8 +16,8 @@ import { isRenderedCorrection } from './editorial-corrections.mjs';
 // prepositional or participial use with no supplier ("based on provided
 // excerpts", "using supplied extracts", "based on supplied evidence"), or the
 // writer as recipient ("the evidence I was given", "we were provided
-// excerpts", "the excerpt was provided to us", "I received excerpts"). Prose
-// that
+// excerpts", "I was provided with excerpts", "the excerpt was provided to
+// us", "I received excerpts"). Prose that
 // names who supplied what ("the vendor provided excerpts of the contract",
 // "EIA provided excerpts from the filing", "The supplier provided evidence of
 // the delay") is ordinary attribution and passes;
@@ -27,7 +27,7 @@ import { isRenderedCorrection } from './editorial-corrections.mjs';
 // verb ("This provided excerpts from the filing to reviewers", "This provided
 // evidence that the forecast was conservative").
 const RULES = [
-  ['input_provenance', /\b(?:the|my|our|its|their)\s+(?:supplied|provided)\s+(?:extracts?|excerpts?|evidence|source\s+text)\b|\b(?:this|that)\s+(?:supplied|provided)\s+(?:extract|excerpt)\b|(?<=(?:^|[.!?:;]|\n)[\s"“”'‘’(\[>*#•\-–—]*(?:\(?\d{1,3}[.)]\s*)?)(?:supplied|provided)\s+(?:extracts?|excerpts?|evidence|source\s+text)\b|\b(?:using|based\s+on|from|with|of|on|via|per)\s+(?:supplied|provided)\s+(?:extracts?|excerpts?|evidence|source\s+text)\b|\b(?:extracts?|excerpts?|evidence|source\s+text)\s+(?:that\s+)?(?:I|we)\s+(?:was|were|have\s+been|had\s+been)\s+(?:given|supplied|provided|handed)\b|\b(?:I|we)\s+(?:was|were|have\s+been|had\s+been)\s+(?:given|supplied|provided|handed)\s+(?:the\s+|an?\s+|these\s+|those\s+|some\s+)?(?:extracts?|excerpts?|evidence|source\s+text)\b|\b(?:extracts?|excerpts?|evidence|source\s+text)\s+(?:was|were|has\s+been|have\s+been)\s+(?:given|supplied|provided|handed)\s+to\s+(?:me|us)\b|\b(?:I|we)\s+(?:received|obtained|got|collected)\s+(?:the\s+|an?\s+|these\s+|those\s+|some\s+)?(?:extracts?|excerpts?|evidence|source\s+text)\b|\b(?:anything|everything)\s+I\s+have\s+been\s+given\b/gi],
+  ['input_provenance', /\b(?:the|my|our|its|their)\s+(?:supplied|provided)\s+(?:extracts?|excerpts?|evidence|source\s+text)\b|\b(?:this|that)\s+(?:supplied|provided)\s+(?:extract|excerpt)\b|(?<=(?:^|[.!?:;]|\n)[\s"“”'‘’(\[>*#•\-–—]*(?:\(?\d{1,3}[.)]\s*)?)(?:supplied|provided)\s+(?:extracts?|excerpts?|evidence|source\s+text)\b|\b(?:using|based\s+on|from|with|of|on|via|per)\s+(?:supplied|provided)\s+(?:extracts?|excerpts?|evidence|source\s+text)\b|\b(?:extracts?|excerpts?|evidence|source\s+text)\s+(?:that\s+)?(?:I|we)\s+(?:was|were|have\s+been|had\s+been)\s+(?:given|supplied|provided|handed)\b|\b(?:I|we)\s+(?:was|were|have\s+been|had\s+been)\s+(?:given|supplied|provided|handed)\s+(?:with\s+)?(?:the\s+|an?\s+|these\s+|those\s+|some\s+)?(?:extracts?|excerpts?|evidence|source\s+text)\b|\b(?:extracts?|excerpts?|evidence|source\s+text)\s+(?:was|were|has\s+been|have\s+been)\s+(?:given|supplied|provided|handed)\s+to\s+(?:me|us)\b|\b(?:I|we)\s+(?:received|obtained|got|collected)\s+(?:the\s+|an?\s+|these\s+|those\s+|some\s+)?(?:extracts?|excerpts?|evidence|source\s+text)\b|\b(?:anything|everything)\s+I\s+have\s+been\s+given\b/gi],
   ['writer_extract', /\b(?:the|an?)\s+extract\s+(?:I|we)\s+(?:have|received|was|were)\b/gi],
   ['process_assurance', /\bI\s+will\s+not\s+invent\s+(?:answers|facts|numbers)\b|\bI\s+am\s+committing\s+to\s+that\s+distinction\b|\bI\s+own\s+this\s+thesis\s+outright\b/gi],
   ['persona_scaffold', /\b(?:my|two|both)\s+standing\s+positions?\b|\bone\s+of\s+my\s+standing\s+positions?\b/gi],
@@ -135,19 +135,23 @@ export function readerCopySurfaces(candidate = {}) {
   // category is a surface only when it is the selected fallback.
   for (const field of ['region', 'source', 'primary_category']) add(field, candidate[field]);
   if (!shown(candidate.primary_category)) add('category', candidate.category);
-  // A column's thesis feeds the publication catalog's "why it matters" line
-  // and the weekly digest.
-  add('stance.thesis', candidate.stance?.thesis);
+  // Column-only metadata. The byline (ArticleHeader author), the source list
+  // and the thesis (the catalog's "why it matters" line and the weekly digest)
+  // render on the column path only; news/[id].astro passes no author to
+  // ArticleHeader, its structured data names the site, and no news renderer
+  // reads sources[] or stance.
+  const columnMetadata = !viaPresentation;
+  if (columnMetadata) add('stance.thesis', candidate.stance?.thesis);
   // Tag pills on the news page, the column byline, and the column's source list.
   for (const [i, tag] of (Array.isArray(candidate.tags) ? candidate.tags : []).entries()) add(`tags[${i}]`, tag);
   const author = candidate.author || {};
-  for (const field of ['name', 'role']) add(`author.${field}`, author[field]);
+  if (columnMetadata) for (const field of ['name', 'role']) add(`author.${field}`, author[field]);
   // column/[slug].astro keeps only sources with a safe http(s) URL and a name,
   // links `title || name`, prints `name`, and shows `author` only in the Epoch
   // AI licence line (SourceLicense). `publisher` is never rendered. The
   // publication catalog (columnPublications) also prints the first source's
   // name on PublicationCard whatever its URL, so sources[0].name always counts.
-  for (const [i, source] of (Array.isArray(candidate.sources) ? candidate.sources : []).entries()) {
+  for (const [i, source] of (columnMetadata && Array.isArray(candidate.sources) ? candidate.sources : []).entries()) {
     if (!source || typeof source !== 'object') continue;
     const url = safeHttpUrl(source.url);
     const kept = Boolean(url) && shown(source.name);

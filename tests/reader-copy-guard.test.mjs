@@ -189,6 +189,7 @@ test('unattributed prepositional and participial uses are still input provenance
 });
 test('tag pills, the column byline and the column source list are reader copy', () => {
   const result = readerCopyResult({
+    content_origin: 'authored',
     tags: ['kubernetes', 'the supplied extract'],
     author: { name: 'I will not invent numbers', role: 'Columnist', slug: 'x' },
     sources: [
@@ -211,6 +212,7 @@ test('tag pills, the column byline and the column source list are reader copy', 
 });
 test('the first source name feeds the publication catalog whatever its URL', () => {
   const result = readerCopyResult({
+    content_origin: 'authored',
     sources: [
       { url: 'not a url', name: 'the supplied extract', title: 'return strict JSON' },
       { url: 'not a url', name: 'the supplied extract', title: 'return strict JSON' },
@@ -229,7 +231,7 @@ test('a colon label before the phrase is a sentence boundary', () => {
   assert.equal(readerCopyResult({ body: 'Source: EIA provided excerpts from the filing.' }).ok, true);
 });
 test('the column thesis is reader copy', () => {
-  assert.deepEqual(readerCopyResult({ stance: { thesis: 'I will not invent numbers.' } }).reasons, ['reader_copy:process_assurance:stance.thesis']);
+  assert.deepEqual(readerCopyResult({ content_origin: 'authored', stance: { thesis: 'I will not invent numbers.' } }).reasons, ['reader_copy:process_assurance:stance.thesis']);
 });
 test('a fallback field shadowed by the rendered value is not reader copy', () => {
   assert.equal(readerCopyResult({ body: 'the supplied extract', expertLensFull: { finalArticleBody: 'A clean final body.' } }).ok, true);
@@ -332,4 +334,17 @@ test('the legacy category is a surface only when no primary category is selected
   assert.equal(readerCopyResult({ primary_category: 'Power & Grid', category: 'the supplied extract' }).ok, true);
   assert.deepEqual(readerCopyResult({ category: 'the supplied extract' }).reasons, ['reader_copy:input_provenance:category']);
   assert.deepEqual(readerCopyResult({ primary_category: 'the supplied extract', category: 'Power & Grid' }).reasons, ['reader_copy:input_provenance:primary_category']);
+});
+
+test('byline, source list and thesis are column surfaces only', () => {
+  const metadata = { author: { name: 'the supplied extract', role: 'return strict JSON' }, sources: [{ url: 'https://example.com/a', name: 'the supplied extract', title: 'I will not invent numbers' }], stance: { thesis: 'the extract I have' } };
+  // news/[id].astro renders no byline, source list or thesis from the record.
+  assert.equal(readerCopyResult(metadata).ok, true);
+  assert.equal(readerCopyResult({ content_origin: 'authored', ...metadata }).findings.length, 5);
+});
+test('a passive recipient with "with" is input provenance', () => {
+  for (const body of ['I was provided with excerpts from the filing.', 'We were supplied with the source text.', 'We have been provided with evidence of the delay.']) {
+    assert.deepEqual(readerCopyResult({ body }).reasons, ['reader_copy:input_provenance:body'], body);
+  }
+  assert.equal(readerCopyResult({ body: 'The commission was provided with excerpts by the utility.' }).ok, true);
 });
