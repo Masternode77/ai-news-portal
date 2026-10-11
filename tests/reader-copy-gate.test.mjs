@@ -214,3 +214,19 @@ test('a page record with a feed card is audited on the raw title the hub lists r
   const listed = auditReaderCopy({ latest: [{ ...page, homepagePublished: true }] }, { homepageSignals: [rendered] });
   assert.deepEqual(listed.articles[0].readerCopy.reasons, ['reader_copy:input_provenance:title']);
 });
+
+test('every rendered variant of a card is audited, not only the first', () => {
+  const card = { id: 'signal', articlePagePublished: false, signalCardOnly: true, homepagePublished: true, title: 'A signal card', deck: 'A clean stored deck.' };
+  const homepage = { id: 'signal', title: 'A signal card', deck: 'A clean homepage deck.', why_it_matters: 'Clean.', image_alt: 'Clean visual' };
+  const archive = { ...homepage, deck: 'The supplied extract reports a benchmark.' };
+  const report = auditReaderCopy({ latest: [card] }, { homepageSignals: [homepage, archive] });
+  assert.equal(report.homepageCards, 1);
+  assert.equal(report.cards[0].variants, 2);
+  assert.deepEqual(report.cards[0].readerCopy.reasons, ['reader_copy:input_provenance:deck']);
+  // A page record with two variants is checked on both as well.
+  const page = { ...card, articlePagePublished: true, expertLensFull: { finalArticleBody: 'A clean final body.' } };
+  const pageReport = auditReaderCopy({ latest: [page] }, { homepageSignals: [homepage, archive] });
+  assert.deepEqual(pageReport.articles[0].readerCopy.reasons, ['reader_copy:input_provenance:deck']);
+  // Identical variants collapse to one.
+  assert.equal(publicCardSignalsFor([]).length, 0);
+});

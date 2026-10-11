@@ -19,17 +19,22 @@ const CARD_FIELDS = ['id', 'title', 'deck', 'why_it_matters', 'image_alt', 'read
  * Every card a reader can reach, as the feed builders render it: the full
  * homepage-eligible set (no 50-card cap) plus the archive-eligible set that
  * `/archive/`, category, region and search pages expose through
- * `buildPublicPublicationCatalog`. Signals are de-duplicated by id.
+ * `buildPublicPublicationCatalog`. Each feed builds a record's card with its
+ * own recentDecks sequence, so ensureUniqueDeck() can give the archive card a
+ * different deck from the homepage card; every distinct rendered variant is
+ * returned (same id, different copy) and only exact duplicates are dropped.
  */
 export function publicCardSignalsFor(records = [], options = {}) {
   const homepage = buildHomepageFeed(records, { ...options, limit: Math.max(records.length, 1), minimumVisible: 0 }).items;
   const archive = buildArchiveFeed(records, { ...options, page: 1, pageSize: Math.max(records.length, 1) }).items;
-  const signals = new Map();
+  const variants = new Map();
   for (const item of [...homepage, ...archive]) {
     const signal = item?.publicSignal;
-    if (signal?.id && !signals.has(signal.id)) signals.set(signal.id, Object.fromEntries(CARD_FIELDS.map((field) => [field, signal[field]])));
+    if (!signal?.id) continue;
+    const projected = Object.fromEntries(CARD_FIELDS.map((field) => [field, signal[field]]));
+    variants.set(JSON.stringify(projected), projected);
   }
-  return [...signals.values()];
+  return [...variants.values()];
 }
 
 function mergeCopyResults(...results) {
@@ -60,7 +65,14 @@ export function auditReaderCopy(collections, { homepageSignals = [], routeOption
     }
   }
   const isColumn = (record) => record.collection === 'authored-columns' || isAuthoredColumn(record);
-  const signalsById = new Map(homepageSignals.filter((signal) => signal?.id).map((signal) => [signal.id, signal]));
+  // Every rendered variant of a card, grouped by record id (the homepage and
+  // archive feeds can render the same record with different copy).
+  const signalsById = new Map();
+  for (const signal of homepageSignals) {
+    if (!signal?.id) continue;
+    if (!signalsById.has(signal.id)) signalsById.set(signal.id, []);
+    signalsById.get(signal.id).push(signal);
+  }
   // The presentation the page header and any card actually render, built the
   // same way src/pages/news/[id].astro and buildHomepageFeed build it. This
   // honors field precedence (persisted deck over top-level deck, synthesized
@@ -99,8 +111,8 @@ export function auditReaderCopy(collections, { homepageSignals = [], routeOption
   const records = [...unique.values()].filter(hasReaderPage);
   const articles = records.map(record => {
     const body = record.expertLensFull?.finalArticleBody || record.body || '';
-    const signal = signalsById.get(record.id);
-    const copy = mergeCopyResults(readerCopyResult(record), presentationCopyResult(record), ...(signal ? [cardCopyResult(signal), hubListCopyResult(record)] : []));
+    const signals = signalsById.get(record.id) || [];
+    const copy = mergeCopyResults(readerCopyResult(record), presentationCopyResult(record), ...signals.map(cardCopyResult), ...(signals.length ? [hubListCopyResult(record)] : []));
     return {
       id: record.id, collection: record.collection, title: record.title,
       path: isColumn(record) ? `/column/${record.slug}/` : `/news/${record.slug || record.id}/`,
@@ -118,12 +130,13 @@ export function auditReaderCopy(collections, { homepageSignals = [], routeOption
   // note nobody can reach is not reader copy for a card-only record, and a
   // top-level field shadowed by a persisted presentation value is not either.
   const articleIds = new Set(articles.map((article) => article.id));
-  const cards = [...signalsById.values()].filter((signal) => !articleIds.has(signal.id)).map((signal) => {
-    const record = unique.get(signal.id);
+  const cards = [...signalsById.entries()].filter(([id]) => !articleIds.has(id)).map(([id, signals]) => {
+    const record = unique.get(id);
+    const rendered = signals.map(cardCopyResult);
     return {
-      id: signal.id, collection: record?.collection || null, title: signal.title, path: '/',
+      id, collection: record?.collection || null, title: signals[0].title, path: '/', variants: signals.length,
       publishedAt: record?.publishedAt || null,
-      readerCopy: record ? mergeCopyResults(cardCopyResult(signal), presentationCopyResult(record), hubListCopyResult(record)) : cardCopyResult(signal),
+      readerCopy: record ? mergeCopyResults(...rendered, presentationCopyResult(record), hubListCopyResult(record)) : mergeCopyResults(...rendered),
     };
   });
   return {
