@@ -32,8 +32,9 @@ import {
   wordCount,
 } from './visible-body-length.mjs';
 
-export const AUTHORED_GENERATION_VERSION = 'authored_column_v1';
-export const AUTHORED_COLUMN_TIER = 'authored_column';
+import { AUTHORED_GENERATION_VERSION, AUTHORED_COLUMN_TIER, isAuthoredColumn } from './authored-column-identity.mjs';
+
+export { AUTHORED_GENERATION_VERSION, AUTHORED_COLUMN_TIER, isAuthoredColumn };
 // Headings that earlier engine versions mandated verbatim. They read as an
 // AI template when repeated across columns, so they are now banned outright;
 // every column must invent its own section headings.
@@ -98,12 +99,6 @@ function jaccard(a, b) {
   let shared = 0;
   for (const token of a) if (b.has(token)) shared += 1;
   return shared / (a.size + b.size - shared);
-}
-
-export function isAuthoredColumn(record = {}) {
-  return record?.content_origin === 'authored'
-    || record?.generation_version === AUTHORED_GENERATION_VERSION
-    || record?.public_content_tier === AUTHORED_COLUMN_TIER;
 }
 
 export function authoredColumnPublicEligible(record = {}) {
@@ -195,7 +190,8 @@ export function authoredColumnQualityResult({
   }
 
   // 3-5. Language guards (banned phrases, public copy, template language)
-  const readerCandidate = { title, deck, summary, body, figures };
+  // Marked as a column so the guard audits figures (a column-only surface).
+  const readerCandidate = { content_origin: 'authored', title, deck, summary, body, figures };
   const readerCopy = readerCopyResult(readerCandidate);
   if (!readerCopy.ok) reasons.push(...readerCopy.reasons);
   // Figure labels, displayed values and attribution are public copy too.

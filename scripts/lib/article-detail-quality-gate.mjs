@@ -6,6 +6,7 @@ import { detectBoilerplate } from './boilerplate-detector.mjs';
 import { detectTruncationArtifacts, stripTrailingEllipsis } from './truncation-detector.mjs';
 import { cleanArticleBodyBlocks } from './article-body-cleaner.mjs';
 import { blogLengthResult } from './blog-length-policy.mjs';
+import { readerCopyResult } from './reader-copy-guard.mjs';
 
 function publicDetailText(article = {}) {
   const finalBody = article.expertLensFull?.finalArticleBody || '';
@@ -35,6 +36,11 @@ export function articleDetailQualityResult(article = {}, options = {}) {
   const templateGuard = guardPublicTemplatePhrases(copyGuard.text || text);
   const boilerplate = detectBoilerplate(text);
   const truncation = detectTruncationArtifacts(text);
+  // Reader copy the detail page renders (headline, deck, image alt, body,
+  // tags, source, category, correction notes) must not carry writer-only
+  // language; card-only fields are the card audit's business, and
+  // `articleText`/`rawText` hold source evidence outside the allowlist.
+  const readerCopy = readerCopyResult(article, { route: 'detail' });
   const bodyBlocks = cleanArticleBodyBlocks(article.expertLensFull?.finalArticleBody || article.articleText || '');
   const length = blogLengthResult(bodyBlocks.join('\n\n'), article.blog_route || article.publishing_route || 'standard_blog');
   const reasons = [];
@@ -48,6 +54,7 @@ export function articleDetailQualityResult(article = {}, options = {}) {
   if (boilerplate.boilerplate_ratio > 0 || boilerplate.copyright_footer_detected || boilerplate.nav_or_cta_detected) reasons.push('source_boilerplate_leakage');
   if (!truncation.ok) reasons.push(...truncation.artifacts);
   if (/editor'?s brief/i.test(text)) reasons.push('fixed_editors_brief_template');
+  if (!readerCopy.ok) reasons.push(...readerCopy.reasons);
   reasons.push(...length.reasons);
 
   return {
@@ -59,6 +66,7 @@ export function articleDetailQualityResult(article = {}, options = {}) {
     templateGuard,
     boilerplate,
     truncation,
+    readerCopy,
     bodyBlocks,
     length,
   };
