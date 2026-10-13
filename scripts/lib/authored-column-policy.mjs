@@ -24,7 +24,12 @@ import { insightDensityScore } from './insight-density-score.mjs';
 // passing). 0.75 still rejects summary-heavy prose.
 export const AUTHORED_MIN_INSIGHT_DENSITY_DEFAULT = 0.75;
 import { unsupportedClaimGuard } from './unsupported-claim-guard.mjs';
-import { analyzeArticleRepetition } from './repetition-detector.mjs';
+import {
+  analyzeArticleRepetition,
+  firstSentenceOfParagraph,
+  leadTemplateSimilarity,
+  LEAD_TEMPLATE_SIMILARITY_THRESHOLD,
+} from './repetition-detector.mjs';
 import {
   headingSequence,
   paragraphCount,
@@ -76,7 +81,7 @@ function firstSentenceOf(body = '') {
     .map((block) => block.trim())
     .find((block) => block && !headings.has(block));
   if (!firstParagraph) return '';
-  return (firstParagraph.split(/(?<=[.!?])\s+/)[0] || '').trim();
+  return firstSentenceOfParagraph(firstParagraph);
 }
 
 function envNumber(name, fallback) {
@@ -178,6 +183,13 @@ export function authoredColumnQualityResult({
     0
   );
   if (lead && leadReuseMax >= LEAD_REUSE_JACCARD) reasons.push('lead_repeats_recent_column');
+  // Token overlap misses a lead rebuilt from a recent column's sentence frame
+  // with different nouns, so the opening construction is compared as well.
+  const leadTemplateMax = recentLeads.reduce(
+    (max, prior) => Math.max(max, leadTemplateSimilarity(lead, prior)),
+    0
+  );
+  if (lead && leadTemplateMax > LEAD_TEMPLATE_SIMILARITY_THRESHOLD) reasons.push('lead_template_repeats_recent_column');
 
   // 2c. Figures — every column ships 1-3 evidence-backed visual elements.
   // `null` means the caller manages figures elsewhere (legacy call sites).
@@ -271,6 +283,7 @@ export function authoredColumnQualityResult({
       thesis_overlap: Number(maxThesisOverlap.toFixed(3)),
       heading_reuse_max: Number(headingReuseMax.toFixed(3)),
       lead_reuse_max: Number(leadReuseMax.toFixed(3)),
+      lead_template_max: Number(leadTemplateMax.toFixed(3)),
       figure_count: Array.isArray(figures) ? figures.length : 0,
     },
   };

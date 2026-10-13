@@ -513,6 +513,8 @@ const FEEDBACK_HINTS = [
     `Rewrite ${match[1] ? `these headings: ${match[1]}` : 'the flagged headings'} — they repeat headings from recent columns. Invent fresh phrasings drawn from this column's own argument and evidence.`],
   [/^lead_repeats_recent_column$/, () =>
     'Rewrite the opening sentence with a different device than recent columns used — open on a scene, a specific number, a contradiction, a filing detail, or a deadline instead.'],
+  [/^lead_template_repeats_recent_column$|^lead_template_similarity>/, () =>
+    'The opening sentence rebuilds the sentence structure of a recent column with different nouns swapped in. Swapping subjects is not a new opening; change the construction itself — start from a filing detail, a date, a quoted figure or a direct claim, and do not reuse the "I track X the way most people track Y" frame.'],
   [/^figures_missing$/, () =>
     'The column must carry 1-3 evidence figures; keep the prose intact.'],
   [/^unsupported_numeric_claims(?::(.+))?$/, (match) =>

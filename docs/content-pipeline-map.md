@@ -121,8 +121,9 @@ Extraction quality is scored in `scripts/lib/quality-gate.mjs`:
 Generated article repetition is scored in `scripts/lib/repetition-detector.mjs` after Expert Lens generation and before archive/latest sync:
 
 - The detector compares each generated full-memo draft against the last 50 published articles from latest plus archive stores.
-- It computes repeated sentence ratio, repeated paragraph ratio, heading sequence similarity, banned phrase count, n-gram overlap, blueprint repetition, and conclusion similarity.
-- It blocks publication when repeated sentence ratio is above `0.12`, any banned phrase appears more than once in the current draft plus the last 9 articles, heading sequence similarity is above `0.75` against any recent article, conclusion similarity is above `0.7`, or blueprint repetition exceeds two consecutive uses.
+- It computes repeated sentence ratio, repeated paragraph ratio, heading sequence similarity, banned phrase count, n-gram overlap, blueprint repetition, conclusion similarity, and lead template similarity (the opening sentence reduced to a skeleton of function words with content runs collapsed to placeholders, compared as a sequence so a recent opening rebuilt with different nouns still matches).
+- It blocks publication when repeated sentence ratio is above `0.12`, any banned phrase appears more than once in the current draft plus the last 9 articles, heading sequence similarity is above `0.75` against any recent article, conclusion similarity is above `0.7`, lead template similarity is above `0.8`, or blueprint repetition exceeds two consecutive uses.
+- The authored-column gate in `scripts/lib/authored-column-policy.mjs` applies the same lead template measure against the last 15 column openings (`lead_template_repeats_recent_column`) next to its token-overlap lead check.
 - Blocked repetition drafts are marked `articlePagePublished: false`, `homepagePublished: false`, `archiveOnly: true`, and retain `repetition_check` plus `repetition_block_reasons` on the article record.
 
 ## 3. Article Summarization Prompts
