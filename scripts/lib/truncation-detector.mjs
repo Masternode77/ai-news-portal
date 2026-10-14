@@ -1,3 +1,6 @@
+import { decodeHtmlEntities } from './html-text-entities.mjs';
+import { maskQuotedElisions } from './quoted-elisions.mjs';
+
 const INCOMPLETE_TERMINALS = new Set([
   'b',
   'c',
@@ -32,7 +35,7 @@ function abbreviationOrUnitLetter(terminal = '', before = '') {
 }
 
 function normalizeText(text = '') {
-  return String(text || '').replace(/\s+/g, ' ').trim();
+  return decodeHtmlEntities(text).replace(/\s+/g, ' ').trim();
 }
 
 // RSS snippets and feed summaries legitimately end with an ellipsis (or a
@@ -45,8 +48,7 @@ export function stripTrailingEllipsis(text = '') {
     .trim();
 }
 
-export function detectTruncationArtifacts(text = '', options = {}) {
-  const normalized = normalizeText(text);
+function truncationArtifactsInNormalizedText(normalized, options = {}) {
   const artifacts = [];
   if (!normalized) {
     return { ok: true, artifacts };
@@ -64,8 +66,9 @@ export function detectTruncationArtifacts(text = '', options = {}) {
     artifacts.push('single_lowercase_letter_sentence_fragment');
   }
 
-  if (!options.allowEllipsis && /(?:…|\.{3})/.test(normalized)) {
-    artifacts.push('ellipsis_truncation_artifact');
+  if (!options.allowEllipsis) {
+    const analyzed = maskQuotedElisions(normalized, decodedQuoteFragmentIsComplete);
+    if (/(?:…|\.{3})/.test(analyzed)) artifacts.push('ellipsis_truncation_artifact');
   }
 
   const sentenceLike = normalized
@@ -103,10 +106,19 @@ export function detectTruncationArtifacts(text = '', options = {}) {
   };
 }
 
+// Called only after entity normalization by both extraction guards.
+export function decodedQuoteFragmentIsComplete(fragment = '') {
+  return truncationArtifactsInNormalizedText(`${fragment}.`, { allowEllipsis: true }).ok;
+}
+
+export function detectTruncationArtifacts(text = '', options = {}) {
+  return truncationArtifactsInNormalizedText(normalizeText(text), options);
+}
+
 export function sentenceCompletionScore(text = '') {
   const normalized = normalizeText(text);
   if (!normalized) return 0;
-  const fragments = detectTruncationArtifacts(normalized, { allowEllipsis: true });
+  const fragments = truncationArtifactsInNormalizedText(normalized, { allowEllipsis: true });
   const sentences = normalized.split(/(?<=[.!?])\s+/).map((sentence) => sentence.trim()).filter(Boolean);
   const complete = sentences.filter((sentence) => /[.!?]["')\]]?$/.test(sentence)).length;
   const terminal = /[.!?]["')\]]?$/.test(normalized) ? 1 : 0;
@@ -123,5 +135,5 @@ export function isTruncatedEvidence(value = '') {
   const text = normalizeText(value);
   if (!text) return true;
   if (text.length < 80) return true;
-  return hasTruncationArtifacts(text);
+  return !truncationArtifactsInNormalizedText(text).ok;
 }

@@ -150,7 +150,8 @@ test('lets headline-glued teasers tip the verdict once two clipped fragments are
   const longformGate = sourceExtractionPassesLongformGate({ ...fixture, articleText: mostlyUnclipped });
   assert.equal(longformGate.ok, false);
   assert.ok(longformGate.block_reasons.includes(RELATED_STORY_CONTAMINATION_REASON));
-  assert.ok(!longformGate.block_reasons.includes('ellipsis_truncation_artifact'));
+  // Entity normalization now also closes the original truncation-gate escape.
+  assert.ok(longformGate.block_reasons.includes('ellipsis_truncation_artifact'));
 
   // With no ellipsis at all the same text is indistinguishable from flattened
   // sub-headings, so the shape check deliberately stays silent.
