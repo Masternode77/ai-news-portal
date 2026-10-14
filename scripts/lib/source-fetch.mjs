@@ -1,6 +1,7 @@
 import { PIPELINE_OFFLINE } from './constants.mjs';
 import { stripHtml, truncate } from './normalize.mjs';
 import { analyzeExtractionQuality } from './quality-gate.mjs';
+import { RELATED_STORY_CONTAMINATION_REASON } from './related-story-contamination.mjs';
 import { fetchAuthorizedSourceText } from './source-text-fetcher.mjs';
 import { GOOGLE_RELEASE_SOURCE_PATTERN, googleReleaseNoteSection } from './google-cloud-release-notes.mjs';
 import { loadSourceRegistrySync } from './source-registry.mjs';
@@ -429,6 +430,13 @@ export async function fetchArticleExtraction({
       extractionQa.can_generate_longform = false;
       extractionQa.block_reasons = [];
       extractionQa.longform_block_reasons = [EXTRACTED_TEXT_LIMIT_REASON];
+    }
+    // A page whose extracted paragraphs are the related-story sidebar rather
+    // than the body is a hard block, not a long-form-only cap: nothing in that
+    // text is evidence for this article.
+    if (extractionQa.related_story_contamination_detected) {
+      extractionQa.can_generate_longform = false;
+      extractionQa.block_reasons = [...(extractionQa.block_reasons || []), RELATED_STORY_CONTAMINATION_REASON];
     }
 
     return { articleText, extractionQa };

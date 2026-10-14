@@ -1,4 +1,5 @@
 import { analyzeSourceTextCompleteness } from './source-text-completeness.mjs';
+import { RELATED_STORY_CONTAMINATION_REASON, detectRelatedStoryContamination } from './related-story-contamination.mjs';
 
 export const ARTICLE_PAGE_QUALITY_THRESHOLD = Number(
   process.env.ARTICLE_PAGE_QUALITY_THRESHOLD || 0.8
@@ -151,6 +152,7 @@ function buildExtractionReasons(metrics, threshold) {
   if (metrics.sentence_completion_score < 0.65) {
     reasons.push(`sentence_completion_score ${metrics.sentence_completion_score.toFixed(2)} low`);
   }
+  if (metrics.related_story_contamination_detected) reasons.push(RELATED_STORY_CONTAMINATION_REASON);
   if (metrics.extraction_failure_reason) reasons.push(`extraction_failure_reason ${metrics.extraction_failure_reason}`);
   return reasons;
 }
@@ -177,6 +179,10 @@ export function analyzeExtractionQuality({
   const copyrightFooterDetected = booleanFromPatterns(raw, COPYRIGHT_PATTERNS);
   const legalBoilerplateDetected = copyrightFooterDetected || booleanFromPatterns(raw, LEGAL_BOILERPLATE_PATTERNS);
   const navOrCtaDetected = booleanFromPatterns(raw, NAV_OR_CTA_PATTERNS);
+  // Sidebar teasers read as clean prose to every metric above (no
+  // boilerplate vocabulary, complete sentences), so the extract's shape is
+  // judged separately and fails the long-form gate on its own.
+  const relatedStoryContamination = detectRelatedStoryContamination({ title, text });
   const hasSpecificAdapter = sourceDomainAdapter && sourceDomainAdapter !== 'generic';
 
   let score = 0;
@@ -212,6 +218,7 @@ export function analyzeExtractionQuality({
   if (legalBoilerplateDetected) score -= 0.22;
   if (navOrCtaDetected && boilerplateRatio >= 0.08) score -= 0.08;
   if (!hasMeaningfulExtraction) score -= 0.18;
+  if (relatedStoryContamination.detected) score -= 0.35;
   if (extractionFailureReason) score -= 0.25;
 
   const extractionQualityScore = clampScore(score);
@@ -223,6 +230,9 @@ export function analyzeExtractionQuality({
     legal_boilerplate_detected: legalBoilerplateDetected,
     nav_or_cta_detected: navOrCtaDetected,
     sentence_completion_score: completionScore,
+    related_story_contamination_detected: relatedStoryContamination.detected,
+    related_story_contamination_score: relatedStoryContamination.score,
+    teaser_shaped_segment_count: relatedStoryContamination.teaser_fragment_count,
     source_domain_adapter: sourceDomainAdapter || 'generic',
     extraction_quality_score: extractionQualityScore,
     extraction_failure_reason: extractionFailureReason || null,
@@ -254,6 +264,9 @@ export function qualityGateReason(article = {}, threshold = ARTICLE_PAGE_QUALITY
   }
   if (article.extraction_qa?.copyright_footer_detected || article.copyright_footer_detected) {
     return 'fail_closed: copyright_footer_detected';
+  }
+  if (detectRelatedStoryContamination({ title: article.title, text: article.articleText || article.contentText || '' }).detected) {
+    return `fail_closed: ${RELATED_STORY_CONTAMINATION_REASON}`;
   }
 
   const completeness = analyzeSourceTextCompleteness(article);
