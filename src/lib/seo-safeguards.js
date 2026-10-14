@@ -1,4 +1,5 @@
 import { seoNoindexReasons as qualityNoindexReasons } from '../../scripts/lib/seo-quality-policy.mjs';
+import { correctionText } from '../../scripts/lib/editorial-corrections.mjs';
 import { safeHttpUrl, serializeJsonForScript } from '../../scripts/lib/normalize.mjs';
 
 export { serializeJsonForScript };
@@ -132,6 +133,7 @@ export const buildColumnStructuredData = ({ column, site, canonicalUrl }) => {
     image: [imageUrl],
     datePublished: column.publishedAt,
     dateModified: column.updatedAt || column.publishedAt,
+    ...(correctionText(column) ? { correction: correctionText(column) } : {}),
     articleSection: column.primary_category || column.category || 'AI infrastructure',
     keywords: (column.tags || []).filter(Boolean),
     isAccessibleForFree: true,
@@ -185,6 +187,7 @@ export const buildArticleStructuredData = ({
     image: [imageUrl],
     datePublished: article.publishedAt,
     dateModified: article.updatedAt || article.publishedAt,
+    ...(correctionText(article) ? { correction: correctionText(article) } : {}),
     articleSection: taxonomy?.primary || article.primary_category || article.category || 'AI infrastructure',
     keywords,
     wordCount: articleBody.join(' ').split(/\s+/).filter(Boolean).length || undefined,

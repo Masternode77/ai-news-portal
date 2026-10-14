@@ -1,5 +1,6 @@
 import specs from '../../config/eiaRestorationArticles.json' with { type: 'json' };
 import { createExtractionArtifact } from './extraction-artifact.mjs';
+import { readerCopyResult } from './reader-copy-guard.mjs';
 
 export const EIA_RESTORATION_SOURCE_ID = 'eia-today-in-energy';
 export const EIA_RESTORATION_IDS = specs.map((article) => article.id);
@@ -147,8 +148,31 @@ function buildRecord(spec, sourceText, index) {
   };
 }
 
-export function buildEiaRestorationInventory(sourceTexts = {}) {
-  return specs.map((spec, index) => buildRecord(spec, sourceTexts[spec.id], index));
+// Spec copy is reader copy: the title, deck and why-it-matters line render on
+// every card and the body blocks become the detail page. The check runs on the
+// spec, before any record exists, so a config edit cannot publish writer-only
+// language even if a later gate were bypassed. Source text is not inspected.
+export function eiaRestorationReaderCopyFindings(specList = specs) {
+  const findings = [];
+  for (const spec of specList) {
+    const result = readerCopyResult({
+      title: spec.title,
+      deck: spec.deck,
+      why_it_matters: spec.whyItMatters,
+      body: Array.isArray(spec.body) ? spec.body.join('\n\n') : '',
+    });
+    for (const finding of result.findings) findings.push({ id: spec.id, ...finding });
+  }
+  return findings;
+}
+
+export function buildEiaRestorationInventory(sourceTexts = {}, { specs: specList = specs } = {}) {
+  const findings = eiaRestorationReaderCopyFindings(specList);
+  if (findings.length) {
+    const summary = [...new Set(findings.map((finding) => `${finding.id}:${finding.code}:${finding.field}`))];
+    throw new Error(`EIA restoration spec contains writer-only copy: ${summary.slice(0, 5).join(', ')}`);
+  }
+  return specList.map((spec, index) => buildRecord(spec, sourceTexts[spec.id], index));
 }
 
 export function eiaRestorationSpecs() {

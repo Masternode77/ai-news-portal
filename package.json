@@ -1,7 +1,7 @@
 {
   "name": "compute-current",
   "type": "module",
-  "version": "0.0.45",
+  "version": "0.0.48",
   "engines": {
     "node": "22.x"
   },
@@ -60,8 +60,9 @@
     "audit:feed-volume": "node scripts/audit-public-feed-volume.mjs",
     "audit:public": "node ./scripts/audit-rendered-public-output.mjs && node ./scripts/audit-public-copy.mjs && node ./scripts/audit-public-article-quality.mjs && npm run audit:homepage && npm run audit:feed-volume",
     "audit:admin": "node ./scripts/audit-admin-exclusion.mjs",
+    "audit:reader-copy": "node ./scripts/audit-reader-copy.mjs --strict",
     "content:gate": "npm run check && npm run build && npm run content:gate:built",
-    "content:gate:built": "node --test tests/public-output.test.mjs tests/image-output.test.mjs tests/admin-security.test.mjs tests/content-cycle.test.mjs && npm run audit:public && npm run audit:images && npm run audit:admin",
+    "content:gate:built": "node --test tests/public-output.test.mjs tests/image-output.test.mjs tests/admin-security.test.mjs tests/content-cycle.test.mjs && npm run audit:public && npm run audit:images && npm run audit:admin && npm run audit:reader-copy",
     "audit:autonomous-current": "node ./scripts/audit-autonomous-current-state.mjs",
     "run:editorial-cycle": "node ./scripts/run-editorial-cycle.mjs",
     "content:cycle": "PIPELINE_OFFLINE=1 node ./scripts/run-content-cycle.mjs --fixture tests/fixtures/content-cycle-mixed.json --out-dir .cache/content-cycle",

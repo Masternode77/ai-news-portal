@@ -1,0 +1,146 @@
+# Compute Current editorial-quality audit — 2026-10-11
+
+## Scope, versions and conclusion
+
+This is an editorial audit and a bounded engine-hardening change, not a certification that every claim is correct. All 26 full article bodies in the live sitemap at the initial audit were read, including their figures. The sitemap was checked again at approximately 13:39 KST: 26 distinct article URLs returned HTTP 200. Source-card/archive records without a published local article body were not counted as articles.
+
+The initial repository/production snapshot was `d8f537a78ee45c05be7b9c4c085277fd18540aed`. Main advanced during the work. The implementation was reconciled with `32e6e8720b5388a50dddc30293402105710c2dfc`, including PR #46 and release v0.0.45. That commit adds a further coding-agent column, `col_2a7e9ab01954bb9f`, whose full body and figure were also read. It is present in GitHub with publication flags but was not in the live sitemap checked above. Do not equate a committed publication flag with a verified production deployment.
+
+At the final code baseline the three collections contain 22 authored columns, 45 latest-news records and 1,020 archived-news records: 1,087 unique records, but only 27 records with `articlePagePublished=true`. Their combined body length is 38,156 whitespace-separated words. The original 26 live articles account for 36,759 words. Twenty-six of the 27 stored article records cite one source; source count alone does not establish quality or independence.
+
+The principal problem is not raw system-prompt insertion. It is the conversion of internal evidence instructions, persona positions and unverified analytical premises into reader-facing prose. Some articles also contain independently identifiable accounting, chronology, regulatory or engineering-scope problems. Strong source/rights checks exist, but their successful status is not a reliable measure of the reader's experience or of every factual premise.
+
+## Evidence and limits
+
+Primary article evidence is the complete `expertLensFull.finalArticleBody`, `figures` and `sources` for the IDs below in `src/data/authored-columns.json`, `src/data/latest-news.json` and `src/data/archived-news.json` at the stated commits. Public routing was reconciled against `https://www.computecurrent.com/sitemap.xml` and HTTP responses. Full original publisher content was not independently reverified for every sentence of every article. The findings distinguish errors visible in the text, unsupported extensions, and editorial judgments.
+
+The reproducible scanner added in this change flags five of the 27 stored articles for narrow writer-only language. It separately flags 15 for editorial review signals, including repeated figure titles, possible clipping and personal-history language. These are overlapping sets, not five plus fifteen factual errors. A clean scanner result is not a source-fidelity approval. Five EIA news bodies contain zero Arabic numeric tokens; this is an observation about their main prose, not a claim that their sources contain no data or that numbers must be inserted artificially.
+
+## Priority findings
+
+1. **Writer-only language:** the Kubernetes article uses `supplied extract` 11 times. The newly committed coding-agent article repeats `the extract I have`. Both discuss what a drafting system received rather than developing the reader's decision. Replacing every instance with “the publication” would be unsafe: a limited extract cannot establish that the full publication omits information.
+2. **Unsupported certainty:** acquisition agreements become payments; groundbreakings become energized sites; research programs become demonstrated operational bottlenecks; render benchmarks become inference evidence; internal electrical architecture becomes utility interconnection capacity.
+3. **Persona contamination:** a first-person opinion is repeatedly supported by invented prior advocacy, universal industry convictions or descriptions of the author's standing positions. A persona charter must supply questions and tone, not factual evidence.
+4. **Real subject-matter risks:** operating leases are broadly described as off-balance-sheet; a six-calendar-year span is described as four years; a Texas air-permitting responsibility is attributed to the Railroad Commission; component cooling and facility heat rejection are conflated. These warrant priority source-specific correction, not just stylistic cleanup.
+5. **Long-form padding:** a thin single-source item is expanded to satisfy section, word-count, counterargument, watch-item and figure contracts. Repeated caveats and imagined forecasts substitute for evidence. The five EIA articles have the inverse problem: generally restrained analysis but few concrete source anchors and no Arabic numerical baselines in their bodies.
+6. **Figure quality:** many tables are copied source prose rather than a useful comparison. Some contain clipped labels or unrelated related-story fragments. A figure's existence is not proof that it adds value.
+
+## Article-by-article review queue
+
+P0 means priority substantive verification/correction before promoting or republishing the piece. P1 means rewrite or source enrichment. P2 means limited editing. These priorities do not automatically remove any live article. Article IDs resolve the exact records and avoid confusing long, occasionally outdated slugs with current headlines.
+
+| No. | Article ID / topic | Main finding and its status | Required editorial action |
+|---|---|---|---|
+| 1 | `col_5be9ec4d110578c9` — Kubernetes node swap | Confirmed writer-only wording; repeated caveats and a prose table displace a useful benchmark comparison. The benchmark-versus-production distinction itself is reasonable. | P1: source-grounded rewrite; preserve qualifications; show measured workload/comparator/results rather than generic source sentences. |
+| 2 | `col_82697d9ea33d8c58` — Malaysia server trade | Relatively strong separation of trade observations from a smuggling hypothesis. H100-equivalent estimates must not become a physical H100 shipment count. Some diligence points repeat. | P2: shorten; retain units, estimation method and alternative explanations. |
+| 3 | `col_b3a7a5ab60c3b9b1` — EU data-center ratings | Current prose correctly distinguishes a rating proposal from binding heat-reuse obligations. Old slug still describes a permit-condition thesis; repeated rebuttal makes the correction dominate. | P1: concise current thesis and a dated correction note where warranted; preserve URLs unless a deliberate redirect is implemented. |
+| 4 | `col_55e9ccd7116252dd` — ERCOT six-week demand record | Weather-driven demand observations are extended into structural rationing, precise future deadlines and strong contract conclusions without adequate evidence shown in the article. A Texas approval pause is real, not an invented event. | P0: separate the August interconnection audit from the September 21 TCEQ directive; verify scope and each asserted deadline against primary orders. Do not label the existence of the pause false. |
+| 5 | `col_4fcaacca965031d9` — Cooling procurement envelope | Generally useful distinction between server loads, facility requirements and proposed procurement tests. Concrete baselines and site operating conditions are thin. | P2: add source-specific facts and distinguish measured performance from proposed acceptance criteria. |
+| 6 | `col_776dcf6e9c89b581` — Switch IPO | Short reporting is extended into detailed expected filing contents and valuation consequences. Technical tier terminology, historical assertions and future disclosure claims require verification. | P1: preserve attribution and uncertainty; verify filings before treating proposed disclosure as known. |
+| 7 | `col_13e55e0a75a620db` — Sandbox escapes | A reported evaluation incident becomes broad insurance exclusions, legal exposure and projected standards changes without the policy, jurisdiction or authoritative timetable. | P0: verify the incident and legal/insurance scope; turn unknown coverage into diligence questions, not universal exclusions. |
+| 8 | `col_fca83bb71323a3ba` — Quantum networking | Weak AI-infrastructure relevance, unsupported generalizations about customers and workloads, and unrelated related-story fragments in evidence figures. | P1: extract the primary announcement cleanly; separate research goals from measured classical-network constraints; shorten or decline the angle. |
+| 9 | `col_b6074069a1555367` — NVIDIA financing | The broad assertion that an operating lease keeps both asset and liability off the balance sheet is not valid as a general lessee-accounting rule. Financing ambition and completed funding are also insufficiently separated. | P0: correct accounting with applicable standards and lease/service classification; distinguish proposed financing, signed commitments and funded amounts. |
+| 10 | `col_69cab7b291d16a59` — AMD / Taalas | Lead describes payment while the body describes a definitive acquisition agreement. Hardware flexibility, design-cycle durations and commercial milestones are asserted too categorically. | P0: verify signing versus closing/payment; separate product architecture evidence from speculative model-lifecycle economics. |
+| 11 | `col_24b7abd6a12c5e63` — Delta 150 kW CDU | A component rating is used to imply support for a higher-power rack and a simple retrofit without demonstrating captured liquid fraction, residual air load or building heat rejection. | P0: reconcile thermal boundaries, operating temperatures, redundancy and facility capacity before claiming usable rack power or schedule savings. |
+| 12 | `col_4af3df9a2131c335` — Gym-class agent incident | Legal responsibility and insurance consequences are stated without contracts or jurisdiction; an agent framework is treated too much like a model provider. | P0: verify actor roles and incident facts; label allocation of liability as unresolved unless supported by applicable authority. |
+| 13 | `col_7c5e4b3b0b775337` — Efficiency strategy | Conditional supply assumptions become a firm industry timeline and price story. Repeated power/capex positions and additional unsupported corporate claims inflate the article. | P1: isolate disclosed facts, costs, volumes and scenarios; use a falsifier that could genuinely change the thesis. |
+| 14 | `col_f73d297e3be9969c` — Eaton quantum contract | A funded research program is presented as evidence of a demonstrated grid-planning bottleneck and a broader commercial buying pattern. | P1: identify funder, subcontractor, end user, research objective and actual benchmark; do not treat intent as deployed performance. |
+| 15 | `col_ad15e2d4c145e30d` — SK hynix tiered memory | Vendor motives and universal training/inference economics are asserted beyond the cited product story. Workload, latency, bandwidth, memory capacity and economics are insufficiently differentiated. | P1: obtain product/benchmark evidence; treat margin-defense and competitor responses as hypotheses, not reported facts. |
+| 16 | `col_4dd46fdfbc30fd72` — Intel integrated GPU | A Blender rendering result is used as an inference-performance proxy; “free at the margin” neglects incremental power, memory and software constraints. | P0: require an actual inference benchmark and clearly scoped incremental-cost model before the edge-inference conclusion. |
+| 17 | `col_3dbd354c8bc9107d` — Amazon Gilroy | The text's 2020-to-2026 span is called four years; groundbreaking and energization are blurred. Nearby industrial activity is used to infer firm available power. | P0: correct chronology and milestone status; require utility evidence before a power-availability claim. |
+| 18 | `col_4425d817371fe825` — Amazon Texas gas | Final air-quality permitting is attributed to the Texas Railroad Commission rather than supported by a specific permit record. On-site generation is treated as if it removes schedule and grid risks. | P0: check TCEQ permit documents; separate fuel, turbine, emissions, water, interconnection and commissioning dependencies. |
+| 19 | `col_292b67321a052acf` — NVIDIA 800 VDC | Internal DC power distribution is conflated with a utility substation/interconnection workaround. Lead-time and retrofit conclusions need a physical electrical boundary. | P0: trace utility HV/MV through facility distribution and rack conversion; do not infer additional utility capacity from an internal voltage architecture. |
+| 20 | `col_ba22f5ea8bef96e6` — Hormuz / diesel backup | Brent prices are treated too directly as delivered diesel cost; basis, operating hours, pass-through and emissions permissions are missing. | P1: use a labeled scenario with delivered-fuel price, consumption, runtime and contract treatment; preserve units in figures. |
+| 21 | `col_414c93d7b5969906` — Samsung vertical stacking | Technology demonstrations become a conclusion that memory is solved and cooling/packaging is now the binding constraint. Density is treated too directly as rack power. | P1: distinguish technology families, maturity, yield, power per bit, production ramp and system configuration. |
+| 22 | `eia-data-center-load-timing` | Cautious but generic; 717-word body has no Arabic numeric baseline. | P1: add verified source dates, quantities and the distinction between requested, contracted and realized load; remove repeated generalities. |
+| 23 | `eia-server-cooling-forecast` | 684-word body lacks the source's quantitative forecast anchors. | P1: state the forecast period and load boundary; distinguish server electricity from total facility consumption. |
+| 24 | `eia-virginia-peak-load` | 659-word body gives little numerical or geographical specificity. | P1: identify the actual region, period, peak/average measure and growth attribution supported by EIA. |
+| 25 | `eia-nuclear-data-center-contracts` | 675-word body discusses multiple nuclear examples without enough named contracts, counterparties or quantities. | P1: restore source-specific deal facts; distinguish signed offtake from available delivery and regulatory permissions. |
+| 26 | `eia-texas-large-loads` | 703-word body repeats capacity-planning principles instead of the source's concrete large-load evidence. | P1: include dated source baselines and application-versus-energized distinctions; shorten. |
+| 27 | `col_2a7e9ab01954bb9f` — Coding-agent use; newly committed | Useful list-price-versus-internal-cost distinction, but repeated writer-only extract references and an inference-stickiness thesis whose premise the article itself says is not established. Figure repeats headline. Not verified in live sitemap. | P1: remove drafting-process language without strengthening absence claims; center the observed usage methodology and defer unsupported persistence/capacity conclusions. |
+
+## Source checks that change the diagnosis
+
+- IFRS 16 requires recognition of right-of-use assets and lease liabilities for lessees, subject to its scope and exemptions. A broad off-balance-sheet assertion should not be left in the financing article: https://www.ifrs.org/issued-standards/list-of-standards/ifrs-16-leases/ . The actual transaction's accounting framework and classification still need to be identified; this audit is not a transaction accounting opinion.
+- TCEQ publishes Texas electric-generating-unit air-permitting requirements: https://www.tceq.texas.gov/permitting/air/newsourcereview/combustion/egu_sp.html and https://www.tceq.texas.gov/permitting/air/air_permits.html . A particular project's final permit must be checked, rather than replacing one categorical assertion with another.
+- The Texas governor's September 21 directive really halted data-center permits pending the ERCOT audit: https://gov.texas.gov/news/post/governor-abbott-directs-tceq-to-halt-data-center-permits . Therefore the ERCOT article's existence-of-pause premise should not be called fabricated. The date, affected process, legal scope and invented future timetable are separate questions.
+- Original Kubernetes benchmark: https://kubernetes.io/blog/2026/10/05/scaling-kubernetes-workloads-with-node-swap/ . Use the measured configurations and results, not production generalizations.
+- Google explicitly emphasizes accuracy, quality, relevance and added value for AI-generated content, including metadata: https://developers.google.com/search/docs/fundamentals/using-gen-ai-content . Its people-first guidance asks for meaningful original analysis, reliable sourcing and non-exaggerated titles: https://developers.google.com/search/docs/fundamentals/creating-helpful-content . This supports reducing padding and strengthening evidence, not a claim that this site has received a search penalty. No Search Console or ranking-loss attribution was audited here.
+
+## Implemented in this change
+
+| File | Exact implementation |
+|---|---|
+| `scripts/lib/reader-copy-guard.mjs` | New deterministic reader-only guard covering explicit input provenance, writer-extract references, process assurances, persona scaffolding and generation-field/instruction leakage. Whitelists public title/deck/body/metadata and every figure label, displayed value and attribution; excludes private evidence/review objects. Returns precise field-level findings without rewriting text. |
+| `scripts/lib/authored-column-policy.mjs` | `authoredColumnQualityResult` invokes the new guard, adds its blocking reasons and `reader_copy_issue_count`, and expands existing banned/template/internal-language checks to figure text. Existing source, numerical, rights, repetition and quality requirements are not weakened. |
+| `config/editorial/persona-charter.json` | Version 2 turns ten standing conclusions into evidence-led questions. First person is optional rather than a quota. Adds explicit boundaries for transaction status, accounting/legal claims, invented author history and common infrastructure category errors. |
+| `scripts/audit-reader-copy.mjs` | Reproducible offline collection audit with JSON output, ID deduplication, explicit published-record scope and separate blocking copy findings versus triage warnings. `--strict` is opt-in; historical articles are not hidden or rewritten. |
+| `tests/reader-copy-guard.test.mjs` | 27 regression tests covering literal and whitespace/case variants, newly observed wording, all public surfaces, private-data exclusions, legitimate AI terminology, immutability, figure integration and inventory behavior. |
+
+PR #46 already introduced complete deck/summary handling, improved numeric figure selection and taxonomy/catalog fixes. Those changes are preserved and are not attributed to this audit. The newly committed coding-agent article is also preserved. No article body, image asset, production setting, model pin, schedule or credential is changed by this patch.
+
+## Precise next engine work — not represented as implemented
+
+1. **Evidence contract:** in `authored-column-engine.mjs` (`evidencePayload`, `evidenceBriefPass`, `reviewColumnEvidence`), add typed claims with exact spans, unit, denominator, date, actor, jurisdiction and status. Review every load-bearing premise, including headline, counterargument and figure, rather than only the presence of matching numbers. Legal/accounting conclusions need the relevant authoritative source. Absence from an extract must remain distinct from absence in the publication.
+2. **Evidence-sized formats:** revise `draftPass`, `voicePass` and corresponding policy/tests together. Offer concise source-led notes, analysis and genuinely supported long-form rather than enforcing long-form for every selected story. Proposed lengths are editorial defaults, not SEO rules. Do not relax source extraction or substitute generic material to satisfy a quota.
+3. **Figure utility:** extend `authored-column-figures.mjs` and `ColumnFigure.astro` with units, comparator, period and complete labels. Reject related-story contamination before the claim ledger. Make a no-figure route possible only through an explicit policy/test change; this patch does not remove the existing 1–3 figure contract.
+4. **Semantic review:** add a separate reader/editing review alongside factual review. A genuine counterargument must weaken the thesis. A hypothetical winner, deadline or mechanism cannot be promoted into evidence by adding “I think.” Keep model-reported confidence separate from validation results.
+5. **Historic remediation:** correct P0 articles from their cited primary sources, record correction notes and updated timestamps, rerun current validation, and then reconcile rendered pages. Do not globally delete leak phrases, silently sanitize unsupported claims, or mass-unpublish historical content based on a lexical scan.
+6. **Broader publication surfaces:** the new generation hook is in the authored-column policy. Apply the same public-copy contract to other writing paths and final built output in a separate tested integration, with an explicit migration plan for historical findings. The new CLI reports existing records but is not installed as an unconditional site-wide strict gate. *Follow-up 2026-10-11: done in a separate change; see `docs/reader-copy-gate-decision-2026-10-11.md` for the coverage map, the rule review and the decision to run `--strict` inside `content:gate:built`.*
+
+## Validation and release status
+
+On the final main baseline, the focused suite of reader-copy, authored-column-engine and subscription-routing tests passed **130/130** with `LLM_PROVIDER=disabled PIPELINE_OFFLINE=0`. The new reader-copy file separately passed **27/27** after the final equivalent regex cleanup. `git diff --check` passed. No paid model call or live article generation was used for these tests.
+
+A complete `content:gate`/build was attempted separately but was not established as passing at the time this audit document was prepared. The focused result must not be relabeled as a complete build or end-to-end publication test. Full hosted validation and a rendered-output check remain release requirements. The previous temporary test session expired; the source changes were restored from a saved snapshot and reconciled with the newer main before retesting.
+
+Reproduction:
+
+```sh
+LLM_PROVIDER=disabled PIPELINE_OFFLINE=0 node --test tests/reader-copy-guard.test.mjs tests/authored-column-engine.test.mjs tests/subscription-routing.test.mjs
+node scripts/audit-reader-copy.mjs --out /tmp/reader-copy-audit.json
+# This intentionally returns 1 while historical writer-only findings remain:
+node scripts/audit-reader-copy.mjs --strict --out /tmp/reader-copy-audit-strict.json
+LLM_PROVIDER=disabled PIPELINE_OFFLINE=1 npm run content:gate
+```
+
+The change is intended for a review branch/PR, not a direct production deployment. A code commit is not proof of merge, deployment, automation activation or historical content repair. The strongest next operational action is source-specific correction of the P0 pieces, followed by completion of the publication validation and an explicit production release.
+
+## Independent verification addendum — 2026-10-11
+
+A second review re-ran this audit's checks against commit `396bd6f` (this PR's head) with `LLM_PROVIDER=disabled`. The Korean companion document `docs/editorial-correction-plan-2026-10-11-ko.md` carries the full comparison table, the revised priorities and the per-article correction log. The points that change this document's findings are recorded here.
+
+### Confirmed
+
+- Record counts (22 columns, 45 latest-news, 1,020 archived, 1,087 unique, 27 with `articlePagePublished=true`), the 38,156-word total, the Kubernetes `supplied extract` count (11), the coding-agent `the extract I have` count (4), the zero Arabic numerals in the five EIA bodies, and the 5-flagged / 15-warning scanner result all reproduce exactly.
+- The focused suite passed 130/130 and the reader-copy file 27/27 on re-run.
+- The P0 substantive findings (lease accounting, Gilroy chronology, Texas permitting agency, Taalas signing versus payment, CDU rating versus rack power, rendering as an inference proxy) are present in the stored bodies as described.
+
+### Corrections to this audit's own findings
+
+- **Accounting standard.** The NVIDIA financing column's counterparties are US cloud providers reporting under US GAAP. ASC 842, not IFRS 16, is the primary standard, and it also recognizes a right-of-use asset and lease liability for operating leases; "capital lease" is ASC 840 vocabulary (now "finance lease"). IFRS 16 remains a supporting citation.
+- **ERCOT chronology.** The column was published on 2026-09-16 from an EIA item dated 2026-09-03, which mentions a "recent moratorium on new data center interconnections". The 2026-09-21 TCEQ directive cited above post-dates the column and must not be written into it. The correction limits the column to the EIA sentence and removes the invented deadline and the rationing conclusion.
+- **800 VDC.** The body already states that the hybrid rack "does not eliminate the power queue". The defects are the headline, deck, unsourced interconnection lead-time and input-voltage figures, and "native 800 VDC substations"; they were corrected without rewriting the argument.
+
+### Findings this audit missed
+
+1. **Contaminated source extracts.** `cleaned_source_text` for the NVIDIA financing (`9ccadbbb854d8c11`), Qunnect/Monarch (`0a214f44a3ae4610`) and Eaton/Infleqtion (`2cc01594647686aa`) records is a block of HPCwire sidebar teasers, not the article, and extraction QA passed it (boilerplate ratio 0, sentence completion 1). The NVIDIA column's facts are supported only by the feed `contentText`; the quantum column's figures carried Oratomic and Hyperion fragments as evidence. Extraction QA needs a related-story teaser check before long-form generation.
+2. **Thin and roundup sources.** The Switch IPO column (1,337 words) rests on a 191-character Bloomberg sentence and asserted facility tiers, utility relationships and company history that the source does not contain; it is treated as P0 for unsupported claims. The Samsung column's source is a "Chip Industry Week in Review" roundup whose stored extract does not contain the zHBM, zNAND-O, BV-NAND, Kioxia or NEO details; those remain attributed to the roundup pending re-verification against the full article.
+3. **Gilroy.** "Broke ground in July 2026" and "started construction last month" are not in the stored Tom's Hardware extract, and "30 miles southwest of San Jose" is the wrong direction (Gilroy is south-southeast of San Jose). Both were removed.
+4. **Repeated opening device.** "I track data center capacity the way most people/analysts track chip supply..." appears in the Gilroy, Switch and sandbox columns. Cross-column lead similarity is not caught by the repetition detector.
+5. **Persona and invented-history language** beyond the scanner's regexes: "I have argued for two years", "I have argued before", "I have written before", "the first integrated GPU I have seen", "Two Standing Positions Apply Directly", "I argue from two standing positions", "This position rests on two standing views", "The standing position I argue from". All were replaced.
+6. **EIA bodies derive from `config/eiaRestorationArticles.json`.** Editing `latest-news.json` alone would be reverted by the restoration script; both were edited together.
+
+### Historic remediation applied in this PR
+
+- 19 columns and all 5 EIA articles were corrected by exact sentence-level replacement from the stored source evidence only; no body was regenerated, no article was unpublished, and `publishedAt`, slugs and images are unchanged. Three columns (Malaysia, EU ratings, cooling procurement) needed no change.
+- Each corrected record carries `corrections: [{ date, summary }]` and a refreshed `updatedAt`. Column and news pages render a "Corrections and updates" block after the body (`src/components/EditorialCorrectionNote.astro`), NewsArticle structured data carries `correction`, and the reader-copy guard treats correction summaries as public copy.
+- After the edits the reader-copy audit reports 0 flagged articles and 0 review warnings across the 27 published records, and every column passes the authored-column quality checks except the ledger-backed numeric check, which cannot be re-run because stored records do not carry their generation ledger.
+
+### Still requiring network access
+
+Live sitemap and production-deployment reconciliation (Vercel API access was refused with 403 in the review session), full-text comparison for the HPCwire, Tom's Hardware, Semiconductor Engineering and Bloomberg sources, the Texas governor's order and the Pecos County TCEQ permit record.
+
+## Follow-up — reader-copy gate installed (2026-10-11)
+
+Recorded in `docs/reader-copy-gate-decision-2026-10-11.md`: the guard now also runs inside `longformQualityResult`, `articleDetailQualityResult` (and therefore every final-publication integrity check), the EIA restoration spec builder and the subscription runner; the `input_provenance` rule was tightened after a review of all stored bodies; and `node scripts/audit-reader-copy.mjs --strict` (`npm run audit:reader-copy`) is the last step of `content:gate:built`. The strict audit is clean on the 27 published records, so the gate introduces no historical backlog.

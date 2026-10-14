@@ -4,6 +4,7 @@ import { selectHookFamily } from './hook-diversity.mjs';
 import { seniorEditorRewrite } from './senior-editor-rewrite.mjs';
 import { normalizeProperNouns } from './proper-noun-normalizer.mjs';
 import { detectTruncationArtifacts } from './truncation-detector.mjs';
+import { readerCopyResult } from './reader-copy-guard.mjs';
 
 const SECTION_SETS = [
   ['The Constraint Behind the Headline', 'What Has To Be True', 'Who Gains Leverage', 'Who Carries The Exposure', 'The Decision Point'],
@@ -132,12 +133,17 @@ export function longformQualityResult(article = {}) {
   const sections = body.split(/\n{2,}/).map((block) => block.trim()).filter((block) => block && !/[.!?]$/.test(block));
   const forbiddenSkeleton = /^(What Changed|Why Teams Care|Metric To Watch|Editorial Read|At a Glance)$/im.test(body);
   const truncation = detectTruncationArtifacts(body);
+  // Every public surface of the record (headline, deck, summary, body,
+  // figures, correction notes) is reader copy; the guard never reads source
+  // evidence fields, so a publisher's own wording cannot trip it.
+  const readerCopy = readerCopyResult(article);
   const visibleBodyCharacters = visibleBodyLength(body);
   const metrics = {
     visibleBodyCharacters,
     wordCount: wordCount(body),
     paragraphCount: paragraphs.length,
     sectionCount: sections.length,
+    readerCopyIssueCount: readerCopy.findings.length,
   };
   const reasons = [];
   if (visibleBodyCharacters < 4500) reasons.push('body_below_4500_chars');
@@ -145,6 +151,7 @@ export function longformQualityResult(article = {}) {
   if (sections.length < 4) reasons.push('section_count_below_4');
   if (forbiddenSkeleton) reasons.push('memo_skeleton_heading');
   if (!truncation.ok) reasons.push(...truncation.artifacts);
+  if (!readerCopy.ok) reasons.push(...readerCopy.reasons);
   if (/should care because|source-backed change|turns the reported move into|the practical issue is whether|the next signal to watch is|the watch metric is|for Compute Current readers/i.test(body)) {
     reasons.push('forbidden_longform_phrase');
   }

@@ -18,6 +18,10 @@ export const SUBSCRIPTION_NEWS_STEPS = [
   ['node', ['scripts/update-industry-headlines.mjs']],
   ['node', ['scripts/restore-eia-public-inventory.mjs']],
   ['npm', ['run', 'rebuild:taxonomy-pages']],
+  // Reader-copy audit of the final stored inventory. It fails fast, before
+  // the long test and build steps, if any published record carries
+  // writer-only language; `content:gate` repeats it on the built checkout.
+  ['node', ['scripts/audit-reader-copy.mjs', '--strict']],
   ['node', ['scripts/audit-omo-ultra-current-state.mjs']],
   ['npm', ['test']],
   ['npm', ['run', 'content:gate']],

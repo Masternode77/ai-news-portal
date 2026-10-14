@@ -6,6 +6,7 @@
 // Every check reuses an existing guard module where one exists. There is
 // deliberately no fallback: a column that fails here is not published.
 import { bannedPhraseMatches } from './banned-phrases.mjs';
+import { readerCopyResult, readerCopySurfaces } from './reader-copy-guard.mjs';
 import { guardPublicCopy } from './copy-quality-guard.mjs';
 import { guardPublicTemplatePhrases } from './public-template-phrase-guard.mjs';
 import { hasInternalPublicLanguage } from './internal-language-guard.mjs';
@@ -23,7 +24,12 @@ import { insightDensityScore } from './insight-density-score.mjs';
 // passing). 0.75 still rejects summary-heavy prose.
 export const AUTHORED_MIN_INSIGHT_DENSITY_DEFAULT = 0.75;
 import { unsupportedClaimGuard } from './unsupported-claim-guard.mjs';
-import { analyzeArticleRepetition } from './repetition-detector.mjs';
+import {
+  analyzeArticleRepetition,
+  firstSentenceOfParagraph,
+  leadTemplateSimilarity,
+  LEAD_TEMPLATE_SIMILARITY_THRESHOLD,
+} from './repetition-detector.mjs';
 import {
   headingSequence,
   paragraphCount,
@@ -31,8 +37,9 @@ import {
   wordCount,
 } from './visible-body-length.mjs';
 
-export const AUTHORED_GENERATION_VERSION = 'authored_column_v1';
-export const AUTHORED_COLUMN_TIER = 'authored_column';
+import { AUTHORED_GENERATION_VERSION, AUTHORED_COLUMN_TIER, isAuthoredColumn } from './authored-column-identity.mjs';
+
+export { AUTHORED_GENERATION_VERSION, AUTHORED_COLUMN_TIER, isAuthoredColumn };
 // Headings that earlier engine versions mandated verbatim. They read as an
 // AI template when repeated across columns, so they are now banned outright;
 // every column must invent its own section headings.
@@ -74,7 +81,7 @@ function firstSentenceOf(body = '') {
     .map((block) => block.trim())
     .find((block) => block && !headings.has(block));
   if (!firstParagraph) return '';
-  return (firstParagraph.split(/(?<=[.!?])\s+/)[0] || '').trim();
+  return firstSentenceOfParagraph(firstParagraph);
 }
 
 function envNumber(name, fallback) {
@@ -97,12 +104,6 @@ function jaccard(a, b) {
   let shared = 0;
   for (const token of a) if (b.has(token)) shared += 1;
   return shared / (a.size + b.size - shared);
-}
-
-export function isAuthoredColumn(record = {}) {
-  return record?.content_origin === 'authored'
-    || record?.generation_version === AUTHORED_GENERATION_VERSION
-    || record?.public_content_tier === AUTHORED_COLUMN_TIER;
 }
 
 export function authoredColumnPublicEligible(record = {}) {
@@ -182,6 +183,13 @@ export function authoredColumnQualityResult({
     0
   );
   if (lead && leadReuseMax >= LEAD_REUSE_JACCARD) reasons.push('lead_repeats_recent_column');
+  // Token overlap misses a lead rebuilt from a recent column's sentence frame
+  // with different nouns, so the opening construction is compared as well.
+  const leadTemplateMax = recentLeads.reduce(
+    (max, prior) => Math.max(max, leadTemplateSimilarity(lead, prior)),
+    0
+  );
+  if (lead && leadTemplateMax > LEAD_TEMPLATE_SIMILARITY_THRESHOLD) reasons.push('lead_template_repeats_recent_column');
 
   // 2c. Figures — every column ships 1-3 evidence-backed visual elements.
   // `null` means the caller manages figures elsewhere (legacy call sites).
@@ -194,7 +202,12 @@ export function authoredColumnQualityResult({
   }
 
   // 3-5. Language guards (banned phrases, public copy, template language)
-  const fullText = [title, deck, summary, body].filter(Boolean).join('\n\n');
+  // Marked as a column so the guard audits figures (a column-only surface).
+  const readerCandidate = { content_origin: 'authored', title, deck, summary, body, figures };
+  const readerCopy = readerCopyResult(readerCandidate);
+  if (!readerCopy.ok) reasons.push(...readerCopy.reasons);
+  // Figure labels, displayed values and attribution are public copy too.
+  const fullText = readerCopySurfaces(readerCandidate).map(({ text }) => text).join('\n\n');
   const banned = bannedPhraseMatches(fullText);
   if (banned.length) reasons.push(`banned_phrases:${banned.slice(0, 3).join('|')}`);
   const copyGuard = guardPublicCopy(body);
@@ -263,12 +276,14 @@ export function authoredColumnQualityResult({
       copyright_overlap_score: copyright.overlap_score ?? 0,
       unsupported_claim_count: claims.unsupportedNumbers?.length ?? 0,
       banned_phrase_count: banned.length,
+      reader_copy_issue_count: readerCopy.findings.length,
       repeated_sentence_ratio: Number((repetition.repeated_sentence_ratio ?? 0).toFixed(3)),
       heading_sequence_similarity: Number((repetition.heading_sequence_similarity ?? 0).toFixed(3)),
       conclusion_similarity: Number((repetition.conclusion_similarity ?? 0).toFixed(3)),
       thesis_overlap: Number(maxThesisOverlap.toFixed(3)),
       heading_reuse_max: Number(headingReuseMax.toFixed(3)),
       lead_reuse_max: Number(leadReuseMax.toFixed(3)),
+      lead_template_max: Number(leadTemplateMax.toFixed(3)),
       figure_count: Array.isArray(figures) ? figures.length : 0,
     },
   };

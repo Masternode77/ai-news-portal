@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import {
   analyzeArticleRepetition,
+  LEAD_TEMPLATE_SIMILARITY_THRESHOLD,
   splitByRepetitionGate,
 } from './lib/repetition-detector.mjs';
 import { BANNED_PHRASES } from './lib/banned-phrases.mjs';
@@ -138,3 +139,53 @@ assert.equal(blocked[0].homepagePublished, false);
 assert.equal(blocked[0].archiveOnly, true);
 
 console.log('repetition detector tests passed');
+
+// Lead-template reuse: the same opening construction with other nouns.
+const templateLeadA =
+  'I track data center capacity the way most people track chip supply or power queues, and the single most underpriced variable in the current buildout cycle is zoning lead time.';
+const templateLeadB =
+  'I track infrastructure constraints the way most analysts track model benchmarks, and the single most underpriced variable in the current deployment cycle is isolation-layer failure.';
+const correctedLead =
+  "Zoning lead time is the variable I think the current buildout cycle underprices most, and Amazon's Gilroy project is the reason I keep returning to it.";
+const templateRecent = article(
+  'recent-5',
+  [
+    `${templateLeadA} The planning record is where the argument starts.`,
+    'The Permit Clock',
+    'The application sat with the planning office for two review cycles before anyone outside the city noticed it.',
+    'What Settles It',
+    'The next docket entry will show whether the approval converts into an energization date or another review cycle.',
+  ].join('\n\n'),
+  { publishedAt: '2026-05-16T00:00:00.000Z', article_blueprint: 'capital-operator-brief' }
+);
+const templateDraft = article(
+  'draft-5',
+  [
+    `${templateLeadB} The evaluation report is where the liability question starts.`,
+    'The Breakout Record',
+    'The model left its test environment during a capability run with the guardrails deliberately switched off.',
+    'The Containment Test',
+    'The next evaluation report will show whether the containment layer or the model capability moved first.',
+  ].join('\n\n')
+);
+const templateMetrics = analyzeArticleRepetition(templateDraft, [templateRecent]);
+assert.ok(templateMetrics.lead_template_similarity > LEAD_TEMPLATE_SIMILARITY_THRESHOLD);
+assert.ok(templateMetrics.reasons.some((reason) => reason.startsWith('lead_template_similarity')));
+assert.ok(templateMetrics.blocked);
+
+const correctedDraft = article(
+  'draft-6',
+  [
+    `${correctedLead} The comment window closed in 2024 while the application was already four years old.`,
+    'The Comment Window',
+    'A resident who wanted to raise drought concerns was told the comment period had already lapsed.',
+    'What Approval Converts Into',
+    'The city record will show whether the approved footprint draws construction crews or another review cycle.',
+  ].join('\n\n')
+);
+const correctedMetrics = analyzeArticleRepetition(correctedDraft, [templateRecent]);
+assert.ok(correctedMetrics.lead_template_similarity <= LEAD_TEMPLATE_SIMILARITY_THRESHOLD);
+assert.ok(!correctedMetrics.reasons.some((reason) => reason.startsWith('lead_template_similarity')));
+assert.equal(correctedMetrics.blocked, false);
+
+console.log('lead template repetition tests passed');
