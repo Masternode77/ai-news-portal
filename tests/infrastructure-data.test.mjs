@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import test from 'node:test';
-import { capacityGroups, csv, normalizeDemand, snapshotAge } from '../scripts/lib/infrastructure-data.mjs';
+import { capacityGroups, csv, normalizeDemand, retainedSnapshotWithinTolerance, snapshotAge } from '../scripts/lib/infrastructure-data.mjs';
 
 const demand = JSON.parse(fs.readFileSync('src/data/grid/demand.json', 'utf8'));
 const capacity = JSON.parse(fs.readFileSync('src/data/grid/capacity.json', 'utf8'));
@@ -68,6 +68,21 @@ test('snapshot age labels recent, dated, historical, invalid and future dates', 
   assert.deepEqual(snapshotAge('2026-04', now), { days: 158, label: 'Historical snapshot' });
   assert.deepEqual(snapshotAge('invalid', now), { days: null, label: 'Date unavailable' });
   assert.deepEqual(snapshotAge('2026-09-07T00:00:00Z', now), { days: null, label: 'Date unavailable' });
+});
+
+test('retained snapshots tolerate a transient outage only while they are recent', () => {
+  const now = new Date('2026-10-16T06:00:00Z');
+  assert.equal(retainedSnapshotWithinTolerance('demand', '2026-10-16T04:00:00Z', now), true);
+  assert.equal(retainedSnapshotWithinTolerance('demand', '2026-10-14T06:00:00Z', now), true);
+  assert.equal(retainedSnapshotWithinTolerance('demand', '2026-10-14T05:00:00Z', now), false);
+  assert.equal(retainedSnapshotWithinTolerance('demand', '2026-10-17T00:00:00Z', now), false);
+  assert.equal(retainedSnapshotWithinTolerance('demand', 'not a date', now), false);
+  assert.equal(retainedSnapshotWithinTolerance('capacity', '2026-08', now), true);
+  assert.equal(retainedSnapshotWithinTolerance('capacity', '2026-07', now), true);
+  assert.equal(retainedSnapshotWithinTolerance('capacity', '2026-06', now), false);
+  assert.equal(retainedSnapshotWithinTolerance('capacity', '2026-11', now), false);
+  assert.equal(retainedSnapshotWithinTolerance('capacity', '2026-8', now), false);
+  assert.throws(() => retainedSnapshotWithinTolerance('ercot', '2026-08', now), /Unknown snapshot kind/);
 });
 
 test('CSV export quotes fields, escapes quotes and neutralizes spreadsheet formulas', () => {
