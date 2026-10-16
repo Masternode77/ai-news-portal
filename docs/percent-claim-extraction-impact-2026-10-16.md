@@ -1,7 +1,8 @@
 # Percent claim extraction: impact on committed content (2026-10-16)
 
-Status: **awaiting owner decision**. The extractor change is ready, but it must
-not ship until the owner picks a path for the records below.
+Status: **resolved**. The owner approved the extractor change (merged in #54)
+and paths A, B and C on 2026-10-16, with quarantine where re-extraction fails.
+See [Resolution](#resolution-2026-10-16) for what was done.
 
 ## The defect
 
@@ -128,3 +129,61 @@ make these records pass.
   designed offline fallback.
 - Ranges with one shared unit (`10–20%`, `10 and 20 percent`) still extract only
   the second value. This gap existed before the fix and is a follow-up.
+
+## Resolution (2026-10-16)
+
+**EIA restoration (paths A and B).**
+
+- `eia-restoration-inventory.mjs` now builds each analysis's `claim_ledger` from
+  the verified EIA text. Every row quotes the EIA sentence that states a figure
+  the body uses. A body figure the source does not state still has no row, so
+  it still blocks publication.
+- The extractor reads EIA's `BkWh` (billion kilowatthours) and gives it the same
+  key as "billion kWh". No published body or metadata uses `BkWh`, so this only
+  adds source-side evidence.
+- Copy corrections in `config/eiaRestorationArticles.json`. All of them are
+  grounded in the stored EIA text:
+  - `eia-data-center-load-timing`:
+    - "about 10%" becomes "10%" (the source says load growth "averages 10%").
+    - "roughly $1.30 to $3.00 per MWh elsewhere" becomes "$1.30 to $3.00 per MWh
+      in California, the Southwest, New England and New York". The source gives
+      $1.30 for California and the Southwest and $3.00 for New England and New York.
+    - The outlook attribution is reworded so the source-fidelity actor check does
+      not treat "The EIA" as an unsupported name.
+  - `eia-texas-large-loads`:
+    - "14,200 MW" becomes "about 14,200 MW", the source's qualifier.
+    - "a September Short-Term Energy Outlook" becomes "the September STEO", the
+      source's term.
+- Correction notes and `updatedAt` now live in the spec, so a restore keeps them.
+  The 2026-10-11 notes were copied over, and a 2026-10-16 note was added to the
+  two corrected analyses.
+- After rerunning `restore-eia-public-inventory.mjs`, it exits 0 and is
+  idempotent. All five analyses pass `finalPublicationIntegrityResult`.
+  `enforceFinalPublicationIntegrity` blocks no record in `latest-news.json`,
+  `search-index.json` or `archived-news.json`. `search-index.json` now carries
+  the corrected bodies.
+- `tests/eia-public-restoration.test.mjs` builds the analyses from the committed
+  source text and requires them to pass the final gate. A body figure the source
+  does not state must keep its analysis blocked.
+
+**Columns (path C, then D).**
+
+Re-extraction is not possible for either source:
+
+- `afb38d125df0c4c6` (StorageReview) and `ddb3c065c105e647` (TechCrunch AI) are
+  registered as link-only (`allow_text_use: false`, reviewed 2026-09-05), so a
+  new extraction would still fail `currentSourceTextAuthorization`. Changing
+  those rights is a separate rights decision and was not made here.
+- Neither host was reachable from the sandbox.
+
+`col_4dd46fdfbc30fd72` and `col_4425d817371fe825` were quarantined with
+`quarantineArticle` and the reasons `source_rights:text_use_not_authorized:<source>`
+and `extraction_artifact:missing_or_invalid:<record>`. They no longer render as
+column pages, cards, catalog, RSS or sitemap entries, so public columns go from
+22 to 20 and the archive route from 64 to 62 records. Bodies, figures and artwork
+registrations are kept, so the quarantine can be reversed if text rights are
+granted later.
+
+**Still open.** The other 13 columns with invalid source artifacts were outside
+this decision. They stay published, but `columnArtworkReadiness` cannot verify
+them.

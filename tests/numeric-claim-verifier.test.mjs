@@ -37,3 +37,10 @@ test('percent keys treat the sign and the word alike and keep qualifiers distinc
   assert.deepEqual(keyOf('1.9% and 12 percent and 12%'), ['1.9|%|=', '12|%|=', '12|%|=']);
   assert.deepEqual(keyOf('about 10% versus 10%'), ['10|%|~', '10|%|=']);
 });
+
+test('EIA billion-kilowatthour figures share the key of the spelled-out form', () => {
+  const keyOf = (text) => extractNumericClaims(text).map(numericClaimKey);
+  assert.deepEqual(keyOf('the two-year increase would rise to 7.3% (123 BkWh).'), ['7.3|%|=', '123|billion|=']);
+  assert.deepEqual(keyOf('gas generation rises 7.3% (123 billion kWh)'), ['7.3|%|=', '123|billion|=']);
+  assert.deepEqual(keyOf('a 5 kWh battery'), []);
+});
