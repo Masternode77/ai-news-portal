@@ -134,3 +134,28 @@ test('numeric rows receive the fixed claim budget before nonnumeric rows while o
   assert.deepEqual(body.map((claim) => claim.numeric_value), Array.from({ length: 18 }, (_, index) => index + 1));
   assert.ok(body.every((claim) => claim.claim_text === numericSentence));
 });
+
+test('percent figures in source text become numeric ledger claims', () => {
+  const result = buildClaimLedger({
+    cluster_id: 'sig_percent',
+    representative_source: {
+      title: 'Utility raises its data center load forecast',
+      cleaned_text: [
+        'The utility now forecasts load growth of 1.9% in 2026 across its service territory.',
+        'Contracted data center demand recorded a 50% increase over the prior filing period.',
+        'Transformer utilization reached 79%, above the planning reserve the utility targets.',
+        'Large-load customers account for about 10% of the queued interconnection capacity.',
+        'Commercial electricity sales rose 12 percent last year in the same service territory.',
+      ].join(' '),
+      source_url: 'https://example.com/percent',
+      source_name: 'Example Source',
+      source_published_at: '2026-10-01T00:00:00Z',
+    },
+  }, 'article_percent');
+  const percentKeys = result.claims
+    .filter((claim) => /^(?:%|percent)$/.test(claim.unit))
+    .map((claim) => `${claim.comparator ? `${claim.comparator} ` : ''}${claim.numeric_value}${claim.unit === '%' ? '%' : ' percent'}`);
+
+  assert.deepEqual(percentKeys.sort(), ['1.9%', '12 percent', '50%', '79%', 'about 10%']);
+  assert.equal(result.summary.unsupported_claim_count, 0);
+});
