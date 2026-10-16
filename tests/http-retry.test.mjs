@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { TransientUpstreamError, fetchWithRetry, isTransientError, retryAfterMs, transientDiagnostic } from '../scripts/lib/http-retry.mjs';
+import { TransientUpstreamError, fetchWithRetry, isRetryableStatus, isTransientError, retryAfterMs, transientDiagnostic } from '../scripts/lib/http-retry.mjs';
 
 function response(status, body = 'ok', headers = {}) {
   return new Response(body, { status, headers });
@@ -99,6 +99,8 @@ test('error classification and Retry-After parsing', () => {
   assert.equal(isTransientError(new TypeError('Cannot read properties of undefined')), false);
   assert.equal(isTransientError(new SyntaxError('Unexpected token <')), false);
   assert.equal(isTransientError(new Error('Workbook too large')), false);
+  for (const status of [408, 425, 429, 500, 502, 503, 504, 520, 522, 524, 599]) assert.equal(isRetryableStatus(status), true, String(status));
+  for (const status of [200, 301, 400, 401, 403, 404, 410, 501, 505, 600]) assert.equal(isRetryableStatus(status), false, String(status));
   assert.equal(retryAfterMs('3'), 3000);
   assert.equal(retryAfterMs(new Date(10_000).toUTCString(), 4_000), 6000);
   assert.equal(retryAfterMs('soon'), undefined);

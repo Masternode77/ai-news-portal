@@ -14,7 +14,12 @@ export class TransientUpstreamError extends Error {
   }
 }
 
-export const RETRYABLE_STATUS = new Set([408, 425, 429, 500, 502, 503, 504]);
+// Any 5xx counts, including edge/proxy codes such as 520-524, except the
+// two that signal a permanent server capability mismatch.
+export function isRetryableStatus(status) {
+  if (status === 408 || status === 425 || status === 429) return true;
+  return status >= 500 && status <= 599 && status !== 501 && status !== 505;
+}
 const NETWORK_CODES = new Set(['ECONNRESET', 'ECONNREFUSED', 'ETIMEDOUT', 'EAI_AGAIN', 'ENOTFOUND', 'EPIPE', 'UND_ERR_SOCKET', 'UND_ERR_CONNECT_TIMEOUT', 'UND_ERR_HEADERS_TIMEOUT', 'UND_ERR_BODY_TIMEOUT']);
 
 export function isTransientError(error) {
@@ -66,7 +71,7 @@ export async function fetchWithRetry(url, {
   for (let attempt = 1; ; attempt++) {
     try {
       const response = await fetchImpl(url, { ...init, signal: AbortSignal.timeout(timeoutMs) });
-      if (RETRYABLE_STATUS.has(response.status)) {
+      if (isRetryableStatus(response.status)) {
         await response.body?.cancel().catch(() => {});
         throw new TransientUpstreamError(`Upstream HTTP ${response.status}`, { status: response.status, retryAfterMs: retryAfterMs(response.headers?.get?.('retry-after')) });
       }
