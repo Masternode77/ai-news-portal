@@ -12,13 +12,13 @@
     "archetype": "dispatch-stress-test",
     "body": [
       "Regional electricity load and generation",
-      "The EIA's February 2026 Short-Term Energy Outlook forecasts U.S. electricity load growth of 1.9% in 2026 and 2.5% in 2027, with the fastest growth in ERCOT and PJM, where annual load is forecast to grow by an average of about 10% and 3% a year, respectively, between 2025 and 2027. The high demand growth scenario built on that outlook raises the 2026 and 2027 growth rates by 50% in regions with significant data-center development and by one percentage point elsewhere, then compares load, natural gas generation, coal generation, and wholesale prices across STEO regions. Electricity use by large computing facilities is rising while the generating capacity available through the near-term forecast is largely fixed by projects that are already operating or already reported.",
+      "EIA's February Short-Term Energy Outlook (STEO) forecasts U.S. electricity load growth of 1.9% in 2026 and 2.5% in 2027, with the fastest growth in ERCOT and PJM, where annual load is forecast to grow by an average of about 10% and 3% a year, respectively, between 2025 and 2027. The high demand growth scenario built on that outlook raises the 2026 and 2027 growth rates by 50% in regions with significant data-center development and by one percentage point elsewhere, then compares load, natural gas generation, coal generation, and wholesale prices across STEO regions. Electricity use by large computing facilities is rising while the generating capacity available through the near-term forecast is largely fixed by projects that are already operating or already reported.",
       "That combination makes utilization the first adjustment. Existing power plants have to produce more electricity before newly planned generation, transmission, or interconnection capacity can change the supply stack. Large computing facilities can increase electricity demand before additional generating capacity becomes operational within the STEO forecast period.",
       "ERCOT exposes the timing risk",
       "ERCOT and PJM are the clearest stress tests because the EIA expects the fastest electricity load growth in those regions through 2027, while MISO, SPP, Arizona and Nevada add data-center load but see lower overall growth because household demand there is growing slowly. The planning challenge is not simply that demand rises; the highest growth can arrive in regions with different fuel mixes, transmission links, weather patterns, and operating reserves.",
-      "The EIA's higher-demand case shows a sharper wholesale price response in ERCOT: a 2027 wholesale price $37 per MWh, or 79%, above the February STEO forecast, against a $2.60 per MWh (4%) increase in PJM and roughly $1.30 to $3.00 per MWh elsewhere. That result follows from the region's limited connections to neighboring grids and its need to rely on more expensive generation when electricity demand is high and wind generation is seasonally lower.",
+      "The EIA's higher-demand case shows a sharper wholesale price response in ERCOT: a 2027 wholesale price $37 per MWh, or 79%, above the February STEO forecast, against increases of $2.60 per MWh (4%) in PJM, $3.00 per MWh (5%) in New England and New York ISO, and $1.30 per MWh (4%) in California and the Southwest. That result follows from the region's limited connections to neighboring grids and its need to rely on more expensive generation when electricity demand is high and wind generation is seasonally lower.",
       "Gas becomes the near-term bridge",
-      "Natural gas-fired plants, which supplied 40% of U.S. generation in 2025, are the main flexible source in the EIA case because their generating capacity already exists and can increase output; U.S. gas generation rises 7.3% (123 billion kWh) between 2025 and 2027 in the high demand case against 1.7% in the baseline, with ERCOT accounting for the largest increase, and the scenario assumes delivered gas prices about $0.50 per MMBtu above the baseline. Coal generation, 17% of the 2025 total, declines 5.0% rather than 9.3% over the two years when electricity load runs above the baseline, while wind and solar, 18% combined in 2025, continue to depend on the resource available in each hour.",
+      "Natural gas-fired plants, which supplied 40% of U.S. generation in 2025, are the main flexible source in the EIA case because their generating capacity already exists and can increase output; U.S. gas generation rises 7.3% (123 BkWh) between 2025 and 2027 in the high demand case against 1.7% in the baseline, with ERCOT accounting for the largest increase, and the scenario assumes delivered gas prices about $0.50 per MMBtu above the baseline. Coal generation, 17% of the 2025 total, declines 5.0% rather than 9.3% over the two years when electricity load runs above the baseline, while wind and solar, 18% combined in 2025, continue to depend on the resource available in each hour.",
       "Near-term data-center planning depends on available generating capacity, fuel costs, and hourly wholesale prices. The operating constraint is the dispatch position of generation during the hours when a regional grid has to serve new computing load without additional near-term capacity.",
       "Who gains and who carries exposure",
       "Generators with available natural gas capacity can benefit from higher utilization, and grid regions with stronger transmission connections can draw on a wider supply pool. Data-center developers gain when a utility can identify firm generation and interconnection capacity without relying on a later project that remains outside the forecast period.",
@@ -33,7 +33,18 @@
       "Bottom Line",
       "The decision turns on timing.",
       "The high demand growth scenario compares electricity load, natural gas generation, coal generation, and wholesale electricity prices. The projects most likely to hold their schedules are those that connect their load date to a specific interconnection plan, an hourly generation profile, and a credible fuel and price case for the region that must serve them."
-    ]
+    ],
+    "corrections": [
+      {
+        "date": "2026-10-11",
+        "summary": "Added the EIA's forecast load growth rates, scenario design, generation shares and modeled regional price effects; the analysis is otherwise unchanged."
+      },
+      {
+        "date": "2026-10-16",
+        "summary": "Named the regions behind each modeled price increase, removed an approximation the EIA does not make and restated the gas-generation increase in the EIA's unit."
+      }
+    ],
+    "updatedAt": "2026-10-16T14:30:00.000Z"
   },
   {
     "id": "eia-server-cooling-forecast",
@@ -51,7 +62,7 @@
       "AEO2026, released on April 8, 2026, projects electricity consumed by data-center servers across the commercial building stock, with greater growth in standalone data centers than in data-center rooms combined. The EIA projects that commercial electricity intensity will exceed its 2003 high of 14.9 kWh per square foot for the first time in 2031-2032, with data-center servers and the cooling and ventilation that support them driving the increase. Standalone data centers account for the larger increase, but server rooms inside other building types also remain part of the load.",
       "Server electricity is only one end use because space cooling and ventilation support server operation. Chips and related equipment require cooling and ventilation, and those supporting end uses raise commercial electricity intensity along with the direct operational power draw of the installed server stock.",
       "Cooling compounds the curve",
-      "Cooling electricity changes with both server activity and the conditions around the building. The EIA assumes that space cooling in data-center floorspace is, on average, as much as 2.9 times as energy intensive as in non-data-center floorspace, while population movement and weather affect the service demand needed to maintain operating conditions. Using the same population and weather assumptions, space-cooling electricity in the High Electricity Demand case is 84 billion kWh higher than in the Counterfactual Baseline case in 2050.",
+      "Cooling electricity changes with both server activity and the conditions around the building. The EIA assumes that space cooling in data-center floorspace is, on average, as much as 2.9 times as energy intensive as in non-data-center floorspace, while population movement and weather affect the service demand needed to maintain operating conditions. Using the same population and weather assumptions, space-cooling electricity in the High Electricity Demand case is 84 BkWh higher than in the Counterfactual Baseline case in 2050.",
       "A campus forecast that copies server power into a flat facilities load will miss this interaction. The AEO assumes a flat server end-use load shape, while space cooling electricity remains sensitive to data-center floorspace, population migration, and weather.",
       "Efficiency cannot carry the whole case",
       "The Counterfactual Baseline assumes that after 2040 servers become increasingly efficient, cutting average annual operational power draw by 10% every three years beyond historical trends, but continued installations still push total consumption upward. The High Electricity Demand case removes that extra efficiency assumption and gives AI servers a larger share of the installed stock, widening the range of possible electricity use.",
@@ -70,7 +81,18 @@
       "Bottom Line",
       "The facilities forecast needs two ledgers.",
       "The AEO cutoff is a limitation because it excludes later legislation, regulations, executive actions, and court rulings. Data center servers require space cooling and ventilation so chips and related IT equipment can operate efficiently. Plans that track only server draw will understate the grid connection, cooling plant, and operating margin needed when the installed stock grows faster than efficiency can reduce total demand."
-    ]
+    ],
+    "corrections": [
+      {
+        "date": "2026-10-11",
+        "summary": "Added the AEO2026 release date, the commercial electricity-intensity threshold, the cooling-intensity and efficiency assumptions and the 2050 cooling difference between cases; the analysis is otherwise unchanged."
+      },
+      {
+        "date": "2026-10-16",
+        "summary": "Restated the 2050 space-cooling difference in the EIA's unit."
+      }
+    ],
+    "updatedAt": "2026-10-16T14:30:00.000Z"
   },
   {
     "id": "eia-virginia-peak-load",
@@ -106,7 +128,14 @@
       "Bottom Line",
       "Peak demand is the operating test.",
       "Virginia commercial electricity sales have increased as data centers concentrate in the Dominion zone. The decisive planning document is the hourly load curve: which projects arrive, how they ramp, what flexibility they offer, and which grid resources are available when the Dominion zone reaches its next peak."
-    ]
+    ],
+    "corrections": [
+      {
+        "date": "2026-10-11",
+        "summary": "Added PJM's Dominion-zone peak-load figures, growth forecast and the EIA's hourly peak distribution; the analysis is otherwise unchanged."
+      }
+    ],
+    "updatedAt": "2026-10-11T06:04:13.926Z"
   },
   {
     "id": "eia-nuclear-data-center-contracts",
@@ -142,7 +171,14 @@
       "Bottom Line",
       "Contract and delivery are separate milestones.",
       "Nuclear plants can match the consistent electricity demand of data centers designed to operate at all hours. The agreement becomes usable capacity only when nuclear generation, PJM delivery, and data-center operations align."
-    ]
+    ],
+    "corrections": [
+      {
+        "date": "2026-10-11",
+        "summary": "Added the counterparties, contracted capacities, ramp terms, restart target and regulatory steps reported by the EIA; the analysis is otherwise unchanged."
+      }
+    ],
+    "updatedAt": "2026-10-11T06:04:13.926Z"
   },
   {
     "id": "eia-texas-large-loads",
@@ -158,7 +194,7 @@
     "body": [
       "Large flexible load is an operating category",
       "ERCOT created a process for large flexible load customers as data centers, cryptocurrency mining operations, and industrial facilities increased their demand for power. The category matters because very large customers can affect grid reliability differently from ordinary commercial growth.",
-      "The EIA analysis, built on a September Short-Term Energy Outlook that treated 2025 as the forecast year, separates approved demand capacity from the electricity that facilities are expected to consume. At the time, ERCOT had approved 5,479 MW of large flexible load, 1,570 MW of it in the prior 12 months, and the EIA assumed approvals would reach 9,500 MW by the end of 2025, with facilities historically using about 65% of approved capacity. That distinction keeps the forecast tied to operating behavior instead of assuming every approved megawatt runs continuously from the first day.",
+      "The EIA analysis, which compares its 2025 scenarios with the September STEO forecast as a base case, separates approved demand capacity from the electricity that facilities are expected to consume. At the time, ERCOT had approved 5,479 MW of large flexible load, 1,570 MW of it in the prior 12 months, and the EIA assumed approvals would reach 9,500 MW by the end of 2025, with facilities historically using about 65% of approved capacity. That distinction keeps the forecast tied to operating behavior instead of assuming every approved megawatt runs continuously from the first day.",
       "The queue is not the load",
       "Projects can appear in several stages before they become live demand: early plans, submitted studies, plans under review, approved capacity, and operating facilities. A large application total therefore describes potential pressure on the grid, not the amount of electricity already being served. ERCOT's early-September status update showed projects representing about 26,500 MW applying to be operational by the end of 2025, including about 2,000 MW without submitted plans and more than 12,000 MW with plans still under review, which the EIA judged unlikely to come online by that date.",
       "ERCOT estimates large flexible load from approved demand capacity and the electricity consumed by operating facilities. Forecasts should assign a probability and a schedule to each stage, then separate the capacity approved by ERCOT from the share that facilities actually use through the day.",
@@ -175,12 +211,23 @@
       "Generators and grid planners need the same conversion view. Building around the full application queue assumes that every project becomes sustained demand, while ignoring approved projects assumes the opposite. Tracking approvals, operations, actual consumption, and market participation separately gives a more useful range for generation and reliability decisions. Each STEO revision can then follow changes in approved capacity, utilization, and expected electricity demand.",
       "For operators, the practical test is whether the forecast records both consumption and flexibility. A large facility that is online but can reliably reduce demand during a stressed interval creates a different system obligation from a facility with the same normal load and no curtailment capability.",
       "Forecast uncertainty",
-      "A key limitation is that future LFL demand depends on ERCOT approvals, facility operations, utilization, and voluntary curtailment. Approval timing, facility completion, utilization, and demand response can all move the result, so one forecast cannot prove how much data-center or mining load will operate in a specific hour. The EIA's scenarios show the range: a low case with no capacity beyond the 6,500 MW expected at the end of 2024 gives about 37 billion kWh of large-load consumption in 2025, 32% below the 54 billion kWh baseline, while a high case with 14,200 MW operational gives 81 billion kWh, 50% above it. Overall ERCOT load growth runs from 1% to 10% across those cases against a 5% baseline, and modeled wholesale prices move from 11% below to 17% above the roughly $27 per MWh base case, with the largest differences in summer.",
+      "A key limitation is that future LFL demand depends on ERCOT approvals, facility operations, utilization, and voluntary curtailment. Approval timing, facility completion, utilization, and demand response can all move the result, so one forecast cannot prove how much data-center or mining load will operate in a specific hour. The EIA's scenarios show the range: a low case with no capacity beyond the 6,500 MW expected at the end of 2024 gives about 37 billion kWh of large-load consumption in 2025, 32% below the 54 billion kWh baseline, while a high case with about 14,200 MW operational gives 81 billion kWh, 50% above it. Overall ERCOT load growth runs from 1% to 10% across those cases against a 5% baseline, and modeled wholesale prices move from 11% below to 17% above the roughly $27 per MWh base case, with the largest differences in summer.",
       "A useful planning model therefore keeps at least three ledgers: projects seeking approval, capacity approved for operation, and measured electricity consumption. Mixing those ledgers inflates certainty and makes it harder to see whether the next constraint is grid approval, construction, or available generation.",
       "Bottom Line",
       "Approved capacity is not live demand.",
       "Texas has a large pipeline of LFL demand, but generation planning depends on approved capacity, utilization, and timing. The strongest data-center power cases will show where a project sits in the ERCOT process, how its utilization develops, and what curtailment it can provide when the grid is tight."
-    ]
+    ],
+    "corrections": [
+      {
+        "date": "2026-10-11",
+        "summary": "Added the EIA's approved-capacity, application-queue, utilization and scenario figures with their forecast year; the analysis is otherwise unchanged."
+      },
+      {
+        "date": "2026-10-16",
+        "summary": "Restored the EIA's qualifier on the high-case capacity and described the base case as the September STEO forecast, as the EIA does."
+      }
+    ],
+    "updatedAt": "2026-10-16T14:30:00.000Z"
   },
   {
     "id": "eia-computing-hub-demand",

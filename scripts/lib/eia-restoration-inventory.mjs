@@ -1,5 +1,7 @@
 import specs from '../../config/eiaRestorationArticles.json' with { type: 'json' };
+import { extractNumericClaims } from './autonomous-desk-utils.mjs';
 import { createExtractionArtifact } from './extraction-artifact.mjs';
+import { numericClaimKey } from './numeric-claim-policy.mjs';
 import { readerCopyResult } from './reader-copy-guard.mjs';
 
 export const EIA_RESTORATION_SOURCE_ID = 'eia-today-in-energy';
@@ -67,12 +69,57 @@ function extractionFor(spec, sourceText) {
   };
 }
 
+// Source sentences split the way the fidelity checks split prose, except that
+// "U.S." and "U.K." never end a sentence, so a figure that follows either
+// abbreviation keeps the sentence that states it.
+function sourceSentences(text = '') {
+  return compact(text).split(/(?<!\bU\.[SK]\.)(?<=[.!?])\s+/).filter(Boolean);
+}
+
+// The final publication gate accepts a figure in the body only when a
+// verified_primary ledger row states the same value, unit and qualifier.
+// Each body figure is tied to the first source sentence that states it, and
+// that exact sentence is the row's quote. A figure the source does not state
+// gets no row, so the gate still rejects it.
+function sourceClaimLedger(spec, body, sourceText) {
+  const bySourceKey = new Map();
+  for (const quote of sourceSentences(sourceText)) {
+    for (const numeric of extractNumericClaims(quote)) {
+      const key = numericClaimKey(numeric);
+      if (key && !bySourceKey.has(key)) bySourceKey.set(key, { quote, numeric });
+    }
+  }
+  const ledger = [];
+  const linked = new Set();
+  for (const numeric of extractNumericClaims(body)) {
+    const key = numericClaimKey(numeric);
+    const source = bySourceKey.get(key);
+    if (!source || linked.has(key)) continue;
+    linked.add(key);
+    ledger.push({
+      claim_id: `clm_${spec.id}_${ledger.length + 1}`,
+      article_id: spec.id,
+      claim_text: source.quote,
+      source_quote_or_summary: source.quote,
+      source_url: spec.sourceUrl,
+      source_name: 'U.S. Energy Information Administration',
+      numeric_value: source.numeric.numeric_value,
+      unit: source.numeric.unit,
+      comparator: source.numeric.comparator,
+      verification_status: 'verified_primary',
+      used_in_article: true,
+    });
+  }
+  return ledger;
+}
+
 function buildRecord(spec, sourceText, index) {
   const extraction = extractionFor(spec, sourceText);
   const longform = spec.kind === 'longform';
   const publishedAt = publicationTime(index);
   const route = routeFor(spec);
   const body = longform ? spec.body.join('\n\n') : '';
+  const corrections = Array.isArray(spec.corrections) ? structuredClone(spec.corrections) : [];
   return {
     id: spec.id,
     title: spec.title,
@@ -82,7 +129,10 @@ function buildRecord(spec, sourceText, index) {
     url: spec.sourceUrl,
     publishedAt,
     analysisPublishedAt: publishedAt,
-    updatedAt: publishedAt,
+    updatedAt: spec.updatedAt || publishedAt,
+    // Published correction notes live in the spec, so a restoration run keeps
+    // the notes readers have already seen.
+    ...(corrections.length ? { corrections } : {}),
     category: spec.category,
     primary_category: spec.category,
     secondary_category: spec.infrastructureLayer,
@@ -128,7 +178,7 @@ function buildRecord(spec, sourceText, index) {
     deck: spec.deck,
     why_it_matters: spec.whyItMatters,
     expertLensShort: spec.deck,
-    claim_ledger: [],
+    claim_ledger: longform ? sourceClaimLedger(spec, body, extraction.text) : [],
     generation_version: 'eia_public_domain_restoration_v1',
     ...(longform ? {
       blog_metadata: {
@@ -160,6 +210,7 @@ export function eiaRestorationReaderCopyFindings(specList = specs) {
       deck: spec.deck,
       why_it_matters: spec.whyItMatters,
       body: Array.isArray(spec.body) ? spec.body.join('\n\n') : '',
+      corrections: spec.corrections,
     });
     for (const finding of result.findings) findings.push({ id: spec.id, ...finding });
   }

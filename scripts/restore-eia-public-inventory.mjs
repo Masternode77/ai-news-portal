@@ -192,7 +192,7 @@ async function fetchSourceTexts(specs, sources, storedRecords) {
   });
 }
 
-function verifyAndStamp(records, sources) {
+export function verifyAndStamp(records, sources) {
   const options = { sourceRegistry: sources, now: NOW };
   const recentLongforms = [];
   const stamped = records.map((record) => {

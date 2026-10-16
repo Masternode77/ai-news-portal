@@ -28,7 +28,10 @@ import { buildRssItems } from '../scripts/lib/rss-builder.mjs';
 import { buildSitemapEntries } from '../scripts/lib/sitemap-builder.mjs';
 import { publicProductFitResult } from '../scripts/lib/public-product-fit.mjs';
 import { editorialArtworkDescriptor } from '../scripts/lib/image-store.mjs';
-import { reconcileEiaPublicInventory, resolveSourceTexts } from '../scripts/restore-eia-public-inventory.mjs';
+import { reconcileEiaPublicInventory, resolveSourceTexts, verifyAndStamp } from '../scripts/restore-eia-public-inventory.mjs';
+import { extractNumericClaims } from '../scripts/lib/autonomous-desk-utils.mjs';
+import { numericClaimKey } from '../scripts/lib/numeric-claim-policy.mjs';
+import { unsupportedClaimGuard } from '../scripts/lib/unsupported-claim-guard.mjs';
 
 const imageGeneratorUrl = pathToFileURL(path.resolve('scripts/lib/image-generator.mjs')).href;
 
@@ -426,4 +429,86 @@ test('EIA restoration specs are checked as reader copy before any record is buil
   assert.throws(() => buildEiaRestorationInventory({}, { specs: tampered }), /writer-only copy: eia-[a-z-]+:input_provenance:body/);
   // The committed specs are untouched by the tampered clone.
   assert.deepEqual(eiaRestorationReaderCopyFindings(), []);
+});
+
+function committedRecords() {
+  const read = (file) => JSON.parse(fsSync.readFileSync(path.resolve('src/data', file), 'utf8'));
+  return [...read('latest-news.json'), ...read('archived-news.json')];
+}
+
+// The verified text the committed inventory holds, as restoration resolves it
+// when EIA cannot be reached.
+function committedSourceTexts() {
+  return resolveSourceTexts(eiaRestorationSpecs(), {
+    storedRecords: committedRecords(),
+    fetchText: async () => {
+      throw Object.assign(new Error('offline'), { code: 'offline' });
+    },
+    log: () => {},
+    retryDelayMs: 0,
+  });
+}
+
+test('the committed EIA analyses pass the restoration publication gate', async () => {
+  // The Mac runner calls restore-eia-public-inventory.mjs before it publishes
+  // anything, and hosted validation never ran that gate. Running it here on the
+  // committed text makes a spec edit it would reject fail CI first.
+  const verified = verifyAndStamp(buildEiaRestorationInventory(await committedSourceTexts()), loadSourceRegistrySync());
+  assert.equal(verified.detailRoutes.length, 5);
+  const analyses = verified.records.filter((record) => record.articlePagePublished);
+  assert.equal(analyses.length, 5);
+  assert.ok(analyses.every((record) => record.publication_integrity.ok));
+});
+
+test('EIA analyses back each body figure with the source sentence that states it', async () => {
+  const texts = await committedSourceTexts();
+  for (const record of buildEiaRestorationInventory(texts).filter((item) => item.articlePagePublished)) {
+    const source = record.extraction_artifact.cleaned_extracted_text;
+    assert.ok(record.claim_ledger.length > 0, record.id);
+    for (const claim of record.claim_ledger) {
+      assert.equal(claim.verification_status, 'verified_primary');
+      assert.equal(claim.source_url, record.sourceUrl);
+      assert.ok(source.includes(claim.source_quote_or_summary), `${record.id}: ledger quote is not source text`);
+      assert.ok(
+        extractNumericClaims(claim.source_quote_or_summary).some((numeric) => numericClaimKey(numeric) === numericClaimKey(claim)),
+        `${record.id}: ledger figure is not stated by its quote`,
+      );
+    }
+    assert.ok(unsupportedClaimGuard(record.expertLensFull.finalArticleBody, record.claim_ledger).ok, record.id);
+  }
+
+  // The source says "about 14,200 MW". Dropping the qualifier, or adding a
+  // figure the source never states, leaves that figure without a ledger row.
+  const guardFor = (edit) => {
+    const spec = eiaRestorationSpecs().find((item) => item.id === 'eia-texas-large-loads');
+    spec.body = spec.body.map(edit);
+    const [record] = buildEiaRestorationInventory({ [spec.id]: texts[spec.id] }, { specs: [spec] });
+    return unsupportedClaimGuard(record.expertLensFull.finalArticleBody, record.claim_ledger);
+  };
+  const unqualified = guardFor((block) => block.replace('about 14,200 MW', '14,200 MW'));
+  assert.equal(unqualified.ok, false);
+  assert.deepEqual(unqualified.unsupportedNumbers.map((claim) => claim.raw), ['14,200 MW']);
+  const invented = guardFor((block, index) => (index === 2 ? `${block} The EIA expects 31,337 MW of large flexible load.` : block));
+  assert.equal(invented.ok, false);
+  assert.deepEqual(invented.unsupportedNumbers.map((claim) => claim.raw), ['31,337 MW']);
+});
+
+test('EIA restoration keeps the correction notes and update time readers have seen', async () => {
+  const published = new Map(committedRecords().map((record) => [record.id, record]));
+  const records = buildEiaRestorationInventory(await committedSourceTexts());
+  assert.equal(records.filter((record) => record.corrections).length, 5);
+  for (const record of records) {
+    // Every note already on the site survives a restoration run.
+    for (const note of published.get(record.id)?.corrections || []) {
+      assert.ok(
+        (record.corrections || []).some((kept) => kept.date === note.date && kept.summary === note.summary),
+        `${record.id}: restoration dropped the ${note.date} correction`,
+      );
+    }
+    if (record.corrections) {
+      assert.ok(record.updatedAt.slice(0, 10) >= record.corrections.at(-1).date, `${record.id}: updatedAt predates its latest correction`);
+    } else {
+      assert.equal(record.updatedAt, record.publishedAt);
+    }
+  }
 });
