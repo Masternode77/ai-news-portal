@@ -132,3 +132,46 @@ test('unsupported negative modifiers fail closed instead of authorizing their in
   assert.equal(result.ok, false);
   assert.equal(result.malformedVerifiedNumeric.length, 1);
 });
+
+test('percent figures in article copy need a verified ledger entry', () => {
+  const ledger = [{
+    numeric_value: 1.9,
+    unit: '%',
+    verification_status: 'verified_primary',
+    source_url: 'https://example.com/source',
+    source_quote_or_summary: 'The utility forecasts load growth of 1.9% in 2026.',
+  }, {
+    numeric_value: 2026,
+    unit: 'year',
+    verification_status: 'verified_primary',
+    source_url: 'https://example.com/source',
+    source_quote_or_summary: 'The utility forecasts load growth of 1.9% in 2026.',
+  }];
+
+  const result = unsupportedClaimGuard(
+    'The utility expects load growth of 1.9% in 2026, a 50% increase over plan, with utilization at 79%, above the reserve target.',
+    ledger,
+  );
+
+  assert.equal(result.ok, false);
+  assert.deepEqual(result.malformedVerifiedNumeric, []);
+  assert.deepEqual(result.unsupportedNumbers.map((claim) => claim.raw), ['50%', '79%']);
+  assert.match(result.reasons[0], /^unsupported_numeric_claims:50%,79%$/);
+});
+
+test('a percent sign and the word percent verify each other but not a changed qualifier', () => {
+  const ledgerFor = (quote, value) => [{
+    numeric_value: value,
+    unit: '%',
+    verification_status: 'verified_primary',
+    source_url: 'https://example.com/source',
+    source_quote_or_summary: quote,
+  }];
+  const exact = ledgerFor('Commercial demand rose 12 percent last year.', 12);
+  const approximate = ledgerFor('Data centers used about 10% of the load.', 10);
+
+  assert.equal(unsupportedClaimGuard('Commercial demand rose 12% last year.', exact).ok, true);
+  assert.equal(unsupportedClaimGuard('Commercial demand rose about 12% last year.', exact).ok, false);
+  assert.equal(unsupportedClaimGuard('Data centers used around 10% of the load.', approximate).ok, true);
+  assert.equal(unsupportedClaimGuard('Data centers used 10% of the load.', approximate).ok, false);
+});
