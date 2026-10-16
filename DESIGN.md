@@ -14,7 +14,7 @@ Compute Current is a light, source-linked editorial product for AI-infrastructur
 | Soft surface | `--al-soft` | `#f5f5f7` | Cards, house promotions, secondary actions |
 | Primary text | `--al-text` | `#1d1d1f` | Headlines and primary copy |
 | Muted text | `--al-muted` | `#6e6e73` | Decks, metadata, supporting copy |
-| Faint text | `--al-faint` | `#a1a1a6` | Low-emphasis labels |
+| Faint text | `--al-faint` | `#6e6e73` | Low-emphasis labels; readable against white and soft surfaces |
 | Divider | `--al-hairline` | `rgba(0, 0, 0, 0.08)` | Borders and separators |
 | Strong divider | `--al-hairline-strong` | `rgba(0, 0, 0, 0.14)` | Hover and active borders |
 | Primary action | `--al-blue` | `#0071e3` | Primary buttons and action links |
@@ -63,6 +63,7 @@ Compute Current is a light, source-linked editorial product for AI-infrastructur
 
 - Cards combine image/provenance, metadata, headline, deck, and source-oriented actions.
 - Use meaningful image alt text when an image links to editorial content.
+- The homepage Analysis list keeps eligible published analyses directly discoverable, reusing `product-section`, `product-list`, and `product-meta` for headlines, source names, and dates.
 - Hover motion is limited to a small transform and shadow change; focus-visible must remain obvious.
 
 ### House promotions and advertising
@@ -90,6 +91,7 @@ Compute Current is a light, source-linked editorial product for AI-infrastructur
 - Use semantic landmarks and explicit accessible names for navigation, promotional asides, and status groups where appropriate.
 - Respect reduced motion. Animate only transform, opacity, color, background-color, border-color, and box-shadow; micro-interactions should remain around 160ms.
 - Do not rely on color alone for a material status or disclosure.
+- Supporting labels and metadata retain at least 4.5:1 text contrast on their surface. Low emphasis comes from size and weight rather than a pale text color.
 
 ## 7. Depth & Restraint
 

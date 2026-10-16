@@ -39,6 +39,7 @@ const boardTitle = SITE.name;
 const homepageArticles = process.env.HOMEPAGE_FIXTURE === 'empty' ? [] : [...latestNews, ...archivedNews];
 const feed = buildHomepageFeed(homepageArticles, { limit: 15, minimumVisible: 15 });
 const publicationCatalog = buildPublicPublicationCatalog({ articles: homepageArticles, columns: authoredColumns });
+const publishedAnalyses = publicationCatalog.filter((entry) => entry.type === 'Analysis' && entry.href.startsWith('/news/'));
 const authorizedSourceCount = activeRegistryFeeds(loadSourceRegistrySync(), new Date()).length;
 const rightsReviewSafeMode = authorizedSourceCount === 0 && feed.items.length === 0;
 const featuredSignal = feed.featured?.publicSignal || null;
@@ -283,6 +284,23 @@ const structuredData = {
     <PulseBoard metrics={pulseMetrics} mix={coverageMix} updatedLabel={updatedLabel} />
 
     <FeaturedArticle signal={featuredSignal} />
+
+    {publishedAnalyses.length > 0 && (
+      <section class="product-section" aria-labelledby="published-analysis-heading">
+        <h2 id="published-analysis-heading">Infrastructure analysis</h2>
+        <ul class="product-list">
+          {publishedAnalyses.map((entry) => (
+            <li>
+              <h3><a href={entry.href}>{entry.title}</a></h3>
+              <p class="product-meta">
+                {entry.source}{' · '}
+                <time datetime={entry.date}>{dateFormatter.format(new Date(entry.date))}</time>
+              </p>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
 
     <AdSlot variant="leaderboard" class="home-ad" />
 
