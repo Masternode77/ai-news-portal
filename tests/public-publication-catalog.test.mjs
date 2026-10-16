@@ -5,6 +5,7 @@ import {
   buildPublicPublicationCatalog,
   filterPublications,
 } from '../scripts/lib/public-publication-catalog.mjs';
+import { isQuarantinedArticle } from '../scripts/lib/content-quarantine.mjs';
 
 const publishedColumn = {
   id: 'col-public',
@@ -112,7 +113,10 @@ test('current public catalog grows with eligible authored columns and excludes p
     draft: true,
     public_status: 'draft',
   };
-  const expectedPublicColumnIds = new Set([...columns, addedColumn].map((column) => column.id));
+  // Quarantined committed columns stay out of the catalog; every other
+  // committed column and the new public column must be in it.
+  const quarantined = columns.filter(isQuarantinedArticle);
+  const expectedPublicColumnIds = new Set([...columns.filter((column) => !isQuarantinedArticle(column)), addedColumn].map((column) => column.id));
   const catalog = buildPublicPublicationCatalog({
     articles,
     columns: [...columns, addedColumn, privateAddition],
@@ -122,4 +126,5 @@ test('current public catalog grows with eligible authored columns and excludes p
   assert.equal(publicColumnIds.size, expectedPublicColumnIds.size);
   assert.deepEqual([...publicColumnIds].sort(), [...expectedPublicColumnIds].sort());
   assert.equal(publicColumnIds.has(privateAddition.id), false);
+  for (const column of quarantined) assert.equal(publicColumnIds.has(column.id), false, column.id);
 });

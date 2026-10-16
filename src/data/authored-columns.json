@@ -3323,13 +3323,13 @@
     "heroImage": "/generated/articles/col_4dd46fdfbc30fd72-intel-s-integrated-workstation-gpu-is-an-edge-inference-cost-story/hero.webp",
     "generatedImage": "/generated/articles/col_4dd46fdfbc30fd72-intel-s-integrated-workstation-gpu-is-an-edge-inference-cost-story/hero.webp",
     "imageAlt": "Editorial image for Intel's integrated workstation GPU could be an edge-inference cost story",
-    "articlePagePublished": true,
-    "homepagePublished": true,
-    "public_status": "published",
+    "articlePagePublished": false,
+    "homepagePublished": false,
+    "public_status": "quarantined",
     "draft": false,
-    "noindex": false,
-    "seo_noindex": false,
-    "archiveOnly": false,
+    "noindex": true,
+    "seo_noindex": true,
+    "archiveOnly": true,
     "figures": [
       {
         "type": "table",
@@ -3406,7 +3406,31 @@
         "date": "2026-10-11",
         "summary": "Removed the claim that rendering is a proxy for inference and labeled the edge-inference thesis as an extrapolation pending an inference benchmark, corrected \"free at the margin\" to account for incremental device costs, removed unsourced configuration, battery and latency figures, replaced persona language, and rebuilt the figures from the reported benchmarks."
       }
-    ]
+    ],
+    "quarantined": true,
+    "signalCardOnly": false,
+    "seo_noindex_reasons": [
+      "emergency_quality_quarantine",
+      "source_rights:text_use_not_authorized:storagereview",
+      "extraction_artifact:missing_or_invalid:afb38d125df0c4c6"
+    ],
+    "quarantine_reason": [
+      "source_rights:text_use_not_authorized:storagereview",
+      "extraction_artifact:missing_or_invalid:afb38d125df0c4c6"
+    ],
+    "routing_decision": "quarantine",
+    "public_routing": {
+      "visibility": "archive",
+      "laneKey": "archive-only",
+      "laneTitle": "Archive Only",
+      "public_signal_label": "Adjacent Signal",
+      "editorial_lens": "Quarantined",
+      "routing_decision": "quarantine",
+      "blocked_reasons": [
+        "source_rights:text_use_not_authorized:storagereview",
+        "extraction_artifact:missing_or_invalid:afb38d125df0c4c6"
+      ]
+    }
   },
   {
     "id": "col_3dbd354c8bc9107d",
@@ -3645,13 +3669,13 @@
     "heroImage": "/generated/articles/col_4425d817371fe825-amazon-s-texas-gas-plant-is-a-queue-jumping-move-not-a-climate-story/hero.webp",
     "generatedImage": "/generated/articles/col_4425d817371fe825-amazon-s-texas-gas-plant-is-a-queue-jumping-move-not-a-climate-story/hero.webp",
     "imageAlt": "Editorial image for Amazon's Texas gas plant is a queue-jumping move, not a climate story",
-    "articlePagePublished": true,
-    "homepagePublished": true,
-    "public_status": "published",
+    "articlePagePublished": false,
+    "homepagePublished": false,
+    "public_status": "quarantined",
     "draft": false,
-    "noindex": false,
-    "seo_noindex": false,
-    "archiveOnly": false,
+    "noindex": true,
+    "seo_noindex": true,
+    "archiveOnly": true,
     "figures": [
       {
         "type": "table",
@@ -3706,7 +3730,31 @@
         "date": "2026-10-11",
         "summary": "Corrected the permitting agency (air-quality permits for Texas generating units are issued by TCEQ, not the Railroad Commission), described the plant as planned rather than under construction, removed an invented permit deadline, stopped describing on-site generation as eliminating delivery dependencies, removed a claimed prior-advocacy reference, and rebuilt the figure from the source."
       }
-    ]
+    ],
+    "quarantined": true,
+    "signalCardOnly": false,
+    "seo_noindex_reasons": [
+      "emergency_quality_quarantine",
+      "source_rights:text_use_not_authorized:techcrunch-ai",
+      "extraction_artifact:missing_or_invalid:ddb3c065c105e647"
+    ],
+    "quarantine_reason": [
+      "source_rights:text_use_not_authorized:techcrunch-ai",
+      "extraction_artifact:missing_or_invalid:ddb3c065c105e647"
+    ],
+    "routing_decision": "quarantine",
+    "public_routing": {
+      "visibility": "archive",
+      "laneKey": "archive-only",
+      "laneTitle": "Archive Only",
+      "public_signal_label": "Adjacent Signal",
+      "editorial_lens": "Quarantined",
+      "routing_decision": "quarantine",
+      "blocked_reasons": [
+        "source_rights:text_use_not_authorized:techcrunch-ai",
+        "extraction_artifact:missing_or_invalid:ddb3c065c105e647"
+      ]
+    }
   },
   {
     "id": "col_292b67321a052acf",
