@@ -24,6 +24,8 @@ The July 2026 source workbook currently parses to 2,341 planned-unit rows. That 
 
 The scheduled workflow runs `node scripts/refresh-infrastructure-data.mjs`. EIA-930 and EIA-860M refresh independently, write through temporary files, and retain the prior validated file when one source fails. It then validates the resulting snapshots before committing changes.
 
+EIA intermittently stalls, answers 5xx or serves a short-lived challenge page, so every upstream read goes through a bounded retry (`scripts/lib/upstream-retry.mjs`): the EIA-930 API request and the EIA-860M landing page get up to three attempts and each workbook download up to two, 5 and 15 seconds apart, each attempt under its own timeout covering the body read. Only transient conditions are retried: a timeout, a network failure, HTTP 408/425/429/500/502/503/504, or a landing page without recognisable edition links. Any other status, an untrusted redirect, an oversized or malformed workbook and parse or validation failures still fail on the first attempt. When retries are exhausted the dataset fails as before; its diagnostic names the allowlisted reason, the HTTP status and the attempt count (for example `Upstream request timed out after 3 attempts` or `Demand fetch failed (HTTP 503) after 3 attempts`) and appears as an error annotation on the workflow run.
+
 Run both validation suites locally:
 
 ```sh
