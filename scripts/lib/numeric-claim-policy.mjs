@@ -5,7 +5,7 @@ const UNIT_ALIASES = new Map([
   ['gw', 'gw'], ['gigawatt', 'gw'], ['gigawatts', 'gw'],
   ['kw', 'kw'], ['kilowatt', 'kw'], ['kilowatts', 'kw'],
   ['%', '%'], ['percent', '%'],
-  ['billion', 'billion'], ['million', 'million'],
+  ['billion', 'billion'], ['bkwh', 'billion'], ['million', 'million'],
   ['usd', 'usd'], ['usd thousand', 'usd thousand'], ['usd million', 'usd million'],
   ['usd billion', 'usd billion'], ['usd trillion', 'usd trillion'],
   ['times', 'times'], ['time', 'times'], ['multiplier', 'times'],

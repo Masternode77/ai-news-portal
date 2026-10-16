@@ -1,5 +1,7 @@
 import specs from '../../config/eiaRestorationArticles.json' with { type: 'json' };
+import { extractNumericClaims, splitSentences } from './autonomous-desk-utils.mjs';
 import { createExtractionArtifact } from './extraction-artifact.mjs';
+import { numericClaimKey } from './numeric-claim-policy.mjs';
 import { readerCopyResult } from './reader-copy-guard.mjs';
 
 export const EIA_RESTORATION_SOURCE_ID = 'eia-today-in-energy';
@@ -67,6 +69,39 @@ function extractionFor(spec, sourceText) {
   };
 }
 
+// The analyses quote EIA figures, and the numeric gates accept a body figure
+// only when a verified_primary ledger row carries it. Each row quotes the EIA
+// sentence that states the figure, taken from the same verified text the
+// extraction artifact binds, so a figure the source does not state stays
+// unsupported and blocks publication.
+function sourceClaimLedger(spec, sourceText, body) {
+  const bodyKeys = new Set(extractNumericClaims(body).map(numericClaimKey).filter(Boolean));
+  const ledgered = new Set();
+  const ledger = [];
+  for (const sourceSentence of splitSentences(sourceText)) {
+    for (const numeric of extractNumericClaims(sourceSentence)) {
+      const key = numericClaimKey(numeric);
+      if (!key || !bodyKeys.has(key) || ledgered.has(key)) continue;
+      ledgered.add(key);
+      ledger.push({
+        claim_id: `clm_${spec.id}_${ledger.length + 1}`,
+        article_id: spec.id,
+        claim_text: sourceSentence,
+        claim_type: 'numeric',
+        numeric_value: numeric.numeric_value,
+        unit: numeric.unit,
+        comparator: numeric.comparator,
+        source_url: spec.sourceUrl,
+        source_name: 'U.S. Energy Information Administration',
+        source_quote_or_summary: sourceSentence,
+        verification_status: 'verified_primary',
+        used_in_article: true,
+      });
+    }
+  }
+  return ledger;
+}
+
 function buildRecord(spec, sourceText, index) {
   const extraction = extractionFor(spec, sourceText);
   const longform = spec.kind === 'longform';
@@ -82,7 +117,10 @@ function buildRecord(spec, sourceText, index) {
     url: spec.sourceUrl,
     publishedAt,
     analysisPublishedAt: publishedAt,
-    updatedAt: publishedAt,
+    // A corrected spec carries its correction notes and the time the body
+    // last changed, so a restore keeps both instead of resetting them.
+    updatedAt: spec.updatedAt || publishedAt,
+    ...(Array.isArray(spec.corrections) && spec.corrections.length ? { corrections: structuredClone(spec.corrections) } : {}),
     category: spec.category,
     primary_category: spec.category,
     secondary_category: spec.infrastructureLayer,
@@ -128,7 +166,7 @@ function buildRecord(spec, sourceText, index) {
     deck: spec.deck,
     why_it_matters: spec.whyItMatters,
     expertLensShort: spec.deck,
-    claim_ledger: [],
+    claim_ledger: longform ? sourceClaimLedger(spec, extraction.text, body) : [],
     generation_version: 'eia_public_domain_restoration_v1',
     ...(longform ? {
       blog_metadata: {
@@ -160,6 +198,7 @@ export function eiaRestorationReaderCopyFindings(specList = specs) {
       deck: spec.deck,
       why_it_matters: spec.whyItMatters,
       body: Array.isArray(spec.body) ? spec.body.join('\n\n') : '',
+      corrections: spec.corrections,
     });
     for (const finding of result.findings) findings.push({ id: spec.id, ...finding });
   }

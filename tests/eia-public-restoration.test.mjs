@@ -29,6 +29,7 @@ import { buildSitemapEntries } from '../scripts/lib/sitemap-builder.mjs';
 import { publicProductFitResult } from '../scripts/lib/public-product-fit.mjs';
 import { editorialArtworkDescriptor } from '../scripts/lib/image-store.mjs';
 import { reconcileEiaPublicInventory, resolveSourceTexts } from '../scripts/restore-eia-public-inventory.mjs';
+import { finalPublicationIntegrityResult } from '../scripts/lib/final-publication-integrity.mjs';
 
 const imageGeneratorUrl = pathToFileURL(path.resolve('scripts/lib/image-generator.mjs')).href;
 
@@ -426,4 +427,74 @@ test('EIA restoration specs are checked as reader copy before any record is buil
   assert.throws(() => buildEiaRestorationInventory({}, { specs: tampered }), /writer-only copy: eia-[a-z-]+:input_provenance:body/);
   // The committed specs are untouched by the tampered clone.
   assert.deepEqual(eiaRestorationReaderCopyFindings(), []);
+});
+
+// The committed inventory holds the verified EIA text each analysis was
+// published from. Building from it, as the offline restore does, must yield
+// analyses that pass the same final gate the restore asserts.
+async function committedEiaInventory(specs) {
+  const stored = ['latest-news', 'archived-news'].flatMap((name) => JSON.parse(fsSync.readFileSync(`src/data/${name}.json`, 'utf8')));
+  const texts = await resolveSourceTexts(eiaRestorationSpecs(), {
+    storedRecords: stored,
+    fetchText: async () => { throw new Error('offline'); },
+    log: () => {},
+    retryDelayMs: 0,
+  });
+  return { texts, records: buildEiaRestorationInventory(texts, specs ? { specs } : {}) };
+}
+
+function integrityResults(records) {
+  const options = { sourceRegistry: loadSourceRegistrySync(), now: '2026-08-12T03:00:00.000Z' };
+  const recent = [];
+  return records.filter((record) => record.articlePagePublished).map((record) => {
+    const integrity = finalPublicationIntegrityResult(record, recent, options);
+    recent.unshift(record);
+    return { record, integrity };
+  });
+}
+
+test('EIA analyses pass the final publication gate on the committed source text', async () => {
+  const { texts, records } = await committedEiaInventory();
+  const results = integrityResults(records);
+
+  assert.equal(results.length, 5);
+  for (const { record, integrity } of results) {
+    assert.equal(integrity.ok, true, `${record.id}: ${integrity.reasons.join(', ')}`);
+    assert.ok(record.claim_ledger.length > 0, record.id);
+    const source = texts[record.id].replace(/\s+/g, ' ');
+    for (const claim of record.claim_ledger) {
+      assert.equal(claim.verification_status, 'verified_primary');
+      assert.equal(claim.source_url, record.sourceUrl);
+      assert.ok(source.includes(claim.source_quote_or_summary.replace(/\.$/, '')), `${record.id}: ${claim.source_quote_or_summary}`);
+    }
+  }
+});
+
+test('an EIA analysis figure that its source does not state keeps the analysis blocked', async () => {
+  const specs = eiaRestorationSpecs();
+  const target = specs.find((spec) => spec.id === 'eia-data-center-load-timing');
+  const index = target.body.findIndex((paragraph) => paragraph.includes('an average of 10% and 3% a year'));
+  target.body[index] = target.body[index].replace('an average of 10% and 3% a year', 'an average of about 10% and 3% a year');
+
+  const { records } = await committedEiaInventory(specs);
+  const { integrity } = integrityResults(records).find(({ record }) => record.id === target.id);
+
+  assert.equal(integrity.ok, false);
+  assert.ok(integrity.reasons.some((reason) => /^unsupported_claim:unsupported_numeric_claims:.*about 10%/.test(reason)), integrity.reasons.join(', '));
+  assert.ok(!integrity.reasons.some((reason) => reason.includes('malformed_verified_numeric_claim_records')));
+});
+
+test('EIA restoration keeps the correction notes and update time of each corrected analysis', () => {
+  const records = eiaRecords();
+  const corrected = eiaRestorationSpecs().filter((entry) => entry.corrections);
+  assert.deepEqual(corrected.map((spec) => spec.id), records.filter((record) => record.articlePagePublished).map((record) => record.id));
+  for (const spec of corrected) {
+    const record = records.find((entry) => entry.id === spec.id);
+    assert.deepEqual(record.corrections, spec.corrections, spec.id);
+    assert.equal(record.updatedAt, spec.updatedAt, spec.id);
+    assert.ok(record.updatedAt >= record.publishedAt, spec.id);
+  }
+  const uncorrected = records.find((record) => record.signalCardOnly);
+  assert.equal(uncorrected.corrections, undefined);
+  assert.equal(uncorrected.updatedAt, uncorrected.publishedAt);
 });

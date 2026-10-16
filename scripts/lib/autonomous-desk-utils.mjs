@@ -176,8 +176,10 @@ export function extractNumericClaims(text = '') {
   // `%` is a non-word character, so a trailing \b would only match when a
   // letter follows it ("50%of") and every "1.9% in", "50% increase" or
   // "79%," figure escaped the gates. Word units keep their boundary.
+  // EIA writes billion kilowatthours as "BkWh"; it shares the
+  // magnitude-only billion key that "123 billion kWh" already gets.
   addMatches(
-    new RegExp(`(?<comparator>${comparator})?(?<value>${number})\\s*(?<unit>%|(?:GW|MW|kW|billion|million|percent|years?|months?|days?|sq\\.?\\s?ft|megawatts?|gigawatts?)\\b)`, 'gi'),
+    new RegExp(`(?<comparator>${comparator})?(?<value>${number})\\s*(?<unit>%|(?:GW|MW|kW|BkWh|billion|million|percent|years?|months?|days?|sq\\.?\\s?ft|megawatts?|gigawatts?)\\b)`, 'gi'),
     (match) => ({
       raw: compact(match[0]),
       numeric_value: numericValue(match.groups.value),
