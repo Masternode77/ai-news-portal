@@ -11,7 +11,7 @@ concurrency:
 jobs:
   refresh:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
@@ -27,7 +27,7 @@ jobs:
         run: node scripts/refresh-infrastructure-data.mjs
       - name: Validate retained and refreshed data
         run: |
-          node --test tests/infrastructure-data.test.mjs tests/eia860m-discovery.test.mjs
+          node --test tests/infrastructure-data.test.mjs tests/eia860m-discovery.test.mjs tests/http-retry.test.mjs
           python3 -m unittest discover -s tests -p test_eia860_parser.py
       - name: Commit validated snapshots
         run: |
