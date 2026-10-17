@@ -25,7 +25,7 @@
 |---|---|---|---|
 | D1 | 컬럼 단계 실패(품질 거절 포함)가 구독 모드에서 런을 abort → 원장 미기록, wire 결과 유실, `news-pool.json`·이미지는 이미 써짐 | `scripts/pipeline.mjs:445,450`, `scripts/lib/openrouter.mjs:19-21`; 주석 `:387-388`과 모순 | 관측 불가 + 부분 쓰기 |
 | D2 | `bannedPhraseMatches()`는 객체를 반환하는데 `.length`를 검사 → 컬럼 정책의 금칙어 검사 미작동, `banned_phrase_count` 항상 undefined | `scripts/lib/authored-column-policy.mjs:200,211-212` vs `scripts/lib/banned-phrases.mjs:49-56` | 반복 게이트가 대신 잡고 있어 발행 영향은 제한적 |
-| D3 | 수집 단계 카운터 폐기 (`authorizedSourceCount/failedSourceCount`) | `scripts/lib/fetch-feeds.mjs:456` → `scripts/pipeline.mjs:203-215` | H1 측정 불가 |
+| D3 | 수집 단계 카운터 폐기 (`authorizedSourceCount/failedSourceCount`) | `scripts/lib/fetch-feeds.mjs:456` → `scripts/pipeline.mjs:217` (콘솔 로그만, 원장 미기록) | H1 측정 불가 |
 | D4 | 최종 integrity 격리 목록 무시 | `scripts/lib/archive-store.mjs:178-184` → `pipeline.mjs:547/621/743` | 격리가 조용히 일어남 |
 | D5 | 비구독 모드에서 `expertInsight` undefined → TypeError 가능 | `scripts/lib/content.mjs:346-348,366` | 레거시 OpenRouter 경로 |
 | D6 | 라이브러리 내부 `process.exit` | `scripts/lib/subscription-provider.mjs:58-60` | 호출자가 정리 불가 |
