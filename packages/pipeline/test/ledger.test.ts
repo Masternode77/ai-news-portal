@@ -37,6 +37,12 @@ function fakeSupabase(failOn?: string): { client: SupabaseLike; calls: Call[] } 
               return result("select");
             },
           }),
+          in: (column, values) => ({
+            limit: (count) => {
+              calls.push({ table, op: "selectIn", args: [column, values, count] });
+              return result("select");
+            },
+          }),
         }),
       };
     },

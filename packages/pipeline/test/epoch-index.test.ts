@@ -1,0 +1,105 @@
+import { test } from "node:test";
+import assert from "node:assert/strict";
+import { IngestConfig, silentLogger } from "@cc/shared";
+import type { SourceConfig, StageContext } from "@cc/shared";
+import { CC_BY_4_URL, createEpochIndexAdapter, epochArticleMetadata, epochArticleTarget, epochIndexLinks } from "../src/adapters/index.ts";
+import { createBudget } from "../src/budget.ts";
+import { baseRunOptions } from "./helpers.ts";
+
+const NOW = new Date("2026-10-18T00:45:00Z");
+const LONG = "This paragraph is comfortably longer than the sixty character minimum used by the extractor.";
+const LICENCE = `<footer><a href="${CC_BY_4_URL}">CC BY 4.0</a></footer>`;
+
+const INDEX = `<html><body><ul>
+  <li><span>Oct 15, 2026</span> <a href="/gradient-updates/first-post/">First</a></li>
+  <li><span>Oct 14, 2026</span> <a href="https://epoch.ai/gradient-updates/unlicensed-post/">Unlicensed</a></li>
+  <li><span>Sep 1, 2026</span> <a href="/gradient-updates/old-post/">Old</a></li>
+  <li><a href="/data-insights/other-section/">Other section</a></li>
+  <li><a href="/gradient-updates/first-post/">First again</a></li>
+</ul></body></html>`;
+
+function article(title: string, date: string, licensed = true): string {
+  return `<html><head><meta property="og:title" content="${title}"><meta property="og:description" content="Desc of ${title}"></head><body><div class="content-header"><time>${date}</time></div><div class="formatted-text content-body article-content"><p>${LONG} ${title}</p></div><div class="content-sidebar-right"></div>${licensed ? LICENCE : ""}</body></html>`;
+}
+
+const PAGES: Record<string, string> = {
+  "https://epoch.ai/gradient-updates": INDEX,
+  "https://epoch.ai/gradient-updates/first-post/": article("First post title", "Oct 15, 2026"),
+  "https://epoch.ai/gradient-updates/unlicensed-post/": article("Unlicensed post", "Oct 14, 2026", false),
+  "https://epoch.ai/gradient-updates/old-post/": article("Old post", "Sep 1, 2026"),
+};
+
+function ctx(urls: string[]): StageContext {
+  const base = baseRunOptions();
+  return {
+    runId: "11111111-1111-4111-8111-111111111111",
+    now: NOW,
+    config: base.config,
+    logger: silentLogger(),
+    ledger: base.ledger,
+    budget: createBudget(base.config.budget),
+    dryRun: true,
+    replay: false,
+    fixtureName: undefined,
+    fetch: async (input) => {
+      const url = String(input);
+      urls.push(url);
+      const page = PAGES[url];
+      return page === undefined ? new Response("missing", { status: 404, headers: { "content-type": "text/html" } }) : new Response(page, { status: 200, headers: { "content-type": "text/html; charset=utf-8" } });
+    },
+    adapters: base.adapters,
+  };
+}
+
+const SOURCE: SourceConfig = {
+  id: "epoch-ai-gradient-updates",
+  name: "Epoch AI",
+  type: "html",
+  url: "https://epoch.ai/gradient-updates",
+  tier: 2,
+  enabled: true,
+  text_rights: "full",
+  pool_max_age_days: 21,
+  extract: { kind: "epoch_index", path_prefix: "/gradient-updates/", hosts: ["epoch.ai"] },
+};
+
+test("epochArticleTarget accepts only clean https article urls on epoch.ai", () => {
+  assert.deepEqual(epochArticleTarget("https://epoch.ai/gradient-updates/some-post"), { url: "https://epoch.ai/gradient-updates/some-post/", prefix: "/gradient-updates/", slug: "some-post" });
+  assert.equal(epochArticleTarget("https://epoch.ai/gradient-updates/"), null);
+  assert.equal(epochArticleTarget("https://epoch.ai/gradient-updates/some-post/?utm=x"), null);
+  assert.equal(epochArticleTarget("http://epoch.ai/gradient-updates/some-post/"), null);
+  assert.equal(epochArticleTarget("https://evil.example/gradient-updates/some-post/"), null);
+});
+
+test("epochIndexLinks keeps section links within the age window, deduplicated and limited", () => {
+  const links = epochIndexLinks(INDEX, "/gradient-updates/", 5, NOW, 21);
+  assert.deepEqual(links, ["https://epoch.ai/gradient-updates/first-post/", "https://epoch.ai/gradient-updates/unlicensed-post/"]);
+  assert.deepEqual(epochIndexLinks(INDEX, "/gradient-updates/", 1, NOW, 21), ["https://epoch.ai/gradient-updates/first-post/"]);
+  assert.deepEqual(epochIndexLinks(INDEX, "/data-insights/", 5, NOW, 21), ["https://epoch.ai/data-insights/other-section/"], "links without a listing date are kept");
+});
+
+test("epochArticleMetadata needs the licence link, a title and a date", () => {
+  const meta = epochArticleMetadata(PAGES["https://epoch.ai/gradient-updates/first-post/"]!, "https://epoch.ai/gradient-updates/first-post/");
+  assert.deepEqual(meta, { title: "First post title", description: "Desc of First post title", publishedAt: "2026-10-15T12:00:00.000Z", url: "https://epoch.ai/gradient-updates/first-post/" });
+  assert.equal(epochArticleMetadata(PAGES["https://epoch.ai/gradient-updates/unlicensed-post/"]!, "https://epoch.ai/gradient-updates/unlicensed-post/"), null);
+});
+
+test("the html index adapter lists, filters, extracts at fetch time and reports skips", async () => {
+  const urls: string[] = [];
+  const adapter = createEpochIndexAdapter({ ingest: IngestConfig.parse({}), defaultMaxAgeDays: 10, itemsPerSource: 6, resolveHost: async () => ["93.184.216.34"] });
+  const detail = await adapter.fetchDetailed!(SOURCE, ctx(urls));
+  assert.deepEqual(urls, ["https://epoch.ai/gradient-updates", "https://epoch.ai/gradient-updates/first-post/", "https://epoch.ai/gradient-updates/unlicensed-post/"]);
+  assert.equal(detail.stats.listed, 2);
+  assert.equal(detail.stats.kept, 1);
+  assert.deepEqual(detail.stats.skipped, { unlicensed_or_no_metadata: 1 });
+  const [item] = detail.items;
+  assert.equal(item?.canonical_url, "https://epoch.ai/gradient-updates/first-post/");
+  assert.equal(item?.title, "First post title");
+  assert.equal(item?.published_at_source, "2026-10-15T12:00:00.000Z");
+  assert.ok(String(item?.payload?.["body_text"]).includes("First post title"));
+  assert.equal(item?.payload?.["text_rights"], "full");
+  const extracted = await adapter.extract!(item!, SOURCE, ctx([]));
+  assert.equal(extracted.method, "epoch_index:payload");
+  assert.equal(extracted.chars, String(item?.payload?.["body_text"]).length);
+  await assert.rejects(adapter.fetch({ ...SOURCE, url: "https://example.com/gradient-updates" }, ctx([])), /EXTRACTION_FAILED/);
+});

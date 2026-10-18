@@ -7,6 +7,8 @@ export type {
   PublisherTarget,
   PublishResult,
   SourceAdapter,
+  SourceFetchDetail,
+  SourceFetchStats,
 } from "./adapters.ts";
 export type { QaEvidence, QaRule, QaRuleConfig } from "./qa.ts";
 export type {

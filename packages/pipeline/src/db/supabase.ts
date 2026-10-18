@@ -41,6 +41,14 @@ export class SupabaseDb implements DbPort {
     return (result.data ?? []) as T[];
   }
 
+  async selectIn<T extends Row>(table: TableName, column: string, values: readonly unknown[], options: SelectOptions = {}): Promise<T[]> {
+    if (values.length === 0) return [];
+    const columns = options.columns?.length ? options.columns.join(",") : "*";
+    const result = await this.client.from(table).select(columns).in(column, [...values]).limit(options.limit ?? DEFAULT_SELECT_LIMIT);
+    check(result, `selectIn(${table})`);
+    return (result.data ?? []) as T[];
+  }
+
   async update(table: TableName, where: Partial<Row>, patch: Row): Promise<number | null> {
     check(await this.client.from(table).update(patch).match(where), `update(${table})`);
     return null;

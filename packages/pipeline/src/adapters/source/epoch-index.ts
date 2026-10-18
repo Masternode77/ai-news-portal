@@ -1,0 +1,160 @@
+/**
+ * Epoch AI publishes under CC BY 4.0 but ships no feed; its section index
+ * pages are server-rendered. This `type: html` adapter reads the index for a
+ * handful of article links and each article's own metadata, keeping only
+ * pages that carry the licence link (legacy: scripts/lib/epoch-ai.mjs).
+ * Because the article page is already in hand, the body is extracted at
+ * fetch time and stored in the payload; `extract` returns it without a
+ * second request.
+ */
+import type { ExtractedText, IngestConfig, RawItemInsert, SourceAdapter, SourceConfig, SourceFetchDetail, SourceFetchStats, StageContext } from "@cc/shared";
+import { olderThanDays, parseDateCandidate } from "../../lib/dates.ts";
+import { cleanText, metaContent, truncate } from "../../lib/html.ts";
+import { hostOf } from "../../lib/url.ts";
+import { CC_BY_4_URL, extractEpoch, ExtractionError } from "./extract.ts";
+import { PAGE_CONTENT_TYPES, safeFetchText } from "./net.ts";
+import type { HostResolver } from "./net.ts";
+
+export const EPOCH_HOST = "epoch.ai";
+export const EPOCH_INDEX_ARTICLE_LIMIT = 5;
+const ARTICLE_PATH = /^\/(gradient-updates|data-insights)\/([a-z0-9]+(?:-[a-z0-9]+)*)\/?$/;
+const DATE_PATTERN = /\b(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sept?|Oct|Nov|Dec)[a-z]*\.?\s+\d{1,2},?\s+20\d{2}\b/;
+
+export function epochArticleTarget(value: string): { url: string; prefix: string; slug: string } | null {
+  let url: URL;
+  try {
+    url = new URL(value.trim());
+  } catch {
+    return null;
+  }
+  if (url.protocol !== "https:" || url.hostname !== EPOCH_HOST || url.port || url.username || url.password || url.search || url.hash) return null;
+  const match = url.pathname.match(ARTICLE_PATH);
+  if (!match) return null;
+  return { url: `https://${EPOCH_HOST}/${match[1]}/${match[2]}/`, prefix: `/${match[1]}/`, slug: match[2]! };
+}
+
+/** The listing date just before a link decides whether to skip it; links without a readable date are kept. */
+export function epochIndexLinks(html: string, prefix: string, limit: number, now: Date, maxAgeDays: number): string[] {
+  const links: string[] = [];
+  let lastIndex = 0;
+  for (const match of html.matchAll(/href=["']([^"'#?]+)["']/gi)) {
+    const raw = match[1]!.startsWith("/") ? `https://${EPOCH_HOST}${match[1]}` : match[1]!;
+    const target = epochArticleTarget(raw);
+    if (!target || target.prefix !== prefix || links.includes(target.url)) continue;
+    const listing = cleanText(html.slice(lastIndex, match.index).slice(-1500)).match(DATE_PATTERN)?.[0];
+    lastIndex = (match.index ?? 0) + match[0].length;
+    const listingDate = listing ? parseDateCandidate(listing) : null;
+    if (listingDate && olderThanDays(listingDate.toISOString(), maxAgeDays, now)) continue;
+    links.push(target.url);
+    if (links.length >= limit) break;
+  }
+  return links;
+}
+
+export function epochPublishedAt(html: string): string | null {
+  const headerIndex = html.search(/class=["'][^"']*\bcontent-header\b/i);
+  const region = headerIndex >= 0 ? html.slice(headerIndex, headerIndex + 6000) : html;
+  const text = cleanText(region).match(DATE_PATTERN)?.[0] ?? cleanText(html).match(DATE_PATTERN)?.[0];
+  const date = text ? parseDateCandidate(text) : null;
+  return date ? date.toISOString() : null;
+}
+
+export function epochArticleMetadata(html: string, url: string): { title: string; description: string; publishedAt: string; url: string } | null {
+  const target = epochArticleTarget(url);
+  if (!target || !(html.includes(`href="${CC_BY_4_URL}"`) || html.includes(`href='${CC_BY_4_URL}'`))) return null;
+  const title =
+    metaContent(html, "og:title") ||
+    cleanText(html.match(/<h1\b[^>]*>([\s\S]*?)<\/h1>/i)?.[1] ?? "") ||
+    cleanText(html.match(/<title>([\s\S]*?)<\/title>/i)?.[1] ?? "").replace(/\s*\|\s*Epoch AI\s*$/i, "");
+  const publishedAt = epochPublishedAt(html);
+  if (!title || !publishedAt) return null;
+  return { title, description: metaContent(html, "og:description") || metaContent(html, "description"), publishedAt, url: target.url };
+}
+
+export interface EpochIndexOptions {
+  ingest: IngestConfig;
+  defaultMaxAgeDays: number;
+  itemsPerSource: number;
+  resolveHost?: HostResolver;
+}
+
+export function createEpochIndexAdapter(options: EpochIndexOptions): SourceAdapter {
+  const fetchPage = (url: string, ctx: StageContext) =>
+    safeFetchText(url, {
+      fetch: ctx.fetch,
+      logger: ctx.logger,
+      timeoutMs: options.ingest.page_timeout_ms,
+      maxBytes: options.ingest.max_body_bytes,
+      userAgent: options.ingest.user_agent,
+      accept: "text/html, application/xhtml+xml;q=0.9",
+      allowedHosts: [EPOCH_HOST],
+      contentTypes: PAGE_CONTENT_TYPES,
+      ...(options.resolveHost ? { resolveHost: options.resolveHost } : {}),
+    });
+
+  const fetchDetailed = async (source: SourceConfig, ctx: StageContext): Promise<SourceFetchDetail> => {
+    if (hostOf(source.url) !== EPOCH_HOST) throw new ExtractionError("EXTRACTION_FAILED", `${source.id}: epoch_index adapter needs an epoch.ai index url`);
+    const prefix = new URL(source.url).pathname.replace(/\/?$/, "/");
+    const maxAge = source.pool_max_age_days ?? options.defaultMaxAgeDays;
+    const started = Date.now();
+    const index = await fetchPage(source.url, ctx);
+    const links = epochIndexLinks(index.text, prefix, Math.min(EPOCH_INDEX_ARTICLE_LIMIT, options.itemsPerSource), ctx.now, maxAge);
+    const stats: SourceFetchStats = { listed: links.length, kept: 0, skipped: {}, fetch: { url: index.url, bytes: index.bytes, redirects: index.redirects, ms: Date.now() - started } };
+    const items: RawItemInsert[] = [];
+    for (const link of links) {
+      try {
+        const page = await fetchPage(link, ctx);
+        const meta = epochArticleMetadata(page.text, link);
+        if (!meta) {
+          stats.skipped["unlicensed_or_no_metadata"] = (stats.skipped["unlicensed_or_no_metadata"] ?? 0) + 1;
+          continue;
+        }
+        if (olderThanDays(meta.publishedAt, maxAge, ctx.now)) {
+          stats.skipped["too_old"] = (stats.skipped["too_old"] ?? 0) + 1;
+          continue;
+        }
+        const body = extractEpoch(page.text);
+        items.push({
+          source_id: source.id,
+          canonical_url: meta.url,
+          title: meta.title,
+          published_at_source: meta.publishedAt,
+          fetched_at: ctx.now.toISOString(),
+          payload: {
+            guid: meta.url,
+            snippet: truncate(meta.description || body.text, options.ingest.snippet_chars),
+            body_preview: truncate(body.text, options.ingest.body_preview_chars),
+            body_text: body.text,
+            extraction: { ok: true, method: body.method, chars: body.chars, limit_exceeded: body.limitExceeded },
+            image: null,
+            categories: [],
+            text_rights: source.text_rights,
+            text_scope: source.text_scope ?? "full",
+            language: source.language ?? null,
+            tier: source.tier,
+            product: null,
+          },
+        });
+      } catch (error) {
+        const code = error instanceof Error && "code" in error ? String((error as { code: unknown }).code) : "EXTRACTION_FAILED";
+        stats.skipped[code.toLowerCase()] = (stats.skipped[code.toLowerCase()] ?? 0) + 1;
+        ctx.logger.warn("epoch article skipped", { source_id: source.id, link, error: error instanceof Error ? error.message : String(error) });
+      }
+    }
+    stats.kept = items.length;
+    return { items, stats };
+  };
+
+  return {
+    type: "html",
+    async fetch(source, ctx) {
+      return (await fetchDetailed(source, ctx)).items;
+    },
+    fetchDetailed,
+    async extract(item): Promise<ExtractedText> {
+      const text = typeof item.payload?.["body_text"] === "string" ? (item.payload["body_text"] as string) : "";
+      if (!text) throw new ExtractionError("EXTRACTION_FAILED", "epoch item carries no body_text");
+      return { text, chars: text.length, method: "epoch_index:payload" };
+    },
+  };
+}
