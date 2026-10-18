@@ -10,9 +10,9 @@ export type IngestOutput = z.infer<typeof IngestOutput>;
 
 export const NormalizeInput = z.strictObject({ rawItems: z.array(RawItemInsert) });
 export type NormalizeInput = z.infer<typeof NormalizeInput>;
+/** `items_new` is counted by ingest (Phase 3a); normalize reports duplicates within the pool. */
 export const NormalizeOutput = z.strictObject({
   candidates: z.array(CandidateInsert),
-  itemsNew: NonNegativeInt,
   duplicates: NonNegativeInt,
 });
 export type NormalizeOutput = z.infer<typeof NormalizeOutput>;

@@ -29,7 +29,7 @@ export const normalizeStage: Stage<NormalizeInput, NormalizeOutput> = {
   idempotencyKey: (input) => `normalize:${input.rawItems.length}`,
   async run(input, ctx) {
     ctx.logger.info("normalize: no-op (Phase 3b)", { rawItems: input.rawItems.length });
-    return { candidates: [], itemsNew: 0, duplicates: 0 };
+    return { candidates: [], duplicates: 0 };
   },
 };
 
@@ -124,8 +124,8 @@ export const publishStage: Stage<PublishInput, PublishOutput> = {
 export const normalizeSpec = defineStageSpec({
   stage: normalizeStage,
   select: (state) => ({ rawItems: state.rawItems }),
-  merge: (state, output) => ({ ...state, candidates: output.candidates, itemsNew: output.itemsNew }),
-  counts: (output) => ({ items_new: output.itemsNew, candidates: output.candidates.length, duplicates: output.duplicates }),
+  merge: (state, output) => ({ ...state, candidates: output.candidates }),
+  counts: (output) => ({ candidates: output.candidates.length, duplicates: output.duplicates }),
 });
 
 export const scoreSpec = defineStageSpec({

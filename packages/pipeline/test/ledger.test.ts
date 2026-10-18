@@ -37,6 +37,12 @@ function fakeSupabase(failOn?: string): { client: SupabaseLike; calls: Call[] } 
               return result("select");
             },
           }),
+          in: (column, values) => ({
+            limit: (count) => {
+              calls.push({ table, op: "selectIn", args: [column, values, count] });
+              return result("select");
+            },
+          }),
         }),
       };
     },
@@ -145,4 +151,8 @@ test("SupabaseDb maps port operations onto the client", async () => {
   assert.deepEqual(calls[1]?.args[1], { onConflict: "canonical_url" });
   assert.deepEqual(calls[2]?.args, [{ status: "published" }, 5]);
   await assert.rejects(db.upsert("raw_items", [{ canonical_url: "u" }], []), /conflictKeys/);
+  // PostgREST nulls every column a row omits (the column list is the union of keys), so mixed batches are refused.
+  await assert.rejects(db.upsert("sources", [{ id: "a", last_ok_at: "2026-10-18T00:00:00Z" }, { id: "b" }], ["id"]), /same columns/);
+  await assert.rejects(db.insert("sources", [{ id: "a", name: "A" }, { id: "b" }]), /same columns/);
+  assert.equal(calls.filter((c) => c.table === "sources").length, 2, "nothing was sent for the refused batches");
 });

@@ -14,12 +14,28 @@ import type {
 } from "../schema/index.ts";
 import type { StageContext } from "./stage.ts";
 
+/** Why items a feed listed were not kept; reported per source in stage_events.counts. */
+export interface SourceFetchStats {
+  listed: number;
+  kept: number;
+  skipped: Record<string, number>;
+  /** Final URL after redirects, bytes and redirect count of the feed request. */
+  fetch?: { url: string; bytes: number; redirects: number; ms: number };
+}
+
+export interface SourceFetchDetail {
+  items: RawItemInsert[];
+  stats: SourceFetchStats;
+}
+
 export interface SourceAdapter {
   readonly type: SourceType;
   /** Fetch one source. Throw on failure; the ingest stage isolates failures per source. */
   fetch(source: SourceConfig, ctx: StageContext): Promise<RawItemInsert[]>;
+  /** Same as fetch, with per-source statistics (Phase 3a amendment; ingest prefers it when present). */
+  fetchDetailed?(source: SourceConfig, ctx: StageContext): Promise<SourceFetchDetail>;
   /** Optional body extraction. Without it ingest stores the snippet only. */
-  extract?(item: RawItemInsert, ctx: StageContext): Promise<ExtractedText>;
+  extract?(item: RawItemInsert, source: SourceConfig, ctx: StageContext): Promise<ExtractedText>;
 }
 
 export interface LlmAdapter {

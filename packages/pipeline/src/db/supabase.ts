@@ -13,6 +13,21 @@ function check(result: SupabaseResult, operation: string): void {
   if (result.error) throw new Error(`SupabaseDb.${operation}: ${result.error.message}`);
 }
 
+/**
+ * PostgREST builds the column list from the union of keys across the rows and
+ * writes NULL (or the default) for a key a row lacks, so a mixed batch silently
+ * overwrites columns on conflict. Refuse it here instead.
+ */
+export function assertUniformColumns(rows: readonly Row[], operation: string): void {
+  const first = rows[0];
+  if (!first) return;
+  const expected = Object.keys(first).sort().join(",");
+  for (const [index, row] of rows.entries()) {
+    const keys = Object.keys(row).sort().join(",");
+    if (keys !== expected) throw new Error(`SupabaseDb.${operation}: row ${index} has columns [${keys}] but row 0 has [${expected}]; every row in a batch must carry the same columns`);
+  }
+}
+
 export class SupabaseDb implements DbPort {
   readonly kind = "supabase" as const;
   private readonly client: SupabaseLike;
@@ -23,6 +38,7 @@ export class SupabaseDb implements DbPort {
 
   async insert<T extends Row>(table: TableName, rows: T[]): Promise<T[]> {
     if (rows.length === 0) return [];
+    assertUniformColumns(rows, `insert(${table})`);
     check(await this.client.from(table).insert(rows), `insert(${table})`);
     return rows;
   }
@@ -30,6 +46,7 @@ export class SupabaseDb implements DbPort {
   async upsert<T extends Row>(table: TableName, rows: T[], conflictKeys: readonly string[]): Promise<UpsertResult> {
     if (rows.length === 0) return { written: 0, inserted: 0, updated: 0 };
     if (conflictKeys.length === 0) throw new Error("SupabaseDb.upsert: conflictKeys must not be empty");
+    assertUniformColumns(rows, `upsert(${table})`);
     check(await this.client.from(table).upsert(rows, { onConflict: conflictKeys.join(",") }), `upsert(${table})`);
     return { written: rows.length, inserted: null, updated: null };
   }
@@ -38,6 +55,14 @@ export class SupabaseDb implements DbPort {
     const columns = options.columns?.length ? options.columns.join(",") : "*";
     const result = await this.client.from(table).select(columns).match(where).limit(options.limit ?? DEFAULT_SELECT_LIMIT);
     check(result, `select(${table})`);
+    return (result.data ?? []) as T[];
+  }
+
+  async selectIn<T extends Row>(table: TableName, column: string, values: readonly unknown[], options: SelectOptions = {}): Promise<T[]> {
+    if (values.length === 0) return [];
+    const columns = options.columns?.length ? options.columns.join(",") : "*";
+    const result = await this.client.from(table).select(columns).in(column, [...values]).limit(options.limit ?? DEFAULT_SELECT_LIMIT);
+    check(result, `selectIn(${table})`);
     return (result.data ?? []) as T[];
   }
 

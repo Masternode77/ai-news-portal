@@ -19,7 +19,8 @@ test("dry-run with the sample fixture passes every stage as no-op and records th
   );
   assert.equal(result.funnel.sources_configured, 1, "disabled sources are not counted");
   assert.equal(result.funnel.sources_ok, 1);
-  assert.equal(result.funnel.items_fetched, 30, "30 items from fixtures/rss/sample.xml");
+  assert.equal(result.funnel.items_fetched, 6, "the 30-item fixture is capped to caps.items_per_source (default 6)");
+  assert.equal(result.state.sourceStats.sources[0]?.skipped["capped"], 24);
   assert.equal(result.funnel.published, 0);
   assert.equal(result.funnel.top_error, null);
   assert.deepEqual(Object.keys(result.funnel), FUNNEL_COLUMNS);
@@ -35,7 +36,7 @@ test("dry-run with the sample fixture passes every stage as no-op and records th
   assert.equal((run.flags as { dry_run?: boolean })?.dry_run, true);
   assert.equal(dump.stageEvents.length, STAGE_NAMES.length);
   assert.ok(dump.stageEvents.every((e) => e.status === "done" && e.ended_at !== null));
-  assert.equal(dump.stageEvents.find((e) => e.stage === "ingest")?.counts["items_fetched"], 30);
+  assert.equal(dump.stageEvents.find((e) => e.stage === "ingest")?.counts["items_fetched"], 6);
   assert.equal(dump.deadLetters.length, 0);
 });
 

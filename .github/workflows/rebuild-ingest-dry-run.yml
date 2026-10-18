@@ -1,0 +1,70 @@
+name: Rebuild v2 ingest dry-run (live feeds)
+
+# Manual only (brief Phase 3 common procedure 4). Runs the Phase 3a ingest
+# stage against the real feeds in config/sources.yaml with --dry-run: memory
+# ledger and memory DB, nothing written anywhere, no secrets used. The cloud
+# session cannot reach the feed hosts, so this is the evidence path for
+# "items_fetched per cycle vs Phase 0". The full JSON result is printed to the
+# job log; the step summary carries the funnel and a per-source table.
+on:
+  workflow_dispatch:
+    inputs:
+      log_level:
+        description: "Pipeline log level"
+        type: choice
+        default: info
+        options: [debug, info, warn, error]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: rebuild-ingest-dry-run
+  cancel-in-progress: false
+
+jobs:
+  ingest-dry-run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      CC_FLAG_PUBLISH_TARGET: none
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - name: Setup Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '22.22.0'
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Ingest dry-run against live feeds (memory ledger, ingest stage only)
+        id: run
+        run: |
+          set +e
+          node packages/pipeline/bin/pipeline.ts run --dry-run --live --stage ingest --trigger dispatch --json \
+            --log-level "${{ inputs.log_level }}" > ingest-dry-run.json 2> ingest-dry-run.log
+          code=$?
+          set -e
+          echo "exit_code=$code" >> "$GITHUB_OUTPUT"
+          echo "pipeline exit code: $code (0 done, 1 partial, 2 failed/config)"
+          tail -n 300 ingest-dry-run.log
+      - name: Step summary
+        if: always()
+        run: |
+          if [ -s ingest-dry-run.json ]; then
+            node packages/pipeline/tools/ingest-dry-run-summary.ts ingest-dry-run.json >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "## Ingest dry-run produced no JSON (exit code ${{ steps.run.outputs.exit_code }})" >> "$GITHUB_STEP_SUMMARY"
+            tail -n 50 ingest-dry-run.log >> "$GITHUB_STEP_SUMMARY" || true
+          fi
+      - name: Full JSON result (job log)
+        if: always()
+        run: cat ingest-dry-run.json || true
+      - name: Fail only on usage or config errors
+        run: |
+          if [ "${{ steps.run.outputs.exit_code }}" = "2" ]; then
+            echo "pipeline exited 2 (usage/config/failed run)"; exit 2
+          fi
