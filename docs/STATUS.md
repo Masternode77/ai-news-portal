@@ -9,9 +9,9 @@
 | `branch` | `rebuild/v2` (Phase 2 코드 + main 머지 `223249a0`) → PR #58. 3a 코드는 로컬 `rebuild/3a-sources-ingest`(`3ff6b7b1`, `f1f23f2c`, `3d3c3b28`)에 있고 #58 머지 후 `rebuild/v2`에 올려 새 draft PR로 낸다 |
 | `decisions` | 2026-10-18 Josh: #57·#58 머지 진행, 3a 착수 승인, Supabase `0001_init.sql` 적용 승인(대상 프로젝트·경로 회신 대기). 실행 중 판단(3a): 라이브 어댑터는 CLI `--live`로만 켜진다(기본 OFF, `--dry-run` 필수, `--replay` 배타); `allow_text_use false` 53행은 `rewrite_only`(금지 매체 목록 수령 시 `link_only`); 링크 호스트 제한은 페이지를 실제로 가져오는 `full` 소스에만 적용; 자동 비활성은 DB `sources` 행에서만 일어나고 YAML `reviewed_at`을 그 날짜 뒤로 올리면 해제; `items_fetched`는 소스 간 중복 제거 후 고유 URL 수; 본문 추출은 `full`만, 실패 시 항목은 유지하고 `payload.extraction.ok=false` |
 | `pending_approval` | 1) Phase 3a 산출물 승인 → 3b(Normalize) 착수 2) Supabase 프로젝트 선택 + `0001_init.sql` 적용 경로(대시보드 SQL 편집기 vs 세션 `SUPABASE_DB_URL`) 3) 재서술 금지 매체 목록(→ `link_only`) |
-| `blockers` | 세션에서 피드 호스트 미도달 → 라이브 증거는 `rebuild-ingest-dry-run.yml`(workflow_dispatch)로만 확보. 미수령 입력: Anthropic API 키(3d), Supabase 키·프로젝트(3h/4), Telegram(3i), 보이스 샘플(3e), 금지 매체 목록(3a), Vercel 재인가(5) — `docs/migration/plan.md` §4 |
+| `blockers` | 세션에서 피드 호스트 미도달 → 라이브 증거는 `rebuild-ci.yml`의 `ingest-live-dry-run` 잡(workflow_dispatch, `live_ingest=true`)로만 확보. 미수령 입력: Anthropic API 키(3d), Supabase 키·프로젝트(3h/4), Telegram(3i), 보이스 샘플(3e), 금지 매체 목록(3a), Vercel 재인가(5) — `docs/migration/plan.md` §4 |
 | `production_health` | 생성 파이프라인 **정지 중**(heartbeat 2026-10-11T04:31Z, 이슈 #29). 사이트 서빙 정상(정적, `main`에는 docs와 데이터 갱신 커밋만) |
-| `next_step` | #58 CI green → ready → merge → `rebuild/v2`에 3a 반영·push → draft PR → `rebuild-ingest-dry-run` 실행 → 결과를 `docs/migration/notes/3a-sources-ingest.md` §4에 기록 → §7 보고 → Josh 승인 후 3b |
+| `next_step` | #58 CI green → ready → merge → `rebuild/v2`에 3a 반영·push → draft PR → `rebuild-ci` 라이브 잡 실행 → 결과를 `docs/migration/notes/3a-sources-ingest.md` §4에 기록 → §7 보고 → Josh 승인 후 3b |
 | `updated_at` | 2026-10-18 |
 
 ## 세션 로그
@@ -24,7 +24,7 @@
 | 2026-10-18 | 1→2 | approved | Josh: 계획 모드 해제, `rebuild/v2` 신설, 패키지 설치 승인 |
 | 2026-10-18 | 2 | done | npm workspaces(`apps/site`, `packages/shared`, `packages/pipeline`), zod 스키마·계약·설정 로더·플래그·로거, no-op 러너 + 선기록 원장 + fixture 어댑터 + CLI, `config/{pipeline,sources}.yaml`, `fixtures/`, `supabase/migrations/0001_init.sql`(미적용), `rebuild-ci.yml`, `CLAUDE.md`, README. 테스트 66, 레거시 무변경. 리뷰 15건 반영. PR #58 |
 | 2026-10-18 | 2→3a | approved | Josh: #57·#58 검토·머지 진행, 3a 착수 승인, Supabase 적용 승인. PR #57 머지(`2c5a7bc1`), `main`→`rebuild/v2` 머지 push |
-| 2026-10-18 | 3a | partial | 안전 fetch(SSRF·리다이렉트·content-type·2 MiB), 의존성 없는 RSS/Atom/RDF 파서, URL·날짜·HTML 규칙, 라이브 RSS·Epoch 색인 어댑터, 추출기 5종, ingest 재작성(health·auto-disable·캡·중복 제거·items_new·추출), `--live` CLI, 레지스트리 82행 이관 도구 + `config/sources.yaml`, `rebuild-ingest-dry-run.yml`, contracts §2/§4 개정. 테스트 108. 라이브 dry-run 결과 대기 |
+| 2026-10-18 | 3a | partial | 안전 fetch(SSRF·리다이렉트·content-type·2 MiB), 의존성 없는 RSS/Atom/RDF 파서, URL·날짜·HTML 규칙, 라이브 RSS·Epoch 색인 어댑터, 추출기 5종, ingest 재작성(health·auto-disable·캡·중복 제거·items_new·추출), `--live` CLI, 레지스트리 82행 이관 도구 + `config/sources.yaml`, `rebuild-ci.yml`(`ingest-live-dry-run` 잡), contracts §2/§4 개정. 테스트 108. 라이브 dry-run 결과 대기 |
 
 ## Phase 3a 완료 기준 대조 (로컬 기준, 라이브 결과는 §4 노트에 추가)
 

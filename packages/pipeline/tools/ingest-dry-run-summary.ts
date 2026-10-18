@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * Renders a `pipeline run --json` result as Markdown for the GitHub Actions
- * step summary (rebuild-ingest-dry-run.yml): funnel, per-source table,
+ * step summary (rebuild-ci.yml, ingest-live-dry-run job): funnel, per-source table,
  * extraction totals and dead letters by taxonomy code.
  *
  *   node packages/pipeline/tools/ingest-dry-run-summary.ts <result.json>

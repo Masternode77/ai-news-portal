@@ -68,7 +68,7 @@
 | 수집 기록 | `stage_events.counts`에 소스별 `{fetched, accepted, invalid, ms}`와 `sources_ok/failed` — Phase 0 D3 해소 | ADR-007 |
 | 링크 전용 레인 통합 | `industry-headlines` 별도 스크립트 폐지. `link_only` 소스도 같은 ingest로 `raw_items`에 들어가되 `payload.text_rights`로 표시, 추출 없음. 레이더 노출은 3h | |
 | 본문 추출 | `SourceAdapter.extract`: generic(article/main + `<p>` 필터 + 한계) + 특수 4종. `text_rights: full`만 전문 추출, `rewrite_only`는 피드 본문 필드(contentEncoded 등)까지만 저장 | 재서술 규칙과 정합 |
-| 라이브 dry-run | 세션은 피드 호스트에 닿지 않음 → `workflow_dispatch`(`rebuild-ingest-dry-run.yml`)로 GitHub 러너에서 `pipeline run --dry-run --stage ingest --json` 실행, 산출 JSON을 아티팩트로 | 브리프 공통 절차 4 |
+| 라이브 dry-run | 세션은 피드 호스트에 닿지 않음 → `workflow_dispatch`(`rebuild-ci.yml`(`ingest-live-dry-run` 잡))로 GitHub 러너에서 `pipeline run --dry-run --stage ingest --json` 실행, 산출 JSON을 아티팩트로 | 브리프 공통 절차 4 |
 
 ## 4. 완료 기준 대조 계획
 
