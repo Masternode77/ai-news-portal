@@ -1,0 +1,25 @@
+{
+  "name": "@cc/site",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Compute Current rebuild: Astro server-output site that reads published rows only (Phase 2 skeleton)",
+  "type": "module",
+  "engines": {
+    "node": "22.x"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "test": "node --test \"test/**/*.test.ts\""
+  },
+  "dependencies": {
+    "@cc/shared": "0.1.0",
+    "@supabase/supabase-js": "^2.118.0",
+    "astro": "^7.3.6"
+  },
+  "devDependencies": {
+    "@astrojs/vercel": "^11.0.15"
+  }
+}

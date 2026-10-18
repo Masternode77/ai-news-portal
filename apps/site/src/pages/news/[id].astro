@@ -1,0 +1,15 @@
+---
+import Base from "../../layouts/Base.astro";
+import Article from "../../components/Article.astro";
+import { siteRepo } from "../../lib/repo";
+
+const { id } = Astro.params;
+const publication = id ? await siteRepo().get(`news/${id}`) : null;
+if (!publication) {
+  return new Response("Not found", { status: 404, headers: { "content-type": "text/plain; charset=utf-8" } });
+}
+---
+
+<Base title={publication.title} noindex={publication.noindex}>
+  <Article publication={publication} />
+</Base>

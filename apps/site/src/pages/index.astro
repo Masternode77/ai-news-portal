@@ -1,0 +1,28 @@
+---
+import Base from "../layouts/Base.astro";
+import { siteRepo } from "../lib/repo";
+import { formatDate } from "../lib/render";
+
+const rows = await siteRepo().list({ limit: 50 });
+---
+
+<Base title="Compute Current — AI 인프라 인텔리전스">
+  <h1>최근 발행</h1>
+  {
+    rows.length === 0 ? (
+      <p class="muted" data-empty-state>아직 발행된 글이 없습니다. 파이프라인이 첫 발행을 마치면 이곳에 표시됩니다.</p>
+    ) : (
+      <ul>
+        {rows.map((row) => (
+          <li>
+            <a href={`/${row.slug}/`}>{row.title}</a>
+            <span class="muted">
+              {" "}
+              · <time datetime={row.published_at}>{formatDate(row.published_at)}</time> · {row.content_type}
+            </span>
+          </li>
+        ))}
+      </ul>
+    )
+  }
+</Base>
