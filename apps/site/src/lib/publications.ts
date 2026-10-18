@@ -9,9 +9,12 @@
  *   empty       — no data; proves the site builds and renders with 0 published
  *
  * An unset SITE_DATA_SOURCE means `empty`: a deployment must opt into a data
- * source explicitly. Every path is fail-safe: a missing directory, an
- * unreachable database or an invalid row degrades to "fewer rows" and is
- * reported by health(), never by a thrown error at render time.
+ * source explicitly. An invalid row degrades to "fewer rows" and is reported
+ * by health(). An unavailable source (missing credentials, unreachable
+ * database, missing legacy directory) is *not* an empty site: list() and
+ * get() throw DataUnavailableError so pages answer 503 without caching, and
+ * health() reports ok: false. The last-known-good snapshot that ADR-005 plans
+ * for outages arrives with the Phase 5 cutover.
  */
 import { readFile } from "node:fs/promises";
 import { resolve } from "node:path";
@@ -27,6 +30,17 @@ export interface SiteEnv {
   SUPABASE_URL?: string | undefined;
   SUPABASE_ANON_KEY?: string | undefined;
   LEGACY_DATA_DIR?: string | undefined;
+}
+
+/** The configured source cannot answer right now; pages turn this into an uncached 503, never an empty 200. */
+export class DataUnavailableError extends Error {
+  readonly source: DataSource;
+
+  constructor(source: DataSource, detail: string) {
+    super(`${source} unavailable: ${detail}`);
+    this.name = "DataUnavailableError";
+    this.source = source;
+  }
 }
 
 export interface RepoHealth {
@@ -80,6 +94,19 @@ function emptyRepo(detail?: string): PublicationsRepo {
   };
 }
 
+/** The requested source is kept (so /healthz names it) but it cannot be served: unhealthy, and pages get a 503. */
+function misconfiguredRepo(source: DataSource, detail: string): PublicationsRepo {
+  const fail = async (): Promise<never> => {
+    throw new DataUnavailableError(source, detail);
+  };
+  return { source, list: fail, get: fail, health: async () => ({ ok: false, source, publishedCount: 0, detail }) };
+}
+
+function unavailable(source: DataSource, error: unknown): DataUnavailableError {
+  if (error instanceof DataUnavailableError) return error;
+  return new DataUnavailableError(source, error instanceof Error ? error.message : String(error));
+}
+
 function parseRows(data: unknown[] | null | undefined): { rows: PublicationRowType[]; invalid: number } {
   const rows: PublicationRowType[] = [];
   let invalid = 0;
@@ -105,16 +132,19 @@ export function createSupabaseRepo(client: SiteSupabaseLike): PublicationsRepo {
   return {
     source: "supabase",
     async list(options = {}) {
-      return (await fetchList(options.limit ?? DEFAULT_LIMIT)).rows;
+      const result = await fetchList(options.limit ?? DEFAULT_LIMIT);
+      if (result.error !== null) throw new DataUnavailableError("supabase", result.error);
+      return result.rows;
     },
     async get(slug) {
       try {
         const result = await client.from("publications").select(columns).eq("slug", slug).eq("status", "published").maybeSingle();
-        if (result.error || !result.data) return null;
+        if (result.error) throw new DataUnavailableError("supabase", result.error.message);
+        if (!result.data) return null;
         const parsed = PublicationRow.safeParse(result.data);
         return parsed.success && parsed.data.status === "published" ? parsed.data : null;
-      } catch {
-        return null;
+      } catch (error) {
+        throw unavailable("supabase", error);
       }
     },
     async health() {
@@ -166,10 +196,15 @@ export function createLegacyJsonRepo(dataDir: string, fs: { readFile: typeof rea
     })();
     return cache;
   };
+  const loaded = async (): Promise<LegacyLoad> => {
+    const result = await load();
+    if (result.failed) throw new DataUnavailableError("legacy_json", result.detail ?? "legacy data unavailable");
+    return result;
+  };
   return {
     source: "legacy_json",
-    list: async (options = {}) => (await load()).rows.slice(0, options.limit ?? DEFAULT_LIMIT),
-    get: async (slug) => (await load()).rows.find((row) => row.slug === slug) ?? null,
+    list: async (options = {}) => (await loaded()).rows.slice(0, options.limit ?? DEFAULT_LIMIT),
+    get: async (slug) => (await loaded()).rows.find((row) => row.slug === slug) ?? null,
     health: async () => {
       const { rows, detail, failed } = await load();
       return { ok: !failed, source: "legacy_json", publishedCount: rows.length, ...(detail ? { detail } : {}) };
@@ -189,8 +224,8 @@ export function createPublicationsRepo(env: SiteEnv, deps: RepoDeps = {}): Publi
   if (source === "supabase") {
     const url = env.SUPABASE_URL;
     const key = env.SUPABASE_ANON_KEY;
-    if (!url || !key) return emptyRepo("SUPABASE_URL / SUPABASE_ANON_KEY not set; serving empty");
-    if (!deps.supabaseFactory) return emptyRepo("supabase client factory not provided; serving empty");
+    if (!url || !key) return misconfiguredRepo("supabase", "SUPABASE_URL / SUPABASE_ANON_KEY not set");
+    if (!deps.supabaseFactory) return misconfiguredRepo("supabase", "supabase client factory not provided");
     return createSupabaseRepo(deps.supabaseFactory(url, key));
   }
   const dataDir = env.LEGACY_DATA_DIR ?? resolve(deps.repoRoot ?? resolve(process.cwd(), "../.."), "src/data");

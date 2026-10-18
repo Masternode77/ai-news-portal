@@ -7,8 +7,9 @@
  *                [--trigger schedule|dispatch|local] [--json] [--log-level <level>]
  *
  * Exit codes: 0 done · 1 partial/budget_stop · 2 failed, usage or config error.
- * Phase 2 ships fixture adapters only; a live run (no --dry-run/--replay) is
- * refused until Phase 3 installs real adapters.
+ * Phase 2 ships fixture adapters only. Every run needs --dry-run (memory
+ * ledger and DB) until Phase 4 wires Supabase: a bare --replay would keep
+ * adapters offline but still write the real run ledger.
  */
 import { parseArgs } from "node:util";
 import { realpathSync } from "node:fs";
@@ -133,8 +134,8 @@ export async function main(argv: string[], env: NodeJS.ProcessEnv, stdout: (line
     if (cli.command !== "run") throw new UsageError(USAGE);
     logger = createLogger({ name: "cc-pipeline", level: cli.logLevel, sink: (line) => process.stderr.write(`${line}\n`) });
 
-    if (!cli.dryRun && !cli.replay) {
-      throw new UsageError("Phase 2 ships fixture adapters only: pass --dry-run and/or --replay (live adapters land in Phase 3)");
+    if (!cli.dryRun) {
+      throw new UsageError("Phase 2 writes nothing outside the memory ledger: pass --dry-run (add --replay to forbid network access); real ledger writes land in Phase 4");
     }
     const realFetch = globalThis.fetch;
     if (cli.replay) {

@@ -41,6 +41,7 @@ test("CC_FLAG_STAGES_IMAGE=false turns the image stage off from the environment"
 
 test("a live run is refused in Phase 2 and usage errors exit 2", async () => {
   assert.equal((await cli(["run"])).code, 2);
+  assert.equal((await cli(["run", "--replay"])).code, 2, "a bare --replay would write the real run ledger");
   assert.equal((await cli(["frobnicate"])).code, 2);
   assert.equal((await cli(["run", "--dry-run", "--trigger", "cron"])).code, 2);
   const missing = await cli(["run", "--dry-run", "--config", "config/does-not-exist.yaml"]);

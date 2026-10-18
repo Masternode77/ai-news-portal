@@ -90,3 +90,4 @@ ADR-006의 단계 M1~M8을 실행 단위로 풀어 쓴다. 각 단계는 Josh �
 | 레거시 이미지 자산 | 레거시 리더 페이지의 `heroImage`는 루트 `public/generated/**`(1,105 디렉토리)를 가리키며 `apps/site/public/`에는 없다. 새 사이트가 레거시 행을 서빙하면 이미지는 404다 | 3h(퍼블리셔 자산 경로 정책) · 5(M5 자산 이관, `legacy-final` 백업) |
 | 플레이스홀더 이미지 | `/images/placeholder-brief.svg`를 `apps/site/public/images/`에 추가(Phase 2 리뷰 반영) | 완료 |
 | `SITE_DATA_SOURCE` 기본값 | 미설정 = `empty`. 로컬 개발은 `legacy_json`을 명시 | 완료(ADR-006 조정) |
+| DB 장애 시 서빙 | 소스를 쓸 수 없으면(자격증명 누락·연결 실패·레거시 디렉토리 없음) `list/get`이 `DataUnavailableError`를 던지고 페이지는 `503 no-store`로 답한다(빈 200·404가 ISR에 캐시되지 않음). ADR-005의 last-known-good 스냅샷 서빙은 Phase 5 | 503 완료(Codex 리뷰 반영) · 스냅샷은 5 |
