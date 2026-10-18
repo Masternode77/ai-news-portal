@@ -231,3 +231,21 @@ newer content-only commit can legitimately follow the most recent release tag.
 - The daily plan is stored in state so curated stories survive across all three daily runs
 - The homepage keeps the original board format while upgrading the visual quality substantially
 - `scripts/update-news.js` is now just a compatibility alias to `scripts/pipeline.mjs`
+
+## Rebuild v2 (Phase 2 skeleton) — local run
+
+The rebuild lives beside the legacy code as npm workspaces (`apps/site`, `packages/shared`, `packages/pipeline`); see `docs/adr/ADR-001-repo-structure.md`, `docs/architecture/target.md` and `docs/STATUS.md`. Nothing here changes how the legacy site is built or deployed.
+
+```bash
+npm ci                                   # installs legacy + workspace dependencies (Node 22.x)
+npm run v2:typecheck                     # tsc (packages/*) + astro check (apps/site)
+npm run v2:test                          # node --test across the three workspaces, fixtures only
+npm run v2:build                         # astro build for apps/site (SITE_DATA_SOURCE=empty works)
+npm run v2:pipeline -- run --dry-run --replay --fixture sample --json
+```
+
+- The pipeline CLI accepts `--stage <name>`, `--dry-run`, `--fixture <name>`, `--replay`, `--config`, `--sources`, `--fixtures-dir`, `--trigger`, `--json`, `--log-level`. Phase 2 ships fixture adapters only, so a run without `--dry-run`/`--replay` is refused. `--replay` makes every network call throw.
+- Feature flags: `config/pipeline.yaml` (`flags.stages.<stage>`, `flags.publish_target`) or the environment (`CC_FLAG_STAGES_IMAGE=false`, `CC_FLAG_PUBLISH_TARGET=staging`). Unknown flags fail the run.
+- Site data source: `SITE_DATA_SOURCE=legacy_json` (default; maps the committed reader pages in `src/data/`), `supabase` (`SUPABASE_URL` + `SUPABASE_ANON_KEY`, published rows only) or `empty`. `GET /healthz` reports the active source and the published count. Pages are `noindex` until `SITE_INDEXABLE=true`.
+- `supabase/migrations/0001_init.sql` is written but not applied; applying it is a pre-approval item.
+- TypeScript runs directly on Node 22 type stripping: erasable syntax only, `.ts` extensions in relative imports, `import type` for types.
