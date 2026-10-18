@@ -592,7 +592,11 @@ function aggregate(rows, { state, since, latest, archived, columns }) {
   const measuredFetched = ledgerRows.filter((row) => Number.isFinite(Number(row.items_fetched)));
   const fetchedAvg = measuredFetched.length ? measuredFetched.reduce((acc, row) => acc + Number(row.items_fetched), 0) / measuredFetched.length : null;
   const itemsNewAvgPerDay = dailyPlans.length ? dailyPlans.reduce((acc, day) => acc + day.curated, 0) / dailyPlans.length : null;
-  const topGateReasons = Object.entries({ ...archiveOnlyReasons, ...blockedReasons }).sort((a, b) => b[1] - a[1]);
+  const gateReasonCounts = {};
+  for (const histogram of [archiveOnlyReasons, blockedReasons]) {
+    for (const [reason, count] of Object.entries(histogram)) gateReasonCounts[reason] = (gateReasonCounts[reason] || 0) + count;
+  }
+  const topGateReasons = Object.entries(gateReasonCounts).sort((a, b) => b[1] - a[1]);
   const gateReasonTotal = topGateReasons.reduce((acc, [, count]) => acc + count, 0);
   const top2Share = gateReasonTotal ? pct(topGateReasons.slice(0, 2).reduce((acc, [, count]) => acc + count, 0), gateReasonTotal) : null;
 
