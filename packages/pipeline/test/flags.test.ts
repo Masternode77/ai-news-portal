@@ -15,7 +15,10 @@ test("CC_FLAG_STAGES_IMAGE=false skips the image stage and records the flag snap
   const flags = dump.runs[0]?.flags as { stages: Record<string, boolean>; overrides: { env: string }[] };
   assert.equal(flags.stages["image"], false);
   assert.equal(flags.overrides[0]?.env, "CC_FLAG_STAGES_IMAGE");
-  assert.equal(dump.stageEvents.find((e) => e.stage === "image")?.status, "skipped");
+  const imageEvent = dump.stageEvents.find((e) => e.stage === "image");
+  assert.equal(imageEvent?.status, "skipped");
+  assert.equal(imageEvent?.counts["reason"], "flag_off");
+  assert.equal(result.stages.find((s) => s.stage === "image")?.reason, "flag_off");
 });
 
 test("turning every stage off still produces a complete, well-formed run", async () => {

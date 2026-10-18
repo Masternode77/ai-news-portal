@@ -4,12 +4,14 @@
  *
  *   supabase    — anon key + RLS, published rows only (production after Phase 5)
  *   legacy_json — the committed JSON reader pages mapped through legacy-json.ts
- *                 (strangler period; needs LEGACY_DATA_DIR or the repo layout)
+ *                 (strangler period / local dev; needs LEGACY_DATA_DIR or the
+ *                 repo layout, which the Vercel function runtime does not have)
  *   empty       — no data; proves the site builds and renders with 0 published
  *
- * Every path is fail-safe: a missing directory, an unreachable database or an
- * invalid row degrades to "fewer rows" and is reported by health(), never by a
- * thrown error at render time.
+ * An unset SITE_DATA_SOURCE means `empty`: a deployment must opt into a data
+ * source explicitly. Every path is fail-safe: a missing directory, an
+ * unreachable database or an invalid row degrades to "fewer rows" and is
+ * reported by health(), never by a thrown error at render time.
  */
 import { readFile } from "node:fs/promises";
 import { resolve } from "node:path";
@@ -41,22 +43,28 @@ export interface PublicationsRepo {
   health(): Promise<RepoHealth>;
 }
 
+export interface SiteSupabaseResponse {
+  data: unknown[] | null;
+  error: { message: string } | null;
+  count?: number | null;
+}
+
 /** Minimal shape of the supabase-js query chain the repo uses; tests inject a fake. */
 export interface SiteSupabaseQuery {
   eq(column: string, value: unknown): SiteSupabaseQuery;
   order(column: string, options: { ascending: boolean }): SiteSupabaseQuery;
   limit(count: number): SiteSupabaseQuery;
   maybeSingle(): PromiseLike<{ data: unknown; error: { message: string } | null }>;
-  then<T>(onfulfilled: (value: { data: unknown[] | null; error: { message: string } | null }) => T): PromiseLike<T>;
+  then<T>(onfulfilled: (value: SiteSupabaseResponse) => T): PromiseLike<T>;
 }
 export interface SiteSupabaseLike {
-  from(table: string): { select(columns: string): SiteSupabaseQuery };
+  from(table: string): { select(columns: string, options?: { count: "exact"; head: boolean }): SiteSupabaseQuery };
 }
 export type SupabaseFactory = (url: string, anonKey: string) => SiteSupabaseLike;
 
 export function resolveDataSource(env: SiteEnv): DataSource {
   const raw = env.SITE_DATA_SOURCE?.trim();
-  if (!raw) return "legacy_json";
+  if (!raw) return "empty";
   if ((DATA_SOURCES as readonly string[]).includes(raw)) return raw as DataSource;
   throw new Error(`SITE_DATA_SOURCE must be one of ${DATA_SOURCES.join("|")}, got "${raw}"`);
 }
@@ -85,52 +93,59 @@ function parseRows(data: unknown[] | null | undefined): { rows: PublicationRowTy
 
 export function createSupabaseRepo(client: SiteSupabaseLike): PublicationsRepo {
   const columns = PUBLICATION_COLUMNS.join(",");
-  let lastInvalid = 0;
-  let lastError: string | null = null;
+  const fetchList = async (limit: number): Promise<{ rows: PublicationRowType[]; invalid: number; error: string | null }> => {
+    try {
+      const result = await client.from("publications").select(columns).eq("status", "published").order("published_at", { ascending: false }).limit(limit);
+      if (result.error) return { rows: [], invalid: 0, error: result.error.message };
+      return { ...parseRows(result.data), error: null };
+    } catch (error) {
+      return { rows: [], invalid: 0, error: error instanceof Error ? error.message : String(error) };
+    }
+  };
   return {
     source: "supabase",
     async list(options = {}) {
-      try {
-        const result = await client
-          .from("publications")
-          .select(columns)
-          .eq("status", "published")
-          .order("published_at", { ascending: false })
-          .limit(options.limit ?? DEFAULT_LIMIT);
-        if (result.error) {
-          lastError = result.error.message;
-          return [];
-        }
-        const { rows, invalid } = parseRows(result.data);
-        lastInvalid = invalid;
-        lastError = null;
-        return rows;
-      } catch (error) {
-        lastError = error instanceof Error ? error.message : String(error);
-        return [];
-      }
+      return (await fetchList(options.limit ?? DEFAULT_LIMIT)).rows;
     },
     async get(slug) {
       try {
         const result = await client.from("publications").select(columns).eq("slug", slug).eq("status", "published").maybeSingle();
         if (result.error || !result.data) return null;
         const parsed = PublicationRow.safeParse(result.data);
-        return parsed.success ? parsed.data : null;
+        return parsed.success && parsed.data.status === "published" ? parsed.data : null;
       } catch {
         return null;
       }
     },
     async health() {
-      const rows = await this.list({ limit: 1000 });
-      const detail = lastError ?? (lastInvalid > 0 ? `${lastInvalid} row(s) failed schema validation` : undefined);
-      return { ok: lastError === null, source: "supabase", publishedCount: rows.length, ...(detail ? { detail } : {}) };
+      // A head-only count keeps the probe cheap; the small list proves rows parse under the current schema.
+      try {
+        const counted = await client.from("publications").select("id", { count: "exact", head: true }).eq("status", "published");
+        if (counted.error) return { ok: false, source: "supabase", publishedCount: 0, detail: counted.error.message };
+        const sample = await fetchList(5);
+        if (sample.error) return { ok: false, source: "supabase", publishedCount: counted.count ?? 0, detail: sample.error };
+        return {
+          ok: true,
+          source: "supabase",
+          publishedCount: counted.count ?? sample.rows.length,
+          ...(sample.invalid > 0 ? { detail: `${sample.invalid} of the latest rows failed schema validation` } : {}),
+        };
+      } catch (error) {
+        return { ok: false, source: "supabase", publishedCount: 0, detail: error instanceof Error ? error.message : String(error) };
+      }
     },
   };
 }
 
+interface LegacyLoad {
+  rows: PublicationRowType[];
+  detail?: string;
+  failed: boolean;
+}
+
 export function createLegacyJsonRepo(dataDir: string, fs: { readFile: typeof readFile } = { readFile }): PublicationsRepo {
-  let cache: Promise<{ rows: PublicationRowType[]; detail?: string }> | null = null;
-  const load = (): Promise<{ rows: PublicationRowType[]; detail?: string }> => {
+  let cache: Promise<LegacyLoad> | null = null;
+  const load = (): Promise<LegacyLoad> => {
     cache ??= (async () => {
       try {
         const [news, columns] = await Promise.all([
@@ -138,9 +153,15 @@ export function createLegacyJsonRepo(dataDir: string, fs: { readFile: typeof rea
           fs.readFile(resolve(dataDir, "authored-columns.json"), "utf8").then((t) => JSON.parse(t) as unknown),
         ]);
         const mapped = mapLegacyCollections(news, columns);
-        return { rows: mapped.rows, ...(mapped.skipped > 0 ? { detail: `${mapped.skipped} legacy record(s) could not be mapped` } : {}) };
+        const notes = [
+          mapped.skipped > 0 ? `${mapped.skipped} legacy record(s) could not be mapped` : null,
+          mapped.withoutBody > 0 ? `${mapped.withoutBody} legacy page(s) have no editorial body` : null,
+        ].filter((n): n is string => n !== null);
+        return { rows: mapped.rows, failed: false, ...(notes.length > 0 ? { detail: notes.join("; ") } : {}) };
       } catch (error) {
-        return { rows: [], detail: `legacy data unavailable: ${error instanceof Error ? error.message : String(error)}` };
+        // A failed load is not cached: the next request retries instead of serving an empty site for the process lifetime.
+        cache = null;
+        return { rows: [], failed: true, detail: `legacy data unavailable: ${error instanceof Error ? error.message : String(error)}` };
       }
     })();
     return cache;
@@ -150,8 +171,8 @@ export function createLegacyJsonRepo(dataDir: string, fs: { readFile: typeof rea
     list: async (options = {}) => (await load()).rows.slice(0, options.limit ?? DEFAULT_LIMIT),
     get: async (slug) => (await load()).rows.find((row) => row.slug === slug) ?? null,
     health: async () => {
-      const { rows, detail } = await load();
-      return { ok: !detail?.startsWith("legacy data unavailable"), source: "legacy_json", publishedCount: rows.length, ...(detail ? { detail } : {}) };
+      const { rows, detail, failed } = await load();
+      return { ok: !failed, source: "legacy_json", publishedCount: rows.length, ...(detail ? { detail } : {}) };
     },
   };
 }
@@ -164,7 +185,7 @@ export interface RepoDeps {
 
 export function createPublicationsRepo(env: SiteEnv, deps: RepoDeps = {}): PublicationsRepo {
   const source = resolveDataSource(env);
-  if (source === "empty") return emptyRepo();
+  if (source === "empty") return emptyRepo(env.SITE_DATA_SOURCE?.trim() ? undefined : "SITE_DATA_SOURCE unset; serving empty");
   if (source === "supabase") {
     const url = env.SUPABASE_URL;
     const key = env.SUPABASE_ANON_KEY;

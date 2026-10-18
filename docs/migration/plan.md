@@ -82,3 +82,11 @@ ADR-006의 단계 M1~M8을 실행 단위로 풀어 쓴다. 각 단계는 Josh �
 | 2026-10-18 | 7 | done | `apps/site`: `output: 'server'` + Vercel ISR 300s, `publications` 데이터층(`supabase`/`legacy_json`/`empty`), `/healthz`, 빈 상태 빌드 테스트. 테스트 13 |
 | 2026-10-18 | 8 | **written, not applied** | `supabase/migrations/0001_init.sql`(DDL·인덱스·RLS). 적용은 프로젝트 선택 + §5.6 승인 후 |
 | 2026-10-18 | 9 | done | `CLAUDE.md`, README "Rebuild v2" 절, `docs/STATUS.md` |
+
+## 6. 알려진 격차 (Phase 2 리뷰에서 확인)
+
+| 항목 | 내용 | 처리 시점 |
+|---|---|---|
+| 레거시 이미지 자산 | 레거시 리더 페이지의 `heroImage`는 루트 `public/generated/**`(1,105 디렉토리)를 가리키며 `apps/site/public/`에는 없다. 새 사이트가 레거시 행을 서빙하면 이미지는 404다 | 3h(퍼블리셔 자산 경로 정책) · 5(M5 자산 이관, `legacy-final` 백업) |
+| 플레이스홀더 이미지 | `/images/placeholder-brief.svg`를 `apps/site/public/images/`에 추가(Phase 2 리뷰 반영) | 완료 |
+| `SITE_DATA_SOURCE` 기본값 | 미설정 = `empty`. 로컬 개발은 `legacy_json`을 명시 | 완료(ADR-006 조정) |

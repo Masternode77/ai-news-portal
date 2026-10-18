@@ -3,7 +3,7 @@
  * LLM / QA message shapes used across adapters.
  */
 import { z } from "zod";
-import { ImageResult, IsoDateTime, JsonRecord, Severity } from "./tables.ts";
+import { HttpUrl, ImageResult, IsoDateTime, JsonRecord, Severity } from "./tables.ts";
 
 export const NewsBriefSlug = z.string().regex(/^news\/[a-f0-9]{16}$/, "news/<16 hex>");
 export const InsightEssaySlug = z
@@ -17,7 +17,7 @@ export const NewsBrief = z.strictObject({
   why_it_matters_ko: z.string().min(100),
   /** 3 to 5 sentences. */
   expert_lens_ko: z.string().min(150),
-  source_url: z.url(),
+  source_url: HttpUrl,
   source_name: z.string().min(1),
   published_at_source: IsoDateTime,
   tags: z.array(z.string().min(1)).min(1).max(6),
@@ -37,7 +37,7 @@ export const InsightEssay = z.strictObject({
   sources: z
     .array(
       z.strictObject({
-        url: z.url(),
+        url: HttpUrl,
         name: z.string().min(1),
         published_at: IsoDateTime,
       }),

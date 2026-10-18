@@ -7,6 +7,12 @@
  * Only reader-page records are mapped (ADR-003 "레거시 매핑"): news with
  * `articlePagePublished && !archiveOnly && public_status === 'published'`,
  * columns with `public_status === 'published' && articlePagePublished`.
+ *
+ * The body is the editorial text the legacy pages render,
+ * `expertLensFull.finalArticleBody` (src/pages/news/[id].astro:81,
+ * src/pages/column/[slug].astro:31). The raw source extraction
+ * (`articleText`, `cleaned_source_text`, `source_evidence_text`) is third-party
+ * text and is deliberately never copied into a publication.
  */
 import { createHash } from "node:crypto";
 import { PublicationRow } from "@cc/shared";
@@ -16,6 +22,10 @@ type LegacyRecord = Record<string, unknown>;
 
 function str(value: unknown): string | null {
   return typeof value === "string" && value.trim().length > 0 ? value : null;
+}
+
+function obj(value: unknown): LegacyRecord | null {
+  return value && typeof value === "object" && !Array.isArray(value) ? (value as LegacyRecord) : null;
 }
 
 function bool(value: unknown): boolean {
@@ -46,7 +56,7 @@ function toIso(value: unknown): string | null {
 function legacyImage(record: LegacyRecord, generatedAt: string): ImageResult | null {
   const path = str(record["heroImage"]) ?? str(record["generatedImage"]) ?? str(record["ogImage"]);
   if (!path) return null;
-  return {
+  const candidate: ImageResult = {
     path,
     alt: str(record["imageAlt"]) ?? "",
     provenance: {
@@ -56,6 +66,17 @@ function legacyImage(record: LegacyRecord, generatedAt: string): ImageResult | n
     },
     placeholder: false,
     costUsd: 0,
+  };
+  return candidate;
+}
+
+/** The editorial body and SEO fields the legacy pages render. */
+function editorial(record: LegacyRecord): { body: string | null; headline: string | null; metaDescription: string | null } {
+  const lens = obj(record["expertLensFull"]);
+  return {
+    body: str(lens?.["finalArticleBody"]),
+    headline: str(lens?.["finalHeadline"]),
+    metaDescription: str(lens?.["metaDescription"]),
   };
 }
 
@@ -72,6 +93,7 @@ export function mapLegacyNews(record: LegacyRecord): PublicationRowType | null {
   const title = str(record["title"]);
   const publishedAt = toIso(record["publishedAt"]);
   if (!id || !title || !publishedAt) return null;
+  const { body, metaDescription } = editorial(record);
   const sourceUrl = str(record["sourceUrl"]) ?? str(record["url"]);
   const candidate = {
     id: legacyUuid(`news:${id}`),
@@ -81,9 +103,9 @@ export function mapLegacyNews(record: LegacyRecord): PublicationRowType | null {
     title,
     body: {
       deck: str(record["deck"]),
-      article_text: str(record["articleText"]),
+      article_body: body,
+      meta_description: metaDescription,
       why_it_matters: str(record["why_it_matters"]),
-      expert_lens: str(record["expertLensFull"]) ?? str(record["expertLensShort"]),
       legacy: { generation_version: record["generation_version"] ?? null, public_content_tier: record["public_content_tier"] ?? null },
     },
     image: legacyImage(record, publishedAt),
@@ -106,11 +128,13 @@ export function mapLegacyColumn(record: LegacyRecord): PublicationRowType | null
   const id = str(record["id"]);
   const slug = str(record["slug"]);
   const publishedAt = toIso(record["publishedAt"]);
-  const headline = str(record["headline"]) ?? str(record["title"]) ?? (record["draft"] && typeof record["draft"] === "object" ? str((record["draft"] as LegacyRecord)["headline"]) : null);
-  if (!id || !slug || !publishedAt || !headline) return null;
+  const { body, headline, metaDescription } = editorial(record);
+  const title = str(record["title"]) ?? headline;
+  if (!id || !slug || !publishedAt || !title) return null;
+  const stance = obj(record["stance"]);
   const sources = Array.isArray(record["sources"])
     ? (record["sources"] as unknown[])
-        .map((s) => (s && typeof s === "object" ? (s as LegacyRecord) : {}))
+        .map((s) => obj(s) ?? {})
         .map((s) => ({ url: str(s["url"]) ?? "", name: str(s["name"]) ?? str(s["source"]) ?? "source", published_at: toIso(s["publishedAt"]) }))
         .filter((s) => /^https?:\/\//.test(s.url))
     : [];
@@ -119,12 +143,13 @@ export function mapLegacyColumn(record: LegacyRecord): PublicationRowType | null
     draft_id: null,
     slug: `column/${slug}`,
     content_type: "insight_essay",
-    title: headline,
+    title,
     body: {
       deck: str(record["deck"]),
-      draft: record["draft"] && typeof record["draft"] === "object" ? record["draft"] : null,
-      stance: str(record["stance"]),
-      legacy: { generation_version: record["generation_version"] ?? null, author: record["author"] ?? null },
+      thesis: str(stance?.["thesis"]),
+      article_body: body,
+      meta_description: metaDescription,
+      legacy: { generation_version: record["generation_version"] ?? null, author: record["author"] ?? null, angle: str(stance?.["angle"]) },
     },
     image: legacyImage(record, publishedAt),
     sources,
@@ -145,25 +170,26 @@ export function mapLegacyColumn(record: LegacyRecord): PublicationRowType | null
 export interface LegacyMapResult {
   rows: PublicationRowType[];
   skipped: number;
+  /** Mapped reader pages whose editorial body was missing (rendered as deck only). */
+  withoutBody: number;
 }
 
 export function mapLegacyCollections(news: unknown, columns: unknown): LegacyMapResult {
   const rows: PublicationRowType[] = [];
   let skipped = 0;
+  let withoutBody = 0;
   const newsList = Array.isArray(news) ? (news as LegacyRecord[]) : [];
   const columnList = Array.isArray(columns) ? (columns as LegacyRecord[]) : [];
-  for (const record of newsList) {
-    if (!isLegacyNewsReaderPage(record)) continue;
-    const row = mapLegacyNews(record);
-    if (row) rows.push(row);
-    else skipped += 1;
-  }
-  for (const record of columnList) {
-    if (!isLegacyColumnReaderPage(record)) continue;
-    const row = mapLegacyColumn(record);
-    if (row) rows.push(row);
-    else skipped += 1;
-  }
+  const push = (row: PublicationRowType | null): void => {
+    if (!row) {
+      skipped += 1;
+      return;
+    }
+    if (typeof row.body["article_body"] !== "string") withoutBody += 1;
+    rows.push(row);
+  };
+  for (const record of newsList) if (isLegacyNewsReaderPage(record)) push(mapLegacyNews(record));
+  for (const record of columnList) if (isLegacyColumnReaderPage(record)) push(mapLegacyColumn(record));
   rows.sort((a, b) => b.published_at.localeCompare(a.published_at));
-  return { rows, skipped };
+  return { rows, skipped, withoutBody };
 }

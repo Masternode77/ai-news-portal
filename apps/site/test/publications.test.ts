@@ -30,7 +30,7 @@ const validRow = {
 
 function fakeSupabase(rows: unknown[], error: { message: string } | null = null): { client: SiteSupabaseLike; calls: string[] } {
   const calls: string[] = [];
-  const query = (): SiteSupabaseQuery => {
+  const query = (head: boolean): SiteSupabaseQuery => {
     const q: SiteSupabaseQuery = {
       eq: (column, value) => {
         calls.push(`eq:${column}=${String(value)}`);
@@ -45,24 +45,35 @@ function fakeSupabase(rows: unknown[], error: { message: string } | null = null)
         return q;
       },
       maybeSingle: () => Promise.resolve({ data: rows[0] ?? null, error }),
-      then: (onfulfilled) => Promise.resolve({ data: error ? null : rows, error }).then(onfulfilled),
+      then: (onfulfilled) => Promise.resolve(head ? { data: null, error, count: error ? null : rows.length } : { data: error ? null : rows, error }).then(onfulfilled),
     };
     return q;
   };
-  return { client: { from: (table) => ({ select: (columns) => (calls.push(`select:${table}:${columns.split(",").length} cols`), query()) }) }, calls };
+  return {
+    client: {
+      from: (table) => ({
+        select: (columns, options) => {
+          calls.push(`select:${table}:${options?.head ? "count" : `${columns.split(",").length} cols`}`);
+          return query(options?.head === true);
+        },
+      }),
+    },
+    calls,
+  };
 }
 
-test("resolveDataSource defaults to legacy_json and rejects unknown values", () => {
-  assert.equal(resolveDataSource({}), "legacy_json");
-  assert.equal(resolveDataSource({ SITE_DATA_SOURCE: "empty" }), "empty");
+test("resolveDataSource defaults to empty and rejects unknown values", () => {
+  assert.equal(resolveDataSource({}), "empty");
+  assert.equal(resolveDataSource({ SITE_DATA_SOURCE: "legacy_json" }), "legacy_json");
   assert.throws(() => resolveDataSource({ SITE_DATA_SOURCE: "sqlite" }), /SITE_DATA_SOURCE/);
 });
 
-test("empty source serves nothing and reports healthy", async () => {
+test("empty source serves nothing and reports healthy; an unset source says so", async () => {
   const repo = createPublicationsRepo({ SITE_DATA_SOURCE: "empty" });
   assert.deepEqual(await repo.list(), []);
   assert.equal(await repo.get("news/x"), null);
   assert.deepEqual(await repo.health(), { ok: true, source: "empty", publishedCount: 0 });
+  assert.match((await createPublicationsRepo({}).health()).detail ?? "", /SITE_DATA_SOURCE unset/);
 });
 
 test("supabase source without credentials degrades to empty with a detail message", async () => {
@@ -82,14 +93,19 @@ test("supabase repo reads published rows only, drops invalid rows and never thro
   assert.ok(calls.includes("limit:10"));
   assert.ok(calls[0]?.startsWith("select:publications:"));
   assert.equal((await repo.get("news/0123456789abcdef"))?.title, "발행된 브리프");
+
   const health = await repo.health();
   assert.equal(health.ok, true);
-  assert.match(health.detail ?? "", /1 row\(s\) failed/);
+  assert.equal(health.publishedCount, 2, "count comes from the head-only query");
+  assert.match(health.detail ?? "", /1 of the latest rows failed/);
+  assert.ok(calls.includes("select:publications:count"));
 
   const failing = createSupabaseRepo(fakeSupabase([], { message: "connection refused" }).client);
   assert.deepEqual(await failing.list(), []);
   assert.equal(await failing.get("news/x"), null);
-  assert.equal((await failing.health()).ok, false);
+  const failingHealth = await failing.health();
+  assert.equal(failingHealth.ok, false);
+  assert.match(failingHealth.detail ?? "", /connection refused/);
 
   const throwing = createSupabaseRepo({
     from: () => {
@@ -97,6 +113,7 @@ test("supabase repo reads published rows only, drops invalid rows and never thro
     },
   });
   assert.deepEqual(await throwing.list(), []);
+  assert.equal((await throwing.health()).ok, false);
 });
 
 test("legacyUuid is deterministic and RFC 4122 shaped", () => {
@@ -106,7 +123,7 @@ test("legacyUuid is deterministic and RFC 4122 shaped", () => {
   assert.notEqual(a, legacyUuid("column:x"));
 });
 
-test("legacy mappers keep reader pages only and produce valid PublicationRow values", () => {
+test("legacy news mapper uses the editorial body and never copies the source extraction", () => {
   const news = {
     id: "eia-x",
     title: "Data-center load",
@@ -115,7 +132,10 @@ test("legacy mappers keep reader pages only and produce valid PublicationRow val
     archiveOnly: false,
     public_status: "published",
     deck: "Deck",
-    articleText: "Para one.\n\nPara two.",
+    articleText: "THIRD PARTY SOURCE TEXT",
+    cleaned_source_text: "THIRD PARTY SOURCE TEXT",
+    expertLensShort: "Deck",
+    expertLensFull: { finalHeadline: "Final headline", metaDescription: "Meta", finalArticleBody: "Para one.\n\nPara two." },
     sourceUrl: "https://www.eia.gov/todayinenergy/detail.php?id=1",
     source: "EIA",
     tags: ["power", 1],
@@ -127,11 +147,17 @@ test("legacy mappers keep reader pages only and produce valid PublicationRow val
   assert.ok(mapped);
   assert.equal(mapped.slug, "news/eia-x");
   assert.equal(mapped.content_type, "legacy_analysis");
+  assert.equal(mapped.body["article_body"], "Para one.\n\nPara two.");
+  assert.equal(mapped.body["meta_description"], "Meta");
+  assert.ok(!("article_text" in mapped.body) && !("expert_lens" in mapped.body));
+  assert.ok(!JSON.stringify(mapped).includes("THIRD PARTY SOURCE TEXT"));
   assert.deepEqual(mapped.tags, ["power"]);
   assert.equal(mapped.sources[0]?.name, "EIA");
   assert.equal(mapped.image?.path, "/generated/articles/x/hero.webp");
   assert.equal(PublicationRow.safeParse(mapped).success, true);
+});
 
+test("legacy column mapper reads the editorial body and the stance thesis", () => {
   const column = {
     id: "col_1",
     slug: "my-column-2026-10-04",
@@ -139,26 +165,32 @@ test("legacy mappers keep reader pages only and produce valid PublicationRow val
     publishedAt: "2026-10-04T00:00:00.000Z",
     articlePagePublished: true,
     public_status: "published",
+    draft: false,
+    stance: { thesis: "The thesis.", angle: "contrarian" },
+    expertLensFull: { finalHeadline: "My column", metaDescription: "Meta", finalArticleBody: "Body para." },
     sources: [{ name: "Epoch AI", url: "https://epoch.ai/x", publishedAt: "2026-10-03T00:00:00.000Z" }, { name: "bad", url: "not a url" }],
   };
-  const mappedColumn = mapLegacyColumn(column);
-  assert.ok(mappedColumn);
-  assert.equal(mappedColumn.slug, "column/my-column-2026-10-04");
-  assert.equal(mappedColumn.content_type, "insight_essay");
-  assert.equal(mappedColumn.sources.length, 1);
+  const mapped = mapLegacyColumn(column);
+  assert.ok(mapped);
+  assert.equal(mapped.slug, "column/my-column-2026-10-04");
+  assert.equal(mapped.content_type, "insight_essay");
+  assert.equal(mapped.body["article_body"], "Body para.");
+  assert.equal(mapped.body["thesis"], "The thesis.");
+  assert.equal(mapped.sources.length, 1);
 
   const result = mapLegacyCollections(
-    [news, { ...news, id: "archived", archiveOnly: true }, { ...news, id: "quarantined", public_status: "quarantined" }],
-    [column, { ...column, id: "col_2", slug: "q", public_status: "quarantined" }, { ...column, id: "col_3", slug: "", title: "" }],
+    [{ ...column, id: "n1", archiveOnly: true }, { ...column, id: "quarantined", public_status: "quarantined" }],
+    [column, { ...column, id: "col_2", slug: "q", public_status: "quarantined" }, { ...column, id: "col_3", slug: "", title: "" }, { ...column, id: "col_4", slug: "no-body", expertLensFull: null }],
   );
   assert.deepEqual(
     result.rows.map((r) => r.slug),
-    ["column/my-column-2026-10-04", "news/eia-x"],
+    ["column/my-column-2026-10-04", "column/no-body"],
   );
   assert.equal(result.skipped, 1, "a reader-page record that cannot be mapped is counted, not silently dropped");
+  assert.equal(result.withoutBody, 1);
 });
 
-test("legacy_json repo maps the committed reader pages from the real src/data files", async () => {
+test("legacy_json repo maps the committed reader pages from the real src/data files with editorial bodies", async () => {
   const repo = createLegacyJsonRepo(resolve(REPO_ROOT, "src/data"));
   const rows = await repo.list({ limit: 500 });
   const news = rows.filter((r) => r.slug.startsWith("news/"));
@@ -167,6 +199,8 @@ test("legacy_json repo maps the committed reader pages from the real src/data fi
   assert.ok(columns.length >= 1, "at least one legacy column maps");
   assert.ok(rows.every((r) => PublicationRow.safeParse(r).success));
   assert.ok(rows.every((r) => r.publisher === "legacy" && r.legacy_id));
+  assert.ok(rows.every((r) => typeof r.body["article_body"] === "string" && (r.body["article_body"] as string).length > 500), "every legacy reader page carries its editorial body");
+  assert.ok(rows.every((r) => !("article_text" in r.body)));
   const first = rows[0]!;
   assert.deepEqual(await repo.get(first.slug), first);
   const health = await repo.health();
@@ -174,16 +208,23 @@ test("legacy_json repo maps the committed reader pages from the real src/data fi
   assert.equal(health.publishedCount, rows.length);
 });
 
-test("legacy_json repo with a missing directory serves empty and reports it", async () => {
-  const repo = createLegacyJsonRepo(resolve(REPO_ROOT, "does-not-exist"));
+test("legacy_json repo with a missing directory serves empty, reports it and retries on the next call", async () => {
+  let attempts = 0;
+  const repo = createLegacyJsonRepo(resolve(REPO_ROOT, "does-not-exist"), {
+    readFile: (async () => {
+      attempts += 1;
+      throw new Error("ENOENT");
+    }) as never,
+  });
   assert.deepEqual(await repo.list(), []);
   assert.equal(await repo.get("news/x"), null);
   const health = await repo.health();
   assert.equal(health.ok, false);
   assert.match(health.detail ?? "", /legacy data unavailable/);
+  assert.ok(attempts >= 3, "a failed load is not cached");
 });
 
-test("createPublicationsRepo wires legacy_json to the repo root by default", async () => {
+test("createPublicationsRepo wires legacy_json to the repo root when asked", async () => {
   const repo = createPublicationsRepo({ SITE_DATA_SOURCE: "legacy_json" }, { repoRoot: REPO_ROOT });
   assert.equal(repo.source, "legacy_json");
   assert.ok((await repo.list()).length >= 1);

@@ -246,6 +246,6 @@ npm run v2:pipeline -- run --dry-run --replay --fixture sample --json
 
 - The pipeline CLI accepts `--stage <name>`, `--dry-run`, `--fixture <name>`, `--replay`, `--config`, `--sources`, `--fixtures-dir`, `--trigger`, `--json`, `--log-level`. Phase 2 ships fixture adapters only, so a run without `--dry-run`/`--replay` is refused. `--replay` makes every network call throw.
 - Feature flags: `config/pipeline.yaml` (`flags.stages.<stage>`, `flags.publish_target`) or the environment (`CC_FLAG_STAGES_IMAGE=false`, `CC_FLAG_PUBLISH_TARGET=staging`). Unknown flags fail the run.
-- Site data source: `SITE_DATA_SOURCE=legacy_json` (default; maps the committed reader pages in `src/data/`), `supabase` (`SUPABASE_URL` + `SUPABASE_ANON_KEY`, published rows only) or `empty`. `GET /healthz` reports the active source and the published count. Pages are `noindex` until `SITE_INDEXABLE=true`.
+- Site data source: `SITE_DATA_SOURCE=supabase` (`SUPABASE_URL` + `SUPABASE_ANON_KEY`, published rows only), `legacy_json` (maps the committed reader pages in `src/data/`; for local dev and the strangler period, not available in the Vercel function runtime) or `empty`. Unset means `empty`, so a deployment opts in explicitly. `GET /healthz` reports the active source and the published count. Pages are `noindex` until `SITE_INDEXABLE=true`.
 - `supabase/migrations/0001_init.sql` is written but not applied; applying it is a pre-approval item.
 - TypeScript runs directly on Node 22 type stripping: erasable syntax only, `.ts` extensions in relative imports, `import type` for types.

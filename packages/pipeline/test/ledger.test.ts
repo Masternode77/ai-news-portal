@@ -122,10 +122,11 @@ test("SupabaseLedger issues the expected writes in order and surfaces errors", a
 test("MemoryDb upsert is idempotent on the conflict keys", async () => {
   const db = new MemoryDb();
   const row = { canonical_url: "https://a.test/1", title: "one" };
-  assert.deepEqual(await db.upsert("raw_items", [row], ["canonical_url"]), { inserted: 1, updated: 0 });
-  assert.deepEqual(await db.upsert("raw_items", [{ ...row, title: "uno" }], ["canonical_url"]), { inserted: 0, updated: 1 });
+  assert.deepEqual(await db.upsert("raw_items", [row], ["canonical_url"]), { written: 1, inserted: 1, updated: 0 });
+  assert.deepEqual(await db.upsert("raw_items", [{ ...row, title: "uno" }], ["canonical_url"]), { written: 1, inserted: 0, updated: 1 });
   assert.equal(db.size("raw_items"), 1);
   assert.equal((await db.select<{ title: string }>("raw_items", { canonical_url: row.canonical_url }))[0]?.title, "uno");
+  assert.deepEqual(await db.select("raw_items", {}, { columns: ["title"] }), [{ title: "uno" }]);
   assert.equal(await db.update("raw_items", { title: "uno" }, { title: "two" }), 1);
   await assert.rejects(db.upsert("raw_items", [row], []), /conflictKeys/);
 });
@@ -134,13 +135,14 @@ test("SupabaseDb maps port operations onto the client", async () => {
   const { client, calls } = fakeSupabase();
   const db = new SupabaseDb(client);
   await db.insert("sources", [{ id: "a" }]);
-  await db.upsert("raw_items", [{ canonical_url: "u" }], ["canonical_url"]);
-  await db.select("publications", { status: "published" }, { limit: 5 });
-  await db.update("sources", { id: "a" }, { enabled: false });
+  assert.deepEqual(await db.upsert("raw_items", [{ canonical_url: "u" }], ["canonical_url"]), { written: 1, inserted: null, updated: null });
+  await db.select("publications", { status: "published" }, { limit: 5, columns: ["slug", "title"] });
+  assert.equal(await db.update("sources", { id: "a" }, { enabled: false }), null);
   assert.deepEqual(
     calls.map((c) => `${c.table}.${c.op}`),
     ["sources.insert", "raw_items.upsert", "publications.select", "sources.update"],
   );
   assert.deepEqual(calls[1]?.args[1], { onConflict: "canonical_url" });
   assert.deepEqual(calls[2]?.args, [{ status: "published" }, 5]);
+  await assert.rejects(db.upsert("raw_items", [{ canonical_url: "u" }], []), /conflictKeys/);
 });

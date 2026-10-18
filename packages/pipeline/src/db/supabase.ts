@@ -1,6 +1,13 @@
-/** Supabase-backed DbPort, typed against the same minimal client shape as the ledger. */
-import type { DbPort, Row, TableName, UpsertResult } from "@cc/shared";
+/**
+ * Supabase-backed DbPort, typed against the same minimal client shape as the
+ * ledger. PostgREST does not report an inserted/updated split or an affected
+ * row count without a representation, so those come back as null (see the
+ * DbPort contract) and callers that need them select first.
+ */
+import type { DbPort, Row, SelectOptions, TableName, UpsertResult } from "@cc/shared";
 import type { SupabaseLike, SupabaseResult } from "../ledger/supabase.ts";
+
+export const DEFAULT_SELECT_LIMIT = 1000;
 
 function check(result: SupabaseResult, operation: string): void {
   if (result.error) throw new Error(`SupabaseDb.${operation}: ${result.error.message}`);
@@ -21,20 +28,21 @@ export class SupabaseDb implements DbPort {
   }
 
   async upsert<T extends Row>(table: TableName, rows: T[], conflictKeys: readonly string[]): Promise<UpsertResult> {
-    if (rows.length === 0) return { inserted: 0, updated: 0 };
+    if (rows.length === 0) return { written: 0, inserted: 0, updated: 0 };
+    if (conflictKeys.length === 0) throw new Error("SupabaseDb.upsert: conflictKeys must not be empty");
     check(await this.client.from(table).upsert(rows, { onConflict: conflictKeys.join(",") }), `upsert(${table})`);
-    // PostgREST does not report inserted-vs-updated; callers that need the split select first.
-    return { inserted: rows.length, updated: 0 };
+    return { written: rows.length, inserted: null, updated: null };
   }
 
-  async select<T extends Row>(table: TableName, where: Partial<Row> = {}, options: { limit?: number } = {}): Promise<T[]> {
-    const result = await this.client.from(table).select("*").match(where).limit(options.limit ?? 1000);
+  async select<T extends Row>(table: TableName, where: Partial<Row> = {}, options: SelectOptions = {}): Promise<T[]> {
+    const columns = options.columns?.length ? options.columns.join(",") : "*";
+    const result = await this.client.from(table).select(columns).match(where).limit(options.limit ?? DEFAULT_SELECT_LIMIT);
     check(result, `select(${table})`);
     return (result.data ?? []) as T[];
   }
 
-  async update(table: TableName, where: Partial<Row>, patch: Row): Promise<number> {
+  async update(table: TableName, where: Partial<Row>, patch: Row): Promise<number | null> {
     check(await this.client.from(table).update(patch).match(where), `update(${table})`);
-    return -1; // PostgREST returns affected rows only with a representation; Phase 3 refines.
+    return null;
   }
 }

@@ -14,7 +14,7 @@ test("replay mode: a stage that touches ctx.fetch fails with NETWORK_DISABLED", 
       idempotencyKey: () => "net",
       run: async (_input, ctx) => {
         await ctx.fetch("https://example.com/feed.xml");
-        return { rawItems: [], stats: { configured: 0, ok: 0, failed: 0, errors: [] } };
+        return { rawItems: [], stats: { configured: 0, ok: 0, failed: 0, invalid_items: 0, errors: [] } };
       },
     },
     select: (state) => ({ sources: state.sources }),
@@ -58,7 +58,7 @@ test("outside replay mode the injected fetch is passed through to stages", async
       idempotencyKey: () => "probe",
       run: async (_input, ctx) => {
         await ctx.fetch("https://example.test/probe");
-        return { rawItems: [], stats: { configured: 0, ok: 0, failed: 0, errors: [] } };
+        return { rawItems: [], stats: { configured: 0, ok: 0, failed: 0, invalid_items: 0, errors: [] } };
       },
     },
     select: (state) => ({ sources: state.sources }),

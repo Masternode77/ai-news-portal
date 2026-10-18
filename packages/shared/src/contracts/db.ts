@@ -20,16 +20,26 @@ import type { z } from "zod";
 export type Row = Record<string, unknown>;
 
 export interface UpsertResult {
-  inserted: number;
-  updated: number;
+  /** Rows sent to the store. */
+  written: number;
+  /** Inserted-vs-updated split, or null when the backend cannot report it (PostgREST). Callers needing the split select first. */
+  inserted: number | null;
+  updated: number | null;
+}
+
+export interface SelectOptions {
+  limit?: number;
+  /** Columns to return; required for tables with generated columns (publications.search) when the rows are parsed strictly. */
+  columns?: readonly string[];
 }
 
 export interface DbPort {
   readonly kind: "memory" | "supabase";
   insert<T extends Row>(table: TableName, rows: T[]): Promise<T[]>;
   upsert<T extends Row>(table: TableName, rows: T[], conflictKeys: readonly string[]): Promise<UpsertResult>;
-  select<T extends Row>(table: TableName, where?: Partial<Row>, options?: { limit?: number }): Promise<T[]>;
-  update(table: TableName, where: Partial<Row>, patch: Row): Promise<number>;
+  select<T extends Row>(table: TableName, where?: Partial<Row>, options?: SelectOptions): Promise<T[]>;
+  /** Number of rows updated, or null when the backend does not report it. */
+  update(table: TableName, where: Partial<Row>, patch: Row): Promise<number | null>;
 }
 
 export interface StartRunInput {

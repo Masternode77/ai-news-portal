@@ -11,7 +11,9 @@
  * refused until Phase 3 installs real adapters.
  */
 import { parseArgs } from "node:util";
+import { realpathSync } from "node:fs";
 import { resolve } from "node:path";
+import { pathToFileURL } from "node:url";
 import { createClient } from "@supabase/supabase-js";
 import { ConfigError, createLogger, isLogLevel, loadPipelineConfig, loadSourcesConfig } from "@cc/shared";
 import type { DbPort, Ledger, Logger, RunTrigger, StageAdapters, StageName } from "@cc/shared";
@@ -104,12 +106,24 @@ function buildAdapters(cli: Cli, llmProvider: string): StageAdapters {
   };
 }
 
-function buildSupabase(env: NodeJS.ProcessEnv): SupabaseLike | null {
+/** The ledger keeps the real fetch even in --replay, where the global fetch is disabled for adapters. */
+function buildSupabase(env: NodeJS.ProcessEnv, fetchImpl: typeof globalThis.fetch): SupabaseLike | null {
   const url = env["SUPABASE_URL"];
   const key = env["SUPABASE_SERVICE_ROLE_KEY"];
   if (!url || !key) return null;
   // Structural cast: SupabaseClient satisfies the minimal shape the ledger needs.
-  return createClient(url, key) as unknown as SupabaseLike;
+  return createClient(url, key, { global: { fetch: fetchImpl } }) as unknown as SupabaseLike;
+}
+
+/** True when this file is the process entry, also through the `cc-pipeline` bin symlink or a symlinked checkout. */
+function isMainModule(): boolean {
+  const entry = process.argv[1];
+  if (!entry) return false;
+  try {
+    return pathToFileURL(realpathSync(entry)).href === import.meta.url;
+  } catch {
+    return false;
+  }
 }
 
 export async function main(argv: string[], env: NodeJS.ProcessEnv, stdout: (line: string) => void): Promise<number> {
@@ -122,8 +136,10 @@ export async function main(argv: string[], env: NodeJS.ProcessEnv, stdout: (line
     if (!cli.dryRun && !cli.replay) {
       throw new UsageError("Phase 2 ships fixture adapters only: pass --dry-run and/or --replay (live adapters land in Phase 3)");
     }
+    const realFetch = globalThis.fetch;
     if (cli.replay) {
-      // Defense in depth: the runner injects a throwing ctx.fetch; this closes the global door too.
+      // Defense in depth: the runner injects a throwing ctx.fetch; this closes the global door for adapters too.
+      // The ledger client below is built with `realFetch` so a replay can still write a real run ledger.
       globalThis.fetch = disabledFetch as typeof globalThis.fetch;
     }
 
@@ -137,7 +153,7 @@ export async function main(argv: string[], env: NodeJS.ProcessEnv, stdout: (line
       ledger = new MemoryLedger();
       db = new MemoryDb();
     } else {
-      const client = buildSupabase(env);
+      const client = buildSupabase(env, realFetch);
       if (!client) throw new ConfigError("SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY are required without --dry-run (names only; values stay in the environment)");
       ledger = new SupabaseLedger(client);
       db = new SupabaseDb(client);
@@ -173,8 +189,7 @@ export async function main(argv: string[], env: NodeJS.ProcessEnv, stdout: (line
   }
 }
 
-const invokedDirectly = process.argv[1] !== undefined && import.meta.url === new URL(`file://${resolve(process.argv[1])}`).href;
-if (invokedDirectly) {
+if (isMainModule()) {
   main(process.argv.slice(2), process.env, (line) => process.stdout.write(`${line}\n`)).then(
     (code) => {
       process.exitCode = code;

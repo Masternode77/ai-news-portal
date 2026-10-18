@@ -7,6 +7,10 @@
 import { z } from "zod";
 
 export const Uuid = z.uuid();
+/** Only http(s) URLs are accepted anywhere a URL is stored or rendered: a `javascript:` or `data:` URL would otherwise reach `<a href>` / `<img src>`. */
+export const HttpUrl = z.url({ protocol: /^https?$/ });
+/** Image locations: a site-relative path or an https URL. */
+export const ImagePath = z.string().regex(/^(\/[^\s"'<>]+|https:\/\/[^\s"'<>]+)$/, "site-relative path or https URL");
 export const IsoDateTime = z.iso.datetime({ offset: true });
 export const IsoDate = z.iso.date();
 export const JsonRecord = z.record(z.string(), z.unknown());
@@ -70,11 +74,11 @@ export const SourceRow = z.strictObject({
   id: z.string().min(1).max(64),
   name: z.string().min(1),
   type: SourceType,
-  url: z.url(),
+  url: HttpUrl,
   tier: SourceTier,
   enabled: z.boolean(),
   text_rights: TextRights,
-  terms_url: z.url().nullable(),
+  terms_url: HttpUrl.nullable(),
   reviewed_at: IsoDate.nullable(),
   last_ok_at: IsoDateTime.nullable(),
   fail_streak: NonNegativeInt,
@@ -88,7 +92,7 @@ export type SourceRow = z.infer<typeof SourceRow>;
 export const RawItemRow = z.strictObject({
   id: Uuid,
   source_id: z.string().min(1),
-  canonical_url: z.url(),
+  canonical_url: HttpUrl,
   content_hash: z.string().regex(/^[a-f0-9]{64}$/).nullable(),
   title: z.string().min(1),
   published_at_source: IsoDateTime.nullable(),
@@ -182,7 +186,7 @@ export const ImageProvenance = z.strictObject({
 export type ImageProvenance = z.infer<typeof ImageProvenance>;
 
 export const ImageResult = z.strictObject({
-  path: z.string().min(1),
+  path: ImagePath,
   alt: z.string(),
   provenance: ImageProvenance,
   placeholder: z.boolean(),
@@ -191,7 +195,7 @@ export const ImageResult = z.strictObject({
 export type ImageResult = z.infer<typeof ImageResult>;
 
 export const PublicationSource = z.strictObject({
-  url: z.url(),
+  url: HttpUrl,
   name: z.string().min(1),
   published_at: IsoDateTime.nullable(),
 });

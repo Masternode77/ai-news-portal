@@ -33,6 +33,28 @@ test("redacts credential-looking keys at any depth, including arrays", () => {
   assert.ok(!JSON.stringify(lines).includes("svc-value"));
 });
 
+test("keeps usage counters and ordinary words readable while redacting credential keys", () => {
+  const { lines, logger } = capture();
+  logger.info("usage", {
+    usage: { inputTokens: 12, outputTokens: 3, cacheReadTokens: 0 },
+    output_tokens: 3,
+    maxOutputTokens: 100,
+    secretary: "ok",
+    keyword: "ok",
+    apiKey: "x",
+    client_secret: "x",
+    credentials: "x",
+    passwordHash: "x",
+  });
+  const entry = lines[0] as Record<string, unknown>;
+  assert.deepEqual(entry["usage"], { inputTokens: 12, outputTokens: 3, cacheReadTokens: 0 });
+  assert.equal(entry["output_tokens"], 3);
+  assert.equal(entry["maxOutputTokens"], 100);
+  assert.equal(entry["secretary"], "ok");
+  assert.equal(entry["keyword"], "ok");
+  for (const key of ["apiKey", "client_secret", "credentials", "passwordHash"]) assert.equal(entry[key], "[redacted]", key);
+});
+
 test("truncates long strings so source bodies cannot flood logs", () => {
   const long = "x".repeat(MAX_STRING_LENGTH + 50);
   const out = redact({ body: long }) as { body: string };

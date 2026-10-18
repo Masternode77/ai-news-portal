@@ -80,7 +80,7 @@ test("a failing source becomes a dead letter and the run is partial, not failed"
   assert.equal(result.status, "partial");
   assert.equal(result.funnel.sources_failed, 1);
   assert.equal(result.funnel.items_fetched, 0);
-  assert.equal(result.funnel.top_error, "Error");
+  assert.equal(result.funnel.top_error, "SOURCE_UNREACHABLE", "top_error carries the taxonomy code, not the error class");
   const dump = await ledger.dump();
   assert.equal(dump.deadLetters.length, 1);
   assert.equal(dump.deadLetters[0]?.ref_id, "eia-today-in-energy");
@@ -109,8 +109,45 @@ test("a budget stop marks the run budget_stop and later stages still run", async
   const result = await runPipeline(baseRunOptions({ ledger, stages }));
   assert.equal(result.status, "budget_stop");
   assert.ok(result.costTotalUsd > 2);
+  assert.equal(result.funnel.top_error, "BUDGET_EXCEEDED");
   assert.equal(result.stages.find((s) => s.stage === "publish")?.status, "done");
   assert.equal((await ledger.dump()).runs[0]?.status, "budget_stop");
+});
+
+test("a malformed item is dead-lettered on its own and the rest of the source survives", async () => {
+  const ledger = new MemoryLedger();
+  const options = baseRunOptions({ ledger });
+  options.adapters.sources["rss"] = {
+    type: "rss",
+    fetch: async (source, ctx) => [
+      { source_id: source.id, canonical_url: "https://ok.test/1", title: "fine", fetched_at: ctx.now.toISOString() },
+      { source_id: source.id, canonical_url: "/relative/link", title: "bad url", fetched_at: ctx.now.toISOString() },
+      { source_id: source.id, canonical_url: "javascript:alert(1)", title: "bad scheme", fetched_at: ctx.now.toISOString() },
+    ],
+  };
+  const result = await runPipeline(options);
+  assert.equal(result.stages.find((s) => s.stage === "ingest")?.status, "done");
+  assert.equal(result.funnel.items_fetched, 1);
+  assert.equal(result.funnel.sources_ok, 1);
+  assert.equal(result.funnel.sources_failed, 0);
+  assert.equal(result.funnel.top_error, "ITEM_INVALID");
+  assert.equal(result.status, "partial");
+  const dump = await ledger.dump();
+  assert.equal(dump.deadLetters.length, 2);
+  assert.deepEqual(
+    dump.deadLetters.map((d) => d.ref_id),
+    ["/relative/link", "javascript:alert(1)"],
+  );
+  assert.equal(dump.stageEvents.find((e) => e.stage === "ingest")?.counts["items_invalid"], 2);
+});
+
+test("errorCode reduces messages to taxonomy codes", async () => {
+  const { errorCode } = await import("../src/runner.ts");
+  assert.equal(errorCode("Error: SOURCE_UNREACHABLE: 503"), "SOURCE_UNREACHABLE");
+  assert.equal(errorCode("BudgetExceededError: BUDGET_EXCEEDED: spent USD 2.0100 of cap 2.00"), "BUDGET_EXCEEDED");
+  assert.equal(errorCode("NO_ADAPTER: no source adapter registered"), "NO_ADAPTER");
+  assert.equal(errorCode("TypeError: simulated crash"), "TypeError");
+  assert.equal(errorCode("something odd happened"), "something odd happened");
 });
 
 test("--stage runs only the named stage and marks the rest skipped", async () => {
@@ -119,6 +156,7 @@ test("--stage runs only the named stage and marks the rest skipped", async () =>
     result.stages.map((s) => [s.stage, s.status]),
     STAGE_NAMES.map((name) => [name, name === "image" ? "done" : "skipped"]),
   );
+  assert.equal(result.stages[0]?.reason, "not_selected");
   assert.equal(result.funnel.items_fetched, 0);
   await assert.rejects(runPipeline(baseRunOptions({ only: "render" as never })), /unknown stage/);
 });

@@ -18,6 +18,8 @@ export const SourceStats = z.strictObject({
   configured: NonNegativeInt,
   ok: NonNegativeInt,
   failed: NonNegativeInt,
+  /** Items a source returned that failed RawItemInsert validation (dead-lettered individually). */
+  invalid_items: NonNegativeInt,
   errors: z.array(z.strictObject({ source_id: z.string(), error: z.string() })),
 });
 export type SourceStats = z.infer<typeof SourceStats>;
@@ -49,7 +51,7 @@ export type PipelineState = z.infer<typeof PipelineState>;
 export function initialState(sources: SourceConfig[]): PipelineState {
   return {
     sources,
-    sourceStats: { configured: 0, ok: 0, failed: 0, errors: [] },
+    sourceStats: { configured: 0, ok: 0, failed: 0, invalid_items: 0, errors: [] },
     rawItems: [],
     itemsNew: 0,
     candidates: [],

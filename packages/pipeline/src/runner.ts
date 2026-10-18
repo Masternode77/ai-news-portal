@@ -58,6 +58,8 @@ export interface StageResult {
   stage: StageName;
   status: Exclude<StageStatus, "started">;
   counts: Record<string, number>;
+  /** Why a stage was skipped: `flag_off` or `not_selected` (--stage). */
+  reason?: "flag_off" | "not_selected";
   error?: string;
   durationMs: number;
 }
@@ -83,11 +85,26 @@ function errorMessage(error: unknown): string {
   return String(error);
 }
 
+/**
+ * Reduces an error message to its taxonomy code so funnel.top_error compares
+ * with the Phase 0 reason codes: `SOURCE_UNREACHABLE: 503` → SOURCE_UNREACHABLE,
+ * `BudgetExceededError: BUDGET_EXCEEDED: …` → BUDGET_EXCEEDED, and a plain
+ * `TypeError: boom` → TypeError.
+ */
+export function errorCode(message: string): string {
+  const stripped = message.replace(/^[A-Za-z]*Error:\s*/, "");
+  const code = stripped.match(/^([A-Z][A-Z0-9_]{2,})\b/)?.[1];
+  if (code) return code;
+  const name = message.match(/^([A-Za-z]*Error)\b/)?.[1];
+  if (name) return name;
+  return stripped.split(":")[0]?.trim() || message;
+}
+
 function topError(errors: string[]): string | null {
   if (errors.length === 0) return null;
   const tally = new Map<string, number>();
   for (const error of errors) {
-    const code = error.split(":")[0]?.trim() || error;
+    const code = errorCode(error);
     tally.set(code, (tally.get(code) ?? 0) + 1);
   }
   return [...tally.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))[0]?.[0] ?? null;
@@ -176,8 +193,8 @@ export async function runPipeline(options: RunOptions): Promise<RunResult> {
       if (!flagOn || !selected) {
         const reason = !flagOn ? "flag_off" : "not_selected";
         const counts = { skipped: 1 };
-        await ledger.stageFinished(runId, spec.name, clock(), { status: "skipped", counts: { ...counts, reason: reason === "flag_off" ? 0 : 1 } });
-        stageResults.push({ stage: spec.name, status: "skipped", counts, durationMs: 0 });
+        await ledger.stageFinished(runId, spec.name, clock(), { status: "skipped", counts: { ...counts, reason } });
+        stageResults.push({ stage: spec.name, status: "skipped", counts, reason, durationMs: 0 });
         stageLogger.info("stage skipped", { reason });
         continue;
       }

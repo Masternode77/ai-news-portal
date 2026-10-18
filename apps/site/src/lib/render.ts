@@ -15,8 +15,9 @@ export interface BodySection {
 const KNOWN_FIELDS: { key: string; heading: string | null }[] = [
   { key: "deck", heading: null },
   { key: "thesis_ko", heading: "핵심 주장" },
+  { key: "thesis", heading: "핵심 주장" },
   { key: "summary_ko", heading: "요약" },
-  { key: "article_text", heading: null },
+  { key: "article_body", heading: null },
   { key: "body_ko", heading: null },
   { key: "why_it_matters_ko", heading: "왜 중요한가" },
   { key: "why_it_matters", heading: "왜 중요한가" },

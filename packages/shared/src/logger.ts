@@ -8,8 +8,13 @@ export type LogLevel = "debug" | "info" | "warn" | "error";
 
 const LEVEL_RANK: Record<LogLevel, number> = { debug: 10, info: 20, warn: 30, error: 40 };
 
-/** Matches credential-looking keys: `*_key`, `*-key`, `apikey`, `token`, `secret`, `password`, `authorization`, `cookie`, `credential`. */
-export const SENSITIVE_KEY_PATTERN = /(api[-_]?key|(^|[-_])key$|secret|token|password|passwd|authorization|cookie|credential)/i;
+/**
+ * Matches credential-looking keys as whole words at the end of the key
+ * (`api_key`, `x-api-key`, `SUPABASE_SERVICE_ROLE_KEY`, `access_token`, `token`,
+ * `client_secret`, `password`, `Authorization`, `cookie`, `credentials`) while
+ * leaving usage counters such as `inputTokens` / `output_tokens` readable.
+ */
+export const SENSITIVE_KEY_PATTERN = /(^|[-_])(api[-_]?key|key|secret|token|password\w*|passwd|authorization|cookie|credentials?)$/i;
 export const MAX_STRING_LENGTH = 2000;
 const MAX_DEPTH = 8;
 

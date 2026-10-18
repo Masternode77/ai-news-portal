@@ -3,7 +3,7 @@
  * typo in YAML fails at load time instead of silently doing nothing.
  */
 import { z } from "zod";
-import { IsoDate, RedirectRow, SourceTier, SourceType, STAGE_NAMES, TextRights } from "./tables.ts";
+import { HttpUrl, IsoDate, RedirectRow, SourceTier, SourceType, STAGE_NAMES, TextRights } from "./tables.ts";
 
 export const PublishTarget = z.enum(["none", "staging", "production"]);
 export type PublishTarget = z.infer<typeof PublishTarget>;
@@ -81,11 +81,11 @@ export const SourceConfig = z.strictObject({
   id: z.string().regex(/^[a-z0-9][a-z0-9-]{1,63}$/, "kebab-case id"),
   name: z.string().min(1),
   type: SourceType,
-  url: z.url(),
+  url: HttpUrl,
   tier: SourceTier,
   enabled: z.boolean(),
   text_rights: TextRights,
-  terms_url: z.url().optional(),
+  terms_url: HttpUrl.optional(),
   reviewed_at: IsoDate.optional(),
   pool_max_age_days: z.number().int().positive().optional(),
 });

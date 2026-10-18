@@ -17,6 +17,7 @@ export type {
   Ledger,
   LedgerDump,
   Row,
+  SelectOptions,
   StageFinishInput,
   StartRunInput,
   UpsertResult,

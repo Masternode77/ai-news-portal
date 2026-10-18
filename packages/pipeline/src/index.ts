@@ -1,4 +1,4 @@
-export { runPipeline, buildFunnel, disabledFetch, NETWORK_DISABLED_MESSAGE } from "./runner.ts";
+export { runPipeline, buildFunnel, disabledFetch, errorCode, NETWORK_DISABLED_MESSAGE } from "./runner.ts";
 export type { RunOptions, RunResult, StageResult } from "./runner.ts";
 export { createBudget, BudgetExceededError } from "./budget.ts";
 export { MemoryLedger, SupabaseLedger } from "./ledger/index.ts";

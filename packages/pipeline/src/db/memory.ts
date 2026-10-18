@@ -1,5 +1,5 @@
 /** In-memory DbPort for dry-run and tests. Idempotent upserts keyed by the given conflict columns. */
-import type { DbPort, Row, TableName, UpsertResult } from "@cc/shared";
+import type { DbPort, Row, SelectOptions, TableName, UpsertResult } from "@cc/shared";
 
 function matches(row: Row, where: Partial<Row> | undefined): boolean {
   if (!where) return true;
@@ -41,13 +41,14 @@ export class MemoryDb implements DbPort {
         updated += 1;
       }
     }
-    return { inserted, updated };
+    return { written: rows.length, inserted, updated };
   }
 
-  async select<T extends Row>(table: TableName, where?: Partial<Row>, options: { limit?: number } = {}): Promise<T[]> {
+  async select<T extends Row>(table: TableName, where?: Partial<Row>, options: SelectOptions = {}): Promise<T[]> {
     const rows = this.table(table).filter((row) => matches(row, where));
     const limited = options.limit === undefined ? rows : rows.slice(0, options.limit);
-    return structuredClone(limited) as T[];
+    const projected = options.columns ? limited.map((row) => Object.fromEntries(options.columns!.map((c) => [c, row[c]]))) : limited;
+    return structuredClone(projected) as T[];
   }
 
   async update(table: TableName, where: Partial<Row>, patch: Row): Promise<number> {
