@@ -36,7 +36,7 @@
 - 레거시(`scripts/`, `src/`, `tests/`, `config/*.yml`, `.github/workflows/update-news.yml` 등)는 Phase 5 별도 PR 전까지 건드리지 않는다. 루트 `package.json`은 `workspaces`와 `v2:*` 스크립트만 추가됐고 레거시 스크립트는 그대로다.
 - TypeScript는 Node 22의 타입 스트리핑으로 **그대로 실행**된다(빌드 산출물 없음). 따라서 erasable 문법만 쓴다: `enum`·`namespace`·parameter properties 금지(`erasableSyntaxOnly`), 상대 import는 `.ts` 확장자 포함, 타입은 `import type`.
 - 명령: `npm run v2:typecheck`, `npm run v2:test`, `npm run v2:build`, `npm run v2:pipeline -- run --dry-run --replay --fixture sample --json`. 레거시 `npm test`는 `astro build`를 돌리므로 리빌드 세션에서는 돌리지 않는다.
-- 라이브 수집(3a): `npm run v2:pipeline -- run --dry-run --live --stage ingest --json`는 실제 피드를 읽되 메모리 원장·DB에만 쓴다. `--live`는 `--dry-run` 필수, `--replay`와 배타. 세션은 피드 호스트에 닿지 않으므로 라이브 증거는 `.github/workflows/rebuild-ingest-dry-run.yml`(workflow_dispatch, 시크릿 없음)의 step summary로 받는다. `config/sources.yaml` 82행은 `packages/pipeline/tools/migrate-legacy-registry.ts`가 1회 생성했고 이후 수동 편집한다(자동 비활성된 소스는 `reviewed_at`을 그 날짜 뒤로 올리면 재활성).
+- 라이브 수집(3a): `npm run v2:pipeline -- run --dry-run --live --stage ingest --json`는 실제 피드를 읽되 메모리 원장·DB에만 쓴다. Phase 4 전에는 모든 런에 `--dry-run`이 필수(`--replay`만 주면 어댑터는 오프라인이어도 실제 원장을 쓰게 되므로 거부), `--live`는 `--replay`와 배타. 세션은 피드 호스트에 닿지 않으므로 라이브 증거는 `.github/workflows/rebuild-ingest-dry-run.yml`(workflow_dispatch, 시크릿 없음)의 step summary로 받는다. `config/sources.yaml` 82행은 `packages/pipeline/tools/migrate-legacy-registry.ts`가 1회 생성했고 이후 수동 편집한다(자동 비활성된 소스는 `reviewed_at`을 그 날짜 뒤로 올리면 재활성).
 - 기능 플래그: `config/pipeline.yaml`의 `flags.stages.<stage>`와 `flags.publish_target`, 환경 변수 `CC_FLAG_STAGES_<STAGE>`·`CC_FLAG_PUBLISH_TARGET`로 override. 알 수 없는 플래그는 실행 실패다.
 - 네트워크: `--replay`에서는 `ctx.fetch`가 throw 한다. 어댑터는 `ctx.fetch`만 쓴다. CI는 fixture만 읽는다(R7).
 
