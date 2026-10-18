@@ -30,7 +30,7 @@ ingest:                        # Phase 3a live ingest; every key is optional (de
   extract_concurrency: 3       # article pages extracted at once
   feed_timeout_ms: 20000
   page_timeout_ms: 12000
-  max_body_bytes: 2097152      # 2 MiB streaming cap per response
+  max_body_bytes: 6291456      # 6 MiB streaming cap per response (Substack full-content feeds exceed 2 MiB)
   retry_attempts: 1            # per source, timeouts/5xx/429 only (the whole-run retry is gone)
   retry_backoff_ms: 2000
   snippet_chars: 220

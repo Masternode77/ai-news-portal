@@ -239,7 +239,10 @@ export async function safeFetchText(url: string, options: SafeFetchOptions): Pro
       const location = response.headers.get("location");
       if (!location) throw new SourceFetchError("SOURCE_UNREACHABLE", `redirect ${response.status} without location`, response.status);
       if (redirects >= maxRedirects) throw new SourceFetchError("SOURCE_UNREACHABLE", `more than ${maxRedirects} redirects`, response.status);
-      current = new URL(location, target.href).href;
+      const next = new URL(location, target.href);
+      // A redirect that downgrades to http is retried over https (capacitymedia, tomshardware); plain http is never fetched.
+      if (next.protocol === "http:") next.protocol = "https:";
+      current = next.href;
       continue;
     }
     if (response.status >= 500 || response.status === 429) throw new SourceFetchError("SOURCE_UNREACHABLE", `http ${response.status}`, response.status);

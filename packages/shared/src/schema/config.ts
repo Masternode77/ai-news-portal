@@ -71,7 +71,8 @@ export const IngestConfig = z.strictObject({
   extract_concurrency: z.number().int().positive().max(16).default(3),
   feed_timeout_ms: z.number().int().positive().default(20_000),
   page_timeout_ms: z.number().int().positive().default(12_000),
-  max_body_bytes: z.number().int().positive().default(2 * 1024 * 1024),
+  /** Streaming cap per response; Substack full-content feeds exceed 2 MiB (semianalysis 2026-10-18). */
+  max_body_bytes: z.number().int().positive().default(6 * 1024 * 1024),
   /** Retries per source for timeouts and 5xx; the whole-run retry is gone. */
   retry_attempts: z.number().int().nonnegative().max(3).default(1),
   retry_backoff_ms: z.number().int().nonnegative().default(2_000),

@@ -9,7 +9,7 @@
 import type { ExtractedText, IngestConfig, RawItemInsert, SourceAdapter, SourceConfig, SourceFetchDetail, SourceFetchStats, StageContext } from "@cc/shared";
 import { parsePublishedAt, olderThanDays } from "../../lib/dates.ts";
 import { cleanText, truncate } from "../../lib/html.ts";
-import { cleanItemUrl, googleReleaseNoteTarget, hostAllowed, hostOf, pathWithinPrefix, repairFeedLink } from "../../lib/url.ts";
+import { cleanItemUrl, googleReleaseNoteTarget, hostAllowed, hostOf, pathWithinPrefix, registrableDomain, repairFeedLink } from "../../lib/url.ts";
 import { ecPressApiUrl, runExtraction } from "./extract.ts";
 import { parseFeed } from "./feed-parser.ts";
 import type { FeedItem } from "./feed-parser.ts";
@@ -25,10 +25,12 @@ export interface LiveRssOptions {
   resolveHost?: HostResolver;
 }
 
+/** The feed host, its registrable domain and every subdomain of it (feeds redirect between `feeds.`/`www.`/bare), plus `extract.hosts`. */
 export function allowedHostsFor(source: SourceConfig): string[] {
   const feedHost = hostOf(source.url);
+  const domain = feedHost ? registrableDomain(feedHost) : null;
   const configured = source.extract?.hosts ?? [];
-  return [...new Set([feedHost, ...configured].filter((h): h is string => typeof h === "string" && h.length > 0))];
+  return [...new Set([feedHost, domain, domain ? `*.${domain}` : null, ...configured].filter((h): h is string => typeof h === "string" && h.length > 0))];
 }
 
 async function withRetry<T>(attempt: () => Promise<T>, retries: number, backoffMs: number): Promise<T> {

@@ -92,9 +92,10 @@ test("mapFeedItem skip reasons: age window, missing date, title length, no url, 
   assert.equal(mapFeedItem(entry({ link: null, guid: "not-a-url" }), source(), options(), NOW, hosts).skip, "no_url");
   // Link-only and rewrite-only items are never fetched, so any public https host is fine.
   assert.equal(mapFeedItem(entry(), source({ text_rights: "link_only" }), options(), NOW, hosts).skip, null);
-  // A full-rights source fetches the page, so the host allowlist applies.
+  // A full-rights source fetches the page, so the host allowlist applies (the publisher's own domain is always allowed).
   const full = source({ text_rights: "full" });
-  assert.equal(mapFeedItem(entry(), full, options(), NOW, allowedHostsFor(full)).skip, "offhost");
+  assert.equal(mapFeedItem(entry(), full, options(), NOW, allowedHostsFor(full)).skip, null, "www.example.com is the feed's publisher domain");
+  assert.equal(mapFeedItem(entry({ link: "https://www.elsewhere.net/a" }), full, options(), NOW, allowedHostsFor(full)).skip, "offhost");
   const fullWithHosts = source({ text_rights: "full", extract: { kind: "generic", hosts: ["*.example.com"] } });
   assert.equal(mapFeedItem(entry(), fullWithHosts, options(), NOW, allowedHostsFor(fullWithHosts)).skip, null);
   // A source-level age override beats the default window.

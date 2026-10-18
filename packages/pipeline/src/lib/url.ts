@@ -92,6 +92,22 @@ export function hostOf(url: string): string | null {
 }
 
 /** Exact host match, or `*.suffix` for any subdomain (never the bare suffix). */
+const GENERIC_SECOND_LEVEL = new Set(["co", "com", "org", "net", "gov", "edu", "ac", "or", "ne", "go", "re", "mil"]);
+
+/**
+ * Heuristic registrable domain: the last two labels, or three under a two-letter
+ * TLD with a generic second level (`co.uk`, `co.kr`, `go.kr`). Feeds commonly
+ * redirect between `feeds.`, `rss.`, `www.` and the bare domain of one publisher.
+ */
+export function registrableDomain(hostname: string): string {
+  const labels = normalizeHost(hostname).split(".").filter(Boolean);
+  if (labels.length <= 2) return labels.join(".");
+  const tld = labels[labels.length - 1]!;
+  const second = labels[labels.length - 2]!;
+  const take = tld.length === 2 && GENERIC_SECOND_LEVEL.has(second) ? 3 : 2;
+  return labels.slice(-take).join(".");
+}
+
 export function hostAllowed(hostname: string, allowed: readonly string[]): boolean {
   const host = normalizeHost(hostname);
   return allowed.some((candidate) => {

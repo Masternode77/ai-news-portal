@@ -70,15 +70,45 @@
 | 본문 추출 | `SourceAdapter.extract`: generic(article/main + `<p>` 필터 + 한계) + 특수 4종. `text_rights: full`만 전문 추출, `rewrite_only`는 피드 본문 필드(contentEncoded 등)까지만 저장 | 재서술 규칙과 정합 |
 | 라이브 dry-run | 세션은 피드 호스트에 닿지 않음 → `workflow_dispatch`(`rebuild-ci.yml`(`ingest-live-dry-run` 잡))로 GitHub 러너에서 `pipeline run --dry-run --stage ingest --json` 실행, 산출 JSON을 아티팩트로 | 브리프 공통 절차 4 |
 
-## 4. 완료 기준 대조 계획
+## 4. 완료 기준 대조 (2026-10-18)
 
-| 기준 | 증명 방법 |
-|---|---|
-| 신규 소스 추가 ≤ YAML 10줄 | `config/sources.yaml`에 샘플 추가 diff(≤10줄) + 스키마 테스트 |
-| 단일 소스 실패가 런을 중단시키지 않음 | Phase 2 테스트 유지 + 라이브 어댑터에서 타임아웃·5xx·파싱 오류 fixture 3종 |
-| 사이클당 `items_fetched`가 Phase 0 대비 보고 | dry-run JSON의 funnel + 소스별 counts를 Phase 0 `02-funnel.md`(평균 28.1, 캡 30)와 나란히 표로 |
-| tier·health 추적 | 메모리 DbPort에서 `sources` 행 갱신 테스트(성공률·last_ok·fail_streak·auto-disable) |
-| 후보 소스 확장 목록 | `docs/migration/notes/3a-source-candidates.md` |
+| 기준 | 결과 | 근거 |
+|---|---|---|
+| 신규 소스 추가 ≤ YAML 10줄 | 통과 | `config/sources.yaml` 82행 중 `extract` 없는 53행 전부 ≤10줄(`migrate-registry.test.ts`가 강제) |
+| 단일 소스 실패가 런을 중단시키지 않음 | 통과(로컬+라이브) | 라이브 dry-run에서 9개 소스 실패 → dead letter 9건, 런 `partial`로 완주(71 소스 수집). 테스트: 타임아웃·5xx 재시도 1회, 404 미재시도, 비피드 `FEED_PARSE`, 잘못된 항목 개별 dead letter |
+| 사이클당 `items_fetched`가 Phase 0 대비 보고 | 통과 | 아래 §4.1 표. funnel + `stage_events.counts` + 소스별 `sourceStats`(`--json`, step summary) |
+| tier·health 추적 | 통과 | `sources` 행 `last_ok_at`·`fail_streak`·`health{success_rate_7d,last_error,last_error_at,items_last_run,auto_disabled_at,recent}`; 연속 실패 N회 → DB `enabled=false` + `SOURCE_AUTO_DISABLED`; `reviewed_at`으로 재활성(`ingest-stage.test.ts`, `review-3a.test.ts`) |
+| 후보 소스 확장 목록 | 통과 | `docs/migration/notes/3a-source-candidates.md` |
+| 플래그 기본값 OFF | 통과 | 라이브 어댑터는 `--live`에서만, 모든 런 `--dry-run` 필수. CI·테스트는 fixture만(R7), dead-proxy 하에서 18/18 |
+
+### 4.1 라이브 dry-run — GitHub Actions `rebuild-ci.yml` › `ingest-live-dry-run` (run 39103566574, `4ebf408d`, 2026-10-18T06:18:47Z, 일요일)
+
+| 지표 | Phase 0 레거시(`02-funnel.md`) | 3a 라이브 dry-run (run 1) |
+|---|---|---|
+| 수집 시도 소스 | 권리 통과 28행, 실제 풀 기여 10~15 피드 | 80 enabled 전부(링크 전용 레인 통합) → ok 71 / failed 9 |
+| `items_fetched` / 사이클 | 평균 28.1 (캡 30) | **286** 고유 URL (소스당 캡 6, 10일 창) |
+| `items_new` | 측정 불가(원장 없음) | 286 (메모리 DB 첫 런; 소스 간 중복 8) |
+| 피드 나열 항목 | — | 2,803 listed → skipped 2,509 (`too_old` 1,846 · `capped` 643 · `section_missing` 13 · `title_length` 6 · `date_future` 1) |
+| 날짜 규칙 | 파싱 실패 → 현재 시각 | 누락·오류·미래 날짜는 보고(skip 사유), 대체 없음 |
+| 본문 추출(`full` 29행) | 추출 실패 시 fail-closed, 수치 없음 | 68건 성공 / 0 실패 / 218 skip(= `rewrite_only` 항목, 의도) |
+| 소요 | 런 전체 수 분 | ingest 16.4 s (80 피드 동시 6 + 추출 동시 3) |
+| tier별 | — | tier 1: 9/10 ok, kept 44 · tier 2: 30/36, 122 · tier 3: 32/34, 128 |
+
+실패 9건(dead letter)과 조치:
+
+| source | tier | code | 원인 | 조치 |
+|---|---|---|---|---|
+| nrc-news | 1 | `HTTP_403` | 봇 UA 차단 추정(`www.nrc.gov`) | 미해결. tier 1 알림 대상(3i). 소스별 UA override 또는 대체 피드 검토(후속) |
+| bloomberg-technology | 2 | `HOST_NOT_ALLOWED` | `feeds.bloomberg.com` → `www.bloomberg.com` 리다이렉트가 허용 호스트 밖 | **수정**: 피드 호스트의 등록 도메인(`*.bloomberg.com`)을 항상 허용(`allowedHostsFor`) |
+| blocks-and-files | 2 | `HOST_NOT_ALLOWED` | `blocksandfiles.com` → `www.` | 동일 수정 |
+| capacity-media | 2 | `UNSAFE_URL https_required` | `http://`로 다운그레이드 리다이렉트 | **수정**: 다운그레이드 리다이렉트는 `https`로 재시도(평문 fetch는 여전히 없음) |
+| toms-hardware | 3 | `UNSAFE_URL https_required` | 동일 | 동일 수정 |
+| semianalysis | 2 | `BODY_TOO_LARGE` | Substack 전문 피드 > 2 MiB | **수정**: `ingest.max_body_bytes` 6 MiB |
+| nextplatform | 2 | `FEED_PARSE` | `/feed/` → `?lab_viewport=rss`(HTML 2 KB, 봇 챌린지) | 미해결. 후보 목록의 대체 피드 확인(후속) |
+| insidehpc | 2 | `SOURCE_UNREACHABLE fetch failed` | 러너에서 TLS/DNS 실패(1회 재시도 후) | 재실행에서 관찰 |
+| venturebeat-ai | 3 | `SOURCE_UNREACHABLE http 429` | 레이트리밋(1회 재시도 후) | 재실행에서 관찰; 소스 health가 연속 실패를 추적 |
+
+kept 0이지만 정상 동작: `google-cloud-tpu-releases`(30건 전부 10일 밖), `theregister-data-centre`(25), `eia-press`(12), `uk-dsit`(20), `fabricated-knowledge`(20), `arxiv-cs-*` 3개(일요일 빈 피드), `ofgem`(빈 피드), `epoch-ai-gradient-updates`(색인 146 KB에서 21일 창 내 링크 0 — 최근 글 부재 또는 색인 구조 변경, 다음 런에서 확인). `google-cloud-ai-releases`의 `section_missing` 13은 Gemini 섹션이 없는 날짜(의도). 긴 제목 절단·`date_future` 보고·Drupal 날짜·Atom(gov.uk)·RDF 경로 모두 라이브에서 확인됐다.
 
 ## 5. 열린 질문 (Josh)
 

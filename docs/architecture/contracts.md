@@ -167,7 +167,7 @@ ingest:                        # Phase 3a, 전부 선택(기본값은 packages/s
   extract_concurrency: 3
   feed_timeout_ms: 20000
   page_timeout_ms: 12000
-  max_body_bytes: 2097152
+  max_body_bytes: 6291456
   retry_attempts: 1            # 소스별, 타임아웃·5xx·429만
   retry_backoff_ms: 2000
   snippet_chars: 220

@@ -3,15 +3,15 @@
 | 필드 | 값 |
 |---|---|
 | `phase` | **Phase 3a — Sources & Ingest** (`REBUILD_BRIEF.md` §6 Phase 3, 모듈 a) |
-| `phase_status` | `partial` — 코드·테스트·레지스트리 이관·워크플로 완료, 로컬 검증 통과. 남은 항목: GitHub Actions 라이브 dry-run 실행 결과(`items_fetched` vs Phase 0) 첨부, Josh의 3a 산출물 승인 |
-| `last_pass` | Phase 2 `done` 2026-10-18 → PR #57(docs) 머지 `2c5a7bc1`, PR #58(Phase 2) 머지 대기(CI 재실행 중). Phase 3a 착수 승인 2026-10-18(Josh: "착수 승인"). 3a 로컬 검증 2026-10-18: `v2:typecheck` 0 errors, `v2:test` 108/108, `v2:build` OK, dead-proxy 하에 replay·net·rss 테스트 14/14, fixture dry-run 80 소스 ok / items_fetched 6(소스당 캡) / duplicates 474 |
-| `baseline_commit` | `2c5a7bc195b954f2cd152132e997f2ae7aef97b9` (origin/main, PR #57 머지) — Vercel READY 배포 커밋은 커넥터 403으로 미확인 |
-| `branch` | `rebuild/v2` (Phase 2 코드 + main 머지 `223249a0`) → PR #58. 3a 코드는 로컬 `rebuild/3a-sources-ingest`(`3ff6b7b1`, `f1f23f2c`, `3d3c3b28`)에 있고 #58 머지 후 `rebuild/v2`에 올려 새 draft PR로 낸다 |
-| `decisions` | 2026-10-18 Josh: #57·#58 머지 진행, 3a 착수 승인, Supabase `0001_init.sql` 적용 승인(대상 프로젝트·경로 회신 대기). 실행 중 판단(3a): 라이브 어댑터는 CLI `--live`로만 켜진다(기본 OFF, `--dry-run` 필수, `--replay` 배타); `allow_text_use false` 53행은 `rewrite_only`(금지 매체 목록 수령 시 `link_only`); 링크 호스트 제한은 페이지를 실제로 가져오는 `full` 소스에만 적용; 자동 비활성은 DB `sources` 행에서만 일어나고 YAML `reviewed_at`을 그 날짜 뒤로 올리면 해제; `items_fetched`는 소스 간 중복 제거 후 고유 URL 수; 본문 추출은 `full`만, 실패 시 항목은 유지하고 `payload.extraction.ok=false` |
-| `pending_approval` | 1) Phase 3a 산출물 승인 → 3b(Normalize) 착수 2) Supabase 프로젝트 선택 + `0001_init.sql` 적용 경로(대시보드 SQL 편집기 vs 세션 `SUPABASE_DB_URL`) 3) 재서술 금지 매체 목록(→ `link_only`) |
-| `blockers` | 세션에서 피드 호스트 미도달 → 라이브 증거는 `rebuild-ci.yml`의 `ingest-live-dry-run` 잡(workflow_dispatch, `live_ingest=true`)로만 확보. 미수령 입력: Anthropic API 키(3d), Supabase 키·프로젝트(3h/4), Telegram(3i), 보이스 샘플(3e), 금지 매체 목록(3a), Vercel 재인가(5) — `docs/migration/plan.md` §4 |
-| `production_health` | 생성 파이프라인 **정지 중**(heartbeat 2026-10-11T04:31Z, 이슈 #29). 사이트 서빙 정상(정적, `main`에는 docs와 데이터 갱신 커밋만) |
-| `next_step` | #58 CI green → ready → merge → `rebuild/v2`에 3a 반영·push → draft PR → `rebuild-ci` 라이브 잡 실행 → 결과를 `docs/migration/notes/3a-sources-ingest.md` §4에 기록 → §7 보고 → Josh 승인 후 3b |
+| `phase_status` | `done` — 코드·테스트·레지스트리 이관·라이브 dry-run 증거 완료(`docs/migration/notes/3a-sources-ingest.md` §4). PR #59(draft, `rebuild/v2` → `main`) 검토·머지와 3b(Normalize) 착수는 Josh 승인 대기 |
+| `last_pass` | Phase 2 `done` → PR #57 머지 `2c5a7bc1`, PR #58 머지 `6666fd64`(Codex 리뷰 4건 반영 `a705b775`). Phase 3a 착수 승인 2026-10-18. 3a 검증 2026-10-18: `v2:typecheck` 0 errors, `v2:test` 119/119, `v2:build` OK, 루트 `astro check` 0 errors, dead-proxy 하 replay·net·rss 18/18, 독립 코드 리뷰 10건 반영(`fa378465`). 라이브 dry-run(run 39103566574): 80 소스 중 71 ok / 9 failed, `items_fetched` 286(Phase 0 평균 28.1, 캡 30), 추출 68 성공 / 0 실패, ingest 16.4 s |
+| `baseline_commit` | `6666fd64115824eb099a2d16960c267981b09d54` (origin/main, PR #58 머지) — Vercel READY 배포 커밋은 커넥터·세션 네트워크 403으로 미확인 |
+| `branch` | `rebuild/v2` (main 머지 포함, 3a 커밋 `f1f23f2c`·`3d3c3b28`·`985cb146`·`fa378465`·`a46ab40d`·`4ebf408d` + 라이브 수정) → PR #59 |
+| `decisions` | 2026-10-18 Josh: #57·#58 머지 진행, 3a 착수 승인, Supabase `0001_init.sql` 적용 승인(대상·경로 회신 대기). 실행 중 판단(3a): 모든 런 `--dry-run` 필수(Phase 4 전), 라이브 어댑터는 `--live`로만; `allow_text_use false` 53행은 `rewrite_only`(금지 매체 목록 수령 시 `link_only`); 링크 호스트 제한은 `full` 소스에만, 피드 호스트의 등록 도메인은 항상 허용; `http` 다운그레이드 리다이렉트는 `https`로 재시도; 응답 캡 6 MiB; 자동 비활성은 DB 행에서만, YAML `reviewed_at`으로 해제; `items_fetched` = 소스 간 중복 제거 후 고유 URL; 추출 실패는 항목 유지 + `payload.extraction.ok=false`; 라이브 dry-run은 `rebuild-ci.yml`의 dispatch 전용 잡(별도 워크플로는 기본 브랜치에 없으면 dispatch 불가) |
+| `pending_approval` | 1) PR #59(3a) 검토·머지 → 3b(Normalize) 착수 2) Supabase 프로젝트 선택 + `0001_init.sql` 적용 경로(대시보드 SQL 편집기 vs 세션 `SUPABASE_DB_URL`) 3) 재서술 금지 매체 목록(→ `link_only`) 4) nrc-news(tier 1) 403·nextplatform 봇 챌린지 대응 방향(UA 협의/대체 피드) |
+| `blockers` | 없음. 미수령 입력: Anthropic API 키(3d), Supabase 키·프로젝트(3h/4), Telegram(3i), 보이스 샘플(3e), 금지 매체 목록(3a), Vercel 재인가(5) — `docs/migration/plan.md` §4 |
+| `production_health` | 생성 파이프라인 **정지 중**(heartbeat 2026-10-11T04:31Z, 이슈 #29). 사이트 서빙 정상(정적). `main`에 Phase 2 워크스페이스가 머지됐으나 레거시 빌드 입력은 무변경(Vercel 프리뷰·validate-application green) |
+| `next_step` | Josh: PR #59 검토 → 머지 → 3b 킥오프 문구. 병행: Supabase 적용 경로 회신 시 `0001_init.sql` 적용·검증 |
 | `updated_at` | 2026-10-18 |
 
 ## 세션 로그
@@ -22,26 +22,26 @@
 | 2026-10-18 | 0→1 | approved | Josh가 04-verdict·05-preserve-list 승인, 런타임·저장소·재서술 결정 |
 | 2026-10-18 | 1 | done | ADR-001~008, target.md, contracts.md, migration/plan.md(추적표 포함). 코드 변경 0. PR #57 누적 |
 | 2026-10-18 | 1→2 | approved | Josh: 계획 모드 해제, `rebuild/v2` 신설, 패키지 설치 승인 |
-| 2026-10-18 | 2 | done | npm workspaces(`apps/site`, `packages/shared`, `packages/pipeline`), zod 스키마·계약·설정 로더·플래그·로거, no-op 러너 + 선기록 원장 + fixture 어댑터 + CLI, `config/{pipeline,sources}.yaml`, `fixtures/`, `supabase/migrations/0001_init.sql`(미적용), `rebuild-ci.yml`, `CLAUDE.md`, README. 테스트 66, 레거시 무변경. 리뷰 15건 반영. PR #58 |
-| 2026-10-18 | 2→3a | approved | Josh: #57·#58 검토·머지 진행, 3a 착수 승인, Supabase 적용 승인. PR #57 머지(`2c5a7bc1`), `main`→`rebuild/v2` 머지 push |
-| 2026-10-18 | 3a | partial | 안전 fetch(SSRF·리다이렉트·content-type·2 MiB), 의존성 없는 RSS/Atom/RDF 파서, URL·날짜·HTML 규칙, 라이브 RSS·Epoch 색인 어댑터, 추출기 5종, ingest 재작성(health·auto-disable·캡·중복 제거·items_new·추출), `--live` CLI, 레지스트리 82행 이관 도구 + `config/sources.yaml`, `rebuild-ci.yml`(`ingest-live-dry-run` 잡), contracts §2/§4 개정. 테스트 108. 라이브 dry-run 결과 대기 |
+| 2026-10-18 | 2 | done | npm workspaces, zod 스키마·계약·설정 로더·플래그·로거, no-op 러너 + 선기록 원장 + fixture 어댑터 + CLI, `config/{pipeline,sources}.yaml`, `fixtures/`, `supabase/migrations/0001_init.sql`(미적용), `rebuild-ci.yml`, `CLAUDE.md`, README. 리뷰 15건 + Codex 4건 반영. PR #58 머지 |
+| 2026-10-18 | 2→3a | approved | Josh: #57·#58 검토·머지 진행, 3a 착수 승인, Supabase 적용 승인 |
+| 2026-10-18 | 3a | done | 안전 fetch(SSRF·리다이렉트·content-type·캡·charset), 의존성 없는 RSS/Atom/RDF 파서, URL·날짜·HTML 규칙, 라이브 RSS·Epoch 색인 어댑터, 추출기 5종, ingest 재작성(health·auto-disable·캡·중복 제거·items_new·추출), `--live` CLI, 레지스트리 82행 이관, `rebuild-ci.yml` 라이브 dry-run 잡, contracts §2/§4 개정. 테스트 119. 라이브 dry-run 71/80 ok, items_fetched 286. PR #59 |
 
-## Phase 3a 완료 기준 대조 (로컬 기준, 라이브 결과는 §4 노트에 추가)
+## Phase 3a 완료 기준 대조
 
 | 기준 | 결과 | 근거 |
 |---|---|---|
-| 신규 소스 추가 ≤ YAML 10줄 | 통과 | `config/sources.yaml` 82행 중 `extract` 없는 53행 전부 ≤10줄(테스트 `migrate-registry.test.ts`가 강제) |
-| 단일 소스 실패가 런을 중단시키지 않음 | 통과 | `ingest-stage.test.ts`: 실패 소스 dead letter + 나머지 진행, 잘못된 항목 개별 dead letter, 어댑터 없음은 해당 소스만 실패; `rss-adapter.test.ts`: 타임아웃·5xx 재시도 1회, 404 미재시도, 비피드 문서 `FEED_PARSE` |
-| 사이클당 `items_fetched` 보고 | 부분 | funnel + `stage_events.counts`(sources_ok/failed/auto_disabled, items_new/duplicate/skipped, extract_ok/failed/skipped) + 소스별 `sourceStats`(`--json`). 라이브 수치는 Actions 실행 후 기록 |
-| tier·health 추적 | 통과 | `sources` 행: `last_ok_at`, `fail_streak`, `health{success_rate_7d,last_error,last_error_at,items_last_run,auto_disabled_at,recent}`; 연속 실패 N회 → DB `enabled=false` + `SOURCE_AUTO_DISABLED`; `reviewed_at`으로 재활성 — 테스트로 증명 |
-| 후보 소스 확장 목록 | 통과 | `docs/migration/notes/3a-source-candidates.md`(URL 전부 "확인 필요") |
-| 플래그 기본값 OFF | 통과 | 라이브 어댑터는 `--live`에서만; CI·테스트는 fixture만(R7), dead-proxy 증명 |
+| 신규 소스 추가 ≤ YAML 10줄 | 통과 | `config/sources.yaml` 82행 중 `extract` 없는 53행 전부 ≤10줄(테스트 강제) |
+| 단일 소스 실패가 런을 중단시키지 않음 | 통과 | 라이브: 9개 소스 실패 → dead letter, 71개 수집, 런 완주(`partial`). 테스트: 재시도·404·비피드·잘못된 항목·어댑터 없음 |
+| 사이클당 `items_fetched` 보고 | 통과 | 라이브 286 vs Phase 0 평균 28.1(캡 30); funnel + `stage_events.counts` + 소스별 stats(`--json`, step summary) — `notes/3a-sources-ingest.md` §4.1 |
+| tier·health 추적 | 통과 | `sources` 행 health·auto-disable·`reviewed_at` 재활성(테스트) |
+| 후보 소스 확장 목록 | 통과 | `docs/migration/notes/3a-source-candidates.md` |
+| 플래그 기본값 OFF | 통과 | `--live` opt-in, 모든 런 `--dry-run` 필수; CI·테스트 fixture만(R7) |
 
 ## Phase 2 완료 기준 대조
 
 | 기준 | 결과 | 근거 |
 |---|---|---|
-| CI green (lint / typecheck / test / build) | 통과 | PR #58 `rebuild-ci`·`validate-application`·`visual-qa`·Vercel preview green(`471b45e9`, 리뷰 반영 `be2ad03f` 재확인) |
+| CI green (lint / typecheck / test / build) | 통과 | PR #58 `rebuild-ci`·`validate-application`·`visual-qa`·Vercel preview green, 머지 `6666fd64` |
 | `pipeline run --dry-run --fixture sample` 전 Stage no-op 통과 + 런 원장 기록 | 통과 | 7 Stage `done`, `pipeline_runs` 1행(`started`→`done`), `stage_events` 7행, funnel 13컬럼 |
 | published 0개에서 사이트 빌드 성공(테스트) | 통과 | `apps/site/test/build-empty.test.ts`, `healthz.test.ts` |
 | 기능 플래그로 임의 Stage on/off | 통과 | `CC_FLAG_STAGES_IMAGE=false` → image `skipped`(러너·CLI 테스트), 전 Stage off도 정상 종료 |

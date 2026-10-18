@@ -5,7 +5,7 @@ import { EMPTY_SOURCE_HEALTH, IngestConfig, parsePipelineConfig } from "@cc/shar
 import { buildAdapters, parseCli } from "../bin/pipeline.ts";
 import { decodeBody, detectCharset, safeFetchText } from "../src/adapters/index.ts";
 import { paragraphs } from "../src/lib/html.ts";
-import { repairFeedLink } from "../src/lib/url.ts";
+import { registrableDomain, repairFeedLink } from "../src/lib/url.ts";
 import { healthAfter } from "../src/stages/ingest.ts";
 import { cell, link, summarize } from "../tools/ingest-dry-run-summary.ts";
 import { TEST_PIPELINE_YAML } from "./helpers.ts";
@@ -26,6 +26,39 @@ test("repairFeedLink resolves relative links and recovers escaped anchors", () =
   assert.equal(repairFeedLink("https://www.example.com/a", "https://feeds.example.com/rss.xml"), "https://www.example.com/a");
   assert.equal(repairFeedLink("%3Ca%20href%3D%22https%3A%2F%2Fwww.example.com%2Fdrupal%22%3Ex%3C%2Fa%3E", "https://feeds.example.com/rss.xml"), "https://www.example.com/drupal");
   assert.equal(repairFeedLink("   ", "https://feeds.example.com/rss.xml"), "");
+});
+
+test("registrableDomain and the feed allowlist cover feeds./www./bare variants of one publisher", async () => {
+  assert.equal(registrableDomain("feeds.bloomberg.com"), "bloomberg.com");
+  assert.equal(registrableDomain("www.blocksandfiles.com"), "blocksandfiles.com");
+  assert.equal(registrableDomain("rss.etnews.com"), "etnews.com");
+  assert.equal(registrableDomain("www.datanet.co.kr"), "datanet.co.kr");
+  assert.equal(registrableDomain("www.gov.uk"), "www.gov.uk", "gov.uk is treated as a public suffix");
+  assert.equal(registrableDomain("epoch.ai"), "epoch.ai");
+  const { allowedHostsFor } = await import("../src/adapters/index.ts");
+  const hosts = allowedHostsFor({ id: "bloomberg-technology", name: "B", type: "rss", url: "https://feeds.bloomberg.com/technology/news.rss", tier: 2, enabled: true, text_rights: "rewrite_only" });
+  assert.deepEqual(hosts, ["feeds.bloomberg.com", "bloomberg.com", "*.bloomberg.com"]);
+});
+
+test("a redirect that downgrades to http is retried over https", async () => {
+  const seen: string[] = [];
+  const result = await safeFetchText("https://www.capacitymedia.com/feed/", {
+    fetch: async (input) => {
+      const url = String(input);
+      seen.push(url);
+      if (seen.length === 1) return new Response(null, { status: 301, headers: { location: "http://www.capacitymedia.com/feed" } });
+      return new Response("<rss><channel></channel></rss>", { status: 200, headers: { "content-type": "application/rss+xml" } });
+    },
+    timeoutMs: 1000,
+    maxBytes: 1024,
+    userAgent: "test",
+    allowedHosts: ["www.capacitymedia.com"],
+    contentTypes: ["application/rss+xml"],
+    resolveHost: async () => ["93.184.216.34"],
+  });
+  assert.deepEqual(seen, ["https://www.capacitymedia.com/feed/", "https://www.capacitymedia.com/feed"]);
+  assert.equal(result.redirects, 1);
+  assert.equal(result.url, "https://www.capacitymedia.com/feed");
 });
 
 test("charset detection: header first, then the XML prolog or meta charset, else utf-8", () => {
