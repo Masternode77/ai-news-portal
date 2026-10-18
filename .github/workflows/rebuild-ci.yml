@@ -1,0 +1,56 @@
+name: Rebuild v2 CI
+
+# Validates the rebuild workspaces (apps/site, packages/*) with zero network
+# access during tests: fixtures only (brief R7). The legacy site keeps its own
+# workflow (update-news.yml); this one runs only when rebuild paths change.
+on:
+  pull_request:
+    paths:
+      - "apps/**"
+      - "packages/**"
+      - "config/*.yaml"
+      - "fixtures/**"
+      - "supabase/**"
+      - "package.json"
+      - "package-lock.json"
+      - "tsconfig.base.json"
+      - ".github/workflows/rebuild-ci.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: rebuild-ci-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  rebuild-ci:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      SITE_DATA_SOURCE: empty
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - name: Setup Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '22.22.0'
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Audit production dependencies
+        run: npm audit --omit=dev --audit-level=high
+      - name: Typecheck (tsc + astro check)
+        run: npm run v2:typecheck
+      - name: Test (node --test, fixtures only)
+        run: npm run v2:test
+      - name: Build site with zero published items
+        run: npm run v2:build
+      - name: Pipeline dry-run with the sample fixture (replay, no network)
+        run: |
+          npm run --silent v2:pipeline -- run --dry-run --replay --fixture sample --json > pipeline-dry-run.json
+          node -e "const r=require('./pipeline-dry-run.json'); console.log(JSON.stringify({status:r.status, funnel:r.funnel, stages:r.stages.map(s=>s.stage+':'+s.status)}, null, 2)); if (r.status !== 'done') process.exit(1)"

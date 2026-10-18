@@ -1,0 +1,47 @@
+---
+import { bodySections, formatDate } from "../lib/render";
+import type { PublicationRow } from "../lib/render";
+
+interface Props {
+  publication: PublicationRow;
+}
+
+const { publication } = Astro.props;
+const sections = bodySections(publication.body);
+---
+
+<article>
+  <h1>{publication.title}</h1>
+  <p class="muted">
+    <time datetime={publication.published_at}>{formatDate(publication.published_at)}</time> · {publication.content_type}
+    {publication.category && <span> · {publication.category}</span>}
+  </p>
+  {publication.image && <img src={publication.image.path} alt={publication.image.alt} loading="lazy" />}
+  {
+    sections.map((section) => (
+      <section data-section={section.key}>
+        {section.heading && <h2>{section.heading}</h2>}
+        {section.paragraphs.map((paragraph) => (
+          <p>{paragraph}</p>
+        ))}
+      </section>
+    ))
+  }
+  {
+    publication.sources.length > 0 && (
+      <section data-section="sources">
+        <h2>출처</h2>
+        <ul>
+          {publication.sources.map((source: PublicationRow["sources"][number]) => (
+            <li>
+              <a href={source.url} rel="noopener nofollow" target="_blank">
+                {source.name}
+              </a>
+              {source.published_at && <span class="muted"> · {formatDate(source.published_at)}</span>}
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
+</article>

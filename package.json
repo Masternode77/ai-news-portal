@@ -5,6 +5,10 @@
   "engines": {
     "node": "22.x"
   },
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
   "scripts": {
     "dev": "astro dev",
     "pipeline": "node ./scripts/pipeline.mjs",
@@ -75,7 +79,11 @@
     "audit:autonomous-public": "npm run build && node ./scripts/audit-autonomous-public-surface.mjs",
     "eval:articles": "node ./scripts/eval-article-generation.mjs",
     "generate:subscription": "node ./scripts/run-subscription-news.mjs",
-    "check:subscription": "node ./scripts/run-subscription-news.mjs --check"
+    "check:subscription": "node ./scripts/run-subscription-news.mjs --check",
+    "v2:pipeline": "node packages/pipeline/bin/pipeline.ts",
+    "v2:typecheck": "tsc --noEmit -p packages/shared/tsconfig.json && tsc --noEmit -p packages/pipeline/tsconfig.json && npm run check -w apps/site",
+    "v2:test": "node --test \"packages/shared/test/**/*.test.ts\" \"packages/pipeline/test/**/*.test.ts\" \"apps/site/test/**/*.test.ts\"",
+    "v2:build": "npm run build -w apps/site"
   },
   "dependencies": {
     "@astrojs/rss": "^4.0.19",

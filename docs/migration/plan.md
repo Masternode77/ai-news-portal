@@ -68,3 +68,26 @@ ADR-006의 단계 M1~M8을 실행 단위로 풀어 쓴다. 각 단계는 Josh �
 | 이미지 공급자 결정(플레이스홀더 우선 vs OpenAI) | Phase 3f | 미결정(가정: 플레이스홀더 우선) |
 | Vercel 커넥터 팀 스코프 재인가 | Phase 2(한도 확인), Phase 5(설정 변경) | 미완 |
 | Mac 잡 레코드(선택) | — | 미수령 |
+
+## 5. 진행 상태
+
+| 날짜 | 단계 | 상태 | 비고 |
+|---|---|---|---|
+| 2026-10-18 | 1 | done | `rebuild/v2`를 Phase 1 docs head(`b081e9d0`)에서 분기(Josh 결정). worktree 대신 브랜치 전환으로 수행 |
+| 2026-10-18 | 2 | done | npm workspaces + `tsconfig.base.json` + Node 22 타입 스트리핑(`tsx` 불필요). 신규 의존성 4종 승인·설치, `@astrojs/vercel`은 devDependency |
+| 2026-10-18 | 3 | done | `packages/shared`: 테이블·콘텐츠·설정 스키마, Stage/Adapter/QaRule/DbPort/Ledger/Budget 계약, YAML 로더, `CC_FLAG_*` 플래그, 리댁션 로거. 테스트 28 |
+| 2026-10-18 | 4 | done | `packages/pipeline`: 선기록 원장(memory·supabase), DbPort 2종, no-op Stage 7(QA는 fail-closed), fixture 어댑터, 예산 가드, CLI. 테스트 25 |
+| 2026-10-18 | 5 | done | `fixtures/rss/sample.xml`(커밋된 풀 스냅샷 파생, 라이브 캡처 아님), `fixtures/llm/news_brief.sample.json`(합성). `--replay`에서 fetch throw 테스트 |
+| 2026-10-18 | 6 | done | `.github/workflows/rebuild-ci.yml`(pinned SHA, fixtures only). 첫 실행은 PR에서 |
+| 2026-10-18 | 7 | done | `apps/site`: `output: 'server'` + Vercel ISR 300s, `publications` 데이터층(`supabase`/`legacy_json`/`empty`), `/healthz`, 빈 상태 빌드 테스트. 테스트 13 |
+| 2026-10-18 | 8 | **written, not applied** | `supabase/migrations/0001_init.sql`(DDL·인덱스·RLS). 적용은 프로젝트 선택 + §5.6 승인 후 |
+| 2026-10-18 | 9 | done | `CLAUDE.md`, README "Rebuild v2" 절, `docs/STATUS.md` |
+
+## 6. 알려진 격차 (Phase 2 리뷰에서 확인)
+
+| 항목 | 내용 | 처리 시점 |
+|---|---|---|
+| 레거시 이미지 자산 | 레거시 리더 페이지의 `heroImage`는 루트 `public/generated/**`(1,105 디렉토리)를 가리키며 `apps/site/public/`에는 없다. 새 사이트가 레거시 행을 서빙하면 이미지는 404다 | 3h(퍼블리셔 자산 경로 정책) · 5(M5 자산 이관, `legacy-final` 백업) |
+| 플레이스홀더 이미지 | `/images/placeholder-brief.svg`를 `apps/site/public/images/`에 추가(Phase 2 리뷰 반영) | 완료 |
+| `SITE_DATA_SOURCE` 기본값 | 미설정 = `empty`. 로컬 개발은 `legacy_json`을 명시 | 완료(ADR-006 조정) |
+| DB 장애 시 서빙 | 소스를 쓸 수 없으면(자격증명 누락·연결 실패·레거시 디렉토리 없음) `list/get`이 `DataUnavailableError`를 던지고 페이지는 `503 no-store`로 답한다(빈 200·404가 ISR에 캐시되지 않음). ADR-005의 last-known-good 스냅샷 서빙은 Phase 5 | 503 완료(Codex 리뷰 반영) · 스냅샷은 5 |

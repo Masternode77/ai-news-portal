@@ -34,7 +34,7 @@
 
 플래그 정의(`config/pipeline.yaml` + Vercel/Actions 환경변수):
 
-- `SITE_DATA_SOURCE`: `legacy_json` | `supabase` (사이트)
+- `SITE_DATA_SOURCE`: `legacy_json` | `supabase` | `empty` (사이트). Phase 2 조정: 미설정이면 `empty`로 동작해 배포가 데이터 소스를 명시적으로 선택하게 한다(`legacy_json`은 로컬·strangler 기간용이며 Vercel 함수 런타임에는 레거시 JSON이 없다)
 - `PUBLISH_TARGET`: `none` | `staging` | `production` (파이프라인)
 - 모듈별 `stages.<name>.enabled`
 

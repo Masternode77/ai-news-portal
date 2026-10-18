@@ -1,0 +1,25 @@
+{
+  "name": "@cc/shared",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Compute Current rebuild: zod schemas, stage/adapter contracts, config loader, feature flags, logger",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./schema": "./src/schema/index.ts",
+    "./contracts": "./src/contracts/index.ts",
+    "./config": "./src/config/index.ts",
+    "./logger": "./src/logger.ts"
+  },
+  "engines": {
+    "node": "22.x"
+  },
+  "scripts": {
+    "test": "node --test \"test/**/*.test.ts\"",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "dependencies": {
+    "yaml": "^2.9.1",
+    "zod": "^4.6.5"
+  }
+}
