@@ -1,14 +1,16 @@
 #!/usr/bin/env node
 /**
- * cc-pipeline — CLI entry (brief Phase 2 §3).
+ * cc-pipeline — CLI entry (brief Phase 2 §3, Phase 3a `--live`).
  *
- *   pipeline run [--stage <name>] [--dry-run] [--fixture <name>] [--replay]
+ *   pipeline run [--stage <name>] [--dry-run] [--live] [--fixture <name>] [--replay]
  *                [--config <path>] [--sources <path>] [--fixtures-dir <dir>]
  *                [--trigger schedule|dispatch|local] [--json] [--log-level <level>]
  *
  * Exit codes: 0 done · 1 partial/budget_stop · 2 failed, usage or config error.
- * Phase 2 ships fixture adapters only; a live run (no --dry-run/--replay) is
- * refused until Phase 3 installs real adapters.
+ * Source adapters are fixtures unless `--live` swaps in the real RSS/Atom and
+ * Epoch index adapters (Phase 3a). `--live` requires `--dry-run` (memory
+ * ledger and DB, nothing written) until Phase 4 wires Supabase, and cannot be
+ * combined with `--replay`, which forbids all network access.
  */
 import { parseArgs } from "node:util";
 import { realpathSync } from "node:fs";
@@ -16,11 +18,13 @@ import { resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 import { createClient } from "@supabase/supabase-js";
 import { ConfigError, createLogger, isLogLevel, loadPipelineConfig, loadSourcesConfig } from "@cc/shared";
-import type { DbPort, Ledger, Logger, RunTrigger, StageAdapters, StageName } from "@cc/shared";
+import type { DbPort, Ledger, Logger, PipelineConfig, RunTrigger, SourceAdapter, StageAdapters, StageName } from "@cc/shared";
 import {
   createDisabledLlmAdapter,
+  createEpochIndexAdapter,
   createFixtureLlmAdapter,
   createFixtureRssAdapter,
+  createLiveRssAdapter,
   createNoopPublisher,
   createPlaceholderImageAdapter,
 } from "../src/adapters/index.ts";
@@ -31,7 +35,7 @@ import { resolveGitSha } from "../src/git.ts";
 import { notifyConsole } from "../src/notify/console.ts";
 import { disabledFetch, runPipeline } from "../src/runner.ts";
 
-const USAGE = `usage: pipeline run [--stage <name>] [--dry-run] [--fixture <name>] [--replay]
+const USAGE = `usage: pipeline run [--stage <name>] [--dry-run] [--live] [--fixture <name>] [--replay]
                     [--config <path>] [--sources <path>] [--fixtures-dir <dir>]
                     [--trigger schedule|dispatch|local] [--json] [--log-level debug|info|warn|error]`;
 
@@ -39,6 +43,7 @@ interface Cli {
   command: string | undefined;
   stage: StageName | undefined;
   dryRun: boolean;
+  live: boolean;
   fixture: string | undefined;
   replay: boolean;
   config: string;
@@ -56,6 +61,7 @@ export function parseCli(argv: string[]): Cli {
     options: {
       stage: { type: "string" },
       "dry-run": { type: "boolean", default: false },
+      live: { type: "boolean", default: false },
       fixture: { type: "string" },
       replay: { type: "boolean", default: false },
       config: { type: "string", default: "config/pipeline.yaml" },
@@ -72,10 +78,13 @@ export function parseCli(argv: string[]): Cli {
   if (trigger !== "schedule" && trigger !== "dispatch" && trigger !== "local") throw new UsageError(`--trigger must be schedule|dispatch|local, got "${trigger}"`);
   const logLevel = values["log-level"];
   if (!isLogLevel(logLevel)) throw new UsageError(`--log-level must be debug|info|warn|error, got "${logLevel}"`);
+  if (values.live && values.replay) throw new UsageError("--live and --replay are mutually exclusive (--replay forbids network access)");
+  if (values.live && !values["dry-run"]) throw new UsageError("--live requires --dry-run until Phase 4 (nothing is written outside the memory ledger)");
   return {
     command: positionals[0],
     stage: values.stage as StageName | undefined,
     dryRun: values["dry-run"],
+    live: values.live,
     fixture: values.fixture,
     replay: values.replay,
     config: values.config,
@@ -94,12 +103,21 @@ class UsageError extends Error {
   }
 }
 
-function buildAdapters(cli: Cli, llmProvider: string): StageAdapters {
+function buildAdapters(cli: Cli, config: PipelineConfig): StageAdapters {
   const fixtureName = cli.fixture ?? "sample";
   const fixturesDir = resolve(cli.fixturesDir);
+  let sources: Record<string, SourceAdapter>;
+  if (cli.live) {
+    const options = { ingest: config.ingest, defaultMaxAgeDays: config.caps.pool_max_age_days, itemsPerSource: config.caps.items_per_source };
+    sources = { rss: createLiveRssAdapter(options), html: createEpochIndexAdapter(options) };
+  } else {
+    // The fixture serves every source type; `type` is informational on the adapter.
+    const fixture = createFixtureRssAdapter({ fixturesDir, fixtureName });
+    sources = { rss: fixture, html: { ...fixture, type: "html" } };
+  }
   return {
-    sources: { rss: createFixtureRssAdapter({ fixturesDir, fixtureName }) },
-    llm: llmProvider === "fixture" ? createFixtureLlmAdapter({ fixturesDir }) : createDisabledLlmAdapter(),
+    sources,
+    llm: config.llm.provider === "fixture" ? createFixtureLlmAdapter({ fixturesDir }) : createDisabledLlmAdapter(),
     image: createPlaceholderImageAdapter(),
     publishers: { site: createNoopPublisher({ baseUrl: "https://www.computecurrent.com" }) },
     db: new MemoryDb(),
@@ -134,7 +152,7 @@ export async function main(argv: string[], env: NodeJS.ProcessEnv, stdout: (line
     logger = createLogger({ name: "cc-pipeline", level: cli.logLevel, sink: (line) => process.stderr.write(`${line}\n`) });
 
     if (!cli.dryRun && !cli.replay) {
-      throw new UsageError("Phase 2 ships fixture adapters only: pass --dry-run and/or --replay (live adapters land in Phase 3)");
+      throw new UsageError("Phase 3a writes nothing outside the memory ledger: pass --dry-run (add --live for real feeds) and/or --replay");
     }
     const realFetch = globalThis.fetch;
     if (cli.replay) {
@@ -145,7 +163,7 @@ export async function main(argv: string[], env: NodeJS.ProcessEnv, stdout: (line
 
     const loaded = await loadPipelineConfig(resolve(cli.config), env);
     const sources = await loadSourcesConfig(resolve(cli.sources));
-    const adapters = buildAdapters(cli, loaded.config.llm.provider);
+    const adapters = buildAdapters(cli, loaded.config);
 
     let ledger: Ledger;
     let db: DbPort;
@@ -171,14 +189,29 @@ export async function main(argv: string[], env: NodeJS.ProcessEnv, stdout: (line
       gitSha: resolveGitSha(env),
       dryRun: cli.dryRun,
       replay: cli.replay,
-      fixtureName: cli.fixture,
+      fixtureName: cli.live ? undefined : cli.fixture,
       only: cli.stage,
     });
     notifyConsole(logger, result, { capUsd: loaded.config.budget.run_usd });
 
     if (cli.json) {
       const dump = ledger.dump ? await ledger.dump() : undefined;
-      stdout(JSON.stringify({ runId: result.runId, status: result.status, funnel: result.funnel, costTotalUsd: result.costTotalUsd, stages: result.stages, ledger: dump }, null, 2));
+      stdout(
+        JSON.stringify(
+          {
+            runId: result.runId,
+            status: result.status,
+            live: cli.live,
+            funnel: result.funnel,
+            costTotalUsd: result.costTotalUsd,
+            stages: result.stages,
+            sourceStats: result.state.sourceStats,
+            ledger: dump,
+          },
+          null,
+          2,
+        ),
+      );
     }
     return result.status === "done" ? 0 : 1;
   } catch (error) {

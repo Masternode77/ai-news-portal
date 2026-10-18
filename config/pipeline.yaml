@@ -23,6 +23,23 @@ caps:
   essays_per_day: 1
   pool_max_items: 200          # legacy cap was 30 (Phase 0 H1); re-measured in Phase 4
   pool_max_age_days: 10
+  items_per_source: 6          # newest N per registry id (legacy keyed the cap by display name)
+
+ingest:                        # Phase 3a live ingest; every key is optional (defaults in packages/shared/src/schema/config.ts)
+  concurrency: 6               # feeds fetched at once (legacy: unbounded Promise.all)
+  extract_concurrency: 3       # article pages extracted at once
+  feed_timeout_ms: 20000
+  page_timeout_ms: 12000
+  max_body_bytes: 2097152      # 2 MiB streaming cap per response
+  retry_attempts: 1            # per source, timeouts/5xx/429 only (the whole-run retry is gone)
+  retry_backoff_ms: 2000
+  snippet_chars: 220
+  body_preview_chars: 800
+  min_title_chars: 12
+  max_title_chars: 220
+  auto_disable_after: 5        # consecutive failed runs -> sources.enabled=false in the table (YAML untouched)
+  extract_bodies: true         # fetch article bodies for text_rights: full sources
+  user_agent: "Mozilla/5.0 (compatible; ComputeCurrentBot/1.0; +https://www.computecurrent.com)"
 
 budget:
   run_usd: 2.0                 # STOP-THE-LINE threshold (brief §5.4)

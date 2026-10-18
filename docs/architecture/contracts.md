@@ -51,9 +51,20 @@ export interface SourceAdapter {
   readonly type: "rss" | "html" | "api";
   /** 한 소스에서 아이템을 가져온다. 실패는 throw; 러너가 소스 단위로 격리한다. */
   fetch(source: SourceConfig, ctx: StageContext): Promise<RawItemInput[]>;
-  /** 본문 추출(선택). 없으면 ingest가 snippet만 저장한다. */
-  extract?(item: RawItemInput, ctx: StageContext): Promise<ExtractedText>;
+  /** Phase 3a 개정: fetch + 소스별 통계(listed/kept/skipped 사유/바이트/리다이렉트). ingest는 있으면 이것을 쓴다. */
+  fetchDetailed?(source: SourceConfig, ctx: StageContext): Promise<{ items: RawItemInput[]; stats: SourceFetchStats }>;
+  /** 본문 추출(선택). `text_rights: full` 소스에만 호출된다. 없으면 ingest가 피드 필드만 저장한다. */
+  extract?(item: RawItemInput, source: SourceConfig, ctx: StageContext): Promise<ExtractedText>;
 }
+export interface SourceFetchStats {
+  listed: number;                          // 피드가 나열한 항목 수
+  kept: number;                            // url/날짜/제목 규칙과 소스별 캡 적용 후
+  skipped: Record<string, number>;         // too_old | capped | offhost | date_missing | date_invalid | title_length | no_url | duplicate | section_missing …
+  fetch?: { url: string; bytes: number; redirects: number; ms: number };
+}
+// 어댑터의 모든 네트워크 호출은 ctx.fetch를 쓰는 safeFetchText 하나를 지난다: https/443, 자격증명 없음,
+// DNS가 공인 주소로만 해석, 같은 허용 호스트 안에서 ≤3 리다이렉트, content-type 허용 목록, 2 MiB 스트리밍 캡.
+// `--replay`는 ctx.fetch를 throw로 바꾸므로 어댑터는 네트워크 0이 보장된다(R7).
 
 export interface LlmAdapter {
   readonly provider: string;      // 'anthropic' | 'openrouter' | 'fixture'
@@ -150,6 +161,22 @@ caps:
   essays_per_day: 1
   pool_max_items: 200          # 레거시 30 → 상향(ADR-004 재측정 대상)
   pool_max_age_days: 10
+  items_per_source: 6          # Phase 3a: 레지스트리 id별 최신 N(레거시는 표시 이름 기준)
+ingest:                        # Phase 3a, 전부 선택(기본값은 packages/shared/src/schema/config.ts)
+  concurrency: 6
+  extract_concurrency: 3
+  feed_timeout_ms: 20000
+  page_timeout_ms: 12000
+  max_body_bytes: 2097152
+  retry_attempts: 1            # 소스별, 타임아웃·5xx·429만
+  retry_backoff_ms: 2000
+  snippet_chars: 220
+  body_preview_chars: 800
+  min_title_chars: 12
+  max_title_chars: 220
+  auto_disable_after: 5        # 연속 실패 런 수 → sources 테이블의 enabled=false(YAML 불변)
+  extract_bodies: true
+  user_agent: "Mozilla/5.0 (compatible; ComputeCurrentBot/1.0)"
 budget: { run_usd: 2.0, soft_warn_usd: 1.5, max_calls: 60 }
 llm:
   provider: anthropic
@@ -172,6 +199,29 @@ notify: { telegram: { enabled: true } }
   reviewed_at: 2026-10-18
   pool_max_age_days: 10
 ```
+
+Phase 3a 개정 — 선택 필드 3개(단순 소스는 여전히 ≤10줄). `extract`는 특수 페이지에만 쓴다:
+
+```yaml
+- id: google-cloud-ai-releases
+  name: Google Cloud AI
+  type: rss                      # rss | html(서버 렌더 색인; epoch.ai) | api
+  url: https://docs.cloud.google.com/feeds/gcp-release-notes.xml
+  tier: 2
+  enabled: true
+  text_rights: full
+  reviewed_at: 2026-10-04
+  language: en                   # ISO 639-1(선택)
+  text_scope: full               # full | abstract(arXiv: 메타데이터만 CC0)
+  extract:                       # text_rights: full 에서만 의미 있음
+    kind: google_release_notes   # generic | google_release_notes | epoch_index | arxiv_abstract | ec_press | none
+    path: /gemini-enterprise-agent-platform/release-notes   # 허용 기사 경로(정확히) 또는 path_prefix: /gradient-updates/
+    hosts: [docs.cloud.google.com]                          # 기사 호스트 허용 목록(피드 호스트는 항상 포함, `*.example.com` 가능)
+    license_marker: Distributed under CC BY 4.0             # 추출 페이지가 반드시 담아야 하는 가시 문구
+    section: Gemini Enterprise Agent Platform               # 전제품 피드에서 남길 제품 섹션
+```
+
+규칙: 링크 호스트 제한(`hosts`)은 페이지를 실제로 가져오는 `full` 소스에만 적용된다(`rewrite_only`/`link_only`는 링크를 가져오지 않으므로 어떤 공인 https 호스트든 허용). 자동 비활성(`sources.health.auto_disabled_at`)은 YAML의 `reviewed_at`이 그 날짜보다 뒤면 다음 런에서 해제된다. `config/sources.yaml`의 82행은 `packages/pipeline/tools/migrate-legacy-registry.ts`가 `config/sourceRegistry.yml`에서 1회 생성했다(이후 수동 편집).
 
 `config/scoring.yaml`: 루브릭 5축 가중치(relevance 0.35, timeliness 0.2, impact 0.2, reader_value 0.15, insight_potential 0.1), tier 임계값(full 0.75, brief 0.55), `insight_trigger: 0.7`.
 

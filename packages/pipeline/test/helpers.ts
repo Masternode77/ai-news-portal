@@ -59,8 +59,9 @@ export function testSources(): SourceConfig[] {
 }
 
 export function fixtureAdapters(db = new MemoryDb(), fixtureName = "sample"): StageAdapters {
+  const fixture = createFixtureRssAdapter({ fixturesDir: FIXTURES_DIR, fixtureName });
   return {
-    sources: { rss: createFixtureRssAdapter({ fixturesDir: FIXTURES_DIR, fixtureName }) },
+    sources: { rss: fixture, html: { ...fixture, type: "html" } },
     llm: createFixtureLlmAdapter({ fixturesDir: FIXTURES_DIR }),
     image: createPlaceholderImageAdapter(),
     publishers: { site: createNoopPublisher({ baseUrl: "https://example.test" }) },
