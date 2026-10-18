@@ -9,6 +9,7 @@
 import { readFile } from "node:fs/promises";
 import { realpathSync } from "node:fs";
 import { pathToFileURL } from "node:url";
+import { errorCode } from "../src/runner.ts";
 
 interface SourceStat {
   source_id: string;
@@ -21,6 +22,7 @@ interface SourceStat {
   error: string | null;
   fail_streak: number;
   sample: { title: string; url: string; published_at: string | null }[];
+  fetch?: { url: string; bytes: number; redirects: number; ms: number };
 }
 
 interface Result {
@@ -45,8 +47,17 @@ interface Result {
   ledger?: { deadLetters: { ref_id: string; error: string }[] };
 }
 
-function cell(value: unknown): string {
-  return String(value ?? "").replace(/\|/g, "\\|").replace(/\n/g, " ");
+/** Feed titles and error strings are untrusted: neutralise table pipes, newlines and Markdown/HTML syntax. */
+export function cell(value: unknown): string {
+  return String(value ?? "")
+    .replace(/\r?\n/g, " ")
+    .replace(/[\\|*_`[\]<>#]/g, (ch) => `\\${ch}`);
+}
+
+/** An autolink `<url>` survives parentheses in the URL; angle brackets and whitespace cannot appear inside it. */
+export function link(url: string): string {
+  const safe = url.replace(/[<>\s]/g, "");
+  return /^https?:\/\//.test(safe) ? `<${safe}>` : cell(url);
 }
 
 function skippedText(skipped: Record<string, number>): string {
@@ -54,11 +65,6 @@ function skippedText(skipped: Record<string, number>): string {
     .sort((a, b) => b[1] - a[1])
     .map(([k, v]) => `${k} ${v}`);
   return parts.join(", ");
-}
-
-export function errorCode(message: string): string {
-  const stripped = message.replace(/^[A-Za-z]*Error:\s*/, "");
-  return stripped.match(/^([A-Z][A-Z0-9_]{2,})\b/)?.[1] ?? message.match(/^([A-Za-z]*Error)\b/)?.[1] ?? stripped.split(":")[0]?.trim() ?? message;
 }
 
 export function summarize(result: Result): string {
@@ -80,10 +86,20 @@ export function summarize(result: Result): string {
       `sources: configured ${stats.configured} · ok ${stats.ok} · failed ${stats.failed} · auto-disabled ${stats.auto_disabled} · items new ${stats.items_new} · duplicates ${stats.duplicates} · skipped entries ${stats.skipped_items} · extraction ok ${stats.extract_ok} / failed ${stats.extract_failed} / skipped ${stats.extract_skipped}`,
     );
     lines.push("");
-    lines.push("| source | tier | status | listed | kept | skipped | ms | error |");
-    lines.push("|---|---|---|---|---|---|---|---|");
-    for (const s of [...stats.sources].sort((a, b) => a.tier - b.tier || a.source_id.localeCompare(b.source_id))) {
-      lines.push(`| ${s.source_id} | ${s.tier} | ${s.status} | ${s.listed} | ${s.kept} | ${cell(skippedText(s.skipped))} | ${s.ms} | ${cell(s.error ?? "")} |`);
+    lines.push("| source | tier | status | listed | kept | skipped | KB | redirects | ms | error |");
+    lines.push("|---|---|---|---|---|---|---|---|---|---|");
+    const sorted = [...stats.sources].sort((a, b) => a.tier - b.tier || a.source_id.localeCompare(b.source_id));
+    for (const s of sorted) {
+      const kb = s.fetch ? (s.fetch.bytes / 1024).toFixed(0) : "";
+      const redirects = s.fetch ? String(s.fetch.redirects) : "";
+      lines.push(`| ${cell(s.source_id)} | ${s.tier} | ${s.status} | ${s.listed} | ${s.kept} | ${cell(skippedText(s.skipped))} | ${kb} | ${redirects} | ${s.ms} | ${cell(s.error ?? "")} |`);
+    }
+    const redirected = sorted.filter((s) => (s.fetch?.redirects ?? 0) > 0);
+    if (redirected.length > 0) {
+      lines.push("");
+      lines.push("Feeds that redirected (update `url` in config/sources.yaml):");
+      lines.push("");
+      for (const s of redirected) lines.push(`- ${cell(s.source_id)} → ${link(s.fetch!.url)} (${s.fetch!.redirects} hop${s.fetch!.redirects === 1 ? "" : "s"})`);
     }
     const samples = stats.sources.filter((s) => s.sample.length > 0).slice(0, 12);
     if (samples.length > 0) {
@@ -91,7 +107,7 @@ export function summarize(result: Result): string {
       lines.push("<details><summary>Sample items (newest per source, first 12 sources)</summary>");
       lines.push("");
       for (const s of samples) {
-        for (const item of s.sample.slice(0, 2)) lines.push(`- **${s.source_id}** ${cell(item.published_at ?? "")} — ${cell(item.title)} (${item.url})`);
+        for (const item of s.sample.slice(0, 2)) lines.push(`- **${cell(s.source_id)}** ${cell(item.published_at ?? "")} — ${cell(item.title)} ${link(item.url)}`);
       }
       lines.push("");
       lines.push("</details>");

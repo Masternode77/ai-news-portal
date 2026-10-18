@@ -33,7 +33,8 @@ import type { SourceRunStat } from "../state.ts";
 import { defineStageSpec } from "./spec.ts";
 import { IngestInput, IngestOutput } from "./types.ts";
 
-const SELECT_CHUNK = 50;
+/** 20 canonical URLs keep a PostgREST `in` filter under ~4 KB of request URL. */
+const SELECT_CHUNK = 20;
 const UPSERT_CHUNK = 50;
 const ERROR_CHARS = 300;
 const RECENT_MAX = 50;
@@ -81,6 +82,16 @@ interface SourceTrack {
   enabled: boolean;
   health: SourceHealthType;
   failStreak: number;
+  lastOkAt: string | null;
+}
+
+/**
+ * Every row in one upsert must carry the same columns: PostgREST derives the
+ * column list from the union of keys and writes NULL for a key a row lacks,
+ * so a partial row would wipe (e.g.) last_ok_at on conflict.
+ */
+function sourceHealthRow(id: string, enabled: boolean, lastOkAt: string | null, failStreak: number, health: SourceHealthType): Row {
+  return { id, enabled, last_ok_at: lastOkAt, fail_streak: failStreak, health };
 }
 
 /** Mirror the YAML rows into `sources` (config columns only) and read back health. */
@@ -95,6 +106,7 @@ async function syncSources(db: DbPort, sources: SourceConfig[], ctx: StageContex
     const row = existing.get(source.id);
     let health = parseHealth(row?.["health"]);
     let failStreak = typeof row?.["fail_streak"] === "number" ? (row["fail_streak"] as number) : 0;
+    const lastOkAt = typeof row?.["last_ok_at"] === "string" ? (row["last_ok_at"] as string) : null;
     let enabled = source.enabled;
     if (source.enabled && health.auto_disabled_at) {
       if (reviewClearsAutoDisable(source.reviewed_at, health.auto_disabled_at)) {
@@ -117,15 +129,16 @@ async function syncSources(db: DbPort, sources: SourceConfig[], ctx: StageContex
       reviewed_at: source.reviewed_at ?? null,
       fail_streak: failStreak,
       health,
-      ...(row ? {} : { last_ok_at: null }),
+      last_ok_at: lastOkAt,
     });
-    tracks.set(source.id, { source, enabled, health, failStreak });
+    tracks.set(source.id, { source, enabled, health, failStreak, lastOkAt });
   }
   for (const chunk of chunks(mirror, UPSERT_CHUNK)) await db.upsert("sources", chunk, ["id"]);
   return tracks;
 }
 
-function healthAfter(track: SourceTrack, ok: boolean, now: Date, itemsKept: number, error: string | null, window: number): { health: SourceHealthType; failStreak: number } {
+/** `window` = runs in seven days (ceil(168 / slot_hours)); `recent` keeps at most RECENT_MAX outcomes. */
+export function healthAfter(track: { health: SourceHealthType; failStreak: number }, ok: boolean, now: Date, itemsKept: number, error: string | null, window: number): { health: SourceHealthType; failStreak: number } {
   const recent = [...track.health.recent, ok].slice(-RECENT_MAX);
   const sample = recent.slice(-window);
   const rate = sample.length > 0 ? sample.filter(Boolean).length / sample.length : null;
@@ -224,7 +237,7 @@ export const ingestStage: Stage<IngestInput, IngestOutput> = {
           ctx.logger.error("source auto-disabled in the sources table; bump reviewed_at in YAML to re-enable", { source_id: source.id, tier: source.tier, fail_streak: next.failStreak });
         }
         logByTier(ctx, source, "source failed; continuing", { error: message, fail_streak: next.failStreak, ms: outcome.ms });
-        healthRows.push({ id: source.id, enabled, fail_streak: next.failStreak, health: next.health });
+        healthRows.push(sourceHealthRow(source.id, enabled, track.lastOkAt, next.failStreak, next.health));
         perSource.push({ source_id: source.id, tier: source.tier, status: "failed", listed: 0, kept: 0, skipped: {}, ms: outcome.ms, error: message.slice(0, ERROR_CHARS), fail_streak: next.failStreak, sample: [] });
         continue;
       }
@@ -249,7 +262,7 @@ export const ingestStage: Stage<IngestInput, IngestOutput> = {
       skippedItems += Object.values(skipped).reduce((sum, n) => sum + n, 0);
       for (const item of kept) fetched.push({ item, source });
       const next = healthAfter(track, true, now, kept.length, null, window);
-      healthRows.push({ id: source.id, enabled: true, last_ok_at: nowIso, fail_streak: 0, health: next.health });
+      healthRows.push(sourceHealthRow(source.id, true, nowIso, 0, next.health));
       perSource.push({
         source_id: source.id,
         tier: source.tier,
@@ -261,6 +274,7 @@ export const ingestStage: Stage<IngestInput, IngestOutput> = {
         error: null,
         fail_streak: 0,
         sample: kept.slice(0, SAMPLE_ITEMS).map((item) => ({ title: item.title, url: item.canonical_url, published_at: item.published_at_source ?? null })),
+        ...(stats.fetch ? { fetch: stats.fetch } : {}),
       });
       ctx.logger.info("source fetched", { source_id: source.id, tier: source.tier, listed: stats.listed, kept: kept.length, skipped, ms: outcome.ms, invalid: items.length - valid.length });
     }

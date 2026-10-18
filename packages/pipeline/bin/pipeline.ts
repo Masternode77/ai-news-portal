@@ -39,7 +39,7 @@ const USAGE = `usage: pipeline run [--stage <name>] [--dry-run] [--live] [--fixt
                     [--config <path>] [--sources <path>] [--fixtures-dir <dir>]
                     [--trigger schedule|dispatch|local] [--json] [--log-level debug|info|warn|error]`;
 
-interface Cli {
+export interface Cli {
   command: string | undefined;
   stage: StageName | undefined;
   dryRun: boolean;
@@ -103,7 +103,7 @@ class UsageError extends Error {
   }
 }
 
-function buildAdapters(cli: Cli, config: PipelineConfig): StageAdapters {
+export function buildAdapters(cli: Cli, config: PipelineConfig): StageAdapters {
   const fixtureName = cli.fixture ?? "sample";
   const fixturesDir = resolve(cli.fixturesDir);
   let sources: Record<string, SourceAdapter>;

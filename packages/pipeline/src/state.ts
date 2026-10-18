@@ -30,6 +30,8 @@ export const SourceRunStat = z.strictObject({
   error: z.string().nullable(),
   fail_streak: NonNegativeInt,
   sample: z.array(z.strictObject({ title: z.string(), url: z.string(), published_at: z.string().nullable() })).max(3),
+  /** Final URL after redirects, bytes and redirect count of the feed request (live adapters only). */
+  fetch: z.strictObject({ url: z.string(), bytes: NonNegativeInt, redirects: NonNegativeInt, ms: NonNegativeInt }).optional(),
 });
 export type SourceRunStat = z.infer<typeof SourceRunStat>;
 

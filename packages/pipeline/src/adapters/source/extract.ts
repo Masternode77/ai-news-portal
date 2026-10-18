@@ -46,9 +46,9 @@ function fromSection(sectionHtml: string, method: string, licenseOk: boolean | n
 /** `<article>`, then `<main>`, then the whole page with non-content blocks removed. */
 export function extractGeneric(html: string): Extraction {
   const cleaned = removeNonContentBlocks(html);
-  const article = cleaned.match(/<article[\s\S]*?>([\s\S]{0,45000})<\/article>/i)?.[1];
+  const article = cleaned.match(/<article(?:\s[^>]*)?>([\s\S]{0,45000})<\/article>/i)?.[1];
   if (article) return fromSection(article, "generic:article", null);
-  const main = cleaned.match(/<main[\s\S]*?>([\s\S]{0,45000})<\/main>/i)?.[1];
+  const main = cleaned.match(/<main(?:\s[^>]*)?>([\s\S]{0,45000})<\/main>/i)?.[1];
   if (main) return fromSection(main, "generic:main", null);
   return fromSection(cleaned, "generic:page", null);
 }

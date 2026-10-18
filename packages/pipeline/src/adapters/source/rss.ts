@@ -105,10 +105,13 @@ export function mapFeedItem(entry: FeedItem, source: SourceConfig, options: Live
   if (source.extract?.path && parsed.pathname !== source.extract.path) return { item: null, skip: "path_not_allowed" };
   if (source.extract?.path_prefix && !pathWithinPrefix(parsed, source.extract.path_prefix)) return { item: null, skip: "path_not_allowed" };
 
-  if (title.length < options.ingest.min_title_chars || title.length > options.ingest.max_title_chars) return { item: null, skip: "title_length" };
+  if (title.length < options.ingest.min_title_chars) return { item: null, skip: "title_length" };
+  // Long titles (Federal Register notices run past 400 chars) are kept and cut, never skipped.
+  title = truncate(title, options.ingest.max_title_chars);
 
   const date = parsePublishedAt(entry.dates, now);
   if (date.problem === "missing") return { item: null, skip: "date_missing" };
+  if (date.problem === "future") return { item: null, skip: "date_future" };
   if (date.problem || !date.iso) return { item: null, skip: "date_invalid" };
   const maxAge = source.pool_max_age_days ?? options.defaultMaxAgeDays;
   if (olderThanDays(date.iso, maxAge, now)) return { item: null, skip: "too_old" };
@@ -148,7 +151,6 @@ export function createLiveRssAdapter(options: LiveRssOptions): SourceAdapter {
       () =>
         safeFetchText(source.url, {
           fetch: ctx.fetch,
-          logger: ctx.logger,
           timeoutMs: options.ingest.feed_timeout_ms,
           maxBytes: options.ingest.max_body_bytes,
           userAgent: options.ingest.user_agent,
@@ -197,7 +199,6 @@ export function createLiveRssAdapter(options: LiveRssOptions): SourceAdapter {
       const apiUrl = kind === "ec_press" ? ecPressApiUrl(item.canonical_url) : null;
       const response = await safeFetchText(apiUrl ?? item.canonical_url, {
         fetch: ctx.fetch,
-        logger: ctx.logger,
         timeoutMs: options.ingest.page_timeout_ms,
         maxBytes: options.ingest.max_body_bytes,
         userAgent: options.ingest.user_agent,

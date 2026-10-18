@@ -54,7 +54,12 @@ export function cleanItemUrl(raw: string | null | undefined, options: CleanUrlOp
   return url.toString();
 }
 
-/** Some Drupal feeds ship an escaped anchor where the link belongs; recover its href. */
+const HAS_SCHEME = /^[a-z][a-z0-9+.-]*:/i;
+
+/**
+ * Some Drupal feeds ship an escaped anchor where the link belongs (recover its
+ * href); others ship a path relative to the feed (resolve it against the feed URL).
+ */
 export function repairFeedLink(raw: string, baseUrl: string): string {
   const value = raw.trim();
   if (!value) return "";
@@ -62,14 +67,15 @@ export function repairFeedLink(raw: string, baseUrl: string): string {
   try {
     decoded = decodeURIComponent(value);
   } catch {
-    return value;
+    decoded = value;
   }
   const anchor = decoded.match(/<a\s[^>]*href=["']([^"']+)["']/i);
-  if (!anchor?.[1]) return value;
+  const candidate = anchor?.[1] ?? value;
+  if (HAS_SCHEME.test(candidate)) return candidate;
   try {
-    return new URL(anchor[1], baseUrl || value).toString();
+    return new URL(candidate, baseUrl).toString();
   } catch {
-    return "";
+    return candidate;
   }
 }
 

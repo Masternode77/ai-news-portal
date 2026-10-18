@@ -5,10 +5,14 @@
  * addresses only (SSRF), at most 3 same-host redirects, a content-type
  * allowlist and a body cap. All traffic goes through `ctx.fetch`, which
  * `--replay` replaces with a throwing function.
+ *
+ * Known limitation (same as legacy): the public-address check resolves DNS
+ * once and `fetch` resolves again, so a host that rebinds between the two
+ * lookups is not caught. The config allowlist (feed hosts and `extract.hosts`)
+ * bounds the exposure; pinning the vetted addresses needs a custom dispatcher.
  */
 import { lookup } from "node:dns/promises";
 import { isIP } from "node:net";
-import type { Logger } from "@cc/shared";
 import { hostAllowed, normalizeHost } from "../../lib/url.ts";
 
 export class SourceFetchError extends Error {
@@ -114,7 +118,6 @@ export const JSON_CONTENT_TYPES = ["application/json"] as const;
 
 export interface SafeFetchOptions {
   fetch: typeof globalThis.fetch;
-  logger?: Logger;
   timeoutMs: number;
   maxBytes: number;
   userAgent: string;
@@ -130,9 +133,31 @@ export interface SafeFetchResult {
   url: string;
   status: number;
   contentType: string;
+  /** Encoding label the body was decoded with (header charset, XML prolog or meta charset, else utf-8). */
+  charset: string;
   text: string;
   bytes: number;
   redirects: number;
+}
+
+const CHARSET_LABEL = /[A-Za-z0-9._-]+/;
+
+/** Header `charset=` wins; then the XML prolog or a `<meta charset>` in the first KiB; utf-8 otherwise. */
+export function detectCharset(contentTypeHeader: string, head: Uint8Array): string {
+  const fromHeader = contentTypeHeader.match(/charset=["']?([A-Za-z0-9._-]+)/i)?.[1];
+  if (fromHeader) return fromHeader.toLowerCase();
+  const sniff = new TextDecoder("latin1").decode(head.subarray(0, 1024));
+  const fromDocument = sniff.match(/^\s*<\?xml[^>]*\bencoding=["']([A-Za-z0-9._-]+)["']/i)?.[1] ?? sniff.match(/<meta[^>]+charset=["']?([A-Za-z0-9._-]+)/i)?.[1];
+  return fromDocument && CHARSET_LABEL.test(fromDocument) ? fromDocument.toLowerCase() : "utf-8";
+}
+
+/** Decodes with the detected label; an unsupported label (no ICU data) falls back to utf-8. */
+export function decodeBody(bytes: Uint8Array, charset: string): { text: string; charset: string } {
+  try {
+    return { text: new TextDecoder(charset).decode(bytes), charset: new TextDecoder(charset).encoding };
+  } catch {
+    return { text: new TextDecoder("utf-8").decode(bytes), charset: "utf-8" };
+  }
 }
 
 function parseTarget(value: string, allowedHosts: readonly string[]): URL {
@@ -156,10 +181,10 @@ async function assertPublicHost(target: URL, resolveHost: HostResolver): Promise
   if (addresses.some((address) => !isPublicAddress(address))) throw new SourceFetchError("UNSAFE_URL", `non_public_address ${hostname}`);
 }
 
-async function readBody(response: Response, maxBytes: number): Promise<{ text: string; bytes: number }> {
+async function readBody(response: Response, maxBytes: number): Promise<{ text: string; bytes: number; charset: string }> {
   const declared = Number(response.headers.get("content-length") ?? "");
   if (Number.isFinite(declared) && declared > maxBytes) throw new SourceFetchError("BODY_TOO_LARGE", `content-length ${declared} > ${maxBytes}`);
-  if (!response.body) return { text: await response.text(), bytes: 0 };
+  if (!response.body) return { text: await response.text(), bytes: 0, charset: "utf-8" };
   const reader = response.body.getReader();
   const chunks: Uint8Array[] = [];
   let bytes = 0;
@@ -181,7 +206,8 @@ async function readBody(response: Response, maxBytes: number): Promise<{ text: s
     merged.set(chunk, offset);
     offset += chunk.byteLength;
   }
-  return { text: new TextDecoder("utf-8").decode(merged), bytes };
+  const decoded = decodeBody(merged, detectCharset(response.headers.get("content-type") ?? "", merged));
+  return { text: decoded.text, bytes, charset: decoded.charset };
 }
 
 function isTimeout(error: unknown): boolean {
@@ -220,7 +246,7 @@ export async function safeFetchText(url: string, options: SafeFetchOptions): Pro
     if (response.status >= 400) throw new SourceFetchError(`HTTP_${response.status}`, `http ${response.status} for ${target.href}`, response.status);
     const contentType = (response.headers.get("content-type") ?? "").split(";")[0]?.trim().toLowerCase() ?? "";
     if (contentType && !options.contentTypes.includes(contentType)) throw new SourceFetchError("BAD_CONTENT_TYPE", contentType, response.status);
-    const { text, bytes } = await readBody(response, options.maxBytes);
-    return { url: target.href, status: response.status, contentType, text, bytes, redirects };
+    const { text, bytes, charset } = await readBody(response, options.maxBytes);
+    return { url: target.href, status: response.status, contentType, charset, text, bytes, redirects };
   }
 }

@@ -87,7 +87,8 @@ export const BOILERPLATE_LINE = /cookie|subscribe|advertisement/i;
 
 /** Paragraph texts longer than `minChars`, skipping obvious boilerplate lines. */
 export function paragraphs(sectionHtml: string, minChars = 60): string[] {
-  return [...sectionHtml.matchAll(/<p[^>]*>([\s\S]*?)<\/p>/gi)]
+  // `<p` alone would also open on <pre>, <path>, <picture> and <param>.
+  return [...sectionHtml.matchAll(/<p(?:\s[^>]*)?>([\s\S]*?)<\/p>/gi)]
     .map((match) => cleanText(match[1] ?? ""))
     .filter((text) => text.length > minChars && !BOILERPLATE_LINE.test(text));
 }
@@ -112,8 +113,7 @@ export function truncate(text: string, maxChars: number): string {
 export function pageCarriesMarker(html: string, marker: string): boolean {
   const wanted = collapseWhitespace(marker).toLowerCase();
   if (!wanted) return false;
-  const visible = collapseWhitespace(decodeEntities(stripTags(html))).toLowerCase();
-  return visible.includes(wanted);
+  return cleanText(html).toLowerCase().includes(wanted);
 }
 
 export function firstImageSrc(html: string): string | null {

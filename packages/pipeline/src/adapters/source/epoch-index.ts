@@ -82,7 +82,6 @@ export function createEpochIndexAdapter(options: EpochIndexOptions): SourceAdapt
   const fetchPage = (url: string, ctx: StageContext) =>
     safeFetchText(url, {
       fetch: ctx.fetch,
-      logger: ctx.logger,
       timeoutMs: options.ingest.page_timeout_ms,
       maxBytes: options.ingest.max_body_bytes,
       userAgent: options.ingest.user_agent,

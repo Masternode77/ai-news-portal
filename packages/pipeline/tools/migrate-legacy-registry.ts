@@ -109,7 +109,8 @@ export function convertLegacyRow(row: LegacyRow): SourceConfig {
     id: row.id,
     name: f["name"],
     type,
-    url: f["feed"],
+    // The safe fetcher only speaks https; an http feed would fail every run as UNSAFE_URL.
+    url: f["feed"].replace(/^http:\/\//i, "https://"),
     tier,
     enabled: f["status"] === "active_feed",
     text_rights: textRights,

@@ -80,6 +80,15 @@ test("mapFeedItem skip reasons: age window, missing date, title length, no url, 
   assert.equal(mapFeedItem(entry({ dates: [] }), source(), options(), NOW, hosts).skip, "date_missing");
   assert.equal(mapFeedItem(entry({ dates: ["yesterday-ish"] }), source(), options(), NOW, hosts).skip, "date_invalid");
   assert.equal(mapFeedItem(entry({ title: "short" }), source(), options(), NOW, hosts).skip, "title_length");
+  // Federal Register notices run past 400 characters: keep and cut, never skip.
+  const long = mapFeedItem(entry({ title: `Notice of ${"a very long rulemaking title ".repeat(20)}end` }), source(), options(), NOW, hosts);
+  assert.equal(long.skip, null);
+  assert.equal(long.item?.title.length, 220);
+  assert.ok(long.item?.title.endsWith("…"));
+  assert.equal(mapFeedItem(entry({ dates: ["2026-10-25T00:00:00Z"] }), source(), options(), NOW, hosts).skip, "date_future");
+  // A path-only <link> resolves against the feed URL.
+  const relative = mapFeedItem(entry({ link: "/news/relative-item?utm_campaign=x" }), source(), options(), NOW, hosts);
+  assert.equal(relative.item?.canonical_url, "https://feeds.example.com/news/relative-item");
   assert.equal(mapFeedItem(entry({ link: null, guid: "not-a-url" }), source(), options(), NOW, hosts).skip, "no_url");
   // Link-only and rewrite-only items are never fetched, so any public https host is fine.
   assert.equal(mapFeedItem(entry(), source({ text_rights: "link_only" }), options(), NOW, hosts).skip, null);
