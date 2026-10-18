@@ -1,0 +1,47 @@
+# Compute Current rebuild — pipeline configuration (contracts.md §4, ADR-002/004/006/007)
+# Validated strictly by packages/shared/src/schema/config.ts; unknown keys fail the run.
+# Environment overrides: CC_FLAG_STAGES_<STAGE>=true|false, CC_FLAG_PUBLISH_TARGET=none|staging|production.
+
+schedule:
+  cron: "45 15,23,7 * * *"   # 00:45 / 08:45 / 16:45 KST (ADR-002)
+  timezone: UTC
+  slot_hours: 8
+
+flags:
+  stages:
+    ingest: true
+    normalize: true
+    score: true
+    generate: true
+    qa: true
+    image: true
+    publish: true
+  publish_target: none         # none | staging | production (ADR-006; production only at Phase 5 cutover)
+
+caps:
+  briefs_per_cycle: { min: 1, max: 2 }
+  essays_per_day: 1
+  pool_max_items: 200          # legacy cap was 30 (Phase 0 H1); re-measured in Phase 4
+  pool_max_age_days: 10
+
+budget:
+  run_usd: 2.0                 # STOP-THE-LINE threshold (brief §5.4)
+  soft_warn_usd: 1.5
+  max_calls: 60
+
+llm:
+  provider: fixture            # anthropic | openrouter | fixture | disabled — live providers land in Phase 3d
+  models:
+    curate: claude-haiku-5-5
+    news_brief: claude-opus-5-5
+    expert_lens: claude-opus-5-5
+    insight_essay: claude-opus-5-5
+    qa_assist: claude-haiku-5-5
+
+image:
+  provider: placeholder        # placeholder | openai | fixture
+  fallback_chain: [placeholder]
+
+notify:
+  telegram:
+    enabled: false             # Phase 3i

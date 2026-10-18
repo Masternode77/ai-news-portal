@@ -1,0 +1,55 @@
+# Compute Current rebuild — source registry (contracts.md §4, ADR-004 text_rights)
+# Phase 2 sample: five rows carried over from config/sourceRegistry.yml so the
+# skeleton has real ids and URLs. The full 82-row migration and the per-source
+# rights review happen in Phase 3a; text_rights below reflect the legacy
+# allow_text_use flag only (true -> full, false -> rewrite_only) and are not a
+# legal determination.
+#
+# One source is at most ten lines (R5):
+#   id, name, type, url, tier, enabled, text_rights, terms_url?, reviewed_at?, pool_max_age_days?
+
+- id: eia-today-in-energy
+  name: U.S. Energy Information Administration
+  type: rss
+  url: https://www.eia.gov/rss/todayinenergy.xml
+  tier: 1
+  enabled: true
+  text_rights: full
+  terms_url: https://www.eia.gov/about/copyrights_reuse.php
+  reviewed_at: 2026-10-18
+
+- id: epoch-ai-data-insights
+  name: Epoch AI
+  type: rss
+  url: https://epoch.ai/data-insights/rss.xml
+  tier: 1
+  enabled: true
+  text_rights: full
+  reviewed_at: 2026-10-18
+
+- id: kubernetes-blog
+  name: Kubernetes Blog
+  type: rss
+  url: https://kubernetes.io/feed.xml
+  tier: 2
+  enabled: true
+  text_rights: full
+  reviewed_at: 2026-10-18
+
+- id: nvidia-blog
+  name: NVIDIA Blog
+  type: rss
+  url: https://blogs.nvidia.com/feed/
+  tier: 2
+  enabled: true
+  text_rights: rewrite_only
+  reviewed_at: 2026-10-18
+
+- id: aws-news-blog
+  name: AWS News Blog
+  type: rss
+  url: https://aws.amazon.com/blogs/aws/feed/
+  tier: 2
+  enabled: true
+  text_rights: rewrite_only
+  reviewed_at: 2026-10-18
