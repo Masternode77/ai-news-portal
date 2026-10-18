@@ -82,7 +82,7 @@ ADR-006의 단계 M1~M8을 실행 단위로 풀어 쓴다. 각 단계는 Josh �
 | 2026-10-18 | 7 | done | `apps/site`: `output: 'server'` + Vercel ISR 300s, `publications` 데이터층(`supabase`/`legacy_json`/`empty`), `/healthz`, 빈 상태 빌드 테스트. 테스트 13 |
 | 2026-10-18 | 8 | **written, not applied** | `supabase/migrations/0001_init.sql`(DDL·인덱스·RLS). 적용은 프로젝트 선택 + §5.6 승인 후 |
 | 2026-10-18 | 9 | done | `CLAUDE.md`, README "Rebuild v2" 절, `docs/STATUS.md` |
-| 2026-10-18 | 10 (3a) | done | 안전 fetch·피드 파서·URL/날짜/HTML 규칙·라이브 RSS/Epoch 어댑터·추출기 5종, ingest 재작성(health·auto-disable·캡·중복 제거·items_new·추출), `--live` CLI(기본 OFF), 레지스트리 82행 이관(`config/sources.yaml`), `rebuild-ci.yml`의 `ingest-live-dry-run` 잡. 테스트 119. 라이브 dry-run: 80 소스 중 71 ok, `items_fetched` 286(Phase 0 평균 28.1), 추출 68/0 — `notes/3a-sources-ingest.md` §4. PR #59, Josh 승인 대기 |
+| 2026-10-18 | 10 (3a) | done | 안전 fetch·피드 파서·URL/날짜/HTML 규칙·라이브 RSS/Epoch 어댑터·추출기 5종, ingest 재작성(health·auto-disable·캡·중복 제거·items_new·추출), `--live` CLI(기본 OFF), 레지스트리 82행 이관(`config/sources.yaml`), `rebuild-ci.yml`의 `ingest-live-dry-run` 잡. 테스트 119. 라이브 dry-run(run 2): 80 소스 중 76 ok, `items_fetched` 312(Phase 0 평균 28.1), 추출 68/0 — `notes/3a-sources-ingest.md` §4. PR #59, Josh 승인 대기 |
 
 ## 6. 알려진 격차 (Phase 2 리뷰에서 확인)
 

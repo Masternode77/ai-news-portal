@@ -108,6 +108,8 @@
 | insidehpc | 2 | `SOURCE_UNREACHABLE fetch failed` | 러너에서 TLS/DNS 실패(1회 재시도 후) | 재실행에서 관찰 |
 | venturebeat-ai | 3 | `SOURCE_UNREACHABLE http 429` | 레이트리밋(1회 재시도 후) | 재실행에서 관찰; 소스 health가 연속 실패를 추적 |
 
+**Run 2** (run 39104453316, `cecca564`, 2026-10-18T06:33:44Z, 위 수정 반영): **76 ok / 4 failed**, `items_fetched` **312**, `items_new` 312, duplicates 8, listed 3,045 → skipped 2,725(`too_old` 2,001 · `capped` 704 · `section_missing` 13 · `title_length` 6 · `date_future` 1), 추출 68 / 0 / 244 skip, ingest 30.2 s. 수정 확인: bloomberg-technology ok(`feeds.`→`www.` 1 hop, 9 listed), blocks-and-files ok(2 hops, 75 listed), toms-hardware ok(http→https 재시도, 1.2 MB, 50 listed), semianalysis ok(3.5 MB, 20 listed), nextplatform ok(이번엔 `?lab_viewport=rss`가 RSS로 응답, 88 listed — 봇 챌린지는 간헐적). 남은 실패 4: nrc-news `HTTP_403`(재현), insidehpc `fetch failed`(2회 재현 → 러너에서 TLS 협상 실패 추정), venturebeat-ai `429`(2회 재현 → 러너 IP 레이트리밋), capacity-media `HOST_NOT_ALLOWED: capacityglobal.com`(피드가 다른 발행사 도메인으로 이전 — `config/sources.yaml`의 `url`을 새 피드 주소로 확인 후 갱신, 후속). 리다이렉트된 피드 5개(doe-newsroom → `energy.gov/rss/energygov/2193718` 포함)는 step summary의 "Feeds that redirected" 목록으로 드러나므로 `url` 갱신 대상이다.
+
 kept 0이지만 정상 동작: `google-cloud-tpu-releases`(30건 전부 10일 밖), `theregister-data-centre`(25), `eia-press`(12), `uk-dsit`(20), `fabricated-knowledge`(20), `arxiv-cs-*` 3개(일요일 빈 피드), `ofgem`(빈 피드), `epoch-ai-gradient-updates`(색인 146 KB에서 21일 창 내 링크 0 — 최근 글 부재 또는 색인 구조 변경, 다음 런에서 확인). `google-cloud-ai-releases`의 `section_missing` 13은 Gemini 섹션이 없는 날짜(의도). 긴 제목 절단·`date_future` 보고·Drupal 날짜·Atom(gov.uk)·RDF 경로 모두 라이브에서 확인됐다.
 
 ## 5. 열린 질문 (Josh)
