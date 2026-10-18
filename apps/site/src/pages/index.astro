@@ -1,9 +1,13 @@
 ---
 import Base from "../layouts/Base.astro";
-import { siteRepo } from "../lib/repo";
+import { listPublications } from "../lib/repo";
 import { formatDate } from "../lib/render";
 
-const rows = await siteRepo().list({ limit: 50 });
+const loaded = await listPublications(50);
+if (loaded instanceof Response) {
+  return loaded;
+}
+const rows = loaded;
 ---
 
 <Base title="Compute Current — AI 인프라 인텔리전스">

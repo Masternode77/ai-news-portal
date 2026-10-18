@@ -8,9 +8,10 @@
  *
  * Exit codes: 0 done · 1 partial/budget_stop · 2 failed, usage or config error.
  * Source adapters are fixtures unless `--live` swaps in the real RSS/Atom and
- * Epoch index adapters (Phase 3a). `--live` requires `--dry-run` (memory
- * ledger and DB, nothing written) until Phase 4 wires Supabase, and cannot be
- * combined with `--replay`, which forbids all network access.
+ * Epoch index adapters (Phase 3a). Every run needs `--dry-run` (memory ledger
+ * and DB, nothing written) until Phase 4 wires Supabase: a bare `--replay`
+ * would keep adapters offline but still write the real run ledger. `--live`
+ * cannot be combined with `--replay`, which forbids all network access.
  */
 import { parseArgs } from "node:util";
 import { realpathSync } from "node:fs";
@@ -151,8 +152,8 @@ export async function main(argv: string[], env: NodeJS.ProcessEnv, stdout: (line
     if (cli.command !== "run") throw new UsageError(USAGE);
     logger = createLogger({ name: "cc-pipeline", level: cli.logLevel, sink: (line) => process.stderr.write(`${line}\n`) });
 
-    if (!cli.dryRun && !cli.replay) {
-      throw new UsageError("Phase 3a writes nothing outside the memory ledger: pass --dry-run (add --live for real feeds) and/or --replay");
+    if (!cli.dryRun) {
+      throw new UsageError("Phase 3a writes nothing outside the memory ledger: pass --dry-run (add --live for real feeds or --replay to forbid network access); real ledger writes land in Phase 4");
     }
     const realFetch = globalThis.fetch;
     if (cli.replay) {

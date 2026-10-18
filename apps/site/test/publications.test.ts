@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { resolve } from "node:path";
 import { PublicationRow } from "@cc/shared";
 import { legacyUuid, mapLegacyCollections, mapLegacyColumn, mapLegacyNews } from "../src/lib/legacy-json.ts";
-import { createLegacyJsonRepo, createPublicationsRepo, createSupabaseRepo, resolveDataSource } from "../src/lib/publications.ts";
+import { DataUnavailableError, createLegacyJsonRepo, createPublicationsRepo, createSupabaseRepo, resolveDataSource } from "../src/lib/publications.ts";
 import type { SiteSupabaseLike, SiteSupabaseQuery } from "../src/lib/publications.ts";
 
 const REPO_ROOT = resolve(import.meta.dirname, "../../..");
@@ -76,13 +76,18 @@ test("empty source serves nothing and reports healthy; an unset source says so",
   assert.match((await createPublicationsRepo({}).health()).detail ?? "", /SITE_DATA_SOURCE unset/);
 });
 
-test("supabase source without credentials degrades to empty with a detail message", async () => {
+test("supabase source without credentials is unhealthy and unavailable, never a healthy empty site", async () => {
   const repo = createPublicationsRepo({ SITE_DATA_SOURCE: "supabase" });
-  assert.equal(repo.source, "empty");
-  assert.match((await repo.health()).detail ?? "", /SUPABASE_URL/);
+  assert.equal(repo.source, "supabase");
+  const health = await repo.health();
+  assert.equal(health.ok, false);
+  assert.equal(health.source, "supabase");
+  assert.match(health.detail ?? "", /SUPABASE_URL/);
+  await assert.rejects(repo.list(), DataUnavailableError);
+  await assert.rejects(repo.get("news/x"), DataUnavailableError);
 });
 
-test("supabase repo reads published rows only, drops invalid rows and never throws", async () => {
+test("supabase repo reads published rows only, drops invalid rows and reports an outage as unavailable", async () => {
   const { client, calls } = fakeSupabase([validRow, { id: "broken" }]);
   const repo = createSupabaseRepo(client);
   const rows = await repo.list({ limit: 10 });
@@ -101,8 +106,8 @@ test("supabase repo reads published rows only, drops invalid rows and never thro
   assert.ok(calls.includes("select:publications:count"));
 
   const failing = createSupabaseRepo(fakeSupabase([], { message: "connection refused" }).client);
-  assert.deepEqual(await failing.list(), []);
-  assert.equal(await failing.get("news/x"), null);
+  await assert.rejects(failing.list(), /connection refused/);
+  await assert.rejects(failing.get("news/x"), DataUnavailableError);
   const failingHealth = await failing.health();
   assert.equal(failingHealth.ok, false);
   assert.match(failingHealth.detail ?? "", /connection refused/);
@@ -112,7 +117,8 @@ test("supabase repo reads published rows only, drops invalid rows and never thro
       throw new Error("boom");
     },
   });
-  assert.deepEqual(await throwing.list(), []);
+  await assert.rejects(throwing.list(), DataUnavailableError);
+  await assert.rejects(throwing.get("news/x"), /boom/);
   assert.equal((await throwing.health()).ok, false);
 });
 
@@ -208,7 +214,7 @@ test("legacy_json repo maps the committed reader pages from the real src/data fi
   assert.equal(health.publishedCount, rows.length);
 });
 
-test("legacy_json repo with a missing directory serves empty, reports it and retries on the next call", async () => {
+test("legacy_json repo with a missing directory is unavailable, reports it and retries on the next call", async () => {
   let attempts = 0;
   const repo = createLegacyJsonRepo(resolve(REPO_ROOT, "does-not-exist"), {
     readFile: (async () => {
@@ -216,8 +222,8 @@ test("legacy_json repo with a missing directory serves empty, reports it and ret
       throw new Error("ENOENT");
     }) as never,
   });
-  assert.deepEqual(await repo.list(), []);
-  assert.equal(await repo.get("news/x"), null);
+  await assert.rejects(repo.list(), DataUnavailableError);
+  await assert.rejects(repo.get("news/x"), /legacy data unavailable/);
   const health = await repo.health();
   assert.equal(health.ok, false);
   assert.match(health.detail ?? "", /legacy data unavailable/);

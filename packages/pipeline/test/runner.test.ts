@@ -161,3 +161,14 @@ test("--stage runs only the named stage and marks the rest skipped", async () =>
   assert.equal(result.funnel.items_fetched, 0);
   await assert.rejects(runPipeline(baseRunOptions({ only: "render" as never })), /unknown stage/);
 });
+
+test("items_scored counts candidates only when the score stage completed", async () => {
+  const { buildFunnel } = await import("../src/runner.ts");
+  const { initialState } = await import("../src/state.ts");
+  const state = { ...initialState([]), candidates: [{} as never, {} as never] };
+  const at = new Date("2026-10-18T00:45:00Z");
+  const runId = "11111111-1111-4111-8111-111111111111";
+  assert.equal(buildFunnel(runId, at, state, [], new Set()).items_scored, 0, "score flagged off or failed: nothing was scored");
+  assert.equal(buildFunnel(runId, at, state, [], new Set(["normalize"])).items_scored, 0);
+  assert.equal(buildFunnel(runId, at, state, [], new Set(["score"])).items_scored, 2);
+});

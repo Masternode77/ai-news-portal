@@ -1,10 +1,14 @@
 ---
 import Base from "../../layouts/Base.astro";
 import Article from "../../components/Article.astro";
-import { siteRepo } from "../../lib/repo";
+import { getPublication } from "../../lib/repo";
 
 const { slug } = Astro.params;
-const publication = slug ? await siteRepo().get(`column/${slug}`) : null;
+const loaded = slug ? await getPublication(`column/${slug}`) : null;
+if (loaded instanceof Response) {
+  return loaded;
+}
+const publication = loaded;
 if (!publication) {
   return new Response("Not found", { status: 404, headers: { "content-type": "text/plain; charset=utf-8" } });
 }

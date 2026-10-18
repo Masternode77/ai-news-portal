@@ -110,7 +110,12 @@ function topError(errors: string[]): string | null {
   return [...tally.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))[0]?.[0] ?? null;
 }
 
-export function buildFunnel(runId: string, startedAt: Date, state: PipelineState, errors: string[]): FunnelType {
+/**
+ * `items_scored` is an input count (candidates reaching score), so it is only
+ * reported when the score stage completed; a flagged-off or failed score stage
+ * leaves it at 0 instead of counting every candidate as scored.
+ */
+export function buildFunnel(runId: string, startedAt: Date, state: PipelineState, errors: string[], completed: ReadonlySet<StageName>): FunnelType {
   return Funnel.parse({
     run_id: runId,
     started_at: startedAt.toISOString(),
@@ -119,7 +124,7 @@ export function buildFunnel(runId: string, startedAt: Date, state: PipelineState
     sources_failed: state.sourceStats.failed,
     items_fetched: state.rawItems.length,
     items_new: state.itemsNew,
-    items_scored: state.candidates.length,
+    items_scored: completed.has("score") ? state.candidates.length : 0,
     passed_gate: state.selected.length,
     drafts: state.drafts.length,
     qa_passed: state.passed.length,
@@ -180,6 +185,7 @@ export async function runPipeline(options: RunOptions): Promise<RunResult> {
 
   let state = initialState(options.sources);
   const stageResults: StageResult[] = [];
+  const completed = new Set<StageName>();
   let status: RunResult["status"] = "done";
 
   try {
@@ -205,6 +211,7 @@ export async function runPipeline(options: RunOptions): Promise<RunResult> {
         state = spec.merge(state, output);
         const counts = spec.counts(output);
         const finishedAt = clock();
+        completed.add(spec.name);
         await ledger.stageFinished(runId, spec.name, finishedAt, { status: "done", counts });
         stageResults.push({ stage: spec.name, status: "done", counts, durationMs: finishedAt.getTime() - stageStart.getTime() });
         stageLogger.info("stage done", counts);
@@ -226,7 +233,7 @@ export async function runPipeline(options: RunOptions): Promise<RunResult> {
 
     if (status === "done" && errors.length > 0) status = "partial";
     const endedAt = clock();
-    const funnel = buildFunnel(runId, startedAt, state, errors);
+    const funnel = buildFunnel(runId, startedAt, state, errors, completed);
     const result: RunResult = {
       runId,
       status,
@@ -242,7 +249,7 @@ export async function runPipeline(options: RunOptions): Promise<RunResult> {
   } catch (error) {
     const message = errorMessage(error);
     const endedAt = clock();
-    await ledger.finishRun(runId, endedAt, { status: "failed", funnel: buildFunnel(runId, startedAt, state, [...errors, message]), costTotalUsd: budget.spentUsd, error: message });
+    await ledger.finishRun(runId, endedAt, { status: "failed", funnel: buildFunnel(runId, startedAt, state, [...errors, message], completed), costTotalUsd: budget.spentUsd, error: message });
     runLogger.error("run failed outside a stage", { error: message });
     throw error;
   }
