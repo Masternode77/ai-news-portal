@@ -19,9 +19,37 @@ const FUTURE_TOLERANCE_MS = 24 * 60 * 60 * 1000;
 
 const DATE_ONLY_NAMED = /^(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sept?|Oct|Nov|Dec)[a-z]*\.?\s+(\d{1,2}),?\s+(20\d{2})$/;
 
+/** The calendar day a string names, in the shapes the feeds use (ISO, "Feb 31, 2026", RFC 822 "31 Feb 2026", Drupal "02/31/2026"). */
+const CALENDAR_SHAPES: { re: RegExp; pick: (m: RegExpMatchArray) => { year: number; month: number | undefined; day: number } }[] = [
+  { re: /\b(20\d{2})-(\d{2})-(\d{2})(?!\d)/, pick: (m) => ({ year: Number(m[1]), month: Number(m[2]) - 1, day: Number(m[3]) }) },
+  { re: MONTH_NAME_DATE, pick: (m) => ({ year: Number(m[3]), month: MONTHS[m[1]!.toLowerCase()], day: Number(m[2]) }) },
+  { re: /\b(\d{1,2})\s+(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sept?|Oct|Nov|Dec)[a-z]*\.?,?\s+(20\d{2})\b/, pick: (m) => ({ year: Number(m[3]), month: MONTHS[m[2]!.toLowerCase()], day: Number(m[1]) }) },
+  { re: /\b(\d{1,2})\/(\d{1,2})\/(20\d{2})\b/, pick: (m) => ({ year: Number(m[3]), month: Number(m[1]) - 1, day: Number(m[2]) }) },
+];
+
+function daysInMonth(year: number, month: number): number {
+  return new Date(Date.UTC(year, month + 1, 0)).getUTCDate();
+}
+
+/**
+ * True when the string names a day that does not exist in its month ("Feb 31, 2026", "2026-02-31", "Feb 29, 2026").
+ * The Date constructor would roll such a day into the next month and the item would carry a fabricated date; the
+ * caller reports it as unparseable instead (DATE_INVALID, ADR-004).
+ */
+export function namesImpossibleDay(value: string): boolean {
+  for (const { re, pick } of CALENDAR_SHAPES) {
+    const match = value.match(re);
+    if (!match) continue;
+    const { year, month, day } = pick(match);
+    return month === undefined || month < 0 || month > 11 || day < 1 || day > daysInMonth(year, month);
+  }
+  return false;
+}
+
 export function parseDateCandidate(raw: string): Date | null {
   const value = raw.trim();
   if (!value) return null;
+  if (namesImpossibleDay(value)) return null;
   // A bare "Oct 7, 2026" has no timezone; pin it to noon UTC so the result does not depend on the machine's zone.
   const dateOnly = value.match(DATE_ONLY_NAMED);
   if (dateOnly) {
