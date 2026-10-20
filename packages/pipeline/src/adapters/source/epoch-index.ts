@@ -12,6 +12,7 @@ import { isFutureDate, olderThanDays, parseDateCandidate } from "../../lib/dates
 import { cleanText, metaContent, truncate } from "../../lib/html.ts";
 import { hostOf } from "../../lib/url.ts";
 import { CC_BY_4_URL, extractEpoch, ExtractionError } from "./extract.ts";
+import type { Extraction } from "./extract.ts";
 import { PAGE_CONTENT_TYPES, SourceFetchError, safeFetchText, withRetry } from "./net.ts";
 import type { HostResolver } from "./net.ts";
 import { HostPacer } from "./pacer.ts";
@@ -136,11 +137,23 @@ export function createEpochIndexAdapter(options: EpochIndexOptions): SourceAdapt
         // `ingest.extract_bodies` (the kill switch), `text_rights: full`, and an extract kind other than `none`.
         // A `link_only` source keeps the title and link alone.
         const extractBody = options.ingest.extract_bodies && source.text_rights === "full" && (source.extract?.kind ?? "epoch_index") !== "none";
-        const body = extractBody ? extractEpoch(page.text) : null;
-        // A licensed page whose body container holds no text is an extraction failure, not usable source material
-        // (AGENTS.md editorial rule): the item keeps its metadata, carries no body_text and counts as extract_failed.
-        const extracted = body !== null && body.text.trim().length > 0;
-        if (body && !extracted) ctx.logger.warn("epoch article body empty; item kept without body_text", { source_id: source.id, link, method: body.method });
+        // A licensed page whose body cannot be extracted (the body container holds no text, or the publisher changed
+        // its markup and the selector throws) is an extraction failure, not usable source material (AGENTS.md
+        // editorial rule) and not a lost article: the item keeps its title, link and description, carries no
+        // body_text, records the failure and counts as extract_failed in ingest. Only a network error is a skip.
+        let body: Extraction | null = null;
+        let failure: { error: string; detail: string } | null = null;
+        if (extractBody) {
+          try {
+            body = extractEpoch(page.text);
+            if (body.text.trim().length === 0) failure = { error: "EXTRACTION_EMPTY", detail: `${body.method}: body container holds no text` };
+          } catch (error) {
+            if (!(error instanceof ExtractionError)) throw error;
+            failure = { error: error.code, detail: error.message.startsWith(`${error.code}: `) ? error.message.slice(error.code.length + 2) : error.message };
+          }
+        }
+        const extracted = body !== null && failure === null;
+        if (failure) ctx.logger.warn("epoch article body not extracted; item kept without body_text", { source_id: source.id, link, ...failure });
         items.push({
           source_id: source.id,
           canonical_url: meta.url,
@@ -149,12 +162,12 @@ export function createEpochIndexAdapter(options: EpochIndexOptions): SourceAdapt
           fetched_at: ctx.now.toISOString(),
           payload: {
             guid: meta.url,
-            ...(source.text_rights === "link_only" ? {} : { snippet: truncate(meta.description || body?.text || "", options.ingest.snippet_chars) }),
-            ...(body === null
-              ? {}
-              : extracted
-                ? { body_preview: truncate(body.text, options.ingest.body_preview_chars), body_text: body.text, extraction: { ok: true, method: body.method, chars: body.chars, limit_exceeded: body.limitExceeded } }
-                : { extraction: { ok: false, error: "EXTRACTION_EMPTY", detail: `${body.method}: body container holds no text` } }),
+            ...(source.text_rights === "link_only" ? {} : { snippet: truncate(meta.description || (extracted && body ? body.text : ""), options.ingest.snippet_chars) }),
+            ...(extracted && body
+              ? { body_preview: truncate(body.text, options.ingest.body_preview_chars), body_text: body.text, extraction: { ok: true, method: body.method, chars: body.chars, limit_exceeded: body.limitExceeded } }
+              : failure
+                ? { extraction: { ok: false, ...failure } }
+                : {}),
             image: null,
             categories: [],
             text_rights: source.text_rights,
@@ -190,7 +203,12 @@ export function createEpochIndexAdapter(options: EpochIndexOptions): SourceAdapt
     fetchDetailed,
     async extract(item): Promise<ExtractedText> {
       const text = typeof item.payload?.["body_text"] === "string" ? (item.payload["body_text"] as string) : "";
-      if (!text.trim()) throw new ExtractionError("EXTRACTION_EMPTY", "epoch item carries no body_text (empty body at fetch time)");
+      if (!text.trim()) {
+        // Surface the failure recorded at fetch time (EXTRACTION_EMPTY, EXTRACTION_FAILED, …) so ingest counts it by its code.
+        const recorded = item.payload?.["extraction"];
+        const failure = recorded && typeof recorded === "object" && (recorded as { ok?: unknown }).ok === false ? (recorded as { error?: unknown; detail?: unknown }) : null;
+        throw new ExtractionError(typeof failure?.error === "string" ? failure.error : "EXTRACTION_EMPTY", typeof failure?.detail === "string" ? failure.detail : "epoch item carries no body_text (empty body at fetch time)");
+      }
       return { text, chars: text.length, method: "epoch_index:payload" };
     },
   };
