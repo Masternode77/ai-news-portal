@@ -137,11 +137,20 @@ async function syncSources(db: DbPort, sources: SourceConfig[], ctx: StageContex
   return tracks;
 }
 
-/** `window` = runs in seven days (ceil(168 / slot_hours)); `recent` keeps at most RECENT_MAX outcomes. */
-export function healthAfter(track: { health: SourceHealthType; failStreak: number }, ok: boolean, now: Date, itemsKept: number, error: string | null, window: number): { health: SourceHealthType; failStreak: number } {
-  const recent = [...track.health.recent, ok].slice(-RECENT_MAX);
-  const sample = recent.slice(-window);
-  const rate = sample.length > 0 ? sample.filter(Boolean).length / sample.length : null;
+const SEVEN_DAYS_MS = 7 * 24 * 60 * 60 * 1000;
+
+/**
+ * `success_rate_7d` is the share of successful outcomes among the runs recorded
+ * in the seven days before `now` (by their own timestamps, so a missed slot or
+ * an extra dispatch run does not distort it); `recent` keeps at most RECENT_MAX
+ * outcomes, newest last, and an outcome older than the window is ignored even
+ * while it is still in the list.
+ */
+export function healthAfter(track: { health: SourceHealthType; failStreak: number }, ok: boolean, now: Date, itemsKept: number, error: string | null): { health: SourceHealthType; failStreak: number } {
+  const recent = [...track.health.recent, { at: now.toISOString(), ok }].slice(-RECENT_MAX);
+  const since = now.getTime() - SEVEN_DAYS_MS;
+  const sample = recent.filter((outcome) => Date.parse(outcome.at) >= since);
+  const rate = sample.length > 0 ? sample.filter((outcome) => outcome.ok).length / sample.length : null;
   return {
     health: {
       success_rate_7d: rate,
@@ -187,7 +196,6 @@ export const ingestStage: Stage<IngestInput, IngestOutput> = {
     const db = ctx.adapters.db;
     const now = ctx.now;
     const nowIso = now.toISOString();
-    const window = Math.max(1, Math.ceil((7 * 24) / ctx.config.schedule.slot_hours));
 
     const tracks = await syncSources(db, input.sources, ctx);
     const configured = input.sources.filter((source) => source.enabled);
@@ -227,7 +235,7 @@ export const ingestStage: Stage<IngestInput, IngestOutput> = {
         const message = errorMessage(outcome.error);
         errors.push({ source_id: source.id, error: message });
         await ctx.ledger.deadLetter({ run_id: ctx.runId, stage: "ingest", ref_table: "sources", ref_id: source.id, payload: { url: source.url, tier: source.tier, fail_streak: track.failStreak + 1 }, error: message });
-        const next = healthAfter(track, false, now, 0, message, window);
+        const next = healthAfter(track, false, now, 0, message);
         let enabled = true;
         if (next.failStreak >= cfg.auto_disable_after && !next.health.auto_disabled_at) {
           enabled = false;
@@ -261,7 +269,7 @@ export const ingestStage: Stage<IngestInput, IngestOutput> = {
       if (valid.length > kept.length) skipped["capped"] = (skipped["capped"] ?? 0) + (valid.length - kept.length);
       skippedItems += Object.values(skipped).reduce((sum, n) => sum + n, 0);
       for (const item of kept) fetched.push({ item, source });
-      const next = healthAfter(track, true, now, kept.length, null, window);
+      const next = healthAfter(track, true, now, kept.length, null);
       healthRows.push(sourceHealthRow(source.id, true, nowIso, 0, next.health));
       perSource.push({
         source_id: source.id,

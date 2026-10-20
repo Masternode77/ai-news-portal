@@ -88,14 +88,23 @@ export type SourceRow = z.infer<typeof SourceRow>;
 export const SourceRowInsert = SourceRow.partial({ terms_url: true, reviewed_at: true, last_ok_at: true, fail_streak: true, health: true });
 export type SourceRowInsert = z.infer<typeof SourceRowInsert>;
 
-/** Typed view of `sources.health` (jsonb). `recent` holds the last outcomes, newest last. */
+/** One run outcome for a source: when it ran and whether the fetch succeeded. */
+export const SourceOutcome = z.strictObject({ at: IsoDateTime, ok: z.boolean() });
+export type SourceOutcome = z.infer<typeof SourceOutcome>;
+
+/**
+ * Typed view of `sources.health` (jsonb). `recent` holds the last outcomes with
+ * their run time, newest last, so `success_rate_7d` is computed over the runs
+ * that actually happened in the preceding seven days (missed slots and extra
+ * dispatch runs do not stretch or shrink the window).
+ */
 export const SourceHealth = z.strictObject({
   success_rate_7d: UnitInterval.nullable(),
   last_error: z.string().nullable(),
   last_error_at: IsoDateTime.nullable(),
   items_last_run: NonNegativeInt,
   auto_disabled_at: IsoDateTime.nullable(),
-  recent: z.array(z.boolean()).max(50),
+  recent: z.array(SourceOutcome).max(50),
 });
 export type SourceHealth = z.infer<typeof SourceHealth>;
 export const EMPTY_SOURCE_HEALTH: SourceHealth = { success_rate_7d: null, last_error: null, last_error_at: null, items_last_run: 0, auto_disabled_at: null, recent: [] };

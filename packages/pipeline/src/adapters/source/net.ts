@@ -181,24 +181,33 @@ async function assertPublicHost(target: URL, resolveHost: HostResolver): Promise
   if (addresses.some((address) => !isPublicAddress(address))) throw new SourceFetchError("UNSAFE_URL", `non_public_address ${hostname}`);
 }
 
-async function readBody(response: Response, maxBytes: number): Promise<{ text: string; bytes: number; charset: string }> {
+async function readBody(response: Response, maxBytes: number, timeoutMs: number): Promise<{ text: string; bytes: number; charset: string }> {
   const declared = Number(response.headers.get("content-length") ?? "");
   if (Number.isFinite(declared) && declared > maxBytes) throw new SourceFetchError("BODY_TOO_LARGE", `content-length ${declared} > ${maxBytes}`);
   if (!response.body) return { text: await response.text(), bytes: 0, charset: "utf-8" };
   const reader = response.body.getReader();
   const chunks: Uint8Array[] = [];
   let bytes = 0;
-  for (;;) {
-    const { done, value } = await reader.read();
-    if (done) break;
-    if (value) {
-      bytes += value.byteLength;
-      if (bytes > maxBytes) {
-        await reader.cancel().catch(() => undefined);
-        throw new SourceFetchError("BODY_TOO_LARGE", `body exceeded ${maxBytes} bytes`);
+  try {
+    for (;;) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      if (value) {
+        bytes += value.byteLength;
+        if (bytes > maxBytes) {
+          await reader.cancel().catch(() => undefined);
+          throw new SourceFetchError("BODY_TOO_LARGE", `body exceeded ${maxBytes} bytes`);
+        }
+        chunks.push(value);
       }
-      chunks.push(value);
     }
+  } catch (error) {
+    // A body that stalls or disconnects after the headers arrived fails here, not in fetch():
+    // report it as SOURCE_UNREACHABLE so the per-source retry applies to it as well.
+    if (error instanceof SourceFetchError) throw error;
+    await reader.cancel().catch(() => undefined);
+    const detail = error instanceof Error ? error.message : String(error);
+    throw new SourceFetchError("SOURCE_UNREACHABLE", isTimeout(error) ? `timeout while reading body after ${timeoutMs} ms` : `body stream failed: ${detail}`);
   }
   const merged = new Uint8Array(bytes);
   let offset = 0;
@@ -249,7 +258,7 @@ export async function safeFetchText(url: string, options: SafeFetchOptions): Pro
     if (response.status >= 400) throw new SourceFetchError(`HTTP_${response.status}`, `http ${response.status} for ${target.href}`, response.status);
     const contentType = (response.headers.get("content-type") ?? "").split(";")[0]?.trim().toLowerCase() ?? "";
     if (contentType && !options.contentTypes.includes(contentType)) throw new SourceFetchError("BAD_CONTENT_TYPE", contentType, response.status);
-    const { text, bytes, charset } = await readBody(response, options.maxBytes);
+    const { text, bytes, charset } = await readBody(response, options.maxBytes, options.timeoutMs);
     return { url: target.href, status: response.status, contentType, charset, text, bytes, redirects };
   }
 }

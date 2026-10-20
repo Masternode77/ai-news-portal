@@ -121,7 +121,7 @@ test("ingest mirrors sources, isolates a failing source, caps, dedupes, extracts
   const fullRow = byId.get("s-full")!;
   assert.equal(fullRow["last_ok_at"], NOW.toISOString());
   assert.equal(fullRow["fail_streak"], 0);
-  assert.deepEqual(fullRow["health"], { success_rate_7d: 1, last_error: null, last_error_at: null, items_last_run: 6, auto_disabled_at: null, recent: [true] });
+  assert.deepEqual(fullRow["health"], { success_rate_7d: 1, last_error: null, last_error_at: null, items_last_run: 6, auto_disabled_at: null, recent: [{ at: NOW.toISOString(), ok: true }] });
   const badRow = byId.get("s-bad")!;
   assert.equal(badRow["enabled"], true);
   assert.equal(badRow["fail_streak"], 1);

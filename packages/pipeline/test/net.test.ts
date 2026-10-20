@@ -80,3 +80,25 @@ test("maps status codes, content types and body size to error codes", async () =
   await assert.rejects(safeFetchText("https://feeds.test/x", options(() => Promise.reject(timeout))), /timeout after 1000 ms/);
   await assert.rejects(safeFetchText("https://feeds.test/x", options(() => Promise.reject(new Error("ECONNRESET")))), (e: unknown) => e instanceof SourceFetchError && e.code === "SOURCE_UNREACHABLE");
 });
+
+test("a body that stalls or disconnects after the headers is SOURCE_UNREACHABLE, not a bare stream error", async () => {
+  const stalled = (name: string, message: string): Response => {
+    const error = new Error(message);
+    error.name = name;
+    const body = new ReadableStream<Uint8Array>({
+      start(controller) {
+        controller.enqueue(new TextEncoder().encode("<rss>"));
+        controller.error(error);
+      },
+    });
+    return new Response(body, { status: 200, headers: { "content-type": "application/rss+xml" } });
+  };
+  await assert.rejects(
+    safeFetchText("https://feeds.test/x", options(() => stalled("TimeoutError", "The operation was aborted due to timeout"))),
+    (e: unknown) => e instanceof SourceFetchError && e.code === "SOURCE_UNREACHABLE" && /timeout while reading body after 1000 ms/.test(e.message),
+  );
+  await assert.rejects(
+    safeFetchText("https://feeds.test/x", options(() => stalled("TypeError", "terminated"))),
+    (e: unknown) => e instanceof SourceFetchError && e.code === "SOURCE_UNREACHABLE" && /body stream failed: terminated/.test(e.message),
+  );
+});

@@ -182,6 +182,21 @@ test("the feed request retries once on SOURCE_UNREACHABLE and never on a 4xx", a
   await assert.rejects(adapter.fetch(source(), ctx(async () => (calls += 1, response("", "text/html", 503)))), /SOURCE_UNREACHABLE/);
   assert.equal(calls, 2, "one retry for a 5xx");
 
+  calls = 0;
+  const disconnecting = ctx(async () => {
+    calls += 1;
+    if (calls > 1) return response(xml);
+    const body = new ReadableStream<Uint8Array>({
+      start(controller) {
+        controller.enqueue(new TextEncoder().encode("<rss>"));
+        controller.error(new TypeError("terminated"));
+      },
+    });
+    return new Response(body, { status: 200, headers: { "content-type": "application/rss+xml" } });
+  });
+  assert.equal((await adapter.fetch(source(), disconnecting)).length, 1, "a body that disconnects mid-stream is retried like a failed connection");
+  assert.equal(calls, 2);
+
   await assert.rejects(adapter.fetch(source({ url: "https://feeds.example.com/rss.xml" }), ctx(async () => response("<html>not a feed</html>", "text/html"))), /FEED_PARSE|no items|FEED/i);
 });
 

@@ -2,6 +2,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { EMPTY_SOURCE_HEALTH, IngestConfig, parsePipelineConfig } from "@cc/shared";
+import type { SourceHealth } from "@cc/shared";
 import { buildAdapters, parseCli } from "../bin/pipeline.ts";
 import { decodeBody, detectCharset, safeFetchText } from "../src/adapters/index.ts";
 import { paragraphs } from "../src/lib/html.ts";
@@ -88,25 +89,28 @@ test("safeFetchText reports the charset it decoded with", async () => {
   if (result.charset === "euc-kr") assert.equal(result.text, "<rss>한</rss>");
 });
 
-test("healthAfter keeps 50 outcomes and rates success over the seven-day window", () => {
-  const window = 21;
-  let track = { health: { ...EMPTY_SOURCE_HEALTH, recent: [] as boolean[] }, failStreak: 0 };
-  const now = new Date("2026-10-18T00:45:00Z");
-  for (let i = 0; i < 4; i += 1) {
-    const next = healthAfter(track, false, now, 0, "SOURCE_UNREACHABLE: http 503", window);
-    track = { health: next.health, failStreak: next.failStreak };
-  }
+test("healthAfter keeps 50 dated outcomes and rates success over the seven days before the run", () => {
+  type Track = { health: SourceHealth; failStreak: number };
+  let track: Track = { health: { ...EMPTY_SOURCE_HEALTH, recent: [] }, failStreak: 0 };
+  const day = (offset: number): Date => new Date(Date.parse("2026-10-18T00:45:00Z") + offset * 24 * 60 * 60 * 1000);
+  for (const offset of [-12, -11, -10, -6]) track = healthAfter(track, false, day(offset), 0, "SOURCE_UNREACHABLE: http 503");
   assert.equal(track.failStreak, 4);
-  assert.equal(track.health.success_rate_7d, 0);
-  for (let i = 0; i < 60; i += 1) {
-    const next = healthAfter(track, true, now, 3, null, window);
-    track = { health: next.health, failStreak: next.failStreak };
-  }
+  assert.equal(track.health.success_rate_7d, 0, "four failures; the run six days ago saw only failures in its own window");
+  track = healthAfter(track, true, day(0), 3, null);
   assert.equal(track.failStreak, 0);
-  assert.equal(track.health.recent.length, 50, "bounded history");
-  assert.equal(track.health.success_rate_7d, 1, "old failures fall out of the window");
+  assert.equal(track.health.recent.length, 5, "every outcome is kept with its timestamp");
+  assert.deepEqual(track.health.recent.at(-1), { at: day(0).toISOString(), ok: true });
+  // Failures from 12, 11 and 10 days ago left the window; only the 6-day-old failure and today's success count.
+  assert.equal(track.health.success_rate_7d, 0.5);
   assert.equal(track.health.last_error, "SOURCE_UNREACHABLE: http 503", "the last error is kept for diagnosis");
   assert.equal(track.health.items_last_run, 3);
+  // Extra dispatch runs on one day do not reach back: outcomes are selected by time, not by count.
+  for (let i = 0; i < 60; i += 1) track = healthAfter(track, true, day(0), 3, null);
+  assert.equal(track.health.recent.length, 50, "bounded history");
+  assert.equal(track.health.success_rate_7d, 1);
+  // After an outage the stale outcomes are ignored even though they are still in the list.
+  track = healthAfter(track, false, day(30), 0, "SOURCE_UNREACHABLE: http 503");
+  assert.equal(track.health.success_rate_7d, 0, "only the run inside the window counts");
 });
 
 test("--live wires the real adapters; the default wires fixtures for rss and html alike", () => {
