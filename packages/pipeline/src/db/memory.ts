@@ -6,6 +6,33 @@ function matches(row: Row, where: Partial<Row> | undefined): boolean {
   return Object.entries(where).every(([key, value]) => row[key] === value);
 }
 
+function compareValues(a: unknown, b: unknown): number {
+  if (a === b) return 0;
+  if (typeof a === "number" && typeof b === "number") return a - b;
+  return String(a).localeCompare(String(b));
+}
+
+/** Sorts like PostgREST's default: nulls last in either direction. */
+function ordered(rows: Row[], options: SelectOptions): Row[] {
+  const { orderBy } = options;
+  if (!orderBy) return rows;
+  const direction = orderBy.ascending === false ? -1 : 1;
+  return [...rows].sort((a, b) => {
+    const left = a[orderBy.column];
+    const right = b[orderBy.column];
+    const leftNull = left === null || left === undefined;
+    const rightNull = right === null || right === undefined;
+    if (leftNull || rightNull) return leftNull === rightNull ? 0 : leftNull ? 1 : -1;
+    return compareValues(left, right) * direction;
+  });
+}
+
+/** `offset` rows skipped, then at most `limit` rows (both optional), after ordering. */
+function window(rows: Row[], options: SelectOptions): Row[] {
+  const start = options.offset ?? 0;
+  return options.limit === undefined ? rows.slice(start) : rows.slice(start, start + options.limit);
+}
+
 export class MemoryDb implements DbPort {
   readonly kind = "memory" as const;
   private readonly tables = new Map<TableName, Row[]>();
@@ -45,16 +72,16 @@ export class MemoryDb implements DbPort {
   }
 
   async select<T extends Row>(table: TableName, where?: Partial<Row>, options: SelectOptions = {}): Promise<T[]> {
-    const rows = this.table(table).filter((row) => matches(row, where));
-    const limited = options.limit === undefined ? rows : rows.slice(0, options.limit);
+    const rows = ordered(this.table(table).filter((row) => matches(row, where)), options);
+    const limited = window(rows, options);
     const projected = options.columns ? limited.map((row) => Object.fromEntries(options.columns!.map((c) => [c, row[c]]))) : limited;
     return structuredClone(projected) as T[];
   }
 
   async selectIn<T extends Row>(table: TableName, column: string, values: readonly unknown[], options: SelectOptions = {}): Promise<T[]> {
     const wanted = new Set(values);
-    const rows = this.table(table).filter((row) => wanted.has(row[column]));
-    const limited = options.limit === undefined ? rows : rows.slice(0, options.limit);
+    const rows = ordered(this.table(table).filter((row) => wanted.has(row[column])), options);
+    const limited = window(rows, options);
     const projected = options.columns ? limited.map((row) => Object.fromEntries(options.columns!.map((c) => [c, row[c]]))) : limited;
     return structuredClone(projected) as T[];
   }

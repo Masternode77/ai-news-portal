@@ -17,13 +17,29 @@ export interface SupabaseResult {
   error: { message: string } | null;
 }
 
+export interface SupabaseSelectResult extends SupabaseResult {
+  data: unknown[] | null;
+}
+
+/** The tail of a filtered select: `limit` or, when a select asks for `offset`, PostgREST's inclusive `range`. */
+export interface SupabaseWindow {
+  limit(count: number): PromiseLike<SupabaseSelectResult>;
+  /** Optional on fakes; SupabaseDb only calls it when a select asks for `offset`. */
+  range?(from: number, to: number): PromiseLike<SupabaseSelectResult>;
+}
+
+export interface SupabaseQuery extends SupabaseWindow {
+  /** Optional on fakes; SupabaseDb only calls it when a select asks for `orderBy`. */
+  order?(column: string, options: { ascending: boolean }): SupabaseWindow;
+}
+
 export interface SupabaseTable {
   insert(rows: Record<string, unknown>[]): PromiseLike<SupabaseResult>;
   upsert(rows: Record<string, unknown>[], options: { onConflict: string }): PromiseLike<SupabaseResult>;
   update(patch: Record<string, unknown>): { match(filter: Record<string, unknown>): PromiseLike<SupabaseResult> };
   select(columns: string): {
-    match(filter: Record<string, unknown>): { limit(count: number): PromiseLike<SupabaseResult & { data: unknown[] | null }> };
-    in(column: string, values: unknown[]): { limit(count: number): PromiseLike<SupabaseResult & { data: unknown[] | null }> };
+    match(filter: Record<string, unknown>): SupabaseQuery;
+    in(column: string, values: unknown[]): SupabaseQuery;
   };
 }
 

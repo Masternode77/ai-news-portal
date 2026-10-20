@@ -16,7 +16,7 @@
  * re-enables the source on the next run.
  */
 import { createHash } from "node:crypto";
-import { EMPTY_SOURCE_HEALTH, RawItemInsert, SourceHealth } from "@cc/shared";
+import { EMPTY_SOURCE_HEALTH, RawItemInsert, SourceHealth, rawItemId } from "@cc/shared";
 import type {
   DbPort,
   RawItemInsert as RawItemInsertType,
@@ -377,7 +377,8 @@ export const ingestStage: Stage<IngestInput, IngestOutput> = {
     for (const chunk of chunks(urls, SELECT_CHUNK)) {
       for (const row of await db.selectIn<Row>("raw_items", "canonical_url", chunk, { columns: ["canonical_url"] })) existing.add(String(row["canonical_url"]));
     }
-    const rows: RawItemInsertType[] = unique.map(({ item }) => ({ ...item, run_id: ctx.runId, content_hash: contentHash(item) }));
+    // The id is derived from the canonical URL, so an upsert that hits an existing row never changes its primary key.
+    const rows: RawItemInsertType[] = unique.map(({ item }) => ({ ...item, id: rawItemId(item.canonical_url), run_id: ctx.runId, content_hash: contentHash(item) }));
     for (const chunk of chunks(rows, UPSERT_CHUNK)) await db.upsert("raw_items", chunk as Row[], ["canonical_url"]);
     const itemsNew = urls.filter((url) => !existing.has(url)).length;
     for (const chunk of chunks(healthRows, UPSERT_CHUNK)) await db.upsert("sources", chunk, ["id"]);

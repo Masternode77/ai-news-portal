@@ -2,7 +2,7 @@
 /**
  * Renders a `pipeline run --json` result as Markdown for the GitHub Actions
  * step summary (rebuild-ci.yml, ingest-live-dry-run job): funnel, per-source table,
- * extraction totals and dead letters by taxonomy code.
+ * extraction totals, normalize decisions (3b) and dead letters by taxonomy code.
  *
  *   node packages/pipeline/tools/ingest-dry-run-summary.ts <result.json>
  */
@@ -44,6 +44,18 @@ interface Result {
     extract_failed: number;
     extract_skipped: number;
     sources: SourceStat[];
+  };
+  normalizeStats?: {
+    pool: number;
+    candidates: number;
+    rejected: number;
+    duplicate_of_published: number;
+    duplicate_in_pool: number;
+    by_method: Record<string, number>;
+    published_compared: number;
+    published_in_window: number;
+    decisions: { canonical_url: string; source_id: string; reason: string; method: string; duplicate_of: string | null; score: number | null }[];
+    ms: number;
   };
   ledger?: { deadLetters: { ref_id: string; error: string }[] };
 }
@@ -109,6 +121,32 @@ export function summarize(result: Result): string {
       lines.push("");
       for (const s of samples) {
         for (const item of s.sample.slice(0, 2)) lines.push(`- **${cell(s.source_id)}** ${cell(item.published_at ?? "")} — ${cell(item.title)} ${link(item.url)}`);
+      }
+      lines.push("");
+      lines.push("</details>");
+    }
+  }
+  const normalize = result.normalizeStats;
+  const normalizeStage = result.stages.find((stage) => stage.stage === "normalize");
+  if (normalize && normalizeStage?.status === "done") {
+    lines.push("");
+    lines.push(`### Normalize (3b) — pool ${normalize.pool} → candidates ${normalize.candidates} · rejected ${normalize.rejected} (published ${normalize.duplicate_of_published}, in pool ${normalize.duplicate_in_pool}) · publications compared ${normalize.published_compared} (${normalize.published_in_window} in window) · ${normalize.ms} ms`);
+    const methods = Object.entries(normalize.by_method).sort((a, b) => b[1] - a[1]);
+    if (methods.length > 0) {
+      lines.push("");
+      lines.push("| method | count |");
+      lines.push("|---|---|");
+      for (const [method, count] of methods) lines.push(`| ${cell(method)} | ${count} |`);
+    }
+    if (normalize.decisions.length > 0) {
+      lines.push("");
+      lines.push(`<details><summary>Rejections (first ${Math.min(normalize.decisions.length, 40)} of ${normalize.rejected})</summary>`);
+      lines.push("");
+      lines.push("| source | reason | method | score | item | duplicate of |");
+      lines.push("|---|---|---|---|---|---|");
+      for (const d of normalize.decisions.slice(0, 40)) {
+        const duplicateOf = d.duplicate_of ? (/^https?:\/\//.test(d.duplicate_of) ? link(d.duplicate_of) : cell(d.duplicate_of)) : "";
+        lines.push(`| ${cell(d.source_id)} | ${cell(d.reason)} | ${cell(d.method)} | ${d.score === null ? "" : d.score} | ${link(d.canonical_url)} | ${duplicateOf} |`);
       }
       lines.push("");
       lines.push("</details>");

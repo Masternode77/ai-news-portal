@@ -1,7 +1,8 @@
 /**
- * URL hygiene shared by ingest (canonical_url for the raw_items upsert) and,
- * later, 3b normalize. Rules carried over from the legacy pipeline
- * (scripts/lib/normalize.mjs:9-39, fetch-feeds.mjs:68-87, 113-123).
+ * URL hygiene shared by ingest (canonical_url for the raw_items upsert) and
+ * 3b normalize (`urlIdentityKey` for "the same page under another spelling").
+ * Rules carried over from the legacy pipeline (scripts/lib/normalize.mjs:9-39,
+ * fetch-feeds.mjs:68-87, 113-123, 393-404 liveCopyKey).
  */
 
 const CONTROL_CHARACTERS = /[\u0000-\u001F\u007F]/;
@@ -126,4 +127,46 @@ export function pathWithinPrefix(url: URL, prefix: string): boolean {
   if (url.search || url.hash) return false;
   if (!url.pathname.startsWith(prefix)) return false;
   return /^[a-z0-9]+(?:-[a-z0-9]+)*\/?$/.test(url.pathname.slice(prefix.length));
+}
+
+/** Parameters that never change which page a URL names (beyond TRACKING_PARAMS, which ingest already strips). */
+const IDENTITY_IGNORED_PARAMS = new Set<string>([
+  ...TRACKING_PARAMS,
+  "dclid", "msclkid", "twclid", "igshid", "mkt_tok", "_hsenc", "_hsmi", "oly_enc_id", "oly_anon_id", "cmpid", "ncid", "ocid",
+  "sr_share", "guccounter", "guce_referrer", "guce_referrer_sig", "yclid", "_ga", "_gl", "amp",
+]);
+
+/**
+ * Identity of the page a URL names, for dedupe (Phase 3b): host without a
+ * `www.`/`m.`/`amp.` prefix, path without `index.html`, an AMP suffix or a
+ * trailing slash, query without tracking parameters and in sorted order, and
+ * no fragment except the dated Google release-note anchor. The canonical_url
+ * itself keeps the fetchable spelling; only this key collapses the variants.
+ * Returns null for anything that is not an http(s) URL.
+ */
+export function urlIdentityKey(value: string): string | null {
+  let url: URL;
+  try {
+    url = new URL(value.trim());
+  } catch {
+    return null;
+  }
+  if (url.protocol !== "http:" && url.protocol !== "https:") return null;
+  const host = normalizeHost(url.hostname).replace(/^(?:www|m|amp|mobile)\./, "");
+  const path = url.pathname
+    .replace(/\/{2,}/g, "/")
+    .replace(/\/index\.html?$/i, "/")
+    .replace(/\/amp\/?$/i, "/")
+    .replace(/\/+$/, "");
+  const params: [string, string][] = [];
+  for (const [key, val] of url.searchParams) {
+    const name = key.toLowerCase();
+    if (name.startsWith("utm_") || IDENTITY_IGNORED_PARAMS.has(name)) continue;
+    if ((name === "output" || name === "outputtype") && val.toLowerCase() === "amp") continue;
+    params.push([name, val]);
+  }
+  params.sort((a, b) => a[0].localeCompare(b[0]) || a[1].localeCompare(b[1]));
+  const query = new URLSearchParams(params).toString();
+  const hash = googleReleaseNoteTarget(url.href) ? url.hash : "";
+  return `${host}${path}${query ? `?${query}` : ""}${hash}`;
 }

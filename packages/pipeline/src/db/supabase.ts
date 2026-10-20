@@ -5,7 +5,7 @@
  * DbPort contract) and callers that need them select first.
  */
 import type { DbPort, Row, SelectOptions, TableName, UpsertResult } from "@cc/shared";
-import type { SupabaseLike, SupabaseResult } from "../ledger/supabase.ts";
+import type { SupabaseLike, SupabaseQuery, SupabaseResult, SupabaseSelectResult, SupabaseWindow } from "../ledger/supabase.ts";
 
 export const DEFAULT_SELECT_LIMIT = 1000;
 
@@ -26,6 +26,24 @@ export function assertUniformColumns(rows: readonly Row[], operation: string): v
     const keys = Object.keys(row).sort().join(",");
     if (keys !== expected) throw new Error(`SupabaseDb.${operation}: row ${index} has columns [${keys}] but row 0 has [${expected}]; every row in a batch must carry the same columns`);
   }
+}
+
+/**
+ * Applies `orderBy` (when the client supports `.order`) and the row window to a
+ * filtered select: `limit` alone, or PostgREST's inclusive `range(offset, offset + limit - 1)`
+ * when the caller pages with `offset`. PostgREST also caps one response at the
+ * project's `max-rows` (1000 by default), so a caller that needs more rows pages.
+ */
+function limited(query: SupabaseQuery, options: SelectOptions, operation: string): PromiseLike<SupabaseSelectResult> {
+  const limit = options.limit ?? DEFAULT_SELECT_LIMIT;
+  let tail: SupabaseWindow = query;
+  if (options.orderBy) {
+    if (typeof query.order !== "function") throw new Error(`SupabaseDb.${operation}: the client does not support order()`);
+    tail = query.order(options.orderBy.column, { ascending: options.orderBy.ascending !== false });
+  }
+  if (options.offset === undefined) return tail.limit(limit);
+  if (typeof tail.range !== "function") throw new Error(`SupabaseDb.${operation}: the client does not support range()`);
+  return tail.range(options.offset, options.offset + limit - 1);
 }
 
 export class SupabaseDb implements DbPort {
@@ -53,7 +71,8 @@ export class SupabaseDb implements DbPort {
 
   async select<T extends Row>(table: TableName, where: Partial<Row> = {}, options: SelectOptions = {}): Promise<T[]> {
     const columns = options.columns?.length ? options.columns.join(",") : "*";
-    const result = await this.client.from(table).select(columns).match(where).limit(options.limit ?? DEFAULT_SELECT_LIMIT);
+    const query = this.client.from(table).select(columns).match(where);
+    const result = await limited(query, options, `select(${table})`);
     check(result, `select(${table})`);
     return (result.data ?? []) as T[];
   }
@@ -61,7 +80,8 @@ export class SupabaseDb implements DbPort {
   async selectIn<T extends Row>(table: TableName, column: string, values: readonly unknown[], options: SelectOptions = {}): Promise<T[]> {
     if (values.length === 0) return [];
     const columns = options.columns?.length ? options.columns.join(",") : "*";
-    const result = await this.client.from(table).select(columns).in(column, [...values]).limit(options.limit ?? DEFAULT_SELECT_LIMIT);
+    const query = this.client.from(table).select(columns).in(column, [...values]);
+    const result = await limited(query, options, `selectIn(${table})`);
     check(result, `selectIn(${table})`);
     return (result.data ?? []) as T[];
   }

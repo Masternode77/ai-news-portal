@@ -21,7 +21,7 @@ async function cli(args: string[], env: NodeJS.ProcessEnv = {}): Promise<{ code:
 }
 
 test("pipeline run --dry-run --fixture sample --replay --json exits 0 with a full funnel", async () => {
-  const { code, stdout, stderr } = await cli(["run", "--dry-run", "--replay", "--fixture", "sample", "--json"]);
+  const { code, stdout, stderr } = await cli(["run", "--dry-run", "--replay", "--fixture", "sample", "--json"], { CC_FLAG_STAGES_NORMALIZE: "true" });
   assert.equal(code, 0, stderr);
   const out = JSON.parse(stdout) as { status: string; funnel: Record<string, unknown>; stages: { stage: string; status: string }[]; ledger: { runs: unknown[]; stageEvents: unknown[] } };
   assert.equal(out.status, "done");
@@ -35,6 +35,22 @@ test("pipeline run --dry-run --fixture sample --replay --json exits 0 with a ful
   assert.equal(out.ledger.runs.length, 1);
   assert.equal(out.ledger.stageEvents.length, 7);
   assert.ok(stderr.includes('"msg":"run summary"'));
+});
+
+test("normalize is off by default (Phase 3b flag) and --stage accepts a comma list", async () => {
+  const off = await cli(["run", "--dry-run", "--replay", "--json"]);
+  assert.equal(off.code, 0);
+  const outOff = JSON.parse(off.stdout) as { stages: { stage: string; status: string; reason?: string }[] };
+  assert.deepEqual(outOff.stages.find((s) => s.stage === "normalize"), { ...outOff.stages.find((s) => s.stage === "normalize"), status: "skipped", reason: "flag_off" });
+
+  const two = await cli(["run", "--dry-run", "--replay", "--fixture", "dedupe", "--sources", "fixtures/sources/dedupe.yaml", "--stage", "ingest,normalize", "--json"], { CC_FLAG_STAGES_NORMALIZE: "true" });
+  assert.equal(two.code, 0, two.stderr);
+  const out = JSON.parse(two.stdout) as { funnel: Record<string, number>; stages: { stage: string; status: string }[]; normalizeStats: { pool: number; candidates: number; rejected: number; by_method: Record<string, number> } };
+  assert.deepEqual(out.stages.filter((s) => s.status === "done").map((s) => s.stage), ["ingest", "normalize"]);
+  assert.equal(out.funnel["items_fetched"], 12);
+  assert.equal(out.normalizeStats.candidates, 6, "the dedupe fixture converges 12 items from 3 wires to 6 stories (seeded publication included)");
+  assert.deepEqual(out.normalizeStats.by_method, { url: 2, title: 1, body: 1, title_key: 1, hash: 1 });
+  assert.equal((await cli(["run", "--dry-run", "--replay", "--stage", ","])).code, 2);
 });
 
 test("CC_FLAG_STAGES_IMAGE=false turns the image stage off from the environment", async () => {
