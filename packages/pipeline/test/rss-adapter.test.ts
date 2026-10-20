@@ -81,6 +81,13 @@ test("mapFeedItem cleans the url and carries the feed fields and source rights",
   assert.ok(!("body_preview" in (linkOnly.item?.payload ?? {})), "no body_preview for link_only");
   assert.equal(linkOnly.item?.payload?.["text_rights"], "link_only");
   assert.deepEqual(linkOnly.item?.payload?.["categories"], ["ai"]);
+  // An abstract-scoped source stores the feed summary alone, whatever its rights: content:encoded may be the full text.
+  const abstract = mapFeedItem(entry(), source({ text_scope: "abstract" }), options(), NOW, allowedHostsFor(source()));
+  assert.equal(abstract.item?.payload?.["snippet"], "Summary text");
+  assert.equal(abstract.item?.payload?.["body_preview"], "Summary text", "never the content");
+  const noSummary = mapFeedItem(entry({ summaryHtml: "" }), source({ text_scope: "abstract" }), options(), NOW, allowedHostsFor(source()));
+  assert.equal(noSummary.skip, null);
+  assert.ok(!("snippet" in (noSummary.item?.payload ?? {})) && !("body_preview" in (noSummary.item?.payload ?? {})), "no summary → no feed text, not the content");
 });
 
 test("mapFeedItem skip reasons: age window, missing date, title length, no url, offhost only for full rights", () => {
