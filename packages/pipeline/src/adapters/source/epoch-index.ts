@@ -12,7 +12,7 @@ import { olderThanDays, parseDateCandidate } from "../../lib/dates.ts";
 import { cleanText, metaContent, truncate } from "../../lib/html.ts";
 import { hostOf } from "../../lib/url.ts";
 import { CC_BY_4_URL, extractEpoch, ExtractionError } from "./extract.ts";
-import { PAGE_CONTENT_TYPES, safeFetchText, withRetry } from "./net.ts";
+import { PAGE_CONTENT_TYPES, SourceFetchError, safeFetchText, withRetry } from "./net.ts";
 import { sleep } from "../../lib/concurrency.ts";
 import type { HostResolver } from "./net.ts";
 
@@ -81,7 +81,8 @@ export interface EpochIndexOptions {
 
 export function createEpochIndexAdapter(options: EpochIndexOptions): SourceAdapter {
   // Index and article pages share the per-source retry and the per-host request spacing with the feed adapter.
-  const fetchPage = (url: string, ctx: StageContext) =>
+  const pageDelayMs = (source: SourceConfig) => Math.max(options.ingest.extract_host_delay_ms, source.extract?.delay_ms ?? 0);
+  const fetchPage = (url: string, source: SourceConfig, ctx: StageContext) =>
     withRetry(
       () =>
         safeFetchText(url, {
@@ -95,23 +96,24 @@ export function createEpochIndexAdapter(options: EpochIndexOptions): SourceAdapt
           ...(options.resolveHost ? { resolveHost: options.resolveHost } : {}),
         }),
       options.ingest.retry_attempts,
-      options.ingest.retry_backoff_ms,
+      Math.max(options.ingest.retry_backoff_ms, pageDelayMs(source)),
     );
-  const pageDelayMs = (source: SourceConfig) => Math.max(options.ingest.extract_host_delay_ms, source.extract?.delay_ms ?? 0);
 
   const fetchDetailed = async (source: SourceConfig, ctx: StageContext): Promise<SourceFetchDetail> => {
     if (hostOf(source.url) !== EPOCH_HOST) throw new ExtractionError("EXTRACTION_FAILED", `${source.id}: epoch_index adapter needs an epoch.ai index url`);
     const prefix = new URL(source.url).pathname.replace(/\/?$/, "/");
     const maxAge = source.pool_max_age_days ?? options.defaultMaxAgeDays;
     const started = Date.now();
-    const index = await fetchPage(source.url, ctx);
+    const index = await fetchPage(source.url, source, ctx);
     const links = epochIndexLinks(index.text, prefix, Math.min(EPOCH_INDEX_ARTICLE_LIMIT, options.itemsPerSource), ctx.now, maxAge);
     const stats: SourceFetchStats = { listed: links.length, kept: 0, skipped: {}, fetch: { url: index.url, bytes: index.bytes, redirects: index.redirects, ms: Date.now() - started } };
     const items: RawItemInsert[] = [];
+    let fetchFailures = 0;
+    let lastFetchError: string | null = null;
     for (const link of links) {
       await sleep(pageDelayMs(source));
       try {
-        const page = await fetchPage(link, ctx);
+        const page = await fetchPage(link, source, ctx);
         const meta = epochArticleMetadata(page.text, link);
         if (!meta) {
           stats.skipped["unlicensed_or_no_metadata"] = (stats.skipped["unlicensed_or_no_metadata"] ?? 0) + 1;
@@ -146,8 +148,16 @@ export function createEpochIndexAdapter(options: EpochIndexOptions): SourceAdapt
       } catch (error) {
         const code = error instanceof Error && "code" in error ? String((error as { code: unknown }).code) : "EXTRACTION_FAILED";
         stats.skipped[code.toLowerCase()] = (stats.skipped[code.toLowerCase()] ?? 0) + 1;
+        if (error instanceof SourceFetchError) {
+          fetchFailures += 1;
+          lastFetchError = error.message;
+        }
         ctx.logger.warn("epoch article skipped", { source_id: source.id, link, error: error instanceof Error ? error.message : String(error) });
       }
+    }
+    // One unreachable article is an item skip; every listed article unreachable is the source failing (health, streak, auto-disable).
+    if (links.length > 0 && fetchFailures === links.length) {
+      throw new SourceFetchError("SOURCE_UNREACHABLE", `all ${links.length} article requests failed; last: ${lastFetchError ?? "unknown"}`);
     }
     stats.kept = items.length;
     return { items, stats };

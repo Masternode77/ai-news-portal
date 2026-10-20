@@ -197,7 +197,8 @@ export function createLiveRssAdapter(options: LiveRssOptions): SourceAdapter {
             ...(options.resolveHost ? { resolveHost: options.resolveHost } : {}),
           }),
         options.ingest.retry_attempts,
-        options.ingest.retry_backoff_ms,
+        // A retry to the publisher's host keeps the host's request spacing (arXiv: 15 s), not only the global backoff.
+        Math.max(options.ingest.retry_backoff_ms, options.ingest.extract_host_delay_ms, source.extract?.delay_ms ?? 0),
       );
       const extraction = runExtraction({ kind, url: item.canonical_url, body: response.text, licenseMarker: source.extract?.license_marker });
       return { text: extraction.text, chars: extraction.chars, method: extraction.method };
