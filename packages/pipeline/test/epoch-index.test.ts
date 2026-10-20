@@ -114,6 +114,14 @@ test("an Epoch row without full text rights stores no body, and a link-only row 
   const link = (await adapter.fetchDetailed!({ ...SOURCE, text_rights: "link_only" }, ctx([]))).items[0]!;
   assert.equal(link.title, "First post title");
   assert.ok(!("snippet" in link.payload!) && !("body_text" in link.payload!), "link_only keeps title and link alone");
+  // ingest.extract_bodies is the kill switch for every adapter: off, a full-rights Epoch page keeps feed fields only.
+  const off = createEpochIndexAdapter({ ingest: IngestConfig.parse({ extract_host_delay_ms: 0, extract_bodies: false }), defaultMaxAgeDays: 10, itemsPerSource: 6, resolveHost: async () => ["93.184.216.34"] });
+  const unextracted = (await off.fetchDetailed!(SOURCE, ctx([]))).items[0]!;
+  assert.equal(unextracted.payload?.["snippet"], "Desc of First post title");
+  assert.ok(!("body_text" in unextracted.payload!) && !("extraction" in unextracted.payload!), "extract_bodies: false stores no body");
+  // extract.kind: none stores feed fields only, as for the feed adapter.
+  const none = (await adapter.fetchDetailed!({ ...SOURCE, extract: { kind: "none" } }, ctx([]))).items[0]!;
+  assert.ok(!("body_text" in none.payload!) && !("extraction" in none.payload!), "kind none stores no body");
 });
 
 test("index and article requests retry once on SOURCE_UNREACHABLE and article pages are spaced by the host delay", async () => {

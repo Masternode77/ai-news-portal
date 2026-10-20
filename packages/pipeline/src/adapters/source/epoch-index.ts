@@ -132,9 +132,11 @@ export function createEpochIndexAdapter(options: EpochIndexOptions): SourceAdapt
           stats.skipped["too_old"] = (stats.skipped["too_old"] ?? 0) + 1;
           continue;
         }
-        // The page is CC BY 4.0, but the row's text_rights still rules what is stored (same as the feed adapter):
-        // only a `full` source keeps the body, and a `link_only` source keeps the title and link alone.
-        const body = source.text_rights === "full" ? extractEpoch(page.text) : null;
+        // The page is CC BY 4.0, but the same gate as ingest's extraction pass decides whether the body is stored:
+        // `ingest.extract_bodies` (the kill switch), `text_rights: full`, and an extract kind other than `none`.
+        // A `link_only` source keeps the title and link alone.
+        const extractBody = options.ingest.extract_bodies && source.text_rights === "full" && (source.extract?.kind ?? "epoch_index") !== "none";
+        const body = extractBody ? extractEpoch(page.text) : null;
         // A licensed page whose body container holds no text is an extraction failure, not usable source material
         // (AGENTS.md editorial rule): the item keeps its metadata, carries no body_text and counts as extract_failed.
         const extracted = body !== null && body.text.trim().length > 0;
