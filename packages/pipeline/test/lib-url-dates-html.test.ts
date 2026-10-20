@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { cleanItemUrl, googleReleaseNoteTarget, hostAllowed, pathWithinPrefix, repairFeedLink } from "../src/lib/url.ts";
-import { olderThanDays, parsePublishedAt } from "../src/lib/dates.ts";
+import { isFutureDate, olderThanDays, parsePublishedAt } from "../src/lib/dates.ts";
 import { cleanText, decodeEntities, pageCarriesMarker, paragraphs, removeNonContentBlocks, truncateAtSentence, unwrapCdata } from "../src/lib/html.ts";
 
 const NOW = new Date("2026-10-18T00:45:00Z");
@@ -70,4 +70,11 @@ test("html helpers", () => {
   assert.ok(truncateAtSentence("a".repeat(900), 600).endsWith("…"));
   assert.equal(pageCarriesMarker("<p>Distributed under <a>CC BY 4.0</a></p><script>CC BY 4.0</script>", "Distributed under CC BY 4.0"), true);
   assert.equal(pageCarriesMarker("<script>Distributed under CC BY 4.0</script>", "Distributed under CC BY 4.0"), false);
+});
+
+test("isFutureDate tolerates one day of clock skew and matches the feed path's rule", () => {
+  assert.equal(isFutureDate("2026-10-18T20:00:00Z", NOW), false, "later today is not future");
+  assert.equal(isFutureDate("2026-10-19T00:44:00Z", NOW), false, "just under a day ahead is tolerated");
+  assert.equal(isFutureDate("2026-10-19T00:46:00Z", NOW), true, "more than a day ahead is malformed metadata");
+  assert.equal(parsePublishedAt(["2026-10-19T00:46:00Z"], NOW).problem, "future");
 });

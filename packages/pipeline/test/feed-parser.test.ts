@@ -90,3 +90,22 @@ test("garbage input yields no items instead of throwing", () => {
   assert.deepEqual(parseFeed("<html><body>not a feed</body></html>").items, []);
   assert.deepEqual(parseFeed("").items, []);
 });
+
+test("only an enclosure with an image MIME type is the item image; audio, video and untyped enclosures fall through", async () => {
+  const { parseFeed } = await import("../src/adapters/index.ts");
+  const feed = `<?xml version="1.0"?><rss version="2.0" xmlns:media="http://search.yahoo.com/mrss/"><channel><title>T</title>
+    <item><title>Podcast episode with thumbnail</title><link>https://a.test/1</link>
+      <enclosure url="https://a.test/ep1.mp3" type="audio/mpeg" length="1"/>
+      <media:thumbnail url="https://img.test/t1.jpg"/></item>
+    <item><title>Untyped enclosure, media content image</title><link>https://a.test/2</link>
+      <enclosure url="https://a.test/download.bin" length="1"/>
+      <media:content url="https://img.test/m2.jpg" medium="image"/></item>
+    <item><title>Untyped enclosure only</title><link>https://a.test/3</link>
+      <enclosure url="https://a.test/file" length="1"/></item>
+    <item><title>Image enclosure wins</title><link>https://a.test/4</link>
+      <enclosure url="https://img.test/e4.png" type="image/png" length="1"/>
+      <media:thumbnail url="https://img.test/t4.jpg"/></item>
+  </channel></rss>`;
+  const items = parseFeed(feed).items;
+  assert.deepEqual(items.map((i) => i.image), ["https://img.test/t1.jpg", "https://img.test/m2.jpg", null, "https://img.test/e4.png"]);
+});

@@ -187,3 +187,20 @@ test("a licensed Epoch page with an empty body is kept without body_text and fai
   assert.equal(item?.payload?.["snippet"], "Only a description");
   await assert.rejects(adapter.extract!(item!, SOURCE, local), /EXTRACTION_EMPTY/, "ingest's extraction pass records it as a failure, never as extract_ok");
 });
+
+test("a future-dated Epoch article is skipped as date_future, like a feed entry", async () => {
+  const base = ctx([]);
+  const index = `<html><body><ul><li><a href="/gradient-updates/future-post/">Future</a></li><li><span>Oct 15, 2026</span> <a href="/gradient-updates/first-post/">First</a></li></ul></body></html>`;
+  const pages: Record<string, string> = { ...PAGES, "https://epoch.ai/gradient-updates": index, "https://epoch.ai/gradient-updates/future-post/": article("Future post", "Nov 30, 2026") };
+  const local: StageContext = {
+    ...base,
+    fetch: async (input) => {
+      const page = pages[String(input)];
+      return page === undefined ? new Response("missing", { status: 404, headers: { "content-type": "text/html" } }) : new Response(page, { status: 200, headers: { "content-type": "text/html; charset=utf-8" } });
+    },
+  };
+  const adapter = createEpochIndexAdapter({ ingest: IngestConfig.parse({ extract_host_delay_ms: 0 }), defaultMaxAgeDays: 10, itemsPerSource: 6, resolveHost: async () => ["93.184.216.34"] });
+  const detail = await adapter.fetchDetailed!(SOURCE, local);
+  assert.deepEqual(detail.stats.skipped, { date_future: 1 });
+  assert.deepEqual(detail.items.map((i) => i.canonical_url), ["https://epoch.ai/gradient-updates/first-post/"]);
+});
