@@ -231,6 +231,7 @@ test("page extraction runs one worker per registrable host: items of one host ne
   const active = new Map<string, number>();
   const overlaps: string[] = [];
   const order: string[] = [];
+  let parallel = false;
   const rss: SourceAdapter = {
     type: "rss",
     async fetch(source) {
@@ -240,6 +241,7 @@ test("page extraction runs one worker per registrable host: items of one host ne
     async extract(item) {
       const host = new URL(item.canonical_url).hostname;
       if ((active.get(host) ?? 0) > 0) overlaps.push(item.canonical_url);
+      if ([...active.entries()].some(([other, n]) => other !== host && n > 0)) parallel = true;
       active.set(host, (active.get(host) ?? 0) + 1);
       order.push(host);
       await new Promise((resolve) => setTimeout(resolve, 15));
@@ -252,13 +254,11 @@ test("page extraction runs one worker per registrable host: items of one host ne
   const cfg = config();
   const runId = await ledger.startRun({ trigger: "local", startedAt: NOW, gitSha: null, flags: {} });
   const ctx: StageContext = { runId, now: NOW, config: cfg, logger: silentLogger(), ledger, budget: createBudget(cfg.budget), dryRun: true, replay: true, fixtureName: undefined, fetch: () => Promise.reject(new Error("no network")), adapters: { ...fixtureAdapters(db), sources: { rss }, db } };
-  const started = Date.now();
   const out = await ingestStage.run({ sources: [src("s-arxiv", { text_rights: "full", extract: { kind: "arxiv_abstract", delay_ms: 15000 } }), src("s-other", { text_rights: "full", extract: { kind: "generic" } })] }, ctx);
-  const elapsed = Date.now() - started;
   assert.equal(out.stats.extract_ok, 6);
   assert.deepEqual(overlaps, [], "two extractions on one host never run at the same time");
   assert.ok(order.slice(0, 2).includes("arxiv.org") && order.slice(0, 2).includes("www.other.example"), `both hosts start together: ${order.join(",")}`);
-  assert.ok(elapsed < 120, `three 15 ms extractions per host, hosts in parallel: ${elapsed} ms`);
+  assert.ok(parallel, "an extraction on one host started while the other host's was still in flight (no wall-clock deadline: the suite runs files concurrently)");
 });
 
 test("caps.pool_max_items bounds the unique pool before extraction, cutting the lowest tiers first", async () => {

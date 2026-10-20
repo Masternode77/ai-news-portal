@@ -104,7 +104,8 @@ export const SourceHealth = z.strictObject({
   last_error_at: IsoDateTime.nullable(),
   items_last_run: NonNegativeInt,
   auto_disabled_at: IsoDateTime.nullable(),
-  recent: z.array(SourceOutcome).max(50),
+  /** Every outcome inside the seven-day window, newest last; the cap only bounds the row. */
+  recent: z.array(SourceOutcome).max(500),
 });
 export type SourceHealth = z.infer<typeof SourceHealth>;
 export const EMPTY_SOURCE_HEALTH: SourceHealth = { success_rate_7d: null, last_error: null, last_error_at: null, items_last_run: 0, auto_disabled_at: null, recent: [] };

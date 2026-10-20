@@ -38,7 +38,7 @@ import { IngestInput, IngestOutput } from "./types.ts";
 const SELECT_CHUNK = 20;
 const UPSERT_CHUNK = 50;
 const ERROR_CHARS = 300;
-const RECENT_MAX = 50;
+const RECENT_MAX = 500;
 const SAMPLE_ITEMS = 3;
 
 function chunks<T>(items: readonly T[], size: number): T[][] {
@@ -149,15 +149,16 @@ const SEVEN_DAYS_MS = 7 * 24 * 60 * 60 * 1000;
 /**
  * `success_rate_7d` is the share of successful outcomes among the runs recorded
  * in the seven days before `now` (by their own timestamps, so a missed slot or
- * an extra dispatch run does not distort it); `recent` keeps at most RECENT_MAX
- * outcomes, newest last, and an outcome older than the window is ignored even
- * while it is still in the list.
+ * an extra dispatch run does not distort it). `recent` keeps every outcome of
+ * that window, newest last, so the rate is never taken over a subset; outcomes
+ * that left the window are dropped, and RECENT_MAX only bounds the row (it cuts
+ * above ~70 runs a day, far beyond the three scheduled slots plus dispatches).
  */
 export function healthAfter(track: { health: SourceHealthType; failStreak: number }, ok: boolean, now: Date, itemsKept: number, error: string | null): { health: SourceHealthType; failStreak: number } {
-  const recent = [...track.health.recent, { at: now.toISOString(), ok }].slice(-RECENT_MAX);
   const since = now.getTime() - SEVEN_DAYS_MS;
-  const sample = recent.filter((outcome) => Date.parse(outcome.at) >= since);
-  const rate = sample.length > 0 ? sample.filter((outcome) => outcome.ok).length / sample.length : null;
+  const inWindow = [...track.health.recent, { at: now.toISOString(), ok }].filter((outcome) => Date.parse(outcome.at) >= since);
+  const rate = inWindow.filter((outcome) => outcome.ok).length / inWindow.length;
+  const recent = inWindow.slice(-RECENT_MAX);
   return {
     health: {
       success_rate_7d: rate,
