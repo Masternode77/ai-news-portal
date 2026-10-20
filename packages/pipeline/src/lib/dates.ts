@@ -61,6 +61,11 @@ export function parsePublishedAt(candidates: ReadonlyArray<string | null | undef
   return { iso: null, problem: "unparseable" };
 }
 
+/** The same tolerance the feed path applies: more than a day ahead of `now` is malformed metadata, not a fresh item. */
+export function isFutureDate(iso: string, now: Date): boolean {
+  return Date.parse(iso) > now.getTime() + FUTURE_TOLERANCE_MS;
+}
+
 export function olderThanDays(iso: string, days: number, now: Date): boolean {
   return now.getTime() - Date.parse(iso) > days * 24 * 60 * 60 * 1000;
 }

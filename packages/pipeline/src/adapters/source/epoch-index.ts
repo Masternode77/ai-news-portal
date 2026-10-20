@@ -8,7 +8,7 @@
  * second request.
  */
 import type { ExtractedText, IngestConfig, RawItemInsert, SourceAdapter, SourceConfig, SourceFetchDetail, SourceFetchStats, StageContext } from "@cc/shared";
-import { olderThanDays, parseDateCandidate } from "../../lib/dates.ts";
+import { isFutureDate, olderThanDays, parseDateCandidate } from "../../lib/dates.ts";
 import { cleanText, metaContent, truncate } from "../../lib/html.ts";
 import { hostOf } from "../../lib/url.ts";
 import { CC_BY_4_URL, extractEpoch, ExtractionError } from "./extract.ts";
@@ -122,6 +122,10 @@ export function createEpochIndexAdapter(options: EpochIndexOptions): SourceAdapt
         const meta = epochArticleMetadata(page.text, link);
         if (!meta) {
           stats.skipped["unlicensed_or_no_metadata"] = (stats.skipped["unlicensed_or_no_metadata"] ?? 0) + 1;
+          continue;
+        }
+        if (isFutureDate(meta.publishedAt, ctx.now)) {
+          stats.skipped["date_future"] = (stats.skipped["date_future"] ?? 0) + 1;
           continue;
         }
         if (olderThanDays(meta.publishedAt, maxAge, ctx.now)) {

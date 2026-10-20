@@ -78,7 +78,8 @@ function rssLink(block: string): string | null {
 }
 
 function imageOf(block: string): string | null {
-  const enclosure = firstTag(block, "enclosure", (tag) => /\stype=["']image\//i.test(tag) || !/\stype=/i.test(tag));
+  // An enclosure is an image only when it says so; an untyped or audio/video enclosure (podcast feeds) is not.
+  const enclosure = firstTag(block, "enclosure", (tag) => /\stype=["']image\//i.test(tag));
   const enclosureUrl = enclosure ? attr(enclosure, "url") : null;
   if (enclosureUrl) return enclosureUrl;
   const media = firstTag(block, "media:content", (tag) => /\surl=/i.test(tag) && !/\smedium=["'](?:video|audio|document)["']/i.test(tag));
