@@ -39,6 +39,7 @@ ingest:                        # Phase 3a live ingest; every key is optional (de
   max_title_chars: 220
   auto_disable_after: 5        # consecutive failed runs -> sources.enabled=false in the table (YAML untouched)
   extract_bodies: true         # fetch article bodies for text_rights: full sources
+  extract_host_delay_ms: 1000  # minimum interval between page requests to one host; extract.delay_ms raises it per source (arXiv 15000)
   user_agent: "Mozilla/5.0 (compatible; ComputeCurrentBot/1.0; +https://www.computecurrent.com)"
 
 budget:

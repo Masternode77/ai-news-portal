@@ -17,6 +17,7 @@
  *   text_scope abstract          -> text_scope abstract + extract.kind arxiv_abstract
  *   domain ec.europa.eu          -> extract.kind ec_press
  *   article_hosts/license_marker -> extract.hosts / extract.license_marker (text-use rows only)
+ *   rights_note "Crawl-delay N"  -> extract.delay_ms N*1000
  *
  *   node packages/pipeline/tools/migrate-legacy-registry.ts [--in config/sourceRegistry.yml] [--out config/sources.yaml] [--stdout]
  */
@@ -104,6 +105,9 @@ export function convertLegacyRow(row: LegacyRow): SourceConfig {
   } else if (textRights === "full" && (hosts || f["license_marker"])) {
     extract = { kind: "generic", ...(hosts ? { hosts } : {}), ...(f["license_marker"] ? { license_marker: f["license_marker"] } : {}) };
   }
+  // The only crawl policy the legacy registry recorded lives in free text ("robots.txt allows /abs/ with Crawl-delay 15").
+  const crawlDelay = f["rights_note"]?.match(/crawl-delay\s*(\d+)/i);
+  if (extract && crawlDelay) extract = { ...extract, delay_ms: Number(crawlDelay[1]) * 1000 };
 
   const source: SourceConfig = {
     id: row.id,
@@ -166,6 +170,7 @@ export function toSourcesYaml(sources: SourceConfig[], generatedAt: string): str
       if (s.extract.hosts) lines.push(`    hosts: [${s.extract.hosts.map(scalar).join(", ")}]`);
       if (s.extract.license_marker) lines.push(`    license_marker: ${scalar(s.extract.license_marker)}`);
       if (s.extract.section) lines.push(`    section: ${scalar(s.extract.section)}`);
+      if (s.extract.delay_ms !== undefined) lines.push(`    delay_ms: ${s.extract.delay_ms}`);
     }
     return lines.join("\n");
   });

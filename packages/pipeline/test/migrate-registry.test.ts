@@ -42,6 +42,7 @@ test("82 legacy rows convert into a strict, round-trippable sources.yaml", async
   assert.equal(arxiv.text_scope, "abstract");
   assert.equal(arxiv.extract?.kind, "arxiv_abstract");
   assert.ok(arxiv.extract?.hosts?.includes("arxiv.org"));
+  assert.equal(arxiv.extract?.delay_ms, 15000, "the robots Crawl-delay recorded in the legacy rights_note becomes extract.delay_ms");
   assert.equal(byId.get("ec-press-corner")?.extract?.kind, "ec_press");
   assert.equal(byId.get("kubernetes-blog")?.extract?.license_marker, "Distributed under CC BY 4.0");
   assert.deepEqual(byId.get("eia-today-in-energy")?.extract, { kind: "generic", hosts: ["eia.gov", "www.eia.gov"] });

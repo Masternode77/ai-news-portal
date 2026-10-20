@@ -13,7 +13,7 @@ const NOW = new Date("2026-10-18T00:45:00Z");
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
 
 function config(extra = ""): PipelineConfig {
-  return parsePipelineConfig(`${TEST_PIPELINE_YAML}\ningest: { auto_disable_after: 2, concurrency: 2, extract_concurrency: 2, retry_backoff_ms: 0${extra} }\n`, { env: {} }).config;
+  return parsePipelineConfig(`${TEST_PIPELINE_YAML}\ningest: { auto_disable_after: 2, concurrency: 2, extract_concurrency: 2, retry_backoff_ms: 0, extract_host_delay_ms: 0${extra} }\n`, { env: {} }).config;
 }
 
 function src(id: string, overrides: Partial<SourceConfig> = {}): SourceConfig {
@@ -225,4 +225,34 @@ test("every sources upsert carries the full row: PostgreSQL checks NOT NULL befo
   assert.equal(health.find((r) => r["id"] === "s-ok")?.["last_ok_at"], NOW.toISOString());
   assert.equal(health.find((r) => r["id"] === "s-bad")?.["fail_streak"], 1);
   assert.equal(health.find((r) => r["id"] === "s-bad")?.["url"], "https://s-bad.example.com/feed.xml", "config columns ride along so the upsert never inserts NULL into a NOT NULL column");
+});
+
+test("page extraction is serialised per registrable host with the configured interval while other hosts proceed", async () => {
+  const calls: { host: string; at: number }[] = [];
+  const rss: SourceAdapter = {
+    type: "rss",
+    async fetch(source) {
+      const host = source.id === "s-arxiv" ? "arxiv.org" : "www.other.example";
+      return [1, 2, 3].map((n) => ({ ...raw(source.id, `${source.id}-${n}`, 10 + n), canonical_url: `https://${host}/abs/${source.id}-${n}` }));
+    },
+    async extract(item) {
+      calls.push({ host: new URL(item.canonical_url).hostname, at: Date.now() });
+      return { text: "abstract text", chars: 13, method: "test" };
+    },
+  };
+  const db = new MemoryDb();
+  const ledger = new MemoryLedger();
+  const cfg = config();
+  const runId = await ledger.startRun({ trigger: "local", startedAt: NOW, gitSha: null, flags: {} });
+  const ctx: StageContext = { runId, now: NOW, config: cfg, logger: silentLogger(), ledger, budget: createBudget(cfg.budget), dryRun: true, replay: true, fixtureName: undefined, fetch: () => Promise.reject(new Error("no network")), adapters: { ...fixtureAdapters(db), sources: { rss }, db } };
+  const started = Date.now();
+  const out = await ingestStage.run({ sources: [src("s-arxiv", { text_rights: "full", extract: { kind: "arxiv_abstract", delay_ms: 60 } }), src("s-other", { text_rights: "full", extract: { kind: "generic" } })] }, ctx);
+  const elapsed = Date.now() - started;
+  assert.equal(out.stats.extract_ok, 6);
+  const arxiv = calls.filter((c) => c.host === "arxiv.org").map((c) => c.at);
+  const other = calls.filter((c) => c.host === "www.other.example").map((c) => c.at);
+  assert.equal(arxiv.length, 3);
+  assert.ok(arxiv[1]! - arxiv[0]! >= 50 && arxiv[2]! - arxiv[1]! >= 50, `arxiv requests are at least the source delay apart: ${arxiv.map((t) => t - arxiv[0]!).join(",")}`);
+  assert.ok(other[2]! < arxiv[2]!, "the other host finished without waiting on arxiv's interval");
+  assert.ok(elapsed >= 120 && elapsed < 400, `two 60 ms gaps on one host, hosts in parallel: ${elapsed} ms`);
 });
