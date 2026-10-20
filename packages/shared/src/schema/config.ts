@@ -131,6 +131,9 @@ export const ExtractConfig = z.strictObject({
 });
 export type ExtractConfig = z.infer<typeof ExtractConfig>;
 
+/** Extractors that store an abstract/summary only; `text_scope: abstract` on a full-rights source allows nothing else. */
+export const ABSTRACT_EXTRACT_KINDS: readonly ExtractKind[] = ["arxiv_abstract", "none"];
+
 /** A simple source is at most ten YAML lines (R5); `extract` is only needed for special pages. */
 export const SourceConfig = z.strictObject({
   id: z.string().regex(/^[a-z0-9][a-z0-9-]{1,63}$/, "kebab-case id"),
@@ -146,6 +149,13 @@ export const SourceConfig = z.strictObject({
   language: z.string().regex(/^[a-z]{2}$/, "ISO 639-1").optional(),
   text_scope: TextScope.optional(),
   extract: ExtractConfig.optional(),
+}).superRefine((source, ctx) => {
+  // Only a full-rights source fetches pages, and there the scope must be matched by the extractor: the generic
+  // (default) and page extractors would store the whole article, which `abstract` forbids.
+  const kind = source.extract?.kind ?? "generic";
+  if (source.text_scope === "abstract" && source.text_rights === "full" && !ABSTRACT_EXTRACT_KINDS.includes(kind)) {
+    ctx.addIssue({ code: "custom", path: ["extract", "kind"], message: `text_scope: abstract allows only extract.kind arxiv_abstract or none on a full-rights source (the ${kind} extractor would store the whole page)` });
+  }
 });
 export type SourceConfig = z.infer<typeof SourceConfig>;
 

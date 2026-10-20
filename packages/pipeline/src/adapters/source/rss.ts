@@ -4,7 +4,8 @@
  * RawItemInsert rows with the legacy rules carried over as configuration:
  * tracking-param stripping, https upgrade, Drupal dates, age window,
  * per-source cap, host/path allowlists, the Google Cloud release-notes
- * section rule, and no body extraction for rewrite_only / link_only sources.
+ * section rule, no body extraction for rewrite_only / link_only sources, and
+ * no feed text at all for link_only sources (title and link only, ADR-004).
  */
 import type { ExtractedText, IngestConfig, RawItemInsert, SourceAdapter, SourceConfig, SourceFetchDetail, SourceFetchStats, StageContext } from "@cc/shared";
 import { parsePublishedAt, olderThanDays } from "../../lib/dates.ts";
@@ -52,6 +53,18 @@ function googleSection(contentHtml: string, heading: string | undefined): string
   const rest = contentHtml.slice(marker.index + marker[0].length);
   const end = rest.search(/<h2\b/i);
   return end < 0 ? rest : rest.slice(0, end);
+}
+
+/**
+ * The feed's own text, kept for sources that may quote or re-narrate it. A link-only source (ADR-004) carries
+ * the title and link alone: its summary and content are not stored, so no later stage can use text the source
+ * configuration disallows.
+ */
+function feedText(source: SourceConfig, contentHtml: string, summaryHtml: string, ingest: IngestConfig): { snippet: string; body_preview: string } | Record<never, never> {
+  if (source.text_rights === "link_only") return {};
+  const bodyText = cleanText(contentHtml);
+  const summaryText = cleanText(summaryHtml) || bodyText;
+  return { snippet: truncate(summaryText, ingest.snippet_chars), body_preview: truncate(bodyText, ingest.body_preview_chars) };
 }
 
 /** Pure mapping of one feed entry to a raw item, or the reason it was skipped. */
@@ -106,8 +119,6 @@ export function mapFeedItem(entry: FeedItem, source: SourceConfig, options: Live
   const maxAge = source.pool_max_age_days ?? options.defaultMaxAgeDays;
   if (olderThanDays(date.iso, maxAge, now)) return { item: null, skip: "too_old" };
 
-  const bodyText = cleanText(contentHtml);
-  const summaryText = cleanText(entry.summaryHtml) || bodyText;
   const image = entry.image ? cleanItemUrl(entry.image) : null;
   return {
     item: {
@@ -118,8 +129,7 @@ export function mapFeedItem(entry: FeedItem, source: SourceConfig, options: Live
       fetched_at: now.toISOString(),
       payload: {
         guid: entry.guid,
-        snippet: truncate(summaryText, options.ingest.snippet_chars),
-        body_preview: truncate(bodyText, options.ingest.body_preview_chars),
+        ...feedText(source, contentHtml, entry.summaryHtml, options.ingest),
         image,
         categories: entry.categories,
         text_rights: source.text_rights,
@@ -186,6 +196,9 @@ export function createLiveRssAdapter(options: LiveRssOptions): SourceAdapter {
     async extract(item, source, ctx): Promise<ExtractedText> {
       const kind = source.extract?.kind ?? "generic";
       if (source.text_rights !== "full" || kind === "none") throw new SourceFetchError("TEXT_USE_NOT_AUTHORIZED", `${source.id} is ${source.text_rights}`);
+      // The schema already rejects this combination; the adapter refuses it too so a programmatic config cannot
+      // store a whole page where only the abstract may be used.
+      if (source.text_scope === "abstract" && kind !== "arxiv_abstract") throw new SourceFetchError("TEXT_USE_NOT_AUTHORIZED", `${source.id}: text_scope abstract allows only the arxiv_abstract extractor, not ${kind}`);
       const allowedHosts = allowedHostsFor(source);
       const apiUrl = kind === "ec_press" ? ecPressApiUrl(item.canonical_url) : null;
       const pageUrl = apiUrl ?? item.canonical_url;

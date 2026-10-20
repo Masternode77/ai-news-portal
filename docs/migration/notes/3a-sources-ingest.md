@@ -37,7 +37,7 @@
 | 라이선스 마커·범위 | Kubernetes `license_marker`를 가시 텍스트에서 확인, arXiv `text_scope: abstract`(요약만) | `sources.yaml` `extract.license_marker`, `text_scope` | `source-fetch.mjs:328-359`, `fetch-feeds.mjs:152` |
 | 본문 추출 한계 | 80단락·24,000자(문장 끝에서 절단), script/style/nav/aside/footer/form 제거, `<p>` ≥ 60자, 쿠키·구독·광고 줄 제외, 관련기사 오염은 하드 차단 | 3a-extract(`extract/generic.ts`) + 3g `EXTRACTION_CONTAMINATED` | `source-fetch.mjs:10-12, 266-326, 437-440` |
 | EC 보도자료 JSON API, arXiv 요약 | 특수 어댑터 2종 | `extract/ec-press.ts`, `extract/arxiv-abstract.ts` | `source-fetch.mjs:128-140, 197-241` |
-| 링크 전용 레인 규칙 | 제목 12~220자, 7일 창, 호스트 확인, 소스당 6, 본문 미수집 | `text_rights: link_only` 소스는 ingest가 **같은 경로**로 수집하되 `payload.text_rights='link_only'`, 본문 추출 금지 | `industry-headlines.mjs:17-23, 224-260` |
+| 링크 전용 레인 규칙 | 제목 12~220자, 7일 창, 호스트 확인, 소스당 6, 본문 미수집 | `text_rights: link_only` 소스는 ingest가 **같은 경로**로 수집하되 `payload.text_rights='link_only'`, 본문 추출 금지, `payload`에 `snippet`·`body_preview` 없음(제목·링크만) | `industry-headlines.mjs:17-23, 224-260` |
 
 ## 2. 버릴 것
 
