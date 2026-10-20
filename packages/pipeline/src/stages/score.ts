@@ -484,7 +484,7 @@ export const scoreStage: Stage<ScoreInput, ScoreOutput> = {
       reject_reason: rejectReasons.get(entry) ?? null,
       rubric: { tier: entry.tier, rank: rank.get(entry) ?? null, insight_eligible: entry.insightEligible, reasons: entry.reasons },
     }));
-    for (const chunk of chunks(rows as Row[], UPSERT_CHUNK)) await db(ctx).upsert("candidates", chunk, ["raw_item_id", "rubric_version"]);
+    for (const chunk of chunks(rows as Row[], UPSERT_CHUNK)) await ctx.adapters.db.upsert("candidates", chunk, ["raw_item_id", "rubric_version"]);
 
     const byTotal = [...scored.keys()].sort((a, b) => selectionOrder(scored[a]!, scored[b]!));
     const decisions: ScoreDecision[] = byTotal.slice(0, DECISION_SAMPLE).map((index) => {
@@ -521,10 +521,6 @@ export const scoreStage: Stage<ScoreInput, ScoreOutput> = {
     return { candidates: rows, selected: selected.map((entry) => rows[scored.indexOf(entry)]!), stats };
   },
 };
-
-function db(ctx: StageContext) {
-  return ctx.adapters.db;
-}
 
 export const scoreSpec = defineStageSpec({
   stage: scoreStage,

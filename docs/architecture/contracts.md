@@ -43,7 +43,8 @@ export interface Stage<I, O> {
 2. Stage마다: `enabled` 확인 → `input.parse` → `stage_events` started → `run` → `output.parse` → `stage_events` done(counts). 예외는 아이템 단위면 `dead_letters`, Stage 단위면 `stage_events.error` + 런 `partial`, 설정·DB 연결 실패면 런 `failed`.
 3. 종료 시 `funnel` 13컬럼·비용 집계 → Telegram.
 4. `--dry-run`은 `ctx.dryRun=true`로 전 Stage를 실행하되 DbPort가 메모리 구현으로 바뀐다. `--replay --fixture <name>`은 어댑터를 fixture 구현으로 바꾼다(네트워크 0). Phase 3b 개정: `--stage`는 콤마 목록(`--stage ingest,normalize`)을 받고, fixture 런은 `fixtures/db/<name>.json`이 있으면 메모리 DbPort를 먼저 채운다(현재 `publications`).
-5. Phase 3b 개정 — normalize 계약: `NormalizeInput { rawItems, sources }` → `NormalizeOutput { candidates: CandidateInsert[](미채점: scores 0, selected false, rubric_version normalize/<version>), stats }`. 판정 순서는 발행본 URL 정체성(무기한) → 창 내 발행본 제목 유사도 → 풀 내 URL 정체성 → content_hash → 제목 키 → 제목 유사도 → 본문 shingle. 대표 사본은 `text_rights`(full 우선) → tier → 본문 길이 순. `PublicationSource.title`(선택)은 3h가 원제를 남겨 normalize가 한국어 편집 제목 대신 비교할 수 있게 한다. `SelectOptions.orderBy`가 DbPort에 추가됐다(발행본을 최신순으로 읽기 위함).
+5. Phase 3b 개정 — normalize 계약: `NormalizeInput { rawItems, sources }` → `NormalizeOutput { candidates: CandidateInsert[](미채점: scores 0, selected false, rubric_version normalize/<version>), stats }`. 판정 순서는 발행본 URL 정체성(무기한) → 창 내 발행본 제목 유사도 → 풀 내 URL 정체성 → content_hash → 제목 키 → 제목 유사도 → 본문 shingle. 대표 사본은 `text_rights`(full 우선) → tier → 본문 길이 순. `PublicationSource.title`(선택)은 3h가 원제를 남겨 normalize가 한국어 편집 제목 대신 비교할 수 있게 한다. `SelectOptions.orderBy`가 DbPort에 추가됐다(발행본을 최신순으로 읽기 위함). 3b 후속(PR #60 리뷰): 발행본 URL 색인은 `SelectOptions.offset`(PostgREST `range`)으로 `status=published` 행 **전부**를 `normalize.published_page_size`씩 페이지 순회해 만든다(제목 비교만 창 적용).
+6. Phase 3c 개정 — score 계약: `ScoreInput { candidates, rawItems, sources }` → `ScoreOutput { candidates: CandidateInsert[](전부 채점됨), selected: CandidateInsert[], stats }`. `ctx.scoring`(`config/scoring.yaml`, CLI `--scoring`)이 StageContext에 추가됐다. 5축(relevance·timeliness·impact·reader_value·insight_potential) 각 0~1, `total = Σ weights × score`, `tier = total ≥ thresholds.full → full · ≥ thresholds.brief → brief · 미달 → BELOW_THRESHOLD`. 선택은 통과 후보를 total(동점: timeliness → URL) 순으로 소스당 `selection.per_source_max`, 사이클당 `caps.briefs_per_cycle.max`까지; 통과 수가 `min` 미만이면 `shortfall`로 보고하고 채우지 않는다. 모든 후보 행에 `rubric { tier, rank, insight_eligible, reasons{축별 한 줄} }`(`candidates.rubric` jsonb, 마이그레이션 0002)을 쓴다. funnel `passed_gate`는 임계값 통과 수(Phase 0 정의), 선택 수는 stage counts `selected`.
 
 ## 2. Adapter 인터페이스
 
@@ -155,7 +156,7 @@ export const InsightEssay = z.object({
 ```yaml
 schedule: { cron: "45 15,23,7 * * *", timezone: "UTC", slot_hours: 8 }
 flags:
-  stages: { ingest: true, normalize: false, score: true, generate: true, qa: true, image: true, publish: true }   # normalize: 3b 기본 OFF (§7)
+  stages: { ingest: true, normalize: false, score: false, generate: true, qa: true, image: true, publish: true }   # normalize: 3b, score: 3c 기본 OFF (§7)
   publish_target: none        # none | staging | production  (ADR-006)
 caps:
   briefs_per_cycle: { min: 1, max: 2 }
@@ -233,7 +234,7 @@ Phase 3a 개정 — 선택 필드 3개(단순 소스는 여전히 ≤10줄). `ex
 
 규칙: 링크 호스트 제한(`hosts`)은 페이지를 실제로 가져오는 `full` 소스에만 적용된다(`rewrite_only`/`link_only`는 링크를 가져오지 않으므로 어떤 공인 https 호스트든 허용). `link_only` 소스의 `raw_items.payload`에는 `snippet`·`body_preview`가 없다(제목·링크만 저장, ADR-004). `text_scope: abstract`는 `text_rights: full`일 때 `extract.kind`가 `arxiv_abstract` 또는 `none`이어야 설정 로드를 통과한다(기본 `generic` 추출기는 페이지 전체를 저장하므로 거부). 또한 권리와 무관하게 `abstract` 범위의 피드 항목은 `snippet`·`body_preview`를 피드 요약(`description`/`summary`)에서만 채우고 `content:encoded`는 저장하지 않는다(요약이 없으면 둘 다 생략). Epoch `html` 어댑터도 같은 권리 규칙을 따른다(`full`이 아니면 본문 미저장). 자동 비활성(`sources.health.auto_disabled_at`)은 YAML의 `reviewed_at`이 그 날짜보다 뒤면 다음 런에서 해제된다. `config/sources.yaml`의 82행은 `packages/pipeline/tools/migrate-legacy-registry.ts`가 `config/sourceRegistry.yml`에서 1회 생성했다(이후 수동 편집).
 
-`config/scoring.yaml`: 루브릭 5축 가중치(relevance 0.35, timeliness 0.2, impact 0.2, reader_value 0.15, insight_potential 0.1), tier 임계값(full 0.75, brief 0.55), `insight_trigger: 0.7`.
+`config/scoring.yaml`(Phase 3c, `ScoringConfig`, CLI `--scoring`): `version`(→ `rubric_version = score/<version>`), 루브릭 5축 가중치(relevance 0.35, timeliness 0.2, impact 0.2, reader_value 0.15, insight_potential 0.1; 합 1 검증), tier 임계값(full 0.75, brief 0.55; full ≥ brief 검증), `insight_trigger: 0.7`, `selection { per_source_max: 1, abstract_max_tier: brief }`, 그리고 축별 규칙 데이터 — `relevance`(레거시 8차원 가중 어휘 136쌍, AI·인프라·소비자·약한 인접·화석·인접 주제 어휘, `formula`·`lifts`·`caps` 계수, 정형 고시 가드 패턴, 한국어 별칭 42·증시 패턴), `timeliness`(시간 버킷 5 + `beyond`·`unknown_date`), `impact`(신호 9: GW/MW·금액 정규식, 하이퍼스케일러·칩·한국 주요 행위자·거래 동사·규제 용어), `reader_value`(권리·tier·본문 길이·지역 용어·수치 패턴·abstract 상한), `insight_potential`(테마 6 + 다차원 폭 보너스). 엔진의 모양(축·이름 붙은 lift/cap)은 코드, 숫자·용어·패턴은 전부 이 파일. 정규식 문자열은 로드 시 컴파일 검증, 알 수 없는 키는 오류.
 
 `config/qa.yaml`: 규칙 목록·순서·severity·임계값·`auto_pass`(soft).
 
@@ -246,7 +247,7 @@ zod로 전부 검증(`packages/shared/src/config/schema.ts`). 알 수 없는 키
 | 대상 | 키 |
 |---|---|
 | raw_item | `canonical_url` (unique). Phase 3b 개정: 행 `id`는 `rawItemId(canonical_url)` = uuid5 모양의 sha1(`computecurrent:raw_item:<url>`)로 ingest가 upsert 전에 찍는다 — 충돌 시 PK가 바뀌지 않고, normalize·score가 행을 다시 읽지 않고 참조한다 |
-| candidate | `raw_item_id + ':' + rubric_version`. Phase 3b: normalize의 중복 **탈락**은 `rubric_version = normalize/<normalize.version>`, `selected=false`, `reject_reason = "<CODE>: <method>=<duplicate_of>"`(코드: `DUPLICATE_OF_PUBLISHED` \| `DUPLICATE_IN_POOL`)로 기록되고, 살아남은 후보는 메모리로 score에 넘어가 score가 채점 행을 쓴다 |
+| candidate | `raw_item_id + ':' + rubric_version`. Phase 3b: normalize의 중복 **탈락**은 `rubric_version = normalize/<normalize.version>`, `selected=false`, `reject_reason = "<CODE>: <method>=<duplicate_of>"`(코드: `DUPLICATE_OF_PUBLISHED` \| `DUPLICATE_IN_POOL`)로 기록되고, 살아남은 후보는 메모리로 score에 넘어간다. Phase 3c: score는 **모든** 후보를 `rubric_version = score/<scoring.version>`으로 upsert — `scores`(5축)·`total`·`selected`·`reject_reason = "<CODE>: <key>=<value>,…"`(코드: `BELOW_THRESHOLD` \| `NOT_SELECTED`)·`rubric`(tier·rank·insight_eligible·축별 reason). 같은 아이템이 다음 런 풀에 다시 들어오면 같은 행을 덮어쓴다(이월 로직 없음) |
 | draft | `candidate_id + ':' + content_type + ':' + prompt_version` |
 | qa_result | `draft_id + ':' + rule + ':' + checked_at` |
 | publication | `slug` (news: `news/` + sha1(canonical_url + title)[0:16] — 레거시 규칙 유지; essay: `column/` + slugify(title)[0:64] + `-YYYY-MM-DD`) |
@@ -269,5 +270,5 @@ output_schema: NewsBrief
 
 ## 7. 기능 플래그 규약
 
-- 모든 Stage·Adapter·Publisher에 `enabled`. 기본값은 Phase 3 이식 직후 `false`, Phase 4에서 `true`. 적용: 3a ingest는 네트워크 스위치 `--live`(기본 OFF)가 플래그 역할을 하고, 3b normalize는 `flags.stages.normalize: false`(테스트·CI smoke·dry-run 증거는 `CC_FLAG_STAGES_NORMALIZE=true`로 켠다).
+- 모든 Stage·Adapter·Publisher에 `enabled`. 기본값은 Phase 3 이식 직후 `false`, Phase 4에서 `true`. 적용: 3a ingest는 네트워크 스위치 `--live`(기본 OFF)가 플래그 역할을 하고, 3b normalize는 `flags.stages.normalize: false`(테스트·CI smoke·dry-run 증거는 `CC_FLAG_STAGES_NORMALIZE=true`로 켠다), 3c score는 `flags.stages.score: false`(`CC_FLAG_STAGES_SCORE=true`).
 - 플래그는 설정 파일 값이 환경변수(`CC_FLAG_<NAME>`)로 override 가능. 런 원장에 적용된 플래그 스냅샷을 기록한다.
