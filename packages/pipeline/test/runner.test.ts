@@ -151,15 +151,18 @@ test("errorCode reduces messages to taxonomy codes", async () => {
   assert.equal(errorCode("something odd happened"), "something odd happened");
 });
 
-test("--stage runs only the named stage and marks the rest skipped", async () => {
-  const result = await runPipeline(baseRunOptions({ only: "image" }));
+test("--stage runs only the named stages and marks the rest skipped", async () => {
+  const result = await runPipeline(baseRunOptions({ only: ["image"] }));
   assert.deepEqual(
     result.stages.map((s) => [s.stage, s.status]),
     STAGE_NAMES.map((name) => [name, name === "image" ? "done" : "skipped"]),
   );
   assert.equal(result.stages[0]?.reason, "not_selected");
   assert.equal(result.funnel.items_fetched, 0);
-  await assert.rejects(runPipeline(baseRunOptions({ only: "render" as never })), /unknown stage/);
+  const two = await runPipeline(baseRunOptions({ only: ["ingest", "normalize"] }));
+  assert.deepEqual(two.stages.filter((s) => s.status === "done").map((s) => s.stage), ["ingest", "normalize"], "a comma list runs several stages");
+  assert.equal(two.funnel.items_fetched, 6);
+  await assert.rejects(runPipeline(baseRunOptions({ only: ["render" as never] })), /unknown stage/);
 });
 
 test("items_scored counts candidates only when the score stage completed", async () => {

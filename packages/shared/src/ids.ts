@@ -1,0 +1,23 @@
+/**
+ * Deterministic identifiers. `raw_items.id` is derived from the canonical URL
+ * (contracts.md §5: the raw item key is the canonical URL) so that ingest can
+ * stamp the id before the idempotent upsert and an `on conflict (canonical_url)`
+ * update never tries to change the primary key; normalize and score can then
+ * reference the row without reading it back.
+ */
+import { createHash } from "node:crypto";
+
+/** RFC 4122 v5-shaped UUID: sha1 of `namespace:name`, version nibble 5, RFC variant. */
+export function deterministicUuid(namespace: string, name: string): string {
+  const hex = createHash("sha1").update(`${namespace}:${name}`).digest("hex").slice(0, 32);
+  const variant = ["8", "9", "a", "b"][Number.parseInt(hex[16] ?? "0", 16) % 4] ?? "8";
+  const s = `${hex.slice(0, 12)}5${hex.slice(13, 16)}${variant}${hex.slice(17, 32)}`;
+  return `${s.slice(0, 8)}-${s.slice(8, 12)}-${s.slice(12, 16)}-${s.slice(16, 20)}-${s.slice(20, 32)}`;
+}
+
+export const RAW_ITEM_ID_NAMESPACE = "computecurrent:raw_item";
+
+/** The fixed derivation of `raw_items.id`; changing it would make an upsert attempt a primary-key update. */
+export function rawItemId(canonicalUrl: string): string {
+  return deterministicUuid(RAW_ITEM_ID_NAMESPACE, canonicalUrl);
+}

@@ -2,13 +2,15 @@
 /**
  * cc-pipeline — CLI entry (brief Phase 2 §3, Phase 3a `--live`).
  *
- *   pipeline run [--stage <name>] [--dry-run] [--live] [--fixture <name>] [--replay]
+ *   pipeline run [--stage <name>[,<name>]] [--dry-run] [--live] [--fixture <name>] [--replay]
  *                [--config <path>] [--sources <path>] [--fixtures-dir <dir>]
  *                [--trigger schedule|dispatch|local] [--json] [--log-level <level>]
  *
  * Exit codes: 0 done · 1 partial/budget_stop · 2 failed, usage or config error.
  * Source adapters are fixtures unless `--live` swaps in the real RSS/Atom and
- * Epoch index adapters (Phase 3a). Every run needs `--dry-run` (memory ledger
+ * Epoch index adapters (Phase 3a). A fixture run also seeds the memory DB from
+ * `fixtures/db/<fixture>.json` when that file exists (Phase 3b: publications
+ * to dedupe against). Every run needs `--dry-run` (memory ledger
  * and DB, nothing written) until Phase 4 wires Supabase: a bare `--replay`
  * would keep adapters offline but still write the real run ledger. `--live`
  * cannot be combined with `--replay`, which forbids all network access.
@@ -30,20 +32,20 @@ import {
   createNoopPublisher,
   createPlaceholderImageAdapter,
 } from "../src/adapters/index.ts";
-import { MemoryDb, SupabaseDb } from "../src/db/index.ts";
+import { MemoryDb, SupabaseDb, seedMemoryDb } from "../src/db/index.ts";
 import { MemoryLedger, SupabaseLedger } from "../src/ledger/index.ts";
 import type { SupabaseLike } from "../src/ledger/index.ts";
 import { resolveGitSha } from "../src/git.ts";
 import { notifyConsole } from "../src/notify/console.ts";
 import { disabledFetch, runPipeline } from "../src/runner.ts";
 
-const USAGE = `usage: pipeline run [--stage <name>] [--dry-run] [--live] [--fixture <name>] [--replay]
+const USAGE = `usage: pipeline run [--stage <name>[,<name>]] [--dry-run] [--live] [--fixture <name>] [--replay]
                     [--config <path>] [--sources <path>] [--fixtures-dir <dir>]
                     [--trigger schedule|dispatch|local] [--json] [--log-level debug|info|warn|error]`;
 
 export interface Cli {
   command: string | undefined;
-  stage: StageName | undefined;
+  stages: StageName[] | undefined;
   dryRun: boolean;
   live: boolean;
   fixture: string | undefined;
@@ -82,9 +84,11 @@ export function parseCli(argv: string[]): Cli {
   if (!isLogLevel(logLevel)) throw new UsageError(`--log-level must be debug|info|warn|error, got "${logLevel}"`);
   if (values.live && values.replay) throw new UsageError("--live and --replay are mutually exclusive (--replay forbids network access)");
   if (values.live && !values["dry-run"]) throw new UsageError("--live requires --dry-run until Phase 4 (nothing is written outside the memory ledger)");
+  const stages = values.stage === undefined ? undefined : values.stage.split(",").map((name) => name.trim()).filter(Boolean);
+  if (stages !== undefined && stages.length === 0) throw new UsageError("--stage needs at least one stage name");
   return {
     command: positionals[0],
-    stage: values.stage as StageName | undefined,
+    stages: stages as StageName[] | undefined,
     dryRun: values["dry-run"],
     live: values.live,
     fixture: values.fixture,
@@ -172,7 +176,12 @@ export async function main(argv: string[], env: NodeJS.ProcessEnv, stdout: (line
     let db: DbPort;
     if (cli.dryRun) {
       ledger = new MemoryLedger();
-      db = new MemoryDb();
+      const memory = new MemoryDb();
+      if (!cli.live) {
+        const seeded = await seedMemoryDb(memory, resolve(cli.fixturesDir), cli.fixture ?? "sample");
+        if (seeded) logger.info("memory db seeded from fixture", { ...seeded });
+      }
+      db = memory;
     } else {
       const client = buildSupabase(env, realFetch);
       if (!client) throw new ConfigError("SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY are required without --dry-run (names only; values stay in the environment)");
@@ -193,7 +202,7 @@ export async function main(argv: string[], env: NodeJS.ProcessEnv, stdout: (line
       dryRun: cli.dryRun,
       replay: cli.replay,
       fixtureName: cli.live ? undefined : cli.fixture,
-      only: cli.stage,
+      only: cli.stages,
     });
     notifyConsole(logger, result, { capUsd: loaded.config.budget.run_usd });
 
@@ -209,6 +218,7 @@ export async function main(argv: string[], env: NodeJS.ProcessEnv, stdout: (line
             costTotalUsd: result.costTotalUsd,
             stages: result.stages,
             sourceStats: result.state.sourceStats,
+            normalizeStats: result.state.normalizeStats,
             ledger: dump,
           },
           null,

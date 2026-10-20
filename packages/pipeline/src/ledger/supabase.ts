@@ -17,13 +17,19 @@ export interface SupabaseResult {
   error: { message: string } | null;
 }
 
+export interface SupabaseQuery {
+  limit(count: number): PromiseLike<SupabaseResult & { data: unknown[] | null }>;
+  /** Optional on fakes; SupabaseDb only calls it when a select asks for `orderBy`. */
+  order?(column: string, options: { ascending: boolean }): { limit(count: number): PromiseLike<SupabaseResult & { data: unknown[] | null }> };
+}
+
 export interface SupabaseTable {
   insert(rows: Record<string, unknown>[]): PromiseLike<SupabaseResult>;
   upsert(rows: Record<string, unknown>[], options: { onConflict: string }): PromiseLike<SupabaseResult>;
   update(patch: Record<string, unknown>): { match(filter: Record<string, unknown>): PromiseLike<SupabaseResult> };
   select(columns: string): {
-    match(filter: Record<string, unknown>): { limit(count: number): PromiseLike<SupabaseResult & { data: unknown[] | null }> };
-    in(column: string, values: unknown[]): { limit(count: number): PromiseLike<SupabaseResult & { data: unknown[] | null }> };
+    match(filter: Record<string, unknown>): SupabaseQuery;
+    in(column: string, values: unknown[]): SupabaseQuery;
   };
 }
 

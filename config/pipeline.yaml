@@ -10,7 +10,7 @@ schedule:
 flags:
   stages:
     ingest: true
-    normalize: true
+    normalize: false             # Phase 3b logic is in; default OFF until Phase 4 (contracts §7). Override: CC_FLAG_STAGES_NORMALIZE=true
     score: true
     generate: true
     qa: true
@@ -41,6 +41,14 @@ ingest:                        # Phase 3a live ingest; every key is optional (de
   extract_bodies: true         # fetch article bodies for text_rights: full sources
   extract_host_delay_ms: 1000  # minimum interval between page requests to one host; extract.delay_ms raises it per source (arXiv 15000)
   user_agent: "Mozilla/5.0 (compatible; ComputeCurrentBot/1.0; +https://www.computecurrent.com)"
+
+normalize:                     # Phase 3b dedupe; every key is optional (defaults in packages/shared/src/schema/config.ts)
+  version: "2026-10-20.1"      # candidates.rubric_version = normalize/<version> on dedupe rejections; bump when a rule changes
+  title_similarity: 0.85       # title token Dice (ADR-004)
+  body_similarity: 0.6         # word 5-gram shingle Jaccard over the feed body/preview
+  body_min_tokens: 40
+  published_window_days: 7     # title comparison window against publications (URL identity match is unbounded)
+  published_limit: 2000
 
 budget:
   run_usd: 2.0                 # STOP-THE-LINE threshold (brief §5.4)

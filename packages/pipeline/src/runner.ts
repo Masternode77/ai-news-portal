@@ -45,8 +45,8 @@ export interface RunOptions {
   dryRun: boolean;
   replay: boolean;
   fixtureName?: string;
-  /** Run only this stage; the others are recorded as `skipped`. */
-  only?: StageName;
+  /** Run only these stages (`--stage ingest,normalize`); the others are recorded as `skipped`. */
+  only?: readonly StageName[];
   /** Scheduled slot time; defaults to the clock. */
   now?: Date;
   clock?: () => Date;
@@ -142,8 +142,8 @@ export async function runPipeline(options: RunOptions): Promise<RunResult> {
   const budget = createBudget(options.config.budget);
   const flags = flagSnapshot(options.config, options.overrides ?? []);
 
-  if (options.only && !(STAGE_NAMES as readonly string[]).includes(options.only)) {
-    throw new Error(`unknown stage "${options.only}" (known: ${STAGE_NAMES.join(", ")})`);
+  for (const name of options.only ?? []) {
+    if (!(STAGE_NAMES as readonly string[]).includes(name)) throw new Error(`unknown stage "${name}" (known: ${STAGE_NAMES.join(", ")})`);
   }
 
   // Ledger-first: a crash after this point still leaves a `started` row (ADR-007).
@@ -195,7 +195,7 @@ export async function runPipeline(options: RunOptions): Promise<RunResult> {
       await ledger.stageStarted(runId, spec.name, stageStart);
 
       const flagOn = options.config.flags.stages[spec.name];
-      const selected = options.only === undefined || options.only === spec.name;
+      const selected = options.only === undefined || options.only.includes(spec.name);
       if (!flagOn || !selected) {
         const reason = !flagOn ? "flag_off" : "not_selected";
         const counts = { skipped: 1 };

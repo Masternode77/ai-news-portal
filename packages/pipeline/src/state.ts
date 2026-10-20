@@ -60,6 +60,39 @@ export const SourceStats = z.strictObject({
 });
 export type SourceStats = z.infer<typeof SourceStats>;
 
+/** One normalize rejection (Phase 3b); the first 100 are mirrored into the `--json` output. */
+export const NormalizeDecision = z.strictObject({
+  canonical_url: z.string(),
+  source_id: z.string(),
+  /** DUPLICATE_OF_PUBLISHED | DUPLICATE_IN_POOL */
+  reason: z.string(),
+  /** url | title | hash | title_key | body */
+  method: z.string(),
+  /** The publication slug or the canonical URL of the copy that was kept. */
+  duplicate_of: z.string().nullable(),
+  score: z.number().nullable(),
+});
+export type NormalizeDecision = z.infer<typeof NormalizeDecision>;
+
+export const NormalizeStats = z.strictObject({
+  pool: NonNegativeInt,
+  candidates: NonNegativeInt,
+  rejected: NonNegativeInt,
+  duplicate_of_published: NonNegativeInt,
+  duplicate_in_pool: NonNegativeInt,
+  by_method: z.record(z.string(), NonNegativeInt),
+  /** Publications loaded for the comparison, and how many fell inside the title window. */
+  published_compared: NonNegativeInt,
+  published_in_window: NonNegativeInt,
+  decisions: z.array(NormalizeDecision).max(100),
+  ms: NonNegativeInt,
+});
+export type NormalizeStats = z.infer<typeof NormalizeStats>;
+
+export function emptyNormalizeStats(): NormalizeStats {
+  return { pool: 0, candidates: 0, rejected: 0, duplicate_of_published: 0, duplicate_in_pool: 0, by_method: {}, published_compared: 0, published_in_window: 0, decisions: [], ms: 0 };
+}
+
 export const DraftWithImage = z.strictObject({
   draft: DraftInsert,
   image: ImageResult.nullable(),
@@ -74,6 +107,7 @@ export const PipelineState = z.strictObject({
   sourceStats: SourceStats,
   rawItems: z.array(RawItemInsert),
   itemsNew: NonNegativeInt,
+  normalizeStats: NormalizeStats,
   candidates: z.array(CandidateInsert),
   selected: z.array(CandidateInsert),
   drafts: z.array(DraftInsert),
@@ -109,6 +143,7 @@ export function initialState(sources: SourceConfig[]): PipelineState {
     sourceStats: emptySourceStats(),
     rawItems: [],
     itemsNew: 0,
+    normalizeStats: emptyNormalizeStats(),
     candidates: [],
     selected: [],
     drafts: [],
