@@ -51,9 +51,9 @@
 | 입력·출력 | `ScoreInput { candidates, rawItems, sources }` → `ScoreOutput { candidates(채점 완료, 전부), selected, stats }`. 후보는 `raw_item_id`로 raw item(제목·본문·발행일)과 소스(tier·권리·범위)를 찾는다 | contracts §1 개정 |
 | 5축 루브릭 | `relevance`(§1의 8차원 엔진) · `timeliness`(발행일 vs 슬롯 시각 `ctx.now`, 버킷) · `impact`(규모·행위자·거래 신호: GW/MW·금액·하이퍼스케일러·칩·한국 주요 행위자·거래 동사·규제, 신호별 가중, 제목 가중) · `reader_value`(텍스트 권리·본문 길이·tier·한국/APAC 지역·수치 구체성, abstract 범위 상한) · `insight_potential`(전력 전략·용량 계획·부지·자본·한국/APAC·쟁점 프레이밍 테마 + 다차원 폭 보너스) | 각 축 0~1, `scores` jsonb |
 | 총점 | `total = Σ weights[axis] × score[axis]`, 가중치 0.35/0.2/0.2/0.15/0.1(합 1, 로드 시 검증) | contracts §4 |
-| 등급 | `total ≥ thresholds.full` → `full`, `≥ thresholds.brief` → `brief`, 미달 → `BELOW_THRESHOLD`. abstract 범위 소스는 `brief` 상한 | ADR-004 |
+| 등급 | `relevance < thresholds.relevance_min`(0.55) → `BELOW_THRESHOLD`(총점 무관; 레거시 게이트가 관련성 단독이었던 것을 보존), `total ≥ thresholds.full` → `full`, `≥ thresholds.brief` → `brief`, 미달 → `BELOW_THRESHOLD`. abstract 범위 소스는 `brief` 상한 | ADR-004; 관련성 하한은 라이브 런 1에서 추가(§4.2) |
 | 선택 | 통과 후보를 total(동점: timeliness → canonical_url) 내림차순, 소스당 `selection.per_source_max`(1)까지, `caps.briefs_per_cycle.max`(2)까지 `selected=true`. 통과 수 < `min`이면 채우지 않고 `shortfall` 보고 | R2, `allow_zero_publish` |
-| 탈락 사유 | `reject_reason = "<CODE>: <key>=<value>[,…]"` — `BELOW_THRESHOLD: total=0.41,brief=0.55` · `NOT_SELECTED: rank=3,max=2` · `NOT_SELECTED: source_cap=<source_id>,rank=2` | normalize와 같은 형식(R6) |
+| 탈락 사유 | `reject_reason = "<CODE>: <key>=<value>[,…]"` — `BELOW_THRESHOLD: relevance=0.17,relevance_min=0.55` · `BELOW_THRESHOLD: total=0.41,brief=0.55` · `NOT_SELECTED: rank=3,max=2` · `NOT_SELECTED: source_cap=<source_id>,rank=2` | normalize와 같은 형식(R6) |
 | 근거 저장 | `candidates.rubric` jsonb(신규 컬럼, `supabase/migrations/0002_candidates_rubric.sql`): `{ tier, rank, insight_eligible, reasons: { relevance, timeliness, impact, reader_value, insight_potential } }` — 축마다 사람이 읽는 한 줄(매치 용어·버킷·신호·상한) | 브리프 "항목별 점수와 근거를 저장" |
 | 행 기록 | **모든** 후보를 `candidates`에 upsert(`raw_item_id`, `rubric_version = score/<scoring.version>`). 재런은 같은 행을 덮어쓴다(`run_id` 갱신). 캡에 밀린 후보는 다음 런에 다시 풀에 들어오면 재채점된다(이월 로직 없음) | ADR-003 멱등 키 |
 | 설정 파일 | `config/scoring.yaml`(별도 파일, contracts §4) — `version`, `weights`, `thresholds`, `insight_trigger`, `selection`, `relevance`, `timeliness`, `impact`, `reader_value`, `insight_potential`. zod strict(`ScoringConfig`), 정규식 문자열은 로드 시 컴파일 검증. CLI `--scoring <path>` | 임계값·가중치·어휘 변경 = 설정 변경 |
@@ -99,7 +99,31 @@
 
 ### 4.2 라이브 dry-run
 
-(PR 생성 후 `rebuild-ci.yml` `ingest-live-dry-run` 잡(`live_ingest=true`)으로 `--stage ingest,normalize,score` 실행 결과를 적는다.)
+**런 1 — [Actions run 39400530432](https://github.com/Masternode77/ai-news-portal/actions/runs/39400530432)** (`rebuild/v2` `864d93c7`, `--dry-run --live --stage ingest,normalize,score`, 메모리 원장·DB, 시크릿 없음, 2026-10-20T09:25Z, 64 s, status `partial` = 소스 실패 6).
+
+| 단계 | 결과 |
+|---|---|
+| ingest | 80 소스 74 ok / 6 실패(nrc-news 403, insidehpc 러너 TLS, capacity-media 타임아웃, etnews fetch 실패, venturebeat-ai 429, berkeley-lab-news 403), `items_fetched` 200(캡: 교차 중복 8 뒤 123 컷), 추출 56/0/144 |
+| normalize | 풀 200 → 후보 198, 탈락 2(`title_key`, 3b와 같은 FR 정형 고시 쌍), 64 ms |
+| score (v2026-10-20.1) | 후보 198 → **통과 17**(full 1 · brief 16) → 선택 2 · 미선택 15 · 미달 181 · insight-eligible 9 · shortfall 0 · 155 ms. funnel `passed_gate 17/198 = 8.6%`(Phase 0 레거시 3.7%) |
+
+선택: ① datacenterdynamics "Google expands partnership with Entergy Arkansas…" total 0.765 **full**(R 0.78 · T 1.0 · I 0.66 · V 0.55 · P 0.76; `capacity_mw(440mw), hyperscaler(google)`) ② doe-newsroom "Energy Department announces Virginia and West Virginia transmission…" 0.686 brief(R 0.73 · T 0.06 · I 1.0 · V 0.80 · P 0.98). 3~17위는 `NOT_SELECTED: rank=n,max=2`(datacenterfrontier Colossus $575M, storagereview Meta Prometheus, datacenterpost, DCD 배터리, EC press, meta-engineering, …). 통과 17건의 소스는 11곳(DCD 3, DOE 3, datacenterpost 2, EC 2, 그 외 1씩) — 소스당 1 규칙이 유효했다. 상위 100건 샘플의 cap 적용: `no_infra` 24, `procedural_notice` 4; 총점 분포 0.7대 1 · 0.6대 8 · 0.5대 18 · 0.4대 26 · 0.3대 40 · 0.2대 7; timeliness 버킷 ≤3h 18 · ≤8h 10 · ≤18h 17 · ≤30h 20 · beyond 35(풀 창 10일).
+
+**런 1에서 드러난 문제 두 가지(→ v2026-10-20.2로 수정, 런 2에서 재측정)**
+1. **관련성 하한 부재**: EC 연설(관련성 **0.17**, `€90 billion` 등 impact 0.75 + 전문 4,529자 reader_value 0.72)이 총점 0.564로 통과, DOE 가스 파이프라인 고시(관련성 0.34)가 0.567로 통과. 레거시 게이트는 관련성 단독이었으므로 `thresholds.relevance_min: 0.55`를 추가 — 하한 미달은 총점과 무관하게 `BELOW_THRESHOLD: relevance=…,relevance_min=…`. 런 1 기준으로 통과 17건 중 4건(EC press 0.53, FERC 고시 0.49, DOE 파이프라인 0.34, EC 연설 0.17)이 걸러져 13건(6.6%)이 된다.
+2. **금액 패턴 오탐**: "1 million GPUs"(Meta Prometheus)가 `money_million`으로 집계. 금액 신호는 통화 기호(`$ € £ ₩`)나 통화 단어(dollars/euros/won/usd/krw)를 요구하도록 좁혔다.
+
+**런 2 — [Actions run 39401326128](https://github.com/Masternode77/ai-news-portal/actions/runs/39401326128)** (`rebuild/v2` `8d1602bb`, scoring v2026-10-20.2, 2026-10-20T09:32Z, 64 s, status `partial` = 소스 실패 5; etnews는 이번엔 성공).
+
+| 단계 | 결과 |
+|---|---|
+| ingest | 80 소스 75 ok / 5 실패(nrc-news 403, insidehpc 러너 TLS, capacity-media 522, venturebeat-ai 429, berkeley-lab-news 403), 풀 200(캡 129 컷) |
+| normalize | 200 → 198(탈락 2 `title_key`) |
+| score | 후보 198 → **통과 12**(full 1 · brief 11) → 선택 2(런 1과 같은 두 건) · 미선택 10 · 미달 186(그중 **관련성 하한 167**) · insight-eligible 9 · shortfall 0 · 206 ms. funnel `passed_gate 12/198 = 6.1%` |
+
+런 1 통과 17건의 행방: 12건은 그대로 통과(순위만 이동), 4건은 `BELOW_THRESHOLD: relevance=…,relevance_min=0.55`(EC press 0.53 · FERC 고시 0.49 · DOE 파이프라인 0.34 · EC 연설 0.17 — 의도한 효과), 1건(meta-engineering Prometheus)은 런 2 풀에 없었다(라이브 피드라 런마다 풀 구성이 조금 다르다; 금액 오탐 제거로 impact도 0.51 → 0.31이 됐을 항목). 통과 12건은 8개 소스(DCD 3 · DOE 2 · datacenterpost 2 · datacenterfrontier · storagereview · bloomberg-technology · datacenterknowledge · semianalysis), 관련성 최저 0.71. "1 million GPUs"는 더 이상 금액으로 잡히지 않는다(storagereview impact 0.56 → 0.31).
+
+**관찰·한계(Phase 4 튜닝 대상)**: ① 48시간 이상 지난 DOE 기사(T 0.06)가 impact 1.0 + 전문 reader_value 0.8로 2~3위에 올라온다 — timeliness 가중치 0.2·`beyond 0.06`이 의도한 균형인지 Josh 판단 필요(§5-4). ② 통과 12건 중 `signals=none`이 5건 — impact 축이 0이어도 관련성·독자 가치로 brief 등급에 든다. ③ 발행본 비교는 메모리 DB라 0(Supabase 적용 후 재확인). ④ 선택 2건은 두 런에서 동일했다(결정적).
 
 ## 5. 열린 질문 (Josh)
 
