@@ -93,7 +93,8 @@ test("every candidate gets five axis scores, a reason per axis, a total and a du
   assert.equal(kepco.selected, true, "the next source's story takes the second slot");
   assert.equal(kepco.rubric?.rank, 3);
   assert.equal(pets.rubric?.tier, null);
-  assert.equal(pets.reject_reason, rejectReason(BELOW_THRESHOLD, { total: pets.total, brief: testScoring().thresholds.brief }));
+  assert.equal(pets.reject_reason, rejectReason(BELOW_THRESHOLD, { relevance: pets.scores.relevance, relevance_min: testScoring().thresholds.relevance_min }), "an off-beat item is named by the relevance floor, not the total");
+  assert.equal(out.stats.below_relevance, 1);
   assert.match(pets.rubric!.reasons.relevance, /no_infra/);
   assert.ok(hbm.scores.reader_value < busan.scores.reader_value, "link-only tier-3 copy has little reader value");
   assert.deepEqual(out.selected.map((row) => row.raw_item_id), [busan.raw_item_id, kepco.raw_item_id]);
@@ -125,20 +126,20 @@ test("thresholds, weights and caps come from config only: the same candidates ch
   assert.equal(base.candidates[0]?.scores.timeliness, testScoring().timeliness.beyond, "a ten-day-old story is beyond the last bucket");
   assert.ok(base.candidates[0]!.total < 0.9 && base.candidates[0]!.total >= testScoring().thresholds.full);
 
-  const strict = testScoring({ thresholds: { full: 0.95, brief: 0.9 } });
+  const strict = testScoring({ thresholds: { full: 0.95, brief: 0.9, relevance_min: 0.55 } });
   const out = await run(new MemoryDb(), items, sources, strict);
   assert.deepEqual(out.candidates.map((c) => c.rubric?.tier), [null, null, null], "raising the thresholds in config rejects everything");
   assert.ok(out.candidates.every((c) => c.reject_reason?.startsWith(`${BELOW_THRESHOLD}: total=`)));
   assert.equal(out.stats.shortfall, 1, "caps.briefs_per_cycle.min is reported, never filled from below the threshold");
   assert.equal(out.stats.selected, 0);
 
-  const lenient = testScoring({ thresholds: { full: 0.4, brief: 0.3 } });
+  const lenient = testScoring({ thresholds: { full: 0.4, brief: 0.3, relevance_min: 0.55 } });
   const wide = await run(new MemoryDb(), items, sources, lenient, config("{ min: 1, max: 3 }"));
   assert.equal(wide.stats.passed, 3);
   assert.equal(wide.stats.selected, 2, "selection.per_source_max keeps the third (same-source) story out even with room in the cycle cap");
   assert.equal(wide.candidates[2]?.reject_reason, rejectReason(NOT_SELECTED, { source_cap: "b", rank: 3 }));
 
-  const twoPerSource = testScoring({ thresholds: { full: 0.4, brief: 0.3 }, selection: { per_source_max: 2, abstract_max_tier: "brief" } });
+  const twoPerSource = testScoring({ thresholds: { full: 0.4, brief: 0.3, relevance_min: 0.55 }, selection: { per_source_max: 2, abstract_max_tier: "brief" } });
   const three = await run(new MemoryDb(), items, sources, twoPerSource, config("{ min: 1, max: 3 }"));
   assert.equal(three.stats.selected, 3);
 
@@ -150,12 +151,21 @@ test("thresholds, weights and caps come from config only: the same candidates ch
   const relevanceOnly = testScoring({ weights: { relevance: 1, timeliness: 0, impact: 0, reader_value: 0, insight_potential: 0 } });
   const r = await run(new MemoryDb(), items, sources, relevanceOnly);
   assert.ok(r.candidates.every((c) => c.total === Number(c.scores.relevance.toFixed(4))), "weights are read from config");
+
+  // The relevance floor is a config threshold too: a rich but off-beat item cannot pass on impact and reader value.
+  const speech = raw("a", "https://a.example.com/speech", "Commission President announces €90 billion industrial investment programme", "The Commission signed a €90 billion investment programme for European industry, the President said in a speech, with €6 million for skills.");
+  const floored = await run(new MemoryDb(), [speech], sources, testScoring({ thresholds: { full: 0.75, brief: 0.3, relevance_min: 0.55 } }));
+  assert.ok(floored.candidates[0]!.scores.impact >= 0.5 && floored.candidates[0]!.scores.relevance < 0.55, `impact ${floored.candidates[0]!.scores.impact}, relevance ${floored.candidates[0]!.scores.relevance}`);
+  assert.equal(floored.candidates[0]?.rubric?.tier, null);
+  assert.match(floored.candidates[0]!.reject_reason!, /^BELOW_THRESHOLD: relevance=0(\.\d+)?,relevance_min=0\.55$/);
+  const unfloored = await run(new MemoryDb(), [speech], sources, testScoring({ thresholds: { full: 0.75, brief: 0.3, relevance_min: 0 } }));
+  assert.equal(unfloored.candidates[0]?.rubric?.tier, "brief", "lowering the floor in config lets the same item through");
 });
 
 test("an abstract-only source never reaches tier full, and its reader value is capped", async () => {
   const arxiv = src("arxiv", { tier: 1, text_rights: "full", text_scope: "abstract", extract: { kind: "none" } });
   const items = [raw("arxiv", "https://arxiv.example.com/abs/1", "Thermal limits of direct-to-chip liquid cooling for 150 kW GPU training clusters in Seoul AI data centers", "We model heat rejection for direct-to-chip liquid cooling in GPU clusters at rack densities up to 150 kW in Seoul data center halls with 1 GW of grid interconnection, and show CDU flow bounds usable capacity.")];
-  const lenient = testScoring({ thresholds: { full: 0.3, brief: 0.2 } });
+  const lenient = testScoring({ thresholds: { full: 0.3, brief: 0.2, relevance_min: 0.55 } });
   const out = await run(new MemoryDb(), items, [arxiv], lenient);
   const row = out.candidates[0]!;
   assert.ok(row.total >= 0.3, `total ${row.total} clears the full threshold on numbers`);
@@ -222,6 +232,8 @@ test("timeliness buckets follow ctx.now, impact signals and reader value name wh
   assert.equal(impact.score, 1);
   assert.match(impact.reason, /capacity_gw\(1\.2 gw\)/);
   assert.match(impact.reason, /money_billion\(\$2\.1 billion\)/);
+  const gpus = raw("a", "https://a.example.com/gpus", "Meta plans a 1 million GPU supercluster", "The gigawatt-scale cluster will hold 1 million GPUs across the campus.");
+  assert.doesNotMatch(scoreImpact(scoreDoc(candidate(gpus), gpus, src("a"), compiled), scoring.impact, compiled).reason, /money_million/, "a count of GPUs is not a sum of money");
   assert.match(impact.reason, /hyperscaler\(microsoft\)/);
   const value = scoreReaderValue(doc, scoring.reader_value, compiled);
   assert.match(value.reason, /rights=full\(\+0\.3\),tier=1\(\+0\.2\)/);

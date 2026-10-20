@@ -119,6 +119,8 @@ export const ScoreStats = z.strictObject({
   full: NonNegativeInt,
   brief: NonNegativeInt,
   below_threshold: NonNegativeInt,
+  /** Of below_threshold: rejected by the relevance floor (thresholds.relevance_min) rather than by the total. */
+  below_relevance: NonNegativeInt,
   selected: NonNegativeInt,
   /** Passed but beyond the cycle cap or the per-source cap. */
   not_selected: NonNegativeInt,
@@ -131,7 +133,7 @@ export const ScoreStats = z.strictObject({
 export type ScoreStats = z.infer<typeof ScoreStats>;
 
 export function emptyScoreStats(): ScoreStats {
-  return { candidates: 0, passed: 0, full: 0, brief: 0, below_threshold: 0, selected: 0, not_selected: 0, insight_eligible: 0, shortfall: 0, decisions: [], ms: 0 };
+  return { candidates: 0, passed: 0, full: 0, brief: 0, below_threshold: 0, below_relevance: 0, selected: 0, not_selected: 0, insight_eligible: 0, shortfall: 0, decisions: [], ms: 0 };
 }
 
 export const DraftWithImage = z.strictObject({

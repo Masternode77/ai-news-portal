@@ -7,7 +7,8 @@
  * (`ctx.scoring`), so tuning is a config change (brief 3c).
  *
  *   total   = Σ weights[axis] × score[axis]
- *   tier    = total ≥ thresholds.full → full · ≥ thresholds.brief → brief · else BELOW_THRESHOLD
+ *   tier    = relevance < thresholds.relevance_min → BELOW_THRESHOLD (whatever the total) ·
+ *             total ≥ thresholds.full → full · ≥ thresholds.brief → brief · else BELOW_THRESHOLD
  *   select  = passing candidates by total (then timeliness, then url), at most
  *             `selection.per_source_max` per source and `caps.briefs_per_cycle.max`
  *             in all; the rest are NOT_SELECTED with their rank. Fewer passing
@@ -406,7 +407,8 @@ export interface Scored {
   insightEligible: boolean;
 }
 
-export function tierOf(total: number, cfg: ScoringConfig, source: SourceConfig | undefined): CandidateTier | null {
+export function tierOf(total: number, relevance: number, cfg: ScoringConfig, source: SourceConfig | undefined): CandidateTier | null {
+  if (relevance < cfg.thresholds.relevance_min) return null;
   const uncapped: CandidateTier | null = total >= cfg.thresholds.full ? "full" : total >= cfg.thresholds.brief ? "brief" : null;
   if (uncapped === "full" && source?.text_scope === "abstract") return cfg.selection.abstract_max_tier;
   return uncapped;
@@ -425,7 +427,7 @@ export function scoreCandidate(doc: ScoreDoc, cfg: ScoringConfig, compiled: Comp
     scores,
     reasons: { relevance: relevance.reason, timeliness: timeliness.reason, impact: impact.reason, reader_value: readerValue.reason, insight_potential: insight.reason },
     total,
-    tier: tierOf(total, cfg, doc.source),
+    tier: tierOf(total, scores.relevance, cfg, doc.source),
     insightEligible: insight.score >= cfg.insight_trigger,
   };
 }
@@ -472,7 +474,14 @@ export const scoreStage: Stage<ScoreInput, ScoreOutput> = {
         perSource.set(sourceId, used + 1);
       }
     });
-    for (const entry of scored) if (entry.tier === null) rejectReasons.set(entry, rejectReason(BELOW_THRESHOLD, { total: entry.total, brief: cfg.thresholds.brief }));
+    let belowRelevance = 0;
+    for (const entry of scored) {
+      if (entry.tier !== null) continue;
+      if (entry.scores.relevance < cfg.thresholds.relevance_min) {
+        belowRelevance += 1;
+        rejectReasons.set(entry, rejectReason(BELOW_THRESHOLD, { relevance: entry.scores.relevance, relevance_min: cfg.thresholds.relevance_min }));
+      } else rejectReasons.set(entry, rejectReason(BELOW_THRESHOLD, { total: entry.total, brief: cfg.thresholds.brief }));
+    }
 
     const rows: CandidateInsert[] = scored.map((entry) => ({
       raw_item_id: entry.doc.candidate.raw_item_id,
@@ -508,6 +517,7 @@ export const scoreStage: Stage<ScoreInput, ScoreOutput> = {
       full: passing.filter((entry) => entry.tier === "full").length,
       brief: passing.filter((entry) => entry.tier === "brief").length,
       below_threshold: scored.length - passing.length,
+      below_relevance: belowRelevance,
       selected: selected.length,
       not_selected: passing.length - selected.length,
       insight_eligible: scored.filter((entry) => entry.insightEligible).length,
@@ -517,7 +527,7 @@ export const scoreStage: Stage<ScoreInput, ScoreOutput> = {
     };
     for (const entry of selected) ctx.logger.info("score: candidate selected", { source_id: entry.doc.item.source_id, url: entry.doc.item.canonical_url, total: entry.total, tier: entry.tier, rank: rank.get(entry), scores: entry.scores });
     if (stats.shortfall > 0) ctx.logger.warn("score: fewer passing candidates than caps.briefs_per_cycle.min", { selected: stats.selected, min: caps.min, passed: stats.passed, candidates: stats.candidates });
-    ctx.logger.info("score: candidates scored", { candidates: stats.candidates, passed: stats.passed, full: stats.full, brief: stats.brief, below_threshold: stats.below_threshold, selected: stats.selected, not_selected: stats.not_selected, insight_eligible: stats.insight_eligible, shortfall: stats.shortfall, rubric_version: version });
+    ctx.logger.info("score: candidates scored", { candidates: stats.candidates, passed: stats.passed, full: stats.full, brief: stats.brief, below_threshold: stats.below_threshold, below_relevance: stats.below_relevance, selected: stats.selected, not_selected: stats.not_selected, insight_eligible: stats.insight_eligible, shortfall: stats.shortfall, rubric_version: version });
     return { candidates: rows, selected: selected.map((entry) => rows[scored.indexOf(entry)]!), stats };
   },
 };
@@ -532,6 +542,7 @@ export const scoreSpec = defineStageSpec({
     full: output.stats.full,
     brief: output.stats.brief,
     below_threshold: output.stats.below_threshold,
+    below_relevance: output.stats.below_relevance,
     selected: output.stats.selected,
     not_selected: output.stats.not_selected,
     insight_eligible: output.stats.insight_eligible,

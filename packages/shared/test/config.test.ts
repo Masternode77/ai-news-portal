@@ -116,6 +116,7 @@ test("config/scoring.yaml (Phase 3c) loads strictly: weights sum to 1, threshold
   const scoring = await loadScoringConfig(path);
   assert.equal(scoring.thresholds.full, 0.75);
   assert.equal(scoring.thresholds.brief, 0.55);
+  assert.equal(scoring.thresholds.relevance_min, 0.55);
   assert.equal(scoring.insight_trigger, 0.7);
   assert.equal(Object.keys(scoring.relevance.dimensions).length, 8);
   assert.ok(scoring.impact.signals.every((s) => (s.terms === undefined) !== (s.pattern === undefined)));

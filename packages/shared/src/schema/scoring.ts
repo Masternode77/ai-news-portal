@@ -186,7 +186,12 @@ export const ScoringConfig = z.strictObject({
   version: z.string().min(1),
   weights: RubricWeights,
   thresholds: z
-    .strictObject({ full: UnitInterval, brief: UnitInterval })
+    .strictObject({
+      full: UnitInterval,
+      brief: UnitInterval,
+      /** Hard floor on the relevance axis: below it a candidate is BELOW_THRESHOLD whatever its total (the legacy gate was relevance-only). */
+      relevance_min: UnitInterval,
+    })
     .refine((t) => t.full >= t.brief, { message: "thresholds.full must be >= thresholds.brief" }),
   /** `insight_potential` at or above this marks the candidate eligible for an insight essay (3e). */
   insight_trigger: UnitInterval,

@@ -10,7 +10,7 @@
 # scripts/lib/relevance-classifier.mjs rules re-expressed as data
 # (docs/migration/notes/3c-scoring-selection.md §1); the other axes are new.
 
-version: "2026-10-20.1"        # candidates.rubric_version = score/<version>; bump when a rule, weight or term changes
+version: "2026-10-20.2"        # candidates.rubric_version = score/<version>; bump when a rule, weight or term changes
 
 weights:                       # total = Σ weight × axis score (must sum to 1)
   relevance: 0.35
@@ -22,6 +22,7 @@ weights:                       # total = Σ weight × axis score (must sum to 1)
 thresholds:                    # total ≥ full → tier full; ≥ brief → tier brief; below → BELOW_THRESHOLD (ADR-004; 0.65/0.45 A/B in Phase 4)
   full: 0.75
   brief: 0.55
+  relevance_min: 0.55          # hard floor on the relevance axis (legacy signal gate): an off-beat item cannot pass on impact/reader value alone (live run 39400530432: an EC speech at relevance 0.17 passed on total)
 
 insight_trigger: 0.7           # insight_potential ≥ this marks the candidate eligible for an insight essay (3e)
 
@@ -300,8 +301,9 @@ impact:
   signals:
     - { id: capacity_gw, weight: 0.45, pattern: "\\b\\d+(?:[.,]\\d+)?\\s?gw\\b|\\b\\d+(?:[.,]\\d+)?\\s?gigawatts?\\b" }
     - { id: capacity_mw, weight: 0.35, pattern: "\\b\\d{2,}(?:[.,]\\d+)?\\s?mw\\b|\\b\\d{2,}(?:[.,]\\d+)?\\s?megawatts?\\b" }
-    - { id: money_billion, weight: 0.35, pattern: "(?:\\$|€|£|usd\\s?)\\s?\\d+(?:[.,]\\d+)?\\s?(?:billion|bn|b)\\b|\\b\\d+(?:[.,]\\d+)?\\s?(?:billion|bn)\\b|\\d+(?:[.,]\\d+)?\\s?조\\s?원" }
-    - { id: money_million, weight: 0.2, pattern: "(?:\\$|€|£|usd\\s?)\\s?\\d+(?:[.,]\\d+)?\\s?(?:million|mn|m)\\b|\\b\\d+(?:[.,]\\d+)?\\s?million\\b|\\d+(?:[.,]\\d+)?\\s?억\\s?원" }
+    # Money needs a currency marker: a bare "1 million" is as often "1 million GPUs" (live run 39400530432) as a sum.
+    - { id: money_billion, weight: 0.35, pattern: "(?:\\$|€|£|₩|usd\\s?|krw\\s?)\\s?\\d+(?:[.,]\\d+)?\\s?(?:billion|bn|b)\\b|\\b\\d+(?:[.,]\\d+)?\\s?(?:billion|bn)\\s?(?:dollars|euros|pounds|won|usd|eur|krw)\\b|\\d+(?:[.,]\\d+)?\\s?조\\s?원" }
+    - { id: money_million, weight: 0.2, pattern: "(?:\\$|€|£|₩|usd\\s?|krw\\s?)\\s?\\d+(?:[.,]\\d+)?\\s?(?:million|mn|m)\\b|\\b\\d+(?:[.,]\\d+)?\\s?(?:million|mn)\\s?(?:dollars|euros|pounds|won|usd|eur|krw)\\b|\\d+(?:[.,]\\d+)?\\s?억\\s?원" }
     - { id: hyperscaler, weight: 0.25, terms: [microsoft, azure, google, alphabet, amazon, aws, meta, oracle, openai, anthropic, xai, alibaba, tencent, bytedance, coreweave, equinix, digital realty] }
     - { id: chip_major, weight: 0.2, terms: [nvidia, tsmc, sk hynix, samsung electronics, samsung, micron, amd, intel, broadcom, arm] }
     - { id: korea_major, weight: 0.2, terms: [kepco, 한전, korea electric power, naver, kakao, sk telecom, skt, kt, lg cns, lg uplus, samsung sds, sk broadband, 산업통상자원부, motie, 한국수력원자력, khnp] }
