@@ -66,6 +66,14 @@ function parseHealth(value: unknown): SourceHealthType {
   return parsed.success ? parsed.data : { ...EMPTY_SOURCE_HEALTH, recent: [] };
 }
 
+/** The stored health of a source that did not run: the window is aged and the rate recomputed over what is left. */
+export function healthAtRest(health: SourceHealthType, now: Date): SourceHealthType {
+  const since = now.getTime() - SEVEN_DAYS_MS;
+  const inWindow = health.recent.filter((outcome) => Date.parse(outcome.at) >= since);
+  if (inWindow.length === health.recent.length) return health;
+  return { ...health, recent: inWindow, success_rate_7d: inWindow.length > 0 ? inWindow.filter((outcome) => outcome.ok).length / inWindow.length : null };
+}
+
 /** A YAML `reviewed_at` strictly after the calendar day of the auto-disable re-enables the source. */
 export function reviewClearsAutoDisable(reviewedAt: string | undefined, autoDisabledAt: string): boolean {
   return typeof reviewedAt === "string" && reviewedAt > autoDisabledAt.slice(0, 10);
@@ -123,6 +131,10 @@ async function syncSources(db: DbPort, sources: SourceConfig[], ctx: StageContex
         enabled = false;
       }
     }
+    // A source that does not run this cycle (disabled in YAML or auto-disabled) still has its stored health aged:
+    // outcomes that left the seven-day window are dropped and the rate recomputed (null once nothing is left), so
+    // the table never reports a "seven-day" rate made of runs older than seven days.
+    if (!enabled) health = healthAtRest(health, ctx.now);
     const mirrorRow: Row = {
       id: source.id,
       name: source.name,
