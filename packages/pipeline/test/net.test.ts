@@ -73,9 +73,8 @@ test("maps status codes, content types and body size to error codes", async () =
   await assert.rejects(safeFetchText("https://feeds.test/x", options(() => ok("", {}, 429))), /SOURCE_UNREACHABLE/);
   await assert.rejects(safeFetchText("https://feeds.test/x", options(() => ok("", {}, 404))), (e: unknown) => e instanceof SourceFetchError && e.code === "HTTP_404");
   await assert.rejects(safeFetchText("https://feeds.test/x", options(() => ok("x", { "content-type": "image/png" }))), /BAD_CONTENT_TYPE/);
-  // A string body makes Response add text/plain; a byte body carries no Content-Type at all.
+  // A string body makes Response add text/plain (which feeds may legitimately use); a byte body carries no Content-Type at all.
   await assert.rejects(safeFetchText("https://feeds.test/x", options(() => new Response(new TextEncoder().encode("<rss/>"), { status: 200 }))), (e: unknown) => e instanceof SourceFetchError && e.code === "BAD_CONTENT_TYPE" && /missing content-type/.test(e.message), "a response without Content-Type is outside the allowlist too");
-  await assert.rejects(safeFetchText("https://feeds.test/x", options(() => ok("<rss/>", {}))), /BAD_CONTENT_TYPE: text\/plain/);
   await assert.rejects(safeFetchText("https://feeds.test/x", options(() => ok("x".repeat(2000)))), /BODY_TOO_LARGE/);
   await assert.rejects(safeFetchText("https://feeds.test/x", options(() => ok("x", { "content-type": "text/xml", "content-length": "99999" }))), /content-length/);
   const timeout = new Error("The operation was aborted due to timeout");
