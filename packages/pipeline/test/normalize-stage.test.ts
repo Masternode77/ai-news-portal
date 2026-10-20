@@ -111,6 +111,32 @@ test("already published stories are rejected by url identity at any age and by t
   assert.ok((decision?.score ?? 0) >= 0.85);
 });
 
+test("the published url index covers the whole archive by paging, not only the newest page", async () => {
+  const db = new MemoryDb();
+  const rows = Array.from({ length: 7 }, (_, i) => {
+    const publishedAt = new Date(Date.UTC(2025, 0, 1 + i)).toISOString();
+    return {
+      id: rawItemId(`news/old-${i}`), draft_id: null, slug: `news/old-${i}`, content_type: "news_brief", title: `Old story number ${i} about a substation`, body: {}, image: null,
+      sources: [{ url: `https://archive.example.com/story-${i}`, name: "src", published_at: publishedAt }],
+      published_at: publishedAt, updated_at: publishedAt, publisher: "legacy", status: "published", legacy_id: null, noindex: false, tags: [], category: null, region: null,
+    };
+  });
+  await db.insert("publications", rows);
+  const items = [
+    raw("a", "https://archive.example.com/story-0?utm_source=rss", "Old story number 0 about a substation, revisited"),
+    raw("a", "https://archive.example.com/story-6/", "Old story number 6 about a substation, revisited"),
+    raw("a", "https://archive.example.com/story-new", "A new story about a different substation in Daegu"),
+  ];
+  const out = await run(db, items, [src("a")], config(", published_page_size: 3"));
+  assert.equal(out.stats.published_compared, 7, "three pages of 3, 3 and 1 rows");
+  assert.equal(out.stats.published_in_window, 0, "all seven are outside the 7-day title window");
+  assert.deepEqual(out.stats.by_method, { url: 2 });
+  assert.equal(out.stats.candidates, 1);
+  const reasons = db.rows<{ raw_item_id: string; reject_reason: string }>("candidates");
+  assert.equal(reasons.find((r) => r.raw_item_id === rawItemId("https://archive.example.com/story-0?utm_source=rss"))?.reject_reason, rejectReason(DUPLICATE_OF_PUBLISHED, "url", "news/old-0"), "the oldest publication, on the last page, is still matched");
+  assert.equal(reasons.find((r) => r.raw_item_id === rawItemId("https://archive.example.com/story-6/"))?.reject_reason, rejectReason(DUPLICATE_OF_PUBLISHED, "url", "news/old-6"));
+});
+
 test("pool methods: content hash, title key, body shingles; short bodies and different stories pass", async () => {
   const db = new MemoryDb();
   const sources = [src("a", { tier: 1 }), src("b", { tier: 2 })];

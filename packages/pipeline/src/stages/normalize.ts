@@ -105,12 +105,28 @@ export interface PublishedIndex {
   compared: number;
 }
 
-export async function loadPublishedIndex(db: DbPort, now: Date, windowDays: number, limit: number): Promise<PublishedIndex> {
-  const rows = await db.select<Row>("publications", { status: "published" }, { columns: ["slug", "title", "sources", "published_at"], limit, orderBy: { column: "published_at", ascending: false } });
+/** Every `status = published` row, newest first, read in pages of `pageSize` so the archive is never truncated to one select. */
+export async function* publishedRows(db: DbPort, pageSize: number): AsyncGenerator<Row> {
+  const columns = ["slug", "title", "sources", "published_at"];
+  for (let offset = 0; ; offset += pageSize) {
+    const page = await db.select<Row>("publications", { status: "published" }, { columns, limit: pageSize, offset, orderBy: { column: "published_at", ascending: false } });
+    for (const row of page) yield row;
+    if (page.length < pageSize) return;
+  }
+}
+
+/**
+ * The URL index covers the whole archive (the identity rule has no window, so a
+ * story published years ago must still be caught); the title sets only cover
+ * publications inside the window.
+ */
+export async function loadPublishedIndex(db: DbPort, now: Date, windowDays: number, pageSize: number): Promise<PublishedIndex> {
   const since = now.getTime() - windowDays * 24 * 60 * 60 * 1000;
   const urlKeys = new Map<string, string>();
   const recent: PublishedIndex["recent"] = [];
-  for (const row of rows) {
+  let compared = 0;
+  for await (const row of publishedRows(db, pageSize)) {
+    compared += 1;
     const slug = typeof row["slug"] === "string" ? row["slug"] : "";
     if (!slug) continue;
     const titles: string[] = typeof row["title"] === "string" ? [row["title"]] : [];
@@ -130,7 +146,7 @@ export async function loadPublishedIndex(db: DbPort, now: Date, windowDays: numb
       if (sets.length > 0) recent.push({ slug, titles: sets });
     }
   }
-  return { urlKeys, recent, compared: rows.length };
+  return { urlKeys, recent, compared };
 }
 
 export const normalizeStage: Stage<NormalizeInput, NormalizeOutput> = {
@@ -145,7 +161,7 @@ export const normalizeStage: Stage<NormalizeInput, NormalizeOutput> = {
     const version = rubricVersion(cfg.version);
     const sources = new Map(input.sources.map((source) => [source.id, source]));
     const pool = input.rawItems.map((item) => poolItem(item, sources));
-    const published = await loadPublishedIndex(db, ctx.now, cfg.published_window_days, cfg.published_limit);
+    const published = await loadPublishedIndex(db, ctx.now, cfg.published_window_days, cfg.published_page_size);
 
     const decisions: NormalizeDecision[] = [];
     const byMethod: Record<string, number> = {};

@@ -17,10 +17,20 @@ export interface SupabaseResult {
   error: { message: string } | null;
 }
 
-export interface SupabaseQuery {
-  limit(count: number): PromiseLike<SupabaseResult & { data: unknown[] | null }>;
+export interface SupabaseSelectResult extends SupabaseResult {
+  data: unknown[] | null;
+}
+
+/** The tail of a filtered select: `limit` or, when a select asks for `offset`, PostgREST's inclusive `range`. */
+export interface SupabaseWindow {
+  limit(count: number): PromiseLike<SupabaseSelectResult>;
+  /** Optional on fakes; SupabaseDb only calls it when a select asks for `offset`. */
+  range?(from: number, to: number): PromiseLike<SupabaseSelectResult>;
+}
+
+export interface SupabaseQuery extends SupabaseWindow {
   /** Optional on fakes; SupabaseDb only calls it when a select asks for `orderBy`. */
-  order?(column: string, options: { ascending: boolean }): { limit(count: number): PromiseLike<SupabaseResult & { data: unknown[] | null }> };
+  order?(column: string, options: { ascending: boolean }): SupabaseWindow;
 }
 
 export interface SupabaseTable {

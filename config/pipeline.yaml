@@ -48,7 +48,7 @@ normalize:                     # Phase 3b dedupe; every key is optional (default
   body_similarity: 0.6         # word 5-gram shingle Jaccard over the feed body/preview
   body_min_tokens: 40
   published_window_days: 7     # title comparison window against publications (URL identity match is unbounded)
-  published_limit: 2000
+  published_page_size: 1000    # every published row is read for the URL index, in pages of this size (PostgREST max-rows is 1000)
 
 budget:
   run_usd: 2.0                 # STOP-THE-LINE threshold (brief §5.4)

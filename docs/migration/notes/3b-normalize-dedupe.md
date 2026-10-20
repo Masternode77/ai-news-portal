@@ -48,10 +48,10 @@
 | 입력·출력 | `NormalizeInput { rawItems, sources }` → `NormalizeOutput { candidates: CandidateInsert[](미채점), stats }`. `candidates.raw_item_id`는 3a가 찍는 결정적 `raw_items.id = uuid5(canonical_url)` | contracts §1·§5 개정 |
 | 판정 순서 | ① 발행본 URL 정체성 일치 → `DUPLICATE_OF_PUBLISHED` ② 7일 내 발행본 제목(`title`, `sources[].title`) 유사도 ≥ 0.85 → `DUPLICATE_OF_PUBLISHED` ③ 풀 내: URL 정체성 → `content_hash` → 제목 키 → 제목 유사도 → 본문 shingle → `DUPLICATE_IN_POOL`(대표 사본을 `duplicate_of`로 기록) | 가장 싼 규칙부터 |
 | 탈락 기록 | 탈락 아이템은 `candidates` 행으로 **upsert**: `selected=false`, `reject_reason = "<CODE>: <method>=<duplicate_of>"`, 점수 0, `rubric_version = normalize/<version>`. 살아남은 후보는 메모리로 3c에 넘기고 3c가 채점 행을 쓴다(미채점 행을 남기지 않음) | ADR-003 `candidates.reject_reason`, R6 |
-| 설정 | `config/pipeline.yaml` `normalize: { version, title_similarity 0.85, body_similarity 0.6, body_min_tokens 40, published_window_days 7, published_limit 2000 }` — 전부 선택, 기본값은 스키마 | contracts §4 개정 |
+| 설정 | `config/pipeline.yaml` `normalize: { version, title_similarity 0.85, body_similarity 0.6, body_min_tokens 40, published_window_days 7, published_page_size 1000 }` — 전부 선택, 기본값은 스키마 | contracts §4 개정 |
 | 플래그 | `flags.stages.normalize: false`(기본 OFF, contracts §7). 테스트·CI smoke·dry-run 샘플은 `CC_FLAG_STAGES_NORMALIZE=true`로 켠다 | 브리프 공통 절차 5 |
 | 관측 | `stage_events.counts { pool, candidates, rejected, duplicate_of_published, duplicate_in_pool, method_* , published_compared }` + `--json`의 `normalizeStats.decisions`(≤100건: url, source, reason, method, duplicate_of, score) + step summary 절 | ADR-007 |
-| 발행본 비교 입력 | `publications`에서 `status=published` 행을 `published_at` 내림차순 ≤ `published_limit`건 읽어 `sources[].url` 정체성 키(무기한)와 7일 내 제목 토큰을 준비. 새 파이프라인의 `title`은 한국어라 영문 원제와 비교가 안 되므로 `PublicationSource.title`(선택)을 추가해 3h가 원제를 남기게 한다 | 레거시 이관 행은 영문 `title`로 비교됨 |
+| 발행본 비교 입력 | `publications`에서 `status=published` 행 **전부**를 `published_at` 내림차순으로 `published_page_size`(1000)씩 페이지 순회(`DbPort.offset`, PostgREST `range`)해 `sources[].url` 정체성 키(무기한)를 만들고, 7일 창 안의 행에서만 제목 토큰을 준비. 한 번의 select로 잘라 읽으면 창 밖의 오래된 발행본 URL이 색인에서 빠진다(Codex PR #60 P2). 새 파이프라인의 `title`은 한국어라 영문 원제와 비교가 안 되므로 `PublicationSource.title`(선택)을 추가해 3h가 원제를 남기게 한다 | 레거시 이관 행은 영문 `title`로 비교됨 |
 | `--stage` | 콤마 목록 허용(`--stage ingest,normalize`) → 라이브 dry-run 잡이 두 단계를 돌린다 | CLI 개정 |
 | fixture DB 시드 | `fixtures/db/<fixture>.json`이 있으면 메모리 DbPort에 미리 넣는다(현재 `publications`만). 발행본 중복을 replay에서 재현하기 위함 | fixtures/README 갱신 |
 

@@ -101,8 +101,8 @@ export const NormalizeConfig = z.strictObject({
   body_min_tokens: z.number().int().min(5).default(40),
   /** Days back a publication's titles are compared for near-duplicates (a URL identity match is unbounded). */
   published_window_days: z.number().int().positive().default(7),
-  /** Publications (newest first) loaded per run for the comparison. */
-  published_limit: z.number().int().positive().max(5000).default(2000),
+  /** Rows per page while every published row is read (newest first) for the URL index; PostgREST caps one response at max-rows (1000). */
+  published_page_size: z.number().int().positive().max(1000).default(1000),
 });
 export type NormalizeConfig = z.infer<typeof NormalizeConfig>;
 

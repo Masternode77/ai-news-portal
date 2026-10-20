@@ -5,7 +5,7 @@
  * DbPort contract) and callers that need them select first.
  */
 import type { DbPort, Row, SelectOptions, TableName, UpsertResult } from "@cc/shared";
-import type { SupabaseLike, SupabaseQuery, SupabaseResult } from "../ledger/supabase.ts";
+import type { SupabaseLike, SupabaseQuery, SupabaseResult, SupabaseSelectResult, SupabaseWindow } from "../ledger/supabase.ts";
 
 export const DEFAULT_SELECT_LIMIT = 1000;
 
@@ -28,12 +28,22 @@ export function assertUniformColumns(rows: readonly Row[], operation: string): v
   }
 }
 
-/** Applies `orderBy` (when the client supports `.order`) and the row limit to a filtered select. */
-function limited(query: SupabaseQuery, options: SelectOptions, operation: string): PromiseLike<SupabaseResult & { data: unknown[] | null }> {
+/**
+ * Applies `orderBy` (when the client supports `.order`) and the row window to a
+ * filtered select: `limit` alone, or PostgREST's inclusive `range(offset, offset + limit - 1)`
+ * when the caller pages with `offset`. PostgREST also caps one response at the
+ * project's `max-rows` (1000 by default), so a caller that needs more rows pages.
+ */
+function limited(query: SupabaseQuery, options: SelectOptions, operation: string): PromiseLike<SupabaseSelectResult> {
   const limit = options.limit ?? DEFAULT_SELECT_LIMIT;
-  if (!options.orderBy) return query.limit(limit);
-  if (typeof query.order !== "function") throw new Error(`SupabaseDb.${operation}: the client does not support order()`);
-  return query.order(options.orderBy.column, { ascending: options.orderBy.ascending !== false }).limit(limit);
+  let tail: SupabaseWindow = query;
+  if (options.orderBy) {
+    if (typeof query.order !== "function") throw new Error(`SupabaseDb.${operation}: the client does not support order()`);
+    tail = query.order(options.orderBy.column, { ascending: options.orderBy.ascending !== false });
+  }
+  if (options.offset === undefined) return tail.limit(limit);
+  if (typeof tail.range !== "function") throw new Error(`SupabaseDb.${operation}: the client does not support range()`);
+  return tail.range(options.offset, options.offset + limit - 1);
 }
 
 export class SupabaseDb implements DbPort {

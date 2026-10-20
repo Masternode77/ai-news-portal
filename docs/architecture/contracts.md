@@ -185,7 +185,7 @@ normalize:                     # Phase 3b, 전부 선택(기본값은 packages/s
   body_similarity: 0.6         # 본문 5-gram shingle Jaccard
   body_min_tokens: 40
   published_window_days: 7     # 발행본 제목 비교 창(URL 정체성 일치는 무기한)
-  published_limit: 2000
+  published_page_size: 1000    # 발행본 전체를 이 크기로 페이지 순회해 URL 색인을 만든다(PostgREST max-rows 1000)
 budget: { run_usd: 2.0, soft_warn_usd: 1.5, max_calls: 60 }
 llm:
   provider: anthropic
