@@ -1,6 +1,7 @@
+import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
-import { parsePipelineConfig, parseSourcesConfig, silentLogger } from "@cc/shared";
-import type { PipelineConfig, SourceConfig, StageAdapters } from "@cc/shared";
+import { parsePipelineConfig, parseScoringConfig, parseSourcesConfig, silentLogger } from "@cc/shared";
+import type { PipelineConfig, ScoringConfig, SourceConfig, StageAdapters } from "@cc/shared";
 import {
   createFixtureLlmAdapter,
   createFixtureRssAdapter,
@@ -58,6 +59,13 @@ export function testSources(): SourceConfig[] {
   return parseSourcesConfig(TEST_SOURCES_YAML);
 }
 
+let scoringCache: ScoringConfig | undefined;
+/** The repo's `config/scoring.yaml` (deterministic, no network); tests override fields on a copy. */
+export function testScoring(overrides: Partial<ScoringConfig> = {}): ScoringConfig {
+  scoringCache ??= parseScoringConfig(readFileSync(resolve(REPO_ROOT, "config/scoring.yaml"), "utf8"), "config/scoring.yaml");
+  return { ...scoringCache, ...overrides };
+}
+
 export function fixtureAdapters(db = new MemoryDb(), fixtureName = "sample"): StageAdapters {
   const fixture = createFixtureRssAdapter({ fixturesDir: FIXTURES_DIR, fixtureName });
   return {
@@ -83,6 +91,7 @@ export function baseRunOptions(overrides: Partial<RunOptions> = {}): RunOptions 
   const db = new MemoryDb();
   return {
     config,
+    scoring: testScoring(),
     overrides: flagOverrides,
     sources: testSources(),
     ledger: new MemoryLedger(),

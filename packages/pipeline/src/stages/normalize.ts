@@ -181,6 +181,7 @@ export const normalizeStage: Stage<NormalizeInput, NormalizeOutput> = {
         total: 0,
         selected: false,
         reject_reason: rejectReason(code, method, duplicateOf),
+        rubric: null,
       });
       ctx.logger.info("normalize: item rejected", { source_id: entry.item.source_id, url: entry.item.canonical_url, reason: code, method, duplicate_of: duplicateOf, score });
     };
@@ -265,6 +266,7 @@ export const normalizeStage: Stage<NormalizeInput, NormalizeOutput> = {
       total: 0,
       selected: false,
       reject_reason: null,
+      rubric: null,
     }));
     const stats: NormalizeStats = {
       pool: pool.length,

@@ -4,9 +4,11 @@ export type { FlagOverride, FlagSnapshot } from "./flags.ts";
 export {
   loadPipelineConfig,
   loadRedirectsConfig,
+  loadScoringConfig,
   loadSourcesConfig,
   parsePipelineConfig,
   parseRedirectsConfig,
+  parseScoringConfig,
   parseSourcesConfig,
 } from "./load.ts";
 export type { LoadedPipelineConfig } from "./load.ts";

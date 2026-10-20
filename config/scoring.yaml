@@ -1,0 +1,334 @@
+# Compute Current rebuild — scoring & selection rubric (Phase 3c, contracts.md §4, ADR-004).
+# Validated strictly by packages/shared/src/schema/scoring.ts (ScoringConfig); unknown keys fail the run.
+# The engine (packages/pipeline/src/stages/score.ts) has a fixed shape: five axes, a weighted
+# total, two thresholds, named relevance lifts and caps. Every number, term list and pattern it
+# uses is here, so tuning in Phase 4 is a config change. Term lists match whole words,
+# case-insensitively, after Korean aliases are rewritten to the English vocabulary.
+# Patterns are regular-expression sources compiled with the `iu` flags.
+#
+# Provenance: the relevance vocabulary, lifts and caps are the legacy
+# scripts/lib/relevance-classifier.mjs rules re-expressed as data
+# (docs/migration/notes/3c-scoring-selection.md §1); the other axes are new.
+
+version: "2026-10-20.1"        # candidates.rubric_version = score/<version>; bump when a rule, weight or term changes
+
+weights:                       # total = Σ weight × axis score (must sum to 1)
+  relevance: 0.35
+  timeliness: 0.2
+  impact: 0.2
+  reader_value: 0.15
+  insight_potential: 0.1
+
+thresholds:                    # total ≥ full → tier full; ≥ brief → tier brief; below → BELOW_THRESHOLD (ADR-004; 0.65/0.45 A/B in Phase 4)
+  full: 0.75
+  brief: 0.55
+
+insight_trigger: 0.7           # insight_potential ≥ this marks the candidate eligible for an insight essay (3e)
+
+selection:                     # the per-cycle count comes from config/pipeline.yaml caps.briefs_per_cycle
+  per_source_max: 1            # at most one selected candidate per source and run (legacy source-repeat penalty)
+  abstract_max_tier: brief     # text_scope: abstract sources (arXiv) never reach tier full (legacy signal_card cap)
+
+# ---------------------------------------------------------------------------
+# relevance — is this a Compute Current story? (legacy 8-dimension classifier as data)
+# ---------------------------------------------------------------------------
+relevance:
+  title_boost: 0.35            # a term also in the title counts 1.35× its weight
+  term_cap: 0.55               # ceiling on one term's contribution
+  dimensions:
+    direct_ai_infrastructure:
+      - [ai infrastructure, 0.48]
+      - [ai data center, 0.45]
+      - [ai datacenter, 0.45]
+      - [gpu cluster, 0.42]
+      - [gpu clusters, 0.42]
+      - [accelerator cluster, 0.4]
+      - [accelerator capacity, 0.4]
+      - [inference capacity, 0.36]
+      - [training capacity, 0.36]
+      - [compute capacity, 0.32]
+      - [neocloud, 0.34]
+      - [high-performance computing, 0.24]
+      - [hpc, 0.2]
+      - [rack density, 0.22]
+      - [deployment readiness, 0.2]
+      - [usable capacity, 0.2]
+    data_center:
+      - [data center, 0.42]
+      - [data centers, 0.42]
+      - [datacenter, 0.42]
+      - [colocation, 0.34]
+      - [colo, 0.26]
+      - [wholesale lease, 0.28]
+      - [hyperscale campus, 0.34]
+      - [campus, 0.16]
+      - [critical facilities, 0.3]
+      - [rack density, 0.28]
+      - [mep, 0.2]
+      - [server farm, 0.22]
+      - [facility operator, 0.18]
+    cloud_capacity:
+      - [cloud capacity, 0.44]
+      - [capacity expansion, 0.28]
+      - [availability zone, 0.32]
+      - [cloud region, 0.32]
+      - [hyperscaler, 0.32]
+      - [hyperscalers, 0.32]
+      - [aws, 0.22]
+      - [azure, 0.22]
+      - [google cloud, 0.24]
+      - [oracle cloud, 0.24]
+      - [gpu instance, 0.3]
+      - [gpu instances, 0.3]
+      - [provisioning, 0.2]
+      - [reserved capacity, 0.24]
+      - [sovereign cloud, 0.24]
+    semiconductor:
+      - [semiconductor, 0.36]
+      - [semiconductors, 0.36]
+      - [nvidia, 0.28]
+      - [amd, 0.22]
+      - [intel, 0.2]
+      - [arm holdings, 0.24]
+      - [tsmc, 0.28]
+      - [hbm, 0.36]
+      - [hbm4, 0.36]
+      - [high-bandwidth memory, 0.36]
+      - [advanced packaging, 0.32]
+      - [wafer, 0.24]
+      - [fab, 0.22]
+      - [accelerator, 0.22]
+      - [gpu, 0.22]
+      - [asic, 0.2]
+      - [chip supply, 0.26]
+    power_grid:
+      - [power, 0.22]
+      - [grid, 0.28]
+      - [interconnection, 0.36]
+      - [substation, 0.34]
+      - [utility, 0.26]
+      - [utilities, 0.26]
+      - [megawatt, 0.3]
+      - [megawatts, 0.3]
+      - [mw, 0.2]
+      - [gigawatt, 0.34]
+      - [gigawatts, 0.34]
+      - [gw, 0.22]
+      - [ppa, 0.28]
+      - [load growth, 0.24]
+      - [electricity, 0.24]
+      - [transmission, 0.28]
+      - [transformer, 0.26]
+      - [nuclear, 0.26]
+      - [renewable, 0.18]
+      - [energy procurement, 0.3]
+    cooling:
+      - [cooling, 0.34]
+      - [liquid cooling, 0.48]
+      - [direct-to-chip, 0.4]
+      - [direct to chip, 0.4]
+      - [immersion, 0.32]
+      - [cdu, 0.3]
+      - [cdus, 0.3]
+      - [thermal, 0.3]
+      - [heat rejection, 0.34]
+      - [chiller, 0.24]
+      - [water usage, 0.24]
+      - [rear-door, 0.28]
+      - [rear door, 0.28]
+      - [rack density, 0.24]
+    capital_markets:
+      - [funding, 0.28]
+      - [financing, 0.32]
+      - [debt, 0.28]
+      - [equity, 0.26]
+      - [bond, 0.24]
+      - [bonds, 0.24]
+      - [capex, 0.28]
+      - [capital expenditure, 0.28]
+      - [acquisition, 0.3]
+      - [merger, 0.28]
+      - [m&a, 0.28]
+      - [joint venture, 0.3]
+      - [valuation, 0.26]
+      - [ipo, 0.24]
+      - [lease, 0.18]
+      - [project finance, 0.34]
+      - [project financing, 0.34]
+    enterprise_ai:
+      - [enterprise ai, 0.32]
+      - [private ai, 0.28]
+      - [on-prem, 0.26]
+      - [on premises, 0.26]
+      - [hybrid cloud, 0.28]
+      - [openshift, 0.22]
+      - [kubernetes, 0.22]
+      - [virtualization, 0.2]
+      - [data management, 0.18]
+      - [backup, 0.16]
+      - [disaster recovery, 0.2]
+      - [storage, 0.18]
+      - [networking, 0.18]
+      - [inference workload, 0.3]
+      - [inference workloads, 0.3]
+      - [ai workload, 0.24]
+      - [ai workloads, 0.24]
+  ai_terms: [ai, artificial intelligence, accelerator, accelerators, gpu, gpus, inference, training, llm, llms, machine learning, foundation model]
+  infra_terms: [infrastructure, capacity, cluster, clusters, data center, datacenter, cloud, rack, networking, power, grid, cooling, facility, facilities, deployment, provisioning, procurement, supply chain, workload, workloads, kubernetes, storage, backup, disaster recovery, hybrid cloud, on-prem, semiconductor, hbm, chip, chips]
+  consumer_ai_terms: [chatbot, consumer app, social app, photo app, video app, agent for wordpress, writing assistant, search feature, image generator, robot dog, table tennis robot]
+  weak_ai_adjacent_terms: [ai app, agentic ai, ai agent, coding assistant, vibe coding, software engineer, chatbot, content generation, image generator, video generator, productivity software, browser assistant, search feature, consumer ai]
+  hard_archive_terms: [dinosaur, fossil, stegosaurus, skeleton]
+  hard_archive_exception_pattern: "\\bfossils?\\s+(?:fuel|fuels|generation|power|energy)\\b"
+  adjacent_only_terms: [sports ai, football, sumersports, sūmersports, paul tudor jones, legal industry, legal professionals, law firm, law firms, labor market, consumer hardware]
+  formula:                     # overall = top×0.58 + second×0.22 + breadth + direct bonus, capped at 1
+    top: 0.58
+    second: 0.22
+    breadth_min: 0.22          # dimensions at or above this count toward the breadth bonus
+    breadth_step: 0.035
+    breadth_max: 0.14
+    direct_bonus_min: 0.75     # direct_ai_infrastructure ≥ this adds direct_bonus
+    direct_bonus: 0.08
+  lifts:                       # applied to the direct_ai_infrastructure dimension before the formula
+    ai_and_infra_add: 0.22     # an AI term and an infra term both present
+    ai_and_data_center: { min: 0.35, floor: 0.78 }
+    ai_and_grid_and_data_center: { grid_min: 0.35, data_center_min: 0.2, floor: 0.82 }
+    data_center_and_grid: { min: 0.35, floor: 0.7 }
+    ai_and_cloud: { min: 0.4, floor: 0.64 }
+    consumer_ai_only_cap: 0.28 # AI + consumer terms with no infra term
+  caps:                        # ceilings on the overall score
+    enterprise_only: { enterprise_min: 0.75, direct_max: 0.65, physical_max: 0.22, cap: 0.72 }
+    weak_ai_adjacent: { direct_max: 0.65, physical_max: 0.24, cap: 0.44 }
+    no_infra: { with_ai: 0.38, without_ai: 0.28 }
+    korean_market_chatter: 0.38
+    hard_archive: 0.2
+    adjacent_only: 0.62
+    procedural_notice: 0.44
+  procedural_notice:           # docket sources + a formulaic notice title/body, unless a compute hook is present
+    source_id_prefixes: [federal-register-, ferc-]
+    hosts: [federalregister.gov, ferc.gov, regulations.gov, govinfo.gov]
+    title_patterns:
+      - "\\bnotice of (?:availability|intent|application|request|effectiveness|petition|filing|proposed)\\b"
+      - "\\bnotices? of (?:institution|termination|cancellation|amendment)\\b"
+      - "\\bcombined notice of filings\\b"
+      - "\\bsunshine act\\b"
+      - "\\binformation collection\\b"
+      - "\\bblanket (?:authorization|certificate)\\b"
+      - "\\bexempt wholesale generator\\b"
+      - "\\bforeign utility compan(?:y|ies)\\b"
+      - "\\benvironmental (?:impact statement|assessment)\\b"
+      - "\\bhydroelectric\\b"
+      - "\\bhydropower\\b"
+      - "\\brelicens(?:e|es|ed|ing)\\b"
+      - "\\bpreliminary permit\\b"
+      - "\\bsurrender of (?:license|exemption)\\b"
+      - "\\bmarket-based rate\\b"
+      - "\\bgas transmission\\b"
+      - "\\bnatural gas pipeline\\b"
+    body_patterns:
+      - "\\btake notice that\\b"
+      - "\\bany person desiring to intervene\\b"
+    compute_context_terms: [ai, artificial intelligence, machine learning, llm, llms, foundation model, foundation models, generative ai, model training, training run, training runs, training cluster, training clusters, inference workload, inference workloads, inference capacity, ai workload, ai workloads, gpu, gpus, accelerator cluster, accelerator capacity, compute capacity, compute load, compute demand, computing load, computing facility, computing facilities, computing hub, computing campus, high-performance computing, hpc, supercomputer, supercomputing, semiconductor, semiconductors, wafer, nvidia, hbm, data center, data centers, datacenter, datacenters, colocation, hyperscale, hyperscaler, hyperscalers, cloud computing, cloud region, cloud capacity, availability zone, server farm, server farms, server load, server loads, server rack, server racks, server capacity, server capacities, server fleet, server fleets, server hall, server halls, server cluster, server clusters, gpu server, gpu servers, ai server, ai servers, digital infrastructure, bitcoin]
+    compute_context_patterns:
+      - "\\blarge loads?\\b"
+      - "\\bco-?locat(?:e|ed|es|ion|ing)\\b"
+      - "\\bcrypto(?:currency)? min(?:e|es|ing|ers)\\b"
+  korean:                      # rewritten before scoring (whitespace inside a phrase is optional); longer phrases first
+    aliases:
+      - { from: data centres, to: data centers }
+      - { from: data centre, to: data center }
+      - { from: datacentres, to: datacenters }
+      - { from: datacentre, to: datacenter }
+      - { from: 인공지능 데이터 센터, to: ai data center }
+      - { from: 인공지능 데이터센터, to: ai data center }
+      - { from: 데이터 센터, to: data center }
+      - { from: 데이터센터, to: data center }
+      - { from: 전력 계통, to: power grid }
+      - { from: 계통 연계, to: grid interconnection }
+      - { from: 계통 접속, to: grid interconnection }
+      - { from: 전력망, to: grid }
+      - { from: 변전소, to: substation }
+      - { from: 송전선로, to: transmission }
+      - { from: 송전망, to: transmission }
+      - { from: 송전, to: transmission }
+      - { from: 전력 공급, to: power capacity }
+      - { from: 전력 수요, to: power load growth }
+      - { from: 액침 냉각, to: immersion cooling }
+      - { from: 수랭식 냉각, to: liquid cooling }
+      - { from: 수랭 냉각, to: liquid cooling }
+      - { from: 냉각 시스템, to: cooling system }
+      - { from: 칠러, to: chiller }
+      - { from: 고대역폭 메모리, to: high-bandwidth memory }
+      - { from: 그래픽 처리 장치, to: gpu }
+      - { from: 반도체, to: semiconductor }
+      - { from: 클라우드, to: cloud }
+      - { from: 서버 랙, to: rack }
+      - { from: 인허가, to: permitting }
+      - { from: 부지, to: siting }
+      - { from: 용량, to: capacity }
+      - { from: 인공지능, to: artificial intelligence }
+      - { from: 챗봇, to: chatbot }
+      - { from: 소비자 앱, to: consumer app }
+      - { from: 사진 앱, to: photo app }
+      - { from: 영상 생성기, to: video generator }
+      - { from: 영상 생성 도구, to: video generator }
+      - { from: 영상 생성, to: video generator }
+      - { from: 글쓰기 도우미, to: writing assistant }
+      - { from: 한국전력, to: kepco }
+      - { from: 준공, to: energized }
+      - { from: 착공, to: breaks ground }
+    speculative_market_pattern: "(?<![가-힣])(?:관련주|수혜주|주가|증시)(?![가-힣])|(?<![가-힣])(?:급등|급락)(?:세|했|한|하|$|\\s)"
+    physical_infra_pattern: "전력망|전력\\s*계통|계통\\s*(?:연계|접속)|변전소|송전(?:선로|망)?|전력\\s*(?:공급|수요)|냉각|칠러|액침|수랭|데이터\\s*센터\\s*(?:건설|구축|부지|착공|준공)|서버\\s*랙|\\b(?:mw|gw)\\b"
+
+# ---------------------------------------------------------------------------
+# timeliness — age of the source item at the scheduled slot (ctx.now, ADR-002)
+# ---------------------------------------------------------------------------
+timeliness:                    # legacy rank.mjs buckets (32/24/18/12/8/2 of 32) normalised to 1
+  buckets:
+    - { max_hours: 3, score: 1.0 }
+    - { max_hours: 8, score: 0.75 }
+    - { max_hours: 18, score: 0.56 }
+    - { max_hours: 30, score: 0.38 }
+    - { max_hours: 48, score: 0.25 }
+  beyond: 0.06                 # older than 48 h
+  unknown_date: 0.25           # no source publication date
+
+# ---------------------------------------------------------------------------
+# impact — scale, actors and deal signals (each signal counts once; the first match is kept as the reason)
+# ---------------------------------------------------------------------------
+impact:
+  title_boost: 0.25            # a signal matched in the title counts 1.25× its weight
+  signals:
+    - { id: capacity_gw, weight: 0.45, pattern: "\\b\\d+(?:[.,]\\d+)?\\s?gw\\b|\\b\\d+(?:[.,]\\d+)?\\s?gigawatts?\\b" }
+    - { id: capacity_mw, weight: 0.35, pattern: "\\b\\d{2,}(?:[.,]\\d+)?\\s?mw\\b|\\b\\d{2,}(?:[.,]\\d+)?\\s?megawatts?\\b" }
+    - { id: money_billion, weight: 0.35, pattern: "(?:\\$|€|£|usd\\s?)\\s?\\d+(?:[.,]\\d+)?\\s?(?:billion|bn|b)\\b|\\b\\d+(?:[.,]\\d+)?\\s?(?:billion|bn)\\b|\\d+(?:[.,]\\d+)?\\s?조\\s?원" }
+    - { id: money_million, weight: 0.2, pattern: "(?:\\$|€|£|usd\\s?)\\s?\\d+(?:[.,]\\d+)?\\s?(?:million|mn|m)\\b|\\b\\d+(?:[.,]\\d+)?\\s?million\\b|\\d+(?:[.,]\\d+)?\\s?억\\s?원" }
+    - { id: hyperscaler, weight: 0.25, terms: [microsoft, azure, google, alphabet, amazon, aws, meta, oracle, openai, anthropic, xai, alibaba, tencent, bytedance, coreweave, equinix, digital realty] }
+    - { id: chip_major, weight: 0.2, terms: [nvidia, tsmc, sk hynix, samsung electronics, samsung, micron, amd, intel, broadcom, arm] }
+    - { id: korea_major, weight: 0.2, terms: [kepco, 한전, korea electric power, naver, kakao, sk telecom, skt, kt, lg cns, lg uplus, samsung sds, sk broadband, 산업통상자원부, motie, 한국수력원자력, khnp] }
+    - { id: deal_action, weight: 0.2, terms: [signs, signed, agreement, acquires, acquired, acquisition, invests, investment, breaks ground, broke ground, energized, energised, commissioned, approved, approves, awarded, secures, secured, announces, launches, 계약, 투자, 착공, 준공, 승인] }
+    - { id: policy_grid, weight: 0.15, terms: [moratorium, tariff, tariffs, interconnection queue, large load, curtailment, regulator, ferc, kepco tariff, 요금제, 규제, 전력 수급] }
+
+# ---------------------------------------------------------------------------
+# reader_value — can the desk turn it into a brief a Korean infrastructure reader uses?
+# ---------------------------------------------------------------------------
+reader_value:
+  text_rights: { full: 0.3, rewrite_only: 0.2, link_only: 0.05 }   # source rights (config/sources.yaml)
+  body: { min_chars: 400, weight: 0.15 }                            # enough stored text to ground a brief
+  tier: { "1": 0.2, "2": 0.12, "3": 0.05 }                          # source tier
+  region: { weight: 0.2, terms: [korea, korean, south korea, 한국, 국내, seoul, 서울, busan, 부산, incheon, 인천, saemangeum, 새만금, gumi, 구미, pyeongtaek, 평택, yongin, 용인, kepco, apac, asia-pacific, asia pacific, japan, tokyo, osaka, singapore, malaysia, johor, taiwan, hong kong, australia, sydney, melbourne, india, mumbai, vietnam, indonesia, jakarta, thailand, philippines] }
+  figures: { weight: 0.15, pattern: "\\b\\d+(?:[.,]\\d+)?\\s?(?:mw|gw|kv|kw|mwh|gwh|%|billion|million|bn)\\b|(?:\\$|€|£)\\s?\\d|\\d+(?:[.,]\\d+)?\\s?(?:조|억)\\s?원" }
+  abstract_cap: 0.6            # text_scope: abstract sources
+
+# ---------------------------------------------------------------------------
+# insight_potential — does the story carry a thesis for a Josh-voice essay?
+# ---------------------------------------------------------------------------
+insight_potential:
+  title_boost: 0.25
+  themes:
+    - { id: power_strategy, weight: 0.3, terms: [interconnection, grid constraint, grid constraints, grid connection, load growth, transmission, substation, ppa, energy procurement, nuclear, smr, behind-the-meter, behind the meter, curtailment, tariff, tariffs, power supply, 전력망, 계통, 변전소, 전력 수급] }
+    - { id: capacity_planning, weight: 0.25, terms: [capacity, pipeline, pre-leased, preleased, absorption, vacancy, rack density, phase, ready-for-service, ready for service, rfs, expansion, 증설, 용량] }
+    - { id: site_selection, weight: 0.25, terms: [site selection, siting, permitting, zoning, moratorium, land, campus, 부지, 인허가, 입지] }
+    - { id: capital, weight: 0.25, terms: [financing, project finance, project financing, debt, equity, capex, joint venture, acquisition, valuation, bankability, lease, fund, 투자, 자금 조달] }
+    - { id: korea_apac, weight: 0.2, terms: [korea, 한국, seoul, busan, incheon, saemangeum, apac, asia-pacific, japan, singapore, malaysia, johor, taiwan, australia, india, vietnam, indonesia] }
+    - { id: contested, weight: 0.2, terms: [why, whether, risk, risks, shortage, shortages, bottleneck, bottlenecks, constraint, constraints, delay, delays, backlash, pushback, opposition, cost, costs, pricing, outlook, forecast, 전망, 리스크, 병목, 지연] }
+  breadth: { min_dimensions: 2, min_score: 0.22, bonus: 0.15 }    # ≥ 2 relevance dimensions ≥ 0.22 → more angles

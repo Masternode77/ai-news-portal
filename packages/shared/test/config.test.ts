@@ -3,12 +3,16 @@ import assert from "node:assert/strict";
 import { mkdtemp, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
 import {
   ConfigError,
   loadPipelineConfig,
+  loadScoringConfig,
   loadSourcesConfig,
   parsePipelineConfig,
   parseRedirectsConfig,
+  parseScoringConfig,
   parseSourcesConfig,
 } from "../src/index.ts";
 
@@ -105,4 +109,20 @@ test("redirects config rejects duplicate from_path and non-root paths", () => {
   assert.equal(parseRedirectsConfig("- { from_path: /author/rowan-hale, to_path: /author/josh-inn/, status: 301 }").length, 1);
   assert.throws(() => parseRedirectsConfig("- { from_path: /a, to_path: /b, status: 301 }\n- { from_path: /a, to_path: /c, status: 301 }"), /duplicate redirect/);
   assert.throws(() => parseRedirectsConfig("- { from_path: a, to_path: /b, status: 302 }"), ConfigError);
+});
+
+test("config/scoring.yaml (Phase 3c) loads strictly: weights sum to 1, thresholds ordered, patterns compile, unknown keys fail", async () => {
+  const path = resolve(import.meta.dirname, "../../../config/scoring.yaml");
+  const scoring = await loadScoringConfig(path);
+  assert.equal(scoring.thresholds.full, 0.75);
+  assert.equal(scoring.thresholds.brief, 0.55);
+  assert.equal(scoring.insight_trigger, 0.7);
+  assert.equal(Object.keys(scoring.relevance.dimensions).length, 8);
+  assert.ok(scoring.impact.signals.every((s) => (s.terms === undefined) !== (s.pattern === undefined)));
+  const text = readFileSync(path, "utf8");
+  assert.throws(() => parseScoringConfig(text.replace("relevance: 0.35", "relevance: 0.5"), path), (e: unknown) => e instanceof ConfigError && /weights must sum to 1/.test(e.message));
+  assert.throws(() => parseScoringConfig(text.replace("full: 0.75", "full: 0.5"), path), (e: unknown) => e instanceof ConfigError && /thresholds.full must be >= thresholds.brief/.test(e.message));
+  assert.throws(() => parseScoringConfig(text.replace('hard_archive_exception_pattern: "\\\\bfossils?', 'hard_archive_exception_pattern: "(fossils?'), path), (e: unknown) => e instanceof ConfigError && /invalid regular expression/.test(e.message));
+  assert.throws(() => parseScoringConfig(`${text}\nextra_key: 1\n`, path), (e: unknown) => e instanceof ConfigError && /extra_key/.test(e.message));
+  assert.throws(() => parseScoringConfig(text.replace("- { max_hours: 8, score: 0.75 }", "- { max_hours: 2, score: 0.75 }"), path), (e: unknown) => e instanceof ConfigError && /ascending/.test(e.message));
 });

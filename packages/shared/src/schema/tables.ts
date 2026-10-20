@@ -147,6 +147,27 @@ export const RubricScores = z.strictObject({
 });
 export type RubricScores = z.infer<typeof RubricScores>;
 
+/** One human-readable line per rubric axis (Phase 3c): matched terms, bucket, signals, caps. */
+export const CandidateReasons = z.strictObject({
+  relevance: z.string(),
+  timeliness: z.string(),
+  impact: z.string(),
+  reader_value: z.string(),
+  insight_potential: z.string(),
+});
+export type CandidateReasons = z.infer<typeof CandidateReasons>;
+
+/** The score stage's verdict on a candidate (`candidates.rubric`, migration 0002); null on normalize rejections. */
+export const CandidateRubric = z.strictObject({
+  /** null: below `thresholds.brief`. */
+  tier: z.enum(["full", "brief"]).nullable(),
+  /** 1-based position among the candidates that passed the brief threshold; null when it did not pass. */
+  rank: z.number().int().positive().nullable(),
+  insight_eligible: z.boolean(),
+  reasons: CandidateReasons,
+});
+export type CandidateRubric = z.infer<typeof CandidateRubric>;
+
 export const CandidateRow = z.strictObject({
   id: Uuid,
   raw_item_id: Uuid,
@@ -156,6 +177,7 @@ export const CandidateRow = z.strictObject({
   total: UnitInterval,
   selected: z.boolean(),
   reject_reason: z.string().nullable(),
+  rubric: CandidateRubric.nullable(),
   created_at: IsoDateTime,
 });
 export type CandidateRow = z.infer<typeof CandidateRow>;

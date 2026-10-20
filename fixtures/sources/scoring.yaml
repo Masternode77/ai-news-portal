@@ -1,0 +1,40 @@
+# Five fictional sources for the Phase 3c scoring fixture (fixtures/rss/scoring-*.xml, federal-register-fixture.xml).
+# Used by `pipeline run --dry-run --replay --fixture scoring --sources fixtures/sources/scoring.yaml --stage ingest,normalize,score`
+# with CC_FLAG_STAGES_NORMALIZE=true CC_FLAG_STAGES_SCORE=true.
+- id: scoring-wire-a
+  name: Scoring Wire A
+  type: rss
+  url: https://www.wire-a.example.com/feed.xml
+  tier: 1
+  enabled: true
+  text_rights: full
+- id: scoring-wire-b
+  name: Scoring Wire B
+  type: rss
+  url: https://wire-b.example.org/feed.xml
+  tier: 2
+  enabled: true
+  text_rights: rewrite_only
+  language: ko
+- id: scoring-wire-c
+  name: Scoring Wire C
+  type: rss
+  url: https://wire-c.example.net/rss
+  tier: 3
+  enabled: true
+  text_rights: link_only
+- id: scoring-arxiv
+  name: Scoring arXiv (abstract only)
+  type: rss
+  url: https://arxiv.example.org/rss/cs.DC
+  tier: 2
+  enabled: true
+  text_rights: rewrite_only
+  text_scope: abstract
+- id: federal-register-fixture
+  name: Federal Register (fixture)
+  type: rss
+  url: https://www.federalregister.gov/api/v1/documents.rss?conditions[agencies][]=example
+  tier: 2
+  enabled: true
+  text_rights: rewrite_only

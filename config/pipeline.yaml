@@ -11,7 +11,7 @@ flags:
   stages:
     ingest: true
     normalize: false             # Phase 3b logic is in; default OFF until Phase 4 (contracts §7). Override: CC_FLAG_STAGES_NORMALIZE=true
-    score: true
+    score: false                 # Phase 3c logic is in; default OFF until Phase 4 (contracts §7). Override: CC_FLAG_STAGES_SCORE=true
     generate: true
     qa: true
     image: true

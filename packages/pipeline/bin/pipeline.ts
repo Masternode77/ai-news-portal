@@ -3,7 +3,7 @@
  * cc-pipeline — CLI entry (brief Phase 2 §3, Phase 3a `--live`).
  *
  *   pipeline run [--stage <name>[,<name>]] [--dry-run] [--live] [--fixture <name>] [--replay]
- *                [--config <path>] [--sources <path>] [--fixtures-dir <dir>]
+ *                [--config <path>] [--sources <path>] [--scoring <path>] [--fixtures-dir <dir>]
  *                [--trigger schedule|dispatch|local] [--json] [--log-level <level>]
  *
  * Exit codes: 0 done · 1 partial/budget_stop · 2 failed, usage or config error.
@@ -20,7 +20,7 @@ import { realpathSync } from "node:fs";
 import { resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 import { createClient } from "@supabase/supabase-js";
-import { ConfigError, createLogger, isLogLevel, loadPipelineConfig, loadSourcesConfig } from "@cc/shared";
+import { ConfigError, createLogger, isLogLevel, loadPipelineConfig, loadScoringConfig, loadSourcesConfig } from "@cc/shared";
 import type { DbPort, Ledger, Logger, PipelineConfig, RunTrigger, SourceAdapter, StageAdapters, StageName } from "@cc/shared";
 import {
   HostPacer,
@@ -40,7 +40,7 @@ import { notifyConsole } from "../src/notify/console.ts";
 import { disabledFetch, runPipeline } from "../src/runner.ts";
 
 const USAGE = `usage: pipeline run [--stage <name>[,<name>]] [--dry-run] [--live] [--fixture <name>] [--replay]
-                    [--config <path>] [--sources <path>] [--fixtures-dir <dir>]
+                    [--config <path>] [--sources <path>] [--scoring <path>] [--fixtures-dir <dir>]
                     [--trigger schedule|dispatch|local] [--json] [--log-level debug|info|warn|error]`;
 
 export interface Cli {
@@ -52,6 +52,7 @@ export interface Cli {
   replay: boolean;
   config: string;
   sources: string;
+  scoring: string;
   fixturesDir: string;
   trigger: RunTrigger;
   json: boolean;
@@ -70,6 +71,7 @@ export function parseCli(argv: string[]): Cli {
       replay: { type: "boolean", default: false },
       config: { type: "string", default: "config/pipeline.yaml" },
       sources: { type: "string", default: "config/sources.yaml" },
+      scoring: { type: "string", default: "config/scoring.yaml" },
       "fixtures-dir": { type: "string", default: "fixtures" },
       trigger: { type: "string", default: "local" },
       json: { type: "boolean", default: false },
@@ -95,6 +97,7 @@ export function parseCli(argv: string[]): Cli {
     replay: values.replay,
     config: values.config,
     sources: values.sources,
+    scoring: values.scoring,
     fixturesDir: values["fixtures-dir"],
     trigger,
     json: values.json,
@@ -170,6 +173,7 @@ export async function main(argv: string[], env: NodeJS.ProcessEnv, stdout: (line
 
     const loaded = await loadPipelineConfig(resolve(cli.config), env);
     const sources = await loadSourcesConfig(resolve(cli.sources));
+    const scoring = await loadScoringConfig(resolve(cli.scoring));
     const adapters = buildAdapters(cli, loaded.config);
 
     let ledger: Ledger;
@@ -191,6 +195,7 @@ export async function main(argv: string[], env: NodeJS.ProcessEnv, stdout: (line
 
     const result = await runPipeline({
       config: loaded.config,
+      scoring,
       overrides: loaded.overrides,
       sources,
       ledger,
@@ -219,6 +224,7 @@ export async function main(argv: string[], env: NodeJS.ProcessEnv, stdout: (line
             stages: result.stages,
             sourceStats: result.state.sourceStats,
             normalizeStats: result.state.normalizeStats,
+            scoreStats: result.state.scoreStats,
             ledger: dump,
           },
           null,

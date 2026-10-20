@@ -21,7 +21,7 @@ async function cli(args: string[], env: NodeJS.ProcessEnv = {}): Promise<{ code:
 }
 
 test("pipeline run --dry-run --fixture sample --replay --json exits 0 with a full funnel", async () => {
-  const { code, stdout, stderr } = await cli(["run", "--dry-run", "--replay", "--fixture", "sample", "--json"], { CC_FLAG_STAGES_NORMALIZE: "true" });
+  const { code, stdout, stderr } = await cli(["run", "--dry-run", "--replay", "--fixture", "sample", "--json"], { CC_FLAG_STAGES_NORMALIZE: "true", CC_FLAG_STAGES_SCORE: "true" });
   assert.equal(code, 0, stderr);
   const out = JSON.parse(stdout) as { status: string; funnel: Record<string, unknown>; stages: { stage: string; status: string }[]; ledger: { runs: unknown[]; stageEvents: unknown[] } };
   assert.equal(out.status, "done");
@@ -37,11 +37,12 @@ test("pipeline run --dry-run --fixture sample --replay --json exits 0 with a ful
   assert.ok(stderr.includes('"msg":"run summary"'));
 });
 
-test("normalize is off by default (Phase 3b flag) and --stage accepts a comma list", async () => {
+test("normalize (3b) and score (3c) are off by default and --stage accepts a comma list", async () => {
   const off = await cli(["run", "--dry-run", "--replay", "--json"]);
   assert.equal(off.code, 0);
   const outOff = JSON.parse(off.stdout) as { stages: { stage: string; status: string; reason?: string }[] };
   assert.deepEqual(outOff.stages.find((s) => s.stage === "normalize"), { ...outOff.stages.find((s) => s.stage === "normalize"), status: "skipped", reason: "flag_off" });
+  assert.deepEqual(outOff.stages.find((s) => s.stage === "score"), { ...outOff.stages.find((s) => s.stage === "score"), status: "skipped", reason: "flag_off" });
 
   const two = await cli(["run", "--dry-run", "--replay", "--fixture", "dedupe", "--sources", "fixtures/sources/dedupe.yaml", "--stage", "ingest,normalize", "--json"], { CC_FLAG_STAGES_NORMALIZE: "true" });
   assert.equal(two.code, 0, two.stderr);
@@ -51,6 +52,32 @@ test("normalize is off by default (Phase 3b flag) and --stage accepts a comma li
   assert.equal(out.normalizeStats.candidates, 6, "the dedupe fixture converges 12 items from 3 wires to 6 stories (seeded publication included)");
   assert.deepEqual(out.normalizeStats.by_method, { url: 2, title: 1, body: 1, title_key: 1, hash: 1 });
   assert.equal((await cli(["run", "--dry-run", "--replay", "--stage", ","])).code, 2);
+});
+
+test("the scoring fixture: 13 items → 6 pass the brief threshold → 2 selected from two sources, every row with reasons", async () => {
+  const { code, stdout, stderr } = await cli(
+    ["run", "--dry-run", "--replay", "--fixture", "scoring", "--sources", "fixtures/sources/scoring.yaml", "--stage", "ingest,normalize,score", "--json"],
+    { CC_FLAG_STAGES_NORMALIZE: "true", CC_FLAG_STAGES_SCORE: "true" },
+  );
+  assert.equal(code, 0, stderr);
+  const out = JSON.parse(stdout) as {
+    funnel: Record<string, number>;
+    stages: { stage: string; status: string; counts: Record<string, number> }[];
+    scoreStats: { candidates: number; passed: number; selected: number; below_threshold: number; shortfall: number; decisions: { source_id: string; selected: boolean; tier: string | null; reject_reason: string | null; reasons: Record<string, string> }[] };
+  };
+  assert.deepEqual(out.stages.filter((s) => s.status === "done").map((s) => s.stage), ["ingest", "normalize", "score"]);
+  const stats = out.scoreStats;
+  assert.equal(stats.candidates, 13);
+  assert.equal(out.funnel["items_scored"], 13);
+  assert.equal(out.funnel["passed_gate"], stats.passed, "passed_gate is the threshold count, not the selection");
+  assert.ok(stats.passed >= 5 && stats.below_threshold >= 5, `passed ${stats.passed}, below ${stats.below_threshold}`);
+  assert.equal(stats.selected, 2, "caps.briefs_per_cycle.max");
+  assert.equal(stats.shortfall, 0);
+  const selected = stats.decisions.filter((d) => d.selected);
+  assert.equal(new Set(selected.map((d) => d.source_id)).size, 2, "one per source");
+  assert.ok(stats.decisions.every((d) => d.selected ? d.reject_reason === null : /^(BELOW_THRESHOLD|NOT_SELECTED): /.test(d.reject_reason ?? "")));
+  assert.ok(stats.decisions.every((d) => ["relevance", "timeliness", "impact", "reader_value", "insight_potential"].every((axis) => d.reasons[axis]!.length > 0)), "every candidate carries a reason per axis");
+  assert.equal(out.stages.find((s) => s.stage === "score")?.counts["selected"], 2);
 });
 
 test("CC_FLAG_STAGES_IMAGE=false turns the image stage off from the environment", async () => {

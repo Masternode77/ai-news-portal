@@ -14,6 +14,7 @@ function ctxStub(): StageContext {
     runId: "11111111-1111-4111-8111-111111111111",
     now: new Date("2026-10-18T00:45:00Z"),
     config: options.config,
+    scoring: options.scoring,
     logger: options.logger,
     ledger: options.ledger,
     budget: createBudget(options.config.budget),
