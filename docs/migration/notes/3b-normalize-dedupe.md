@@ -80,9 +80,19 @@
 
 `--fixture sample`(커밋된 풀 스냅샷 30건, 소스당 캡 6)에 normalize를 켜면 pool 6 → candidates 6, 탈락 0 — Google 릴리스노트·arXiv 항목 사이에 오탐 없음. 기본 설정(플래그 OFF)은 `normalize: skipped (flag_off)`로 완주.
 
-### 4.2 라이브 dry-run
+### 4.2 라이브 dry-run (2026-10-20, Actions run 39389217169, `rebuild/v2` `0803e095`)
 
-`rebuild-ci.yml` › `ingest-live-dry-run`(`live_ingest=true`)이 이제 `--stage ingest,normalize`를 돌린다. 결과는 PR #59 머지 후 `rebuild/v2`에서 dispatch해 기록한다(아래 갱신 예정).
+`rebuild-ci.yml` › `ingest-live-dry-run`(`live_ingest=true` → `--dry-run --live --stage ingest,normalize`, 메모리 원장·DB, 시크릿 없음). 런 `dba2a570`, 07:51:00–07:52:05Z(65 s), 상태 `partial`(소스 실패 6, `top_error` `SOURCE_UNREACHABLE`), 종료 코드 1.
+
+| 항목 | 값 |
+|---|---|
+| ingest | 소스 80 · ok 74 · 실패 6 · `items_fetched` 200(`caps.pool_max_items` 200 적용: 소스 간 중복 8 제거 후 316 → `pool_cap` 116 컷) · 건너뜀 2,950(`pool_cap` 포함) · 추출 ok 56 / 실패 0 / 생략 144 · 64 s |
+| normalize | pool 200 → 후보 198 · 탈락 2 = `DUPLICATE_IN_POOL` 2(`title_key` 2) · `duplicate_of_published` 0 · `published_compared` 0 · 67 ms |
+| 탈락 2건 | Federal Register 절차 고시 2쌍: "Standard Instrument Approach Procedures…"(2026-21095 ↔ 21096), "Combined Notice of Filings"(2026-21439 ↔ 21438). 서로 다른 문서지만 제목이 완전히 같은 정형 고시라 `title_key`가 하나로 접는다. 편집 관점에서는 허용(둘 다 기사 가치가 없고 하나만 남아도 손실 없음)이지만 "동일 제목 = 동일 기사" 가정의 알려진 한계로 기록한다 |
+| 발행본 경로 | 라이브 모드의 메모리 DB에는 발행본이 없어 비교 0건. `DUPLICATE_OF_PUBLISHED`는 fixture `dedupe`(§4.1)와 `normalize-stage.test.ts`로만 검증됐고, Supabase 적용(3h/4) 뒤 실데이터로 다시 본다 |
+| 소스 실패 6 | insidehpc(`SOURCE_UNREACHABLE` fetch failed, 3a와 같은 러너 TLS), capacity-media(522), venturebeat-ai(429), berkeley-lab-news(403, 신규), blocks-and-files(`FEED_PARSE`: 리다이렉트 끝 `api.blocksandfiles.com`이 text/html 2,101 bytes 반환, 신규), nextplatform(`FEED_PARSE`: text/html 2,101 bytes, 봇 차단 페이지로 추정, 신규). 3a 런 2에서 실패했던 nrc-news(403)는 이번에 성공 |
+
+판정: 라이브 풀 200건에서 오탐 0(탈락 2건 모두 동일 제목 정형 고시). 재서술 복제본의 미탐은 라이브 1회로는 측정할 수 없고(§5 질문 1), Phase 4 shadow 데이터에서 잰다. 풀 상한 200이 실제로 작동해 3a 런 2의 312건이 200으로 잘렸다(3c는 200건 풀을 입력으로 받는다).
 
 ## 5. 열린 질문 (Josh)
 
