@@ -72,6 +72,15 @@ test("mapFeedItem cleans the url and carries the feed fields and source rights",
   assert.equal(mapped.item?.payload?.["text_rights"], "rewrite_only");
   assert.equal(mapped.item?.payload?.["tier"], 2);
   assert.deepEqual(mapped.item?.payload?.["categories"], ["ai"]);
+  // A link-only source keeps the title and link alone: the feed's summary and content are not stored (ADR-004).
+  const linkOnly = mapFeedItem(entry(), source({ text_rights: "link_only" }), options(), NOW, allowedHostsFor(source()));
+  assert.equal(linkOnly.skip, null);
+  assert.equal(linkOnly.item?.title, "A sufficiently long headline");
+  assert.equal(linkOnly.item?.canonical_url, "https://www.example.com/a?id=1");
+  assert.ok(!("snippet" in (linkOnly.item?.payload ?? {})), "no snippet for link_only");
+  assert.ok(!("body_preview" in (linkOnly.item?.payload ?? {})), "no body_preview for link_only");
+  assert.equal(linkOnly.item?.payload?.["text_rights"], "link_only");
+  assert.deepEqual(linkOnly.item?.payload?.["categories"], ["ai"]);
 });
 
 test("mapFeedItem skip reasons: age window, missing date, title length, no url, offhost only for full rights", () => {
@@ -206,6 +215,9 @@ test("extract honours text rights and the licence marker", async () => {
   const itemRow = { source_id: "example-feed", canonical_url: "https://feeds.example.com/post", title: "Headline long enough", fetched_at: NOW.toISOString() };
 
   await assert.rejects(adapter.extract!(itemRow, source(), ctx(async () => response(page(""), "text/html"))), /TEXT_USE_NOT_AUTHORIZED/);
+  // text_scope: abstract allows only the abstract extractor, even for a config built without the schema.
+  const scoped = source({ text_rights: "full", text_scope: "abstract", extract: { kind: "generic" } });
+  await assert.rejects(adapter.extract!(itemRow, scoped, ctx(async () => response(page(""), "text/html"))), /TEXT_USE_NOT_AUTHORIZED.*arxiv_abstract/);
 
   const full = source({ text_rights: "full", extract: { kind: "generic", license_marker: "Distributed under CC BY 4.0" } });
   const text = await adapter.extract!(itemRow, full, ctx(async () => response(page("Distributed under CC BY 4.0"), "text/html")));

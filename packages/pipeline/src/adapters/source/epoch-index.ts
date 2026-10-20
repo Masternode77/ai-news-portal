@@ -132,11 +132,13 @@ export function createEpochIndexAdapter(options: EpochIndexOptions): SourceAdapt
           stats.skipped["too_old"] = (stats.skipped["too_old"] ?? 0) + 1;
           continue;
         }
-        const body = extractEpoch(page.text);
+        // The page is CC BY 4.0, but the row's text_rights still rules what is stored (same as the feed adapter):
+        // only a `full` source keeps the body, and a `link_only` source keeps the title and link alone.
+        const body = source.text_rights === "full" ? extractEpoch(page.text) : null;
         // A licensed page whose body container holds no text is an extraction failure, not usable source material
         // (AGENTS.md editorial rule): the item keeps its metadata, carries no body_text and counts as extract_failed.
-        const extracted = body.text.trim().length > 0;
-        if (!extracted) ctx.logger.warn("epoch article body empty; item kept without body_text", { source_id: source.id, link, method: body.method });
+        const extracted = body !== null && body.text.trim().length > 0;
+        if (body && !extracted) ctx.logger.warn("epoch article body empty; item kept without body_text", { source_id: source.id, link, method: body.method });
         items.push({
           source_id: source.id,
           canonical_url: meta.url,
@@ -145,10 +147,12 @@ export function createEpochIndexAdapter(options: EpochIndexOptions): SourceAdapt
           fetched_at: ctx.now.toISOString(),
           payload: {
             guid: meta.url,
-            snippet: truncate(meta.description || body.text, options.ingest.snippet_chars),
-            ...(extracted
-              ? { body_preview: truncate(body.text, options.ingest.body_preview_chars), body_text: body.text, extraction: { ok: true, method: body.method, chars: body.chars, limit_exceeded: body.limitExceeded } }
-              : { extraction: { ok: false, error: "EXTRACTION_EMPTY", detail: `${body.method}: body container holds no text` } }),
+            ...(source.text_rights === "link_only" ? {} : { snippet: truncate(meta.description || body?.text || "", options.ingest.snippet_chars) }),
+            ...(body === null
+              ? {}
+              : extracted
+                ? { body_preview: truncate(body.text, options.ingest.body_preview_chars), body_text: body.text, extraction: { ok: true, method: body.method, chars: body.chars, limit_exceeded: body.limitExceeded } }
+                : { extraction: { ok: false, error: "EXTRACTION_EMPTY", detail: `${body.method}: body container holds no text` } }),
             image: null,
             categories: [],
             text_rights: source.text_rights,

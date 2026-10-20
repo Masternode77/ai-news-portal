@@ -104,6 +104,18 @@ test("the html index adapter lists, filters, extracts at fetch time and reports 
   await assert.rejects(adapter.fetch({ ...SOURCE, url: "https://example.com/gradient-updates" }, ctx([])), /EXTRACTION_FAILED/);
 });
 
+test("an Epoch row without full text rights stores no body, and a link-only row no feed text at all", async () => {
+  const adapter = createEpochIndexAdapter({ ingest: IngestConfig.parse({ extract_host_delay_ms: 0 }), defaultMaxAgeDays: 10, itemsPerSource: 6, resolveHost: async () => ["93.184.216.34"] });
+  const rewrite = (await adapter.fetchDetailed!({ ...SOURCE, text_rights: "rewrite_only" }, ctx([]))).items[0]!;
+  assert.equal(rewrite.payload?.["snippet"], "Desc of First post title");
+  assert.ok(!("body_text" in rewrite.payload!) && !("body_preview" in rewrite.payload!) && !("extraction" in rewrite.payload!), "rewrite_only keeps the page's description only");
+  assert.equal(rewrite.payload?.["text_rights"], "rewrite_only");
+  await assert.rejects(adapter.extract!(rewrite, { ...SOURCE, text_rights: "rewrite_only" }, ctx([])), /EXTRACTION_EMPTY/);
+  const link = (await adapter.fetchDetailed!({ ...SOURCE, text_rights: "link_only" }, ctx([]))).items[0]!;
+  assert.equal(link.title, "First post title");
+  assert.ok(!("snippet" in link.payload!) && !("body_text" in link.payload!), "link_only keeps title and link alone");
+});
+
 test("index and article requests retry once on SOURCE_UNREACHABLE and article pages are spaced by the host delay", async () => {
   const urls: string[] = [];
   const stamps: number[] = [];

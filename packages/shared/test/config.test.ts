@@ -81,6 +81,26 @@ test("sources config enforces kebab ids, rights enum and unique ids", async () =
   assert.equal((await loadSourcesConfig(path))[0]?.id, "eia-today-in-energy");
 });
 
+test("text_scope: abstract on a full-rights source needs an abstract-only extractor", () => {
+  const arxiv = (extract: string, rights = "full") => `
+- id: arxiv-cs-dc
+  name: arXiv cs.DC
+  type: rss
+  url: https://rss.arxiv.org/rss/cs.DC
+  tier: 3
+  enabled: true
+  text_rights: ${rights}
+  text_scope: abstract
+${extract}`;
+  assert.equal(parseSourcesConfig(arxiv("  extract:\n    kind: arxiv_abstract\n"))[0]?.extract?.kind, "arxiv_abstract");
+  assert.equal(parseSourcesConfig(arxiv("  extract:\n    kind: none\n")).length, 1, "feed fields only is within the scope");
+  assert.throws(() => parseSourcesConfig(arxiv("")), /abstract allows only extract\.kind arxiv_abstract or none .*generic extractor/, "no extract block means the generic page extractor");
+  assert.throws(() => parseSourcesConfig(arxiv("  extract:\n    kind: generic\n")), ConfigError);
+  assert.throws(() => parseSourcesConfig(arxiv("  extract:\n    kind: ec_press\n")), ConfigError);
+  // Without full rights no page is fetched, so the scope needs no extractor.
+  assert.equal(parseSourcesConfig(arxiv("", "rewrite_only")).length, 1);
+});
+
 test("redirects config rejects duplicate from_path and non-root paths", () => {
   assert.equal(parseRedirectsConfig("- { from_path: /author/rowan-hale, to_path: /author/josh-inn/, status: 301 }").length, 1);
   assert.throws(() => parseRedirectsConfig("- { from_path: /a, to_path: /b, status: 301 }\n- { from_path: /a, to_path: /c, status: 301 }"), /duplicate redirect/);
