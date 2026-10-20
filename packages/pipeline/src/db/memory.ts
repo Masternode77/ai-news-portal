@@ -51,6 +51,14 @@ export class MemoryDb implements DbPort {
     return structuredClone(projected) as T[];
   }
 
+  async selectIn<T extends Row>(table: TableName, column: string, values: readonly unknown[], options: SelectOptions = {}): Promise<T[]> {
+    const wanted = new Set(values);
+    const rows = this.table(table).filter((row) => wanted.has(row[column]));
+    const limited = options.limit === undefined ? rows : rows.slice(0, options.limit);
+    const projected = options.columns ? limited.map((row) => Object.fromEntries(options.columns!.map((c) => [c, row[c]]))) : limited;
+    return structuredClone(projected) as T[];
+  }
+
   async update(table: TableName, where: Partial<Row>, patch: Row): Promise<number> {
     let count = 0;
     const rows = this.table(table);
@@ -67,5 +75,10 @@ export class MemoryDb implements DbPort {
   /** Test helper: row count per table. */
   size(table: TableName): number {
     return this.table(table).length;
+  }
+
+  /** Test and dry-run helper: a copy of every row in a table. */
+  rows<T extends Row>(table: TableName): T[] {
+    return structuredClone(this.table(table)) as T[];
   }
 }

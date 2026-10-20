@@ -30,6 +30,8 @@ export const CapsConfig = z.strictObject({
   essays_per_day: z.number().int().nonnegative(),
   pool_max_items: z.number().int().positive(),
   pool_max_age_days: z.number().int().positive(),
+  /** Per registry id, not per display name (legacy keyed the cap by name). */
+  items_per_source: z.number().int().positive().default(6),
 });
 
 export const BudgetConfig = z
@@ -62,6 +64,32 @@ export const NotifyConfig = z.strictObject({
   telegram: z.strictObject({ enabled: z.boolean() }),
 });
 
+export const IngestConfig = z.strictObject({
+  /** Feeds fetched at the same time (legacy: unbounded Promise.all). */
+  concurrency: z.number().int().positive().max(32).default(6),
+  /** Article pages extracted at the same time. */
+  extract_concurrency: z.number().int().positive().max(16).default(3),
+  feed_timeout_ms: z.number().int().positive().default(20_000),
+  page_timeout_ms: z.number().int().positive().default(12_000),
+  /** Streaming cap per response; Substack full-content feeds exceed 2 MiB (semianalysis 2026-10-18). */
+  max_body_bytes: z.number().int().positive().default(6 * 1024 * 1024),
+  /** Retries per source for timeouts and 5xx; the whole-run retry is gone. */
+  retry_attempts: z.number().int().nonnegative().max(3).default(1),
+  retry_backoff_ms: z.number().int().nonnegative().default(2_000),
+  snippet_chars: z.number().int().positive().default(220),
+  body_preview_chars: z.number().int().positive().default(800),
+  min_title_chars: z.number().int().positive().default(12),
+  max_title_chars: z.number().int().positive().default(220),
+  /** Consecutive failed runs before a source is disabled in the sources table (brief 3a). */
+  auto_disable_after: z.number().int().positive().default(5),
+  /** Fetch article bodies for `text_rights: full` sources; false stores feed fields only. */
+  extract_bodies: z.boolean().default(true),
+  /** Minimum interval between page requests to one registrable host (`extract.delay_ms` raises it per source, e.g. a robots Crawl-delay). */
+  extract_host_delay_ms: z.number().int().nonnegative().max(60_000).default(1_000),
+  user_agent: z.string().min(1).default("Mozilla/5.0 (compatible; ComputeCurrentBot/1.0)"),
+});
+export type IngestConfig = z.infer<typeof IngestConfig>;
+
 export const PipelineConfig = z.strictObject({
   schedule: ScheduleConfig,
   flags: z.strictObject({
@@ -73,10 +101,40 @@ export const PipelineConfig = z.strictObject({
   llm: LlmConfig,
   image: ImageConfig,
   notify: NotifyConfig,
+  /** Optional in YAML; every field has a documented default. */
+  ingest: IngestConfig.prefault({}),
 });
 export type PipelineConfig = z.infer<typeof PipelineConfig>;
 
-/** One source is at most ten YAML lines (R5). */
+/** `abstract`: only the abstract/summary may be used as text (arXiv metadata is CC0, the e-print is not). */
+export const TextScope = z.enum(["full", "abstract"]);
+export type TextScope = z.infer<typeof TextScope>;
+
+/** Body extraction strategy for `text_rights: full` sources; `none` stores feed fields only. */
+export const ExtractKind = z.enum(["generic", "google_release_notes", "epoch_index", "arxiv_abstract", "ec_press", "none"]);
+export type ExtractKind = z.infer<typeof ExtractKind>;
+
+export const ExtractConfig = z.strictObject({
+  kind: ExtractKind.default("generic"),
+  /** Exact article path the source may link to (Google release notes). */
+  path: z.string().startsWith("/").optional(),
+  /** Section prefix; one slug segment under it, no query or fragment. */
+  path_prefix: z.string().regex(/^\/.*\/$/, "must start and end with /").optional(),
+  /** Article hosts beyond the feed host (`*.example.com` allowed). */
+  hosts: z.array(z.string().min(1)).max(10).optional(),
+  /** Visible-text licence statement every extracted page must carry. */
+  license_marker: z.string().min(3).optional(),
+  /** Google release notes: the product section heading to keep. */
+  section: z.string().min(1).optional(),
+  /** Minimum interval between page requests to this source's host (robots `Crawl-delay`, e.g. arXiv 15 s); never below `ingest.extract_host_delay_ms`. */
+  delay_ms: z.number().int().nonnegative().max(60_000).optional(),
+});
+export type ExtractConfig = z.infer<typeof ExtractConfig>;
+
+/** Extractors that store an abstract/summary only; `text_scope: abstract` on a full-rights source allows nothing else. */
+export const ABSTRACT_EXTRACT_KINDS: readonly ExtractKind[] = ["arxiv_abstract", "none"];
+
+/** A simple source is at most ten YAML lines (R5); `extract` is only needed for special pages. */
 export const SourceConfig = z.strictObject({
   id: z.string().regex(/^[a-z0-9][a-z0-9-]{1,63}$/, "kebab-case id"),
   name: z.string().min(1),
@@ -88,8 +146,19 @@ export const SourceConfig = z.strictObject({
   terms_url: HttpUrl.optional(),
   reviewed_at: IsoDate.optional(),
   pool_max_age_days: z.number().int().positive().optional(),
+  language: z.string().regex(/^[a-z]{2}$/, "ISO 639-1").optional(),
+  text_scope: TextScope.optional(),
+  extract: ExtractConfig.optional(),
+}).superRefine((source, ctx) => {
+  // Only a full-rights source fetches pages, and there the scope must be matched by the extractor: the generic
+  // (default) and page extractors would store the whole article, which `abstract` forbids.
+  const kind = source.extract?.kind ?? "generic";
+  if (source.text_scope === "abstract" && source.text_rights === "full" && !ABSTRACT_EXTRACT_KINDS.includes(kind)) {
+    ctx.addIssue({ code: "custom", path: ["extract", "kind"], message: `text_scope: abstract allows only extract.kind arxiv_abstract or none on a full-rights source (the ${kind} extractor would store the whole page)` });
+  }
 });
 export type SourceConfig = z.infer<typeof SourceConfig>;
+
 
 export const SourcesConfig = z.array(SourceConfig).superRefine((sources, ctx) => {
   const seen = new Set<string>();

@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import { NETWORK_DISABLED_MESSAGE, runPipeline } from "../src/runner.ts";
 import { defineStageSpec } from "../src/stages/index.ts";
 import { IngestInput, IngestOutput } from "../src/stages/types.ts";
+import { emptySourceStats } from "../src/state.ts";
 import { baseRunOptions } from "./helpers.ts";
 
 test("replay mode: a stage that touches ctx.fetch fails with NETWORK_DISABLED", async () => {
@@ -14,7 +15,7 @@ test("replay mode: a stage that touches ctx.fetch fails with NETWORK_DISABLED", 
       idempotencyKey: () => "net",
       run: async (_input, ctx) => {
         await ctx.fetch("https://example.com/feed.xml");
-        return { rawItems: [], stats: { configured: 0, ok: 0, failed: 0, invalid_items: 0, errors: [] } };
+        return { rawItems: [], stats: emptySourceStats() };
       },
     },
     select: (state) => ({ sources: state.sources }),
@@ -37,7 +38,7 @@ test("replay dry-run over the full default stage list performs zero fetch calls"
   try {
     const result = await runPipeline(baseRunOptions({ replay: true, fetch: counting }));
     assert.equal(result.status, "done");
-    assert.equal(result.funnel.items_fetched, 30);
+    assert.equal(result.funnel.items_fetched, 6, "capped per source; still zero network calls");
   } finally {
     globalThis.fetch = original;
   }
@@ -58,7 +59,7 @@ test("outside replay mode the injected fetch is passed through to stages", async
       idempotencyKey: () => "probe",
       run: async (_input, ctx) => {
         await ctx.fetch("https://example.test/probe");
-        return { rawItems: [], stats: { configured: 0, ok: 0, failed: 0, invalid_items: 0, errors: [] } };
+        return { rawItems: [], stats: emptySourceStats() };
       },
     },
     select: (state) => ({ sources: state.sources }),

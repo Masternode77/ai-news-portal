@@ -2,7 +2,9 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { execFile } from "node:child_process";
 import { promisify } from "node:util";
+import { readFile } from "node:fs/promises";
 import { resolve } from "node:path";
+import { parsePipelineConfig, parseSourcesConfig } from "@cc/shared";
 import { REPO_ROOT } from "./helpers.ts";
 
 const run = promisify(execFile);
@@ -25,8 +27,11 @@ test("pipeline run --dry-run --fixture sample --replay --json exits 0 with a ful
   assert.equal(out.status, "done");
   assert.equal(out.stages.length, 7);
   assert.ok(out.stages.every((s) => s.status === "done"));
-  assert.equal(out.funnel["sources_configured"], 5, "config/sources.yaml has five enabled sample sources");
-  assert.equal(out.funnel["items_fetched"], 150, "the shared fixture is served to each of the five sources");
+  const enabledSources = parseSourcesConfig(await readFile(resolve(REPO_ROOT, "config/sources.yaml"), "utf8")).filter((s) => s.enabled).length;
+  const cap = parsePipelineConfig(await readFile(resolve(REPO_ROOT, "config/pipeline.yaml"), "utf8"), { env: {} }).config.caps.items_per_source;
+  assert.equal(out.funnel["sources_configured"], enabledSources, "every enabled source in config/sources.yaml is configured");
+  assert.equal(out.funnel["items_fetched"], cap, "the shared fixture yields the same newest items for every source, so unique urls == caps.items_per_source");
+  assert.equal(out.funnel["sources_ok"], enabledSources, "the fixture adapter serves rss and html sources alike");
   assert.equal(out.ledger.runs.length, 1);
   assert.equal(out.ledger.stageEvents.length, 7);
   assert.ok(stderr.includes('"msg":"run summary"'));
@@ -47,6 +52,11 @@ test("a live run is refused in Phase 2 and usage errors exit 2", async () => {
   const missing = await cli(["run", "--dry-run", "--config", "config/does-not-exist.yaml"]);
   assert.equal(missing.code, 2);
   assert.ok(missing.stderr.includes("ConfigError"));
+});
+
+test("--live is opt-in and needs --dry-run without --replay (Phase 3a)", async () => {
+  assert.equal((await cli(["run", "--live"])).code, 2);
+  assert.equal((await cli(["run", "--dry-run", "--live", "--replay"])).code, 2);
 });
 
 test("unknown CC_FLAG_* variables fail the run instead of being ignored", async () => {

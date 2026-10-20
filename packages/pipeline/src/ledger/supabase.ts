@@ -23,6 +23,7 @@ export interface SupabaseTable {
   update(patch: Record<string, unknown>): { match(filter: Record<string, unknown>): PromiseLike<SupabaseResult> };
   select(columns: string): {
     match(filter: Record<string, unknown>): { limit(count: number): PromiseLike<SupabaseResult & { data: unknown[] | null }> };
+    in(column: string, values: unknown[]): { limit(count: number): PromiseLike<SupabaseResult & { data: unknown[] | null }> };
   };
 }
 

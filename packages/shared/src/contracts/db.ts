@@ -38,6 +38,8 @@ export interface DbPort {
   insert<T extends Row>(table: TableName, rows: T[]): Promise<T[]>;
   upsert<T extends Row>(table: TableName, rows: T[], conflictKeys: readonly string[]): Promise<UpsertResult>;
   select<T extends Row>(table: TableName, where?: Partial<Row>, options?: SelectOptions): Promise<T[]>;
+  /** Rows whose `column` is one of `values` (e.g. existing canonical_urls before an upsert). */
+  selectIn<T extends Row>(table: TableName, column: string, values: readonly unknown[], options?: SelectOptions): Promise<T[]>;
   /** Number of rows updated, or null when the backend does not report it. */
   update(table: TableName, where: Partial<Row>, patch: Row): Promise<number | null>;
 }
