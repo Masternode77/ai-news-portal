@@ -148,13 +148,13 @@ test("index and article requests retry once on SOURCE_UNREACHABLE and article pa
       return base.fetch(input);
     },
   };
-  const adapter = createEpochIndexAdapter({ ingest: IngestConfig.parse({ retry_backoff_ms: 0, extract_host_delay_ms: 40 }), defaultMaxAgeDays: 10, itemsPerSource: 6, resolveHost: async () => ["93.184.216.34"] });
+  const adapter = createEpochIndexAdapter({ ingest: IngestConfig.parse({ retry_backoff_ms: 0, extract_host_delay_ms: 60 }), defaultMaxAgeDays: 10, itemsPerSource: 6, resolveHost: async () => ["93.184.216.34"] });
   const detail = await adapter.fetchDetailed!(SOURCE, flaky);
   assert.equal(indexCalls, 2, "the 503 on the index was retried once");
-  assert.ok(indexStamps[1]! - indexStamps[0]! >= 35, `the retry waited the host delay, not only retry_backoff_ms: ${indexStamps[1]! - indexStamps[0]!} ms`);
+  assert.ok(indexStamps[1]! - indexStamps[0]! >= 40, `the retry waited the host delay, not only retry_backoff_ms: ${indexStamps[1]! - indexStamps[0]!} ms`);
   assert.equal(detail.stats.kept, 1);
   assert.equal(stamps.length, 2);
-  assert.ok(stamps[1]! - stamps[0]! >= 35, `article pages are at least the host delay apart: ${stamps[1]! - stamps[0]!} ms`);
+  assert.ok(stamps[1]! - stamps[0]! >= 40, `article pages are at least the host delay apart: ${stamps[1]! - stamps[0]!} ms`);
 
   const dead = createEpochIndexAdapter({ ingest: IngestConfig.parse({ retry_attempts: 0, extract_host_delay_ms: 0 }), defaultMaxAgeDays: 10, itemsPerSource: 6, resolveHost: async () => ["93.184.216.34"] });
   indexCalls = 0;
@@ -180,13 +180,13 @@ test("two Epoch sources sharing one pacer never request epoch.ai inside the host
   const base = ctx([]);
   const timed: StageContext = { ...base, fetch: async (input) => { stamps.push(Date.now()); return base.fetch(input); } };
   const pacer = new HostPacer();
-  const adapter = createEpochIndexAdapter({ ingest: IngestConfig.parse({ extract_host_delay_ms: 30 }), defaultMaxAgeDays: 10, itemsPerSource: 6, resolveHost: async () => ["93.184.216.34"], pacer });
+  const adapter = createEpochIndexAdapter({ ingest: IngestConfig.parse({ extract_host_delay_ms: 60 }), defaultMaxAgeDays: 10, itemsPerSource: 6, resolveHost: async () => ["93.184.216.34"], pacer });
   const second: SourceConfig = { ...SOURCE, id: "epoch-ai-data-insights", url: "https://epoch.ai/gradient-updates" };
   const [a, b] = await Promise.all([adapter.fetchDetailed!(SOURCE, timed), adapter.fetchDetailed!(second, timed)]);
   assert.equal(a.stats.kept + b.stats.kept, 2);
   const sorted = [...stamps].sort((x, y) => x - y);
   assert.equal(sorted.length, 6, "two index pages and two article pages per source");
-  for (let i = 1; i < sorted.length; i += 1) assert.ok(sorted[i]! - sorted[i - 1]! >= 25, `requests ${i - 1}→${i} are spaced: ${sorted.map((t) => t - sorted[0]!).join(",")}`);
+  for (let i = 1; i < sorted.length; i += 1) assert.ok(sorted[i]! - sorted[i - 1]! >= 40, `requests ${i - 1}→${i} are spaced: ${sorted.map((t) => t - sorted[0]!).join(",")}`);
 });
 
 test("a licensed Epoch page with an empty body is kept without body_text and fails extraction instead of counting as ok", async () => {
