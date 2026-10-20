@@ -44,7 +44,7 @@ interface Harness {
   db: MemoryDb;
   ledger: MemoryLedger;
   calls: string[];
-  run(sources: SourceConfig[], cfg?: PipelineConfig): Promise<IngestOutput>;
+  run(sources: SourceConfig[], cfg?: PipelineConfig, now?: Date): Promise<IngestOutput>;
 }
 
 function harness(feeds: Record<string, RawItemInsert[] | Error>, extractFails: string[] = []): Harness {
@@ -69,9 +69,9 @@ function harness(feeds: Record<string, RawItemInsert[] | Error>, extractFails: s
     db,
     ledger,
     calls,
-    async run(sources, cfg = config()) {
-      const runId = await ledger.startRun({ trigger: "local", startedAt: NOW, gitSha: null, flags: {} });
-      const ctx: StageContext = { runId, now: NOW, config: cfg, logger: silentLogger(), ledger, budget: createBudget(cfg.budget), dryRun: true, replay: true, fixtureName: undefined, fetch: () => Promise.reject(new Error("no network")), adapters };
+    async run(sources, cfg = config(), now = NOW) {
+      const runId = await ledger.startRun({ trigger: "local", startedAt: now, gitSha: null, flags: {} });
+      const ctx: StageContext = { runId, now, config: cfg, logger: silentLogger(), ledger, budget: createBudget(cfg.budget), dryRun: true, replay: true, fixtureName: undefined, fetch: () => Promise.reject(new Error("no network")), adapters };
       return IngestOutput.parse(await ingestStage.run({ sources }, ctx));
     },
   };
@@ -165,6 +165,16 @@ test("repeated failures auto-disable a source in the table; a later reviewed_at 
   assert.equal(third.stats.failed, 0);
   assert.equal(third.stats.sources.find((s) => s.source_id === "s-bad")?.status, "auto_disabled");
   assert.equal(h.db.rows("sources").find((r) => r["id"] === "s-bad")?.["enabled"], false, "the mirror keeps the table's enabled=false");
+
+  // Eight days later the source is still auto-disabled and does not run, yet its stored health is aged on every
+  // run: no outcome is inside the window any more, so the seven-day rate is null instead of the stale 0.
+  const aged = await h.run([good, bad], config(), new Date(NOW.getTime() + 8 * 24 * 60 * 60 * 1000));
+  assert.equal(aged.stats.auto_disabled, 1);
+  const agedHealth = h.db.rows("sources").find((r) => r["id"] === "s-bad")!["health"] as { success_rate_7d: number | null; recent: unknown[]; auto_disabled_at: string; last_error: string | null };
+  assert.equal(agedHealth.success_rate_7d, null, "no run inside the window → no seven-day rate");
+  assert.deepEqual(agedHealth.recent, []);
+  assert.equal(agedHealth.auto_disabled_at, NOW.toISOString(), "the auto-disable marker and the last error are kept");
+  assert.equal(agedHealth.last_error, "CodedError: HTTP_403: http 403");
 
   h.calls.length = 0;
   const fourth = await h.run([good, { ...bad, reviewed_at: "2026-10-19" }]);
