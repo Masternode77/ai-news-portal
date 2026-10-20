@@ -9,9 +9,10 @@ export {
   epochArticleMetadata,
   epochArticleTarget,
   epochIndexLinks,
+  listEpochIndex,
   epochPublishedAt,
 } from "./source/epoch-index.ts";
-export type { EpochIndexOptions } from "./source/epoch-index.ts";
+export type { EpochIndexListing, EpochIndexOptions } from "./source/epoch-index.ts";
 export {
   CC_BY_4_URL,
   ExtractionError,

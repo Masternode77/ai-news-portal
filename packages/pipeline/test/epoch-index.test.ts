@@ -2,7 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { IngestConfig, silentLogger } from "@cc/shared";
 import type { SourceConfig, StageContext } from "@cc/shared";
-import { CC_BY_4_URL, createEpochIndexAdapter, epochArticleMetadata, epochArticleTarget, epochIndexLinks } from "../src/adapters/index.ts";
+import { CC_BY_4_URL, createEpochIndexAdapter, epochArticleMetadata, epochArticleTarget, epochIndexLinks, listEpochIndex } from "../src/adapters/index.ts";
 import { createBudget } from "../src/budget.ts";
 import { baseRunOptions } from "./helpers.ts";
 
@@ -76,6 +76,11 @@ test("epochIndexLinks keeps section links within the age window, deduplicated an
   assert.deepEqual(links, ["https://epoch.ai/gradient-updates/first-post/", "https://epoch.ai/gradient-updates/unlicensed-post/"]);
   assert.deepEqual(epochIndexLinks(INDEX, "/gradient-updates/", 1, NOW, 21), ["https://epoch.ai/gradient-updates/first-post/"]);
   assert.deepEqual(epochIndexLinks(INDEX, "/data-insights/", 5, NOW, 21), ["https://epoch.ai/data-insights/other-section/"], "links without a listing date are kept");
+  // The telemetry counts what the index listed before the window and the limit, so a stale index is not an empty one.
+  assert.deepEqual(listEpochIndex(INDEX, "/gradient-updates/", 5, NOW, 21), { links, listed: 3, skipped: { too_old: 1 } });
+  assert.deepEqual(listEpochIndex(INDEX, "/gradient-updates/", 1, NOW, 21), { links: [links[0]], listed: 3, skipped: { too_old: 1, capped: 1 } });
+  assert.deepEqual(listEpochIndex(INDEX, "/gradient-updates/", 5, NOW, 1), { links: [], listed: 3, skipped: { too_old: 3 } }, "every link outside the window: listed, not lost");
+  assert.deepEqual(listEpochIndex("<html><body>no links</body></html>", "/gradient-updates/", 5, NOW, 21), { links: [], listed: 0, skipped: {} });
 });
 
 test("epochArticleMetadata needs the licence link, a title and a date", () => {
@@ -89,9 +94,9 @@ test("the html index adapter lists, filters, extracts at fetch time and reports 
   const adapter = createEpochIndexAdapter({ ingest: IngestConfig.parse({ extract_host_delay_ms: 0 }), defaultMaxAgeDays: 10, itemsPerSource: 6, resolveHost: async () => ["93.184.216.34"] });
   const detail = await adapter.fetchDetailed!(SOURCE, ctx(urls));
   assert.deepEqual(urls, ["https://epoch.ai/gradient-updates", "https://epoch.ai/gradient-updates/first-post/", "https://epoch.ai/gradient-updates/unlicensed-post/"]);
-  assert.equal(detail.stats.listed, 2);
+  assert.equal(detail.stats.listed, 3, "the index listed three section links; one is outside the window");
   assert.equal(detail.stats.kept, 1);
-  assert.deepEqual(detail.stats.skipped, { unlicensed_or_no_metadata: 1 });
+  assert.deepEqual(detail.stats.skipped, { too_old: 1, unlicensed_or_no_metadata: 1 });
   const [item] = detail.items;
   assert.equal(item?.canonical_url, "https://epoch.ai/gradient-updates/first-post/");
   assert.equal(item?.title, "First post title");
@@ -166,7 +171,7 @@ test("every listed article unreachable fails the source; one unreachable article
   await assert.rejects(adapter.fetchDetailed!(SOURCE, failing((url) => url !== "https://epoch.ai/gradient-updates")), /SOURCE_UNREACHABLE: all 2 article requests failed; last: .*503/);
   const partial = await adapter.fetchDetailed!(SOURCE, failing((url) => url === "https://epoch.ai/gradient-updates/first-post/"));
   assert.equal(partial.stats.kept, 0);
-  assert.deepEqual(partial.stats.skipped, { source_unreachable: 1, unlicensed_or_no_metadata: 1 }, "a partial failure keeps item-level isolation");
+  assert.deepEqual(partial.stats.skipped, { source_unreachable: 1, too_old: 1, unlicensed_or_no_metadata: 1 }, "a partial failure keeps item-level isolation");
 });
 
 test("two Epoch sources sharing one pacer never request epoch.ai inside the host interval", async () => {
