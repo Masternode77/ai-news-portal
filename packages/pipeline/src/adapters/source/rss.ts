@@ -58,13 +58,17 @@ function googleSection(contentHtml: string, heading: string | undefined): string
 /**
  * The feed's own text, kept for sources that may quote or re-narrate it. A link-only source (ADR-004) carries
  * the title and link alone: its summary and content are not stored, so no later stage can use text the source
- * configuration disallows.
+ * configuration disallows. An abstract-scoped source (`text_scope: abstract`, whatever its rights) stores the
+ * feed summary alone: `content:encoded` may carry the full text, which the scope forbids.
  */
 function feedText(source: SourceConfig, contentHtml: string, summaryHtml: string, ingest: IngestConfig): { snippet: string; body_preview: string } | Record<never, never> {
   if (source.text_rights === "link_only") return {};
+  const summaryText = cleanText(summaryHtml);
+  if (source.text_scope === "abstract") {
+    return summaryText ? { snippet: truncate(summaryText, ingest.snippet_chars), body_preview: truncate(summaryText, ingest.body_preview_chars) } : {};
+  }
   const bodyText = cleanText(contentHtml);
-  const summaryText = cleanText(summaryHtml) || bodyText;
-  return { snippet: truncate(summaryText, ingest.snippet_chars), body_preview: truncate(bodyText, ingest.body_preview_chars) };
+  return { snippet: truncate(summaryText || bodyText, ingest.snippet_chars), body_preview: truncate(bodyText, ingest.body_preview_chars) };
 }
 
 /** Pure mapping of one feed entry to a raw item, or the reason it was skipped. */
