@@ -13,7 +13,7 @@ import { cleanItemUrl, googleReleaseNoteTarget, hostAllowed, hostOf, pathWithinP
 import { ecPressApiUrl, runExtraction } from "./extract.ts";
 import { parseFeed } from "./feed-parser.ts";
 import type { FeedItem } from "./feed-parser.ts";
-import { FEED_CONTENT_TYPES, JSON_CONTENT_TYPES, PAGE_CONTENT_TYPES, SourceFetchError, safeFetchText } from "./net.ts";
+import { FEED_CONTENT_TYPES, JSON_CONTENT_TYPES, PAGE_CONTENT_TYPES, SourceFetchError, safeFetchText, withRetry } from "./net.ts";
 import type { HostResolver } from "./net.ts";
 
 export interface LiveRssOptions {
@@ -31,21 +31,6 @@ export function allowedHostsFor(source: SourceConfig): string[] {
   const domain = feedHost ? registrableDomain(feedHost) : null;
   const configured = source.extract?.hosts ?? [];
   return [...new Set([feedHost, domain, domain ? `*.${domain}` : null, ...configured].filter((h): h is string => typeof h === "string" && h.length > 0))];
-}
-
-async function withRetry<T>(attempt: () => Promise<T>, retries: number, backoffMs: number): Promise<T> {
-  let lastError: unknown;
-  for (let i = 0; i <= retries; i += 1) {
-    try {
-      return await attempt();
-    } catch (error) {
-      lastError = error;
-      const retryable = error instanceof SourceFetchError && error.code === "SOURCE_UNREACHABLE";
-      if (!retryable || i === retries) break;
-      if (backoffMs > 0) await new Promise((resolve) => setTimeout(resolve, backoffMs * (i + 1)));
-    }
-  }
-  throw lastError;
 }
 
 export interface MappedItem {
@@ -199,16 +184,21 @@ export function createLiveRssAdapter(options: LiveRssOptions): SourceAdapter {
       if (source.text_rights !== "full" || kind === "none") throw new SourceFetchError("TEXT_USE_NOT_AUTHORIZED", `${source.id} is ${source.text_rights}`);
       const allowedHosts = allowedHostsFor(source);
       const apiUrl = kind === "ec_press" ? ecPressApiUrl(item.canonical_url) : null;
-      const response = await safeFetchText(apiUrl ?? item.canonical_url, {
-        fetch: ctx.fetch,
-        timeoutMs: options.ingest.page_timeout_ms,
-        maxBytes: options.ingest.max_body_bytes,
-        userAgent: options.ingest.user_agent,
-        accept: apiUrl ? "application/json" : "text/html, application/xhtml+xml;q=0.9, */*;q=0.5",
-        allowedHosts,
-        contentTypes: apiUrl ? JSON_CONTENT_TYPES : PAGE_CONTENT_TYPES,
-        ...(options.resolveHost ? { resolveHost: options.resolveHost } : {}),
-      });
+      const response = await withRetry(
+        () =>
+          safeFetchText(apiUrl ?? item.canonical_url, {
+            fetch: ctx.fetch,
+            timeoutMs: options.ingest.page_timeout_ms,
+            maxBytes: options.ingest.max_body_bytes,
+            userAgent: options.ingest.user_agent,
+            accept: apiUrl ? "application/json" : "text/html, application/xhtml+xml;q=0.9, */*;q=0.5",
+            allowedHosts,
+            contentTypes: apiUrl ? JSON_CONTENT_TYPES : PAGE_CONTENT_TYPES,
+            ...(options.resolveHost ? { resolveHost: options.resolveHost } : {}),
+          }),
+        options.ingest.retry_attempts,
+        options.ingest.retry_backoff_ms,
+      );
       const extraction = runExtraction({ kind, url: item.canonical_url, body: response.text, licenseMarker: source.extract?.license_marker });
       return { text: extraction.text, chars: extraction.chars, method: extraction.method };
     },

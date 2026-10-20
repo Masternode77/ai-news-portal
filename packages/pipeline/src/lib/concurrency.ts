@@ -14,3 +14,8 @@ export async function mapConcurrent<T, R>(items: readonly T[], limit: number, fn
   await Promise.all(workers);
   return results;
 }
+
+/** Resolves after `ms` milliseconds; immediately for zero or negative values. */
+export function sleep(ms: number): Promise<void> {
+  return ms > 0 ? new Promise((resolve) => setTimeout(resolve, ms)) : Promise.resolve();
+}

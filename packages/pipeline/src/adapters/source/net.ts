@@ -13,6 +13,7 @@
  */
 import { lookup } from "node:dns/promises";
 import { isIP } from "node:net";
+import { sleep } from "../../lib/concurrency.ts";
 import { hostAllowed, normalizeHost } from "../../lib/url.ts";
 
 export class SourceFetchError extends Error {
@@ -221,6 +222,27 @@ async function readBody(response: Response, maxBytes: number, timeoutMs: number)
 
 function isTimeout(error: unknown): boolean {
   return error instanceof Error && (error.name === "TimeoutError" || error.name === "AbortError");
+}
+
+/**
+ * Retries `attempt` on SOURCE_UNREACHABLE (timeouts, 5xx, 429, DNS and body
+ * stream failures) with linear backoff; any other error is final. Shared by
+ * every adapter so `ingest.retry_attempts` means the same for feeds, index
+ * pages and article pages.
+ */
+export async function withRetry<T>(attempt: () => Promise<T>, retries: number, backoffMs: number): Promise<T> {
+  let lastError: unknown;
+  for (let i = 0; i <= retries; i += 1) {
+    try {
+      return await attempt();
+    } catch (error) {
+      lastError = error;
+      const retryable = error instanceof SourceFetchError && error.code === "SOURCE_UNREACHABLE";
+      if (!retryable || i === retries) break;
+      await sleep(backoffMs * (i + 1));
+    }
+  }
+  throw lastError;
 }
 
 /** GET a public https resource as text with the safety rules above. Throws SourceFetchError. */

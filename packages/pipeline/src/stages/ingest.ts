@@ -28,7 +28,8 @@ import type {
   Stage,
   StageContext,
 } from "@cc/shared";
-import { mapConcurrent } from "../lib/concurrency.ts";
+import { mapConcurrent, sleep } from "../lib/concurrency.ts";
+import { hostOf, registrableDomain } from "../lib/url.ts";
 import type { SourceRunStat } from "../state.ts";
 import { defineStageSpec } from "./spec.ts";
 import { IngestInput, IngestOutput } from "./types.ts";
@@ -320,16 +321,30 @@ export const ingestStage: Stage<IngestInput, IngestOutput> = {
       if (cfg.extract_bodies && source.text_rights === "full" && (source.extract?.kind ?? "generic") !== "none" && typeof adapter?.extract === "function") eligible.push(entry);
     }
     const extractSkipped = unique.length - eligible.length - extractOk;
-    await mapConcurrent(eligible, cfg.extract_concurrency, async ({ item, source }) => {
-      const adapter = ctx.adapters.sources[source.type]!;
-      try {
-        const text = await adapter.extract!(item, source, ctx);
-        item.payload = { ...(item.payload ?? {}), body_text: text.text, extraction: { ok: true, method: text.method, chars: text.chars } };
-        extractOk += 1;
-      } catch (error) {
-        item.payload = { ...(item.payload ?? {}), extraction: { ok: false, error: errorCodeOf(error), detail: errorMessage(error).slice(0, ERROR_CHARS) } };
-        extractFailed += 1;
-        ctx.logger.warn("extraction failed; item kept with feed text", { source_id: source.id, url: item.canonical_url, error: errorMessage(error) });
+    // Page requests are serialised per registrable host with a minimum interval (a robots Crawl-delay such as
+    // arXiv's 15 s is honoured through `extract.delay_ms`); hosts run in parallel up to extract_concurrency.
+    const byHost = new Map<string, { delayMs: number; entries: typeof eligible }>();
+    for (const entry of eligible) {
+      const host = hostOf(entry.item.canonical_url);
+      const key = host ? registrableDomain(host) : entry.source.id;
+      const group = byHost.get(key) ?? { delayMs: 0, entries: [] };
+      group.delayMs = Math.max(group.delayMs, cfg.extract_host_delay_ms, entry.source.extract?.delay_ms ?? 0);
+      group.entries.push(entry);
+      byHost.set(key, group);
+    }
+    await mapConcurrent([...byHost.values()], cfg.extract_concurrency, async (group) => {
+      for (const [index, { item, source }] of group.entries.entries()) {
+        if (index > 0) await sleep(group.delayMs);
+        const adapter = ctx.adapters.sources[source.type]!;
+        try {
+          const text = await adapter.extract!(item, source, ctx);
+          item.payload = { ...(item.payload ?? {}), body_text: text.text, extraction: { ok: true, method: text.method, chars: text.chars } };
+          extractOk += 1;
+        } catch (error) {
+          item.payload = { ...(item.payload ?? {}), extraction: { ok: false, error: errorCodeOf(error), detail: errorMessage(error).slice(0, ERROR_CHARS) } };
+          extractFailed += 1;
+          ctx.logger.warn("extraction failed; item kept with feed text", { source_id: source.id, url: item.canonical_url, error: errorMessage(error) });
+        }
       }
     });
 

@@ -660,6 +660,7 @@
   extract:
     kind: arxiv_abstract
     hosts: [arxiv.org, www.arxiv.org]
+    delay_ms: 15000
 
 - id: arxiv-cs-ar
   name: arXiv
@@ -675,6 +676,7 @@
   extract:
     kind: arxiv_abstract
     hosts: [arxiv.org, www.arxiv.org]
+    delay_ms: 15000
 
 - id: arxiv-cs-pf
   name: arXiv
@@ -690,6 +692,7 @@
   extract:
     kind: arxiv_abstract
     hosts: [arxiv.org, www.arxiv.org]
+    delay_ms: 15000
 
 - id: nextplatform
   name: The Next Platform

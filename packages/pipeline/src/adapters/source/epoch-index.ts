@@ -12,7 +12,8 @@ import { olderThanDays, parseDateCandidate } from "../../lib/dates.ts";
 import { cleanText, metaContent, truncate } from "../../lib/html.ts";
 import { hostOf } from "../../lib/url.ts";
 import { CC_BY_4_URL, extractEpoch, ExtractionError } from "./extract.ts";
-import { PAGE_CONTENT_TYPES, safeFetchText } from "./net.ts";
+import { PAGE_CONTENT_TYPES, safeFetchText, withRetry } from "./net.ts";
+import { sleep } from "../../lib/concurrency.ts";
 import type { HostResolver } from "./net.ts";
 
 export const EPOCH_HOST = "epoch.ai";
@@ -79,17 +80,24 @@ export interface EpochIndexOptions {
 }
 
 export function createEpochIndexAdapter(options: EpochIndexOptions): SourceAdapter {
+  // Index and article pages share the per-source retry and the per-host request spacing with the feed adapter.
   const fetchPage = (url: string, ctx: StageContext) =>
-    safeFetchText(url, {
-      fetch: ctx.fetch,
-      timeoutMs: options.ingest.page_timeout_ms,
-      maxBytes: options.ingest.max_body_bytes,
-      userAgent: options.ingest.user_agent,
-      accept: "text/html, application/xhtml+xml;q=0.9",
-      allowedHosts: [EPOCH_HOST],
-      contentTypes: PAGE_CONTENT_TYPES,
-      ...(options.resolveHost ? { resolveHost: options.resolveHost } : {}),
-    });
+    withRetry(
+      () =>
+        safeFetchText(url, {
+          fetch: ctx.fetch,
+          timeoutMs: options.ingest.page_timeout_ms,
+          maxBytes: options.ingest.max_body_bytes,
+          userAgent: options.ingest.user_agent,
+          accept: "text/html, application/xhtml+xml;q=0.9",
+          allowedHosts: [EPOCH_HOST],
+          contentTypes: PAGE_CONTENT_TYPES,
+          ...(options.resolveHost ? { resolveHost: options.resolveHost } : {}),
+        }),
+      options.ingest.retry_attempts,
+      options.ingest.retry_backoff_ms,
+    );
+  const pageDelayMs = (source: SourceConfig) => Math.max(options.ingest.extract_host_delay_ms, source.extract?.delay_ms ?? 0);
 
   const fetchDetailed = async (source: SourceConfig, ctx: StageContext): Promise<SourceFetchDetail> => {
     if (hostOf(source.url) !== EPOCH_HOST) throw new ExtractionError("EXTRACTION_FAILED", `${source.id}: epoch_index adapter needs an epoch.ai index url`);
@@ -101,6 +109,7 @@ export function createEpochIndexAdapter(options: EpochIndexOptions): SourceAdapt
     const stats: SourceFetchStats = { listed: links.length, kept: 0, skipped: {}, fetch: { url: index.url, bytes: index.bytes, redirects: index.redirects, ms: Date.now() - started } };
     const items: RawItemInsert[] = [];
     for (const link of links) {
+      await sleep(pageDelayMs(source));
       try {
         const page = await fetchPage(link, ctx);
         const meta = epochArticleMetadata(page.text, link);

@@ -177,6 +177,7 @@ ingest:                        # Phase 3a, 전부 선택(기본값은 packages/s
   max_title_chars: 220
   auto_disable_after: 5        # 연속 실패 런 수 → sources 테이블의 enabled=false(YAML 불변)
   extract_bodies: true
+  extract_host_delay_ms: 1000  # 등록 도메인별 페이지 요청 최소 간격(호스트 간은 병렬, 호스트 안은 직렬)
   user_agent: "Mozilla/5.0 (compatible; ComputeCurrentBot/1.0)"
 normalize:                     # Phase 3b, 전부 선택(기본값은 packages/shared/src/schema/config.ts)
   version: "2026-10-20.1"      # candidates.rubric_version = normalize/<version> (탈락 행)
@@ -227,6 +228,7 @@ Phase 3a 개정 — 선택 필드 3개(단순 소스는 여전히 ≤10줄). `ex
     hosts: [docs.cloud.google.com]                          # 기사 호스트 허용 목록(피드 호스트는 항상 포함, `*.example.com` 가능)
     license_marker: Distributed under CC BY 4.0             # 추출 페이지가 반드시 담아야 하는 가시 문구
     section: Gemini Enterprise Agent Platform               # 전제품 피드에서 남길 제품 섹션
+    delay_ms: 15000                                         # 이 소스 호스트에 대한 페이지 요청 최소 간격(robots Crawl-delay; arXiv 15 s). 기본은 ingest.extract_host_delay_ms
 ```
 
 규칙: 링크 호스트 제한(`hosts`)은 페이지를 실제로 가져오는 `full` 소스에만 적용된다(`rewrite_only`/`link_only`는 링크를 가져오지 않으므로 어떤 공인 https 호스트든 허용). 자동 비활성(`sources.health.auto_disabled_at`)은 YAML의 `reviewed_at`이 그 날짜보다 뒤면 다음 런에서 해제된다. `config/sources.yaml`의 82행은 `packages/pipeline/tools/migrate-legacy-registry.ts`가 `config/sourceRegistry.yml`에서 1회 생성했다(이후 수동 편집).

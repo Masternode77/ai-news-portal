@@ -84,6 +84,8 @@ export const IngestConfig = z.strictObject({
   auto_disable_after: z.number().int().positive().default(5),
   /** Fetch article bodies for `text_rights: full` sources; false stores feed fields only. */
   extract_bodies: z.boolean().default(true),
+  /** Minimum interval between page requests to one registrable host (`extract.delay_ms` raises it per source, e.g. a robots Crawl-delay). */
+  extract_host_delay_ms: z.number().int().nonnegative().max(60_000).default(1_000),
   user_agent: z.string().min(1).default("Mozilla/5.0 (compatible; ComputeCurrentBot/1.0)"),
 });
 export type IngestConfig = z.infer<typeof IngestConfig>;
@@ -141,6 +143,8 @@ export const ExtractConfig = z.strictObject({
   license_marker: z.string().min(3).optional(),
   /** Google release notes: the product section heading to keep. */
   section: z.string().min(1).optional(),
+  /** Minimum interval between page requests to this source's host (robots `Crawl-delay`, e.g. arXiv 15 s); never below `ingest.extract_host_delay_ms`. */
+  delay_ms: z.number().int().nonnegative().max(60_000).optional(),
 });
 export type ExtractConfig = z.infer<typeof ExtractConfig>;
 
