@@ -15,6 +15,7 @@ import { parseFeed } from "./feed-parser.ts";
 import type { FeedItem } from "./feed-parser.ts";
 import { FEED_CONTENT_TYPES, JSON_CONTENT_TYPES, PAGE_CONTENT_TYPES, SourceFetchError, safeFetchText, withRetry } from "./net.ts";
 import type { HostResolver } from "./net.ts";
+import { HostPacer } from "./pacer.ts";
 
 export interface LiveRssOptions {
   ingest: IngestConfig;
@@ -23,6 +24,8 @@ export interface LiveRssOptions {
   /** caps.items_per_source */
   itemsPerSource: number;
   resolveHost?: HostResolver;
+  /** Shared with the other live adapters so one publisher host is paced across sources. */
+  pacer?: HostPacer;
 }
 
 /** The feed host, its registrable domain and every subdomain of it (feeds redirect between `feeds.`/`www.`/bare), plus `extract.hosts`. */
@@ -131,6 +134,7 @@ export function mapFeedItem(entry: FeedItem, source: SourceConfig, options: Live
 }
 
 export function createLiveRssAdapter(options: LiveRssOptions): SourceAdapter {
+  const pacer = options.pacer ?? new HostPacer();
   const fetchDetailed = async (source: SourceConfig, ctx: StageContext): Promise<SourceFetchDetail> => {
     const allowedHosts = allowedHostsFor(source);
     const started = Date.now();
@@ -184,9 +188,13 @@ export function createLiveRssAdapter(options: LiveRssOptions): SourceAdapter {
       if (source.text_rights !== "full" || kind === "none") throw new SourceFetchError("TEXT_USE_NOT_AUTHORIZED", `${source.id} is ${source.text_rights}`);
       const allowedHosts = allowedHostsFor(source);
       const apiUrl = kind === "ec_press" ? ecPressApiUrl(item.canonical_url) : null;
+      const pageUrl = apiUrl ?? item.canonical_url;
+      const pageDelayMs = Math.max(options.ingest.extract_host_delay_ms, source.extract?.delay_ms ?? 0);
       const response = await withRetry(
-        () =>
-          safeFetchText(apiUrl ?? item.canonical_url, {
+        async () => {
+          // Every attempt (first or retry) waits for the host's slot, so retries keep the publisher's spacing too.
+          await pacer.acquire(hostOf(pageUrl) ?? source.id, pageDelayMs);
+          return safeFetchText(pageUrl, {
             fetch: ctx.fetch,
             timeoutMs: options.ingest.page_timeout_ms,
             maxBytes: options.ingest.max_body_bytes,
@@ -195,10 +203,10 @@ export function createLiveRssAdapter(options: LiveRssOptions): SourceAdapter {
             allowedHosts,
             contentTypes: apiUrl ? JSON_CONTENT_TYPES : PAGE_CONTENT_TYPES,
             ...(options.resolveHost ? { resolveHost: options.resolveHost } : {}),
-          }),
+          });
+        },
         options.ingest.retry_attempts,
-        // A retry to the publisher's host keeps the host's request spacing (arXiv: 15 s), not only the global backoff.
-        Math.max(options.ingest.retry_backoff_ms, options.ingest.extract_host_delay_ms, source.extract?.delay_ms ?? 0),
+        options.ingest.retry_backoff_ms,
       );
       const extraction = runExtraction({ kind, url: item.canonical_url, body: response.text, licenseMarker: source.extract?.license_marker });
       return { text: extraction.text, chars: extraction.chars, method: extraction.method };

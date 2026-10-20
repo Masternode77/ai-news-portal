@@ -228,8 +228,10 @@ test("every sources upsert carries the full row: PostgreSQL checks NOT NULL befo
   assert.equal(health.find((r) => r["id"] === "s-bad")?.["url"], "https://s-bad.example.com/feed.xml", "config columns ride along so the upsert never inserts NULL into a NOT NULL column");
 });
 
-test("page extraction is serialised per registrable host with the configured interval while other hosts proceed", async () => {
-  const calls: { host: string; at: number }[] = [];
+test("page extraction runs one worker per registrable host: items of one host never overlap, hosts proceed in parallel", async () => {
+  const active = new Map<string, number>();
+  const overlaps: string[] = [];
+  const order: string[] = [];
   const rss: SourceAdapter = {
     type: "rss",
     async fetch(source) {
@@ -237,7 +239,12 @@ test("page extraction is serialised per registrable host with the configured int
       return [1, 2, 3].map((n) => ({ ...raw(source.id, `${source.id}-${n}`, 10 + n), canonical_url: `https://${host}/abs/${source.id}-${n}` }));
     },
     async extract(item) {
-      calls.push({ host: new URL(item.canonical_url).hostname, at: Date.now() });
+      const host = new URL(item.canonical_url).hostname;
+      if ((active.get(host) ?? 0) > 0) overlaps.push(item.canonical_url);
+      active.set(host, (active.get(host) ?? 0) + 1);
+      order.push(host);
+      await new Promise((resolve) => setTimeout(resolve, 15));
+      active.set(host, active.get(host)! - 1);
       return { text: "abstract text", chars: 13, method: "test" };
     },
   };
@@ -247,13 +254,10 @@ test("page extraction is serialised per registrable host with the configured int
   const runId = await ledger.startRun({ trigger: "local", startedAt: NOW, gitSha: null, flags: {} });
   const ctx: StageContext = { runId, now: NOW, config: cfg, logger: silentLogger(), ledger, budget: createBudget(cfg.budget), dryRun: true, replay: true, fixtureName: undefined, fetch: () => Promise.reject(new Error("no network")), adapters: { ...fixtureAdapters(db), sources: { rss }, db } };
   const started = Date.now();
-  const out = await ingestStage.run({ sources: [src("s-arxiv", { text_rights: "full", extract: { kind: "arxiv_abstract", delay_ms: 60 } }), src("s-other", { text_rights: "full", extract: { kind: "generic" } })] }, ctx);
+  const out = await ingestStage.run({ sources: [src("s-arxiv", { text_rights: "full", extract: { kind: "arxiv_abstract", delay_ms: 15000 } }), src("s-other", { text_rights: "full", extract: { kind: "generic" } })] }, ctx);
   const elapsed = Date.now() - started;
   assert.equal(out.stats.extract_ok, 6);
-  const arxiv = calls.filter((c) => c.host === "arxiv.org").map((c) => c.at);
-  const other = calls.filter((c) => c.host === "www.other.example").map((c) => c.at);
-  assert.equal(arxiv.length, 3);
-  assert.ok(arxiv[1]! - arxiv[0]! >= 50 && arxiv[2]! - arxiv[1]! >= 50, `arxiv requests are at least the source delay apart: ${arxiv.map((t) => t - arxiv[0]!).join(",")}`);
-  assert.ok(other[2]! < arxiv[2]!, "the other host finished without waiting on arxiv's interval");
-  assert.ok(elapsed >= 120 && elapsed < 400, `two 60 ms gaps on one host, hosts in parallel: ${elapsed} ms`);
+  assert.deepEqual(overlaps, [], "two extractions on one host never run at the same time");
+  assert.ok(order.slice(0, 2).includes("arxiv.org") && order.slice(0, 2).includes("www.other.example"), `both hosts start together: ${order.join(",")}`);
+  assert.ok(elapsed < 120, `three 15 ms extractions per host, hosts in parallel: ${elapsed} ms`);
 });

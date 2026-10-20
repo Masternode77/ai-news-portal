@@ -23,6 +23,7 @@ import { createClient } from "@supabase/supabase-js";
 import { ConfigError, createLogger, isLogLevel, loadPipelineConfig, loadSourcesConfig } from "@cc/shared";
 import type { DbPort, Ledger, Logger, PipelineConfig, RunTrigger, SourceAdapter, StageAdapters, StageName } from "@cc/shared";
 import {
+  HostPacer,
   createDisabledLlmAdapter,
   createEpochIndexAdapter,
   createFixtureLlmAdapter,
@@ -113,7 +114,8 @@ export function buildAdapters(cli: Cli, config: PipelineConfig): StageAdapters {
   const fixturesDir = resolve(cli.fixturesDir);
   let sources: Record<string, SourceAdapter>;
   if (cli.live) {
-    const options = { ingest: config.ingest, defaultMaxAgeDays: config.caps.pool_max_age_days, itemsPerSource: config.caps.items_per_source };
+    // One pacer for both adapters: a publisher host is paced across every source that touches it.
+    const options = { ingest: config.ingest, defaultMaxAgeDays: config.caps.pool_max_age_days, itemsPerSource: config.caps.items_per_source, pacer: new HostPacer() };
     sources = { rss: createLiveRssAdapter(options), html: createEpochIndexAdapter(options) };
   } else {
     // The fixture serves every source type; `type` is informational on the adapter.
