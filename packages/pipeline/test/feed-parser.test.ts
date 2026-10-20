@@ -109,3 +109,24 @@ test("only an enclosure with an image MIME type is the item image; audio, video 
   const items = parseFeed(feed).items;
   assert.deepEqual(items.map((i) => i.image), ["https://img.test/t1.jpg", "https://img.test/m2.jpg", null, "https://img.test/e4.png"]);
 });
+
+test("media:content counts as an image only when it says so; the content HTML <img> is the last fallback", async () => {
+  const { parseFeed } = await import("../src/adapters/index.ts");
+  const feed = `<?xml version="1.0"?><rss version="2.0" xmlns:media="http://search.yahoo.com/mrss/" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>T</title>
+    <item><title>Audio media content without medium, thumbnail present</title><link>https://a.test/1</link>
+      <media:content url="https://a.test/ep1.mp3" type="audio/mpeg"/>
+      <media:thumbnail url="https://img.test/t1.jpg"/></item>
+    <item><title>Video medium</title><link>https://a.test/2</link>
+      <media:content url="https://a.test/clip.mp4" medium="video"/>
+      <content:encoded><![CDATA[<p>Story</p><img src="https://img.test/inline2.jpg" alt=""><p>More</p>]]></content:encoded></item>
+    <item><title>Untyped media content with an image url</title><link>https://a.test/3</link>
+      <media:content url="https://img.test/m3.jpeg?w=800"/></item>
+    <item><title>Untyped media content with a non-image url</title><link>https://a.test/4</link>
+      <media:content url="https://a.test/attachment"/></item>
+    <item><title>Escaped description image</title><link>https://a.test/5</link>
+      <description>&lt;p&gt;Text&lt;/p&gt;&lt;img src="https://img.test/desc5.png"&gt;</description></item>
+    <item><title>Nothing</title><link>https://a.test/6</link><description>plain</description></item>
+  </channel></rss>`;
+  const items = parseFeed(feed).items;
+  assert.deepEqual(items.map((i) => i.image), ["https://img.test/t1.jpg", "https://img.test/inline2.jpg", "https://img.test/m3.jpeg?w=800", null, "https://img.test/desc5.png", null]);
+});
