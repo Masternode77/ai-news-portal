@@ -35,22 +35,49 @@ export function epochArticleTarget(value: string): { url: string; prefix: string
   return { url: `https://${EPOCH_HOST}/${match[1]}/${match[2]}/`, prefix: `/${match[1]}/`, slug: match[2]! };
 }
 
-/** The listing date just before a link decides whether to skip it; links without a readable date are kept. */
-export function epochIndexLinks(html: string, prefix: string, limit: number, now: Date, maxAgeDays: number): string[] {
+export interface EpochIndexListing {
+  /** Article links to fetch: inside the age window, in index order, at most `limit`. */
+  links: string[];
+  /** Distinct section links the index actually listed, before the age window and the limit. */
+  listed: number;
+  /** `too_old` (listing date outside the window) and `capped` (beyond the limit), as the feed adapter reports them. */
+  skipped: Record<string, number>;
+}
+
+/**
+ * The section's article links with the telemetry of what the index listed. The listing date just before a link
+ * decides whether it is too old; links without a readable date are kept. Counting happens before the age window
+ * and the limit, so a stale index (`listed: 5, too_old: 5`) is distinguishable from a parser that found nothing.
+ */
+export function listEpochIndex(html: string, prefix: string, limit: number, now: Date, maxAgeDays: number): EpochIndexListing {
   const links: string[] = [];
+  const seen = new Set<string>();
+  const skipped: Record<string, number> = {};
   let lastIndex = 0;
   for (const match of html.matchAll(/href=["']([^"'#?]+)["']/gi)) {
     const raw = match[1]!.startsWith("/") ? `https://${EPOCH_HOST}${match[1]}` : match[1]!;
     const target = epochArticleTarget(raw);
-    if (!target || target.prefix !== prefix || links.includes(target.url)) continue;
+    if (!target || target.prefix !== prefix || seen.has(target.url)) continue;
+    seen.add(target.url);
     const listing = cleanText(html.slice(lastIndex, match.index).slice(-1500)).match(DATE_PATTERN)?.[0];
     lastIndex = (match.index ?? 0) + match[0].length;
     const listingDate = listing ? parseDateCandidate(listing) : null;
-    if (listingDate && olderThanDays(listingDate.toISOString(), maxAgeDays, now)) continue;
+    if (listingDate && olderThanDays(listingDate.toISOString(), maxAgeDays, now)) {
+      skipped["too_old"] = (skipped["too_old"] ?? 0) + 1;
+      continue;
+    }
+    if (links.length >= limit) {
+      skipped["capped"] = (skipped["capped"] ?? 0) + 1;
+      continue;
+    }
     links.push(target.url);
-    if (links.length >= limit) break;
   }
-  return links;
+  return { links, listed: seen.size, skipped };
+}
+
+/** The links alone (see listEpochIndex). */
+export function epochIndexLinks(html: string, prefix: string, limit: number, now: Date, maxAgeDays: number): string[] {
+  return listEpochIndex(html, prefix, limit, now, maxAgeDays).links;
 }
 
 export function epochPublishedAt(html: string): string | null {
@@ -112,8 +139,9 @@ export function createEpochIndexAdapter(options: EpochIndexOptions): SourceAdapt
     const maxAge = source.pool_max_age_days ?? options.defaultMaxAgeDays;
     const started = Date.now();
     const index = await fetchPage(source.url, source, ctx);
-    const links = epochIndexLinks(index.text, prefix, Math.min(EPOCH_INDEX_ARTICLE_LIMIT, options.itemsPerSource), ctx.now, maxAge);
-    const stats: SourceFetchStats = { listed: links.length, kept: 0, skipped: {}, fetch: { url: index.url, bytes: index.bytes, redirects: index.redirects, ms: Date.now() - started } };
+    const listing = listEpochIndex(index.text, prefix, Math.min(EPOCH_INDEX_ARTICLE_LIMIT, options.itemsPerSource), ctx.now, maxAge);
+    const links = listing.links;
+    const stats: SourceFetchStats = { listed: listing.listed, kept: 0, skipped: { ...listing.skipped }, fetch: { url: index.url, bytes: index.bytes, redirects: index.redirects, ms: Date.now() - started } };
     const items: RawItemInsert[] = [];
     let fetchFailures = 0;
     let lastFetchError: string | null = null;

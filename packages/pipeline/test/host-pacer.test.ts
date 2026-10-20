@@ -25,9 +25,14 @@ test("HostPacer spaces request starts per registrable host across concurrent cal
   assert.ok(epoch[1]! - epoch[0]! >= 35, "the two epoch callers are spaced");
   assert.ok(epoch[0]! - began < 30 && arxiv[0]! - began < 30, "the first request on each host starts at once");
   assert.ok(Date.now() - began < 200, "hosts are paced independently, not one after another");
-  // The delay is the caller's: a later caller with a larger delay waits for its own interval.
+  // The interval after a request is the larger of that request's delay and the next caller's: a later caller
+  // with a larger delay waits for its own interval, and a caller with a smaller delay still honours the previous
+  // request's (two sources on one host with different extract.delay_ms never shorten the stricter spacing).
   const t0 = Date.now();
   await pacer.acquire("slow.example", 0);
   await pacer.acquire("slow.example", 30);
-  assert.ok(Date.now() - t0 >= 25);
+  assert.ok(Date.now() - t0 >= 25, "the caller's own delay");
+  const t1 = Date.now();
+  await pacer.acquire("slow.example", 0);
+  assert.ok(Date.now() - t1 >= 25, "the previous request's delay still applies to a caller with a smaller one");
 });
