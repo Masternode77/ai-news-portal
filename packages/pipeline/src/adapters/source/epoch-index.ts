@@ -129,6 +129,10 @@ export function createEpochIndexAdapter(options: EpochIndexOptions): SourceAdapt
           continue;
         }
         const body = extractEpoch(page.text);
+        // A licensed page whose body container holds no text is an extraction failure, not usable source material
+        // (AGENTS.md editorial rule): the item keeps its metadata, carries no body_text and counts as extract_failed.
+        const extracted = body.text.trim().length > 0;
+        if (!extracted) ctx.logger.warn("epoch article body empty; item kept without body_text", { source_id: source.id, link, method: body.method });
         items.push({
           source_id: source.id,
           canonical_url: meta.url,
@@ -138,9 +142,9 @@ export function createEpochIndexAdapter(options: EpochIndexOptions): SourceAdapt
           payload: {
             guid: meta.url,
             snippet: truncate(meta.description || body.text, options.ingest.snippet_chars),
-            body_preview: truncate(body.text, options.ingest.body_preview_chars),
-            body_text: body.text,
-            extraction: { ok: true, method: body.method, chars: body.chars, limit_exceeded: body.limitExceeded },
+            ...(extracted
+              ? { body_preview: truncate(body.text, options.ingest.body_preview_chars), body_text: body.text, extraction: { ok: true, method: body.method, chars: body.chars, limit_exceeded: body.limitExceeded } }
+              : { extraction: { ok: false, error: "EXTRACTION_EMPTY", detail: `${body.method}: body container holds no text` } }),
             image: null,
             categories: [],
             text_rights: source.text_rights,
@@ -176,7 +180,7 @@ export function createEpochIndexAdapter(options: EpochIndexOptions): SourceAdapt
     fetchDetailed,
     async extract(item): Promise<ExtractedText> {
       const text = typeof item.payload?.["body_text"] === "string" ? (item.payload["body_text"] as string) : "";
-      if (!text) throw new ExtractionError("EXTRACTION_FAILED", "epoch item carries no body_text");
+      if (!text.trim()) throw new ExtractionError("EXTRACTION_EMPTY", "epoch item carries no body_text (empty body at fetch time)");
       return { text, chars: text.length, method: "epoch_index:payload" };
     },
   };

@@ -60,7 +60,7 @@ export interface SourceAdapter {
 export interface SourceFetchStats {
   listed: number;                          // 피드가 나열한 항목 수
   kept: number;                            // url/날짜/제목 규칙과 소스별 캡 적용 후
-  skipped: Record<string, number>;         // too_old | capped | offhost | date_missing | date_invalid | title_length | no_url | duplicate | section_missing …
+  skipped: Record<string, number>;         // too_old | capped | pool_cap | offhost | date_missing | date_invalid | title_length | no_url | duplicate | section_missing …
   fetch?: { url: string; bytes: number; redirects: number; ms: number };
 }
 // 어댑터의 모든 네트워크 호출은 ctx.fetch를 쓰는 safeFetchText 하나를 지난다: https/443, 자격증명 없음,
@@ -160,7 +160,7 @@ flags:
 caps:
   briefs_per_cycle: { min: 1, max: 2 }
   essays_per_day: 1
-  pool_max_items: 200          # 레거시 30 → 상향(ADR-004 재측정 대상)
+  pool_max_items: 200          # 레거시 30 → 상향(ADR-004 재측정 대상). ingest가 소스 간 중복 제거 뒤 tier 순으로 자른다(낮은 tier부터 탈락, 추출·저장 전)
   pool_max_age_days: 10
   items_per_source: 6          # Phase 3a: 레지스트리 id별 최신 N(레거시는 표시 이름 기준)
 ingest:                        # Phase 3a, 전부 선택(기본값은 packages/shared/src/schema/config.ts)

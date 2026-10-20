@@ -261,3 +261,20 @@ test("page extraction runs one worker per registrable host: items of one host ne
   assert.ok(order.slice(0, 2).includes("arxiv.org") && order.slice(0, 2).includes("www.other.example"), `both hosts start together: ${order.join(",")}`);
   assert.ok(elapsed < 120, `three 15 ms extractions per host, hosts in parallel: ${elapsed} ms`);
 });
+
+test("caps.pool_max_items bounds the unique pool before extraction, cutting the lowest tiers first", async () => {
+  const cfg = parsePipelineConfig(`${TEST_PIPELINE_YAML.replace("pool_max_items: 200", "pool_max_items: 5")}\ningest: { concurrency: 2, extract_concurrency: 2, retry_backoff_ms: 0, extract_host_delay_ms: 0 }\n`, { env: {} }).config;
+  const h = harness({
+    "s-one": Array.from({ length: 4 }, (_, i) => raw("s-one", `t1-${i}`, 10 + i)),
+    "s-three": Array.from({ length: 4 }, (_, i) => raw("s-three", `t3-${i}`, 10 + i)),
+  });
+  const out = await h.run([src("s-three", { tier: 3 }), src("s-one", { tier: 1 })], cfg);
+  assert.equal(out.rawItems.length, 5, "the pool is cut to pool_max_items");
+  assert.equal(out.stats.pool_capped, 3);
+  assert.equal(out.stats.duplicates, 0);
+  assert.equal(out.stats.skipped_items, 3);
+  assert.deepEqual(out.rawItems.map((item) => item.source_id), ["s-one", "s-one", "s-one", "s-one", "s-three"], "tier 1 survives in full; the tier-3 source loses its oldest items");
+  assert.deepEqual(out.stats.sources.find((s) => s.source_id === "s-three")?.skipped, { pool_cap: 3 });
+  assert.deepEqual(out.stats.sources.find((s) => s.source_id === "s-one")?.skipped, {});
+  assert.equal(h.db.size("raw_items"), 5, "nothing beyond the cap is persisted");
+});

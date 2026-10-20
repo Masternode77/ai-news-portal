@@ -38,6 +38,7 @@ interface Result {
     auto_disabled: number;
     items_new: number;
     duplicates: number;
+    pool_capped?: number;
     skipped_items: number;
     extract_ok: number;
     extract_failed: number;
@@ -95,7 +96,7 @@ export function summarize(result: Result): string {
   if (stats) {
     lines.push("");
     lines.push(
-      `sources: configured ${stats.configured} · ok ${stats.ok} · failed ${stats.failed} · auto-disabled ${stats.auto_disabled} · items new ${stats.items_new} · duplicates ${stats.duplicates} · skipped entries ${stats.skipped_items} · extraction ok ${stats.extract_ok} / failed ${stats.extract_failed} / skipped ${stats.extract_skipped}`,
+      `sources: configured ${stats.configured} · ok ${stats.ok} · failed ${stats.failed} · auto-disabled ${stats.auto_disabled} · items new ${stats.items_new} · duplicates ${stats.duplicates} · pool capped ${stats.pool_capped ?? 0} · skipped entries ${stats.skipped_items} · extraction ok ${stats.extract_ok} / failed ${stats.extract_failed} / skipped ${stats.extract_skipped}`,
     );
     lines.push("");
     lines.push("| source | tier | status | listed | kept | skipped | KB | redirects | ms | error |");

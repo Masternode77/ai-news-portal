@@ -163,3 +163,27 @@ test("two Epoch sources sharing one pacer never request epoch.ai inside the host
   assert.equal(sorted.length, 6, "two index pages and two article pages per source");
   for (let i = 1; i < sorted.length; i += 1) assert.ok(sorted[i]! - sorted[i - 1]! >= 25, `requests ${i - 1}→${i} are spaced: ${sorted.map((t) => t - sorted[0]!).join(",")}`);
 });
+
+test("a licensed Epoch page with an empty body is kept without body_text and fails extraction instead of counting as ok", async () => {
+  const urls: string[] = [];
+  const base = ctx(urls);
+  const index = `<html><body><ul><li><span>Oct 15, 2026</span> <a href="/gradient-updates/empty-post/">Empty</a></li></ul></body></html>`;
+  const empty = `<html><head><meta property="og:title" content="Empty post"><meta property="og:description" content="Only a description"></head><body><div class="content-header"><time>Oct 15, 2026</time></div><div class="formatted-text content-body article-content">   </div><div class="content-sidebar-right"></div>${LICENCE}</body></html>`;
+  const pages: Record<string, string> = { "https://epoch.ai/gradient-updates": index, "https://epoch.ai/gradient-updates/empty-post/": empty };
+  const local: StageContext = {
+    ...base,
+    fetch: async (input) => {
+      const page = pages[String(input)];
+      return page === undefined ? new Response("missing", { status: 404, headers: { "content-type": "text/html" } }) : new Response(page, { status: 200, headers: { "content-type": "text/html; charset=utf-8" } });
+    },
+  };
+  const adapter = createEpochIndexAdapter({ ingest: IngestConfig.parse({ extract_host_delay_ms: 0 }), defaultMaxAgeDays: 10, itemsPerSource: 6, resolveHost: async () => ["93.184.216.34"] });
+  const detail = await adapter.fetchDetailed!(SOURCE, local);
+  assert.equal(detail.stats.kept, 1, "the item is kept with its metadata");
+  const [item] = detail.items;
+  assert.equal(item?.payload?.["body_text"], undefined);
+  assert.equal(item?.payload?.["body_preview"], undefined);
+  assert.deepEqual(item?.payload?.["extraction"], { ok: false, error: "EXTRACTION_EMPTY", detail: "epoch_index:fallback_text: body container holds no text" });
+  assert.equal(item?.payload?.["snippet"], "Only a description");
+  await assert.rejects(adapter.extract!(item!, SOURCE, local), /EXTRACTION_EMPTY/, "ingest's extraction pass records it as a failure, never as extract_ok");
+});

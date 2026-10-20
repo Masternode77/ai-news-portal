@@ -297,7 +297,7 @@ export const ingestStage: Stage<IngestInput, IngestOutput> = {
     // One row per canonical URL; the first source (tier order) wins.
     const seen = new Set<string>();
     let duplicates = 0;
-    const unique: typeof fetched = [];
+    let unique: typeof fetched = [];
     for (const entry of fetched) {
       if (seen.has(entry.item.canonical_url)) {
         duplicates += 1;
@@ -305,6 +305,20 @@ export const ingestStage: Stage<IngestInput, IngestOutput> = {
       }
       seen.add(entry.item.canonical_url);
       unique.push(entry);
+    }
+
+    // The pool is bounded (caps.pool_max_items) before anything is extracted or persisted. The list is in tier
+    // order (tier 1 sources first, newest items first within a source), so the cut falls on the lowest tiers.
+    let poolCapped = 0;
+    if (unique.length > caps.pool_max_items) {
+      poolCapped = unique.length - caps.pool_max_items;
+      for (const entry of unique.slice(caps.pool_max_items)) {
+        const stat = perSource.find((candidate) => candidate.source_id === entry.source.id);
+        if (stat) stat.skipped["pool_cap"] = (stat.skipped["pool_cap"] ?? 0) + 1;
+      }
+      skippedItems += poolCapped;
+      unique = unique.slice(0, caps.pool_max_items);
+      ctx.logger.warn("pool capped; lowest-tier items dropped before extraction", { pool_max_items: caps.pool_max_items, dropped: poolCapped });
     }
 
     // Body extraction only where the source grants text rights and the adapter can do it.
@@ -367,6 +381,7 @@ export const ingestStage: Stage<IngestInput, IngestOutput> = {
         auto_disabled: autoDisabled,
         items_new: itemsNew,
         duplicates,
+        pool_capped: poolCapped,
         skipped_items: skippedItems,
         extract_ok: extractOk,
         extract_failed: extractFailed,
@@ -390,6 +405,7 @@ export const ingestSpec = defineStageSpec({
     items_new: output.stats.items_new,
     items_invalid: output.stats.invalid_items,
     items_duplicate: output.stats.duplicates,
+    items_pool_capped: output.stats.pool_capped,
     items_skipped: output.stats.skipped_items,
     extract_ok: output.stats.extract_ok,
     extract_failed: output.stats.extract_failed,
