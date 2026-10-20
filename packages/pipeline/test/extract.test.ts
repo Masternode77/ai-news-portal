@@ -11,6 +11,7 @@ import {
   extractGoogleReleaseNotes,
   runExtraction,
 } from "../src/adapters/index.ts";
+import { firstElement } from "../src/adapters/source/extract.ts";
 
 const LONG = "This paragraph is comfortably longer than the sixty character minimum used by the extractor.";
 const LICENCE = `<footer><a href="${CC_BY_4_URL}">CC BY 4.0</a></footer>`;
@@ -31,6 +32,19 @@ test("generic extraction prefers <article>, then <main>, then the cleaned page",
   const many = extractGeneric(`<article>${Array.from({ length: MAX_EXTRACTED_PARAGRAPHS + 5 }, (_, i) => `<p>${LONG} ${i}</p>`).join("")}</article>`);
   assert.equal(many.paragraphs, MAX_EXTRACTED_PARAGRAPHS);
   assert.equal(many.limitExceeded, true);
+});
+
+test("generic extraction finds the first <article> at any length and honours nesting", () => {
+  const long = Array.from({ length: 600 }, (_, i) => `<p>${LONG} ${i}</p>`).join("");
+  assert.ok(long.length > 45_000, "longer than the regex bound the extractor used to have");
+  const page = extractGeneric(`<html><body><header><p>${LONG} site header</p></header><article>${long}</article><section><p>${LONG} related story</p></section></body></html>`);
+  assert.equal(page.method, "generic:article", "a long container is still the article, not the whole page");
+  assert.equal(page.limitExceeded, true);
+  assert.ok(page.text.startsWith(LONG) && !page.text.includes("related story") && !page.text.includes("site header"));
+  const nested = extractGeneric(`<article><p>${LONG} main</p><article class="quote"><p>${LONG} nested</p></article></article><article><p>${LONG} sibling card</p></article>`);
+  assert.ok(nested.text.includes("nested") && !nested.text.includes("sibling card"), "nested elements stay inside, later siblings stay out");
+  assert.equal(firstElement("<main><p>open</p>", "main"), "<p>open</p>", "an unterminated container runs to the end");
+  assert.equal(firstElement("<p>none</p></article>", "article"), null);
 });
 
 test("Google release notes: only the dated section, only with the CC BY 4.0 link", () => {

@@ -43,12 +43,35 @@ function fromSection(sectionHtml: string, method: string, licenseOk: boolean | n
   return { text, chars: text.length, paragraphs: selected.length, method: selected.length > 0 ? method : `${method}:fallback_text`, limitExceeded: limitByCount || limitByChars, licenseOk };
 }
 
+/**
+ * The inner HTML of the first `<tag …>…</tag>` element, at any length and honouring nested elements of the same
+ * tag; an unterminated element runs to the end of the page. The paragraph and character limits apply to the text
+ * afterwards. (A length-bounded regex here missed long articles and fell back to the whole page, where navigation
+ * and related-story paragraphs live.)
+ */
+export function firstElement(html: string, tag: string): string | null {
+  const tags = new RegExp(`<(/?)${tag}(?:\\s[^>]*)?>`, "gi");
+  let depth = 0;
+  let start = -1;
+  for (const match of html.matchAll(tags)) {
+    const index = match.index ?? 0;
+    if (match[1] === "") {
+      if (depth === 0) start = index + match[0].length;
+      depth += 1;
+    } else if (depth > 0) {
+      depth -= 1;
+      if (depth === 0) return html.slice(start, index);
+    }
+  }
+  return start >= 0 ? html.slice(start) : null;
+}
+
 /** `<article>`, then `<main>`, then the whole page with non-content blocks removed. */
 export function extractGeneric(html: string): Extraction {
   const cleaned = removeNonContentBlocks(html);
-  const article = cleaned.match(/<article(?:\s[^>]*)?>([\s\S]{0,45000})<\/article>/i)?.[1];
+  const article = firstElement(cleaned, "article");
   if (article) return fromSection(article, "generic:article", null);
-  const main = cleaned.match(/<main(?:\s[^>]*)?>([\s\S]{0,45000})<\/main>/i)?.[1];
+  const main = firstElement(cleaned, "main");
   if (main) return fromSection(main, "generic:main", null);
   return fromSection(cleaned, "generic:page", null);
 }

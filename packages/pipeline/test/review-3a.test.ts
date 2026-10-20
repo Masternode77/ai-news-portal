@@ -89,7 +89,7 @@ test("safeFetchText reports the charset it decoded with", async () => {
   if (result.charset === "euc-kr") assert.equal(result.text, "<rss>한</rss>");
 });
 
-test("healthAfter keeps 50 dated outcomes and rates success over the seven days before the run", () => {
+test("healthAfter keeps every outcome of the seven-day window and rates success over all of them", () => {
   type Track = { health: SourceHealth; failStreak: number };
   let track: Track = { health: { ...EMPTY_SOURCE_HEALTH, recent: [] }, failStreak: 0 };
   const day = (offset: number): Date => new Date(Date.parse("2026-10-18T00:45:00Z") + offset * 24 * 60 * 60 * 1000);
@@ -98,19 +98,27 @@ test("healthAfter keeps 50 dated outcomes and rates success over the seven days 
   assert.equal(track.health.success_rate_7d, 0, "four failures; the run six days ago saw only failures in its own window");
   track = healthAfter(track, true, day(0), 3, null);
   assert.equal(track.failStreak, 0);
-  assert.equal(track.health.recent.length, 5, "every outcome is kept with its timestamp");
+  assert.equal(track.health.recent.length, 2, "outcomes that left the window are dropped; the rest keep their timestamp");
   assert.deepEqual(track.health.recent.at(-1), { at: day(0).toISOString(), ok: true });
   // Failures from 12, 11 and 10 days ago left the window; only the 6-day-old failure and today's success count.
   assert.equal(track.health.success_rate_7d, 0.5);
   assert.equal(track.health.last_error, "SOURCE_UNREACHABLE: http 503", "the last error is kept for diagnosis");
   assert.equal(track.health.items_last_run, 3);
-  // Extra dispatch runs on one day do not reach back: outcomes are selected by time, not by count.
+  // Extra dispatch runs on one day do not push in-window outcomes out: the 6-day-old failure still counts.
   for (let i = 0; i < 60; i += 1) track = healthAfter(track, true, day(0), 3, null);
-  assert.equal(track.health.recent.length, 50, "bounded history");
-  assert.equal(track.health.success_rate_7d, 1);
-  // After an outage the stale outcomes are ignored even though they are still in the list.
+  assert.equal(track.health.recent.length, 62, "every outcome inside the window is kept, beyond the old count cap");
+  assert.equal(track.health.success_rate_7d, 61 / 62);
+  // After an outage only the new run is inside the window; the stale outcomes are gone from the list.
   track = healthAfter(track, false, day(30), 0, "SOURCE_UNREACHABLE: http 503");
   assert.equal(track.health.success_rate_7d, 0, "only the run inside the window counts");
+  assert.equal(track.health.recent.length, 1);
+  // The row-size cap (500) is the only bound: a source run 521 times in one window rates over the 500 kept
+  // outcomes plus the new one, far beyond the three scheduled slots plus dispatches.
+  let busy: Track = { health: { ...EMPTY_SOURCE_HEALTH, recent: [] }, failStreak: 0 };
+  for (let i = 0; i < 520; i += 1) busy = healthAfter(busy, true, day(0), 3, null);
+  busy = healthAfter(busy, false, day(0), 0, "SOURCE_UNREACHABLE: http 503");
+  assert.equal(busy.health.success_rate_7d, 500 / 501);
+  assert.equal(busy.health.recent.length, 500, "bounded row");
 });
 
 test("--live wires the real adapters; the default wires fixtures for rss and html alike", () => {
