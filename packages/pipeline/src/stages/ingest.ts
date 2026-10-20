@@ -28,7 +28,7 @@ import type {
   Stage,
   StageContext,
 } from "@cc/shared";
-import { mapConcurrent, sleep } from "../lib/concurrency.ts";
+import { mapConcurrent } from "../lib/concurrency.ts";
 import { hostOf, registrableDomain } from "../lib/url.ts";
 import type { SourceRunStat } from "../state.ts";
 import { defineStageSpec } from "./spec.ts";
@@ -321,20 +321,16 @@ export const ingestStage: Stage<IngestInput, IngestOutput> = {
       if (cfg.extract_bodies && source.text_rights === "full" && (source.extract?.kind ?? "generic") !== "none" && typeof adapter?.extract === "function") eligible.push(entry);
     }
     const extractSkipped = unique.length - eligible.length - extractOk;
-    // Page requests are serialised per registrable host with a minimum interval (a robots Crawl-delay such as
-    // arXiv's 15 s is honoured through `extract.delay_ms`); hosts run in parallel up to extract_concurrency.
-    const byHost = new Map<string, { delayMs: number; entries: typeof eligible }>();
+    // One worker per registrable host so a heavily paced publisher (arXiv: 15 s between pages) never occupies the
+    // whole pool; the minimum request interval itself is enforced by the adapters' shared HostPacer.
+    const byHost = new Map<string, typeof eligible>();
     for (const entry of eligible) {
       const host = hostOf(entry.item.canonical_url);
       const key = host ? registrableDomain(host) : entry.source.id;
-      const group = byHost.get(key) ?? { delayMs: 0, entries: [] };
-      group.delayMs = Math.max(group.delayMs, cfg.extract_host_delay_ms, entry.source.extract?.delay_ms ?? 0);
-      group.entries.push(entry);
-      byHost.set(key, group);
+      byHost.set(key, [...(byHost.get(key) ?? []), entry]);
     }
     await mapConcurrent([...byHost.values()], cfg.extract_concurrency, async (group) => {
-      for (const [index, { item, source }] of group.entries.entries()) {
-        if (index > 0) await sleep(group.delayMs);
+      for (const { item, source } of group) {
         const adapter = ctx.adapters.sources[source.type]!;
         try {
           const text = await adapter.extract!(item, source, ctx);

@@ -148,3 +148,18 @@ test("every listed article unreachable fails the source; one unreachable article
   assert.equal(partial.stats.kept, 0);
   assert.deepEqual(partial.stats.skipped, { source_unreachable: 1, unlicensed_or_no_metadata: 1 }, "a partial failure keeps item-level isolation");
 });
+
+test("two Epoch sources sharing one pacer never request epoch.ai inside the host interval", async () => {
+  const { HostPacer } = await import("../src/adapters/index.ts");
+  const stamps: number[] = [];
+  const base = ctx([]);
+  const timed: StageContext = { ...base, fetch: async (input) => { stamps.push(Date.now()); return base.fetch(input); } };
+  const pacer = new HostPacer();
+  const adapter = createEpochIndexAdapter({ ingest: IngestConfig.parse({ extract_host_delay_ms: 30 }), defaultMaxAgeDays: 10, itemsPerSource: 6, resolveHost: async () => ["93.184.216.34"], pacer });
+  const second: SourceConfig = { ...SOURCE, id: "epoch-ai-data-insights", url: "https://epoch.ai/gradient-updates" };
+  const [a, b] = await Promise.all([adapter.fetchDetailed!(SOURCE, timed), adapter.fetchDetailed!(second, timed)]);
+  assert.equal(a.stats.kept + b.stats.kept, 2);
+  const sorted = [...stamps].sort((x, y) => x - y);
+  assert.equal(sorted.length, 6, "two index pages and two article pages per source");
+  for (let i = 1; i < sorted.length; i += 1) assert.ok(sorted[i]! - sorted[i - 1]! >= 25, `requests ${i - 1}→${i} are spaced: ${sorted.map((t) => t - sorted[0]!).join(",")}`);
+});

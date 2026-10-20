@@ -33,3 +33,4 @@ export type { HostResolver, SafeFetchOptions, SafeFetchResult } from "./source/n
 export { createDisabledLlmAdapter, createFixtureLlmAdapter } from "./llm/fixture.ts";
 export { createPlaceholderImageAdapter, PLACEHOLDER_IMAGE_PATH } from "./image/placeholder.ts";
 export { createNoopPublisher } from "./publisher/noop.ts";
+export { HostPacer } from "./source/pacer.ts";

@@ -13,8 +13,8 @@ import { cleanText, metaContent, truncate } from "../../lib/html.ts";
 import { hostOf } from "../../lib/url.ts";
 import { CC_BY_4_URL, extractEpoch, ExtractionError } from "./extract.ts";
 import { PAGE_CONTENT_TYPES, SourceFetchError, safeFetchText, withRetry } from "./net.ts";
-import { sleep } from "../../lib/concurrency.ts";
 import type { HostResolver } from "./net.ts";
+import { HostPacer } from "./pacer.ts";
 
 export const EPOCH_HOST = "epoch.ai";
 export const EPOCH_INDEX_ARTICLE_LIMIT = 5;
@@ -77,15 +77,20 @@ export interface EpochIndexOptions {
   defaultMaxAgeDays: number;
   itemsPerSource: number;
   resolveHost?: HostResolver;
+  /** Shared with the other live adapters: both Epoch sources pace their epoch.ai requests through one queue. */
+  pacer?: HostPacer;
 }
 
 export function createEpochIndexAdapter(options: EpochIndexOptions): SourceAdapter {
-  // Index and article pages share the per-source retry and the per-host request spacing with the feed adapter.
+  const pacer = options.pacer ?? new HostPacer();
   const pageDelayMs = (source: SourceConfig) => Math.max(options.ingest.extract_host_delay_ms, source.extract?.delay_ms ?? 0);
+  // Index and article pages share the per-source retry with the feed adapter; every attempt (first or retry) takes
+  // the host's slot from the shared pacer, so two Epoch sources never interleave requests inside the interval.
   const fetchPage = (url: string, source: SourceConfig, ctx: StageContext) =>
     withRetry(
-      () =>
-        safeFetchText(url, {
+      async () => {
+        await pacer.acquire(EPOCH_HOST, pageDelayMs(source));
+        return safeFetchText(url, {
           fetch: ctx.fetch,
           timeoutMs: options.ingest.page_timeout_ms,
           maxBytes: options.ingest.max_body_bytes,
@@ -94,9 +99,10 @@ export function createEpochIndexAdapter(options: EpochIndexOptions): SourceAdapt
           allowedHosts: [EPOCH_HOST],
           contentTypes: PAGE_CONTENT_TYPES,
           ...(options.resolveHost ? { resolveHost: options.resolveHost } : {}),
-        }),
+        });
+      },
       options.ingest.retry_attempts,
-      Math.max(options.ingest.retry_backoff_ms, pageDelayMs(source)),
+      options.ingest.retry_backoff_ms,
     );
 
   const fetchDetailed = async (source: SourceConfig, ctx: StageContext): Promise<SourceFetchDetail> => {
@@ -111,7 +117,6 @@ export function createEpochIndexAdapter(options: EpochIndexOptions): SourceAdapt
     let fetchFailures = 0;
     let lastFetchError: string | null = null;
     for (const link of links) {
-      await sleep(pageDelayMs(source));
       try {
         const page = await fetchPage(link, source, ctx);
         const meta = epochArticleMetadata(page.text, link);
