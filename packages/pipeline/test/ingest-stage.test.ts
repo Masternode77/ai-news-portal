@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { parsePipelineConfig, silentLogger } from "@cc/shared";
-import type { PipelineConfig, RawItemInsert, SourceAdapter, SourceConfig, StageContext } from "@cc/shared";
+import type { DbPort, PipelineConfig, RawItemInsert, Row, SourceAdapter, SourceConfig, StageContext } from "@cc/shared";
 import { createBudget } from "../src/budget.ts";
 import { MemoryDb } from "../src/db/index.ts";
 import { MemoryLedger } from "../src/ledger/index.ts";
@@ -197,4 +197,32 @@ test("ingest.extract_bodies=false stores feed fields only", async () => {
   assert.equal(out.stats.extract_ok, 0);
   assert.equal(out.stats.extract_skipped, 2);
   assert.ok(out.rawItems.every((i) => i.payload?.["body_text"] === undefined));
+});
+
+test("every sources upsert carries the full row: PostgreSQL checks NOT NULL before ON CONFLICT DO UPDATE", async () => {
+  const h = harness({ "s-ok": [raw("s-ok", "a1", 10)], "s-bad": new CodedError("SOURCE_UNREACHABLE", "http 503") });
+  const batches: Row[][] = [];
+  const inner = h.db;
+  const recording: DbPort = {
+    kind: "memory",
+    insert: (table, rows) => inner.insert(table, rows),
+    upsert: (table, rows, keys) => {
+      if (table === "sources") batches.push(rows.map((row) => ({ ...row })));
+      return inner.upsert(table, rows, keys);
+    },
+    select: (table, where, options) => inner.select(table, where, options),
+    selectIn: (table, column, values, options) => inner.selectIn(table, column, values, options),
+    update: (table, where, patch) => inner.update(table, where, patch),
+  };
+  const cfg = config();
+  const runId = await h.ledger.startRun({ trigger: "local", startedAt: NOW, gitSha: null, flags: {} });
+  const ctx: StageContext = { runId, now: NOW, config: cfg, logger: silentLogger(), ledger: h.ledger, budget: createBudget(cfg.budget), dryRun: true, replay: true, fixtureName: undefined, fetch: () => Promise.reject(new Error("no network")), adapters: { ...fixtureAdapters(inner), sources: { rss: { type: "rss", fetch: async (source) => { const v = { "s-ok": [raw("s-ok", "a1", 10)], "s-bad": new CodedError("SOURCE_UNREACHABLE", "http 503") }[source.id]; if (v instanceof Error) throw v; return v ?? []; } } }, db: recording } };
+  await ingestStage.run({ sources: [src("s-ok", { tier: 1 }), src("s-bad")] }, ctx);
+  assert.equal(batches.length, 2, "one mirror upsert, one health upsert");
+  const required = ["id", "name", "type", "url", "tier", "enabled", "text_rights", "terms_url", "reviewed_at", "fail_streak", "health", "last_ok_at"];
+  for (const batch of batches) for (const row of batch) assert.deepEqual(Object.keys(row).sort(), [...required].sort(), JSON.stringify(row));
+  const health = batches[1]!;
+  assert.equal(health.find((r) => r["id"] === "s-ok")?.["last_ok_at"], NOW.toISOString());
+  assert.equal(health.find((r) => r["id"] === "s-bad")?.["fail_streak"], 1);
+  assert.equal(health.find((r) => r["id"] === "s-bad")?.["url"], "https://s-bad.example.com/feed.xml", "config columns ride along so the upsert never inserts NULL into a NOT NULL column");
 });

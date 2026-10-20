@@ -83,15 +83,20 @@ interface SourceTrack {
   health: SourceHealthType;
   failStreak: number;
   lastOkAt: string | null;
+  /** The full `sources` row as mirrored this run; health updates are written on top of it. */
+  row: Row;
 }
 
 /**
- * Every row in one upsert must carry the same columns: PostgREST derives the
- * column list from the union of keys and writes NULL for a key a row lacks,
- * so a partial row would wipe (e.g.) last_ok_at on conflict.
+ * A health update is the full mirrored row with the health columns replaced.
+ * Two reasons: PostgREST derives the upsert column list from the union of keys
+ * and writes NULL for a key a row lacks, so a partial row would wipe other
+ * columns on conflict; and PostgreSQL checks NOT NULL (name, type, url, tier,
+ * text_rights) on the proposed tuple before `ON CONFLICT DO UPDATE` runs, so a
+ * partial row never reaches the update at all.
  */
-function sourceHealthRow(id: string, enabled: boolean, lastOkAt: string | null, failStreak: number, health: SourceHealthType): Row {
-  return { id, enabled, last_ok_at: lastOkAt, fail_streak: failStreak, health };
+function sourceHealthRow(track: SourceTrack, enabled: boolean, lastOkAt: string | null, failStreak: number, health: SourceHealthType): Row {
+  return { ...track.row, enabled, last_ok_at: lastOkAt, fail_streak: failStreak, health };
 }
 
 /** Mirror the YAML rows into `sources` (config columns only) and read back health. */
@@ -117,7 +122,7 @@ async function syncSources(db: DbPort, sources: SourceConfig[], ctx: StageContex
         enabled = false;
       }
     }
-    mirror.push({
+    const mirrorRow: Row = {
       id: source.id,
       name: source.name,
       type: source.type,
@@ -130,8 +135,9 @@ async function syncSources(db: DbPort, sources: SourceConfig[], ctx: StageContex
       fail_streak: failStreak,
       health,
       last_ok_at: lastOkAt,
-    });
-    tracks.set(source.id, { source, enabled, health, failStreak, lastOkAt });
+    };
+    mirror.push(mirrorRow);
+    tracks.set(source.id, { source, enabled, health, failStreak, lastOkAt, row: mirrorRow });
   }
   for (const chunk of chunks(mirror, UPSERT_CHUNK)) await db.upsert("sources", chunk, ["id"]);
   return tracks;
@@ -245,7 +251,7 @@ export const ingestStage: Stage<IngestInput, IngestOutput> = {
           ctx.logger.error("source auto-disabled in the sources table; bump reviewed_at in YAML to re-enable", { source_id: source.id, tier: source.tier, fail_streak: next.failStreak });
         }
         logByTier(ctx, source, "source failed; continuing", { error: message, fail_streak: next.failStreak, ms: outcome.ms });
-        healthRows.push(sourceHealthRow(source.id, enabled, track.lastOkAt, next.failStreak, next.health));
+        healthRows.push(sourceHealthRow(track, enabled, track.lastOkAt, next.failStreak, next.health));
         perSource.push({ source_id: source.id, tier: source.tier, status: "failed", listed: 0, kept: 0, skipped: {}, ms: outcome.ms, error: message.slice(0, ERROR_CHARS), fail_streak: next.failStreak, sample: [] });
         continue;
       }
@@ -270,7 +276,7 @@ export const ingestStage: Stage<IngestInput, IngestOutput> = {
       skippedItems += Object.values(skipped).reduce((sum, n) => sum + n, 0);
       for (const item of kept) fetched.push({ item, source });
       const next = healthAfter(track, true, now, kept.length, null);
-      healthRows.push(sourceHealthRow(source.id, true, nowIso, 0, next.health));
+      healthRows.push(sourceHealthRow(track, true, nowIso, 0, next.health));
       perSource.push({
         source_id: source.id,
         tier: source.tier,
