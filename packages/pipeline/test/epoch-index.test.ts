@@ -208,6 +208,31 @@ test("a licensed Epoch page with an empty body is kept without body_text and fai
   await assert.rejects(adapter.extract!(item!, SOURCE, local), /EXTRACTION_EMPTY/, "ingest's extraction pass records it as a failure, never as extract_ok");
 });
 
+test("a licensed Epoch page whose body selector fails is kept with the failure recorded, not dropped", async () => {
+  const urls: string[] = [];
+  const base = ctx(urls);
+  const index = `<html><body><ul><li><span>Oct 15, 2026</span> <a href="/gradient-updates/new-markup/">New markup</a></li></ul></body></html>`;
+  const page = `<html><head><meta property="og:title" content="New markup post"><meta property="og:description" content="Description survives"></head><body><div class="content-header"><time>Oct 15, 2026</time></div><div class="story-body"><p>${LONG} in a container the extractor does not know.</p></div>${LICENCE}</body></html>`;
+  const pages: Record<string, string> = { "https://epoch.ai/gradient-updates": index, "https://epoch.ai/gradient-updates/new-markup/": page };
+  const local: StageContext = {
+    ...base,
+    fetch: async (input) => {
+      const html = pages[String(input)];
+      return html === undefined ? new Response("missing", { status: 404, headers: { "content-type": "text/html" } }) : new Response(html, { status: 200, headers: { "content-type": "text/html; charset=utf-8" } });
+    },
+  };
+  const adapter = createEpochIndexAdapter({ ingest: IngestConfig.parse({ extract_host_delay_ms: 0 }), defaultMaxAgeDays: 10, itemsPerSource: 6, resolveHost: async () => ["93.184.216.34"] });
+  const detail = await adapter.fetchDetailed!(SOURCE, local);
+  assert.equal(detail.stats.kept, 1, "the article keeps its title, link and description");
+  assert.deepEqual(detail.stats.skipped, {}, "a selector failure is not a skip");
+  const [item] = detail.items;
+  assert.equal(item?.title, "New markup post");
+  assert.equal(item?.payload?.["snippet"], "Description survives");
+  assert.equal(item?.payload?.["body_text"], undefined);
+  assert.deepEqual(item?.payload?.["extraction"], { ok: false, error: "EXTRACTION_FAILED", detail: "article-content marker not found" });
+  await assert.rejects(adapter.extract!(item!, SOURCE, local), /EXTRACTION_FAILED: article-content marker not found/, "ingest's extraction pass counts it as a failure under its own code");
+});
+
 test("a future-dated Epoch article is skipped as date_future, like a feed entry", async () => {
   const base = ctx([]);
   const index = `<html><body><ul><li><a href="/gradient-updates/future-post/">Future</a></li><li><span>Oct 15, 2026</span> <a href="/gradient-updates/first-post/">First</a></li></ul></body></html>`;
