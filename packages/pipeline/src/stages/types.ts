@@ -1,19 +1,24 @@
 /** Per-stage input/output schemas. Each stage parses both (P2). */
 import { z } from "zod";
 import { CandidateInsert, DraftInsert, NonNegativeInt, QaVerdict, RawItemInsert, SourceConfig } from "@cc/shared";
-import { DraftWithImage, PublishedRef, SourceStats } from "../state.ts";
+import { DraftWithImage, NormalizeStats, PublishedRef, SourceStats } from "../state.ts";
 
 export const IngestInput = z.strictObject({ sources: z.array(SourceConfig) });
 export type IngestInput = z.infer<typeof IngestInput>;
 export const IngestOutput = z.strictObject({ rawItems: z.array(RawItemInsert), stats: SourceStats });
 export type IngestOutput = z.infer<typeof IngestOutput>;
 
-export const NormalizeInput = z.strictObject({ rawItems: z.array(RawItemInsert) });
+/** Sources are passed so normalize can prefer the copy with the best text rights and tier (Phase 3b). */
+export const NormalizeInput = z.strictObject({ rawItems: z.array(RawItemInsert), sources: z.array(SourceConfig) });
 export type NormalizeInput = z.infer<typeof NormalizeInput>;
-/** `items_new` is counted by ingest (Phase 3a); normalize reports duplicates within the pool. */
+/**
+ * Candidates leaving normalize are unscored: `scores` are zero, `selected` is
+ * false and `rubric_version` is normalize's own; score (3c) writes the scored
+ * rows. Rejections are already in the `candidates` table with a reject_reason.
+ */
 export const NormalizeOutput = z.strictObject({
   candidates: z.array(CandidateInsert),
-  duplicates: NonNegativeInt,
+  stats: NormalizeStats,
 });
 export type NormalizeOutput = z.infer<typeof NormalizeOutput>;
 

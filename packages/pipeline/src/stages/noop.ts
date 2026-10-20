@@ -1,5 +1,6 @@
 /**
- * Phase 2 no-op stages. Each one validates its input, logs that the real
+ * Phase 2 no-op stages (ingest moved to ingest.ts in 3a, normalize to
+ * normalize.ts in 3b). Each one validates its input, logs that the real
  * implementation lands in a later Phase 3 module, and returns an empty (or
  * pass-through) output. QA fails closed: with no rules installed nothing
  * passes, so publish never receives a draft by accident.
@@ -12,8 +13,6 @@ import {
   GenerateOutput,
   ImageInput,
   ImageOutput,
-  NormalizeInput,
-  NormalizeOutput,
   PublishInput,
   PublishOutput,
   QaInput,
@@ -21,17 +20,6 @@ import {
   ScoreInput,
   ScoreOutput,
 } from "./types.ts";
-
-export const normalizeStage: Stage<NormalizeInput, NormalizeOutput> = {
-  name: "normalize",
-  input: NormalizeInput,
-  output: NormalizeOutput,
-  idempotencyKey: (input) => `normalize:${input.rawItems.length}`,
-  async run(input, ctx) {
-    ctx.logger.info("normalize: no-op (Phase 3b)", { rawItems: input.rawItems.length });
-    return { candidates: [], duplicates: 0 };
-  },
-};
 
 export const scoreStage: Stage<ScoreInput, ScoreOutput> = {
   name: "score",
@@ -120,13 +108,6 @@ export const publishStage: Stage<PublishInput, PublishOutput> = {
     return { published };
   },
 };
-
-export const normalizeSpec = defineStageSpec({
-  stage: normalizeStage,
-  select: (state) => ({ rawItems: state.rawItems }),
-  merge: (state, output) => ({ ...state, candidates: output.candidates }),
-  counts: (output) => ({ candidates: output.candidates.length, duplicates: output.duplicates }),
-});
 
 export const scoreSpec = defineStageSpec({
   stage: scoreStage,

@@ -124,7 +124,9 @@ export const RawItemRow = z.strictObject({
   run_id: Uuid.nullable(),
 });
 export type RawItemRow = z.infer<typeof RawItemRow>;
-export const RawItemInsert = RawItemRow.omit({ id: true }).partial({
+/** `id` is optional on the way in (adapters omit it); ingest stamps `rawItemId(canonical_url)` before the upsert (Phase 3b). */
+export const RawItemInsert = RawItemRow.partial({
+  id: true,
   content_hash: true,
   published_at_source: true,
   payload: true,
@@ -221,6 +223,8 @@ export const PublicationSource = z.strictObject({
   url: HttpUrl,
   name: z.string().min(1),
   published_at: IsoDateTime.nullable(),
+  /** The source's own headline (Phase 3b): normalize compares new items against it, since `publications.title` is the Korean editorial title. */
+  title: z.string().min(1).optional(),
 });
 export type PublicationSource = z.infer<typeof PublicationSource>;
 

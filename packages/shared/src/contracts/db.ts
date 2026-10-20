@@ -31,6 +31,8 @@ export interface SelectOptions {
   limit?: number;
   /** Columns to return; required for tables with generated columns (publications.search) when the rows are parsed strictly. */
   columns?: readonly string[];
+  /** Sort before `limit` is applied (e.g. newest publications first). */
+  orderBy?: { column: string; ascending?: boolean };
 }
 
 export interface DbPort {

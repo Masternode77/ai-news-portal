@@ -42,7 +42,8 @@ export interface Stage<I, O> {
 1. `pipeline_runs` 선기록(`status: started`).
 2. Stage마다: `enabled` 확인 → `input.parse` → `stage_events` started → `run` → `output.parse` → `stage_events` done(counts). 예외는 아이템 단위면 `dead_letters`, Stage 단위면 `stage_events.error` + 런 `partial`, 설정·DB 연결 실패면 런 `failed`.
 3. 종료 시 `funnel` 13컬럼·비용 집계 → Telegram.
-4. `--dry-run`은 `ctx.dryRun=true`로 전 Stage를 실행하되 DbPort가 메모리 구현으로 바뀐다. `--replay --fixture <name>`은 어댑터를 fixture 구현으로 바꾼다(네트워크 0).
+4. `--dry-run`은 `ctx.dryRun=true`로 전 Stage를 실행하되 DbPort가 메모리 구현으로 바뀐다. `--replay --fixture <name>`은 어댑터를 fixture 구현으로 바꾼다(네트워크 0). Phase 3b 개정: `--stage`는 콤마 목록(`--stage ingest,normalize`)을 받고, fixture 런은 `fixtures/db/<name>.json`이 있으면 메모리 DbPort를 먼저 채운다(현재 `publications`).
+5. Phase 3b 개정 — normalize 계약: `NormalizeInput { rawItems, sources }` → `NormalizeOutput { candidates: CandidateInsert[](미채점: scores 0, selected false, rubric_version normalize/<version>), stats }`. 판정 순서는 발행본 URL 정체성(무기한) → 창 내 발행본 제목 유사도 → 풀 내 URL 정체성 → content_hash → 제목 키 → 제목 유사도 → 본문 shingle. 대표 사본은 `text_rights`(full 우선) → tier → 본문 길이 순. `PublicationSource.title`(선택)은 3h가 원제를 남겨 normalize가 한국어 편집 제목 대신 비교할 수 있게 한다. `SelectOptions.orderBy`가 DbPort에 추가됐다(발행본을 최신순으로 읽기 위함).
 
 ## 2. Adapter 인터페이스
 
@@ -154,7 +155,7 @@ export const InsightEssay = z.object({
 ```yaml
 schedule: { cron: "45 15,23,7 * * *", timezone: "UTC", slot_hours: 8 }
 flags:
-  stages: { ingest: true, normalize: true, score: true, generate: true, qa: true, image: true, publish: true }
+  stages: { ingest: true, normalize: false, score: true, generate: true, qa: true, image: true, publish: true }   # normalize: 3b 기본 OFF (§7)
   publish_target: none        # none | staging | production  (ADR-006)
 caps:
   briefs_per_cycle: { min: 1, max: 2 }
@@ -177,6 +178,13 @@ ingest:                        # Phase 3a, 전부 선택(기본값은 packages/s
   auto_disable_after: 5        # 연속 실패 런 수 → sources 테이블의 enabled=false(YAML 불변)
   extract_bodies: true
   user_agent: "Mozilla/5.0 (compatible; ComputeCurrentBot/1.0)"
+normalize:                     # Phase 3b, 전부 선택(기본값은 packages/shared/src/schema/config.ts)
+  version: "2026-10-20.1"      # candidates.rubric_version = normalize/<version> (탈락 행)
+  title_similarity: 0.85       # 제목 토큰 Dice (ADR-004)
+  body_similarity: 0.6         # 본문 5-gram shingle Jaccard
+  body_min_tokens: 40
+  published_window_days: 7     # 발행본 제목 비교 창(URL 정체성 일치는 무기한)
+  published_limit: 2000
 budget: { run_usd: 2.0, soft_warn_usd: 1.5, max_calls: 60 }
 llm:
   provider: anthropic
@@ -235,8 +243,8 @@ zod로 전부 검증(`packages/shared/src/config/schema.ts`). 알 수 없는 키
 
 | 대상 | 키 |
 |---|---|
-| raw_item | `sha256(canonical_url)` |
-| candidate | `raw_item_id + ':' + rubric_version` |
+| raw_item | `canonical_url` (unique). Phase 3b 개정: 행 `id`는 `rawItemId(canonical_url)` = uuid5 모양의 sha1(`computecurrent:raw_item:<url>`)로 ingest가 upsert 전에 찍는다 — 충돌 시 PK가 바뀌지 않고, normalize·score가 행을 다시 읽지 않고 참조한다 |
+| candidate | `raw_item_id + ':' + rubric_version`. Phase 3b: normalize의 중복 **탈락**은 `rubric_version = normalize/<normalize.version>`, `selected=false`, `reject_reason = "<CODE>: <method>=<duplicate_of>"`(코드: `DUPLICATE_OF_PUBLISHED` \| `DUPLICATE_IN_POOL`)로 기록되고, 살아남은 후보는 메모리로 score에 넘어가 score가 채점 행을 쓴다 |
 | draft | `candidate_id + ':' + content_type + ':' + prompt_version` |
 | qa_result | `draft_id + ':' + rule + ':' + checked_at` |
 | publication | `slug` (news: `news/` + sha1(canonical_url + title)[0:16] — 레거시 규칙 유지; essay: `column/` + slugify(title)[0:64] + `-YYYY-MM-DD`) |
@@ -259,5 +267,5 @@ output_schema: NewsBrief
 
 ## 7. 기능 플래그 규약
 
-- 모든 Stage·Adapter·Publisher에 `enabled`. 기본값은 Phase 3 이식 직후 `false`, Phase 4에서 `true`.
+- 모든 Stage·Adapter·Publisher에 `enabled`. 기본값은 Phase 3 이식 직후 `false`, Phase 4에서 `true`. 적용: 3a ingest는 네트워크 스위치 `--live`(기본 OFF)가 플래그 역할을 하고, 3b normalize는 `flags.stages.normalize: false`(테스트·CI smoke·dry-run 증거는 `CC_FLAG_STAGES_NORMALIZE=true`로 켠다).
 - 플래그는 설정 파일 값이 환경변수(`CC_FLAG_<NAME>`)로 override 가능. 런 원장에 적용된 플래그 스냅샷을 기록한다.

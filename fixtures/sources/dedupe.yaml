@@ -1,0 +1,23 @@
+# Three fictional wires for the Phase 3b dedupe fixture (fixtures/rss/dedupe-wire-*.xml).
+# Used by `pipeline run --dry-run --replay --fixture dedupe --sources fixtures/sources/dedupe.yaml`.
+- id: dedupe-wire-a
+  name: Dedupe Wire A
+  type: rss
+  url: https://www.wire-a.example.com/feed.xml
+  tier: 1
+  enabled: true
+  text_rights: full
+- id: dedupe-wire-b
+  name: Dedupe Wire B
+  type: rss
+  url: https://wire-b.example.org/feed.xml
+  tier: 2
+  enabled: true
+  text_rights: rewrite_only
+- id: dedupe-wire-c
+  name: Dedupe Wire C
+  type: rss
+  url: https://wire-c.example.net/rss
+  tier: 3
+  enabled: true
+  text_rights: rewrite_only

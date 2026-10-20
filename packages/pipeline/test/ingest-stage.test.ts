@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { parsePipelineConfig, silentLogger } from "@cc/shared";
+import { parsePipelineConfig, rawItemId, silentLogger } from "@cc/shared";
 import type { PipelineConfig, RawItemInsert, SourceAdapter, SourceConfig, StageContext } from "@cc/shared";
 import { createBudget } from "../src/budget.ts";
 import { MemoryDb } from "../src/db/index.ts";
@@ -103,6 +103,7 @@ test("ingest mirrors sources, isolates a failing source, caps, dedupes, extracts
   assert.equal(out.stats.skipped_items, 2, "two of eight capped away");
   assert.equal(out.rawItems[0]?.source_id, "s-full", "tier order");
   assert.ok(out.rawItems.every((item) => UUID.test(item.run_id ?? "") && /^[a-f0-9]{64}$/.test(item.content_hash ?? "")), "run_id and content_hash are stamped");
+  assert.ok(out.rawItems.every((item) => item.id === rawItemId(item.canonical_url)), "the row id is derived from the canonical url (Phase 3b)");
 
   assert.equal(out.stats.extract_ok, 5);
   assert.equal(out.stats.extract_failed, 1);

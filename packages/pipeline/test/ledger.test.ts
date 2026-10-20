@@ -36,6 +36,12 @@ function fakeSupabase(failOn?: string): { client: SupabaseLike; calls: Call[] } 
               calls.push({ table, op: "select", args: [filter, count] });
               return result("select");
             },
+            order: (column, options) => ({
+              limit: (count) => {
+                calls.push({ table, op: "select", args: [filter, count, column, options] });
+                return result("select");
+              },
+            }),
           }),
           in: (column, values) => ({
             limit: (count) => {
@@ -135,6 +141,9 @@ test("MemoryDb upsert is idempotent on the conflict keys", async () => {
   assert.deepEqual(await db.select("raw_items", {}, { columns: ["title"] }), [{ title: "uno" }]);
   assert.equal(await db.update("raw_items", { title: "uno" }, { title: "two" }), 1);
   await assert.rejects(db.upsert("raw_items", [row], []), /conflictKeys/);
+  await db.insert("publications", [{ slug: "b", published_at: "2026-10-02T00:00:00Z" }, { slug: "c", published_at: null }, { slug: "a", published_at: "2026-10-01T00:00:00Z" }]);
+  assert.deepEqual((await db.select<{ slug: string }>("publications", {}, { orderBy: { column: "published_at", ascending: false }, columns: ["slug"] })).map((r) => r.slug), ["b", "a", "c"], "orderBy sorts before limit; nulls last");
+  assert.deepEqual((await db.select<{ slug: string }>("publications", {}, { orderBy: { column: "published_at" }, limit: 1, columns: ["slug"] })).map((r) => r.slug), ["a"]);
 });
 
 test("SupabaseDb maps port operations onto the client", async () => {
@@ -143,13 +152,15 @@ test("SupabaseDb maps port operations onto the client", async () => {
   await db.insert("sources", [{ id: "a" }]);
   assert.deepEqual(await db.upsert("raw_items", [{ canonical_url: "u" }], ["canonical_url"]), { written: 1, inserted: null, updated: null });
   await db.select("publications", { status: "published" }, { limit: 5, columns: ["slug", "title"] });
+  await db.select("publications", { status: "published" }, { limit: 7, orderBy: { column: "published_at", ascending: false } });
   assert.equal(await db.update("sources", { id: "a" }, { enabled: false }), null);
   assert.deepEqual(
     calls.map((c) => `${c.table}.${c.op}`),
-    ["sources.insert", "raw_items.upsert", "publications.select", "sources.update"],
+    ["sources.insert", "raw_items.upsert", "publications.select", "publications.select", "sources.update"],
   );
   assert.deepEqual(calls[1]?.args[1], { onConflict: "canonical_url" });
   assert.deepEqual(calls[2]?.args, [{ status: "published" }, 5]);
+  assert.deepEqual(calls[3]?.args, [{ status: "published" }, 7, "published_at", { ascending: false }]);
   await assert.rejects(db.upsert("raw_items", [{ canonical_url: "u" }], []), /conflictKeys/);
   // PostgREST nulls every column a row omits (the column list is the union of keys), so mixed batches are refused.
   await assert.rejects(db.upsert("sources", [{ id: "a", last_ok_at: "2026-10-18T00:00:00Z" }, { id: "b" }], ["id"]), /same columns/);

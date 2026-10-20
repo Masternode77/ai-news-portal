@@ -3,7 +3,7 @@
  * typo in YAML fails at load time instead of silently doing nothing.
  */
 import { z } from "zod";
-import { HttpUrl, IsoDate, RedirectRow, SourceTier, SourceType, STAGE_NAMES, TextRights } from "./tables.ts";
+import { HttpUrl, IsoDate, RedirectRow, SourceTier, SourceType, STAGE_NAMES, TextRights, UnitInterval } from "./tables.ts";
 
 export const PublishTarget = z.enum(["none", "staging", "production"]);
 export type PublishTarget = z.infer<typeof PublishTarget>;
@@ -88,6 +88,22 @@ export const IngestConfig = z.strictObject({
 });
 export type IngestConfig = z.infer<typeof IngestConfig>;
 
+export const NormalizeConfig = z.strictObject({
+  /** Stamped as `candidates.rubric_version` (`normalize/<version>`) on dedupe rejections; bump when a rule or threshold changes. */
+  version: z.string().min(1).default("2026-10-20.1"),
+  /** Title token Dice coefficient at or above which two items are one story (ADR-004: 0.85). */
+  title_similarity: UnitInterval.default(0.85),
+  /** Jaccard similarity of word 5-gram shingles over the feed body/preview at or above which two items are copies. */
+  body_similarity: UnitInterval.default(0.6),
+  /** Both bodies need at least this many tokens before shingle similarity is attempted (never below the 5-token shingle). */
+  body_min_tokens: z.number().int().min(5).default(40),
+  /** Days back a publication's titles are compared for near-duplicates (a URL identity match is unbounded). */
+  published_window_days: z.number().int().positive().default(7),
+  /** Publications (newest first) loaded per run for the comparison. */
+  published_limit: z.number().int().positive().max(5000).default(2000),
+});
+export type NormalizeConfig = z.infer<typeof NormalizeConfig>;
+
 export const PipelineConfig = z.strictObject({
   schedule: ScheduleConfig,
   flags: z.strictObject({
@@ -101,6 +117,7 @@ export const PipelineConfig = z.strictObject({
   notify: NotifyConfig,
   /** Optional in YAML; every field has a documented default. */
   ingest: IngestConfig.prefault({}),
+  normalize: NormalizeConfig.prefault({}),
 });
 export type PipelineConfig = z.infer<typeof PipelineConfig>;
 
