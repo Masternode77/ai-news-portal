@@ -214,5 +214,16 @@ test("extract honours text rights and the licence marker", async () => {
   assert.equal(text.chars, text.text.length);
 
   await assert.rejects(adapter.extract!(itemRow, full, ctx(async () => response(page("All rights reserved"), "text/html"))), /LICENSE_MARKER_MISSING/);
+
+  // A transient failure on the article page is retried after the host delay (arXiv 15 s in config), not only retry_backoff_ms.
+  const paced = createLiveRssAdapter(options({ ingest: IngestConfig.parse({ retry_backoff_ms: 0, extract_host_delay_ms: 40 }) }));
+  const stamps: number[] = [];
+  const retried = await paced.extract!(itemRow, full, ctx(async () => {
+    stamps.push(Date.now());
+    return stamps.length === 1 ? response("", "text/html", 503) : response(page("Distributed under CC BY 4.0"), "text/html");
+  }));
+  assert.equal(retried.method, "generic:article");
+  assert.equal(stamps.length, 2);
+  assert.ok(stamps[1]! - stamps[0]! >= 35, `retry spacing honours the host delay: ${stamps[1]! - stamps[0]!} ms`);
   await assert.rejects(adapter.extract!({ ...itemRow, canonical_url: "https://elsewhere.example.net/post" }, full, ctx(async () => response(page(""), "text/html"))), /HOST_NOT_ALLOWED/);
 });

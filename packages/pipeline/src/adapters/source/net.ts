@@ -175,9 +175,24 @@ function parseTarget(value: string, allowedHosts: readonly string[]): URL {
   return target;
 }
 
-async function assertPublicHost(target: URL, resolveHost: HostResolver): Promise<void> {
+/** Rejects with SOURCE_UNREACHABLE when `promise` has not settled within `ms`; the timer is cleared as soon as either settles. */
+function withTimeout<T>(promise: Promise<T>, ms: number, detail: string): Promise<T> {
+  let timer: NodeJS.Timeout | undefined;
+  const timeout = new Promise<never>((_, reject) => {
+    timer = setTimeout(() => reject(new SourceFetchError("SOURCE_UNREACHABLE", detail)), ms);
+  });
+  return Promise.race([promise, timeout]).finally(() => clearTimeout(timer));
+}
+
+/** DNS is bounded by the same timeout as the request, so a stalled resolver cannot hold a worker past feed/page_timeout_ms. */
+async function assertPublicHost(target: URL, resolveHost: HostResolver, timeoutMs: number): Promise<void> {
   const hostname = normalizeHost(target.hostname);
-  const addresses = isIP(hostname) ? [hostname] : await resolveHost(hostname).catch(() => []);
+  const addresses = isIP(hostname)
+    ? [hostname]
+    : await withTimeout(resolveHost(hostname), timeoutMs, `dns_timeout ${hostname} after ${timeoutMs} ms`).catch((error: unknown) => {
+        if (error instanceof SourceFetchError) throw error;
+        return [];
+      });
   if (addresses.length === 0) throw new SourceFetchError("SOURCE_UNREACHABLE", `dns_resolution_empty ${hostname}`);
   if (addresses.some((address) => !isPublicAddress(address))) throw new SourceFetchError("UNSAFE_URL", `non_public_address ${hostname}`);
 }
@@ -252,7 +267,7 @@ export async function safeFetchText(url: string, options: SafeFetchOptions): Pro
   let current = url;
   for (let redirects = 0; ; redirects += 1) {
     const target = parseTarget(current, options.allowedHosts);
-    await assertPublicHost(target, resolveHost);
+    await assertPublicHost(target, resolveHost, options.timeoutMs);
     let response: Response;
     try {
       response = await options.fetch(target.href, {
@@ -279,7 +294,8 @@ export async function safeFetchText(url: string, options: SafeFetchOptions): Pro
     if (response.status >= 500 || response.status === 429) throw new SourceFetchError("SOURCE_UNREACHABLE", `http ${response.status}`, response.status);
     if (response.status >= 400) throw new SourceFetchError(`HTTP_${response.status}`, `http ${response.status} for ${target.href}`, response.status);
     const contentType = (response.headers.get("content-type") ?? "").split(";")[0]?.trim().toLowerCase() ?? "";
-    if (contentType && !options.contentTypes.includes(contentType)) throw new SourceFetchError("BAD_CONTENT_TYPE", contentType, response.status);
+    // A missing Content-Type is rejected like an unsupported one: the allowlist is the boundary, not a hint.
+    if (!options.contentTypes.includes(contentType)) throw new SourceFetchError("BAD_CONTENT_TYPE", contentType || "missing content-type", response.status);
     const { text, bytes, charset } = await readBody(response, options.maxBytes, options.timeoutMs);
     return { url: target.href, status: response.status, contentType, charset, text, bytes, redirects };
   }

@@ -73,6 +73,8 @@ test("maps status codes, content types and body size to error codes", async () =
   await assert.rejects(safeFetchText("https://feeds.test/x", options(() => ok("", {}, 429))), /SOURCE_UNREACHABLE/);
   await assert.rejects(safeFetchText("https://feeds.test/x", options(() => ok("", {}, 404))), (e: unknown) => e instanceof SourceFetchError && e.code === "HTTP_404");
   await assert.rejects(safeFetchText("https://feeds.test/x", options(() => ok("x", { "content-type": "image/png" }))), /BAD_CONTENT_TYPE/);
+  // A string body makes Response add text/plain (which feeds may legitimately use); a byte body carries no Content-Type at all.
+  await assert.rejects(safeFetchText("https://feeds.test/x", options(() => new Response(new TextEncoder().encode("<rss/>"), { status: 200 }))), (e: unknown) => e instanceof SourceFetchError && e.code === "BAD_CONTENT_TYPE" && /missing content-type/.test(e.message), "a response without Content-Type is outside the allowlist too");
   await assert.rejects(safeFetchText("https://feeds.test/x", options(() => ok("x".repeat(2000)))), /BODY_TOO_LARGE/);
   await assert.rejects(safeFetchText("https://feeds.test/x", options(() => ok("x", { "content-type": "text/xml", "content-length": "99999" }))), /content-length/);
   const timeout = new Error("The operation was aborted due to timeout");
@@ -101,4 +103,14 @@ test("a body that stalls or disconnects after the headers is SOURCE_UNREACHABLE,
     safeFetchText("https://feeds.test/x", options(() => stalled("TypeError", "terminated"))),
     (e: unknown) => e instanceof SourceFetchError && e.code === "SOURCE_UNREACHABLE" && /body stream failed: terminated/.test(e.message),
   );
+});
+
+test("DNS resolution is bounded by the request timeout", async () => {
+  const started = Date.now();
+  await assert.rejects(
+    safeFetchText("https://feeds.test/x", options(() => ok("<rss/>"), { timeoutMs: 50, resolveHost: () => new Promise(() => undefined) })),
+    (e: unknown) => e instanceof SourceFetchError && e.code === "SOURCE_UNREACHABLE" && /dns_timeout feeds.test after 50 ms/.test(e.message),
+  );
+  assert.ok(Date.now() - started < 1000, "the stalled resolver did not hold the request");
+  await assert.rejects(safeFetchText("https://feeds.test/x", options(() => ok("<rss/>"), { resolveHost: async () => { throw new Error("servfail"); } })), /dns_resolution_empty/);
 });

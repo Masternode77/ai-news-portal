@@ -107,20 +107,26 @@ test("the html index adapter lists, filters, extracts at fetch time and reports 
 test("index and article requests retry once on SOURCE_UNREACHABLE and article pages are spaced by the host delay", async () => {
   const urls: string[] = [];
   const stamps: number[] = [];
+  const indexStamps: number[] = [];
   let indexCalls = 0;
   const base = ctx(urls);
   const flaky: StageContext = {
     ...base,
     fetch: async (input) => {
       const url = String(input);
-      if (url === "https://epoch.ai/gradient-updates" && (indexCalls += 1) === 1) return new Response("", { status: 503, headers: { "content-type": "text/html" } });
-      if (url !== "https://epoch.ai/gradient-updates") stamps.push(Date.now());
+      if (url === "https://epoch.ai/gradient-updates") {
+        indexStamps.push(Date.now());
+        if ((indexCalls += 1) === 1) return new Response("", { status: 503, headers: { "content-type": "text/html" } });
+      } else {
+        stamps.push(Date.now());
+      }
       return base.fetch(input);
     },
   };
   const adapter = createEpochIndexAdapter({ ingest: IngestConfig.parse({ retry_backoff_ms: 0, extract_host_delay_ms: 40 }), defaultMaxAgeDays: 10, itemsPerSource: 6, resolveHost: async () => ["93.184.216.34"] });
   const detail = await adapter.fetchDetailed!(SOURCE, flaky);
   assert.equal(indexCalls, 2, "the 503 on the index was retried once");
+  assert.ok(indexStamps[1]! - indexStamps[0]! >= 35, `the retry waited the host delay, not only retry_backoff_ms: ${indexStamps[1]! - indexStamps[0]!} ms`);
   assert.equal(detail.stats.kept, 1);
   assert.equal(stamps.length, 2);
   assert.ok(stamps[1]! - stamps[0]! >= 35, `article pages are at least the host delay apart: ${stamps[1]! - stamps[0]!} ms`);
@@ -128,4 +134,17 @@ test("index and article requests retry once on SOURCE_UNREACHABLE and article pa
   const dead = createEpochIndexAdapter({ ingest: IngestConfig.parse({ retry_attempts: 0, extract_host_delay_ms: 0 }), defaultMaxAgeDays: 10, itemsPerSource: 6, resolveHost: async () => ["93.184.216.34"] });
   indexCalls = 0;
   await assert.rejects(dead.fetchDetailed!(SOURCE, flaky), /SOURCE_UNREACHABLE/, "with retries off the first 503 is final");
+});
+
+test("every listed article unreachable fails the source; one unreachable article is only a skip", async () => {
+  const base = ctx([]);
+  const failing = (urlsToFail: (url: string) => boolean): StageContext => ({
+    ...base,
+    fetch: async (input) => (urlsToFail(String(input)) ? new Response("", { status: 503, headers: { "content-type": "text/html" } }) : base.fetch(input)),
+  });
+  const adapter = createEpochIndexAdapter({ ingest: IngestConfig.parse({ retry_attempts: 0, extract_host_delay_ms: 0 }), defaultMaxAgeDays: 10, itemsPerSource: 6, resolveHost: async () => ["93.184.216.34"] });
+  await assert.rejects(adapter.fetchDetailed!(SOURCE, failing((url) => url !== "https://epoch.ai/gradient-updates")), /SOURCE_UNREACHABLE: all 2 article requests failed; last: .*503/);
+  const partial = await adapter.fetchDetailed!(SOURCE, failing((url) => url === "https://epoch.ai/gradient-updates/first-post/"));
+  assert.equal(partial.stats.kept, 0);
+  assert.deepEqual(partial.stats.skipped, { source_unreachable: 1, unlicensed_or_no_metadata: 1 }, "a partial failure keeps item-level isolation");
 });
