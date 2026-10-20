@@ -7,7 +7,7 @@ import { MemoryDb } from "../src/db/index.ts";
 import { MemoryLedger } from "../src/ledger/index.ts";
 import { ingestStage, reviewClearsAutoDisable } from "../src/stages/ingest.ts";
 import { IngestOutput } from "../src/stages/types.ts";
-import { TEST_PIPELINE_YAML, fixtureAdapters } from "./helpers.ts";
+import { TEST_PIPELINE_YAML, fixtureAdapters, testScoring } from "./helpers.ts";
 
 const NOW = new Date("2026-10-18T00:45:00Z");
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
@@ -71,7 +71,7 @@ function harness(feeds: Record<string, RawItemInsert[] | Error>, extractFails: s
     calls,
     async run(sources, cfg = config(), now = NOW) {
       const runId = await ledger.startRun({ trigger: "local", startedAt: now, gitSha: null, flags: {} });
-      const ctx: StageContext = { runId, now, config: cfg, logger: silentLogger(), ledger, budget: createBudget(cfg.budget), dryRun: true, replay: true, fixtureName: undefined, fetch: () => Promise.reject(new Error("no network")), adapters };
+      const ctx: StageContext = { runId, now, config: cfg, logger: silentLogger(), ledger, budget: createBudget(cfg.budget), dryRun: true, replay: true, fixtureName: undefined, scoring: testScoring(), fetch: () => Promise.reject(new Error("no network")), adapters };
       return IngestOutput.parse(await ingestStage.run({ sources }, ctx));
     },
   };
@@ -227,7 +227,7 @@ test("every sources upsert carries the full row: PostgreSQL checks NOT NULL befo
   };
   const cfg = config();
   const runId = await h.ledger.startRun({ trigger: "local", startedAt: NOW, gitSha: null, flags: {} });
-  const ctx: StageContext = { runId, now: NOW, config: cfg, logger: silentLogger(), ledger: h.ledger, budget: createBudget(cfg.budget), dryRun: true, replay: true, fixtureName: undefined, fetch: () => Promise.reject(new Error("no network")), adapters: { ...fixtureAdapters(inner), sources: { rss: { type: "rss", fetch: async (source) => { const v = { "s-ok": [raw("s-ok", "a1", 10)], "s-bad": new CodedError("SOURCE_UNREACHABLE", "http 503") }[source.id]; if (v instanceof Error) throw v; return v ?? []; } } }, db: recording } };
+  const ctx: StageContext = { runId, now: NOW, config: cfg, logger: silentLogger(), ledger: h.ledger, budget: createBudget(cfg.budget), dryRun: true, replay: true, fixtureName: undefined, scoring: testScoring(), fetch: () => Promise.reject(new Error("no network")), adapters: { ...fixtureAdapters(inner), sources: { rss: { type: "rss", fetch: async (source) => { const v = { "s-ok": [raw("s-ok", "a1", 10)], "s-bad": new CodedError("SOURCE_UNREACHABLE", "http 503") }[source.id]; if (v instanceof Error) throw v; return v ?? []; } } }, db: recording } };
   await ingestStage.run({ sources: [src("s-ok", { tier: 1 }), src("s-bad")] }, ctx);
   assert.equal(batches.length, 2, "one mirror upsert, one health upsert");
   const required = ["id", "name", "type", "url", "tier", "enabled", "text_rights", "terms_url", "reviewed_at", "fail_streak", "health", "last_ok_at"];
@@ -264,7 +264,7 @@ test("page extraction runs one worker per registrable host: items of one host ne
   const ledger = new MemoryLedger();
   const cfg = config();
   const runId = await ledger.startRun({ trigger: "local", startedAt: NOW, gitSha: null, flags: {} });
-  const ctx: StageContext = { runId, now: NOW, config: cfg, logger: silentLogger(), ledger, budget: createBudget(cfg.budget), dryRun: true, replay: true, fixtureName: undefined, fetch: () => Promise.reject(new Error("no network")), adapters: { ...fixtureAdapters(db), sources: { rss }, db } };
+  const ctx: StageContext = { runId, now: NOW, config: cfg, logger: silentLogger(), ledger, budget: createBudget(cfg.budget), dryRun: true, replay: true, fixtureName: undefined, scoring: testScoring(), fetch: () => Promise.reject(new Error("no network")), adapters: { ...fixtureAdapters(db), sources: { rss }, db } };
   const out = await ingestStage.run({ sources: [src("s-arxiv", { text_rights: "full", extract: { kind: "arxiv_abstract", delay_ms: 15000 } }), src("s-other", { text_rights: "full", extract: { kind: "generic" } })] }, ctx);
   assert.equal(out.stats.extract_ok, 6);
   assert.deepEqual(overlaps, [], "two extractions on one host never run at the same time");

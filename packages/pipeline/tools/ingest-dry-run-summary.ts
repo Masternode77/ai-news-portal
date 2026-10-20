@@ -2,7 +2,7 @@
 /**
  * Renders a `pipeline run --json` result as Markdown for the GitHub Actions
  * step summary (rebuild-ci.yml, ingest-live-dry-run job): funnel, per-source table,
- * extraction totals, normalize decisions (3b) and dead letters by taxonomy code.
+ * extraction totals, normalize decisions (3b), score verdicts (3c) and dead letters by taxonomy code.
  *
  *   node packages/pipeline/tools/ingest-dry-run-summary.ts <result.json>
  */
@@ -55,6 +55,29 @@ interface Result {
     published_compared: number;
     published_in_window: number;
     decisions: { canonical_url: string; source_id: string; reason: string; method: string; duplicate_of: string | null; score: number | null }[];
+    ms: number;
+  };
+  scoreStats?: {
+    candidates: number;
+    passed: number;
+    full: number;
+    brief: number;
+    below_threshold: number;
+    selected: number;
+    not_selected: number;
+    insight_eligible: number;
+    shortfall: number;
+    decisions: {
+      canonical_url: string;
+      source_id: string;
+      total: number;
+      tier: string | null;
+      selected: boolean;
+      rank: number | null;
+      reject_reason: string | null;
+      scores: Record<string, number>;
+      reasons: Record<string, string>;
+    }[];
     ms: number;
   };
   ledger?: { deadLetters: { ref_id: string; error: string }[] };
@@ -147,6 +170,35 @@ export function summarize(result: Result): string {
       for (const d of normalize.decisions.slice(0, 40)) {
         const duplicateOf = d.duplicate_of ? (/^https?:\/\//.test(d.duplicate_of) ? link(d.duplicate_of) : cell(d.duplicate_of)) : "";
         lines.push(`| ${cell(d.source_id)} | ${cell(d.reason)} | ${cell(d.method)} | ${d.score === null ? "" : d.score} | ${link(d.canonical_url)} | ${duplicateOf} |`);
+      }
+      lines.push("");
+      lines.push("</details>");
+    }
+  }
+  const score = result.scoreStats;
+  const scoreStage = result.stages.find((stage) => stage.stage === "score");
+  if (score && scoreStage?.status === "done") {
+    lines.push("");
+    lines.push(`### Score (3c) — candidates ${score.candidates} · passed ${score.passed} (full ${score.full}, brief ${score.brief}) · below threshold ${score.below_threshold} · selected ${score.selected} (not selected ${score.not_selected}, shortfall ${score.shortfall}) · insight-eligible ${score.insight_eligible} · ${score.ms} ms`);
+    if (score.decisions.length > 0) {
+      lines.push("");
+      lines.push(`<details><summary>Verdicts by total (first ${Math.min(score.decisions.length, 40)} of ${score.candidates})</summary>`);
+      lines.push("");
+      lines.push("| # | sel | total | tier | R | T | I | V | P | source | item | verdict |");
+      lines.push("|---|---|---|---|---|---|---|---|---|---|---|---|");
+      for (const d of score.decisions.slice(0, 40)) {
+        const s = d.scores;
+        lines.push(`| ${d.rank ?? ""} | ${d.selected ? "✓" : ""} | ${d.total.toFixed(3)} | ${cell(d.tier ?? "")} | ${(s["relevance"] ?? 0).toFixed(2)} | ${(s["timeliness"] ?? 0).toFixed(2)} | ${(s["impact"] ?? 0).toFixed(2)} | ${(s["reader_value"] ?? 0).toFixed(2)} | ${(s["insight_potential"] ?? 0).toFixed(2)} | ${cell(d.source_id)} | ${link(d.canonical_url)} | ${cell(d.reject_reason ?? "selected")} |`);
+      }
+      lines.push("");
+      lines.push("</details>");
+      const explained = score.decisions.slice(0, 12);
+      lines.push("");
+      lines.push(`<details><summary>Reasons per axis (top ${explained.length})</summary>`);
+      lines.push("");
+      for (const d of explained) {
+        lines.push(`- **${cell(d.source_id)}** ${d.total.toFixed(3)} ${cell(d.tier ?? "below")}${d.selected ? " ✓" : ""} ${link(d.canonical_url)}`);
+        for (const axis of ["relevance", "timeliness", "impact", "reader_value", "insight_potential"]) lines.push(`  - ${axis} ${(d.scores[axis] ?? 0).toFixed(2)}: ${cell(d.reasons[axis] ?? "")}`);
       }
       lines.push("");
       lines.push("</details>");
