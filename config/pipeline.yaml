@@ -21,7 +21,7 @@ flags:
 caps:
   briefs_per_cycle: { min: 1, max: 2 }
   essays_per_day: 1
-  pool_max_items: 200          # legacy cap was 30 (Phase 0 H1); re-measured in Phase 4
+  pool_max_items: 200          # legacy cap was 30 (Phase 0 H1); re-measured in Phase 4. Applied after cross-source dedupe, lowest tiers cut first
   pool_max_age_days: 10
   items_per_source: 6          # newest N per registry id (legacy keyed the cap by display name)
 

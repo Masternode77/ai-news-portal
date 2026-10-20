@@ -48,6 +48,8 @@ export const SourceStats = z.strictObject({
   items_new: NonNegativeInt.default(0),
   /** Same canonical URL listed by more than one source (first source by tier wins). */
   duplicates: NonNegativeInt.default(0),
+  /** Unique items dropped by caps.pool_max_items (lowest tiers first) before extraction and persistence. */
+  pool_capped: NonNegativeInt.default(0),
   /** Listed entries dropped by adapter rules and the per-source cap. */
   skipped_items: NonNegativeInt.default(0),
   extract_ok: NonNegativeInt.default(0),
@@ -92,6 +94,7 @@ export function emptySourceStats(): SourceStats {
     auto_disabled: 0,
     items_new: 0,
     duplicates: 0,
+    pool_capped: 0,
     skipped_items: 0,
     extract_ok: 0,
     extract_failed: 0,
