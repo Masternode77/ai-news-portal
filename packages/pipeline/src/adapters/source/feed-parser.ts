@@ -4,7 +4,7 @@
  * anchors) and escaped-HTML descriptions are handled without an xml2js
  * detour. Unknown feeds degrade to "no items", never to a crash.
  */
-import { cleanText, decodeEntities, unwrapCdata } from "../../lib/html.ts";
+import { cleanText, decodeEntities, firstImageSrc, unwrapCdata } from "../../lib/html.ts";
 
 export interface FeedItem {
   title: string;
@@ -77,16 +77,32 @@ function rssLink(block: string): string | null {
   return null;
 }
 
-function imageOf(block: string): string | null {
-  // An enclosure is an image only when it says so; an untyped or audio/video enclosure (podcast feeds) is not.
+const IMAGE_FILE = /\.(?:jpe?g|png|gif|webp|avif|svg)(?:[?#]|$)/i;
+
+/**
+ * Item image, most explicit source first: an enclosure typed image/*; a
+ * media:content that says it is an image (medium="image" or type="image/*";
+ * an explicit other medium or type is never one, and an element with neither
+ * attribute counts only when its url looks like an image file); a
+ * media:thumbnail; finally the first <img> of the content HTML (the legacy
+ * firstImage path, common for WordPress feeds).
+ */
+function imageOf(block: string, contentHtml: string): string | null {
   const enclosure = firstTag(block, "enclosure", (tag) => /\stype=["']image\//i.test(tag));
   const enclosureUrl = enclosure ? attr(enclosure, "url") : null;
   if (enclosureUrl) return enclosureUrl;
-  const media = firstTag(block, "media:content", (tag) => /\surl=/i.test(tag) && !/\smedium=["'](?:video|audio|document)["']/i.test(tag));
+  const media = firstTag(block, "media:content", (tag) => {
+    if (!/\surl=/i.test(tag)) return false;
+    if (/\smedium=["']image["']/i.test(tag) || /\stype=["']image\//i.test(tag)) return true;
+    if (/\smedium=/i.test(tag) || /\stype=/i.test(tag)) return false;
+    return IMAGE_FILE.test(attr(tag, "url") ?? "");
+  });
   const mediaUrl = media ? attr(media, "url") : null;
   if (mediaUrl) return mediaUrl;
   const thumb = firstTag(block, "media:thumbnail");
-  return thumb ? attr(thumb, "url") : null;
+  const thumbUrl = thumb ? attr(thumb, "url") : null;
+  if (thumbUrl) return thumbUrl;
+  return firstImageSrc(contentHtml);
 }
 
 function categories(block: string): string[] {
@@ -117,7 +133,7 @@ function parseItemBlock(block: string, kind: ParsedFeed["kind"]): FeedItem | nul
     innerText(block, "date"),
   ].filter((d): d is string => d !== null);
   if (!title && !link) return null;
-  return { title, link, guid, dates, contentHtml, summaryHtml, image: imageOf(block), categories: categories(block) };
+  return { title, link, guid, dates, contentHtml, summaryHtml, image: imageOf(block, contentHtml), categories: categories(block) };
 }
 
 export function parseFeed(xml: string): ParsedFeed {
