@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { cleanItemUrl, googleReleaseNoteTarget, hostAllowed, pathWithinPrefix, repairFeedLink } from "../src/lib/url.ts";
-import { isFutureDate, olderThanDays, parsePublishedAt } from "../src/lib/dates.ts";
+import { isFutureDate, namesImpossibleDay, olderThanDays, parsePublishedAt } from "../src/lib/dates.ts";
 import { cleanText, decodeEntities, pageCarriesMarker, paragraphs, removeNonContentBlocks, truncateAtSentence, unwrapCdata } from "../src/lib/html.ts";
 
 const NOW = new Date("2026-10-18T00:45:00Z");
@@ -53,6 +53,13 @@ test("parsePublishedAt handles ISO, RFC 822, Drupal, month names, missing, unpar
   assert.deepEqual(parsePublishedAt(["garbage", "2026-10-01T00:00:00Z"], NOW), { iso: "2026-10-01T00:00:00.000Z", problem: null });
   assert.equal(parsePublishedAt(["2026-10-20T00:00:00Z"], NOW).problem, "future");
   assert.equal(parsePublishedAt(["2026-10-18T20:00:00Z"], NOW).problem, null, "within the one-day tolerance");
+  // A day that does not exist in its month is unparseable, never rolled into the next month (the Date constructor would give Mar 3).
+  for (const impossible of ["Feb 31, 2026", "Wed, 31 Feb 2026 07:00:00 GMT", "2026-02-31T00:00:00Z", "2026-02-31", "Tue, 02/31/2026 - 09:30", "Feb 29, 2026", "Apr 31, 2026 10:00:00 +0900", "31 February 2026"]) {
+    assert.deepEqual(parsePublishedAt([impossible], NOW), { iso: null, problem: "unparseable" }, impossible);
+  }
+  assert.equal(namesImpossibleDay("Feb 31, 2026"), true);
+  assert.equal(parsePublishedAt(["Feb 29, 2024"], NOW).iso, "2024-02-29T12:00:00.000Z", "a leap day exists");
+  assert.equal(parsePublishedAt(["Sat, 31 Jan 2026 23:30:00 -0500"], NOW).iso, "2026-02-01T04:30:00.000Z", "a real day that crosses midnight in UTC is still a real day");
   assert.equal(olderThanDays("2026-10-01T00:00:00Z", 10, NOW), true);
   assert.equal(olderThanDays("2026-10-15T00:00:00Z", 10, NOW), false);
 });
