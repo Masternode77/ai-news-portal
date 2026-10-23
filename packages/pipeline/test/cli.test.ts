@@ -21,7 +21,7 @@ async function cli(args: string[], env: NodeJS.ProcessEnv = {}): Promise<{ code:
 }
 
 test("pipeline run --dry-run --fixture sample --replay --json exits 0 with a full funnel", async () => {
-  const { code, stdout, stderr } = await cli(["run", "--dry-run", "--replay", "--fixture", "sample", "--json"], { CC_FLAG_STAGES_NORMALIZE: "true", CC_FLAG_STAGES_SCORE: "true" });
+  const { code, stdout, stderr } = await cli(["run", "--dry-run", "--replay", "--fixture", "sample", "--json"], { CC_FLAG_STAGES_NORMALIZE: "true", CC_FLAG_STAGES_SCORE: "true", CC_FLAG_STAGES_GENERATE: "true" });
   assert.equal(code, 0, stderr);
   const out = JSON.parse(stdout) as { status: string; funnel: Record<string, unknown>; stages: { stage: string; status: string }[]; ledger: { runs: unknown[]; stageEvents: unknown[] } };
   assert.equal(out.status, "done");
@@ -43,6 +43,7 @@ test("normalize (3b) and score (3c) are off by default and --stage accepts a com
   const outOff = JSON.parse(off.stdout) as { stages: { stage: string; status: string; reason?: string }[] };
   assert.deepEqual(outOff.stages.find((s) => s.stage === "normalize"), { ...outOff.stages.find((s) => s.stage === "normalize"), status: "skipped", reason: "flag_off" });
   assert.deepEqual(outOff.stages.find((s) => s.stage === "score"), { ...outOff.stages.find((s) => s.stage === "score"), status: "skipped", reason: "flag_off" });
+  assert.deepEqual(outOff.stages.find((s) => s.stage === "generate"), { ...outOff.stages.find((s) => s.stage === "generate"), status: "skipped", reason: "flag_off" }, "3d: generate is off by default");
 
   const two = await cli(["run", "--dry-run", "--replay", "--fixture", "dedupe", "--sources", "fixtures/sources/dedupe.yaml", "--stage", "ingest,normalize", "--json"], { CC_FLAG_STAGES_NORMALIZE: "true" });
   assert.equal(two.code, 0, two.stderr);

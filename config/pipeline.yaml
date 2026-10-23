@@ -12,7 +12,7 @@ flags:
     ingest: true
     normalize: false             # Phase 3b logic is in; default OFF until Phase 4 (contracts §7). Override: CC_FLAG_STAGES_NORMALIZE=true
     score: false                 # Phase 3c logic is in; default OFF until Phase 4 (contracts §7). Override: CC_FLAG_STAGES_SCORE=true
-    generate: true
+    generate: false              # Phase 3d news_brief generation is in; default OFF until Phase 4 (contracts §7). Override: CC_FLAG_STAGES_GENERATE=true
     qa: true
     image: true
     publish: true
@@ -56,13 +56,20 @@ budget:
   max_calls: 60
 
 llm:
-  provider: fixture            # anthropic | openrouter | fixture | disabled — live providers land in Phase 3d
+  provider: fixture            # anthropic | fixture | disabled (openrouter: not implemented, ADR-002). anthropic needs ANTHROPIC_API_KEY in the environment (name only)
   models:
     curate: claude-haiku-5-5
     news_brief: claude-opus-5-5
     expert_lens: claude-opus-5-5
     insight_essay: claude-opus-5-5
     qa_assist: claude-haiku-5-5
+  pricing:                     # USD per million tokens (ADR-007 table, 2026-10-06); the Anthropic adapter refuses a model without a row
+    claude-opus-5-5: { input_per_mtok: 4, output_per_mtok: 20, cache_read_per_mtok: 0.4 }
+    claude-sonnet-5-5: { input_per_mtok: 2, output_per_mtok: 10, cache_read_per_mtok: 0.2 }
+    claude-haiku-5-5: { input_per_mtok: 0.1, output_per_mtok: 0.5, cache_read_per_mtok: 0.01 }
+  timeout_ms: 90000            # per request; 429/5xx/timeouts retry up to max_retries with backoff
+  max_retries: 2
+  max_source_chars: 12000      # source body sent to the model is cut here (the packet says so)
 
 image:
   provider: placeholder        # placeholder | openai | fixture

@@ -19,11 +19,11 @@ ADR-006의 단계 M1~M8을 실행 단위로 풀어 쓴다. 각 단계는 Josh �
 | 11 | 3b | Normalize & Dedupe | `stages/normalize` | 동일 기사 3소스 fixture → 1, 발행본 중복 reject | 플래그 OFF |
 | 12 | 3c | Scoring & Selection | `stages/score`, `config/scoring.yaml` | 항목별 점수+reason, 임계값 설정만으로 변경 | 플래그 OFF |
 | 13 | 3d | news_brief 생성 | `stages/generate/news_brief`, `prompts/news_brief.md`, `adapters/llm/anthropic` | fixture → 스키마 통과, 수치 grounding 통과율 보고 | 플래그 OFF |
-| 14 | 3e | insight_essay 생성 | `stages/generate/insight_essay`, `prompts/insight_essay.md`, `content/voice/josh_voice.md`(Josh 제공), `content/templates/insight_essay.md` | 샘플 3편 Josh 승인 | 플래그 OFF |
-| 15 | 3f | Image | `stages/image`, `adapters/image/{placeholder,openai}` | 전부 실패 fixture에서도 발행 진행 | 플래그 OFF |
-| 16 | 3g | QA Gates | `qa/rules/*`(hard 13 → soft 7), `qa/run`, `config/qa.yaml` | 규칙 추가 = 파일 1개, 판정 100% reason_code, 규칙별 통과율 리포트 | 플래그 OFF |
-| 17 | 3h | Publisher | `publishers/site`(upsert + revalidate), `config/redirects.yaml`, 레거시 25건 이관 스크립트(dry-run) | 발행이 빌드와 무관(테스트), slug 충돌 방지 | 플래그 OFF / staging만 |
-| 18 | 3i | Scheduler·Alerting·Cost | `.github/workflows/pipeline.yml`, `notify/telegram`, `budget` | 실패·성공 알림 fixture 테스트, 예산 트리거 테스트 | 워크플로 비활성 |
+| 14 | 3f | Image | `stages/image`, `adapters/image/{placeholder,openai}` | 전부 실패 fixture에서도 발행 진행 | 플래그 OFF |
+| 15 | 3g | QA Gates | `qa/rules/*`(hard 13 → soft 7), `qa/run`, `config/qa.yaml` | 규칙 추가 = 파일 1개, 판정 100% reason_code, 규칙별 통과율 리포트 | 플래그 OFF |
+| 16 | 3h | Publisher | `publishers/site`(upsert + revalidate), `config/redirects.yaml`, 레거시 25건 이관 스크립트(dry-run) | 발행이 빌드와 무관(테스트), slug 충돌 방지 | 플래그 OFF / staging만 |
+| 17 | 3i | Scheduler·Alerting·Cost | `.github/workflows/pipeline.yml`, `notify/telegram`, `budget` | 실패·성공 알림 fixture 테스트, 예산 트리거 테스트 | 워크플로 비활성 |
+| 18 | 3e | insight_essay 생성 — **2026-10-23 재계획(Josh): 브리프 라인(3d→3f→3g→3h→3i)을 먼저 끝내고 3e는 마지막**. 보이스 샘플 미수령이 선행 입력이라 뒤로 미룸 | `stages/generate/insight_essay`, `prompts/insight_essay.md`, `content/voice/josh_voice.md`(Josh 제공), `content/templates/insight_essay.md` | 샘플 3편 Josh 승인 | 플래그 OFF |
 | 19 | 4 | Shadow run ≥ 3일, `PUBLISH_TARGET=staging`, 프리뷰 배포, `docs/shadow/{compare,tuning-log}.md`, 롤백 드릴 | 문서·측정 | Phase 4 완료 기준 5개 | 워크플로 비활성 |
 | 20 | 5 | `legacy-final` 태그 + 백업(승인), 레거시 25건 이관 실행, URL 136 전수 검증, Vercel Root Directory·플래그 전환, 48h 모니터링 | runbook, postmortem | 48h 무중단, URL 100% | 플래그 되돌리기 / 이전 배포 Promote / 태그 재배포 |
 | 21 | 5 | 레거시 제거 PR(별도 승인) | PR | — | PR 미머지 |

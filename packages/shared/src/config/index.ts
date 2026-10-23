@@ -3,10 +3,12 @@ export { FLAG_ENV_PREFIX, applyFlagOverrides, flagSnapshot } from "./flags.ts";
 export type { FlagOverride, FlagSnapshot } from "./flags.ts";
 export {
   loadPipelineConfig,
+  loadPromptFile,
   loadRedirectsConfig,
   loadScoringConfig,
   loadSourcesConfig,
   parsePipelineConfig,
+  parsePromptFile,
   parseRedirectsConfig,
   parseScoringConfig,
   parseSourcesConfig,

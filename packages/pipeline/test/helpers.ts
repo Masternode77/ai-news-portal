@@ -3,6 +3,7 @@ import { resolve } from "node:path";
 import { parsePipelineConfig, parseScoringConfig, parseSourcesConfig, silentLogger } from "@cc/shared";
 import type { PipelineConfig, ScoringConfig, SourceConfig, StageAdapters } from "@cc/shared";
 import {
+  createFilePromptRegistry,
   createFixtureLlmAdapter,
   createFixtureRssAdapter,
   createNoopPublisher,
@@ -74,6 +75,7 @@ export function fixtureAdapters(db = new MemoryDb(), fixtureName = "sample"): St
     image: createPlaceholderImageAdapter(),
     publishers: { site: createNoopPublisher({ baseUrl: "https://example.test" }) },
     db,
+    prompts: createFilePromptRegistry({ promptsDir: resolve(REPO_ROOT, "prompts") }),
   };
 }
 

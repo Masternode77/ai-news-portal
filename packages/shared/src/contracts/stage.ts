@@ -8,7 +8,7 @@
  */
 import type { z } from "zod";
 import type { PipelineConfig, ScoringConfig, StageName } from "../schema/index.ts";
-import type { ImageAdapter, LlmAdapter, PublisherAdapter, SourceAdapter } from "./adapters.ts";
+import type { ImageAdapter, LlmAdapter, PromptRegistry, PublisherAdapter, SourceAdapter } from "./adapters.ts";
 import type { Budget, DbPort, Ledger } from "./db.ts";
 import type { Logger } from "../logger.ts";
 
@@ -20,6 +20,8 @@ export interface StageAdapters {
   image: ImageAdapter;
   publishers: Record<string, PublisherAdapter>;
   db: DbPort;
+  /** Prompt files by task (Phase 3d). */
+  prompts: PromptRegistry;
 }
 
 export interface StageContext {

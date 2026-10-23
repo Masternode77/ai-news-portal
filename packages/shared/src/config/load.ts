@@ -5,12 +5,14 @@ import { readFile } from "node:fs/promises";
 import { parse as parseYaml } from "yaml";
 import { z } from "zod";
 import {
+  PromptFile as PromptFileSchema,
+  PromptFrontMatter as PromptFrontMatterSchema,
   PipelineConfig as PipelineConfigSchema,
   RedirectsConfig as RedirectsConfigSchema,
   ScoringConfig as ScoringConfigSchema,
   SourcesConfig as SourcesConfigSchema,
 } from "../schema/index.ts";
-import type { PipelineConfig, RedirectsConfig, ScoringConfig, SourcesConfig } from "../schema/index.ts";
+import type { PipelineConfig, PromptFile, RedirectsConfig, ScoringConfig, SourcesConfig } from "../schema/index.ts";
 import { ConfigError } from "./errors.ts";
 import { applyFlagOverrides } from "./flags.ts";
 import type { FlagOverride } from "./flags.ts";
@@ -65,6 +67,23 @@ export function parseScoringConfig(text: string, path?: string): ScoringConfig {
 
 export async function loadScoringConfig(path: string): Promise<ScoringConfig> {
   return parseScoringConfig(await readConfigFile(path), path);
+}
+
+const FRONT_MATTER = /^---\r?\n([\s\S]*?)\r?\n---\r?\n?([\s\S]*)$/;
+
+/** `prompts/<task>.md`: YAML front matter between `---` lines, then the system prompt. */
+export function parsePromptFile(text: string, path?: string): PromptFile {
+  const match = FRONT_MATTER.exec(text);
+  if (!match) throw new ConfigError("prompt file needs a YAML front matter block between --- lines", path);
+  const header = parseWith(PromptFrontMatterSchema, match[1] ?? "", path);
+  const system = (match[2] ?? "").trim();
+  const result = PromptFileSchema.safeParse({ ...header, system, ...(path ? { path } : {}) });
+  if (!result.success) throw new ConfigError(formatIssues(result.error), path);
+  return result.data;
+}
+
+export async function loadPromptFile(path: string): Promise<PromptFile> {
+  return parsePromptFile(await readConfigFile(path), path);
 }
 
 export function parseRedirectsConfig(text: string, path?: string): RedirectsConfig {

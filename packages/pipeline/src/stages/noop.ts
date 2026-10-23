@@ -1,16 +1,13 @@
 /**
  * Phase 2 no-op stages (ingest moved to ingest.ts in 3a, normalize to
- * normalize.ts in 3b, score to score.ts in 3c). Each one validates its input, logs that the real
+ * normalize.ts in 3b, score to score.ts in 3c, generate to generate.ts in 3d). Each one validates its input, logs that the real
  * implementation lands in a later Phase 3 module, and returns an empty (or
  * pass-through) output. QA fails closed: with no rules installed nothing
  * passes, so publish never receives a draft by accident.
  */
 import type { Stage } from "@cc/shared";
-import { BudgetExceededError } from "../budget.ts";
 import { defineStageSpec } from "./spec.ts";
 import {
-  GenerateInput,
-  GenerateOutput,
   ImageInput,
   ImageOutput,
   PublishInput,
@@ -18,18 +15,6 @@ import {
   QaInput,
   QaOutput,
 } from "./types.ts";
-
-export const generateStage: Stage<GenerateInput, GenerateOutput> = {
-  name: "generate",
-  input: GenerateInput,
-  output: GenerateOutput,
-  idempotencyKey: (input) => `generate:${input.selected.length}`,
-  async run(input, ctx) {
-    if (!ctx.budget.canSpend(0)) throw new BudgetExceededError(ctx.budget.spentUsd, ctx.budget.limitUsd);
-    ctx.logger.info("generate: no-op (Phase 3d/3e)", { selected: input.selected.length, budgetUsd: ctx.budget.spentUsd });
-    return { drafts: [] };
-  },
-};
 
 export const qaStage: Stage<QaInput, QaOutput> = {
   name: "qa",
@@ -95,13 +80,6 @@ export const publishStage: Stage<PublishInput, PublishOutput> = {
     return { published };
   },
 };
-
-export const generateSpec = defineStageSpec({
-  stage: generateStage,
-  select: (state) => ({ selected: state.selected }),
-  merge: (state, output) => ({ ...state, drafts: output.drafts }),
-  counts: (output) => ({ drafts: output.drafts.length }),
-});
 
 export const qaSpec = defineStageSpec({
   stage: qaStage,
