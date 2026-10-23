@@ -184,6 +184,32 @@ column pages, cards, catalog, RSS or sitemap entries, so public columns go from
 registrations are kept, so the quarantine can be reversed if text rights are
 granted later.
 
-**Still open.** The other 13 columns with invalid source artifacts were outside
-this decision. They stay published, but `columnArtworkReadiness` cannot verify
-them.
+**Remaining 13 columns (2026-10-23).** The owner then asked for the same rule
+to be applied to the other 13 columns whose source records have no valid
+extraction artifact: try re-extraction, and quarantine if it fails.
+
+For each source record, `fetchAuthorizedSourceText` was called through the
+source registry. All 13 attempts were denied with `text_use_not_authorized`.
+Every source is registered link-only (`allow_text_use: false`, reviewed
+2026-09-05), and several rights notes rule out fetching article text outright:
+
+| Source | Columns | Rights note (registry) |
+| --- | --- | --- |
+| Bloomberg Technology | `col_776dcf6e9c89b581` | ask first; noncommercial-only licence, scraper ban |
+| TechCrunch AI | `col_13e55e0a75a620db` | link-only: feed content as shipped with attribution |
+| HPCwire | `col_fca83bb71323a3ba`, `col_b6074069a1555367`, `col_f73d297e3be9969c` | terms ban data mining and commercial exploitation |
+| StorageReview | `col_69cab7b291d16a59`, `col_ad15e2d4c145e30d` | link-only; default copyright |
+| ServeTheHome | `col_24b7abd6a12c5e63` | link-only: up to 300 characters plus one image |
+| Tom's Hardware | `col_4af3df9a2131c335`, `col_3dbd354c8bc9107d` | link-only; no commercial use without a licence |
+| Semiconductor Engineering | `col_7c5e4b3b0b775337`, `col_414c93d7b5969906` | non-commercial personal viewing only, no copying |
+| NVIDIA Blog | `col_292b67321a052acf` | scraper clause forbids fetching article pages |
+
+None of the eight hosts was reachable from the sandbox either. All 13 columns
+were quarantined with `quarantineArticle`, using the same reason format as
+above. Public columns go from 20 to 7, and the archive route from 62 to 49
+records. As before, bodies, figures and artwork registrations are kept.
+
+**Still open.** Two of the remaining public columns have valid source artifacts
+but fail `columnArtworkReadiness` on numeric provenance: `col_55e9ccd7116252dd`
+(ERCOT; 2027, 2028) and `col_ba22f5ea8bef96e6` (Hormuz; 2026, $46, $4, $1). They
+were outside this decision and remain published.
