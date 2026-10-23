@@ -7,7 +7,7 @@
  * `ctx.fixtureName` tells fixture adapters which recording to load.
  */
 import type { z } from "zod";
-import type { PipelineConfig, StageName } from "../schema/index.ts";
+import type { PipelineConfig, ScoringConfig, StageName } from "../schema/index.ts";
 import type { ImageAdapter, LlmAdapter, PublisherAdapter, SourceAdapter } from "./adapters.ts";
 import type { Budget, DbPort, Ledger } from "./db.ts";
 import type { Logger } from "../logger.ts";
@@ -27,6 +27,8 @@ export interface StageContext {
   /** The scheduled slot time, independent of cron delay (ADR-002). */
   now: Date;
   config: PipelineConfig;
+  /** `config/scoring.yaml` (Phase 3c): rubric weights, thresholds, vocabularies. */
+  scoring: ScoringConfig;
   logger: Logger;
   ledger: Ledger;
   budget: Budget;

@@ -1,7 +1,7 @@
 /** Per-stage input/output schemas. Each stage parses both (P2). */
 import { z } from "zod";
 import { CandidateInsert, DraftInsert, NonNegativeInt, QaVerdict, RawItemInsert, SourceConfig } from "@cc/shared";
-import { DraftWithImage, NormalizeStats, PublishedRef, SourceStats } from "../state.ts";
+import { DraftWithImage, NormalizeStats, PublishedRef, ScoreStats, SourceStats } from "../state.ts";
 
 export const IngestInput = z.strictObject({ sources: z.array(SourceConfig) });
 export type IngestInput = z.infer<typeof IngestInput>;
@@ -22,9 +22,11 @@ export const NormalizeOutput = z.strictObject({
 });
 export type NormalizeOutput = z.infer<typeof NormalizeOutput>;
 
-export const ScoreInput = z.strictObject({ candidates: z.array(CandidateInsert) });
+/** Phase 3c: the raw items and sources ride along so the rubric can read title, body, date, tier and rights. */
+export const ScoreInput = z.strictObject({ candidates: z.array(CandidateInsert), rawItems: z.array(RawItemInsert), sources: z.array(SourceConfig) });
 export type ScoreInput = z.infer<typeof ScoreInput>;
-export const ScoreOutput = z.strictObject({ selected: z.array(CandidateInsert), rejected: NonNegativeInt });
+/** `candidates` are the scored rows for every input candidate; `selected` is the subset chosen for this cycle. */
+export const ScoreOutput = z.strictObject({ candidates: z.array(CandidateInsert), selected: z.array(CandidateInsert), stats: ScoreStats });
 export type ScoreOutput = z.infer<typeof ScoreOutput>;
 
 export const GenerateInput = z.strictObject({ selected: z.array(CandidateInsert) });

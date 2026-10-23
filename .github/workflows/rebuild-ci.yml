@@ -18,7 +18,7 @@ on:
   workflow_dispatch:
     inputs:
       live_ingest:
-        description: "Also run the ingest (3a) and normalize (3b) stages against the live feeds (--dry-run --live; memory ledger, no secrets, nothing written)"
+        description: "Also run the ingest (3a), normalize (3b) and score (3c) stages against the live feeds (--dry-run --live; memory ledger, no secrets, nothing written)"
         type: boolean
         default: false
       log_level:
@@ -70,13 +70,22 @@ jobs:
         run: |
           npm run --silent v2:pipeline -- run --dry-run --replay --fixture dedupe --sources fixtures/sources/dedupe.yaml --stage ingest,normalize --json > normalize-dry-run.json
           node -e "const r=require('./normalize-dry-run.json'); const n=r.normalizeStats; console.log(JSON.stringify({status:r.status, pool:n.pool, candidates:n.candidates, rejected:n.rejected, by_method:n.by_method}, null, 2)); if (r.status !== 'done' || n.pool !== 12 || n.candidates !== 6) process.exit(1)"
+      - name: Score dry-run with the scoring fixture (5 sources, 13 items -> 2 selected from 2 sources; replay, no network)
+        env:
+          CC_FLAG_STAGES_NORMALIZE: "true"
+          CC_FLAG_STAGES_SCORE: "true"
+        run: |
+          npm run --silent v2:pipeline -- run --dry-run --replay --fixture scoring --sources fixtures/sources/scoring.yaml --stage ingest,normalize,score --json > score-dry-run.json
+          node -e "const r=require('./score-dry-run.json'); const s=r.scoreStats; console.log(JSON.stringify({status:r.status, candidates:s.candidates, passed:s.passed, full:s.full, brief:s.brief, below_threshold:s.below_threshold, selected:s.selected, shortfall:s.shortfall, selected_items:s.decisions.filter(d=>d.selected).map(d=>[d.source_id, d.total, d.tier])}, null, 2)); const sources=new Set(s.decisions.filter(d=>d.selected).map(d=>d.source_id)); if (r.status !== 'done' || s.candidates !== 13 || s.selected !== 2 || sources.size !== 2 || s.passed < 5) process.exit(1)"
+          node packages/pipeline/tools/ingest-dry-run-summary.ts score-dry-run.json >> "$GITHUB_STEP_SUMMARY"
 
   # Manual only (brief Phase 3 common procedure 4): the cloud session cannot reach
   # the feed hosts, so this job is the evidence path for "items_fetched per cycle
-  # vs Phase 0" (3a) and for the dedupe counts on a real pool (3b). Dispatch with
-  # live_ingest=true on the branch under review. The full JSON result goes to the
-  # job log; the step summary carries the funnel, a per-source table and the
-  # normalize decisions. No secrets, memory ledger and DB only.
+  # vs Phase 0" (3a), for the dedupe counts on a real pool (3b) and for the rubric
+  # verdicts on real candidates (3c). Dispatch with live_ingest=true on the branch
+  # under review. The full JSON result goes to the job log; the step summary
+  # carries the funnel, a per-source table, the normalize decisions and the score
+  # verdicts with their reasons. No secrets, memory ledger and DB only.
   ingest-live-dry-run:
     if: ${{ github.event_name == 'workflow_dispatch' && inputs.live_ingest }}
     runs-on: ubuntu-latest
@@ -84,6 +93,7 @@ jobs:
     env:
       CC_FLAG_PUBLISH_TARGET: none
       CC_FLAG_STAGES_NORMALIZE: "true"   # 3b: default OFF in config/pipeline.yaml; the evidence run turns it on
+      CC_FLAG_STAGES_SCORE: "true"       # 3c: same
     steps:
       - name: Checkout repo
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
@@ -96,13 +106,13 @@ jobs:
           cache: npm
       - name: Install dependencies
         run: npm ci
-      - name: Ingest + normalize dry-run against live feeds (memory ledger and DB)
+      - name: Ingest + normalize + score dry-run against live feeds (memory ledger and DB)
         id: run
         env:
           LOG_LEVEL: ${{ inputs.log_level }}
         run: |
           set +e
-          node packages/pipeline/bin/pipeline.ts run --dry-run --live --stage ingest,normalize --trigger dispatch --json \
+          node packages/pipeline/bin/pipeline.ts run --dry-run --live --stage ingest,normalize,score --trigger dispatch --json \
             --log-level "$LOG_LEVEL" > ingest-dry-run.json 2> ingest-dry-run.log
           code=$?
           set -e

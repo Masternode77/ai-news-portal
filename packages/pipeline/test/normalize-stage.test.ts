@@ -10,7 +10,7 @@ import { MemoryLedger } from "../src/ledger/index.ts";
 import { runPipeline } from "../src/runner.ts";
 import { DUPLICATE_IN_POOL, DUPLICATE_OF_PUBLISHED, normalizeStage, rejectReason } from "../src/stages/normalize.ts";
 import { NormalizeOutput } from "../src/stages/types.ts";
-import { FIXTURES_DIR, REPO_ROOT, TEST_PIPELINE_YAML, baseRunOptions, fixtureAdapters } from "./helpers.ts";
+import { FIXTURES_DIR, REPO_ROOT, TEST_PIPELINE_YAML, baseRunOptions, fixtureAdapters, testScoring } from "./helpers.ts";
 
 const NOW = new Date("2026-10-20T00:45:00Z");
 const RUN_ID = "11111111-1111-4111-8111-111111111111";
@@ -29,7 +29,7 @@ function raw(sourceId: string, url: string, title: string, body = "", extra: Par
 
 async function run(db: MemoryDb, rawItems: RawItemInsert[], sources: SourceConfig[], cfg = config()): Promise<NormalizeOutput> {
   const ledger = new MemoryLedger();
-  const ctx: StageContext = { runId: RUN_ID, now: NOW, config: cfg, logger: silentLogger(), ledger, budget: createBudget(cfg.budget), dryRun: true, replay: true, fixtureName: undefined, fetch: () => Promise.reject(new Error("no network")), adapters: { ...fixtureAdapters(db), db } };
+  const ctx: StageContext = { runId: RUN_ID, now: NOW, config: cfg, logger: silentLogger(), ledger, budget: createBudget(cfg.budget), dryRun: true, replay: true, fixtureName: undefined, scoring: testScoring(), fetch: () => Promise.reject(new Error("no network")), adapters: { ...fixtureAdapters(db), db } };
   return NormalizeOutput.parse(await normalizeStage.run({ rawItems, sources }, ctx));
 }
 
@@ -186,10 +186,12 @@ test("end to end with the dedupe fixture: 12 raw items from 3 wires become 6 can
   assert.equal(counts?.["candidates"], 6);
   assert.equal(counts?.["duplicate_of_published"], 1);
   assert.equal(counts?.["method_url"], 2);
-  assert.equal(db.size("candidates"), 6);
-  const reasons = db.rows<{ reject_reason: string }>("candidates").map((r) => r.reject_reason).sort();
+  const rows = db.rows<{ reject_reason: string | null; rubric_version: string }>("candidates");
+  assert.equal(rows.filter((r) => r.rubric_version.startsWith("normalize/")).length, 6, "normalize writes its six rejections");
+  assert.equal(rows.filter((r) => r.rubric_version.startsWith("score/")).length, 6, "score (3c) writes a row for each survivor");
+  const reasons = rows.filter((r) => r.rubric_version.startsWith("normalize/")).map((r) => r.reject_reason ?? "").sort();
   assert.ok(reasons.every((r) => /^DUPLICATE_(OF_PUBLISHED|IN_POOL): (url|title|hash|title_key|body)=/.test(r)), reasons.join("\n"));
   assert.ok(reasons.includes("DUPLICATE_OF_PUBLISHED: url=news/eia-data-center-load-timing"));
-  assert.equal(result.state.candidates.length, 6);
+  assert.equal(result.state.candidates.length, 6, "score keeps every survivor as a scored candidate");
   assert.ok(result.state.rawItems.every((item) => item.id === rawItemId(item.canonical_url)), "ingest stamps the deterministic id normalize references");
 });

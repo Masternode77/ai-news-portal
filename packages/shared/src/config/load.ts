@@ -7,9 +7,10 @@ import { z } from "zod";
 import {
   PipelineConfig as PipelineConfigSchema,
   RedirectsConfig as RedirectsConfigSchema,
+  ScoringConfig as ScoringConfigSchema,
   SourcesConfig as SourcesConfigSchema,
 } from "../schema/index.ts";
-import type { PipelineConfig, RedirectsConfig, SourcesConfig } from "../schema/index.ts";
+import type { PipelineConfig, RedirectsConfig, ScoringConfig, SourcesConfig } from "../schema/index.ts";
 import { ConfigError } from "./errors.ts";
 import { applyFlagOverrides } from "./flags.ts";
 import type { FlagOverride } from "./flags.ts";
@@ -56,6 +57,14 @@ export function parseSourcesConfig(text: string, path?: string): SourcesConfig {
 
 export async function loadSourcesConfig(path: string): Promise<SourcesConfig> {
   return parseSourcesConfig(await readConfigFile(path), path);
+}
+
+export function parseScoringConfig(text: string, path?: string): ScoringConfig {
+  return parseWith(ScoringConfigSchema, text, path);
+}
+
+export async function loadScoringConfig(path: string): Promise<ScoringConfig> {
+  return parseScoringConfig(await readConfigFile(path), path);
 }
 
 export function parseRedirectsConfig(text: string, path?: string): RedirectsConfig {

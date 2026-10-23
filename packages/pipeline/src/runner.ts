@@ -17,6 +17,7 @@ import type {
   Ledger,
   Logger,
   PipelineConfig,
+  ScoringConfig,
   RunStatus,
   RunTrigger,
   SourceConfig,
@@ -34,6 +35,8 @@ import type { PipelineState } from "./state.ts";
 
 export interface RunOptions {
   config: PipelineConfig;
+  /** `config/scoring.yaml` (Phase 3c). */
+  scoring: ScoringConfig;
   overrides?: FlagOverride[];
   sources: SourceConfig[];
   ledger: Ledger;
@@ -113,7 +116,10 @@ function topError(errors: string[]): string | null {
 /**
  * `items_scored` is an input count (candidates reaching score), so it is only
  * reported when the score stage completed; a flagged-off or failed score stage
- * leaves it at 0 instead of counting every candidate as scored.
+ * leaves it at 0 instead of counting every candidate as scored. `passed_gate`
+ * is the number of candidates at or above the brief threshold (Phase 0's
+ * definition, so the 3.7% baseline compares); the cycle's `selected` count is
+ * in the score stage's counts.
  */
 export function buildFunnel(runId: string, startedAt: Date, state: PipelineState, errors: string[], completed: ReadonlySet<StageName>): FunnelType {
   return Funnel.parse({
@@ -125,7 +131,7 @@ export function buildFunnel(runId: string, startedAt: Date, state: PipelineState
     items_fetched: state.rawItems.length,
     items_new: state.itemsNew,
     items_scored: completed.has("score") ? state.candidates.length : 0,
-    passed_gate: state.selected.length,
+    passed_gate: state.scoreStats.passed,
     drafts: state.drafts.length,
     qa_passed: state.passed.length,
     published: state.published.length,
@@ -173,6 +179,7 @@ export async function runPipeline(options: RunOptions): Promise<RunResult> {
     runId,
     now: startedAt,
     config: options.config,
+    scoring: options.scoring,
     logger: runLogger,
     ledger,
     budget,

@@ -6,11 +6,13 @@
 import { z } from "zod";
 import {
   CandidateInsert,
+  CandidateReasons,
   DraftInsert,
   ImageResult,
   NonNegativeInt,
   QaVerdict,
   RawItemInsert,
+  RubricScores,
   SourceConfig,
   SourceTier,
 } from "@cc/shared";
@@ -93,6 +95,47 @@ export function emptyNormalizeStats(): NormalizeStats {
   return { pool: 0, candidates: 0, rejected: 0, duplicate_of_published: 0, duplicate_in_pool: 0, by_method: {}, published_compared: 0, published_in_window: 0, decisions: [], ms: 0 };
 }
 
+/** One scored candidate (Phase 3c); the top 100 by total are mirrored into the `--json` output. */
+export const ScoreDecision = z.strictObject({
+  canonical_url: z.string(),
+  source_id: z.string(),
+  total: z.number(),
+  /** full | brief | null (below the brief threshold) */
+  tier: z.enum(["full", "brief"]).nullable(),
+  selected: z.boolean(),
+  /** 1-based position among passing candidates; null when it did not pass. */
+  rank: NonNegativeInt.nullable(),
+  /** BELOW_THRESHOLD | NOT_SELECTED, with the detail after the colon */
+  reject_reason: z.string().nullable(),
+  scores: RubricScores,
+  reasons: CandidateReasons,
+});
+export type ScoreDecision = z.infer<typeof ScoreDecision>;
+
+export const ScoreStats = z.strictObject({
+  candidates: NonNegativeInt,
+  /** At or above thresholds.brief. */
+  passed: NonNegativeInt,
+  full: NonNegativeInt,
+  brief: NonNegativeInt,
+  below_threshold: NonNegativeInt,
+  /** Of below_threshold: rejected by the relevance floor (thresholds.relevance_min) rather than by the total. */
+  below_relevance: NonNegativeInt,
+  selected: NonNegativeInt,
+  /** Passed but beyond the cycle cap or the per-source cap. */
+  not_selected: NonNegativeInt,
+  insight_eligible: NonNegativeInt,
+  /** caps.briefs_per_cycle.min minus selected, when positive (never filled from below the threshold). */
+  shortfall: NonNegativeInt,
+  decisions: z.array(ScoreDecision).max(100),
+  ms: NonNegativeInt,
+});
+export type ScoreStats = z.infer<typeof ScoreStats>;
+
+export function emptyScoreStats(): ScoreStats {
+  return { candidates: 0, passed: 0, full: 0, brief: 0, below_threshold: 0, below_relevance: 0, selected: 0, not_selected: 0, insight_eligible: 0, shortfall: 0, decisions: [], ms: 0 };
+}
+
 export const DraftWithImage = z.strictObject({
   draft: DraftInsert,
   image: ImageResult.nullable(),
@@ -109,6 +152,7 @@ export const PipelineState = z.strictObject({
   itemsNew: NonNegativeInt,
   normalizeStats: NormalizeStats,
   candidates: z.array(CandidateInsert),
+  scoreStats: ScoreStats,
   selected: z.array(CandidateInsert),
   drafts: z.array(DraftInsert),
   verdicts: z.array(QaVerdict),
@@ -145,6 +189,7 @@ export function initialState(sources: SourceConfig[]): PipelineState {
     itemsNew: 0,
     normalizeStats: emptyNormalizeStats(),
     candidates: [],
+    scoreStats: emptyScoreStats(),
     selected: [],
     drafts: [],
     verdicts: [],
