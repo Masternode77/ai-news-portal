@@ -36,8 +36,9 @@ function src(id: string, overrides: Partial<SourceConfig> = {}): SourceConfig {
   return { id, name: id, type: "rss", url: `https://${id}.example.com/feed.xml`, tier: 2, enabled: true, text_rights: "rewrite_only", ...overrides };
 }
 
+/** Items carry a positive extraction marker, as ingest stamps on a full-rights source whose page was fetched; the marker is inert on other sources. */
 function raw(sourceId: string, url: string, title: string, body = "", publishedAt: string | null = "2026-10-19T22:00:00.000Z"): RawItemInsert {
-  return { id: rawItemId(url), source_id: sourceId, canonical_url: url, title, published_at_source: publishedAt, fetched_at: NOW.toISOString(), payload: { snippet: body } };
+  return { id: rawItemId(url), source_id: sourceId, canonical_url: url, title, published_at_source: publishedAt, fetched_at: NOW.toISOString(), payload: { snippet: body, extraction: { ok: true, method: "test", chars: body.length } } };
 }
 
 function candidate(item: RawItemInsert): CandidateInsert {
@@ -139,7 +140,7 @@ test("thresholds, weights and caps come from config only: the same candidates ch
   assert.equal(wide.stats.selected, 2, "selection.per_source_max keeps the third (same-source) story out even with room in the cycle cap");
   assert.equal(wide.candidates[2]?.reject_reason, rejectReason(NOT_SELECTED, { source_cap: "b", rank: 3 }));
 
-  const twoPerSource = testScoring({ thresholds: { full: 0.4, brief: 0.3, relevance_min: 0.55 }, selection: { per_source_max: 2, abstract_max_tier: "brief", failed_extraction_max_tier: "brief" } });
+  const twoPerSource = testScoring({ thresholds: { full: 0.4, brief: 0.3, relevance_min: 0.55 }, selection: { per_source_max: 2, abstract_max_tier: "brief", unextracted_max_tier: "brief" } });
   const three = await run(new MemoryDb(), items, sources, twoPerSource, config("{ min: 1, max: 3 }"));
   assert.equal(three.stats.selected, 3);
 
@@ -174,25 +175,31 @@ test("an abstract-only source never reaches tier full, and its reader value is c
   assert.match(row.rubric!.reasons.reader_value, /cap=abstract/);
 });
 
-test("a full-rights item whose extraction failed is scored on its feed text as rewrite_only and never reaches tier full", async () => {
+test("a full-rights item without a positive extraction (failed or never attempted) is scored on its feed text as rewrite_only and never reaches tier full", async () => {
   const full = src("a", { tier: 1, text_rights: "full" });
-  const ok = raw("a", "https://a.example.com/ok", "Microsoft signs 1.2 GW capacity agreement with Example Data Centers in Busan", BUSAN);
+  const title = "Microsoft signs 1.2 GW capacity agreement with Example Data Centers in Busan";
+  const ok = raw("a", "https://a.example.com/ok", title, BUSAN);
   ok.payload = { ...ok.payload, body_text: BUSAN, extraction: { ok: true, method: "generic", chars: BUSAN.length } };
-  const failed = raw("a", "https://a.example.com/failed", "Microsoft signs 1.2 GW capacity agreement with Example Data Centers in Busan", BUSAN);
-  failed.payload = { ...failed.payload, extraction: { ok: false, error: "EXTRACTION_EMPTY", detail: "no text" } };
-  const out = await run(new MemoryDb(), [ok, failed], [full]);
-  const [good, bad] = out.candidates;
+  const failed = raw("a", "https://a.example.com/failed", title, BUSAN);
+  failed.payload = { snippet: BUSAN, extraction: { ok: false, error: "EXTRACTION_EMPTY", detail: "no text" } };
+  const missing = raw("a", "https://a.example.com/missing", title, BUSAN);
+  missing.payload = { snippet: BUSAN };
+  const out = await run(new MemoryDb(), [ok, failed, missing], [full]);
+  const [good, bad, never] = out.candidates;
   assert.equal(good?.rubric?.tier, "full");
-  assert.equal(bad?.rubric?.tier, "brief", "selection.failed_extraction_max_tier");
+  assert.equal(bad?.rubric?.tier, "brief", "selection.unextracted_max_tier on a failed extraction");
+  assert.equal(never?.rubric?.tier, "brief", "selection.unextracted_max_tier when extraction was never attempted (extract_bodies off, extract.kind none)");
   assert.ok(bad!.scores.reader_value < good!.scores.reader_value, `reader value ${bad!.scores.reader_value} vs ${good!.scores.reader_value}`);
+  assert.equal(never!.scores.reader_value, bad!.scores.reader_value);
   assert.match(bad!.rubric!.reasons.reader_value, /rights=full→rewrite_only\(extraction_failed/);
+  assert.match(never!.rubric!.reasons.reader_value, /rights=full→rewrite_only\(extraction_missing/);
   assert.equal(bad!.scores.reader_value, Number((good!.scores.reader_value - testScoring().reader_value.text_rights.full + testScoring().reader_value.text_rights.rewrite_only).toFixed(3)));
-  const lifted = await run(new MemoryDb(), [failed], [full], testScoring({ selection: { per_source_max: 1, abstract_max_tier: "brief", failed_extraction_max_tier: "full" } }));
-  assert.equal(lifted.candidates[0]?.rubric?.tier, "full", "the cap is a config choice");
-  const rewrite = raw("b", "https://b.example.com/x", "Microsoft signs 1.2 GW capacity agreement with Example Data Centers in Busan", BUSAN);
-  rewrite.payload = { ...rewrite.payload, extraction: { ok: false, error: "EXTRACTION_EMPTY" } };
+  const lifted = await run(new MemoryDb(), [failed, missing], [full], testScoring({ selection: { per_source_max: 2, abstract_max_tier: "brief", unextracted_max_tier: "full" } }));
+  assert.deepEqual(lifted.candidates.map((c) => c.rubric?.tier), ["full", "full"], "the cap is a config choice");
+  const rewrite = raw("b", "https://b.example.com/x", title, BUSAN);
+  rewrite.payload = { snippet: BUSAN };
   const other = await run(new MemoryDb(), [rewrite], [src("b")]);
-  assert.doesNotMatch(other.candidates[0]!.rubric!.reasons.reader_value, /extraction_failed/, "the marker only matters on full-rights sources");
+  assert.doesNotMatch(other.candidates[0]!.rubric!.reasons.reader_value, /extraction_/, "the marker only matters on full-rights sources");
 });
 
 test("relevance: lifts, caps and the procedural-notice guard are explained in the reason", () => {

@@ -182,20 +182,26 @@ export interface ScoreDoc {
   text: string;
   /** Longest stored body text (extracted body, preview, snippet or description). */
   body: string;
-  /** A full-rights source whose page extraction failed: only feed text is stored (`payload.extraction.ok = false`, 3a). */
-  extractionFailed: boolean;
+  /**
+   * Full-rights source without a positive extraction: `failed` (ingest kept the feed text with
+   * `payload.extraction.ok = false`) or `missing` (never attempted: extract_bodies off, extract.kind
+   * none, no extractor). null when the page text is there (`ok: true`) or the source is not full-rights.
+   */
+  unextracted: "failed" | "missing" | null;
 }
 
-export function extractionFailed(item: RawItemInsert, source: SourceConfig | undefined): boolean {
-  if (source?.text_rights !== "full") return false;
+export function unextracted(item: RawItemInsert, source: SourceConfig | undefined): "failed" | "missing" | null {
+  if (source?.text_rights !== "full") return null;
   const marker = item.payload?.["extraction"];
-  return typeof marker === "object" && marker !== null && (marker as { ok?: unknown }).ok === false;
+  const ok = typeof marker === "object" && marker !== null ? (marker as { ok?: unknown }).ok : undefined;
+  if (ok === true) return null;
+  return ok === false ? "failed" : "missing";
 }
 
 export function scoreDoc(candidate: CandidateInsert, item: RawItemInsert, source: SourceConfig | undefined, compiled: CompiledScoring): ScoreDoc {
   const body = bodyTextOf(item);
   const raw = `${item.title} ${body}`;
-  return { candidate, item, source, raw, title: normalizeText(item.title, compiled.aliases), text: normalizeText(raw, compiled.aliases), body, extractionFailed: extractionFailed(item, source) };
+  return { candidate, item, source, raw, title: normalizeText(item.title, compiled.aliases), text: normalizeText(raw, compiled.aliases), body, unextracted: unextracted(item, source) };
 }
 
 // ---------------------------------------------------------------------------
@@ -357,12 +363,12 @@ export function scoreImpact(doc: ScoreDoc, cfg: ImpactConfig, compiled: Compiled
 
 export function scoreReaderValue(doc: ScoreDoc, cfg: ReaderValueConfig, compiled: CompiledScoring): AxisResult {
   const declared = doc.source?.text_rights ?? "link_only";
-  // Only feed text survived a failed extraction, so the item is worth what a rewrite_only source is worth.
-  const rights = doc.extractionFailed ? "rewrite_only" : declared;
+  // Without a positive extraction only feed text exists, so the item is worth what a rewrite_only source is worth.
+  const rights = doc.unextracted ? "rewrite_only" : declared;
   const tier = String(doc.source?.tier ?? 3) as "1" | "2" | "3";
   const parts: string[] = [];
   let score = cfg.text_rights[rights] + cfg.tier[tier];
-  parts.push(doc.extractionFailed ? `rights=${declared}→${rights}(extraction_failed,+${cfg.text_rights[rights]})` : `rights=${rights}(+${cfg.text_rights[rights]})`, `tier=${tier}(+${cfg.tier[tier]})`);
+  parts.push(doc.unextracted ? `rights=${declared}→${rights}(extraction_${doc.unextracted},+${cfg.text_rights[rights]})` : `rights=${rights}(+${cfg.text_rights[rights]})`, `tier=${tier}(+${cfg.tier[tier]})`);
   const chars = doc.body.length;
   if (chars >= cfg.body.min_chars) {
     score += cfg.body.weight;
@@ -417,13 +423,13 @@ export interface Scored {
   insightEligible: boolean;
 }
 
-export function tierOf(total: number, relevance: number, cfg: ScoringConfig, source: SourceConfig | undefined, failedExtraction = false): CandidateTier | null {
+export function tierOf(total: number, relevance: number, cfg: ScoringConfig, source: SourceConfig | undefined, unextractedItem = false): CandidateTier | null {
   if (relevance < cfg.thresholds.relevance_min) return null;
   const uncapped: CandidateTier | null = total >= cfg.thresholds.full ? "full" : total >= cfg.thresholds.brief ? "brief" : null;
   if (uncapped !== "full") return uncapped;
   const caps: CandidateTier[] = [];
   if (source?.text_scope === "abstract") caps.push(cfg.selection.abstract_max_tier);
-  if (failedExtraction) caps.push(cfg.selection.failed_extraction_max_tier);
+  if (unextractedItem) caps.push(cfg.selection.unextracted_max_tier);
   return caps.includes("brief") ? "brief" : "full";
 }
 
@@ -440,7 +446,7 @@ export function scoreCandidate(doc: ScoreDoc, cfg: ScoringConfig, compiled: Comp
     scores,
     reasons: { relevance: relevance.reason, timeliness: timeliness.reason, impact: impact.reason, reader_value: readerValue.reason, insight_potential: insight.reason },
     total,
-    tier: tierOf(total, scores.relevance, cfg, doc.source, doc.extractionFailed),
+    tier: tierOf(total, scores.relevance, cfg, doc.source, doc.unextracted !== null),
     insightEligible: insight.score >= cfg.insight_trigger,
   };
 }

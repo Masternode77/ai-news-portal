@@ -51,7 +51,7 @@
 | 입력·출력 | `ScoreInput { candidates, rawItems, sources }` → `ScoreOutput { candidates(채점 완료, 전부), selected, stats }`. 후보는 `raw_item_id`로 raw item(제목·본문·발행일)과 소스(tier·권리·범위)를 찾는다 | contracts §1 개정 |
 | 5축 루브릭 | `relevance`(§1의 8차원 엔진) · `timeliness`(발행일 vs 슬롯 시각 `ctx.now`, 버킷) · `impact`(규모·행위자·거래 신호: GW/MW·금액·하이퍼스케일러·칩·한국 주요 행위자·거래 동사·규제, 신호별 가중, 제목 가중) · `reader_value`(텍스트 권리·본문 길이·tier·한국/APAC 지역·수치 구체성, abstract 범위 상한) · `insight_potential`(전력 전략·용량 계획·부지·자본·한국/APAC·쟁점 프레이밍 테마 + 다차원 폭 보너스) | 각 축 0~1, `scores` jsonb |
 | 총점 | `total = Σ weights[axis] × score[axis]`, 가중치 0.35/0.2/0.2/0.15/0.1(합 1, 로드 시 검증) | contracts §4 |
-| 등급 | `relevance < thresholds.relevance_min`(0.55) → `BELOW_THRESHOLD`(총점 무관; 레거시 게이트가 관련성 단독이었던 것을 보존), `total ≥ thresholds.full` → `full`, `≥ thresholds.brief` → `brief`, 미달 → `BELOW_THRESHOLD`. abstract 범위 소스는 `brief` 상한. full 권리 소스인데 본문 추출이 실패한 아이템(`payload.extraction.ok = false`, 3a)은 피드 텍스트만 있으므로 reader_value를 `rewrite_only`로 계산하고 `selection.failed_extraction_max_tier`(brief) 상한(AGENTS.md: 추출 실패 소스로 장문 생성 금지; Codex PR #61 P1) | ADR-004; 관련성 하한은 라이브 런 1에서 추가(§4.2) |
+| 등급 | `relevance < thresholds.relevance_min`(0.55) → `BELOW_THRESHOLD`(총점 무관; 레거시 게이트가 관련성 단독이었던 것을 보존), `total ≥ thresholds.full` → `full`, `≥ thresholds.brief` → `brief`, 미달 → `BELOW_THRESHOLD`. abstract 범위 소스는 `brief` 상한. full 권리 소스인데 **긍정 추출 표식**(`payload.extraction.ok = true`, 3a)이 없는 아이템 — 추출 실패(`ok: false`) 또는 미시도(`ingest.extract_bodies: false`, `extract.kind: none`) — 은 피드 텍스트만 있으므로 reader_value를 `rewrite_only`로 계산하고 `selection.unextracted_max_tier`(brief) 상한(AGENTS.md: 검증 안 된 소스로 장문 생성 금지; Codex PR #61 P1 2건). replay fixture는 추출이 없으므로 full 권리 와이어도 `brief`가 상한이다 | ADR-004; 관련성 하한은 라이브 런 1에서 추가(§4.2) |
 | 선택 | 통과 후보를 total(동점: timeliness → canonical_url) 내림차순, 소스당 `selection.per_source_max`(1)까지, `caps.briefs_per_cycle.max`(2)까지 `selected=true`. 통과 수 < `min`이면 채우지 않고 `shortfall` 보고 | R2, `allow_zero_publish` |
 | 탈락 사유 | `reject_reason = "<CODE>: <key>=<value>[,…]"` — `BELOW_THRESHOLD: relevance=0.17,relevance_min=0.55` · `BELOW_THRESHOLD: total=0.41,brief=0.55` · `NOT_SELECTED: rank=3,max=2` · `NOT_SELECTED: source_cap=<source_id>,rank=2` | normalize와 같은 형식(R6) |
 | 근거 저장 | `candidates.rubric` jsonb(신규 컬럼, `supabase/migrations/0002_candidates_rubric.sql`): `{ tier, rank, insight_eligible, reasons: { relevance, timeliness, impact, reader_value, insight_potential } }` — 축마다 사람이 읽는 한 줄(매치 용어·버킷·신호·상한) | 브리프 "항목별 점수와 근거를 저장" |
@@ -71,31 +71,33 @@
 | 플래그 기본값 OFF | 통과 | `flags.stages.score: false`; 기본 런은 `score: skipped (flag_off)`, 증거 런은 `CC_FLAG_STAGES_SCORE=true` |
 | 결정적·네트워크 0 | 통과 | LLM·fetch 호출 없음; `--replay`에서 실행. 같은 입력·같은 `now`면 같은 행 |
 
-### 4.1 fixture dry-run (`scoring`, 5소스 13건, 2026-10-20T09:05Z 실행)
+### 4.1 fixture dry-run (`scoring`, 5소스 13건, 2026-10-23T16:00Z 재측정 · 루브릭 2026-10-23.2)
 
-`CC_FLAG_STAGES_NORMALIZE=true CC_FLAG_STAGES_SCORE=true npm run v2:pipeline -- run --dry-run --replay --fixture scoring --sources fixtures/sources/scoring.yaml --stage ingest,normalize,score --json` → `done`, funnel `items_scored 13 → passed_gate 6`, score 76 ms. 후보 13 · 통과 6(full 4 · brief 2) · 미달 7 · 선택 2 · 미선택 4 · insight-eligible 6 · shortfall 0.
+`CC_FLAG_STAGES_NORMALIZE=true CC_FLAG_STAGES_SCORE=true npm run v2:pipeline -- run --dry-run --replay --fixture scoring --sources fixtures/sources/scoring.yaml --stage ingest,normalize,score --json` → `done`, funnel `items_scored 13 → passed_gate 6`, score 75 ms. 후보 13 · 통과 6(full 0 · brief 6) · 미달 7 · 선택 2 · 미선택 4 · insight-eligible 6 · shortfall 0.
+
+첫 측정(2026-10-20T09:05Z, 루브릭 2026-10-20.1)은 통과 6(full 4 · brief 2)이었다. 두 가지가 바뀌었다: ① Codex 2차 반영으로 full 권리 와이어(wire-a)도 replay에는 `payload.extraction.ok = true` 표식이 없어 reader_value가 `rewrite_only`(−0.10)로 계산되고 `brief` 상한에 걸린다(라이브에서는 추출 성공 시 full 복귀) ② fixture 발행일이 고정이라 timeliness가 0.56/0.38 → 0.06으로 감쇠했다. 순위·선택·미달 사유는 그대로다.
 
 | # | 선택 | total | tier | R | T | I | V | P | 소스 | 아이템 | 판정 |
 |---|---|---|---|---|---|---|---|---|---|---|---|
-| 1 | ✓ | 0.912 | full | 1.00 | 0.56 | 1.00 | 1.00 | 1.00 | wire-a (t1 full) | Microsoft 1.2 GW Busan | selected |
-| 2 | | 0.869 | full | 0.94 | 0.56 | 1.00 | 0.85 | 1.00 | wire-a | Incheon $1.4B PF 300 MW | `NOT_SELECTED: source_cap=scoring-wire-a,rank=2` |
-| 3 | ✓ | 0.786 | full | 0.84 | 0.56 | 0.90 | 0.67 | 1.00 | wire-b (t2) | KEPCO 345 kV Saemangeum (EN) | selected |
-| 4 | | 0.780 | full | 0.84 | 0.56 | 0.95 | 0.67 | 0.84 | wire-b | 한국전력 345kV 변전소 준공 (KO, 같은 사건) | `NOT_SELECTED: rank=4,max=2` |
-| 5 | | 0.708 | brief | 0.97 | 0.38 | 0.35 | 0.85 | 0.96 | wire-a | Seoul liquid cooling PUE 1.15 | `NOT_SELECTED: rank=5,max=2` |
-| 6 | | 0.639 | brief | 0.85 | 0.38 | 0.59 | 0.47 | 0.76 | federal-register | Combined Notice: 500 MW large-load DC | `NOT_SELECTED: rank=6,max=2` (compute 문맥 → 상한 해제) |
-| 7 | | 0.527 | – | 0.97 | 0.38 | 0.00 | 0.47 | 0.40 | arxiv (abstract) | liquid cooling 150 kW thermal limits | `BELOW_THRESHOLD` (impact 0) |
-| 8 | | 0.521 | – | 0.70 | 0.56 | 0.45 | 0.10 | 0.60 | wire-c (t3 link_only) | Nvidia·SK hynix HBM4 | `BELOW_THRESHOLD` (reader_value 0.10) |
-| 9 | | 0.386 | – | 0.70 | 0.56 | 0.00 | 0.10 | 0.15 | wire-c | Enterprise AI Kubernetes operator | `BELOW_THRESHOLD` (`caps=enterprise_only(0.72)`) |
-| 10 | | 0.367 | – | 0.43 | 0.38 | 0.35 | 0.47 | 0.00 | federal-register | NOA Final EIS hydroelectric relicensing | `BELOW_THRESHOLD` (`caps=procedural_notice(0.44)`) |
-| 11 | | 0.308 | – | 0.38 | 0.56 | 0.00 | 0.32 | 0.15 | wire-b | AI 데이터센터 관련주 급등 | `BELOW_THRESHOLD` (`caps=korean_market_chatter(0.38)`) |
-| 12 | | 0.217 | – | 0.16 | 0.56 | 0.00 | 0.32 | 0.00 | wire-b | Stegosaurus fossil auction | `BELOW_THRESHOLD` (`caps=hard_archive(0.2)`) |
-| 13 | | 0.151 | – | 0.00 | 0.38 | 0.00 | 0.50 | 0.00 | wire-a | Photo app pet portraits | `BELOW_THRESHOLD` (`caps=no_infra(0.38)`) |
+| 1 | ✓ | 0.797 | brief | 1.00 | 0.06 | 1.00 | 0.90 | 1.00 | wire-a (t1 full) | Microsoft 1.2 GW Busan | selected |
+| 2 |  | 0.753 | brief | 0.94 | 0.06 | 1.00 | 0.75 | 1.00 | wire-a | Incheon $1.4B PF 300 MW | `NOT_SELECTED: source_cap=scoring-wire-a,rank=2` |
+| 3 | ✓ | 0.686 | brief | 0.84 | 0.06 | 0.90 | 0.67 | 1.00 | wire-b | KEPCO 345 kV Saemangeum (EN) | selected |
+| 4 |  | 0.680 | brief | 0.84 | 0.06 | 0.95 | 0.67 | 0.84 | wire-b | 한국전력 345kV 변전소 준공 (KO, 같은 사건) | `NOT_SELECTED: rank=4,max=2` |
+| 5 |  | 0.629 | brief | 0.97 | 0.06 | 0.35 | 0.75 | 0.96 | wire-a | Seoul liquid cooling PUE 1.15 | `NOT_SELECTED: rank=5,max=2` |
+| 6 |  | 0.575 | brief | 0.85 | 0.06 | 0.59 | 0.47 | 0.76 | federal-register | Combined Notice: 500 MW large-load DC | `NOT_SELECTED: rank=6,max=2` (compute 문맥 → 상한 해제) |
+| 7 |  | 0.463 | – | 0.97 | 0.06 | 0.00 | 0.47 | 0.40 | arxiv | liquid cooling 150 kW thermal limits | `BELOW_THRESHOLD` (impact 0) |
+| 8 |  | 0.421 | – | 0.70 | 0.06 | 0.45 | 0.10 | 0.60 | wire-c | Nvidia·SK hynix HBM4 | `BELOW_THRESHOLD` (reader_value 0.10) |
+| 9 |  | 0.303 | – | 0.43 | 0.06 | 0.35 | 0.47 | 0.00 | federal-register | NOA Final EIS hydroelectric relicensing | `BELOW_THRESHOLD` (`caps=procedural_notice(0.44)`) |
+| 10 |  | 0.286 | – | 0.70 | 0.06 | 0.00 | 0.10 | 0.15 | wire-c | Enterprise AI Kubernetes operator | `BELOW_THRESHOLD` (`caps=enterprise_only(0.72)`) |
+| 11 |  | 0.208 | – | 0.38 | 0.06 | 0.00 | 0.32 | 0.15 | wire-b | AI 데이터센터 관련주 급등 | `BELOW_THRESHOLD` (`caps=korean_market_chatter(0.38)`) |
+| 12 |  | 0.117 | – | 0.16 | 0.06 | 0.00 | 0.32 | 0.00 | wire-b | Stegosaurus fossil auction | `BELOW_THRESHOLD` (`caps=hard_archive(0.2)`) |
+| 13 |  | 0.072 | – | 0.00 | 0.06 | 0.00 | 0.40 | 0.00 | wire-a | Photo app pet portraits | `BELOW_THRESHOLD` (`caps=weak_ai_adjacent(0.44)`) |
 
-축별 reason 예(1위): relevance `dims=direct_ai_infrastructure:1.00(ai data center/gpu clusters) data_center:1.00(data center/data centers/campus) power_grid:1.00(grid/interconnection/substation) cooling:0.82(…) …; lifts=ai+infra` · timeliness `age=9.7h,bucket=<=18h` · impact `signals=capacity_gw(1.2 gw),capacity_mw(200 mw),money_billion($2.1 billion),hyperscaler(microsoft),korea_major(kepco),deal_action(signs)` · reader_value `rights=full(+0.3),tier=1(+0.2),body=492ch(+0.15),region=korean/busan/kepco(+0.2),figures(+0.15)` · insight_potential `themes=power_strategy(interconnection/substation),capacity_planning(capacity/phase),site_selection(campus),capital(financing),korea_apac(busan);breadth=6dims(+0.15)`.
+축별 reason 예(1위): relevance `dims=direct_ai_infrastructure:1.00(ai data center/gpu clusters) data_center:1.00(data center/data centers/campus) power_grid:1.00(grid/interconnection/substatio…` · timeliness `age=88.5h,bucket=beyond` · impact `signals=capacity_gw(1.2 gw),capacity_mw(200 mw),money_billion($2.1 billion),hyperscaler(microsoft),korea_major(kepco),deal_action(signs)` · reader_value `rights=full→rewrite_only(extraction_missing,+0.2),tier=1(+0.2),body=492ch(+0.15),region=korean/busan/kepco(+0.2),figures(+0.15)` · insight_potential `themes=power_strategy(interconnection/substation),capacity_planning(capacity/phase),site_selection(campus),capital(financing),korea_apac(busan);breadth=6dims(+0.15)`.
 
 읽는 법: 소스당 1 규칙이 wire-a의 2위를 밀어내 wire-b가 2번째 슬롯을 받았고, 한·영 같은 사건(3·4위)은 토큰 규칙으로는 묶이지 않아 둘 다 통과했다(3b 열린 질문 1과 같은 한계; 이번 fixture에선 사이클 캡이 중복 발행을 막았다). timeliness는 fixture 발행일이 고정이라 실행 시각에 따라 내려간다(테스트는 `now` 고정).
 
-다른 fixture: `dedupe` 6 후보 → 통과 4(full 1·brief 3) → 선택 2(wire-a Incheon 300 MW 0.777 full, wire-b Samsung SDS Gumi 0.671 brief). `sample`(Google 릴리스노트·GAO·EC 연설 등 30건 중 6) → 통과 0, `shortfall 1`, 선택 0 — 레거시가 "플로어"로 채우던 상황을 새 구조는 0건 + 보고로 처리한다.
+다른 fixture: `dedupe` 6 후보 → 통과 3(full 0·brief 3; 첫 측정 10-20은 통과 4(full 1·brief 3), 차이는 timeliness 감쇠와 wire-a 상한) → 선택 2(wire-a 0.724 brief, wire-b 0.633 brief). `sample`(Google 릴리스노트·GAO·EC 연설 등 30건 중 6) → 통과 0, `shortfall 1`, 선택 0 — 레거시가 "플로어"로 채우던 상황을 새 구조는 0건 + 보고로 처리한다.
 
 ### 4.2 라이브 dry-run
 
