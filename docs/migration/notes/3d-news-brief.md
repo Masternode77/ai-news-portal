@@ -59,8 +59,42 @@
 
 ## 4. 완료 기준 대조
 
-(실행 후 채운다)
+| 기준(브리프 3d) | 결과 | 근거 |
+|---|---|---|
+| fixture 입력 → 스키마 통과 초안 | 통과 | `scoring` fixture의 선택 2건 → `drafts` 2행(`NewsBrief` zod 통과; 출처·날짜·slug는 스테이지가 채움). 재런은 같은 `(candidate_id, content_type, prompt_version)` 행 upsert — `generate-stage.test.ts`, `cli.test.ts`, CI `generate-dry-run` smoke(선택 2·초안 2·실패 0·grounding 2건 검사 1건 통과) |
+| 수치 grounding 검사 통과율 보고 | 통과 | `stage_events.counts { grounding_checked, grounding_passed }`, `--json` `generateStats.grounding { checked, passed, numbers, ungrounded }` + `grounding_pass_rate`, 건별 `decisions[].grounding_ungrounded`, step summary 절. fixture: 2건 중 1건 통과(KEPCO 초안의 "2027"은 원문에 없는 수치 — fixture가 일부러 넣은 것) |
+| 출처 링크 필수 | 통과 | `source_url`·`source_name`·`published_at_source`는 모델 출력 스키마(`NewsBriefDraft`)에 없고 스테이지가 raw item·source 행에서 채운다. 모델이 출처를 지어낼 경로가 없다 |
+| 원문 연속 인용 제한 | 보고 | 프롬프트 규칙(원문 표현 그대로는 ≤20단어 1회) + `checks.quote_max_words`(초안과 원문의 최장 연속 공통 단어 수) 기록. 차단은 3g QA 규칙 |
+| 한국어 Expert Lens 포함 | 통과 | `expert_lens_ko`(Appendix A zod, 150자 이상)를 프롬프트가 역할·금지 표현과 함께 요구 |
+| LLM 어댑터 뒤에서 호출 | 통과 | 스테이지는 `ctx.adapters.llm.complete()`만 호출. `fixture`(녹화)·`anthropic`(`ctx.fetch`)·`disabled` 교체는 CLI `llm.provider` |
+| 프롬프트 파일화(버전 관리) | 통과 | `prompts/news_brief.md` front matter `version: 2026-10-23.1` → `drafts.prompt_version`; `PromptRegistry`가 로드·strict 검증(`parsePromptFile` 테스트) |
+| 플래그 기본값 OFF | 통과 | `flags.stages.generate: false`; 기본 런은 `generate: skipped (flag_off)`, 증거 런은 `CC_FLAG_STAGES_GENERATE=true` |
+| 비용 상한(ADR-007) | 통과 | 호출 전 추정치(입력 글자/3 + `max_output_tokens`, `llm.pricing`)로 `budget.canSpend`; 첫 후보부터 불가 → `BUDGET_EXCEEDED`로 런 중단, 도중 불가 → 남은 후보 `budget_stopped` 보고(테스트) |
+| 네트워크 0(R7) | 통과 | fixture 어댑터는 `fixtures/llm/news_brief/<raw_item_id>.json`만 읽는다. Anthropic 어댑터는 `ctx.fetch`만 써서 `--replay`에서는 throw(테스트) |
+
+### 4.1 fixture dry-run (`scoring`, 2026-10-23T16:02Z)
+
+`CC_FLAG_STAGES_NORMALIZE=true CC_FLAG_STAGES_SCORE=true CC_FLAG_STAGES_GENERATE=true npm run v2:pipeline -- run --dry-run --replay --fixture scoring --sources fixtures/sources/scoring.yaml --stage ingest,normalize,score,generate --json` → `done`, funnel `items_scored 13 → passed_gate 6 → drafts 2`. `generateStats`: 선택 2 · 초안 2 · 실패 0 · budget_stopped 0 · grounding 1/2(숫자 10개 중 미근거 1) · `quote_max_words` 2 · USD 0(fixture; 3,600 in / 1,800 out) · 22 ms.
+
+| ok | 소스 | 제목(ko) | slug | 숫자 | 미근거 | 최장 공통 run |
+|---|---|---|---|---|---|---|
+| ✓ | wire-a (t1 full) | Microsoft, 부산 AI 데이터센터 캠퍼스에 1.2 GW 용량 계약 체결 | `news/920a329a451a5000` | 7 | – | 2 |
+| ✓ | wire-b (t2) | 한전, 새만금 데이터센터 클러스터용 345 kV 변전소 가동 | `news/732e5467dd67c011` | 3 | 2027 | 2 |
+
+녹화 응답은 **합성**이다(손으로 쓴 `NewsBriefDraft`, 모델 출력 아님; `fixtures/README.md`). `sample` fixture는 3c 통과 0 → 선택 0 → 초안 0. 검사 수준: grounding은 한국어 단위어(조·억·만·천)·영어 scale(billion·million…)을 값으로 비교하고 서수·단위 접미(1단계·2호기 등)는 제외한다; 1.2 GW와 1,200 MW처럼 단위 환산은 하지 않는다(미근거로 보고될 수 있음 — 3g에서 판단).
+
+테스트: `generate-stage.test.ts` 6, `anthropic-adapter.test.ts` 4(가짜 fetch: 강제 tool 호출·429/5xx 백오프·4xx 즉시 거부·타임아웃·replay 차단·가격 없는 모델 거부), shared `parsePromptFile` 1 → 전체 170, `v2:typecheck` 0 errors.
+
+### 4.2 라이브 dry-run
+
+미실행 — Anthropic API 키 미수령(세션·CI에는 키가 없고 R7상 CI는 fixture만 읽는다). 키 수령 후 절차: `config/pipeline.yaml` `llm.provider: anthropic`(또는 별도 config) + 환경 `ANTHROPIC_API_KEY`(이름만)에서 `CC_FLAG_STAGES_NORMALIZE=true CC_FLAG_STAGES_SCORE=true CC_FLAG_STAGES_GENERATE=true npm run v2:pipeline -- run --dry-run --live --stage ingest,normalize,score,generate --json`(Josh Mac 또는 시크릿 있는 수동 dispatch). 비용 상한 추정: 후보 2건 × (입력 ≤12,000자 ≈ 4,000토큰 × $4/M + 출력 ≤2,500토큰 × $20/M) ≈ $0.13/런, `budget.run_usd 2.0` 안.
 
 ## 5. 열린 질문
 
-(실행 후 채운다)
+1. **SDK vs 직접 호출** — 현재 `ctx.fetch`로 Messages API를 직접 호출한다(패키지 추가 0, replay 차단 자동). `@anthropic-ai/sdk` 도입은 패키지 추가 승인 항목이고, 도입하더라도 `ctx.fetch`를 custom fetch로 주입해 R7을 유지해야 한다. 권고: 라이브 측정 전까지 현 상태 유지.
+2. **`SCHEMA_INVALID` 재시도** — 지금은 1회 호출 후 dead letter(초안 미기록). 스키마 이탈 시 수정 지시를 붙여 1회 재요청할지는 비용 ×2 대 드랍률의 문제라 라이브 측정 후 결정(Phase 4).
+3. **link_only 소스** — 선택되면 제목·스니펫만으로 브리프를 쓴다(패킷 note가 모델에 알림). 3c가 reader_value 0.1로 사실상 걸러내지만, 생성 자체를 막을지(3c tier 상한)는 Josh 결정.
+4. **실제 모델 출력의 grounding 통과율** — fixture는 합성이라 미측정. Anthropic 키 수령 후 §4.2로 측정하고 `insight_trigger`·프롬프트 규칙을 조정한다.
+5. **프롬프트 캐싱·배치** — system prompt `cache_control`과 Batches API는 비용 절감 후보지만 런당 2~4건이라 Phase 4 이후.
+6. **한·영 동일 사건** — 3c 열린 질문 그대로: 같은 사건 2건이 모두 선택되면 브리프도 2건이다. 3c(묶기) 또는 3g(중복 QA)에서 처리.
+7. **model_hint vs config** — 프롬프트의 `model_hint`는 문서용이고 실제 모델은 `llm.models.news_brief`다. 둘이 다르면 경고만 할지, config가 항상 이기게 둘지(현재) 확정 필요.
