@@ -10,7 +10,7 @@
 # scripts/lib/relevance-classifier.mjs rules re-expressed as data
 # (docs/migration/notes/3c-scoring-selection.md §1); the other axes are new.
 
-version: "2026-10-20.2"        # candidates.rubric_version = score/<version>; bump when a rule, weight or term changes
+version: "2026-10-23.1"        # candidates.rubric_version = score/<version>; bump when a rule, weight or term changes
 
 weights:                       # total = Σ weight × axis score (must sum to 1)
   relevance: 0.35
@@ -29,6 +29,7 @@ insight_trigger: 0.7           # insight_potential ≥ this marks the candidate 
 selection:                     # the per-cycle count comes from config/pipeline.yaml caps.briefs_per_cycle
   per_source_max: 1            # at most one selected candidate per source and run (legacy source-repeat penalty)
   abstract_max_tier: brief     # text_scope: abstract sources (arXiv) never reach tier full (legacy signal_card cap)
+  failed_extraction_max_tier: brief  # a full-rights item whose extraction failed (payload.extraction.ok = false) is scored on its feed text as rewrite_only and never reaches full
 
 # ---------------------------------------------------------------------------
 # relevance — is this a Compute Current story? (legacy 8-dimension classifier as data)

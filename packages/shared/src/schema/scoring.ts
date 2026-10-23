@@ -167,6 +167,8 @@ export const SelectionConfig = z.strictObject({
   per_source_max: z.number().int().positive(),
   /** Highest tier a `text_scope: abstract` source can reach. */
   abstract_max_tier: CandidateTier,
+  /** Highest tier for a full-rights item whose body extraction failed (ingest keeps it with feed text and `payload.extraction.ok = false`; AGENTS.md: no long-form from a failed extraction). */
+  failed_extraction_max_tier: CandidateTier,
 });
 export type SelectionConfig = z.infer<typeof SelectionConfig>;
 
