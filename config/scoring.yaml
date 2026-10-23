@@ -10,7 +10,7 @@
 # scripts/lib/relevance-classifier.mjs rules re-expressed as data
 # (docs/migration/notes/3c-scoring-selection.md §1); the other axes are new.
 
-version: "2026-10-23.2"        # candidates.rubric_version = score/<version>; bump when a rule, weight or term changes
+version: "2026-10-23.3"        # candidates.rubric_version = score/<version>; bump when a rule, weight or term changes
 
 weights:                       # total = Σ weight × axis score (must sum to 1)
   relevance: 0.35

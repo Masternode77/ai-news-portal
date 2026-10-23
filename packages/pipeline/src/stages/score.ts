@@ -119,13 +119,18 @@ function aliasPattern(from: string): RegExp {
   return new RegExp(`(?<![a-z0-9])${escapeRegex(from.toLowerCase()).replace(/\s+/g, "\\s*")}(?![a-z0-9])`, "giu");
 }
 
-/** Lower case, Korean aliases rewritten to the English vocabulary, `&` → and, punctuation collapsed to spaces (`$ % . - / + #` kept for figures). */
+/**
+ * Lower case, Korean aliases rewritten to the English vocabulary, `&` → and, punctuation collapsed to
+ * spaces. `$ % . - / + #` are kept for figures, and a comma survives only between digits (`1,400`,
+ * `1,2 GW`, `€1,4 billion`) so the `[.,]` numeric patterns see the separator instead of a split number.
+ */
 export function normalizeText(value: string, aliases: readonly Alias[]): string {
   let text = value.toLowerCase();
   for (const alias of aliases) text = text.replace(alias.pattern, ` ${alias.to} `);
   return text
     .replace(/&/g, " and ")
-    .replace(/[^a-z0-9.+#/$%€£₩가-힣-]+/gu, " ")
+    .replace(/[^a-z0-9.,+#/$%€£₩가-힣-]+/gu, " ")
+    .replace(/(?<!\d),|,(?!\d)/g, " ")
     .replace(/\s+/g, " ")
     .trim();
 }
