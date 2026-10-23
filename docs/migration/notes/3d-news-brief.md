@@ -50,8 +50,8 @@
 | slug | `news/` + sha1(`canonical_url|title`)[0:16] (`newsBriefSlug()`, 레거시 규칙 유지) | contracts §5 |
 | 행 id | `candidates.id = candidateId(raw_item_id, rubric_version)`, `drafts.id = draftId(candidate_id, content_type, prompt_version)` — 3b의 `raw_items.id`처럼 결정적 파생, upsert 전에 찍음 | contracts §5 개정 |
 | Anthropic 어댑터 | `adapters/llm/anthropic.ts`: `ctx.fetch`로 Messages API 직접 호출(`--replay`에서는 자동 차단), tool_use 구조화 출력, `llm.pricing[model]`로 비용 계산, 429/5xx 재시도(`llm.max_retries`), `llm.timeout_ms`. 키는 `ANTHROPIC_API_KEY`(이름만; CLI가 `llm.provider: anthropic`일 때 요구). SDK(`@anthropic-ai/sdk`)는 패키지 추가 승인 후 교체 가능 | ADR-002, CLAUDE.md §3 |
-| 비용 가드 | 호출 전 `budget.canSpend(추정)`(입력 글자/4 + max_output_tokens × 단가), 어댑터가 실제 비용 `record`. 첫 후보부터 불가면 `BUDGET_EXCEEDED`(런 `budget_stop`), 도중 불가면 남은 후보를 `budget_stopped`로 보고하고 중단 | ADR-007 |
-| 검사(3d 범위) | ① 스키마: 응답 JSON → `NewsBriefDraft` zod. 실패 → dead letter `SCHEMA_INVALID`, 초안 미기록 ② grounding: 초안 숫자 토큰 ⊆ 원문 숫자 토큰(제목·본문·발행일·소스명). 결과 `checks.grounding { numbers, ungrounded, pass }` ③ `checks.quote_max_words`: 초안과 원문의 최장 연속 공통 단어 수. 3d는 **보고**만 하고 차단은 3g | 브리프 3d 완료 기준 |
+| 비용 가드 | 호출 전 `budget.canSpend(추정)`(입력 글자/4 + max_output_tokens × 단가), 어댑터가 실제 비용 `record`. 첫 후보부터 불가면 `BUDGET_EXCEEDED`(런 `budget_stop`), 도중 불가면 남은 후보를 `budget_stopped`로 보고하고 `ctx.budget.stop(reason)`으로 러너에 알린다 → 런 상태 `budget_stop`(exit 1), 완료된 초안은 다음 스테이지로 흐름(Codex PR #65) | ADR-007 |
+| 검사(3d 범위) | ① 스키마: 응답 JSON → `NewsBriefDraft` zod. 실패 → dead letter `SCHEMA_INVALID`, 초안 미기록 ② grounding: 초안 숫자 토큰 ⊆ 원문 숫자 토큰(제목·본문·발행일·소스명); 단위어가 붙은 수치(`2.1 million`·`21억`)는 정규화 값으로만 대조하고(`2.1 million`은 `$2.1 billion`에 근거하지 않음), 단위어 없는 수치만 원문 숫자 표기로도 인정(Codex PR #65). 결과 `checks.grounding { numbers, ungrounded, pass }` ③ `checks.quote_max_words`: 초안과 원문의 최장 연속 공통 단어 수. 3d는 **보고**만 하고 차단은 3g | 브리프 3d 완료 기준 |
 | draft 행 | `{ candidate_id, run_id, content_type: news_brief, prompt_version, model, body: { brief: NewsBrief, checks, source: { raw_item_id, canonical_url, text_rights, chars } }, input_tokens, output_tokens, cost_usd, review_status: none }`, upsert(`candidate_id, content_type, prompt_version`) | ADR-003 |
 | fixture 어댑터 | `LlmRequest.cacheKey`(선택, `news_brief:<raw_item_id>`)로 `fixtures/llm/<task>/<key>.json`을 먼저 찾고 없으면 `<task>.sample.json` | R7 |
 | 플래그 | `flags.stages.generate: false`(기본 OFF). 테스트·CI smoke는 `CC_FLAG_STAGES_GENERATE=true` + `llm.provider: fixture` | 공통 절차 5 |
@@ -69,7 +69,7 @@
 | LLM 어댑터 뒤에서 호출 | 통과 | 스테이지는 `ctx.adapters.llm.complete()`만 호출. `fixture`(녹화)·`anthropic`(`ctx.fetch`)·`disabled` 교체는 CLI `llm.provider` |
 | 프롬프트 파일화(버전 관리) | 통과 | `prompts/news_brief.md` front matter `version: 2026-10-23.1` → `drafts.prompt_version`; `PromptRegistry`가 로드·strict 검증(`parsePromptFile` 테스트) |
 | 플래그 기본값 OFF | 통과 | `flags.stages.generate: false`; 기본 런은 `generate: skipped (flag_off)`, 증거 런은 `CC_FLAG_STAGES_GENERATE=true` |
-| 비용 상한(ADR-007) | 통과 | 호출 전 추정치(입력 글자/3 + `max_output_tokens`, `llm.pricing`)로 `budget.canSpend`; 첫 후보부터 불가 → `BUDGET_EXCEEDED`로 런 중단, 도중 불가 → 남은 후보 `budget_stopped` 보고(테스트) |
+| 비용 상한(ADR-007) | 통과 | 호출 전 추정치(입력 글자/3 + `max_output_tokens`, `llm.pricing`)로 `budget.canSpend`; 첫 후보부터 불가 → `BUDGET_EXCEEDED`로 런 중단, 도중 불가 → 남은 후보 `budget_stopped` 보고 + `budget.stop()` → 런 `budget_stop`·exit 1·초안 보존(스테이지·러너·CLI 테스트) |
 | 네트워크 0(R7) | 통과 | fixture 어댑터는 `fixtures/llm/news_brief/<raw_item_id>.json`만 읽는다. Anthropic 어댑터는 `ctx.fetch`만 써서 `--replay`에서는 throw(테스트) |
 
 ### 4.1 fixture dry-run (`scoring`, 2026-10-23T16:02Z)

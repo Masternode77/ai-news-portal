@@ -2,8 +2,9 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { execFile } from "node:child_process";
 import { promisify } from "node:util";
-import { readFile } from "node:fs/promises";
-import { resolve } from "node:path";
+import { mkdtemp, readFile, writeFile } from "node:fs/promises";
+import { tmpdir } from "node:os";
+import { join, resolve } from "node:path";
 import { parsePipelineConfig, parseSourcesConfig } from "@cc/shared";
 import { REPO_ROOT } from "./helpers.ts";
 
@@ -86,6 +87,25 @@ test("CC_FLAG_STAGES_IMAGE=false turns the image stage off from the environment"
   assert.equal(code, 0);
   const out = JSON.parse(stdout) as { stages: { stage: string; status: string }[] };
   assert.equal(out.stages.find((s) => s.stage === "image")?.status, "skipped");
+});
+
+test("budget exhaustion after the first draft ends the run as budget_stop (exit 1) and keeps that draft", async () => {
+  const yaml = (await readFile(resolve(REPO_ROOT, "config/pipeline.yaml"), "utf8")).replace(/max_calls:\s*\d+/, "max_calls: 1");
+  assert.match(yaml, /max_calls: 1\b/);
+  const file = join(await mkdtemp(join(tmpdir(), "cc-budget-")), "pipeline.yaml");
+  await writeFile(file, yaml);
+  const { code, stdout, stderr } = await cli(
+    ["run", "--dry-run", "--replay", "--fixture", "scoring", "--sources", "fixtures/sources/scoring.yaml", "--stage", "ingest,normalize,score,generate", "--config", file, "--json"],
+    { CC_FLAG_STAGES_NORMALIZE: "true", CC_FLAG_STAGES_SCORE: "true", CC_FLAG_STAGES_GENERATE: "true" },
+  );
+  assert.equal(code, 1, stderr);
+  const result = JSON.parse(stdout);
+  assert.equal(result.status, "budget_stop");
+  assert.equal(result.generateStats.drafted, 1);
+  assert.equal(result.generateStats.budget_stopped, 1);
+  assert.equal(result.funnel.drafts, 1);
+  assert.equal(result.funnel.top_error, "BUDGET_EXCEEDED");
+  assert.equal(result.stages.find((s: { stage: string }) => s.stage === "generate")?.status, "done");
 });
 
 test("a live run is refused in Phase 2 and usage errors exit 2", async () => {

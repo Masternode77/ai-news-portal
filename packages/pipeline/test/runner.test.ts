@@ -115,6 +115,35 @@ test("a budget stop marks the run budget_stop and later stages still run", async
   assert.equal((await ledger.dump()).runs[0]?.status, "budget_stop");
 });
 
+test("a stage that stops on the budget after producing output still ends the run as budget_stop, keeps its output and lets later stages run", async () => {
+  const ledger = new MemoryLedger();
+  const stopping = defineStageSpec({
+    stage: {
+      name: "generate",
+      input: QaInput,
+      output: QaOutput,
+      idempotencyKey: () => "x",
+      run: async (_input, ctx) => {
+        ctx.budget.record(0.5);
+        ctx.budget.stop("generate stopped before candidate 2/2: next call estimated at USD 1.9000, spent 0.5000 of cap 2.00 after 1 calls");
+        return { passed: [], verdicts: [] };
+      },
+    },
+    select: (state) => ({ drafts: state.drafts }),
+    merge: (state) => state,
+    counts: () => ({ drafted: 1, budget_stopped: 1 }),
+  });
+  const { DEFAULT_STAGE_SPECS } = await import("../src/stages/index.ts");
+  const stages = DEFAULT_STAGE_SPECS.map((spec) => (spec.name === "generate" ? stopping : spec));
+  const result = await runPipeline(baseRunOptions({ ledger, stages }));
+  assert.equal(result.status, "budget_stop");
+  assert.equal(result.stages.find((s) => s.stage === "generate")?.status, "done", "the stage itself completed with what it had");
+  assert.deepEqual(result.stages.find((s) => s.stage === "generate")?.counts, { drafted: 1, budget_stopped: 1 });
+  assert.equal(result.stages.find((s) => s.stage === "publish")?.status, "done");
+  assert.equal(result.funnel.top_error, "BUDGET_EXCEEDED");
+  assert.equal((await ledger.dump()).runs[0]?.status, "budget_stop");
+});
+
 test("a malformed item is dead-lettered on its own and the rest of the source survives", async () => {
   const ledger = new MemoryLedger();
   const options = baseRunOptions({ ledger });

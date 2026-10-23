@@ -73,10 +73,10 @@ async function promptFile() {
   return parsePromptFile(await readFile(resolve(REPO_ROOT, "prompts/news_brief.md"), "utf8"), "prompts/news_brief.md");
 }
 
-async function run(db: MemoryDb, items: RawItemInsert[], sources: SourceConfig[], llm: LlmAdapter, cfg = config(), ledger = new MemoryLedger()): Promise<GenerateOutput> {
+async function run(db: MemoryDb, items: RawItemInsert[], sources: SourceConfig[], llm: LlmAdapter, cfg = config(), ledger = new MemoryLedger(), budget = createBudget(cfg.budget)): Promise<GenerateOutput> {
   const prompts = createMemoryPromptRegistry({ news_brief: await promptFile() });
   const runId = await ledger.startRun({ trigger: "local", startedAt: NOW, gitSha: null, flags: {} });
-  const ctx: StageContext = { runId, now: NOW, config: cfg, scoring: testScoring(), logger: silentLogger(), ledger, budget: createBudget(cfg.budget), dryRun: true, replay: true, fixtureName: undefined, fetch: () => Promise.reject(new Error("no network")), adapters: { ...fixtureAdapters(db), llm, prompts, db } };
+  const ctx: StageContext = { runId, now: NOW, config: cfg, scoring: testScoring(), logger: silentLogger(), ledger, budget, dryRun: true, replay: true, fixtureName: undefined, fetch: () => Promise.reject(new Error("no network")), adapters: { ...fixtureAdapters(db), llm, prompts, db } };
   return GenerateOutput.parse(await generateStage.run({ selected: items.map((item) => ({ ...candidate(item), run_id: runId })), rawItems: items, sources }, ctx));
 }
 
@@ -157,10 +157,12 @@ test("the budget guard stops generation before a call it cannot cover; a first c
   const sources = [src("a"), src("b"), src("c")];
   // Each reply costs 0.6 USD; the cap of 1.0 covers one call and the estimate for the next (≈0.07) still fits, the third does not.
   const tight = config(PRICING, "budget: { run_usd: 1.0, soft_warn_usd: 0.9, max_calls: 60 }");
-  const out = await run(new MemoryDb(), items, sources, scriptedLlm([response(GOOD_DRAFT, { costUsd: 0.6 }), response(GOOD_DRAFT, { costUsd: 0.6 })]), tight);
+  const budget = createBudget(tight.budget);
+  const out = await run(new MemoryDb(), items, sources, scriptedLlm([response(GOOD_DRAFT, { costUsd: 0.6 }), response(GOOD_DRAFT, { costUsd: 0.6 })]), tight, new MemoryLedger(), budget);
   assert.equal(out.stats.drafted, 2, "spent 1.2? no: the second call was allowed on the pre-call estimate; the third was refused");
   assert.equal(out.stats.budget_stopped, 1);
   assert.equal(out.stats.decisions[2]?.error?.startsWith("BUDGET_EXCEEDED: "), true);
+  assert.match(budget.stopReason ?? "", /^generate stopped before candidate 3\/3: /, "the stage tells the runner so the run ends as budget_stop with the two drafts kept");
 
   const exhausted = config(PRICING, "budget: { run_usd: 0.01, soft_warn_usd: 0.01, max_calls: 60 }");
   await assert.rejects(run(new MemoryDb(), items, sources, scriptedLlm([response(GOOD_DRAFT)]), exhausted), (error: unknown) => error instanceof BudgetExceededError);
@@ -172,7 +174,10 @@ test("checks: number claims are Korean-aware (scale words, counters), grounding 
   const g = groundingCheck("용량은 1.2 GW, 1단계 200 MW, 2028년, 21억 달러", BUSAN);
   assert.deepEqual(g, { numbers: ["1.2", "200", "2028", "21억"], ungrounded: [], pass: true }, "21억 grounds on $2.1 billion by value");
   assert.deepEqual(groundingCheck("2027년 1,200 MW", BUSAN).ungrounded, ["2027", "1,200"], "a year the source never gave and a converted unit are both flagged");
-  assert.equal(groundingCheck("2.1", BUSAN).pass, true, "the bare number of a scaled source figure grounds");
+  assert.equal(groundingCheck("2.1", BUSAN).pass, true, "the bare number of a scaled source figure grounds an unscaled claim");
+  assert.deepEqual(groundingCheck("투자액은 2.1 million 달러다.", "Investment was $2.1 billion.").ungrounded, ["2.1 million"], "a scaled claim must match the canonical value, not just the digits");
+  assert.equal(groundingCheck("21억 달러와 2.1 billion", "Investment was $2.1 billion.").pass, true);
+  assert.deepEqual(groundingCheck("1.2조원", "1.2 GW").ungrounded, ["1.2조"]);
   assert.equal(groundingCheck("수치가 없는 문장", BUSAN).pass, true);
   assert.equal(longestCommonRun("the first 200 MW phase is scheduled to reach", BUSAN), 9);
   assert.equal(longestCommonRun("완전히 다른 문장", BUSAN), 0);

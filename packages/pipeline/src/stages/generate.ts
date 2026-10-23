@@ -48,7 +48,9 @@ export interface NumberClaim {
   raw: string;
   /** Canonical value with the scale applied, so `21억` and `2.1 billion` share a key. */
   key: string;
-  /** The bare number without its scale, so a source "2.1 billion" also grounds a draft "2.1". */
+  /** True when a scale word was written (`21억`, `2.1 billion`): such a claim grounds only on the canonical value. */
+  scaled: boolean;
+  /** The bare number without its scale, so a source "2.1 billion" also grounds an unscaled draft "2.1". */
   bare: string;
 }
 
@@ -64,7 +66,7 @@ export function numberClaims(text: string): NumberClaim[] {
     const value = Number.parseFloat(bare);
     if (!Number.isFinite(value)) continue;
     const key = String(scale ? value * (SCALE[scale] ?? 1) : value);
-    out.push({ raw: raw.trim(), key, bare });
+    out.push({ raw: raw.trim(), key, scaled: Boolean(scale), bare });
   }
   return out;
 }
@@ -83,7 +85,10 @@ export interface GroundingResult {
 /**
  * Every number in the draft must appear in the source text by value (`21억 달러`
  * grounds on `$2.1 billion`; `1.2 GW` does not ground on `1,200 MW` — unit
- * conversion is left to the prompt's "keep the source's unit" rule). Numbers
+ * conversion is left to the prompt's "keep the source's unit" rule). A claim
+ * written with a scale word (`2.1 million`) must match the source's canonical
+ * value, so `2.1 million` never grounds on `$2.1 billion`; only an unscaled
+ * claim (`2.1`) may fall back to the digits of a scaled source figure. Numbers
  * only; entities are QA 3g's UNGROUNDED_ENTITY.
  */
 export function groundingCheck(draftText: string, sourceText: string): GroundingResult {
@@ -99,7 +104,8 @@ export function groundingCheck(draftText: string, sourceText: string): Grounding
     if (seen.has(claim.raw)) continue;
     seen.add(claim.raw);
     numbers.push(claim.raw);
-    if (!source.has(claim.key) && !source.has(claim.bare)) ungrounded.push(claim.raw);
+    const grounded = claim.scaled ? source.has(claim.key) : source.has(claim.key) || source.has(claim.bare);
+    if (!grounded) ungrounded.push(claim.raw);
   }
   return { numbers, ungrounded, pass: ungrounded.length === 0 };
 }
@@ -248,7 +254,8 @@ export const generateStage: Stage<GenerateInput, GenerateOutput> = {
       if (!ctx.budget.canSpend(estimate)) {
         if (drafts.length === 0 && index === 0) throw new BudgetExceededError(ctx.budget.spentUsd, ctx.budget.limitUsd);
         budgetStopped = input.selected.length - index;
-        ctx.logger.warn("generate: budget cannot cover the next call; stopping", { remaining: budgetStopped, estimate_usd: estimate, spent_usd: ctx.budget.spentUsd, cap_usd: ctx.budget.limitUsd });
+        ctx.budget.stop(`generate stopped before candidate ${index + 1}/${input.selected.length}: next call estimated at USD ${estimate.toFixed(4)}, spent ${ctx.budget.spentUsd.toFixed(4)} of cap ${ctx.budget.limitUsd.toFixed(2)} after ${ctx.budget.calls} calls`);
+        ctx.logger.warn("generate: budget cannot cover the next call; stopping (run ends as budget_stop, drafts so far are kept)", { remaining: budgetStopped, estimate_usd: estimate, spent_usd: ctx.budget.spentUsd, cap_usd: ctx.budget.limitUsd });
         for (const rest of input.selected.slice(index)) {
           const restItem = items.get(rest.raw_item_id);
           record({ canonical_url: restItem?.canonical_url ?? rest.raw_item_id, source_id: restItem?.source_id ?? "", slug: null, ok: false, error: `BUDGET_EXCEEDED: next call estimated at USD ${estimate.toFixed(4)} would pass the cap`, model: null, cost_usd: 0, input_tokens: 0, output_tokens: 0, grounding_numbers: 0, grounding_ungrounded: [], quote_max_words: 0, title_ko: null });

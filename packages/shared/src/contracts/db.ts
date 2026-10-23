@@ -101,4 +101,12 @@ export interface Budget {
   canSpend(estimateUsd: number): boolean;
   record(costUsd: number): void;
   state(): BudgetState;
+  /**
+   * Set by a stage that stopped its own work because the next call could not be covered
+   * (ADR-007; generate after at least one draft). The runner then ends the run as
+   * `budget_stop` (exit 1) while the later stages still run on what was produced. The first
+   * reason wins.
+   */
+  readonly stopReason: string | null;
+  stop(reason: string): void;
 }
