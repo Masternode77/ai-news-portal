@@ -165,15 +165,12 @@ export type CandidateTier = z.infer<typeof CandidateTier>;
 export const SelectionConfig = z.strictObject({
   /** Selected candidates per source in one run. */
   per_source_max: z.number().int().positive(),
-  /** Highest tier a `text_scope: abstract` source can reach. */
-  abstract_max_tier: CandidateTier,
   /**
-   * Highest tier for a full-rights item without a positive extraction (`payload.extraction.ok = true`):
-   * a failed extraction (ingest keeps the feed text with `ok: false`) or one never attempted
-   * (`ingest.extract_bodies: false`, `extract.kind: none`, no extractor). Only feed text exists then,
-   * and AGENTS.md forbids long-form from an unverified source.
+   * Highest tier a `text_scope: abstract` source can reach. There is deliberately no such knob for a
+   * full-rights item without a positive extraction (`payload.extraction.ok = true`): the score stage
+   * caps it at `brief` in code (fail-closed; AGENTS.md forbids long-form from an unverified source).
    */
-  unextracted_max_tier: CandidateTier,
+  abstract_max_tier: CandidateTier,
 });
 export type SelectionConfig = z.infer<typeof SelectionConfig>;
 

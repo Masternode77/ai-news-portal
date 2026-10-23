@@ -423,14 +423,18 @@ export interface Scored {
   insightEligible: boolean;
 }
 
+/**
+ * Tier from the total and the relevance floor, then the caps. The abstract-scope cap is config
+ * (`selection.abstract_max_tier`); the unextracted cap is not: a full-rights item without a positive
+ * extraction marker never reaches `full`, whatever the config says (fail-closed, AGENTS.md: no
+ * long-form from an unverified source).
+ */
 export function tierOf(total: number, relevance: number, cfg: ScoringConfig, source: SourceConfig | undefined, unextractedItem = false): CandidateTier | null {
   if (relevance < cfg.thresholds.relevance_min) return null;
   const uncapped: CandidateTier | null = total >= cfg.thresholds.full ? "full" : total >= cfg.thresholds.brief ? "brief" : null;
   if (uncapped !== "full") return uncapped;
-  const caps: CandidateTier[] = [];
-  if (source?.text_scope === "abstract") caps.push(cfg.selection.abstract_max_tier);
-  if (unextractedItem) caps.push(cfg.selection.unextracted_max_tier);
-  return caps.includes("brief") ? "brief" : "full";
+  if (unextractedItem) return "brief";
+  return source?.text_scope === "abstract" && cfg.selection.abstract_max_tier === "brief" ? "brief" : "full";
 }
 
 export function scoreCandidate(doc: ScoreDoc, cfg: ScoringConfig, compiled: CompiledScoring, now: Date): Scored {

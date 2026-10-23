@@ -29,7 +29,8 @@ insight_trigger: 0.7           # insight_potential ≥ this marks the candidate 
 selection:                     # the per-cycle count comes from config/pipeline.yaml caps.briefs_per_cycle
   per_source_max: 1            # at most one selected candidate per source and run (legacy source-repeat penalty)
   abstract_max_tier: brief     # text_scope: abstract sources (arXiv) never reach tier full (legacy signal_card cap)
-  unextracted_max_tier: brief  # a full-rights item without a positive extraction (payload.extraction.ok = true: failed, or never attempted via extract_bodies/extract.kind none) is scored on its feed text as rewrite_only and never reaches full
+  # No knob for a full-rights item without a positive extraction (payload.extraction.ok = true): the stage scores it on its
+  # feed text as rewrite_only and caps it at brief in code (fail-closed, AGENTS.md; Codex PR #61).
 
 # ---------------------------------------------------------------------------
 # relevance — is this a Compute Current story? (legacy 8-dimension classifier as data)
