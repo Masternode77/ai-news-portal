@@ -28,6 +28,8 @@ ADR-006의 단계 M1~M8을 실행 단위로 풀어 쓴다. 각 단계는 Josh �
 | 20 | 5 | `legacy-final` 태그 + 백업(승인), 레거시 25건 이관 실행, URL 136 전수 검증, Vercel Root Directory·플래그 전환, 48h 모니터링 | runbook, postmortem | 48h 무중단, URL 100% | 플래그 되돌리기 / 이전 배포 Promote / 태그 재배포 |
 | 21 | 5 | 레거시 제거 PR(별도 승인) | PR | — | PR 미머지 |
 
+> **B안 세부(Josh 확인 대기, 2026-10-23)**: 다른 세션에서 Josh가 "브리프 B안으로 진행"을 결정했다고 전달됨 — 3d → 3f(플레이스홀더 우선) → 3g → 3h → 3i → **Phase 4 shadow(≥3일)·Phase 5 전환까지 news_brief만으로** 진행하고 3e(insight_essay)는 전환 이후. 의존 관계 점검(ADR-006·contracts·이 표): 3g·3h·Phase 4·5 어느 행도 insight_essay 생성을 전제하지 않는다(3h는 slug 규약 `column/…`과 레거시 25건 이관으로 기존 컬럼을 그대로 서빙, URL 136 검증은 기존 URL 대상). 막히는 의존 없음. 단 두 가지는 요구사항 변경이라 Josh 확인이 필요하다: ① 브리프 R3(insight_essay 일 0~1)이 전환 시점에 미충족 ② "Phase 3 전체 완료 기준"(3a~3i 전부, 노트 9개)을 3e 제외로 읽어야 함. 이 스레드에서 Josh가 확정하면 §1 표와 `REBUILD_BRIEF.md` §6 재계획 문구를 갱신한다.
+
 ## 2. 모듈 ↔ 레거시 파일 매핑 (P9: 읽고 재작성, 복붙 금지)
 
 | 모듈 | 대체되는 레거시 파일 | 추출할 것 | 버릴 것 |
