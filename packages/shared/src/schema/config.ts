@@ -50,10 +50,27 @@ export const LlmModels = z.strictObject({
   qa_assist: z.string().min(1),
 });
 
+/** USD per million tokens (ADR-007 cost table); the adapter refuses a model with no row so the budget guard is never blind. */
+export const LlmPricing = z.strictObject({
+  input_per_mtok: z.number().nonnegative(),
+  output_per_mtok: z.number().nonnegative(),
+  cache_read_per_mtok: z.number().nonnegative().default(0),
+});
+export type LlmPricing = z.infer<typeof LlmPricing>;
+
 export const LlmConfig = z.strictObject({
   provider: z.enum(["anthropic", "openrouter", "fixture", "disabled"]),
   models: LlmModels,
+  /** Keyed by model id. */
+  pricing: z.record(z.string(), LlmPricing).default({}),
+  base_url: HttpUrl.default("https://api.anthropic.com"),
+  timeout_ms: z.number().int().positive().default(90000),
+  /** Retries on 429/5xx/network errors (Phase 3d adapter). */
+  max_retries: z.number().int().nonnegative().max(5).default(2),
+  /** Source text sent to the model is cut at this many characters. */
+  max_source_chars: z.number().int().positive().default(12000),
 });
+export type LlmConfig = z.infer<typeof LlmConfig>;
 
 export const ImageConfig = z.strictObject({
   provider: z.enum(["placeholder", "openai", "fixture"]),

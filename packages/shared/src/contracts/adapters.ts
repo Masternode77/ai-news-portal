@@ -7,6 +7,8 @@ import type {
   ImageResult,
   LlmRequest,
   LlmResponse,
+  LlmTask,
+  PromptFile,
   PublicationInsert,
   RawItemInsert,
   SourceConfig,
@@ -42,6 +44,11 @@ export interface LlmAdapter {
   /** 'anthropic' | 'openrouter' | 'fixture' | 'disabled' */
   readonly provider: string;
   complete(request: LlmRequest, ctx: StageContext): Promise<LlmResponse>;
+}
+
+/** Where stages get their prompt files (contracts.md §6); file-backed in production, in-memory in tests. */
+export interface PromptRegistry {
+  get(task: LlmTask): Promise<PromptFile>;
 }
 
 export interface ImageRequest {

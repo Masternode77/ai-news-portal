@@ -19,14 +19,16 @@ ADR-006의 단계 M1~M8을 실행 단위로 풀어 쓴다. 각 단계는 Josh �
 | 11 | 3b | Normalize & Dedupe | `stages/normalize` | 동일 기사 3소스 fixture → 1, 발행본 중복 reject | 플래그 OFF |
 | 12 | 3c | Scoring & Selection | `stages/score`, `config/scoring.yaml` | 항목별 점수+reason, 임계값 설정만으로 변경 | 플래그 OFF |
 | 13 | 3d | news_brief 생성 | `stages/generate/news_brief`, `prompts/news_brief.md`, `adapters/llm/anthropic` | fixture → 스키마 통과, 수치 grounding 통과율 보고 | 플래그 OFF |
-| 14 | 3e | insight_essay 생성 | `stages/generate/insight_essay`, `prompts/insight_essay.md`, `content/voice/josh_voice.md`(Josh 제공), `content/templates/insight_essay.md` | 샘플 3편 Josh 승인 | 플래그 OFF |
-| 15 | 3f | Image | `stages/image`, `adapters/image/{placeholder,openai}` | 전부 실패 fixture에서도 발행 진행 | 플래그 OFF |
-| 16 | 3g | QA Gates | `qa/rules/*`(hard 13 → soft 7), `qa/run`, `config/qa.yaml` | 규칙 추가 = 파일 1개, 판정 100% reason_code, 규칙별 통과율 리포트 | 플래그 OFF |
-| 17 | 3h | Publisher | `publishers/site`(upsert + revalidate), `config/redirects.yaml`, 레거시 25건 이관 스크립트(dry-run) | 발행이 빌드와 무관(테스트), slug 충돌 방지 | 플래그 OFF / staging만 |
-| 18 | 3i | Scheduler·Alerting·Cost | `.github/workflows/pipeline.yml`, `notify/telegram`, `budget` | 실패·성공 알림 fixture 테스트, 예산 트리거 테스트 | 워크플로 비활성 |
+| 14 | 3f | Image | `stages/image`, `adapters/image/{placeholder,openai}` | 전부 실패 fixture에서도 발행 진행 | 플래그 OFF |
+| 15 | 3g | QA Gates | `qa/rules/*`(hard 13 → soft 7), `qa/run`, `config/qa.yaml` | 규칙 추가 = 파일 1개, 판정 100% reason_code, 규칙별 통과율 리포트 | 플래그 OFF |
+| 16 | 3h | Publisher | `publishers/site`(upsert + revalidate), `config/redirects.yaml`, 레거시 25건 이관 스크립트(dry-run) | 발행이 빌드와 무관(테스트), slug 충돌 방지 | 플래그 OFF / staging만 |
+| 17 | 3i | Scheduler·Alerting·Cost | `.github/workflows/pipeline.yml`, `notify/telegram`, `budget` | 실패·성공 알림 fixture 테스트, 예산 트리거 테스트 | 워크플로 비활성 |
+| 18 | 3e | insight_essay 생성 — **2026-10-23 재계획(Josh): 브리프 라인(3d→3f→3g→3h→3i)을 먼저 끝내고 3e는 마지막**. 보이스 샘플 미수령이 선행 입력이라 뒤로 미룸 | `stages/generate/insight_essay`, `prompts/insight_essay.md`, `content/voice/josh_voice.md`(Josh 제공), `content/templates/insight_essay.md` | 샘플 3편 Josh 승인 | 플래그 OFF |
 | 19 | 4 | Shadow run ≥ 3일, `PUBLISH_TARGET=staging`, 프리뷰 배포, `docs/shadow/{compare,tuning-log}.md`, 롤백 드릴 | 문서·측정 | Phase 4 완료 기준 5개 | 워크플로 비활성 |
 | 20 | 5 | `legacy-final` 태그 + 백업(승인), 레거시 25건 이관 실행, URL 136 전수 검증, Vercel Root Directory·플래그 전환, 48h 모니터링 | runbook, postmortem | 48h 무중단, URL 100% | 플래그 되돌리기 / 이전 배포 Promote / 태그 재배포 |
 | 21 | 5 | 레거시 제거 PR(별도 승인) | PR | — | PR 미머지 |
+
+> **B안 세부(Josh 확인 대기, 2026-10-23)**: 다른 세션에서 Josh가 "브리프 B안으로 진행"을 결정했다고 전달됨 — 3d → 3f(플레이스홀더 우선) → 3g → 3h → 3i → **Phase 4 shadow(≥3일)·Phase 5 전환까지 news_brief만으로** 진행하고 3e(insight_essay)는 전환 이후. 의존 관계 점검(ADR-006·contracts·이 표): 3g·3h·Phase 4·5 어느 행도 insight_essay 생성을 전제하지 않는다(3h는 slug 규약 `column/…`과 레거시 25건 이관으로 기존 컬럼을 그대로 서빙, URL 136 검증은 기존 URL 대상). 막히는 의존 없음. 단 두 가지는 요구사항 변경이라 Josh 확인이 필요하다: ① 브리프 R3(insight_essay 일 0~1)이 전환 시점에 미충족 ② "Phase 3 전체 완료 기준"(3a~3i 전부, 노트 9개)을 3e 제외로 읽어야 함. 이 스레드에서 Josh가 확정하면 §1 표와 `REBUILD_BRIEF.md` §6 재계획 문구를 갱신한다.
 
 ## 2. 모듈 ↔ 레거시 파일 매핑 (P9: 읽고 재작성, 복붙 금지)
 
@@ -85,6 +87,7 @@ ADR-006의 단계 M1~M8을 실행 단위로 풀어 쓴다. 각 단계는 Josh �
 | 2026-10-18 | 10 (3a) | done | 안전 fetch·피드 파서·URL/날짜/HTML 규칙·라이브 RSS/Epoch 어댑터·추출기 5종, ingest 재작성(health·auto-disable·캡·중복 제거·items_new·추출), `--live` CLI(기본 OFF), 레지스트리 82행 이관(`config/sources.yaml`), `rebuild-ci.yml`의 `ingest-live-dry-run` 잡. 테스트 119. 라이브 dry-run(run 2): 80 소스 중 76 ok, `items_fetched` 312(Phase 0 평균 28.1), 추출 68/0 — `notes/3a-sources-ingest.md` §4. PR #59 (Codex 2건 반영 `0d2f05bf`) |
 | 2026-10-20 | 11 (3b) | done | `stages/normalize` 재작성: 발행본 URL 정체성·제목 유사도(7일 창) → `DUPLICATE_OF_PUBLISHED`, 풀 내 URL 정체성·content_hash·제목 키·제목 Dice ≥ 0.85·본문 shingle Jaccard ≥ 0.6 → `DUPLICATE_IN_POOL`; 탈락은 `candidates` 행(`selected=false`, `reject_reason`, `rubric_version normalize/<v>`)으로 기록, 대표 사본은 `text_rights`→tier→본문 길이. `raw_items.id = uuid5(canonical_url)`(3a ingest가 찍음), `PublicationSource.title`(선택), `DbPort.orderBy`, `--stage` 콤마 목록, `fixtures/db/<fixture>.json` 시드. 플래그 `flags.stages.normalize: false`(기본 OFF). 테스트 130. fixture dry-run: 3 와이어 12건 → 후보 6, 탈락 6(url 2·title 1·body 1·title_key 1·hash 1) — `notes/3b-normalize-dedupe.md` §4 |
 | 2026-10-20 | 12 (3c) | done | `stages/score` 재작성: 5축 루브릭(relevance = 레거시 8차원 어휘·lift·cap을 `config/scoring.yaml` 데이터로, timeliness 버킷, impact 신호 9, reader_value, insight_potential 테마 6) → `total = Σ weights`, tier full 0.75/brief 0.55 + 관련성 하한 `relevance_min` 0.55(라이브 런 1에서 추가), 선택은 total 순 소스당 1·사이클당 `caps.briefs_per_cycle.max`, 미달은 `shortfall`. 모든 후보 행 upsert(`rubric_version score/<v>`, `reject_reason BELOW_THRESHOLD\|NOT_SELECTED`, `rubric { tier, rank, insight_eligible, reasons }` — `0002_candidates_rubric.sql`, 미적용). `ScoringConfig`(zod strict, 정규식 컴파일 검증), CLI `--scoring`, `ctx.scoring`, funnel `passed_gate` = 임계 통과 수. 플래그 `flags.stages.score: false`. 테스트 158. fixture dry-run: 5소스 13건 → 통과 6 → 선택 2; 라이브 dry-run run 39401326128: 198 후보 → 통과 12(6.1%) → 선택 2 — `notes/3c-scoring-selection.md` §4. PR #61 |
+| 2026-10-23 | 13 (3d) | done | `stages/generate` 재작성(news_brief): 선택 후보 → 소스 패킷(권리·범위·잘림 표시) → `LlmAdapter.complete`(`NewsBriefDraft` JSON 스키마 강제) → `NewsBrief`(출처·날짜·slug는 스테이지가 채움) → `drafts` upsert(`candidate_id, content_type, prompt_version`). `prompts/news_brief.md`(front matter + 한국어 system, `PromptRegistry`, CLI `--prompts-dir`), `adapters/llm/anthropic`(ctx.fetch 전용, tool 강제 구조화 출력, 재시도·타임아웃, `llm.pricing` 비용), `candidateId`·`draftId`·`newsBriefSlug` 결정적 id, 한국어 인식 숫자 grounding 검사·`quote_max_words`(보고만, 차단은 3g), 예산 가드(호출 전 추정), `SCHEMA_INVALID`·LLM 오류 → dead letter, `GenerateStats`·step summary 절·CI smoke. 플래그 `flags.stages.generate: false`. 테스트 170. fixture dry-run: 선택 2 → 초안 2, grounding 1/2 — `notes/3d-news-brief.md` §4. 라이브 생성은 Anthropic 키 수령 후. 3c 후속(PR #61 Codex P1 2건): 추출 실패/미시도 full 소스는 rewrite_only 값 + 코드상 brief 상한(fail-closed, 설정 키 없음), 숫자 콤마 보존; v2026-10-23.3 |
 
 ## 6. 알려진 격차 (Phase 2 리뷰에서 확인)
 

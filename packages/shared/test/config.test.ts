@@ -12,6 +12,7 @@ import {
   loadSourcesConfig,
   parsePipelineConfig,
   parseRedirectsConfig,
+  parsePromptFile,
   parseScoringConfig,
   parseSourcesConfig,
 } from "../src/index.ts";
@@ -126,4 +127,20 @@ test("config/scoring.yaml (Phase 3c) loads strictly: weights sum to 1, threshold
   assert.throws(() => parseScoringConfig(text.replace('hard_archive_exception_pattern: "\\\\bfossils?', 'hard_archive_exception_pattern: "(fossils?'), path), (e: unknown) => e instanceof ConfigError && /invalid regular expression/.test(e.message));
   assert.throws(() => parseScoringConfig(`${text}\nextra_key: 1\n`, path), (e: unknown) => e instanceof ConfigError && /extra_key/.test(e.message));
   assert.throws(() => parseScoringConfig(text.replace("- { max_hours: 8, score: 0.75 }", "- { max_hours: 2, score: 0.75 }"), path), (e: unknown) => e instanceof ConfigError && /ascending/.test(e.message));
+});
+
+test("prompt files (Phase 3d) carry a strict YAML front matter and the body is the system prompt", () => {
+  const head = "---\ntask: news_brief\nversion: 2026-10-23.1\nmodel_hint: claude-opus-5-5\noutput_schema: NewsBriefDraft\nmax_output_tokens: 2500\n---\n";
+  const file = parsePromptFile(`${head}\n당신은 편집자다.\n\n규칙 1.\n`, "prompts/news_brief.md");
+  assert.equal(file.task, "news_brief");
+  assert.equal(file.version, "2026-10-23.1");
+  assert.equal(file.max_output_tokens, 2500);
+  assert.equal(file.system, "당신은 편집자다.\n\n규칙 1.");
+  assert.equal(file.path, "prompts/news_brief.md");
+  assert.throws(() => parsePromptFile("task: news_brief\nno front matter"), ConfigError);
+  assert.throws(() => parsePromptFile(`${head}`), ConfigError, "an empty system prompt is rejected");
+  assert.throws(() => parsePromptFile("---\ntask: news_brief\nversion: 1\n---\nbody"), ConfigError, "missing header fields");
+  assert.throws(() => parsePromptFile(head.replace("news_brief", "poem") + "body"), ConfigError, "task must be an LlmTask");
+  assert.throws(() => parsePromptFile(head.replace("---\n", "temperature: 0.2\n---\n").replace(/^temperature/m, "---\ntask: news_brief\nversion: 1\nmodel_hint: m\noutput_schema: NewsBriefDraft\nmax_output_tokens: 10\ntemperature") + "body"), ConfigError, "unknown keys fail (strict)");
+  assert.throws(() => parsePromptFile(head.replace("2500", "0") + "body"), ConfigError, "max_output_tokens must be positive");
 });

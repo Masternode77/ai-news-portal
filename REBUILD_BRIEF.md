@@ -226,6 +226,8 @@ computecurrent.com은 장기간 누적된 코드가 서로 얽혀 반복 장애�
 - **3i Scheduler, Alerting, Cost guard** — ADR-002/007 구현. 런 종료 시 Telegram 요약(funnel 표 + 발행 링크 + 실패 상위 3개 + 비용). 런당 비용 상한 초과 시 생성 중단(사이트 무영향).
   - 완료: 실패 런·성공 런 각각 알림 fixture 테스트 / 비용 상한 트리거 테스트
 
+> **재계획 2026-10-23 (Josh)**: 모듈 실행 순서를 **3a → 3b → 3c → 3d → 3f → 3g → 3h → 3i → 3e**로 바꾼다. news_brief 라인을 먼저 끝까지(생성 → 이미지 → QA → 발행 → 스케줄) 이어 붙이고, insight_essay(3e)는 보이스 샘플 수령 후 마지막에 한다. 모듈별 완료 기준·게이트는 그대로.
+
 **Phase 3 전체 완료 기준**
 - [ ] 3a~3i 모두 테스트·CI 통과, 플래그 존재
 - [ ] `pipeline run --dry-run` 이 실제 소스에서 끝까지 돌고 "발행했을 글"을 staging에 기록

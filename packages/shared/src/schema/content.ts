@@ -26,6 +26,14 @@ export const NewsBrief = z.strictObject({
 });
 export type NewsBrief = z.infer<typeof NewsBrief>;
 
+/**
+ * What the model writes (Phase 3d): the reader-facing Korean fields only. The
+ * stage fills `source_url`, `source_name`, `published_at_source` and `slug`
+ * from the raw item, so a model can never invent a source.
+ */
+export const NewsBriefDraft = NewsBrief.pick({ title_ko: true, summary_ko: true, why_it_matters_ko: true, expert_lens_ko: true, tags: true });
+export type NewsBriefDraft = z.infer<typeof NewsBriefDraft>;
+
 export const InsightEssay = z.strictObject({
   title_ko: z.string().min(10).max(90),
   /** One sentence. */
@@ -69,6 +77,8 @@ export const LlmRequest = z.strictObject({
   maxOutputTokens: z.number().int().positive(),
   /** `version` from the prompts/<task>.md front matter. */
   promptVersion: z.string().min(1),
+  /** Stable key for this request (e.g. `news_brief:<raw_item_id>`): the fixture adapter looks up `fixtures/llm/<task>/<key>.json` by it (Phase 3d). */
+  cacheKey: z.string().min(1).optional(),
 });
 export type LlmRequest = z.infer<typeof LlmRequest>;
 

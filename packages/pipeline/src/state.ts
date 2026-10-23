@@ -136,6 +136,55 @@ export function emptyScoreStats(): ScoreStats {
   return { candidates: 0, passed: 0, full: 0, brief: 0, below_threshold: 0, below_relevance: 0, selected: 0, not_selected: 0, insight_eligible: 0, shortfall: 0, decisions: [], ms: 0 };
 }
 
+/** One generation attempt (Phase 3d); the first 100 are mirrored into the `--json` output. */
+export const GenerateDecision = z.strictObject({
+  canonical_url: z.string(),
+  source_id: z.string(),
+  slug: z.string().nullable(),
+  ok: z.boolean(),
+  /** `<CODE>: <detail>` when the attempt failed (SCHEMA_INVALID, LLM_*, BUDGET_EXCEEDED). */
+  error: z.string().nullable(),
+  model: z.string().nullable(),
+  cost_usd: z.number().nonnegative(),
+  input_tokens: NonNegativeInt,
+  output_tokens: NonNegativeInt,
+  /** Numbers found in the draft and the subset missing from the source text. */
+  grounding_numbers: NonNegativeInt,
+  grounding_ungrounded: z.array(z.string()).max(20),
+  /** Longest run of consecutive words the draft shares with the source (QA 3g caps it at 20). */
+  quote_max_words: NonNegativeInt,
+  title_ko: z.string().nullable(),
+});
+export type GenerateDecision = z.infer<typeof GenerateDecision>;
+
+export const GenerateStats = z.strictObject({
+  selected: NonNegativeInt,
+  drafted: NonNegativeInt,
+  failed: NonNegativeInt,
+  /** Candidates not attempted because the run budget could not cover another call. */
+  budget_stopped: NonNegativeInt,
+  cost_usd: z.number().nonnegative(),
+  input_tokens: NonNegativeInt,
+  output_tokens: NonNegativeInt,
+  grounding: z.strictObject({
+    checked: NonNegativeInt,
+    /** Drafts whose every number appears in their source. */
+    passed: NonNegativeInt,
+    numbers: NonNegativeInt,
+    ungrounded: NonNegativeInt,
+  }),
+  /** passed / checked, null when nothing was checked. */
+  grounding_pass_rate: z.number().min(0).max(1).nullable(),
+  quote_max_words: NonNegativeInt,
+  decisions: z.array(GenerateDecision).max(100),
+  ms: NonNegativeInt,
+});
+export type GenerateStats = z.infer<typeof GenerateStats>;
+
+export function emptyGenerateStats(): GenerateStats {
+  return { selected: 0, drafted: 0, failed: 0, budget_stopped: 0, cost_usd: 0, input_tokens: 0, output_tokens: 0, grounding: { checked: 0, passed: 0, numbers: 0, ungrounded: 0 }, grounding_pass_rate: null, quote_max_words: 0, decisions: [], ms: 0 };
+}
+
 export const DraftWithImage = z.strictObject({
   draft: DraftInsert,
   image: ImageResult.nullable(),
@@ -154,6 +203,7 @@ export const PipelineState = z.strictObject({
   candidates: z.array(CandidateInsert),
   scoreStats: ScoreStats,
   selected: z.array(CandidateInsert),
+  generateStats: GenerateStats,
   drafts: z.array(DraftInsert),
   verdicts: z.array(QaVerdict),
   passed: z.array(DraftInsert),
@@ -191,6 +241,7 @@ export function initialState(sources: SourceConfig[]): PipelineState {
     candidates: [],
     scoreStats: emptyScoreStats(),
     selected: [],
+    generateStats: emptyGenerateStats(),
     drafts: [],
     verdicts: [],
     passed: [],
