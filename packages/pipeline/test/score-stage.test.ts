@@ -301,3 +301,14 @@ test("text normalisation: Korean aliases, whole-word terms and the fixture end t
   assert.equal(rows.length, 13);
   assert.ok(rows.every((r) => r.rubric && Object.keys(r.rubric.reasons).length === 5));
 });
+
+test("numeric separators survive normalisation: decimal commas and thousands separators still feed the impact and figure patterns", async () => {
+  assert.equal(normalizeText("Plans a 1,2 GW campus for $1,400 million, said KEPCO (Busan).", []), "plans a 1,2 gw campus for $1,400 million said kepco busan .");
+  const item = raw("a", "https://a.example.com/comma", "Hyperscaler signs 1,2 GW data center lease worth $1,400 million in Busan", "A 1,2 GW AI data center campus in Busan: a $1,400 million lease signed with the hyperscaler, with grid interconnection by KEPCO at a 345 kV substation.");
+  const out = await run(new MemoryDb(), [item], [src("a", { tier: 1, text_rights: "full" })]);
+  const impact = out.candidates[0]!.rubric!.reasons.impact;
+  assert.match(impact, /capacity_gw\(1,2 gw\)/, impact);
+  assert.match(impact, /money_million\(\$1,400 million\)/, impact);
+  assert.doesNotMatch(impact, /capacity_gw\(2 gw\)/, "a decimal comma must not split the figure");
+  assert.match(out.candidates[0]!.rubric!.reasons.reader_value, /figures\(/);
+});

@@ -71,7 +71,7 @@
 | 플래그 기본값 OFF | 통과 | `flags.stages.score: false`; 기본 런은 `score: skipped (flag_off)`, 증거 런은 `CC_FLAG_STAGES_SCORE=true` |
 | 결정적·네트워크 0 | 통과 | LLM·fetch 호출 없음; `--replay`에서 실행. 같은 입력·같은 `now`면 같은 행 |
 
-### 4.1 fixture dry-run (`scoring`, 5소스 13건, 2026-10-23T16:00Z 재측정 · 루브릭 2026-10-23.2)
+### 4.1 fixture dry-run (`scoring`, 5소스 13건, 2026-10-23T16:00Z 재측정 · 루브릭 2026-10-23.3)
 
 `CC_FLAG_STAGES_NORMALIZE=true CC_FLAG_STAGES_SCORE=true npm run v2:pipeline -- run --dry-run --replay --fixture scoring --sources fixtures/sources/scoring.yaml --stage ingest,normalize,score --json` → `done`, funnel `items_scored 13 → passed_gate 6`, score 75 ms. 후보 13 · 통과 6(full 0 · brief 6) · 미달 7 · 선택 2 · 미선택 4 · insight-eligible 6 · shortfall 0.
 
