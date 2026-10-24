@@ -227,6 +227,8 @@ computecurrent.com은 장기간 누적된 코드가 서로 얽혀 반복 장애�
   - 완료: 실패 런·성공 런 각각 알림 fixture 테스트 / 비용 상한 트리거 테스트
 
 > **재계획 2026-10-23 (Josh)**: 모듈 실행 순서를 **3a → 3b → 3c → 3d → 3f → 3g → 3h → 3i → 3e**로 바꾼다. news_brief 라인을 먼저 끝까지(생성 → 이미지 → QA → 발행 → 스케줄) 이어 붙이고, insight_essay(3e)는 보이스 샘플 수령 후 마지막에 한다. 모듈별 완료 기준·게이트는 그대로.
+>
+> **B안 세부 2026-10-24 (Josh 승인)**: Phase 4 shadow(≥3일)·Phase 5 전환까지 news_brief만으로 진행한다 — R3(insight_essay 일 0~1)는 전환 시점 미충족을 허용하고, "Phase 3 전체 완료"는 3e를 제외한 3a~3d·3f~3i로 읽는다. 3e는 전환 직후 착수하고, 보이스 샘플 5~10편은 shadow 기간 중 Josh가 제출한다(`docs/migration/plan.md` §1 B안 메모).
 
 **Phase 3 전체 완료 기준**
 - [ ] 3a~3i 모두 테스트·CI 통과, 플래그 존재

@@ -23,12 +23,12 @@ ADR-006의 단계 M1~M8을 실행 단위로 풀어 쓴다. 각 단계는 Josh �
 | 15 | 3g | QA Gates | `qa/rules/*`(hard 13 → soft 7), `qa/run`, `config/qa.yaml` | 규칙 추가 = 파일 1개, 판정 100% reason_code, 규칙별 통과율 리포트 | 플래그 OFF |
 | 16 | 3h | Publisher | `publishers/site`(upsert + revalidate), `config/redirects.yaml`, 레거시 25건 이관 스크립트(dry-run) | 발행이 빌드와 무관(테스트), slug 충돌 방지 | 플래그 OFF / staging만 |
 | 17 | 3i | Scheduler·Alerting·Cost | `.github/workflows/pipeline.yml`, `notify/telegram`, `budget` | 실패·성공 알림 fixture 테스트, 예산 트리거 테스트 | 워크플로 비활성 |
-| 18 | 3e | insight_essay 생성 — **2026-10-23 재계획(Josh): 브리프 라인(3d→3f→3g→3h→3i)을 먼저 끝내고 3e는 마지막**. 보이스 샘플 미수령이 선행 입력이라 뒤로 미룸 | `stages/generate/insight_essay`, `prompts/insight_essay.md`, `content/voice/josh_voice.md`(Josh 제공), `content/templates/insight_essay.md` | 샘플 3편 Josh 승인 | 플래그 OFF |
+| 18 | 3e | insight_essay 생성 — **2026-10-23 재계획(Josh): 브리프 라인(3d→3f→3g→3h→3i)을 먼저 끝내고 3e는 마지막**. 보이스 샘플 미수령이 선행 입력이라 뒤로 미룸. **2026-10-24 Josh**: Phase 5 전환 직후 착수, 보이스 샘플 5~10편은 Phase 4 shadow 기간 중 제출(B안 세부 메모) | `stages/generate/insight_essay`, `prompts/insight_essay.md`, `content/voice/josh_voice.md`(Josh 제공), `content/templates/insight_essay.md` | 샘플 3편 Josh 승인 | 플래그 OFF |
 | 19 | 4 | Shadow run ≥ 3일, `PUBLISH_TARGET=staging`, 프리뷰 배포, `docs/shadow/{compare,tuning-log}.md`, 롤백 드릴 | 문서·측정 | Phase 4 완료 기준 5개 | 워크플로 비활성 |
 | 20 | 5 | `legacy-final` 태그 + 백업(승인), 레거시 25건 이관 실행, URL 136 전수 검증, Vercel Root Directory·플래그 전환, 48h 모니터링 | runbook, postmortem | 48h 무중단, URL 100% | 플래그 되돌리기 / 이전 배포 Promote / 태그 재배포 |
 | 21 | 5 | 레거시 제거 PR(별도 승인) | PR | — | PR 미머지 |
 
-> **B안 세부(Josh 확인 대기, 2026-10-23)**: 다른 세션에서 Josh가 "브리프 B안으로 진행"을 결정했다고 전달됨 — 3d → 3f(플레이스홀더 우선) → 3g → 3h → 3i → **Phase 4 shadow(≥3일)·Phase 5 전환까지 news_brief만으로** 진행하고 3e(insight_essay)는 전환 이후. 의존 관계 점검(ADR-006·contracts·이 표): 3g·3h·Phase 4·5 어느 행도 insight_essay 생성을 전제하지 않는다(3h는 slug 규약 `column/…`과 레거시 25건 이관으로 기존 컬럼을 그대로 서빙, URL 136 검증은 기존 URL 대상). 막히는 의존 없음. 단 두 가지는 요구사항 변경이라 Josh 확인이 필요하다: ① 브리프 R3(insight_essay 일 0~1)이 전환 시점에 미충족 ② "Phase 3 전체 완료 기준"(3a~3i 전부, 노트 9개)을 3e 제외로 읽어야 함. 이 스레드에서 Josh가 확정하면 §1 표와 `REBUILD_BRIEF.md` §6 재계획 문구를 갱신한다.
+> **B안 세부(Josh 승인 2026-10-24, 이 스레드에서 직접 확인)**: 2026-10-23 다른 세션에서 Josh가 "브리프 B안으로 진행"을 결정했다고 전달됨 — 3d → 3f(플레이스홀더 우선) → 3g → 3h → 3i → **Phase 4 shadow(≥3일)·Phase 5 전환까지 news_brief만으로** 진행하고 3e(insight_essay)는 전환 이후. 의존 관계 점검(ADR-006·contracts·이 표): 3g·3h·Phase 4·5 어느 행도 insight_essay 생성을 전제하지 않는다(3h는 slug 규약 `column/…`과 레거시 25건 이관으로 기존 컬럼을 그대로 서빙, URL 136 검증은 기존 URL 대상). 막히는 의존 없음. 단 두 가지는 요구사항 변경이라 Josh 확인이 필요하다: ① 브리프 R3(insight_essay 일 0~1)이 전환 시점에 미충족 ② "Phase 3 전체 완료 기준"(3a~3i 전부, 노트 9개)을 3e 제외로 읽어야 함. **2026-10-24 Josh 승인**: ①·② 모두 "예" — R3는 전환 시점 미충족을 허용하고 3e 완료로 충족하며, Phase 3 완료 기준은 3e 제외로 읽는다. 3e는 Phase 5 전환 직후 착수하고, 보이스 샘플 5~10편은 Phase 4 shadow 기간 중 Josh가 제출한다. §1 18행·§3 R3 행·`REBUILD_BRIEF.md` §6 재계획 문구에 반영.
 
 ## 2. 모듈 ↔ 레거시 파일 매핑 (P9: 읽고 재작성, 복붙 금지)
 
@@ -51,7 +51,7 @@ ADR-006의 단계 M1~M8을 실행 단위로 풀어 쓴다. 각 단계는 Josh �
 |---|---|---|
 | R1 주기 소싱(8h) | ADR-002 cron `45 15,23,7 * * *`, `stages/ingest`, `config/sources.yaml` tier | `pipeline_runs.funnel.items_fetched` 런별 ≥ 1, 소스 health |
 | R2 사이클당 1~2 `news_brief` | `caps.briefs_per_cycle`, `stages/score` 선택 상·하한, 3d, ADR-004 재서술 허용으로 풀 확장 | 7일 이동평균 `published` ≥ 1/런 (Phase 4 기준 80%) |
-| R3 `insight_essay` 일 0~1 | `caps.essays_per_day`, `scoring.insight_trigger`, 3e 보이스 파일 | Josh 샘플 승인, `publications.content_type` 집계 |
+| R3 `insight_essay` 일 0~1 | `caps.essays_per_day`, `scoring.insight_trigger`, 3e 보이스 파일 | Josh 샘플 승인, `publications.content_type` 집계. **Phase 5 전환 시점에는 미충족 허용(Josh 2026-10-24, B안 세부)**: 3e가 전환 직후 이어서 충족한다 |
 | R4 파이프라인 장애 ≠ 서빙 중단 | ADR-005 SSR/ISR + `publications`만 읽기, ADR-002 Actions 분리, P5 dead_letters | 파이프라인 강제 실패 중 사이트 200 (Phase 4 드릴) |
 | R5 플러그앤플레이 | ADR-001 워크스페이스, `contracts.md` Adapter·QaRule, `sources.yaml` ≤ 10줄, `qa/rules/<RULE>.ts` 1파일 | 3a·3g 완료 기준 |
 | R6 설명 가능한 게이트 | ADR-004 reason_code, `qa_results`, `candidates.reject_reason` | 판정 100% reason_code (SQL 검사) |
