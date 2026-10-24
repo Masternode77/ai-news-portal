@@ -54,8 +54,41 @@ Phase 3 모듈 f(`REBUILD_BRIEF.md` §6: `ImageAdapter`(OpenAI 우선, 폴백 �
 
 ## 4. 완료 기준 대조
 
-(실행 후 채운다)
+| 기준 | 결과 | 근거 |
+|---|---|---|
+| 공급자 전부 실패 fixture에서도 발행 흐름이 멈추지 않음(테스트) | 통과 | `image-stage.test.ts`: fixture(파일 없음)·openai(503) 전부 실패 → 두 초안 모두 플레이스홀더로 완주, 시도 기록 4건, `IMAGE_MISSING` soft 2건이 `qa_results`에 적재, dead letter 0; end-to-end(QA 통과 스텁)에서 generate → image → publish(none)까지 런 `done` |
+| `ImageAdapter` 폴백 체인(OpenAI 우선 가능) | 통과 | `image.provider` → `image.fallback_chain`(스키마가 마지막 `placeholder`를 강제) → `createImageChain`. 기본은 플레이스홀더 우선(B안), OpenAI는 `provider: openai` + `OPENAI_API_KEY`(이름만)로 opt-in |
+| provenance(프롬프트·공급자·모델·생성시각) | 통과 | `ImageResult.provenance { provider, model, prompt, generatedAt }` + `placeholder` 플래그; 플레이스홀더도 `model: svg-editorial/2026-10-24.1`을 남긴다 |
+| alt text | 통과 | 스테이지가 `{title_ko} — Compute Current 편집 일러스트`로 결정적으로 채움(모델 출력 아님) |
+| 전부 실패 시 브랜드 플레이스홀더(soft) | 통과 | 초안별 결정적 SVG(주제 모티프·slug 팔레트) → ImageStore; 저장소 자체가 실패하면 정적 `/images/placeholder-brief.svg`. soft verdict `IMAGE_MISSING`(reason `IMAGE_PROVIDERS_FAILED` / `IMAGE_BUDGET_SKIPPED`) |
+| 비용 상한 | 통과 | 유료 공급자(`openai`)는 호출 전 `budget.canSpend(usd_per_image)`; 불가면 호출 없이 플레이스홀더(`budget_stopped` 카운트, 런은 계속) — 테스트 |
+| 플래그 기본값 OFF | 통과 | `flags.stages.image: false`(Phase 2의 no-op 때 `true`였던 것을 공통 절차 5에 맞춰 내림); 기본 런 `image: skipped (flag_off)`, `CC_FLAG_STAGES_IMAGE=true`로 켬 |
+| 네트워크 0(R7) | 통과 | OpenAI 어댑터는 `ctx.fetch`만 사용(`--replay`에서 throw); CI·테스트는 fixture·placeholder만 |
+
+### 4.1 fixture dry-run (`scoring`, 2026-10-24T00:17Z)
+
+`CC_FLAG_STAGES_NORMALIZE=true CC_FLAG_STAGES_SCORE=true CC_FLAG_STAGES_GENERATE=true CC_FLAG_STAGES_IMAGE=true npm run v2:pipeline -- run --dry-run --replay --fixture scoring --sources fixtures/sources/scoring.yaml --stage ingest,normalize,score,generate,qa,image --json` → `done`; ingest 13 → normalize 13 → score 통과 6·선택 2 → generate 초안 2 → **qa 통과 0(3g 전 fail-closed)** → image `done`, `passed 0 · with_images 0`(4 ms) → publish skipped. 즉 3g가 들어오기 전까지 dry-run에는 image 입력이 없고, 이 모듈의 증거는 테스트다:
+
+| 테스트 | 결과 |
+|---|---|
+| 플레이스홀더 우선: 초안 1 → `/images/generated/news/<hash>/hero.svg`(SVG 1.6 KB, 주제 `power-grid` 모티프), provenance placeholder, verdict 0, 같은 입력 → 같은 바이트 | 통과 |
+| 공급자 전부 실패(fixture 없음 → openai 503 → placeholder): 초안 2 → 플레이스홀더 2, 시도 기록 `fixture:FIXTURE_MISSING → openai:IMAGE_UNAVAILABLE → placeholder:ok`, `IMAGE_MISSING` 2(`qa_results` 2행), dead letter 0 | 통과 |
+| 예산: `usd_per_image 0.5` vs `run_usd 0.4` → openai 호출 0, `budget_stopped 1`, reason `IMAGE_BUDGET_SKIPPED` | 통과 |
+| 녹화 fixture 응답(SVG b64, cost 0.01) → 실제 이미지, provenance fixture, 예산 0.01 기록 | 통과 |
+| 프롬프트 템플릿 치환(`{{title}}`…)·alt·잘못된 초안 body → dead letter `IMAGE_INPUT_INVALID`, image null | 통과 |
+| end-to-end: scoring fixture → 초안 2 → QA 통과 스텁 → image(fixture 실패 → 플레이스홀더 2, IMAGE_MISSING 2) → publish none, 런 `done`, 비용 0 | 통과 |
+| OpenAI 어댑터(가짜 fetch): 요청 모양(model/size/quality/output_format/n), b64·url 응답, 429 재시도, 4xx 즉시 거부, 단가 없는 모델 거부(호출 0), 타임아웃 2회 후 `IMAGE_TIMEOUT` | 통과 |
+
+로컬 저장소 확인: `createLocalImageStore({ dir })`로 `<dir>/news/732e5467dd67c011/hero.svg` 1,663 바이트가 쓰였다(CLI `--images-dir`). 테스트 합계 184(3d 175 + 3f 9), `v2:typecheck` 0 errors.
+
+### 4.2 라이브
+해당 없음(이미지 생성은 피드가 아니라 초안에서 시작). OpenAI 실호출 증거는 `OPENAI_API_KEY` 수령·`image.provider: openai` 설정 후 3g 이후의 dry-run에서 남긴다. 단가 `gpt-image-2 0.07 USD/장`은 ADR-007 범위의 가정값이라 Josh 확인이 필요하다.
 
 ## 5. 열린 질문
 
-(실행 후 채운다)
+1. **호스팅 저장소** — 생성 바이트의 최종 위치(Supabase Storage vs Vercel Blob vs 사이트 정적 자산). 외부 서비스 신규 연결이라 승인 항목. 3h 퍼블리셔가 `ImageStore` 구현을 하나 더 붙이면 되게 포트를 두었다. 사이트는 `publication.image.path`만 렌더하므로 3h 전까지 `/images/generated/…` 경로는 사이트에서 404다(dry-run 전용).
+2. **공급자 결정** — B안대로 플레이스홀더 우선으로 시작. OpenAI(`gpt-image-2`, 1536×1024 medium, webp)로 바꾸는 시점과 단가 확정은 Josh. 월 상한은 OpenAI 콘솔에서.
+3. **출처 이미지 재사용** — 레거시의 "출처 이미지 포스터" 경로는 소스별 이미지 권리 필드가 없어 버렸다. 필요하면 `config/sources.yaml`에 `image_rights`를 추가하는 3a 후속으로.
+4. **변형(variant)** — 레거시는 hero/thumbnail/og 3종 webp를 만들었다. 새 구조는 hero(1200×630 SVG 또는 공급자 원본) 1종이고 사이트가 CSS로 자른다. OG 전용 래스터가 필요하면 3h에서 결정(sharp 의존성 추가는 승인 항목).
+5. **스테이지 순서** — 런타임은 generate → qa → image → publish(거절될 초안에 유료 이미지를 만들지 않음). 3g가 `IMAGE_MISSING` soft 규칙을 `qa/rules/`로 옮길지, 이미지 스테이지가 계속 verdict를 만들지는 3g 설계에서 확정.
+6. **플레이스홀더 어휘** — `image.placeholder.topics` 9종 어휘는 초기값. 라이브 초안에서 분류 적중률을 보고 조정(설정만).

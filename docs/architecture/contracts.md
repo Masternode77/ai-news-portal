@@ -46,6 +46,7 @@ export interface Stage<I, O> {
 5. Phase 3b 개정 — normalize 계약: `NormalizeInput { rawItems, sources }` → `NormalizeOutput { candidates: CandidateInsert[](미채점: scores 0, selected false, rubric_version normalize/<version>), stats }`. 판정 순서는 발행본 URL 정체성(무기한) → 창 내 발행본 제목 유사도 → 풀 내 URL 정체성 → content_hash → 제목 키 → 제목 유사도 → 본문 shingle. 대표 사본은 `text_rights`(full 우선) → tier → 본문 길이 순. `PublicationSource.title`(선택)은 3h가 원제를 남겨 normalize가 한국어 편집 제목 대신 비교할 수 있게 한다. `SelectOptions.orderBy`가 DbPort에 추가됐다(발행본을 최신순으로 읽기 위함). 3b 후속(PR #60 리뷰): 발행본 URL 색인은 `SelectOptions.offset`(PostgREST `range`)으로 `status=published` 행 **전부**를 `normalize.published_page_size`씩 페이지 순회해 만든다(제목 비교만 창 적용).
 6. Phase 3c 개정 — score 계약: `ScoreInput { candidates, rawItems, sources }` → `ScoreOutput { candidates: CandidateInsert[](전부 채점됨), selected: CandidateInsert[], stats }`. `ctx.scoring`(`config/scoring.yaml`, CLI `--scoring`)이 StageContext에 추가됐다. 5축(relevance·timeliness·impact·reader_value·insight_potential) 각 0~1, `total = Σ weights × score`, `tier = relevance < thresholds.relevance_min → BELOW_THRESHOLD(총점 무관) · total ≥ thresholds.full → full · ≥ thresholds.brief → brief · 미달 → BELOW_THRESHOLD`. 선택은 통과 후보를 total(동점: timeliness → URL) 순으로 소스당 `selection.per_source_max`, 사이클당 `caps.briefs_per_cycle.max`까지; 통과 수가 `min` 미만이면 `shortfall`로 보고하고 채우지 않는다. 모든 후보 행에 `rubric { tier, rank, insight_eligible, reasons{축별 한 줄} }`(`candidates.rubric` jsonb, 마이그레이션 0002)을 쓴다. funnel `passed_gate`는 임계값 통과 수(Phase 0 정의), 선택 수는 stage counts `selected`.
 7. Phase 3d 개정 — generate 계약(news_brief): `GenerateInput { selected, rawItems, sources }` → `GenerateOutput { drafts: DraftInsert[], stats }`. 선택 후보마다 raw item·source에서 **소스 패킷**(제목·소스명·URL·발행일·언어·`text_rights`·`text_scope`·본문(`llm.max_source_chars`에서 잘라 표시)·note)을 user 메시지로 보내고, `ctx.adapters.prompts.get("news_brief")`의 system prompt와 `NewsBriefDraft` JSON 스키마로 `ctx.adapters.llm.complete()`를 호출한다. 모델은 `NewsBriefDraft { title_ko, summary_ko, why_it_matters_ko, expert_lens_ko, tags }`만 쓰고 `source_url`·`source_name`·`published_at_source`·`slug`(`newsBriefSlug`)는 스테이지가 채워 `NewsBrief`로 검증한다. 호출 전 `budget.canSpend(추정)`(첫 후보부터 불가 → `BudgetExceededError`, 도중 불가 → 남은 후보 `budget_stopped` + `ctx.budget.stop(reason)` → 러너가 런을 `budget_stop`(exit 1)으로 끝내되 완료된 초안은 다음 스테이지로 흘린다), 스키마 실패·LLM 오류는 `dead_letters(stage generate, ref candidates)`. 초안 행 `body = { brief, checks: { grounding { numbers, ungrounded, pass }, quote_max_words }, source }`, 검사는 보고만(차단은 3g). `stage_events.counts { selected, drafted, failed, budget_stopped, grounding_checked, grounding_passed, quote_max_words, cost_usd_milli }`, funnel `drafts`.
+8. Phase 3f 개정 — image 계약: `ImageInput { passed }`(QA 통과 초안) → `ImageOutput { withImages: DraftWithImage[], verdicts: QaVerdict[], stats }`. 초안마다 `body.brief`(NewsBrief)에서 프롬프트(`prompts/image.md` 템플릿의 `{{title}}·{{summary}}·{{tags}}·{{source}}` 치환)·alt(`{title_ko} — Compute Current 편집 일러스트`)·slug를 만들고 공급자 체인(`image.provider` → `image.fallback_chain`, 마지막은 항상 placeholder)을 `ctx.adapters.image.generate()`로 호출한다. 유료 공급자는 호출 전 `budget.canSpend(image.pricing[model].usd_per_image)`; 불가면 호출 없이 건너뛴다(`budget_stopped`, 런은 계속). 실제 공급자가 설정돼 있는데 플레이스홀더가 들어가면 `QaVerdict { rule: IMAGE_MISSING, severity: soft, pass: false, reason_code: IMAGE_PROVIDERS_FAILED | IMAGE_BUDGET_SKIPPED, evidence { provider_order, attempts, path } }`를 `qa_results`에 upsert(`draft_id, rule, checked_at`)하고 `state.verdicts`에 덧붙인다(ADR-004). body에 brief가 없는 초안은 dead letter(`IMAGE_INPUT_INVALID`)와 `image: null`. `stage_events.counts { passed, with_images, generated, placeholders, failed_attempts, budget_stopped, image_missing, cost_usd_milli }`.
 
 ## 2. Adapter 인터페이스
 
@@ -98,9 +99,19 @@ export interface PromptRegistry { get(task: LlmTask): Promise<PromptFile> }
 // LLM_REQUEST_REJECTED, 비용은 llm.pricing[model]로 계산해 budget.record(행 없는 모델은 LLM_PRICING_MISSING). 키는 ANTHROPIC_API_KEY(이름만).
 
 export interface ImageAdapter {
-  readonly provider: string;      // 'placeholder' | 'openai' | 'fixture'
-  generate(req: { prompt: string; alt: string; slug: string }, ctx: StageContext): Promise<ImageResult>;
+  readonly provider: string;      // 'placeholder' | 'openai' | 'fixture' | 'chain'
+  generate(req: ImageRequest, ctx: StageContext): Promise<ImageResult>;
 }
+export interface ImageRequest { prompt: string; alt: string; slug: string; title?: string; tags?: readonly string[] }   // Phase 3f: title·tags는 플레이스홀더 모티프용
+// Phase 3f: 생성된 바이트는 레포에 들어가지 않는다. 어댑터는 ImageStore에 넣고 돌려받은 경로를 ImageResult.path에 쓴다.
+// 구현: memory(dry-run·테스트), local(CLI --images-dir); 호스팅 저장소(Supabase Storage / Vercel Blob)는 3h 결정.
+export interface ImageStore {
+  readonly kind: string;
+  put(input: { bytes: Uint8Array; mime: "image/svg+xml" | "image/png" | "image/jpeg" | "image/webp"; slug: string; variant: string }, ctx: StageContext): Promise<{ path: string; bytes: number }>;
+}
+// 체인(adapters/image/chain.ts): image.provider → image.fallback_chain 순으로 시도, 시도마다 { provider, ok, code, error, ms }를 남긴다.
+// placeholder 어댑터는 던지지 않는다(저장소 실패 시 정적 /images/placeholder-brief.svg). openai 어댑터는 ctx.fetch만 쓰고(--replay에서 throw),
+// 429/5xx/타임아웃은 image.max_retries까지 재시도, 비용은 image.pricing[model].usd_per_image(행 없으면 IMAGE_PRICING_MISSING).
 export const ImageResult = z.object({
   path: z.string(),                        // 저장 경로 또는 URL
   alt: z.string(),
@@ -163,7 +174,7 @@ export const InsightEssay = z.object({
 ```yaml
 schedule: { cron: "45 15,23,7 * * *", timezone: "UTC", slot_hours: 8 }
 flags:
-  stages: { ingest: true, normalize: false, score: false, generate: false, qa: true, image: true, publish: true }   # normalize: 3b, score: 3c, generate: 3d 기본 OFF (§7)
+  stages: { ingest: true, normalize: false, score: false, generate: false, qa: true, image: false, publish: true }   # normalize: 3b, score: 3c, generate: 3d, image: 3f 기본 OFF (§7)
   publish_target: none        # none | staging | production  (ADR-006)
 caps:
   briefs_per_cycle: { min: 1, max: 2 }
@@ -205,7 +216,14 @@ llm:
   timeout_ms: 90000           # 요청당; 429/5xx/타임아웃은 max_retries까지 지수 백오프
   max_retries: 2
   max_source_chars: 12000     # 모델에 보내는 원문 본문 상한(패킷에 잘림 표시)
-image: { provider: placeholder, fallback_chain: [placeholder] }
+image:                        # Phase 3f
+  provider: placeholder       # placeholder | openai | fixture — 먼저 시도(기본 플레이스홀더 우선, B안)
+  fallback_chain: [placeholder]   # 이어서 시도; 마지막은 placeholder 필수(스키마 refine)
+  openai: { model: gpt-image-2, size: 1536x1024, quality: medium, output_format: webp }   # OPENAI_API_KEY(이름만) 필요
+  pricing: { gpt-image-2: { usd_per_image: 0.07 } }   # 장당 USD; 어댑터는 행 없는 모델을 거부
+  timeout_ms: 60000
+  max_retries: 1
+  placeholder: { default_topic: ai-infrastructure, topics: { power-grid: [grid, 변전소, …], cooling: […], … } }   # 결정적 브랜드 SVG의 모티프 어휘
 notify: { telegram: { enabled: true } }
 ```
 
@@ -282,9 +300,9 @@ max_output_tokens: 2500
 (본문 = system prompt, 한국어)
 ```
 
-`drafts.prompt_version`에 `version`을 기록한다. Phase 3d: 머리말은 `PromptFrontMatter` zod(strict; `task`는 `LlmTask` enum, `output_schema`는 콘텐츠 스키마 이름, `max_output_tokens` 양의 정수)로 검증하고 `---` 뒤 본문이 system prompt다(`parsePromptFile`/`loadPromptFile`, `PromptRegistry`). `output_schema`가 `NewsBriefDraft`인 이유는 모델이 제목·요약·의미·렌즈·태그만 쓰고 출처·날짜·slug는 스테이지가 채우기 때문이다(§1 7). `model_hint`는 문서용이고 실제 모델은 `llm.models.<task>`다. 규칙·문체·용어를 바꾸면 `version`을 올린다(초안 행이 새로 생긴다, §5). 레거시 인라인 프롬프트(`curate.mjs:58-73`, `content.mjs:159-184`, `expert-lens.mjs:403-426`, `authored-column-engine.mjs:830-1478`)는 3d/3e에서 추출·재작성하며 복붙하지 않는다(P9).
+`drafts.prompt_version`에 `version`을 기록한다. Phase 3d: 머리말은 `PromptFrontMatter` zod(strict; `task`는 `LlmTask` enum, `output_schema`는 콘텐츠 스키마 이름, `max_output_tokens` 양의 정수)로 검증하고 `---` 뒤 본문이 system prompt다(`parsePromptFile`/`loadPromptFile`, `PromptRegistry`). `output_schema`가 `NewsBriefDraft`인 이유는 모델이 제목·요약·의미·렌즈·태그만 쓰고 출처·날짜·slug는 스테이지가 채우기 때문이다(§1 7). `model_hint`는 문서용이고 실제 모델은 `llm.models.<task>`다. 규칙·문체·용어를 바꾸면 `version`을 올린다(초안 행이 새로 생긴다, §5). Phase 3f: `task: image`인 `prompts/image.md`는 머리말이 `{ task, version, model_hint }`뿐이고 본문은 `{{title}}`·`{{summary}}`·`{{tags}}`·`{{source}}`·`{{why}}`를 치환하는 템플릿이다(`ImagePromptFile`; `requireLlmPrompt`/`requireImagePrompt`가 스테이지에서 종류를 보장). 그 `version`은 `ImageResult.provenance`에는 들어가지 않고 run 로그에 남는다. 레거시 인라인 프롬프트(`curate.mjs:58-73`, `content.mjs:159-184`, `expert-lens.mjs:403-426`, `authored-column-engine.mjs:830-1478`)는 3d/3e에서 추출·재작성하며 복붙하지 않는다(P9).
 
 ## 7. 기능 플래그 규약
 
-- 모든 Stage·Adapter·Publisher에 `enabled`. 기본값은 Phase 3 이식 직후 `false`, Phase 4에서 `true`. 적용: 3a ingest는 네트워크 스위치 `--live`(기본 OFF)가 플래그 역할을 하고, 3b normalize는 `flags.stages.normalize: false`(테스트·CI smoke·dry-run 증거는 `CC_FLAG_STAGES_NORMALIZE=true`로 켠다), 3c score는 `flags.stages.score: false`(`CC_FLAG_STAGES_SCORE=true`), 3d generate는 `flags.stages.generate: false`(`CC_FLAG_STAGES_GENERATE=true`; fixture 런은 `llm.provider: fixture`, 라이브 생성은 `anthropic` + `ANTHROPIC_API_KEY`).
+- 모든 Stage·Adapter·Publisher에 `enabled`. 기본값은 Phase 3 이식 직후 `false`, Phase 4에서 `true`. 적용: 3a ingest는 네트워크 스위치 `--live`(기본 OFF)가 플래그 역할을 하고, 3b normalize는 `flags.stages.normalize: false`(테스트·CI smoke·dry-run 증거는 `CC_FLAG_STAGES_NORMALIZE=true`로 켠다), 3c score는 `flags.stages.score: false`(`CC_FLAG_STAGES_SCORE=true`), 3d generate는 `flags.stages.generate: false`(`CC_FLAG_STAGES_GENERATE=true`; fixture 런은 `llm.provider: fixture`, 라이브 생성은 `anthropic` + `ANTHROPIC_API_KEY`), 3f image는 `flags.stages.image: false`(`CC_FLAG_STAGES_IMAGE=true`; Phase 2 no-op 때 `true`였던 기본값을 내림).
 - 플래그는 설정 파일 값이 환경변수(`CC_FLAG_<NAME>`)로 override 가능. 런 원장에 적용된 플래그 스냅샷을 기록한다.
