@@ -39,3 +39,23 @@ export function capacityGroups(records) {
   }
   return [...groups.values()].map(r => ({ ...r, netSummerMW: Math.round(r.netSummerMW * 10) / 10 })).sort((a,b) => (a.year ?? 9999) - (b.year ?? 9999) || a.state.localeCompare(b.state));
 }
+// How stale a retained snapshot may get before a transient upstream outage
+// stops being tolerable and the scheduled refresh must fail loudly. Hourly
+// demand refreshes every six hours; EIA-860M publishes each month's workbook
+// roughly two months later, so a lag of three months still means one missed
+// edition at most.
+export const RETAINED_SNAPSHOT_TOLERANCE = { demandHours: 48, capacityMonths: 3 };
+export function retainedSnapshotWithinTolerance(kind, asOf, now = new Date(), tolerance = RETAINED_SNAPSHOT_TOLERANCE) {
+  if (kind === 'demand') {
+    const time = Date.parse(asOf);
+    if (!Number.isFinite(time) || time > Number(now)) return false;
+    return Number(now) - time <= tolerance.demandHours * 3600000;
+  }
+  if (kind === 'capacity') {
+    const match = /^(\d{4})-(\d{2})$/.exec(String(asOf));
+    if (!match) return false;
+    const lag = (now.getUTCFullYear() * 12 + now.getUTCMonth()) - (Number(match[1]) * 12 + Number(match[2]) - 1);
+    return lag >= 0 && lag <= tolerance.capacityMonths;
+  }
+  throw new Error(`Unknown snapshot kind: ${kind}`);
+}
