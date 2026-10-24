@@ -1,6 +1,7 @@
 /**
  * Phase 2 no-op stages (ingest moved to ingest.ts in 3a, normalize to
- * normalize.ts in 3b, score to score.ts in 3c, generate to generate.ts in 3d). Each one validates its input, logs that the real
+ * normalize.ts in 3b, score to score.ts in 3c, generate to generate.ts in 3d,
+ * image to image.ts in 3f). Each one validates its input, logs that the real
  * implementation lands in a later Phase 3 module, and returns an empty (or
  * pass-through) output. QA fails closed: with no rules installed nothing
  * passes, so publish never receives a draft by accident.
@@ -8,8 +9,6 @@
 import type { Stage } from "@cc/shared";
 import { defineStageSpec } from "./spec.ts";
 import {
-  ImageInput,
-  ImageOutput,
   PublishInput,
   PublishOutput,
   QaInput,
@@ -24,23 +23,6 @@ export const qaStage: Stage<QaInput, QaOutput> = {
   async run(input, ctx) {
     ctx.logger.info("qa: no rules installed, failing closed (Phase 3g)", { drafts: input.drafts.length });
     return { passed: [], verdicts: [] };
-  },
-};
-
-export const imageStage: Stage<ImageInput, ImageOutput> = {
-  name: "image",
-  input: ImageInput,
-  output: ImageOutput,
-  idempotencyKey: (input) => `image:${input.passed.length}`,
-  async run(input, ctx) {
-    const withImages = [];
-    for (const draft of input.passed) {
-      const slug = typeof draft.body["slug"] === "string" ? draft.body["slug"] : "unknown";
-      const image = await ctx.adapters.image.generate({ prompt: "", alt: "", slug }, ctx);
-      withImages.push({ draft, image });
-    }
-    ctx.logger.info("image: placeholder only (Phase 3f)", { count: withImages.length });
-    return { withImages };
   },
 };
 
@@ -86,13 +68,6 @@ export const qaSpec = defineStageSpec({
   select: (state) => ({ drafts: state.drafts }),
   merge: (state, output) => ({ ...state, passed: output.passed, verdicts: output.verdicts }),
   counts: (output) => ({ qa_passed: output.passed.length, verdicts: output.verdicts.length }),
-});
-
-export const imageSpec = defineStageSpec({
-  stage: imageStage,
-  select: (state) => ({ passed: state.passed }),
-  merge: (state, output) => ({ ...state, withImages: output.withImages }),
-  counts: (output) => ({ with_images: output.withImages.length, placeholders: output.withImages.filter((d) => d.image?.placeholder).length }),
 });
 
 export const publishSpec = defineStageSpec({

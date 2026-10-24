@@ -13,6 +13,7 @@ import type {
   RawItemInsert,
   SourceConfig,
   SourceType,
+  PromptTask,
 } from "../schema/index.ts";
 import type { StageContext } from "./stage.ts";
 
@@ -48,19 +49,44 @@ export interface LlmAdapter {
 
 /** Where stages get their prompt files (contracts.md §6); file-backed in production, in-memory in tests. */
 export interface PromptRegistry {
-  get(task: LlmTask): Promise<PromptFile>;
+  get(task: PromptTask): Promise<PromptFile>;
 }
 
 export interface ImageRequest {
   prompt: string;
   alt: string;
   slug: string;
+  /** Phase 3f: the brief's title and tags, so the placeholder can pick a motif without parsing the prompt. */
+  title?: string;
+  tags?: readonly string[];
 }
 
 export interface ImageAdapter {
-  /** 'placeholder' | 'openai' | 'fixture' */
+  /** 'placeholder' | 'openai' | 'fixture' | 'chain' */
   readonly provider: string;
   generate(request: ImageRequest, ctx: StageContext): Promise<ImageResult>;
+}
+
+export type ImageMime = "image/svg+xml" | "image/png" | "image/jpeg" | "image/webp";
+
+export interface ImageStoreInput {
+  bytes: Uint8Array;
+  mime: ImageMime;
+  /** The publication slug (`news/<hash>`); the store derives the path from it. */
+  slug: string;
+  /** 'hero' | 'og' | … */
+  variant: string;
+}
+
+/**
+ * Where generated image bytes go (Phase 3f). Adapters hand bytes to the store
+ * and put the returned site path on the ImageResult; the hosted store that the
+ * publisher needs (Supabase Storage / Vercel Blob) is a 3h decision, so Phase 3
+ * ships memory and local-directory implementations only.
+ */
+export interface ImageStore {
+  readonly kind: string;
+  put(input: ImageStoreInput, ctx: StageContext): Promise<{ path: string; bytes: number }>;
 }
 
 export type PublisherTarget = "site" | "blog" | "social";

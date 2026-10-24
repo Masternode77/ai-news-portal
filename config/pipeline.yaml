@@ -14,7 +14,7 @@ flags:
     score: false                 # Phase 3c logic is in; default OFF until Phase 4 (contracts §7). Override: CC_FLAG_STAGES_SCORE=true
     generate: false              # Phase 3d news_brief generation is in; default OFF until Phase 4 (contracts §7). Override: CC_FLAG_STAGES_GENERATE=true
     qa: true
-    image: true
+    image: false
     publish: true
   publish_target: none         # none | staging | production (ADR-006; production only at Phase 5 cutover)
 
@@ -71,9 +71,25 @@ llm:
   max_retries: 2
   max_source_chars: 12000      # source body sent to the model is cut here (the packet says so)
 
-image:
-  provider: placeholder        # placeholder | openai | fixture
-  fallback_chain: [placeholder]
+image:                         # Phase 3f. Placeholder first (Josh, B안 2026-10-23); openai is opt-in and needs OPENAI_API_KEY in the environment (name only)
+  provider: placeholder        # placeholder | openai | fixture — tried first
+  fallback_chain: [placeholder] # tried next, in order; must end with placeholder (an image failure never blocks publishing, P5 / ADR-004 IMAGE_MISSING soft)
+  openai: { model: gpt-image-2, size: 1536x1024, quality: medium, output_format: webp }
+  pricing:                     # USD per image; the OpenAI adapter refuses a model without a row. ADR-007 estimate 0.04–0.20 — Josh to confirm the figure
+    gpt-image-2: { usd_per_image: 0.07 }
+  timeout_ms: 60000
+  max_retries: 1
+  placeholder:                 # deterministic brand SVG: the first topic whose vocabulary matches picks the motif, the slug picks the palette
+    default_topic: ai-infrastructure
+    topics:
+      power-grid: [grid, substation, transmission, interconnection, kepco, 변전소, 송전, 계통, 전력망, 한전]
+      cooling: [cooling, liquid, immersion, thermal, pue, 냉각, 액침, 수랭]
+      semiconductors: [gpu, hbm, chip, semiconductor, wafer, 반도체, 칩, 웨이퍼]
+      capital-markets: [financing, loan, bond, investment, fund, 금융, 투자, 대출, 펀드]
+      regulation: [regulation, policy, ministry, permit, tariff, 규제, 정책, 인허가, 요금]
+      supply-chain: [supply chain, transformer, lead time, procurement, 공급망, 변압기, 조달]
+      cloud-capacity: [cloud, capacity, hyperscale, region, availability zone, 클라우드, 용량, 리전]
+      data-centers: [data center, campus, colocation, 데이터센터, 캠퍼스, 코로케이션]
 
 notify:
   telegram:

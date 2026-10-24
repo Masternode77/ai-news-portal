@@ -2,7 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import { resolve } from "node:path";
-import { TEMPLATE_UNRESOLVED, parsePipelineConfig, parsePromptFile, parseSourcesConfig, candidateId, draftId, newsBriefSlug, rawItemId, silentLogger } from "@cc/shared";
+import { TEMPLATE_UNRESOLVED, parsePipelineConfig, parsePromptFile, parseSourcesConfig, requireLlmPrompt, candidateId, draftId, newsBriefSlug, rawItemId, silentLogger } from "@cc/shared";
 import type { CandidateInsert, LlmAdapter, LlmRequest, LlmResponse, PipelineConfig, RawItemInsert, SourceConfig, StageContext } from "@cc/shared";
 import { createMemoryPromptRegistry } from "../src/adapters/index.ts";
 import { BudgetExceededError, createBudget } from "../src/budget.ts";
@@ -70,7 +70,7 @@ function scriptedLlm(replies: Array<LlmResponse | Error>, seen: LlmRequest[] = [
 }
 
 async function promptFile() {
-  return parsePromptFile(await readFile(resolve(REPO_ROOT, "prompts/news_brief.md"), "utf8"), "prompts/news_brief.md");
+  return requireLlmPrompt(parsePromptFile(await readFile(resolve(REPO_ROOT, "prompts/news_brief.md"), "utf8"), "prompts/news_brief.md"));
 }
 
 async function run(db: MemoryDb, items: RawItemInsert[], sources: SourceConfig[], llm: LlmAdapter, cfg = config(), ledger = new MemoryLedger(), budget = createBudget(cfg.budget), systemOverride?: string): Promise<GenerateOutput> {
