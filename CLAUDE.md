@@ -52,7 +52,7 @@
 - 레거시 발행 = JSON 커밋 → `main` push → Vercel 전체 재빌드. 빌드 입력을 깨뜨리는 변경은 곧 서비스 영향이다.
 - `prompts/` 디렉토리의 레거시 37파일은 런타임에서 쓰이지 않는다. 실제 레거시 프롬프트는 `scripts/lib/{curate,content,expert-lens,authored-column-engine}.mjs` 인라인이다.
 - `config/sourceRegistry.yml`은 엄격한 YAML 파서(PyYAML, `yaml` npm)로 읽히지 않는다(254행). 레거시 로더만 읽을 수 있으니 리빌드는 `config/sources.yaml`을 쓴다.
-- `@astrojs/vercel`은 빌드 도구라 `apps/site`의 devDependency다. `npm audit --omit=dev`는 통과하지만 전체 감사에는 `@vercel/routing-utils`가 고정한 `path-to-regexp@6.1.0`(GHSA-9wv6-86v2-598j) 3건이 남는다. 업스트림 갱신 전까지 알려진 항목이다.
+- `@astrojs/vercel`은 빌드 도구라 `apps/site`의 devDependency다. `npm audit --omit=dev`는 통과하지만 전체 감사에는 `@vercel/routing-utils`가 고정한 `path-to-regexp@6.1.0`(GHSA-9wv6-86v2-598j) 3건이 남는다. 업스트림 갱신 전까지 알려진 항목이다. GHSA-mrhx-c7xc-m3w5(zod <4.6.6)는 `@vercel/cli-config@0.3.3`가 zod 4.1.11을 정확히 고정해 생겼고, 루트 `package.json`의 `overrides`로 그 한 곳만 `^4.6.7`로 올려 해소했다(Josh A안, 2026-10-24; 호이스트된 zod로 dedupe). npm 10.9는 lockfile에 중첩 zod 항목이 이미 있으면 `npm install`이 override를 적용하지 않으므로, 되살아나면 그 lock 항목(`node_modules/@vercel/cli-config/node_modules/zod`)과 디렉토리를 지우고 `npm install`을 다시 돌린다.
 
 ## 8. 보고 포맷
 `REBUILD_BRIEF.md` §7을 그대로 쓴다. "완료했습니다" 한 줄은 보고가 아니다.
