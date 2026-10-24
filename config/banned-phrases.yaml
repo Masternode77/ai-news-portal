@@ -1,0 +1,99 @@
+# Compute Current rebuild — banned-phrase inventory (Phase 3d, contracts.md §4, AGENTS.md "Banned Generic Patterns").
+# Validated strictly by packages/shared/src/schema/banned-phrases.ts (BannedPhrasesConfig); unknown keys fail the run.
+# One inventory feeds two places: the news_brief prompt renders `phrases.ko` and every pattern's `note` into its
+# {{banned_phrases}} line (prompts/news_brief.md), and the guard (packages/pipeline/src/checks/banned-phrases.ts)
+# matches every phrase, hook start and pattern on each draft's reader-facing fields — reported on the draft in 3d
+# (`checks.banned`), blocking as QA 3g BANNED_PATTERN. Never copy an entry into a prompt or fallback copy:
+# change this file and bump `version`.
+#
+# Provenance: `phrases.en` and `hook_starts.en` are the legacy config/bannedPhrases.yml inventory carried over as
+# data (the legacy file is retired at the Phase 5 cutover); `phrases.ko` and `patterns` are new for the Korean brief.
+
+version: "2026-10-24.1"        # bump when an entry changes; every draft records the version it was checked against
+
+phrases:                       # exact phrases; matched case-insensitively with any whitespace between words
+  ko:                          # rendered into the Korean prompt and checked
+    - "전략적 의미"
+    - "이 신호가 중요한 이유"
+    - "시장이 놓치고 있는 것"
+    - "주목할 만하다"
+    - "게임 체인저"
+  en:                          # legacy inventory, checked only (the Korean prompt does not show it)
+    - "The development puts cloud infrastructure execution, not headline demand, at the center of the story."
+    - "The issue is no longer demand alone; it is whether the surrounding infrastructure is ready."
+    - "The real test is whether power access can keep pace with AI infrastructure demand."
+    - "The practical issue is whether demand can be converted into reliable capacity on schedule."
+    - "Watch execution details, customer commitments, and any bottlenecks around power, cooling, silicon, or permitting."
+    - "Read narrowly, this is one more item in the daily flow of infrastructure news."
+    - "Read against the buildout cycle"
+    - "The story lands in a market where demand is already assumed."
+    - "The important part is what the report says about cloud infrastructure as a working system"
+    - "The financial question is whether"
+    - "the operating question is procurement timing"
+    - "the customer question is whether this changes build sequencing"
+    - "The market tends to price the demand story first and the delivery work later."
+    - "This is where AI infrastructure differs from ordinary software growth."
+    - "The next signal to watch is customer commitments, infrastructure readiness"
+    - "power, cooling, silicon supply, or permitting becomes the real bottleneck"
+    - "The next test is whether this remains a narrow market experiment"
+    - "The winner is usually not the party with the loudest demand signal"
+    - "The development puts cloud infrastructure execution"
+    - "The issue is no longer demand alone"
+    - "The real test is whether power access can keep pace"
+    - "Watch execution details, customer commitments"
+    - "The operating question is"
+    - "The customer question is"
+    - "The important part is what the report says"
+    - "strategic significance"
+    - "This signal matters"
+    - "what the market may be missing"
+    - "Operators should read this through"
+    - "Investors should track whether"
+    - "For investors, the useful read-through is"
+    - "For operators, the story comes down to"
+    - "For hyperscalers and cloud providers, watch whether"
+    - "raises a practical capacity question after"
+    - "turns component availability into a delivery test after"
+    - "puts grid timing back into the operating plan after"
+    - "should read it through"
+    - "the useful follow-up is"
+    - "confirms timing, site readiness, buyer commitment, or operating impact"
+    - "still has to show that the reported change can survive real deployment"
+    - "belongs on the board only if"
+    - "gives infrastructure readers a compact signal"
+    - "compact signal on AI capacity planning"
+
+hook_starts:                   # a field must not begin with these (legacy blockedHookStarts), checked only
+  ko: []
+  en:
+    - "The development"
+    - "The issue"
+    - "The real test"
+    - "The story lands"
+    - "Read narrowly"
+    - "The important part"
+    - "StorageReview raises"
+    - "ServeTheHome raises"
+    - "Semiconductor Engineering turns"
+    - "Data Center Frontier raises"
+    - "Bloomberg Technology puts"
+
+patterns:                      # `note` is what the prompt shows, `regex` (flags iu) is what the guard matches
+  - name: memo_scaffolding
+    note: '컨설팅 메모식 스캐폴딩("투자자 관점에서는 / 운영자 관점에서는"의 기계적 반복)'
+    regex: "투자자\\s*관점에서는[\\s\\S]*운영자\\s*관점에서는|운영자\\s*관점에서는[\\s\\S]*투자자\\s*관점에서는"
+  - name: reads_as
+    note: '"~로 읽힌다"'
+    regex: "로\\s*읽힌다"
+  - name: unsourced_attribution
+    note: '"업계에 따르면"(출처 없는 귀속)'
+    regex: "업계에\\s*따르면"
+  - name: exclamation
+    note: 느낌표
+    regex: "[!！]"
+  - name: emoji
+    note: 이모지
+    regex: "\\p{Emoji_Presentation}"
+  - name: english_heads
+    note: 영문 머리글(What/Why/Watch)
+    regex: "(?:^|\\n)\\s*(?:What|Why|Watch|Who|So what)\\s*[:：]"

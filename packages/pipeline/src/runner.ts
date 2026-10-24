@@ -19,6 +19,7 @@ import type {
   Ledger,
   Logger,
   PipelineConfig,
+  BannedPhrasesConfig,
   ScoringConfig,
   RunStatus,
   RunTrigger,
@@ -39,6 +40,8 @@ export interface RunOptions {
   config: PipelineConfig;
   /** `config/scoring.yaml` (Phase 3c). */
   scoring: ScoringConfig;
+  /** `config/banned-phrases.yaml` (Phase 3d). */
+  bannedPhrases: BannedPhrasesConfig;
   overrides?: FlagOverride[];
   sources: SourceConfig[];
   ledger: Ledger;
@@ -182,6 +185,7 @@ export async function runPipeline(options: RunOptions): Promise<RunResult> {
     now: startedAt,
     config: options.config,
     scoring: options.scoring,
+    bannedPhrases: options.bannedPhrases,
     logger: runLogger,
     ledger,
     budget,

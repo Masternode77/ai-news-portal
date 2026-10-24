@@ -13,7 +13,7 @@ import { runPipeline } from "../src/runner.ts";
 import { DEFAULT_STAGE_SPECS, defineStageSpec } from "../src/stages/index.ts";
 import { IMAGE_MISSING, imageAlt, imagePrompt, imageStage } from "../src/stages/image.ts";
 import { ImageOutput, QaInput, QaOutput } from "../src/stages/types.ts";
-import { REPO_ROOT, TEST_PIPELINE_YAML, baseRunOptions, fixtureAdapters, testScoring } from "./helpers.ts";
+import { baseRunOptions, fixtureAdapters, REPO_ROOT, TEST_PIPELINE_YAML, testBannedPhrases, testScoring } from "./helpers.ts";
 
 const NOW = new Date("2026-10-24T00:45:00Z");
 const RUN_ID = "11111111-1111-4111-8111-111111111111";
@@ -62,7 +62,7 @@ async function ctxWith(cfg: PipelineConfig, image: ImageAdapter, fetchImpl: type
   const store = new MemoryImageStore();
   const ledger = new MemoryLedger();
   const runId = await ledger.startRun({ trigger: "local", startedAt: NOW, gitSha: null, flags: {} });
-  const ctx: StageContext = { runId, now: NOW, config: cfg, scoring: testScoring(), logger: silentLogger(), ledger, budget: createBudget(cfg.budget), dryRun: true, replay: true, fixtureName: undefined, fetch: fetchImpl, adapters: { ...fixtureAdapters(db), image, imageStore: store, db } };
+  const ctx: StageContext = { runId, now: NOW, config: cfg, scoring: testScoring(), bannedPhrases: testBannedPhrases(), logger: silentLogger(), ledger, budget: createBudget(cfg.budget), dryRun: true, replay: true, fixtureName: undefined, fetch: fetchImpl, adapters: { ...fixtureAdapters(db), image, imageStore: store, db } };
   return { ctx, store, db, ledger };
 }
 

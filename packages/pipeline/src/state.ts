@@ -153,6 +153,8 @@ export const GenerateDecision = z.strictObject({
   grounding_ungrounded: z.array(z.string()).max(20),
   /** Longest run of consecutive words the draft shares with the source (QA 3g caps it at 20). */
   quote_max_words: NonNegativeInt,
+  /** Banned-phrase guard matches (`phrase:…`, `hook_start:…`, `pattern:…`), reported in 3d and blocking in QA 3g. */
+  banned_matches: z.array(z.string()).max(20),
   title_ko: z.string().nullable(),
 });
 export type GenerateDecision = z.infer<typeof GenerateDecision>;
@@ -176,13 +178,21 @@ export const GenerateStats = z.strictObject({
   /** passed / checked, null when nothing was checked. */
   grounding_pass_rate: z.number().min(0).max(1).nullable(),
   quote_max_words: NonNegativeInt,
+  /** Banned-phrase guard (config/banned-phrases.yaml) over the drafted briefs. */
+  banned: z.strictObject({
+    checked: NonNegativeInt,
+    /** Drafts with no match. */
+    passed: NonNegativeInt,
+    /** Distinct matches summed over the drafts. */
+    matches: NonNegativeInt,
+  }),
   decisions: z.array(GenerateDecision).max(100),
   ms: NonNegativeInt,
 });
 export type GenerateStats = z.infer<typeof GenerateStats>;
 
 export function emptyGenerateStats(): GenerateStats {
-  return { selected: 0, drafted: 0, failed: 0, budget_stopped: 0, cost_usd: 0, input_tokens: 0, output_tokens: 0, grounding: { checked: 0, passed: 0, numbers: 0, ungrounded: 0 }, grounding_pass_rate: null, quote_max_words: 0, decisions: [], ms: 0 };
+  return { selected: 0, drafted: 0, failed: 0, budget_stopped: 0, cost_usd: 0, input_tokens: 0, output_tokens: 0, grounding: { checked: 0, passed: 0, numbers: 0, ungrounded: 0 }, grounding_pass_rate: null, quote_max_words: 0, banned: { checked: 0, passed: 0, matches: 0 }, decisions: [], ms: 0 };
 }
 
 /** One draft's image outcome (Phase 3f), kept in `--json` and the step summary. */

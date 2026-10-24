@@ -23,7 +23,7 @@ import {
   scoreTimeliness,
 } from "../src/stages/score.ts";
 import { ScoreOutput } from "../src/stages/types.ts";
-import { REPO_ROOT, TEST_PIPELINE_YAML, baseRunOptions, fixtureAdapters, testScoring } from "./helpers.ts";
+import { REPO_ROOT, TEST_PIPELINE_YAML, baseRunOptions, fixtureAdapters, testBannedPhrases, testScoring } from "./helpers.ts";
 
 const NOW = new Date("2026-10-20T00:45:00Z");
 const RUN_ID = "11111111-1111-4111-8111-111111111111";
@@ -47,7 +47,7 @@ function candidate(item: RawItemInsert): CandidateInsert {
 
 async function run(db: MemoryDb, items: RawItemInsert[], sources: SourceConfig[], scoring: ScoringConfig = testScoring(), cfg = config()): Promise<ScoreOutput> {
   const ledger = new MemoryLedger();
-  const ctx: StageContext = { runId: RUN_ID, now: NOW, config: cfg, scoring, logger: silentLogger(), ledger, budget: createBudget(cfg.budget), dryRun: true, replay: true, fixtureName: undefined, fetch: () => Promise.reject(new Error("no network")), adapters: { ...fixtureAdapters(db), db } };
+  const ctx: StageContext = { runId: RUN_ID, now: NOW, config: cfg, scoring, bannedPhrases: testBannedPhrases(), logger: silentLogger(), ledger, budget: createBudget(cfg.budget), dryRun: true, replay: true, fixtureName: undefined, fetch: () => Promise.reject(new Error("no network")), adapters: { ...fixtureAdapters(db), db } };
   return ScoreOutput.parse(await scoreStage.run({ candidates: items.map(candidate), rawItems: items, sources }, ctx));
 }
 

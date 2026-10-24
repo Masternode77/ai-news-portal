@@ -6,7 +6,7 @@
  * was configured and the placeholder stood in anyway, the stage writes the
  * IMAGE_MISSING soft verdict (ADR-004) to `qa_results` and passes it on.
  */
-import { NewsBrief, draftId, requireImagePrompt } from "@cc/shared";
+import { draftId, NewsBrief, renderTemplate, requireImagePrompt } from "@cc/shared";
 import type { ImageAdapter, ImageRequest, QaVerdict, Stage, StageContext } from "@cc/shared";
 import type { QaResultInsert } from "@cc/shared";
 import { PAID_IMAGE_PROVIDERS, imageChainOrder, isImageChain } from "../adapters/image/chain.ts";
@@ -20,7 +20,7 @@ import { ImageInput, ImageOutput } from "./types.ts";
 export const IMAGE_MISSING = "IMAGE_MISSING";
 const DECISION_SAMPLE = 100;
 
-/** `{{title}}`, `{{summary}}`, `{{tags}}`, `{{source}}`, `{{why}}` in the prompt template. */
+/** `{{title}}`, `{{summary}}`, `{{tags}}`, `{{source}}`, `{{why}}` in the prompt template (strict: an unknown placeholder fails before any provider call). */
 export function imagePrompt(template: string, brief: NewsBrief): string {
   const fields: Record<string, string> = {
     title: brief.title_ko,
@@ -29,7 +29,7 @@ export function imagePrompt(template: string, brief: NewsBrief): string {
     tags: brief.tags.join(", "),
     source: brief.source_name,
   };
-  return template.replace(/\{\{\s*([a-z_]+)\s*\}\}/g, (match, key: string) => fields[key] ?? match).trim();
+  return renderTemplate(template, fields).trim();
 }
 
 /** Alt text is editorial metadata the stage owns, never a model output. */

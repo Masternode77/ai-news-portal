@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
-import { parsePipelineConfig, parseScoringConfig, parseSourcesConfig, silentLogger } from "@cc/shared";
-import type { PipelineConfig, ScoringConfig, SourceConfig, StageAdapters } from "@cc/shared";
+import { parseBannedPhrasesConfig, parsePipelineConfig, parseScoringConfig, parseSourcesConfig, silentLogger } from "@cc/shared";
+import type { BannedPhrasesConfig, PipelineConfig, ScoringConfig, SourceConfig, StageAdapters } from "@cc/shared";
 import {
   createFilePromptRegistry,
   createFixtureLlmAdapter,
@@ -68,6 +68,13 @@ export function testScoring(overrides: Partial<ScoringConfig> = {}): ScoringConf
   return { ...scoringCache, ...overrides };
 }
 
+let bannedCache: BannedPhrasesConfig | undefined;
+/** The repo's `config/banned-phrases.yaml` (Phase 3d); tests override fields on a copy. */
+export function testBannedPhrases(overrides: Partial<BannedPhrasesConfig> = {}): BannedPhrasesConfig {
+  bannedCache ??= parseBannedPhrasesConfig(readFileSync(resolve(REPO_ROOT, "config/banned-phrases.yaml"), "utf8"), "config/banned-phrases.yaml");
+  return { ...bannedCache, ...overrides };
+}
+
 export function fixtureAdapters(db = new MemoryDb(), fixtureName = "sample"): StageAdapters {
   const fixture = createFixtureRssAdapter({ fixturesDir: FIXTURES_DIR, fixtureName });
   return {
@@ -96,6 +103,7 @@ export function baseRunOptions(overrides: Partial<RunOptions> = {}): RunOptions 
   return {
     config,
     scoring: testScoring(),
+    bannedPhrases: testBannedPhrases(),
     overrides: flagOverrides,
     sources: testSources(),
     ledger: new MemoryLedger(),
