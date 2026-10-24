@@ -37,9 +37,30 @@ const MAX_TAGS = 6;
 // ---------------------------------------------------------------------------
 // deterministic checks
 // ---------------------------------------------------------------------------
-/** A number with an optional scale word: Korean 조/억/만/천 or English trillion/billion/million/thousand (bn, mn). */
-const NUMBER = /(\d+(?:[.,]\d+)*)(?:\s*(?:(조|억|만|천)|(trillion|billion|bn|million|mn|thousand)(?![a-z])))?/giu;
+/**
+ * A number with an optional scale: a run of Korean scale words (조/억/만/천, so `2천억` is 2 × 10³ × 10⁸)
+ * or one English word (trillion/billion/million/thousand, bn, mn).
+ */
+const NUMBER = /(\d+(?:[.,]\d+)*)(?:\s*(?:((?:조|억|만|천)+)|(trillion|billion|bn|million|mn|thousand)(?![a-z])))?/giu;
 const SCALE: Record<string, number> = { 조: 1e12, 억: 1e8, 만: 1e4, 천: 1e3, trillion: 1e12, billion: 1e9, bn: 1e9, million: 1e6, mn: 1e6, thousand: 1e3 };
+
+/** The multiplier a scale token stands for; a Korean run multiplies its characters. */
+export function scaleMultiplier(scale: string | undefined): number {
+  if (!scale) return 1;
+  const lower = scale.toLowerCase();
+  if (lower in SCALE) return SCALE[lower]!;
+  let multiplier = 1;
+  for (const char of scale) multiplier *= SCALE[char] ?? 1;
+  return multiplier;
+}
+
+/**
+ * Decimal-safe comparison key: the product is rounded to 12 significant digits so
+ * `20.1억` and `2.01 billion` share "2010000000" instead of two floating-point tails.
+ */
+export function canonicalKey(value: number, multiplier: number): string {
+  return String(Number((value * multiplier).toPrecision(12)));
+}
 /** Korean counters and ordinals right after a digit ("1단계", "2차", "3분기") count things, not figures; they are not grounded. */
 const COUNTER = /^(?:단계|차|번째|호기|호|개|곳|명|건|번|위|층|분기|라운드|종|차례)/u;
 
@@ -65,7 +86,7 @@ export function numberClaims(text: string): NumberClaim[] {
     const bare = (digits ?? "").replace(/,(?=\d{3}(?:\D|$))/g, "");
     const value = Number.parseFloat(bare);
     if (!Number.isFinite(value)) continue;
-    const key = String(scale ? value * (SCALE[scale] ?? 1) : value);
+    const key = canonicalKey(value, scaleMultiplier(scale));
     out.push({ raw: raw.trim(), key, scaled: Boolean(scale), bare });
   }
   return out;

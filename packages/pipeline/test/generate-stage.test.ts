@@ -178,6 +178,11 @@ test("checks: number claims are Korean-aware (scale words, counters), grounding 
   assert.deepEqual(groundingCheck("투자액은 2.1 million 달러다.", "Investment was $2.1 billion.").ungrounded, ["2.1 million"], "a scaled claim must match the canonical value, not just the digits");
   assert.equal(groundingCheck("21억 달러와 2.1 billion", "Investment was $2.1 billion.").pass, true);
   assert.deepEqual(groundingCheck("1.2조원", "1.2 GW").ungrounded, ["1.2조"]);
+  assert.deepEqual(numberTokens("투자액은 2천억 달러, 1조2천억 원"), ["2천억", "1조", "2천억"], "a run of Korean scale words is one claim");
+  assert.deepEqual(groundingCheck("투자액은 2천억 달러다.", "Investment was $2000.").ungrounded, ["2천억"], "a compound scale is not its numeric prefix");
+  assert.equal(groundingCheck("2천억 달러", "$200 billion").pass, true, "2천억 = 2 × 10³ × 10⁸ = 200 billion");
+  assert.equal(groundingCheck("투자액 20.1억 달러", "Investment $2.01 billion").pass, true, "decimal scales compare by value, not by floating-point tails");
+  assert.equal(groundingCheck("1.5만 가구", "15,000 homes").pass, true);
   assert.equal(groundingCheck("수치가 없는 문장", BUSAN).pass, true);
   assert.equal(longestCommonRun("the first 200 MW phase is scheduled to reach", BUSAN), 9);
   assert.equal(longestCommonRun("완전히 다른 문장", BUSAN), 0);
