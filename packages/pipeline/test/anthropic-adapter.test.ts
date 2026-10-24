@@ -108,6 +108,36 @@ test("a hung request times out and retries; network errors retry; the replay fet
   await assert.rejects(createAnthropicLlmAdapter({ apiKey: "k", llm: offline.config.llm, backoffMs: 1 }).complete(REQUEST, offline), (error: unknown) => error instanceof LlmError && error.code === "LLM_UNAVAILABLE" && /fetch failed/.test(error.message));
 });
 
+test("a body that stalls or drops after the headers arrived is retried like a failed request", async () => {
+  let attempts = 0;
+  const ctx = ctxWith(async () => {
+    attempts += 1;
+    if (attempts === 1) {
+      const abort = new Error("The operation was aborted");
+      abort.name = "AbortError";
+      return new Response(new ReadableStream({ pull(controller) { controller.error(abort); } }), { status: 200, headers: { "content-type": "application/json" } });
+    }
+    if (attempts === 2) {
+      return new Response(new ReadableStream({ pull(controller) { controller.error(new TypeError("terminated")); } }), { status: 200, headers: { "content-type": "application/json" } });
+    }
+    return ok(MESSAGE);
+  });
+  const adapter = createAnthropicLlmAdapter({ apiKey: "k", llm: ctx.config.llm, backoffMs: 1 });
+  const response = await adapter.complete(REQUEST, ctx);
+  assert.equal(attempts, 3, "two body failures (timeout, network) were retried");
+  assert.deepEqual(response.json, { title_ko: "제목" });
+
+  let exhausted = 0;
+  const failing = ctxWith(async () => {
+    exhausted += 1;
+    const abort = new Error("aborted");
+    abort.name = "AbortError";
+    return new Response(new ReadableStream({ pull(controller) { controller.error(abort); } }), { status: 200 });
+  });
+  await assert.rejects(createAnthropicLlmAdapter({ apiKey: "k", llm: failing.config.llm, backoffMs: 1 }).complete(REQUEST, failing), (error: unknown) => error instanceof LlmError && error.code === "LLM_TIMEOUT");
+  assert.equal(exhausted, 3, "max_retries 2 → three attempts, then the body timeout surfaces");
+});
+
 test("response parsing tolerates text-only replies and missing usage; the cost estimate scales with input size", () => {
   const parsed = parseMessagesResponse({ content: [{ type: "text", text: "{\"a\":1}" }], stop_reason: "end_turn" }, "fallback-model");
   assert.equal(parsed.json, undefined);
