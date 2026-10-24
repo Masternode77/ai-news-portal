@@ -5,7 +5,7 @@ import type { SourceConfig, StageContext } from "@cc/shared";
 import { allowedHostsFor, createLiveRssAdapter, mapFeedItem } from "../src/adapters/index.ts";
 import type { FeedItem, LiveRssOptions } from "../src/adapters/index.ts";
 import { createBudget } from "../src/budget.ts";
-import { baseRunOptions, testScoring } from "./helpers.ts";
+import { baseRunOptions, testBannedPhrases, testScoring } from "./helpers.ts";
 
 const NOW = new Date("2026-10-18T00:45:00Z");
 const RESOLVE = async () => ["93.184.216.34"];
@@ -44,7 +44,7 @@ function ctx(fetchImpl: typeof globalThis.fetch): StageContext {
     dryRun: true,
     replay: false,
     fixtureName: undefined,
-    scoring: testScoring(),
+    scoring: testScoring(), bannedPhrases: testBannedPhrases(),
     fetch: fetchImpl,
     adapters: base.adapters,
   };

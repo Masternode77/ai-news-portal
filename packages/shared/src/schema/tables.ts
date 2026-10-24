@@ -181,7 +181,8 @@ export const CandidateRow = z.strictObject({
   created_at: IsoDateTime,
 });
 export type CandidateRow = z.infer<typeof CandidateRow>;
-export const CandidateInsert = CandidateRow.omit({ id: true, created_at: true });
+/** `id` is optional on the way in; score stamps `candidateId(raw_item_id, rubric_version)` (Phase 3d) so drafts can reference the row without reading it back. */
+export const CandidateInsert = CandidateRow.omit({ created_at: true }).partial({ id: true });
 export type CandidateInsert = z.infer<typeof CandidateInsert>;
 
 // ---------------------------------------------------------------------------
@@ -202,7 +203,8 @@ export const DraftRow = z.strictObject({
   created_at: IsoDateTime,
 });
 export type DraftRow = z.infer<typeof DraftRow>;
-export const DraftInsert = DraftRow.omit({ id: true, created_at: true }).partial({ review_status: true });
+/** `id` is optional on the way in; generate stamps `draftId(candidate_id, content_type, prompt_version)` (Phase 3d). */
+export const DraftInsert = DraftRow.omit({ created_at: true }).partial({ id: true, review_status: true });
 export type DraftInsert = z.infer<typeof DraftInsert>;
 
 // ---------------------------------------------------------------------------

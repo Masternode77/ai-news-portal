@@ -23,6 +23,7 @@ export class BudgetExceededError extends Error {
 export function createBudget(config: BudgetConfigLike): Budget {
   let spentUsd = 0;
   let calls = 0;
+  let stopReason: string | null = null;
   return {
     limitUsd: config.run_usd,
     softWarnUsd: config.soft_warn_usd,
@@ -41,6 +42,12 @@ export function createBudget(config: BudgetConfigLike): Budget {
       if (costUsd < 0 || Number.isNaN(costUsd)) throw new RangeError(`budget.record: invalid cost ${costUsd}`);
       spentUsd += costUsd;
       calls += 1;
+    },
+    get stopReason() {
+      return stopReason;
+    },
+    stop(reason: string): void {
+      stopReason ??= reason;
     },
     state(): BudgetState {
       if (spentUsd > config.run_usd || calls >= config.max_calls) return "exceeded";

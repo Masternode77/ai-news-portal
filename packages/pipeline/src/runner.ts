@@ -5,8 +5,10 @@
  * 2. For each stage in order: flag check → parse input → stage_events started
  *    → run → parse output → merge → stage_events done(counts).
  *    An item failure is a dead letter (P5); a stage exception is a stage
- *    error and the run becomes `partial`; a budget stop keeps QA-passed
- *    drafts flowing to publish (ADR-007).
+ *    error and the run becomes `partial`; a budget stop (a thrown
+ *    BudgetExceededError, or a stage that produced something and then
+ *    called ctx.budget.stop()) ends the run as `budget_stop` while QA-passed
+ *    drafts keep flowing to publish (ADR-007).
  * 3. Aggregate the 13 funnel columns and the cost, finish the ledger row.
  */
 import { Funnel, STAGE_NAMES } from "@cc/shared";
@@ -17,6 +19,7 @@ import type {
   Ledger,
   Logger,
   PipelineConfig,
+  BannedPhrasesConfig,
   ScoringConfig,
   RunStatus,
   RunTrigger,
@@ -37,6 +40,8 @@ export interface RunOptions {
   config: PipelineConfig;
   /** `config/scoring.yaml` (Phase 3c). */
   scoring: ScoringConfig;
+  /** `config/banned-phrases.yaml` (Phase 3d). */
+  bannedPhrases: BannedPhrasesConfig;
   overrides?: FlagOverride[];
   sources: SourceConfig[];
   ledger: Ledger;
@@ -180,6 +185,7 @@ export async function runPipeline(options: RunOptions): Promise<RunResult> {
     now: startedAt,
     config: options.config,
     scoring: options.scoring,
+    bannedPhrases: options.bannedPhrases,
     logger: runLogger,
     ledger,
     budget,
@@ -222,6 +228,12 @@ export async function runPipeline(options: RunOptions): Promise<RunResult> {
         await ledger.stageFinished(runId, spec.name, finishedAt, { status: "done", counts });
         stageResults.push({ stage: spec.name, status: "done", counts, durationMs: finishedAt.getTime() - stageStart.getTime() });
         stageLogger.info("stage done", counts);
+        if (budget.stopReason !== null && status !== "budget_stop") {
+          // The stage kept what it had produced and told us the cap stopped the rest (ADR-007).
+          status = "budget_stop";
+          errors.push(`BUDGET_EXCEEDED: ${budget.stopReason}`);
+          stageLogger.warn("budget cap reached inside the stage; the run ends as budget_stop, later stages still run on what was produced", { reason: budget.stopReason });
+        }
       } catch (error) {
         const message = errorMessage(error);
         errors.push(message);

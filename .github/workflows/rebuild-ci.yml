@@ -78,6 +78,15 @@ jobs:
           npm run --silent v2:pipeline -- run --dry-run --replay --fixture scoring --sources fixtures/sources/scoring.yaml --stage ingest,normalize,score --json > score-dry-run.json
           node -e "const r=require('./score-dry-run.json'); const s=r.scoreStats; console.log(JSON.stringify({status:r.status, candidates:s.candidates, passed:s.passed, full:s.full, brief:s.brief, below_threshold:s.below_threshold, selected:s.selected, shortfall:s.shortfall, selected_items:s.decisions.filter(d=>d.selected).map(d=>[d.source_id, d.total, d.tier])}, null, 2)); const sources=new Set(s.decisions.filter(d=>d.selected).map(d=>d.source_id)); if (r.status !== 'done' || s.candidates !== 13 || s.selected !== 2 || sources.size !== 2 || s.passed < 5) process.exit(1)"
           node packages/pipeline/tools/ingest-dry-run-summary.ts score-dry-run.json >> "$GITHUB_STEP_SUMMARY"
+      - name: Generate dry-run with the scoring fixture (2 selected -> 2 news_brief drafts from recorded replies; replay, no network, fixture LLM)
+        env:
+          CC_FLAG_STAGES_NORMALIZE: "true"
+          CC_FLAG_STAGES_SCORE: "true"
+          CC_FLAG_STAGES_GENERATE: "true"
+        run: |
+          npm run --silent v2:pipeline -- run --dry-run --replay --fixture scoring --sources fixtures/sources/scoring.yaml --stage ingest,normalize,score,generate --json > generate-dry-run.json
+          node -e "const r=require('./generate-dry-run.json'); const g=r.generateStats; console.log(JSON.stringify({status:r.status, selected:g.selected, drafted:g.drafted, failed:g.failed, grounding:g.grounding, pass_rate:g.grounding_pass_rate, quote_max_words:g.quote_max_words, banned:g.banned, cost_usd:g.cost_usd, drafts:g.decisions.map(d=>[d.source_id, d.ok, d.slug, d.grounding_ungrounded, d.banned_matches])}, null, 2)); if (r.status !== 'done' || g.selected !== 2 || g.drafted !== 2 || g.failed !== 0 || g.grounding.checked !== 2 || g.grounding.passed !== 1 || g.banned.checked !== 2 || g.banned.passed !== 2) process.exit(1)"
+          node packages/pipeline/tools/ingest-dry-run-summary.ts generate-dry-run.json >> "$GITHUB_STEP_SUMMARY"
 
   # Manual only (brief Phase 3 common procedure 4): the cloud session cannot reach
   # the feed hosts, so this job is the evidence path for "items_fetched per cycle

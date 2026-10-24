@@ -9,6 +9,7 @@ export type {
   SourceAdapter,
   SourceFetchDetail,
   SourceFetchStats,
+  PromptRegistry,
 } from "./adapters.ts";
 export type { QaEvidence, QaRule, QaRuleConfig } from "./qa.ts";
 export type {

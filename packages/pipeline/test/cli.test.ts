@@ -2,8 +2,9 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { execFile } from "node:child_process";
 import { promisify } from "node:util";
-import { readFile } from "node:fs/promises";
-import { resolve } from "node:path";
+import { mkdtemp, readFile, writeFile } from "node:fs/promises";
+import { tmpdir } from "node:os";
+import { join, resolve } from "node:path";
 import { parsePipelineConfig, parseSourcesConfig } from "@cc/shared";
 import { REPO_ROOT } from "./helpers.ts";
 
@@ -21,7 +22,7 @@ async function cli(args: string[], env: NodeJS.ProcessEnv = {}): Promise<{ code:
 }
 
 test("pipeline run --dry-run --fixture sample --replay --json exits 0 with a full funnel", async () => {
-  const { code, stdout, stderr } = await cli(["run", "--dry-run", "--replay", "--fixture", "sample", "--json"], { CC_FLAG_STAGES_NORMALIZE: "true", CC_FLAG_STAGES_SCORE: "true" });
+  const { code, stdout, stderr } = await cli(["run", "--dry-run", "--replay", "--fixture", "sample", "--json"], { CC_FLAG_STAGES_NORMALIZE: "true", CC_FLAG_STAGES_SCORE: "true", CC_FLAG_STAGES_GENERATE: "true" });
   assert.equal(code, 0, stderr);
   const out = JSON.parse(stdout) as { status: string; funnel: Record<string, unknown>; stages: { stage: string; status: string }[]; ledger: { runs: unknown[]; stageEvents: unknown[] } };
   assert.equal(out.status, "done");
@@ -43,6 +44,7 @@ test("normalize (3b) and score (3c) are off by default and --stage accepts a com
   const outOff = JSON.parse(off.stdout) as { stages: { stage: string; status: string; reason?: string }[] };
   assert.deepEqual(outOff.stages.find((s) => s.stage === "normalize"), { ...outOff.stages.find((s) => s.stage === "normalize"), status: "skipped", reason: "flag_off" });
   assert.deepEqual(outOff.stages.find((s) => s.stage === "score"), { ...outOff.stages.find((s) => s.stage === "score"), status: "skipped", reason: "flag_off" });
+  assert.deepEqual(outOff.stages.find((s) => s.stage === "generate"), { ...outOff.stages.find((s) => s.stage === "generate"), status: "skipped", reason: "flag_off" }, "3d: generate is off by default");
 
   const two = await cli(["run", "--dry-run", "--replay", "--fixture", "dedupe", "--sources", "fixtures/sources/dedupe.yaml", "--stage", "ingest,normalize", "--json"], { CC_FLAG_STAGES_NORMALIZE: "true" });
   assert.equal(two.code, 0, two.stderr);
@@ -85,6 +87,25 @@ test("CC_FLAG_STAGES_IMAGE=false turns the image stage off from the environment"
   assert.equal(code, 0);
   const out = JSON.parse(stdout) as { stages: { stage: string; status: string }[] };
   assert.equal(out.stages.find((s) => s.stage === "image")?.status, "skipped");
+});
+
+test("budget exhaustion after the first draft ends the run as budget_stop (exit 1) and keeps that draft", async () => {
+  const yaml = (await readFile(resolve(REPO_ROOT, "config/pipeline.yaml"), "utf8")).replace(/max_calls:\s*\d+/, "max_calls: 1");
+  assert.match(yaml, /max_calls: 1\b/);
+  const file = join(await mkdtemp(join(tmpdir(), "cc-budget-")), "pipeline.yaml");
+  await writeFile(file, yaml);
+  const { code, stdout, stderr } = await cli(
+    ["run", "--dry-run", "--replay", "--fixture", "scoring", "--sources", "fixtures/sources/scoring.yaml", "--stage", "ingest,normalize,score,generate", "--config", file, "--json"],
+    { CC_FLAG_STAGES_NORMALIZE: "true", CC_FLAG_STAGES_SCORE: "true", CC_FLAG_STAGES_GENERATE: "true" },
+  );
+  assert.equal(code, 1, stderr);
+  const result = JSON.parse(stdout);
+  assert.equal(result.status, "budget_stop");
+  assert.equal(result.generateStats.drafted, 1);
+  assert.equal(result.generateStats.budget_stopped, 1);
+  assert.equal(result.funnel.drafts, 1);
+  assert.equal(result.funnel.top_error, "BUDGET_EXCEEDED");
+  assert.equal(result.stages.find((s: { stage: string }) => s.stage === "generate")?.status, "done");
 });
 
 test("a live run is refused in Phase 2 and usage errors exit 2", async () => {

@@ -7,8 +7,8 @@
  * `ctx.fixtureName` tells fixture adapters which recording to load.
  */
 import type { z } from "zod";
-import type { PipelineConfig, ScoringConfig, StageName } from "../schema/index.ts";
-import type { ImageAdapter, LlmAdapter, PublisherAdapter, SourceAdapter } from "./adapters.ts";
+import type { BannedPhrasesConfig, PipelineConfig, ScoringConfig, StageName } from "../schema/index.ts";
+import type { ImageAdapter, LlmAdapter, PromptRegistry, PublisherAdapter, SourceAdapter } from "./adapters.ts";
 import type { Budget, DbPort, Ledger } from "./db.ts";
 import type { Logger } from "../logger.ts";
 
@@ -20,6 +20,8 @@ export interface StageAdapters {
   image: ImageAdapter;
   publishers: Record<string, PublisherAdapter>;
   db: DbPort;
+  /** Prompt files by task (Phase 3d). */
+  prompts: PromptRegistry;
 }
 
 export interface StageContext {
@@ -29,6 +31,8 @@ export interface StageContext {
   config: PipelineConfig;
   /** `config/scoring.yaml` (Phase 3c): rubric weights, thresholds, vocabularies. */
   scoring: ScoringConfig;
+  /** `config/banned-phrases.yaml` (Phase 3d): the inventory the prompt renders and the guard matches. */
+  bannedPhrases: BannedPhrasesConfig;
   logger: Logger;
   ledger: Ledger;
   budget: Budget;

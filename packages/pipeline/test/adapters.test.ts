@@ -15,6 +15,7 @@ function ctxStub(): StageContext {
     now: new Date("2026-10-18T00:45:00Z"),
     config: options.config,
     scoring: options.scoring,
+    bannedPhrases: options.bannedPhrases,
     logger: options.logger,
     ledger: options.ledger,
     budget: createBudget(options.config.budget),

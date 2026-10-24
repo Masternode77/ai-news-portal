@@ -10,7 +10,7 @@ import { MemoryLedger } from "../src/ledger/index.ts";
 import { runPipeline } from "../src/runner.ts";
 import { DUPLICATE_IN_POOL, DUPLICATE_OF_PUBLISHED, normalizeStage, rejectReason } from "../src/stages/normalize.ts";
 import { NormalizeOutput } from "../src/stages/types.ts";
-import { FIXTURES_DIR, REPO_ROOT, TEST_PIPELINE_YAML, baseRunOptions, fixtureAdapters, testScoring } from "./helpers.ts";
+import { baseRunOptions, fixtureAdapters, FIXTURES_DIR, REPO_ROOT, TEST_PIPELINE_YAML, testBannedPhrases, testScoring } from "./helpers.ts";
 
 const NOW = new Date("2026-10-20T00:45:00Z");
 const RUN_ID = "11111111-1111-4111-8111-111111111111";
@@ -29,7 +29,7 @@ function raw(sourceId: string, url: string, title: string, body = "", extra: Par
 
 async function run(db: MemoryDb, rawItems: RawItemInsert[], sources: SourceConfig[], cfg = config()): Promise<NormalizeOutput> {
   const ledger = new MemoryLedger();
-  const ctx: StageContext = { runId: RUN_ID, now: NOW, config: cfg, logger: silentLogger(), ledger, budget: createBudget(cfg.budget), dryRun: true, replay: true, fixtureName: undefined, scoring: testScoring(), fetch: () => Promise.reject(new Error("no network")), adapters: { ...fixtureAdapters(db), db } };
+  const ctx: StageContext = { runId: RUN_ID, now: NOW, config: cfg, logger: silentLogger(), ledger, budget: createBudget(cfg.budget), dryRun: true, replay: true, fixtureName: undefined, scoring: testScoring(), bannedPhrases: testBannedPhrases(), fetch: () => Promise.reject(new Error("no network")), adapters: { ...fixtureAdapters(db), db } };
   return NormalizeOutput.parse(await normalizeStage.run({ rawItems, sources }, ctx));
 }
 

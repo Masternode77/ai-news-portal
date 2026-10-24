@@ -16,7 +16,7 @@ export interface StageContext {
   config: PipelineConfig;          // §4
   logger: Logger;                  // 구조화 로그, 시크릿·원문 금지
   ledger: Ledger;                  // stage_events / dead_letters 기록
-  budget: Budget;                  // 누계 USD, canSpend(estimateUsd): boolean
+  budget: Budget;                  // 누계 USD, canSpend(estimateUsd), record(costUsd), stop(reason)/stopReason (3d: 스테이지가 산출물을 남기고 멈추면 러너가 런을 budget_stop으로 끝낸다)
   dryRun: boolean;                 // true면 DB 쓰기·발행·외부 호출 금지(어댑터가 fixture/모의로 대체)
   adapters: {
     sources: Record<string, SourceAdapter>;
@@ -45,6 +45,7 @@ export interface Stage<I, O> {
 4. `--dry-run`은 `ctx.dryRun=true`로 전 Stage를 실행하되 DbPort가 메모리 구현으로 바뀐다. `--replay --fixture <name>`은 어댑터를 fixture 구현으로 바꾼다(네트워크 0). Phase 3b 개정: `--stage`는 콤마 목록(`--stage ingest,normalize`)을 받고, fixture 런은 `fixtures/db/<name>.json`이 있으면 메모리 DbPort를 먼저 채운다(현재 `publications`).
 5. Phase 3b 개정 — normalize 계약: `NormalizeInput { rawItems, sources }` → `NormalizeOutput { candidates: CandidateInsert[](미채점: scores 0, selected false, rubric_version normalize/<version>), stats }`. 판정 순서는 발행본 URL 정체성(무기한) → 창 내 발행본 제목 유사도 → 풀 내 URL 정체성 → content_hash → 제목 키 → 제목 유사도 → 본문 shingle. 대표 사본은 `text_rights`(full 우선) → tier → 본문 길이 순. `PublicationSource.title`(선택)은 3h가 원제를 남겨 normalize가 한국어 편집 제목 대신 비교할 수 있게 한다. `SelectOptions.orderBy`가 DbPort에 추가됐다(발행본을 최신순으로 읽기 위함). 3b 후속(PR #60 리뷰): 발행본 URL 색인은 `SelectOptions.offset`(PostgREST `range`)으로 `status=published` 행 **전부**를 `normalize.published_page_size`씩 페이지 순회해 만든다(제목 비교만 창 적용).
 6. Phase 3c 개정 — score 계약: `ScoreInput { candidates, rawItems, sources }` → `ScoreOutput { candidates: CandidateInsert[](전부 채점됨), selected: CandidateInsert[], stats }`. `ctx.scoring`(`config/scoring.yaml`, CLI `--scoring`)이 StageContext에 추가됐다. 5축(relevance·timeliness·impact·reader_value·insight_potential) 각 0~1, `total = Σ weights × score`, `tier = relevance < thresholds.relevance_min → BELOW_THRESHOLD(총점 무관) · total ≥ thresholds.full → full · ≥ thresholds.brief → brief · 미달 → BELOW_THRESHOLD`. 선택은 통과 후보를 total(동점: timeliness → URL) 순으로 소스당 `selection.per_source_max`, 사이클당 `caps.briefs_per_cycle.max`까지; 통과 수가 `min` 미만이면 `shortfall`로 보고하고 채우지 않는다. 모든 후보 행에 `rubric { tier, rank, insight_eligible, reasons{축별 한 줄} }`(`candidates.rubric` jsonb, 마이그레이션 0002)을 쓴다. funnel `passed_gate`는 임계값 통과 수(Phase 0 정의), 선택 수는 stage counts `selected`.
+7. Phase 3d 개정 — generate 계약(news_brief): `GenerateInput { selected, rawItems, sources }` → `GenerateOutput { drafts: DraftInsert[], stats }`. 선택 후보마다 raw item·source에서 **소스 패킷**(제목·소스명·URL·발행일·언어·`text_rights`·`text_scope`·본문(`llm.max_source_chars`에서 잘라 표시)·note)을 user 메시지로 보내고, `ctx.adapters.prompts.get("news_brief")`의 system prompt와 `NewsBriefDraft` JSON 스키마로 `ctx.adapters.llm.complete()`를 호출한다. 모델은 `NewsBriefDraft { title_ko, summary_ko, why_it_matters_ko, expert_lens_ko, tags }`만 쓰고 `source_url`·`source_name`·`published_at_source`·`slug`(`newsBriefSlug`)는 스테이지가 채워 `NewsBrief`로 검증한다. 호출 전 `budget.canSpend(추정)`(첫 후보부터 불가 → `BudgetExceededError`, 도중 불가 → 남은 후보 `budget_stopped` + `ctx.budget.stop(reason)` → 러너가 런을 `budget_stop`(exit 1)으로 끝내되 완료된 초안은 다음 스테이지로 흘린다), 스키마 실패·LLM 오류는 `dead_letters(stage generate, ref candidates)`. 초안 행 `body = { brief, checks: { grounding { numbers, ungrounded, pass }, quote_max_words, banned { version, matches, pass } }, source }`, 검사는 보고만(차단은 3g). `stage_events.counts { selected, drafted, failed, budget_stopped, grounding_checked, grounding_passed, quote_max_words, banned_passed, cost_usd_milli }`, funnel `drafts`. `ctx.bannedPhrases`(`config/banned-phrases.yaml`, CLI `--banned-phrases`)가 StageContext에 추가됐다(Codex PR #65 P1): system prompt는 `prompts/news_brief.md`의 `{{banned_phrases}}` 자리를 그 인벤토리(`phrases.ko` + `patterns[].note`)로 렌더링하고(`renderTemplate`; 값이 없는 placeholder는 호출 전에 `TEMPLATE_UNRESOLVED`로 실패), 같은 인벤토리(`phrases` ko·en, `hook_starts`, `patterns[].regex`)로 초안의 독자 노출 필드(`title_ko`·`summary_ko`·`why_it_matters_ko`·`expert_lens_ko`)를 검사한다(`packages/pipeline/src/checks/banned-phrases.ts`; 3g `BANNED_PATTERN`은 같은 함수로 차단). 금지 표현 목록은 프롬프트 파일에 적지 않는다(AGENTS.md "Banned Generic Patterns").
 
 ## 2. Adapter 인터페이스
 
@@ -80,6 +81,7 @@ export const LlmRequest = z.object({
   outputSchema: z.any().optional(),        // 구조화 출력(zod → JSON schema)
   maxOutputTokens: z.number().int().positive(),
   promptVersion: z.string(),               // prompts/<task>.md 헤더 version
+  cacheKey: z.string().optional(),         // Phase 3d: fixture 어댑터의 녹화 키(news_brief: raw_item_id → fixtures/llm/<task>/<key>.json)
 });
 export const LlmResponse = z.object({
   text: z.string(),
@@ -89,6 +91,11 @@ export const LlmResponse = z.object({
   model: z.string(),
   stopReason: z.string(),
 });
+// Phase 3d: 프롬프트 파일 레지스트리(StageAdapters.prompts). 파일 구현은 prompts/<task>.md를 읽어 §6 머리말을 strict 검증하고 캐시한다.
+export interface PromptRegistry { get(task: LlmTask): Promise<PromptFile> }
+// Anthropic 어댑터(adapters/llm/anthropic.ts)는 ctx.fetch로만 Messages API를 호출한다(--replay에서 throw, R7). outputSchema가 있으면
+// 단일 tool(emit_result) 강제 호출로 구조화 출력을 받고, 429/5xx/네트워크/타임아웃은 llm.max_retries까지 지수 백오프, 4xx는 즉시
+// LLM_REQUEST_REJECTED, 비용은 llm.pricing[model]로 계산해 budget.record(행 없는 모델은 LLM_PRICING_MISSING). 키는 ANTHROPIC_API_KEY(이름만).
 
 export interface ImageAdapter {
   readonly provider: string;      // 'placeholder' | 'openai' | 'fixture'
@@ -156,7 +163,7 @@ export const InsightEssay = z.object({
 ```yaml
 schedule: { cron: "45 15,23,7 * * *", timezone: "UTC", slot_hours: 8 }
 flags:
-  stages: { ingest: true, normalize: false, score: false, generate: true, qa: true, image: true, publish: true }   # normalize: 3b, score: 3c 기본 OFF (§7)
+  stages: { ingest: true, normalize: false, score: false, generate: false, qa: true, image: true, publish: true }   # normalize: 3b, score: 3c, generate: 3d 기본 OFF (§7)
   publish_target: none        # none | staging | production  (ADR-006)
 caps:
   briefs_per_cycle: { min: 1, max: 2 }
@@ -191,6 +198,13 @@ budget: { run_usd: 2.0, soft_warn_usd: 1.5, max_calls: 60 }
 llm:
   provider: anthropic
   models: { curate: claude-haiku-5-5, news_brief: claude-opus-5-5, expert_lens: claude-opus-5-5, insight_essay: claude-opus-5-5, qa_assist: claude-haiku-5-5 }
+  pricing:                    # Phase 3d: USD/M토큰. Anthropic 어댑터는 행 없는 모델을 거부한다(비용 계산 필수)
+    claude-opus-5-5: { input_per_mtok: 4, output_per_mtok: 20, cache_read_per_mtok: 0.4 }
+    claude-haiku-5-5: { input_per_mtok: 0.1, output_per_mtok: 0.5, cache_read_per_mtok: 0.01 }
+  base_url: https://api.anthropic.com
+  timeout_ms: 90000           # 요청당; 429/5xx/타임아웃은 max_retries까지 지수 백오프
+  max_retries: 2
+  max_source_chars: 12000     # 모델에 보내는 원문 본문 상한(패킷에 잘림 표시)
 image: { provider: placeholder, fallback_chain: [placeholder] }
 notify: { telegram: { enabled: true } }
 ```
@@ -236,6 +250,8 @@ Phase 3a 개정 — 선택 필드 3개(단순 소스는 여전히 ≤10줄). `ex
 
 `config/scoring.yaml`(Phase 3c, `ScoringConfig`, CLI `--scoring`): `version`(→ `rubric_version = score/<version>`), 루브릭 5축 가중치(relevance 0.35, timeliness 0.2, impact 0.2, reader_value 0.15, insight_potential 0.1; 합 1 검증), tier 임계값(full 0.75, brief 0.55; full ≥ brief 검증) + 관련성 축 하한 `relevance_min: 0.55`(레거시 게이트가 관련성 단독이었던 것을 보존: 영향도·독자 가치만으로는 통과 불가), `insight_trigger: 0.7`, `selection { per_source_max: 1, abstract_max_tier: brief }`(full 소스인데 `payload.extraction.ok = true`가 없는 아이템 — 추출 실패·미시도 — 은 reader_value를 rewrite_only로 계산하고 코드에서 brief 상한: 설정으로 풀 수 없는 fail-closed 게이트), 그리고 축별 규칙 데이터 — `relevance`(레거시 8차원 가중 어휘 136쌍, AI·인프라·소비자·약한 인접·화석·인접 주제 어휘, `formula`·`lifts`·`caps` 계수, 정형 고시 가드 패턴, 한국어 별칭 42·증시 패턴), `timeliness`(시간 버킷 5 + `beyond`·`unknown_date`), `impact`(신호 9: GW/MW·금액 정규식, 하이퍼스케일러·칩·한국 주요 행위자·거래 동사·규제 용어), `reader_value`(권리·tier·본문 길이·지역 용어·수치 패턴·abstract 상한), `insight_potential`(테마 6 + 다차원 폭 보너스). 엔진의 모양(축·이름 붙은 lift/cap)은 코드, 숫자·용어·패턴은 전부 이 파일. 정규식 문자열은 로드 시 컴파일 검증, 알 수 없는 키는 오류.
 
+`config/banned-phrases.yaml`(Phase 3d, `BannedPhrasesConfig`, CLI `--banned-phrases`; AGENTS.md "Banned Generic Patterns"의 리빌드 측 정본): `version`, `phrases { ko, en }`(정확 문구; 대소문자 무시·단어 사이 공백 유연 매치), `hook_starts { ko, en }`(필드가 이 문구로 시작하면 매치), `patterns [{ name, note, regex }]`(`note`는 프롬프트에 보이는 설명, `regex`는 가드가 `iu`로 매치). 한 인벤토리가 두 곳을 먹인다 — `prompts/news_brief.md`의 `{{banned_phrases}}`(출력 언어인 `phrases.ko` + 모든 `patterns[].note`)와 초안 가드(전 항목; 3d 보고 `checks.banned`, 3g 차단 `BANNED_PATTERN`). `phrases.en` 43구·`hook_starts.en` 11구는 레거시 `config/bannedPhrases.yml`을 데이터로 이관한 것(레거시 파일은 Phase 5 컷오버에서 퇴역; 그때까지 두 파일이 공존하되 리빌드는 새 파일만 읽는다). 중복 문구(공백·대소문자 무시)·중복 패턴 이름·컴파일 안 되는 정규식·알 수 없는 키는 로드 오류. 문구를 프롬프트·폴백 문안에 복사하지 않고 이 파일을 고치고 `version`을 올린다.
+
 `config/qa.yaml`: 규칙 목록·순서·severity·임계값·`auto_pass`(soft).
 
 `config/redirects.yaml`: `[{ from: "/author/rowan-hale", to: "/author/josh-inn/", status: 301 }, …]` (레거시 5건).
@@ -247,10 +263,10 @@ zod로 전부 검증(`packages/shared/src/config/schema.ts`). 알 수 없는 키
 | 대상 | 키 |
 |---|---|
 | raw_item | `canonical_url` (unique). Phase 3b 개정: 행 `id`는 `rawItemId(canonical_url)` = uuid5 모양의 sha1(`computecurrent:raw_item:<url>`)로 ingest가 upsert 전에 찍는다 — 충돌 시 PK가 바뀌지 않고, normalize·score가 행을 다시 읽지 않고 참조한다 |
-| candidate | `raw_item_id + ':' + rubric_version`. Phase 3b: normalize의 중복 **탈락**은 `rubric_version = normalize/<normalize.version>`, `selected=false`, `reject_reason = "<CODE>: <method>=<duplicate_of>"`(코드: `DUPLICATE_OF_PUBLISHED` \| `DUPLICATE_IN_POOL`)로 기록되고, 살아남은 후보는 메모리로 score에 넘어간다. Phase 3c: score는 **모든** 후보를 `rubric_version = score/<scoring.version>`으로 upsert — `scores`(5축)·`total`·`selected`·`reject_reason = "<CODE>: <key>=<value>,…"`(코드: `BELOW_THRESHOLD` \| `NOT_SELECTED`)·`rubric`(tier·rank·insight_eligible·축별 reason). 같은 아이템이 다음 런 풀에 다시 들어오면 같은 행을 덮어쓴다(이월 로직 없음) |
-| draft | `candidate_id + ':' + content_type + ':' + prompt_version` |
+| candidate | `raw_item_id + ':' + rubric_version`. Phase 3b: normalize의 중복 **탈락**은 `rubric_version = normalize/<normalize.version>`, `selected=false`, `reject_reason = "<CODE>: <method>=<duplicate_of>"`(코드: `DUPLICATE_OF_PUBLISHED` \| `DUPLICATE_IN_POOL`)로 기록되고, 살아남은 후보는 메모리로 score에 넘어간다. Phase 3c: score는 **모든** 후보를 `rubric_version = score/<scoring.version>`으로 upsert — `scores`(5축)·`total`·`selected`·`reject_reason = "<CODE>: <key>=<value>,…"`(코드: `BELOW_THRESHOLD` \| `NOT_SELECTED`)·`rubric`(tier·rank·insight_eligible·축별 reason). 같은 아이템이 다음 런 풀에 다시 들어오면 같은 행을 덮어쓴다(이월 로직 없음). Phase 3d: 행 `id = candidateId(raw_item_id, rubric_version)`(uuid5 모양 sha1)을 score가 upsert 전에 찍어 drafts가 참조한다 |
+| draft | `candidate_id + ':' + content_type + ':' + prompt_version`. Phase 3d: 행 `id = draftId(candidate_id, content_type, prompt_version)`, upsert 충돌 키 `(candidate_id, content_type, prompt_version)` — 같은 후보·같은 프롬프트 버전의 재생성은 행을 덮어쓰고, 프롬프트 버전이 오르면 새 행 |
 | qa_result | `draft_id + ':' + rule + ':' + checked_at` |
-| publication | `slug` (news: `news/` + sha1(canonical_url + title)[0:16] — 레거시 규칙 유지; essay: `column/` + slugify(title)[0:64] + `-YYYY-MM-DD`) |
+| publication | `slug` (news: `news/` + sha1(canonical_url + title)[0:16] — 레거시 규칙 유지, Phase 3d `newsBriefSlug(url, title)` = sha1(`url|title`)[0:16]을 초안 단계에서 미리 계산; essay: `column/` + slugify(title)[0:64] + `-YYYY-MM-DD`) |
 | run | uuid; 재실행은 새 run, 아이템 키는 그대로라 중복 발행 불가 |
 
 ## 6. 프롬프트 파일 규약
@@ -260,15 +276,17 @@ zod로 전부 검증(`packages/shared/src/config/schema.ts`). 알 수 없는 키
 ```
 ---
 task: news_brief
-version: 2026-10-18.1
+version: 2026-10-24.1
 model_hint: claude-opus-5-5
-output_schema: NewsBrief
+output_schema: NewsBriefDraft
+max_output_tokens: 2500
 ---
+(본문 = system prompt, 한국어; `{{name}}` placeholder 허용)
 ```
 
-`drafts.prompt_version`에 `version`을 기록한다. 레거시 인라인 프롬프트(`curate.mjs:58-73`, `content.mjs:159-184`, `expert-lens.mjs:403-426`, `authored-column-engine.mjs:830-1478`)는 3d/3e에서 추출·재작성하며 복붙하지 않는다(P9).
+`drafts.prompt_version`에 `version`을 기록한다. Phase 3d: 머리말은 `PromptFrontMatter` zod(strict; `task`는 `LlmTask` enum, `output_schema`는 콘텐츠 스키마 이름, `max_output_tokens` 양의 정수)로 검증하고 `---` 뒤 본문이 system prompt다(`parsePromptFile`/`loadPromptFile`, `PromptRegistry`). `output_schema`가 `NewsBriefDraft`인 이유는 모델이 제목·요약·의미·렌즈·태그만 쓰고 출처·날짜·slug는 스테이지가 채우기 때문이다(§1 7). `model_hint`는 문서용이고 실제 모델은 `llm.models.<task>`다. 규칙·문체·용어를 바꾸면 `version`을 올린다(초안 행이 새로 생긴다, §5). 본문은 `{{name}}` placeholder를 가질 수 있고 스테이지가 `renderTemplate`로 채운다(strict: 값이 없는 placeholder는 모델 호출 전에 `TEMPLATE_UNRESOLVED`로 실패, 치환된 값은 다시 스캔하지 않음). 3d `news_brief.md`의 유일한 placeholder는 `{{banned_phrases}}`로 `config/banned-phrases.yaml`(§4)에서 렌더링된다 — 금지 표현 목록을 프롬프트 파일에 적지 않는다(AGENTS.md). 레거시 인라인 프롬프트(`curate.mjs:58-73`, `content.mjs:159-184`, `expert-lens.mjs:403-426`, `authored-column-engine.mjs:830-1478`)는 3d/3e에서 추출·재작성하며 복붙하지 않는다(P9).
 
 ## 7. 기능 플래그 규약
 
-- 모든 Stage·Adapter·Publisher에 `enabled`. 기본값은 Phase 3 이식 직후 `false`, Phase 4에서 `true`. 적용: 3a ingest는 네트워크 스위치 `--live`(기본 OFF)가 플래그 역할을 하고, 3b normalize는 `flags.stages.normalize: false`(테스트·CI smoke·dry-run 증거는 `CC_FLAG_STAGES_NORMALIZE=true`로 켠다), 3c score는 `flags.stages.score: false`(`CC_FLAG_STAGES_SCORE=true`).
+- 모든 Stage·Adapter·Publisher에 `enabled`. 기본값은 Phase 3 이식 직후 `false`, Phase 4에서 `true`. 적용: 3a ingest는 네트워크 스위치 `--live`(기본 OFF)가 플래그 역할을 하고, 3b normalize는 `flags.stages.normalize: false`(테스트·CI smoke·dry-run 증거는 `CC_FLAG_STAGES_NORMALIZE=true`로 켠다), 3c score는 `flags.stages.score: false`(`CC_FLAG_STAGES_SCORE=true`), 3d generate는 `flags.stages.generate: false`(`CC_FLAG_STAGES_GENERATE=true`; fixture 런은 `llm.provider: fixture`, 라이브 생성은 `anthropic` + `ANTHROPIC_API_KEY`).
 - 플래그는 설정 파일 값이 환경변수(`CC_FLAG_<NAME>`)로 override 가능. 런 원장에 적용된 플래그 스냅샷을 기록한다.

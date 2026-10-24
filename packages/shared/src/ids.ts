@@ -21,3 +21,21 @@ export const RAW_ITEM_ID_NAMESPACE = "computecurrent:raw_item";
 export function rawItemId(canonicalUrl: string): string {
   return deterministicUuid(RAW_ITEM_ID_NAMESPACE, canonicalUrl);
 }
+
+export const CANDIDATE_ID_NAMESPACE = "computecurrent:candidate";
+export const DRAFT_ID_NAMESPACE = "computecurrent:draft";
+
+/** `candidates.id` from its idempotency key (contracts.md §5: raw_item_id + rubric_version); Phase 3d. */
+export function candidateId(rawItemId: string, rubricVersion: string): string {
+  return deterministicUuid(CANDIDATE_ID_NAMESPACE, `${rawItemId}:${rubricVersion}`);
+}
+
+/** `drafts.id` from its idempotency key (candidate_id + content_type + prompt_version); Phase 3d. */
+export function draftId(candidateId: string, contentType: string, promptVersion: string): string {
+  return deterministicUuid(DRAFT_ID_NAMESPACE, `${candidateId}:${contentType}:${promptVersion}`);
+}
+
+/** Legacy news slug rule kept (contracts.md §5): `news/` + sha1(canonical_url | title)[0:16]. */
+export function newsBriefSlug(canonicalUrl: string, title: string): string {
+  return `news/${createHash("sha1").update(`${canonicalUrl}|${title}`).digest("hex").slice(0, 16)}`;
+}

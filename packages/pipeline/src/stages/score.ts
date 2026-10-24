@@ -19,7 +19,7 @@
  * score/<version>) with `scores`, `total`, `selected`, `reject_reason` and
  * `rubric { tier, rank, insight_eligible, reasons }` (ADR-003, R6).
  */
-import { RELEVANCE_DIMENSIONS, rawItemId } from "@cc/shared";
+import { RELEVANCE_DIMENSIONS, candidateId, rawItemId } from "@cc/shared";
 import type {
   CandidateInsert,
   CandidateReasons,
@@ -512,6 +512,7 @@ export const scoreStage: Stage<ScoreInput, ScoreOutput> = {
     }
 
     const rows: CandidateInsert[] = scored.map((entry) => ({
+      id: candidateId(entry.doc.candidate.raw_item_id, version),
       raw_item_id: entry.doc.candidate.raw_item_id,
       run_id: ctx.runId,
       rubric_version: version,
