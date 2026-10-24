@@ -209,7 +209,32 @@ were quarantined with `quarantineArticle`, using the same reason format as
 above. Public columns go from 20 to 7, and the archive route from 62 to 49
 records. As before, bodies, figures and artwork registrations are kept.
 
-**Still open.** Two of the remaining public columns have valid source artifacts
-but fail `columnArtworkReadiness` on numeric provenance: `col_55e9ccd7116252dd`
-(ERCOT; 2027, 2028) and `col_ba22f5ea8bef96e6` (Hormuz; 2026, $46, $4, $1). They
-were outside this decision and remain published.
+**ERCOT and Hormuz columns (2026-10-23).** The owner asked for the two
+remaining columns that failed numeric provenance to be corrected against their
+EIA sources, and quarantined if that is not possible.
+
+- `col_55e9ccd7116252dd` (ERCOT) was **corrected**. The EIA source does not
+  report the energization and moratorium dates in the body (2027, 2028, and a
+  twelve-month clearance), so those passages were rewritten as conditions to
+  watch. A 2026-10-23 correction note was added. The column now passes
+  `columnArtworkReadiness`, which covers numeric provenance, length, style and
+  repetition, and the reader-copy guard.
+- `col_ba22f5ea8bef96e6` (Hormuz) was **corrected and quarantined**:
+  - Corrections: a derived $46 swing and a fourfold comparison (the EIA gives
+    the $118 and $72 endpoints and the $4 versus $1 daily swings) were rewritten
+    from the reported figures, and two watch-list dates the EIA did not report
+    were removed.
+  - Why it is still quarantined: the remaining flagged figures (2026, $4, $1,
+    2025) all appear in the EIA text, but the gate does not accept them.
+    `verifyNumericClaim` marks a value `verified_multi_source` whenever its digits
+    appear anywhere in more than one source, and the numeric gate accepts only
+    `verified_primary`. Removing those figures would remove the column's core
+    evidence, so the column was quarantined instead.
+  - Restoring it: the corrected body is kept, and the column can be restored if
+    the gate is changed to accept multi-source-verified claims.
+
+All six remaining public columns now pass `columnArtworkReadiness`.
+
+**Still open.** The numeric gate treats a multi-source match as unverified, and
+the multi-source check is a substring test on the raw value. Changing it is a
+publish-gate change and needs the owner's approval.
