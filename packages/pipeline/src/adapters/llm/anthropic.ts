@@ -122,7 +122,16 @@ export function createAnthropicLlmAdapter(options: AnthropicOptions): LlmAdapter
             ctx.logger.warn("llm: request failed, will retry", { attempt, code: lastError.code, task: request.task });
             continue;
           }
-          const text = await response.text();
+          let text: string;
+          try {
+            text = await response.text();
+          } catch (error) {
+            // Headers arrived but the body stalled or the connection dropped: the same retry as a failed request.
+            const aborted = error instanceof Error && error.name === "AbortError";
+            lastError = new LlmError(aborted ? "LLM_TIMEOUT" : "LLM_UNAVAILABLE", aborted ? `response body not received within ${options.llm.timeout_ms} ms` : `response body failed: ${error instanceof Error ? error.message : String(error)}`, { status: response.status, retryable: true });
+            ctx.logger.warn("llm: response body failed, will retry", { attempt, code: lastError.code, status: response.status, task: request.task });
+            continue;
+          }
           if (response.status === 429 || response.status >= 500) {
             lastError = new LlmError("LLM_UNAVAILABLE", `http ${response.status}`, { status: response.status, retryable: true });
             ctx.logger.warn("llm: upstream unavailable, will retry", { attempt, status: response.status, task: request.task });
