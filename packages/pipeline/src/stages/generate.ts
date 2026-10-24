@@ -19,7 +19,7 @@
  * BUDGET_EXCEEDED so the run ends as budget_stop).
  */
 import { z } from "zod";
-import { NewsBrief, NewsBriefDraft, candidateId, draftId, newsBriefSlug, rawItemId } from "@cc/shared";
+import { NewsBrief, NewsBriefDraft, candidateId, draftId, newsBriefSlug, rawItemId, requireLlmPrompt } from "@cc/shared";
 import type { CandidateInsert, DraftInsert, LlmResponse, RawItemInsert, SourceConfig, Stage, StageContext } from "@cc/shared";
 import { estimateCostUsd } from "../adapters/llm/anthropic.ts";
 import { BudgetExceededError } from "../budget.ts";
@@ -221,7 +221,7 @@ export const generateStage: Stage<GenerateInput, GenerateOutput> = {
     const started = Date.now();
     const llmConfig = ctx.config.llm;
     const model = llmConfig.models.news_brief;
-    const prompt = await ctx.adapters.prompts.get("news_brief");
+    const prompt = requireLlmPrompt(await ctx.adapters.prompts.get("news_brief"));
     const outputSchema = z.toJSONSchema(NewsBriefDraft) as Record<string, unknown>;
     const sources = new Map(input.sources.map((source) => [source.id, source]));
     const items = new Map(input.rawItems.map((item) => [item.id ?? rawItemId(item.canonical_url), item]));

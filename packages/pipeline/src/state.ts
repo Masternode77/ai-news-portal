@@ -185,6 +185,46 @@ export function emptyGenerateStats(): GenerateStats {
   return { selected: 0, drafted: 0, failed: 0, budget_stopped: 0, cost_usd: 0, input_tokens: 0, output_tokens: 0, grounding: { checked: 0, passed: 0, numbers: 0, ungrounded: 0 }, grounding_pass_rate: null, quote_max_words: 0, decisions: [], ms: 0 };
 }
 
+/** One draft's image outcome (Phase 3f), kept in `--json` and the step summary. */
+export const ImageAttemptRecord = z.strictObject({
+  provider: z.string(),
+  ok: z.boolean(),
+  code: z.string().nullable(),
+  error: z.string().nullable(),
+  ms: NonNegativeInt,
+});
+export const ImageDecision = z.strictObject({
+  slug: z.string(),
+  provider: z.string(),
+  placeholder: z.boolean(),
+  path: z.string(),
+  cost_usd: z.number().nonnegative(),
+  attempts: z.array(ImageAttemptRecord),
+});
+export type ImageDecision = z.infer<typeof ImageDecision>;
+
+export const ImageStats = z.strictObject({
+  passed: NonNegativeInt,
+  with_images: NonNegativeInt,
+  /** Images a real provider produced. */
+  generated: NonNegativeInt,
+  placeholders: NonNegativeInt,
+  /** Provider attempts that failed (a draft can have several). */
+  failed_attempts: NonNegativeInt,
+  /** Drafts whose paid provider was skipped because the run budget could not cover another image. */
+  budget_stopped: NonNegativeInt,
+  /** IMAGE_MISSING soft verdicts written (a real provider was configured but the draft got a placeholder). */
+  image_missing: NonNegativeInt,
+  cost_usd: z.number().nonnegative(),
+  decisions: z.array(ImageDecision).max(100),
+  ms: NonNegativeInt,
+});
+export type ImageStats = z.infer<typeof ImageStats>;
+
+export function emptyImageStats(): ImageStats {
+  return { passed: 0, with_images: 0, generated: 0, placeholders: 0, failed_attempts: 0, budget_stopped: 0, image_missing: 0, cost_usd: 0, decisions: [], ms: 0 };
+}
+
 export const DraftWithImage = z.strictObject({
   draft: DraftInsert,
   image: ImageResult.nullable(),
@@ -207,6 +247,7 @@ export const PipelineState = z.strictObject({
   drafts: z.array(DraftInsert),
   verdicts: z.array(QaVerdict),
   passed: z.array(DraftInsert),
+  imageStats: ImageStats,
   withImages: z.array(DraftWithImage),
   published: z.array(PublishedRef),
 });
@@ -245,6 +286,7 @@ export function initialState(sources: SourceConfig[]): PipelineState {
     drafts: [],
     verdicts: [],
     passed: [],
+    imageStats: emptyImageStats(),
     withImages: [],
     published: [],
   };

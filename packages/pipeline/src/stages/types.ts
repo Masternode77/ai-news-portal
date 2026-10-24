@@ -1,7 +1,7 @@
 /** Per-stage input/output schemas. Each stage parses both (P2). */
 import { z } from "zod";
 import { CandidateInsert, DraftInsert, NonNegativeInt, QaVerdict, RawItemInsert, SourceConfig } from "@cc/shared";
-import { DraftWithImage, GenerateStats, NormalizeStats, PublishedRef, ScoreStats, SourceStats } from "../state.ts";
+import { DraftWithImage, GenerateStats, ImageStats, NormalizeStats, PublishedRef, ScoreStats, SourceStats } from "../state.ts";
 
 export const IngestInput = z.strictObject({ sources: z.array(SourceConfig) });
 export type IngestInput = z.infer<typeof IngestInput>;
@@ -42,7 +42,8 @@ export type QaOutput = z.infer<typeof QaOutput>;
 
 export const ImageInput = z.strictObject({ passed: z.array(DraftInsert) });
 export type ImageInput = z.infer<typeof ImageInput>;
-export const ImageOutput = z.strictObject({ withImages: z.array(DraftWithImage) });
+/** Phase 3f: the stage appends IMAGE_MISSING soft verdicts (ADR-004) when a configured provider failed and the placeholder stood in. */
+export const ImageOutput = z.strictObject({ withImages: z.array(DraftWithImage), verdicts: z.array(QaVerdict), stats: ImageStats });
 export type ImageOutput = z.infer<typeof ImageOutput>;
 
 export const PublishInput = z.strictObject({ withImages: z.array(DraftWithImage) });

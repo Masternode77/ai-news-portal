@@ -22,7 +22,7 @@ import { pathToFileURL } from "node:url";
 import { createClient } from "@supabase/supabase-js";
 import { ConfigError, createLogger, isLogLevel, loadPipelineConfig, loadScoringConfig, loadSourcesConfig } from "@cc/shared";
 import type { DbPort, Ledger, Logger, PipelineConfig, RunTrigger, SourceAdapter, LlmAdapter,
-  StageAdapters, StageName } from "@cc/shared";
+  StageAdapters, StageName, ImageAdapter, ImageProvider } from "@cc/shared";
 import {
   HostPacer,
   createDisabledLlmAdapter,
@@ -34,6 +34,12 @@ import {
   createLiveRssAdapter,
   createNoopPublisher,
   createPlaceholderImageAdapter,
+  createFixtureImageAdapter,
+  createOpenAiImageAdapter,
+  createImageChain,
+  imageChainOrder,
+  MemoryImageStore,
+  createLocalImageStore,
 } from "../src/adapters/index.ts";
 import { MemoryDb, SupabaseDb, seedMemoryDb } from "../src/db/index.ts";
 import { MemoryLedger, SupabaseLedger } from "../src/ledger/index.ts";
@@ -43,7 +49,7 @@ import { notifyConsole } from "../src/notify/console.ts";
 import { disabledFetch, runPipeline } from "../src/runner.ts";
 
 const USAGE = `usage: pipeline run [--stage <name>[,<name>]] [--dry-run] [--live] [--fixture <name>] [--replay]
-                    [--config <path>] [--sources <path>] [--scoring <path>] [--fixtures-dir <dir>] [--prompts-dir <dir>]
+                    [--config <path>] [--sources <path>] [--scoring <path>] [--fixtures-dir <dir>] [--prompts-dir <dir>] [--images-dir <dir>]
                     [--trigger schedule|dispatch|local] [--json] [--log-level debug|info|warn|error]`;
 
 export interface Cli {
@@ -58,6 +64,8 @@ export interface Cli {
   scoring: string;
   fixturesDir: string;
   promptsDir: string;
+  /** Phase 3f: where generated image bytes are written; unset keeps them in memory for the run. */
+  imagesDir: string | undefined;
   trigger: RunTrigger;
   json: boolean;
   logLevel: "debug" | "info" | "warn" | "error";
@@ -78,6 +86,7 @@ export function parseCli(argv: string[]): Cli {
       scoring: { type: "string", default: "config/scoring.yaml" },
       "fixtures-dir": { type: "string", default: "fixtures" },
       "prompts-dir": { type: "string", default: "prompts" },
+      "images-dir": { type: "string" },
       trigger: { type: "string", default: "local" },
       json: { type: "boolean", default: false },
       "log-level": { type: "string", default: "info" },
@@ -105,6 +114,7 @@ export function parseCli(argv: string[]): Cli {
     scoring: values.scoring,
     fixturesDir: values["fixtures-dir"],
     promptsDir: values["prompts-dir"],
+    imagesDir: values["images-dir"],
     trigger,
     json: values.json,
     logLevel,
@@ -135,6 +145,21 @@ export function buildLlmAdapter(config: PipelineConfig, env: NodeJS.ProcessEnv, 
   }
 }
 
+/** The image chain for `image.provider` + `image.fallback_chain`; the OpenAI key is read by name only when that provider is in the chain. */
+export function buildImageAdapter(config: PipelineConfig, env: NodeJS.ProcessEnv, fixturesDir: string): ImageAdapter {
+  const order = imageChainOrder(config.image);
+  const adapters: Partial<Record<ImageProvider, ImageAdapter>> = {
+    placeholder: createPlaceholderImageAdapter({ topics: config.image.placeholder.topics, defaultTopic: config.image.placeholder.default_topic }),
+  };
+  if (order.includes("fixture")) adapters.fixture = createFixtureImageAdapter({ fixturesDir });
+  if (order.includes("openai")) {
+    const apiKey = env["OPENAI_API_KEY"];
+    if (!apiKey) throw new ConfigError("OPENAI_API_KEY is required when image.provider or image.fallback_chain includes openai (name only; the value stays in the environment)");
+    adapters.openai = createOpenAiImageAdapter({ apiKey, image: config.image });
+  }
+  return createImageChain(config.image, adapters);
+}
+
 export function buildAdapters(cli: Cli, config: PipelineConfig, env: NodeJS.ProcessEnv = {}): StageAdapters {
   const fixtureName = cli.fixture ?? "sample";
   const fixturesDir = resolve(cli.fixturesDir);
@@ -151,7 +176,8 @@ export function buildAdapters(cli: Cli, config: PipelineConfig, env: NodeJS.Proc
   return {
     sources,
     llm: buildLlmAdapter(config, env, fixturesDir),
-    image: createPlaceholderImageAdapter(),
+    image: buildImageAdapter(config, env, fixturesDir),
+    imageStore: cli.imagesDir ? createLocalImageStore({ dir: resolve(cli.imagesDir) }) : new MemoryImageStore(),
     publishers: { site: createNoopPublisher({ baseUrl: "https://www.computecurrent.com" }) },
     db: new MemoryDb(),
     prompts: createFilePromptRegistry({ promptsDir: resolve(cli.promptsDir) }),
@@ -250,6 +276,7 @@ export async function main(argv: string[], env: NodeJS.ProcessEnv, stdout: (line
             normalizeStats: result.state.normalizeStats,
             scoreStats: result.state.scoreStats,
             generateStats: result.state.generateStats,
+        imageStats: result.state.imageStats,
             ledger: dump,
           },
           null,

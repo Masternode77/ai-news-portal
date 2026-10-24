@@ -8,6 +8,7 @@ import {
   createFixtureRssAdapter,
   createNoopPublisher,
   createPlaceholderImageAdapter,
+  MemoryImageStore,
 } from "../src/adapters/index.ts";
 import { MemoryDb } from "../src/db/index.ts";
 import { MemoryLedger } from "../src/ledger/index.ts";
@@ -73,6 +74,7 @@ export function fixtureAdapters(db = new MemoryDb(), fixtureName = "sample"): St
     sources: { rss: fixture, html: { ...fixture, type: "html" } },
     llm: createFixtureLlmAdapter({ fixturesDir: FIXTURES_DIR }),
     image: createPlaceholderImageAdapter(),
+    imageStore: new MemoryImageStore(),
     publishers: { site: createNoopPublisher({ baseUrl: "https://example.test" }) },
     db,
     prompts: createFilePromptRegistry({ promptsDir: resolve(REPO_ROOT, "prompts") }),

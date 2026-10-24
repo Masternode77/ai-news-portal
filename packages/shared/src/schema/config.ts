@@ -72,10 +72,48 @@ export const LlmConfig = z.strictObject({
 });
 export type LlmConfig = z.infer<typeof LlmConfig>;
 
-export const ImageConfig = z.strictObject({
-  provider: z.enum(["placeholder", "openai", "fixture"]),
-  fallback_chain: z.array(z.enum(["placeholder", "openai", "fixture"])).min(1),
+export const ImageProvider = z.enum(["placeholder", "openai", "fixture"]);
+export type ImageProvider = z.infer<typeof ImageProvider>;
+
+/** USD per generated image (ADR-007); the OpenAI adapter refuses a model without a row. */
+export const ImagePricing = z.strictObject({ usd_per_image: z.number().nonnegative() });
+export type ImagePricing = z.infer<typeof ImagePricing>;
+
+export const OpenAiImageConfig = z.strictObject({
+  model: z.string().min(1).default("gpt-image-2"),
+  size: z.string().regex(/^\d{3,4}x\d{3,4}$/).default("1536x1024"),
+  quality: z.enum(["low", "medium", "high", "auto"]).default("medium"),
+  output_format: z.enum(["png", "jpeg", "webp"]).default("webp"),
+  base_url: HttpUrl.default("https://api.openai.com"),
 });
+export type OpenAiImageConfig = z.infer<typeof OpenAiImageConfig>;
+
+/** Deterministic brand placeholder (Phase 3f): topic vocabulary picks the motif, the slug picks the palette. */
+export const PlaceholderImageConfig = z.strictObject({
+  default_topic: z.string().regex(/^[a-z0-9-]+$/).default("ai-infrastructure"),
+  topics: z.record(z.string().regex(/^[a-z0-9-]+$/), z.array(z.string().min(1)).min(1)).default({}),
+});
+export type PlaceholderImageConfig = z.infer<typeof PlaceholderImageConfig>;
+
+export const ImageConfig = z
+  .strictObject({
+    /** Tried first. */
+    provider: ImageProvider,
+    /** Tried after the provider fails, in order; the last entry must be placeholder (P5: an image failure never blocks publishing). */
+    fallback_chain: z.array(ImageProvider).min(1),
+    openai: OpenAiImageConfig.prefault({}),
+    placeholder: PlaceholderImageConfig.prefault({}),
+    /** Keyed by model id. */
+    pricing: z.record(z.string(), ImagePricing).default({}),
+    timeout_ms: z.number().int().positive().default(60000),
+    /** Retries on 429/5xx/network errors (Phase 3f adapter). */
+    max_retries: z.number().int().nonnegative().max(5).default(1),
+  })
+  .refine((config) => config.provider === "placeholder" || config.fallback_chain[config.fallback_chain.length - 1] === "placeholder", {
+    message: "image.fallback_chain must end with placeholder (fail-safe: an image failure never blocks publishing)",
+    path: ["fallback_chain"],
+  });
+export type ImageConfig = z.infer<typeof ImageConfig>;
 
 export const NotifyConfig = z.strictObject({
   telegram: z.strictObject({ enabled: z.boolean() }),
