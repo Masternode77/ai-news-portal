@@ -7,9 +7,11 @@ import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import {
   ConfigError,
+  loadBannedPhrasesConfig,
   loadPipelineConfig,
   loadScoringConfig,
   loadSourcesConfig,
+  parseBannedPhrasesConfig,
   parsePipelineConfig,
   parseRedirectsConfig,
   parsePromptFile,
@@ -127,6 +129,21 @@ test("config/scoring.yaml (Phase 3c) loads strictly: weights sum to 1, threshold
   assert.throws(() => parseScoringConfig(text.replace('hard_archive_exception_pattern: "\\\\bfossils?', 'hard_archive_exception_pattern: "(fossils?'), path), (e: unknown) => e instanceof ConfigError && /invalid regular expression/.test(e.message));
   assert.throws(() => parseScoringConfig(`${text}\nextra_key: 1\n`, path), (e: unknown) => e instanceof ConfigError && /extra_key/.test(e.message));
   assert.throws(() => parseScoringConfig(text.replace("- { max_hours: 8, score: 0.75 }", "- { max_hours: 2, score: 0.75 }"), path), (e: unknown) => e instanceof ConfigError && /ascending/.test(e.message));
+});
+
+test("config/banned-phrases.yaml (Phase 3d) loads strictly: languages, hook starts, named patterns that compile, no duplicates, no unknown keys", async () => {
+  const path = resolve(import.meta.dirname, "../../../config/banned-phrases.yaml");
+  const banned = await loadBannedPhrasesConfig(path);
+  assert.match(banned.version, /^\d{4}-\d{2}-\d{2}\.\d+$/);
+  assert.ok(banned.phrases.ko.includes("전략적 의미") && banned.phrases.en.includes("strategic significance"));
+  assert.ok(banned.hook_starts.en.includes("The development"));
+  assert.ok(banned.patterns.some((p) => p.name === "exclamation"));
+  const text = readFileSync(path, "utf8");
+  assert.throws(() => parseBannedPhrasesConfig(text.replace('- "게임 체인저"', '- "게임 체인저"\n    - "전략적  의미"'), path), (e: unknown) => e instanceof ConfigError && /duplicate phrase/.test(e.message));
+  assert.throws(() => parseBannedPhrasesConfig(text.replace('regex: "[!！]"', 'regex: "[!！"'), path), (e: unknown) => e instanceof ConfigError && /invalid regular expression/.test(e.message));
+  assert.throws(() => parseBannedPhrasesConfig(text.replace("- name: emoji", "- name: exclamation"), path), (e: unknown) => e instanceof ConfigError && /duplicate pattern name/.test(e.message));
+  assert.throws(() => parseBannedPhrasesConfig(`${text}\nextra_key: 1\n`, path), (e: unknown) => e instanceof ConfigError && /extra_key/.test(e.message));
+  assert.throws(() => parseBannedPhrasesConfig(text.replace("  ko: []\n", ""), path), ConfigError, "both languages are explicit");
 });
 
 test("prompt files (Phase 3d) carry a strict YAML front matter and the body is the system prompt", () => {

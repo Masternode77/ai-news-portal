@@ -91,8 +91,9 @@ interface Result {
     output_tokens: number;
     grounding: { checked: number; passed: number; numbers: number; ungrounded: number };
     grounding_pass_rate: number | null;
+    banned: { checked: number; passed: number; matches: number };
     quote_max_words: number;
-    decisions: { canonical_url: string; source_id: string; slug: string | null; ok: boolean; error: string | null; model: string | null; cost_usd: number; input_tokens: number; output_tokens: number; grounding_numbers: number; grounding_ungrounded: string[]; quote_max_words: number; title_ko: string | null }[];
+    decisions: { canonical_url: string; source_id: string; slug: string | null; ok: boolean; error: string | null; model: string | null; cost_usd: number; input_tokens: number; output_tokens: number; grounding_numbers: number; grounding_ungrounded: string[]; quote_max_words: number; banned_matches: string[]; title_ko: string | null }[];
     ms: number;
   };
   ledger?: { deadLetters: { ref_id: string; error: string }[] };
@@ -224,13 +225,13 @@ export function summarize(result: Result): string {
   if (generate && generateStage?.status === "done") {
     lines.push("");
     const rate = generate.grounding_pass_rate === null ? "n/a" : `${Math.round(generate.grounding_pass_rate * 100)}%`;
-    lines.push(`### Generate (3d news_brief) — selected ${generate.selected} · drafted ${generate.drafted} · failed ${generate.failed} · budget-stopped ${generate.budget_stopped} · grounding ${generate.grounding.passed}/${generate.grounding.checked} (${rate}; ${generate.grounding.ungrounded} ungrounded of ${generate.grounding.numbers} numbers) · longest shared run ${generate.quote_max_words} words · USD ${generate.cost_usd.toFixed(4)} (${generate.input_tokens} in / ${generate.output_tokens} out) · ${generate.ms} ms`);
+    lines.push(`### Generate (3d news_brief) — selected ${generate.selected} · drafted ${generate.drafted} · failed ${generate.failed} · budget-stopped ${generate.budget_stopped} · grounding ${generate.grounding.passed}/${generate.grounding.checked} (${rate}; ${generate.grounding.ungrounded} ungrounded of ${generate.grounding.numbers} numbers) · longest shared run ${generate.quote_max_words} words · banned-phrase guard ${generate.banned.passed}/${generate.banned.checked} clean (${generate.banned.matches} matches) · USD ${generate.cost_usd.toFixed(4)} (${generate.input_tokens} in / ${generate.output_tokens} out) · ${generate.ms} ms`);
     if (generate.decisions.length > 0) {
       lines.push("");
-      lines.push("| ok | source | title | slug | model | USD | numbers | ungrounded | run | error |");
-      lines.push("|---|---|---|---|---|---|---|---|---|---|");
+      lines.push("| ok | source | title | slug | model | USD | numbers | ungrounded | run | banned | error |");
+      lines.push("|---|---|---|---|---|---|---|---|---|---|---|");
       for (const d of generate.decisions.slice(0, 40)) {
-        lines.push(`| ${d.ok ? "✓" : "✗"} | ${cell(d.source_id)} | ${cell(d.title_ko ?? "")} ${link(d.canonical_url)} | ${cell(d.slug ?? "")} | ${cell(d.model ?? "")} | ${d.cost_usd.toFixed(4)} | ${d.grounding_numbers} | ${cell(d.grounding_ungrounded.join(" "))} | ${d.quote_max_words} | ${cell(d.error ?? "")} |`);
+        lines.push(`| ${d.ok ? "✓" : "✗"} | ${cell(d.source_id)} | ${cell(d.title_ko ?? "")} ${link(d.canonical_url)} | ${cell(d.slug ?? "")} | ${cell(d.model ?? "")} | ${d.cost_usd.toFixed(4)} | ${d.grounding_numbers} | ${cell(d.grounding_ungrounded.join(" "))} | ${d.quote_max_words} | ${cell(d.banned_matches.join(" "))} | ${cell(d.error ?? "")} |`);
       }
     }
   }

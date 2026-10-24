@@ -5,6 +5,7 @@ import { readFile } from "node:fs/promises";
 import { parse as parseYaml } from "yaml";
 import { z } from "zod";
 import {
+  BannedPhrasesConfig as BannedPhrasesConfigSchema,
   PromptFile as PromptFileSchema,
   PromptFrontMatter as PromptFrontMatterSchema,
   PipelineConfig as PipelineConfigSchema,
@@ -12,7 +13,7 @@ import {
   ScoringConfig as ScoringConfigSchema,
   SourcesConfig as SourcesConfigSchema,
 } from "../schema/index.ts";
-import type { PipelineConfig, PromptFile, RedirectsConfig, ScoringConfig, SourcesConfig } from "../schema/index.ts";
+import type { BannedPhrasesConfig, PipelineConfig, PromptFile, RedirectsConfig, ScoringConfig, SourcesConfig } from "../schema/index.ts";
 import { ConfigError } from "./errors.ts";
 import { applyFlagOverrides } from "./flags.ts";
 import type { FlagOverride } from "./flags.ts";
@@ -67,6 +68,14 @@ export function parseScoringConfig(text: string, path?: string): ScoringConfig {
 
 export async function loadScoringConfig(path: string): Promise<ScoringConfig> {
   return parseScoringConfig(await readConfigFile(path), path);
+}
+
+export function parseBannedPhrasesConfig(text: string, path?: string): BannedPhrasesConfig {
+  return parseWith(BannedPhrasesConfigSchema, text, path);
+}
+
+export async function loadBannedPhrasesConfig(path: string): Promise<BannedPhrasesConfig> {
+  return parseBannedPhrasesConfig(await readConfigFile(path), path);
 }
 
 const FRONT_MATTER = /^---\r?\n([\s\S]*?)\r?\n---\r?\n?([\s\S]*)$/;

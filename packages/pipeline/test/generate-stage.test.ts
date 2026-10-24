@@ -2,16 +2,16 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import { resolve } from "node:path";
-import { parsePipelineConfig, parsePromptFile, parseSourcesConfig, candidateId, draftId, newsBriefSlug, rawItemId, silentLogger } from "@cc/shared";
+import { TEMPLATE_UNRESOLVED, parsePipelineConfig, parsePromptFile, parseSourcesConfig, candidateId, draftId, newsBriefSlug, rawItemId, silentLogger } from "@cc/shared";
 import type { CandidateInsert, LlmAdapter, LlmRequest, LlmResponse, PipelineConfig, RawItemInsert, SourceConfig, StageContext } from "@cc/shared";
 import { createMemoryPromptRegistry } from "../src/adapters/index.ts";
 import { BudgetExceededError, createBudget } from "../src/budget.ts";
 import { MemoryDb } from "../src/db/index.ts";
 import { MemoryLedger } from "../src/ledger/index.ts";
 import { runPipeline } from "../src/runner.ts";
-import { SCHEMA_INVALID, generateStage, groundingCheck, longestCommonRun, numberTokens, parseDraft, sourcePacket } from "../src/stages/generate.ts";
+import { SCHEMA_INVALID, generateStage, groundingCheck, longestCommonRun, numberTokens, parseDraft, readerFields, sourcePacket } from "../src/stages/generate.ts";
 import { GenerateOutput } from "../src/stages/types.ts";
-import { REPO_ROOT, TEST_PIPELINE_YAML, baseRunOptions, fixtureAdapters, testScoring } from "./helpers.ts";
+import { baseRunOptions, fixtureAdapters, REPO_ROOT, TEST_PIPELINE_YAML, testBannedPhrases, testScoring } from "./helpers.ts";
 
 const NOW = new Date("2026-10-20T00:45:00Z");
 const RUN_ID = "11111111-1111-4111-8111-111111111111";
@@ -73,10 +73,11 @@ async function promptFile() {
   return parsePromptFile(await readFile(resolve(REPO_ROOT, "prompts/news_brief.md"), "utf8"), "prompts/news_brief.md");
 }
 
-async function run(db: MemoryDb, items: RawItemInsert[], sources: SourceConfig[], llm: LlmAdapter, cfg = config(), ledger = new MemoryLedger(), budget = createBudget(cfg.budget)): Promise<GenerateOutput> {
-  const prompts = createMemoryPromptRegistry({ news_brief: await promptFile() });
+async function run(db: MemoryDb, items: RawItemInsert[], sources: SourceConfig[], llm: LlmAdapter, cfg = config(), ledger = new MemoryLedger(), budget = createBudget(cfg.budget), systemOverride?: string): Promise<GenerateOutput> {
+  const file = await promptFile();
+  const prompts = createMemoryPromptRegistry({ news_brief: systemOverride === undefined ? file : { ...file, system: systemOverride } });
   const runId = await ledger.startRun({ trigger: "local", startedAt: NOW, gitSha: null, flags: {} });
-  const ctx: StageContext = { runId, now: NOW, config: cfg, scoring: testScoring(), logger: silentLogger(), ledger, budget, dryRun: true, replay: true, fixtureName: undefined, fetch: () => Promise.reject(new Error("no network")), adapters: { ...fixtureAdapters(db), llm, prompts, db } };
+  const ctx: StageContext = { runId, now: NOW, config: cfg, scoring: testScoring(), bannedPhrases: testBannedPhrases(), logger: silentLogger(), ledger, budget, dryRun: true, replay: true, fixtureName: undefined, fetch: () => Promise.reject(new Error("no network")), adapters: { ...fixtureAdapters(db), llm, prompts, db } };
   return GenerateOutput.parse(await generateStage.run({ selected: items.map((item) => ({ ...candidate(item), run_id: runId })), rawItems: items, sources }, ctx));
 }
 
@@ -103,8 +104,11 @@ test("a selected candidate becomes a schema-valid news_brief draft: the stage fi
   assert.equal(brief["slug"], newsBriefSlug(BUSAN_URL, BUSAN_TITLE));
   assert.match(brief["slug"] as string, /^news\/[a-f0-9]{16}$/);
   assert.deepEqual(brief["tags"], ["hyperscale", "korea", "power", "grid", "financing", "cooling"], "tags are lower-cased, de-duplicated and cut at six");
-  const checks = draft.body["checks"] as { grounding: { numbers: string[]; ungrounded: string[]; pass: boolean }; quote_max_words: number };
+  const checks = draft.body["checks"] as { grounding: { numbers: string[]; ungrounded: string[]; pass: boolean }; quote_max_words: number; banned: { version: string; matches: string[]; pass: boolean } };
   assert.equal(checks.grounding.pass, true, `ungrounded: ${checks.grounding.ungrounded.join(" ")}`);
+  assert.deepEqual(checks.banned, { version: testBannedPhrases().version, matches: [], pass: true }, "the banned-phrase guard runs on every draft and records the inventory version");
+  assert.deepEqual(out.stats.banned, { checked: 1, passed: 1, matches: 0 });
+  assert.deepEqual(out.stats.decisions[0]?.banned_matches, []);
   assert.ok(checks.grounding.numbers.includes("1.2") && checks.grounding.numbers.includes("345") && checks.grounding.numbers.includes("2028") && checks.grounding.numbers.includes("21억"), checks.grounding.numbers.join(" "));
   assert.ok(checks.quote_max_words >= 2 && checks.quote_max_words <= 20, `shared run ${checks.quote_max_words}`);
   assert.equal(out.stats.drafted, 1);
@@ -120,6 +124,8 @@ test("a selected candidate becomes a schema-valid news_brief draft: the stage fi
   assert.equal(request.maxOutputTokens, prompt.max_output_tokens);
   assert.ok(request.outputSchema && (request.outputSchema as { properties?: Record<string, unknown> }).properties?.["summary_ko"], "the draft schema rides along as JSON Schema");
   assert.ok(request.system.includes("재서술"), "the system prompt is the prompt file body");
+  assert.ok(request.system.includes('"전략적 의미"') && request.system.includes("느낌표") && !request.system.includes("{{"), "the 금지 표현 line is rendered from config/banned-phrases.yaml");
+  assert.ok(!request.system.includes("strategic significance"), "guard-only English entries stay out of the Korean prompt");
   assert.ok(request.messages[0]!.content.includes(BUSAN_URL) && request.messages[0]!.content.includes("text_rights"));
 
   assert.equal(db.size("drafts"), 1);
@@ -166,6 +172,26 @@ test("the budget guard stops generation before a call it cannot cover; a first c
 
   const exhausted = config(PRICING, "budget: { run_usd: 0.01, soft_warn_usd: 0.01, max_calls: 60 }");
   await assert.rejects(run(new MemoryDb(), items, sources, scriptedLlm([response(GOOD_DRAFT)]), exhausted), (error: unknown) => error instanceof BudgetExceededError);
+});
+
+test("a draft that uses a banned phrase or pattern is reported, not blocked; a prompt with an unresolved placeholder fails before any call", async () => {
+  const db = new MemoryDb();
+  const item = raw("a", BUSAN_URL, BUSAN_TITLE, BUSAN);
+  const dirty = { ...GOOD_DRAFT, title_ko: "Microsoft, 부산에 1.2 GW 계약 — 게임 체인저!", expert_lens_ko: `${GOOD_DRAFT.expert_lens_ko} 업계에 따르면 후속 계약도 논의 중이다.` };
+  const out = await run(db, [item], [src("a")], scriptedLlm([response(dirty)]));
+  assert.equal(out.drafts.length, 1, "reported, not blocked (blocking is QA 3g)");
+  const checks = out.drafts[0]!.body["checks"] as { banned: { matches: string[]; pass: boolean } };
+  assert.deepEqual(checks.banned, { ...checks.banned, matches: ["phrase:게임 체인저", "pattern:unsourced_attribution", "pattern:exclamation"], pass: false });
+  assert.deepEqual(out.stats.banned, { checked: 1, passed: 0, matches: 3 });
+  assert.deepEqual(out.stats.decisions[0]?.banned_matches, checks.banned.matches);
+  assert.deepEqual(Object.keys(readerFields(GOOD_DRAFT as never)), ["title_ko", "summary_ko", "why_it_matters_ko", "expert_lens_ko"], "tags are not reader copy");
+
+  const seen: LlmRequest[] = [];
+  await assert.rejects(
+    run(new MemoryDb(), [item], [src("a")], scriptedLlm([response(GOOD_DRAFT)], seen), config(), new MemoryLedger(), undefined, "규칙: {{banned_phrases}} 그리고 {{tone}}"),
+    (e: unknown) => e instanceof Error && e.message.startsWith(TEMPLATE_UNRESOLVED) && e.message.includes("{{tone}}"),
+  );
+  assert.equal(seen.length, 0, "nothing reaches the model with braces in the prompt");
 });
 
 test("checks: number claims are Korean-aware (scale words, counters), grounding compares values, and the longest shared run is deterministic", () => {
@@ -222,6 +248,7 @@ test("end to end: the scoring fixture's two selected items become two drafts fro
   assert.equal(stats.grounding.checked, 2);
   assert.equal(stats.grounding.passed, 1, "the KEPCO reply names a 2027 completion the source never gave");
   assert.deepEqual(stats.decisions.find((d) => d.source_id === "scoring-wire-b")?.grounding_ungrounded, ["2027"]);
+  assert.deepEqual(stats.banned, { checked: 2, passed: 2, matches: 0 }, "the recorded replies are clean under the inventory");
   assert.equal(stats.quote_max_words <= 20, true);
   assert.equal(result.funnel.drafts, 2);
   assert.equal(result.funnel.passed_gate, result.state.scoreStats.passed);

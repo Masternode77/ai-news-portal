@@ -3,7 +3,7 @@
  * cc-pipeline — CLI entry (brief Phase 2 §3, Phase 3a `--live`).
  *
  *   pipeline run [--stage <name>[,<name>]] [--dry-run] [--live] [--fixture <name>] [--replay]
- *                [--config <path>] [--sources <path>] [--scoring <path>] [--fixtures-dir <dir>] [--prompts-dir <dir>]
+ *                [--config <path>] [--sources <path>] [--scoring <path>] [--banned-phrases <path>] [--fixtures-dir <dir>] [--prompts-dir <dir>]
  *                [--trigger schedule|dispatch|local] [--json] [--log-level <level>]
  *
  * Exit codes: 0 done · 1 partial/budget_stop · 2 failed, usage or config error.
@@ -20,7 +20,7 @@ import { realpathSync } from "node:fs";
 import { resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 import { createClient } from "@supabase/supabase-js";
-import { ConfigError, createLogger, isLogLevel, loadPipelineConfig, loadScoringConfig, loadSourcesConfig } from "@cc/shared";
+import { ConfigError, createLogger, isLogLevel, loadBannedPhrasesConfig, loadPipelineConfig, loadScoringConfig, loadSourcesConfig } from "@cc/shared";
 import type { DbPort, Ledger, Logger, PipelineConfig, RunTrigger, SourceAdapter, LlmAdapter,
   StageAdapters, StageName } from "@cc/shared";
 import {
@@ -43,7 +43,7 @@ import { notifyConsole } from "../src/notify/console.ts";
 import { disabledFetch, runPipeline } from "../src/runner.ts";
 
 const USAGE = `usage: pipeline run [--stage <name>[,<name>]] [--dry-run] [--live] [--fixture <name>] [--replay]
-                    [--config <path>] [--sources <path>] [--scoring <path>] [--fixtures-dir <dir>] [--prompts-dir <dir>]
+                    [--config <path>] [--sources <path>] [--scoring <path>] [--banned-phrases <path>] [--fixtures-dir <dir>] [--prompts-dir <dir>]
                     [--trigger schedule|dispatch|local] [--json] [--log-level debug|info|warn|error]`;
 
 export interface Cli {
@@ -56,6 +56,7 @@ export interface Cli {
   config: string;
   sources: string;
   scoring: string;
+  bannedPhrases: string;
   fixturesDir: string;
   promptsDir: string;
   trigger: RunTrigger;
@@ -76,6 +77,7 @@ export function parseCli(argv: string[]): Cli {
       config: { type: "string", default: "config/pipeline.yaml" },
       sources: { type: "string", default: "config/sources.yaml" },
       scoring: { type: "string", default: "config/scoring.yaml" },
+      "banned-phrases": { type: "string", default: "config/banned-phrases.yaml" },
       "fixtures-dir": { type: "string", default: "fixtures" },
       "prompts-dir": { type: "string", default: "prompts" },
       trigger: { type: "string", default: "local" },
@@ -103,6 +105,7 @@ export function parseCli(argv: string[]): Cli {
     config: values.config,
     sources: values.sources,
     scoring: values.scoring,
+    bannedPhrases: values["banned-phrases"],
     fixturesDir: values["fixtures-dir"],
     promptsDir: values["prompts-dir"],
     trigger,
@@ -198,6 +201,7 @@ export async function main(argv: string[], env: NodeJS.ProcessEnv, stdout: (line
     const loaded = await loadPipelineConfig(resolve(cli.config), env);
     const sources = await loadSourcesConfig(resolve(cli.sources));
     const scoring = await loadScoringConfig(resolve(cli.scoring));
+    const bannedPhrases = await loadBannedPhrasesConfig(resolve(cli.bannedPhrases));
     const adapters = buildAdapters(cli, loaded.config, env);
 
     let ledger: Ledger;
@@ -220,6 +224,7 @@ export async function main(argv: string[], env: NodeJS.ProcessEnv, stdout: (line
     const result = await runPipeline({
       config: loaded.config,
       scoring,
+      bannedPhrases,
       overrides: loaded.overrides,
       sources,
       ledger,

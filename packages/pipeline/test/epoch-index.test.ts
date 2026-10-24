@@ -4,7 +4,7 @@ import { IngestConfig, silentLogger } from "@cc/shared";
 import type { SourceConfig, StageContext } from "@cc/shared";
 import { CC_BY_4_URL, createEpochIndexAdapter, epochArticleMetadata, epochArticleTarget, epochIndexLinks, listEpochIndex } from "../src/adapters/index.ts";
 import { createBudget } from "../src/budget.ts";
-import { baseRunOptions, testScoring } from "./helpers.ts";
+import { baseRunOptions, testBannedPhrases, testScoring } from "./helpers.ts";
 
 const NOW = new Date("2026-10-18T00:45:00Z");
 const LONG = "This paragraph is comfortably longer than the sixty character minimum used by the extractor.";
@@ -41,7 +41,7 @@ function ctx(urls: string[]): StageContext {
     dryRun: true,
     replay: false,
     fixtureName: undefined,
-    scoring: testScoring(),
+    scoring: testScoring(), bannedPhrases: testBannedPhrases(),
     fetch: async (input) => {
       const url = String(input);
       urls.push(url);
