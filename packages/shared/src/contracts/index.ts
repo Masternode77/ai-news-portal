@@ -1,7 +1,10 @@
 export type { AnyStage, Stage, StageAdapters, StageContext, StageName } from "./stage.ts";
 export type {
   ImageAdapter,
+  ImageMime,
   ImageRequest,
+  ImageStore,
+  ImageStoreInput,
   LlmAdapter,
   PublisherAdapter,
   PublisherTarget,

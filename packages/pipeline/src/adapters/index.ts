@@ -36,6 +36,14 @@ export { ANTHROPIC_VERSION, LlmError, STRUCTURED_OUTPUT_TOOL, costOf, createAnth
 export type { AnthropicOptions } from "./llm/anthropic.ts";
 export { createFilePromptRegistry, createMemoryPromptRegistry } from "./prompts/file.ts";
 export type { FilePromptOptions } from "./prompts/file.ts";
-export { createPlaceholderImageAdapter, PLACEHOLDER_IMAGE_PATH } from "./image/placeholder.ts";
+export { createPlaceholderImageAdapter, placeholderSvg, placeholderTopic, staticPlaceholder, PLACEHOLDER_IMAGE_PATH, PLACEHOLDER_MODEL } from "./image/placeholder.ts";
+export type { PlaceholderOptions } from "./image/placeholder.ts";
+export { FixtureImageRecord, createFixtureImageAdapter, fixtureImagePath } from "./image/fixture.ts";
+export { createOpenAiImageAdapter, extractOpenAiImage, imageCostEstimate } from "./image/openai.ts";
+export type { OpenAiImageOptions } from "./image/openai.ts";
+export { PAID_IMAGE_PROVIDERS, createImageChain, imageChainOrder, isImageChain } from "./image/chain.ts";
+export type { ImageAttempt, ImageChain, ImageChainOptions, ImageChainResult } from "./image/chain.ts";
+export { ImageError, errorCodeOf as imageErrorCodeOf } from "./image/errors.ts";
+export { MemoryImageStore, createLocalImageStore, imagePath } from "./image-store/memory.ts";
 export { createNoopPublisher } from "./publisher/noop.ts";
 export { HostPacer } from "./source/pacer.ts";
