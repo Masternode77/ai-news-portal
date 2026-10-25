@@ -9,7 +9,7 @@
 # Provenance: `phrases.en` and `hook_starts.en` are the legacy config/bannedPhrases.yml inventory carried over as
 # data (the legacy file is retired at the Phase 5 cutover); `phrases.ko` and `patterns` are new for the Korean brief.
 
-version: "2026-10-24.1"        # bump when an entry changes; every draft records the version it was checked against
+version: "2026-10-25.1"        # bump when an entry changes; every draft records the version it was checked against
 
 phrases:                       # exact phrases; matched case-insensitively with any whitespace between words
   ko:                          # rendered into the Korean prompt and checked
@@ -97,3 +97,14 @@ patterns:                      # `note` is what the prompt shows, `regex` (flags
   - name: english_heads
     note: 영문 머리글(What/Why/Watch)
     regex: "(?:^|\\n)\\s*(?:What|Why|Watch|Who|So what)\\s*[:：]"
+  # Prompt and scaffold leakage (legacy reader-copy guard intent, re-expressed): text that talks about the
+  # extract, the instructions, the model or the generation fields instead of the story.
+  - name: prompt_leak_ko
+    note: 프롬프트·지시문 흔적("다음은 ~한 기사입니다", "주어진 원문에 따르면", "지시에 따라", "AI로서")
+    regex: "(?:^|\\n)\\s*다음은\\s[^\\n]{0,40}(?:기사|브리프|요약|내용)(?:입니다|이다)|(?:주어진|제공된|입력된)\\s*(?:원문|패킷|텍스트|자료)(?:에\\s*따르면|을\\s*바탕으로|에서는)|지시(?:사항)?에\\s*따라|AI로서|언어\\s*모델로서"
+  - name: prompt_leak_en
+    note: 영문 프롬프트 흔적("As an AI", "the provided excerpt", "I will not invent", "Here is the article", "strict JSON")
+    regex: "\\bas an ai\\b|\\b(?:the|this|my)\\s+(?:supplied|provided)\\s+(?:extract|excerpt|source text|evidence)\\b|\\bi will not invent\\b|\\bhere is (?:the|your) (?:article|brief|summary)\\b|\\bstrict json\\b"
+  - name: generation_field
+    note: 생성 필드명 노출(systemPrompt/userPrompt/body_text/source_packet 등)
+    regex: "\\b(?:systemPrompt|userPrompt|finalArticleBody|body_blocks|source_packet|output_schema|max_output_tokens)\\b|\\bpayload\\.body_text\\b"

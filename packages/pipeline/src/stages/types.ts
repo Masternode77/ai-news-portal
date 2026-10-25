@@ -1,7 +1,7 @@
 /** Per-stage input/output schemas. Each stage parses both (P2). */
 import { z } from "zod";
 import { CandidateInsert, DraftInsert, NonNegativeInt, QaVerdict, RawItemInsert, SourceConfig } from "@cc/shared";
-import { DraftWithImage, GenerateStats, ImageStats, NormalizeStats, PublishedRef, ScoreStats, SourceStats } from "../state.ts";
+import { DraftWithImage, GenerateStats, ImageStats, NormalizeStats, PublishedRef, ScoreStats, SourceStats, QaStats } from "../state.ts";
 
 export const IngestInput = z.strictObject({ sources: z.array(SourceConfig) });
 export type IngestInput = z.infer<typeof IngestInput>;
@@ -35,9 +35,10 @@ export type GenerateInput = z.infer<typeof GenerateInput>;
 export const GenerateOutput = z.strictObject({ drafts: z.array(DraftInsert), stats: GenerateStats });
 export type GenerateOutput = z.infer<typeof GenerateOutput>;
 
-export const QaInput = z.strictObject({ drafts: z.array(DraftInsert) });
+/** Phase 3g: the rules read the source text, rights and the scored candidate besides the draft. */
+export const QaInput = z.strictObject({ drafts: z.array(DraftInsert), rawItems: z.array(RawItemInsert), sources: z.array(SourceConfig), candidates: z.array(CandidateInsert) });
 export type QaInput = z.infer<typeof QaInput>;
-export const QaOutput = z.strictObject({ passed: z.array(DraftInsert), verdicts: z.array(QaVerdict) });
+export const QaOutput = z.strictObject({ passed: z.array(DraftInsert), verdicts: z.array(QaVerdict), stats: QaStats });
 export type QaOutput = z.infer<typeof QaOutput>;
 
 export const ImageInput = z.strictObject({ passed: z.array(DraftInsert) });
