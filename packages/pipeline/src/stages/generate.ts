@@ -24,7 +24,7 @@
  * BUDGET_EXCEEDED so the run ends as budget_stop).
  */
 import { z } from "zod";
-import { NewsBrief, NewsBriefDraft, candidateId, draftId, newsBriefSlug, rawItemId, renderTemplate } from "@cc/shared";
+import { NewsBrief, NewsBriefDraft, candidateId, draftId, newsBriefSlug, rawItemId, renderTemplate, requireLlmPrompt } from "@cc/shared";
 import type { CandidateInsert, DraftInsert, LlmResponse, RawItemInsert, SourceConfig, Stage, StageContext } from "@cc/shared";
 import { estimateCostUsd } from "../adapters/llm/anthropic.ts";
 import { BudgetExceededError } from "../budget.ts";
@@ -254,7 +254,7 @@ export const generateStage: Stage<GenerateInput, GenerateOutput> = {
     const started = Date.now();
     const llmConfig = ctx.config.llm;
     const model = llmConfig.models.news_brief;
-    const prompt = await ctx.adapters.prompts.get("news_brief");
+    const prompt = requireLlmPrompt(await ctx.adapters.prompts.get("news_brief"));
     const banned = compileBannedPhrases(ctx.bannedPhrases);
     /** `{{banned_phrases}}` is the only placeholder; an unresolved one fails here, never at the model. */
     const system = renderTemplate(prompt.system, { banned_phrases: bannedPhrasePromptText(ctx.bannedPhrases) });

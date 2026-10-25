@@ -6,16 +6,16 @@
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { parsePromptFile } from "@cc/shared";
-import type { LlmTask, PromptFile, PromptRegistry } from "@cc/shared";
+import type { PromptFile, PromptRegistry, PromptTask } from "@cc/shared";
 
 export interface FilePromptOptions {
   promptsDir: string;
 }
 
 export function createFilePromptRegistry(options: FilePromptOptions): PromptRegistry {
-  const cache = new Map<LlmTask, Promise<PromptFile>>();
+  const cache = new Map<PromptTask, Promise<PromptFile>>();
   return {
-    get(task: LlmTask): Promise<PromptFile> {
+    get(task: PromptTask): Promise<PromptFile> {
       let pending = cache.get(task);
       if (!pending) {
         const path = join(options.promptsDir, `${task}.md`);
@@ -32,9 +32,9 @@ export function createFilePromptRegistry(options: FilePromptOptions): PromptRegi
   };
 }
 
-export function createMemoryPromptRegistry(files: Partial<Record<LlmTask, PromptFile>>): PromptRegistry {
+export function createMemoryPromptRegistry(files: Partial<Record<PromptTask, PromptFile>>): PromptRegistry {
   return {
-    async get(task: LlmTask): Promise<PromptFile> {
+    async get(task: PromptTask): Promise<PromptFile> {
       const file = files[task];
       if (!file) throw new Error(`PROMPT_MISSING: no in-memory prompt for task "${task}"`);
       return file;

@@ -96,6 +96,18 @@ interface Result {
     decisions: { canonical_url: string; source_id: string; slug: string | null; ok: boolean; error: string | null; model: string | null; cost_usd: number; input_tokens: number; output_tokens: number; grounding_numbers: number; grounding_ungrounded: string[]; quote_max_words: number; banned_matches: string[]; title_ko: string | null }[];
     ms: number;
   };
+  imageStats?: {
+    passed: number;
+    with_images: number;
+    generated: number;
+    placeholders: number;
+    failed_attempts: number;
+    budget_stopped: number;
+    image_missing: number;
+    cost_usd: number;
+    decisions: { slug: string; provider: string; placeholder: boolean; path: string; cost_usd: number; attempts: { provider: string; ok: boolean; code: string | null; error: string | null; ms: number }[] }[];
+    ms: number;
+  };
   ledger?: { deadLetters: { ref_id: string; error: string }[] };
 }
 
@@ -247,6 +259,23 @@ export function summarize(result: Result): string {
     for (const [code, count] of [...tally.entries()].sort((a, b) => b[1] - a[1]).slice(0, 15)) lines.push(`| ${code} | ${count} |`);
   }
   lines.push("");
+  
+
+  const image = result.imageStats;
+  if (image && (image.passed > 0 || image.with_images > 0)) {
+    lines.push("");
+    lines.push(`### Image (3f) — passed ${image.passed} · with images ${image.with_images} · generated ${image.generated} · placeholders ${image.placeholders} · failed attempts ${image.failed_attempts} · budget-skipped ${image.budget_stopped} · IMAGE_MISSING ${image.image_missing} · USD ${image.cost_usd.toFixed(4)} · ${image.ms} ms`);
+    lines.push("");
+    lines.push("| slug | provider | placeholder | path | USD | attempts |");
+    lines.push("|---|---|---|---|---|---|");
+    for (const d of image.decisions) {
+      lines.push(`| ${cell(d.slug)} | ${cell(d.provider)} | ${d.placeholder ? "yes" : "no"} | ${cell(d.path)} | ${d.cost_usd.toFixed(4)} | ${cell(d.attempts.map((a) => `${a.provider}:${a.ok ? "ok" : a.code ?? "failed"}`).join(" → "))} |`);
+    }
+  } else if (image) {
+    lines.push("");
+    lines.push(`### Image (3f) — no QA-passed drafts reached the stage (passed ${image.passed}); provider order and placeholders are covered by the unit tests until 3g lands`);
+  }
+
   lines.push("| stage | status | duration ms |");
   lines.push("|---|---|---|");
   for (const stage of result.stages) lines.push(`| ${stage.stage} | ${stage.status}${stage.reason ? ` (${stage.reason})` : ""} | ${stage.durationMs} |`);
