@@ -517,6 +517,10 @@ const FEEDBACK_HINTS = [
     'The opening sentence rebuilds the sentence structure of a recent column with different nouns swapped in. Swapping subjects is not a new opening; change the construction itself — start from a filing detail, a date, a quoted figure or a direct claim, and do not reuse the "I track X the way most people track Y" frame.'],
   [/^figures_missing$/, () =>
     'The column must carry 1-3 evidence figures; keep the prose intact.'],
+  // The generator writes one deck into the summary and page description, so a
+  // finding on any of the three is fixed in the deck.
+  [/^unsupported_numeric_claims_in_(title|deck|summary|meta_description)(?::(.+))?$/, (match) =>
+    `The ${match[1] === 'title' ? 'headline' : 'deck'} cites numbers that are not in the verified claims${match[2] ? `: ${match[2]}` : ''}. Rewrite the ${match[1] === 'title' ? 'headline' : 'deck'} without them, or with the exact value and unit from verified_claims; never derive a difference, range, ratio or duration.`],
   [/^unsupported_numeric_claims(?::(.+))?$/, (match) =>
     `Remove or rewrite around these numbers, which are not in the verified claims${match[1] ? `: ${match[1]}` : ''}. Cite only numbers from verified_claims, keeping the exact value and unit as given — never convert units or aggregate figures.`],
   [/^copied_source_sentence$/, () =>

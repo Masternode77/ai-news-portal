@@ -124,6 +124,7 @@ export function authoredColumnQualityResult({
   title = '',
   deck = '',
   summary = '',
+  metaDescription = '',
   thesis = '',
   ledgerClaims = [],
   sourceText = '',
@@ -229,6 +230,23 @@ export function authoredColumnQualityResult({
     const offenders = (claims.unsupportedNumbers || []).slice(0, 5).map((claim) => claim.raw).join(',');
     reasons.push(offenders ? `unsupported_numeric_claims:${offenders}` : 'unsupported_numeric_claims');
   }
+  // 7b. The headline, deck, summary and page description carry the column's
+  // figures onto cards, feeds and search results, and only the body used to
+  // be checked: a derived figure removed from the body survived in all three
+  // summary fields. Each is held to the same ledger. A field that repeats an
+  // earlier one verbatim (the generator writes one deck into all three) is
+  // reported once, under the first field.
+  const checkedSummaryText = new Set();
+  let metadataUnsupportedCount = 0;
+  for (const [field, value] of [['title', title], ['deck', deck], ['summary', summary], ['meta_description', metaDescription]]) {
+    const text = String(value || '').replace(/\s+/g, ' ').trim();
+    if (!text || checkedSummaryText.has(text)) continue;
+    checkedSummaryText.add(text);
+    const unsupported = unsupportedClaimGuard(text, ledgerClaims).unsupportedNumbers || [];
+    if (!unsupported.length) continue;
+    metadataUnsupportedCount += unsupported.length;
+    reasons.push(`unsupported_numeric_claims_in_${field}:${unsupported.slice(0, 5).map((claim) => claim.raw).join(',')}`);
+  }
 
   // 8-9. Copyright shingle overlap + summary ratio against source texts.
   const copyright = copyrightSafeCopyGuard({ generatedText: body, sourceText });
@@ -275,6 +293,7 @@ export function authoredColumnQualityResult({
       source_summary_ratio: Number(summaryRatio.toFixed(3)),
       copyright_overlap_score: copyright.overlap_score ?? 0,
       unsupported_claim_count: claims.unsupportedNumbers?.length ?? 0,
+      metadata_unsupported_claim_count: metadataUnsupportedCount,
       banned_phrase_count: banned.length,
       reader_copy_issue_count: readerCopy.findings.length,
       repeated_sentence_ratio: Number((repetition.repeated_sentence_ratio ?? 0).toFixed(3)),

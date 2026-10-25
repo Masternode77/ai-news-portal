@@ -281,10 +281,16 @@ and the reader-copy guard, and the archive route goes from 48 to 49 records.
 The six other public columns have no figure in those fields that their
 sources do not state.
 
-The column numeric check (`authoredColumnQualityResult`) runs only on the
+The column numeric check (`authoredColumnQualityResult`) ran only on the
 body, which is why the deck, summary and page description kept a figure the
-body no longer had. Extending it to those fields is a gate change and needs
-the owner's approval.
+body no longer had. With the owner's approval (2026-10-25), the check now also
+covers the headline, deck, summary and page description against the same
+ledger. Each finding names its field (`unsupported_numeric_claims_in_deck:$46`),
+and the generator's repair pass gets a matching instruction to fix the deck or
+headline. On the committed inventory, none of the 22 columns has such a
+figure in those fields, so no column changes state. Spelled-out quantities
+("six months") are still invisible to the extractor in every field. Closing
+that gap is a separate extractor change.
 
 The owner also decided to keep the current source policy. Link-only sources
 remain usable for signal cards and story leads, a column's text and figures
