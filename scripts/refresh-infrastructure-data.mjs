@@ -72,7 +72,8 @@ await independent('EIA-860M', async () => {
     const snapshot=JSON.parse(await readFile(output,'utf8'));
     if(snapshot.asOf !== latest.date) throw new Error('Workbook edition mismatch');
     await commit('capacity.json',snapshot);
+    // Counts come from the parsed snapshot, not the upstream body, so they are safe to log.
+    return `updated (${snapshot.records.length} planned units, ${snapshot.unspecifiedTechnologyCount} with blank technology labelled Unspecified)`;
   } finally { await rm(dir,{recursive:true,force:true}); }
-  return 'updated';
 });
 console.log(JSON.stringify({ checkedAt:new Date().toISOString(), results },null,2));

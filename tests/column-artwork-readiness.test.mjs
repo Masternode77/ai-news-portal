@@ -48,3 +48,32 @@ test('a blocked first column never consumes the batch limit or hides pending wor
   assert.equal(deferred.pendingCount, 1);
   assert.deepEqual(parseArgs(['--exclude-id', 'blocked', '--exclude-id', 'ready']).excludeIds, ['blocked', 'ready']);
 });
+
+test('headline, deck, summary and page description are held to the source ledger like the body', () => {
+  const column = artworkColumn();
+  const source = artworkSource();
+  const readiness = (overrides) => columnArtworkReadiness({ ...column, ...overrides }, [source], [], options);
+  // The fixture deck cites 200 MW, which the source states.
+  assert.equal(readiness({}).ok, true);
+
+  const derivedDeck = 'Northline Power secured 250 MW for its Dakota AI campus, and the anchor tenant bought schedule risk that is priced as energy risk.';
+  const deckResult = readiness({ deck: derivedDeck, summary: derivedDeck });
+  assert.equal(deckResult.ok, false);
+  // A summary that repeats the deck verbatim is reported once, under the deck.
+  assert.deepEqual(deckResult.reasons.filter((reason) => reason.includes('unsupported_numeric_claims_in_')),
+    ['authored_quality:unsupported_numeric_claims_in_deck:250 MW']);
+
+  const metaResult = readiness({ expertLensFull: { ...column.expertLensFull, metaDescription: 'Northline Power secured 250 MW for its Dakota AI campus.' } });
+  assert.ok(metaResult.reasons.includes('authored_quality:unsupported_numeric_claims_in_meta_description:250 MW'), metaResult.reasons.join('; '));
+
+  const summaryResult = readiness({ summary: 'A grid delivery assessment of a 250 MW campus.' });
+  assert.ok(summaryResult.reasons.includes('authored_quality:unsupported_numeric_claims_in_summary:250 MW'), summaryResult.reasons.join('; '));
+
+  const titleResult = readiness({ title: 'The 250 MW Dakota Grid Deal Is A Utility Execution Story' });
+  assert.ok(titleResult.reasons.includes('authored_quality:unsupported_numeric_claims_in_title:250 MW'), titleResult.reasons.join('; '));
+
+  // The same check passes when the summary fields carry the stated figure.
+  const backed = readiness({ expertLensFull: { ...column.expertLensFull, metaDescription: column.deck } });
+  assert.equal(backed.ok, true, backed.reasons.join('; '));
+  assert.equal(backed.metrics.metadata_unsupported_claim_count, 0);
+});

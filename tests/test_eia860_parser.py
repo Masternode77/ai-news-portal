@@ -35,7 +35,7 @@ def column_name(index):
 def write_fixture(path, data_rows, headers=HEADERS):
     values = ["Inventory of Planned Generators as of July 2026", *headers]
     for row in data_rows:
-        values.extend(str(value) for value in row)
+        values.extend(str(value) for value in row if value is not None)
     unique = list(dict.fromkeys(values))
     index = {value: position for position, value in enumerate(unique)}
     shared = '<sst xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main">' + "".join(
@@ -47,6 +47,7 @@ def write_fixture(path, data_rows, headers=HEADERS):
         cells = "".join(
             f'<c r="{column_name(column)}{row_number}" t="s"><v>{index[str(value)]}</v></c>'
             for column, value in enumerate(row, 1)
+            if value is not None
         )
         worksheet_rows.append(f'<row r="{row_number}">{cells}</row>')
     worksheet = '<worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><sheetData>' + "".join(worksheet_rows) + "</sheetData></worksheet>"
@@ -75,10 +76,27 @@ class Eia860ParserTests(unittest.TestCase):
         self.assertEqual(snapshot["asOf"], "2026-07")
         self.assertEqual(snapshot["unit"], "MW net summer capacity")
         self.assertEqual(snapshot["missingCapacityCount"], 1)
+        self.assertEqual(snapshot["unspecifiedTechnologyCount"], 0)
         self.assertEqual(snapshot["retrievedAt"], "2026-09-06T00:00:00+00:00")
         self.assertEqual(snapshot["sha256"], hashlib.sha256(path.read_bytes()).hexdigest())
         self.assertEqual(snapshot["records"][0]["netSummerMW"], 10.5)
         self.assertIsNone(snapshot["records"][1]["month"])
+
+    def test_blank_technology_is_labelled_unspecified_counted_and_keeps_capacity(self):
+        # None omits the cell from the row XML, as Excel does for an empty cell.
+        snapshot, _ = self.parse([
+            ["100", "A1", "TX", "", "10.5", "2027", "7", "Planning"],
+            ["101", "B2", "VA", "   ", "4", "2028", "1", "Planning"],
+            ["102", "C3", "AZ", None, "6", "2027", "3", "Planning"],
+            ["103", "D4", "AZ", "Batteries", "20", "2027", "3", "Planning"],
+        ])
+        self.assertEqual(snapshot["unspecifiedTechnologyCount"], 3)
+        self.assertEqual(
+            [record["technology"] for record in snapshot["records"]],
+            ["Unspecified", "Unspecified", "Unspecified", "Batteries"],
+        )
+        self.assertEqual([record["netSummerMW"] for record in snapshot["records"]], [10.5, 4.0, 6.0, 20.0])
+        self.assertEqual(snapshot["missingCapacityCount"], 0)
 
     def test_missing_headers_duplicate_units_and_invalid_capacity_are_rejected(self):
         with self.assertRaisesRegex(ValueError, "Missing EIA headers"):

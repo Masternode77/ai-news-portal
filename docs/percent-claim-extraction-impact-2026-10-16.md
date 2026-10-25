@@ -235,6 +235,64 @@ EIA sources, and quarantined if that is not possible.
 
 All six remaining public columns now pass `columnArtworkReadiness`.
 
-**Still open.** The numeric gate treats a multi-source match as unverified, and
-the multi-source check is a substring test on the raw value. Changing it is a
-publish-gate change and needs the owner's approval.
+**Multi-source classification (2026-10-25).** The owner approved fixing the
+classification defect that kept the Hormuz column out of the gate. The gate
+itself is unchanged: it still accepts only `verified_primary` rows whose quote
+states the figure and that name a source URL. Two defects decided which rows
+got that status:
+
+- `verifyNumericClaim` counted a source as corroborating whenever the raw
+  digits appeared anywhere in it, so "$4" matched "2014" and "8 million"
+  matched "118". It also ranked corroboration above `verified_primary`, so a
+  figure that two sources state (a year such as 2026) left the gate. A source
+  now corroborates only when it states the same value, unit and qualifier
+  (`numericClaimKey`), and a claim quoted from the source it cites stays
+  `verified_primary`, with confidence 0.94 instead of 0.88 when corroborated.
+  `verified_multi_source` remains only for a claim with no source URL.
+- `attachSecondaryVerification` credited every claim without a named entity
+  to the secondary source (every text includes the empty string), and moved
+  credited claims to `verified_secondary`, which the gate also excludes. It
+  now needs a named entity and records the secondary source without changing
+  the status.
+
+Measured on the committed inventory before and after the change: no news,
+archive or search-index record changes result, the five EIA restoration
+records still pass, the six public columns still pass `columnArtworkReadiness`,
+and `col_ba22f5ea8bef96e6` (Hormuz) now passes it with no reasons. Every figure
+in its corrected body is backed by an EIA sentence. The column stays
+quarantined until the owner approves restoring it in a separate change.
+
+**Hormuz restored and source policy (2026-10-25).** The owner approved
+restoring `col_ba22f5ea8bef96e6`. Before lifting the quarantine, every text
+field of the record was checked against its source ledger. The deck, summary
+and page description still read "swung $46 per barrel in eight weeks", the
+derived figure removed from the body on 2026-10-23. All three now give the
+reported $118 and $72 endpoints and dates. The body also kept three statements
+that the extractor does not see because they are spelled out, and that the EIA
+does not report: an "eighteen months" framing, a "next six months" watch
+horizon (twice) and a "double-digit percentages" cost estimate. They were
+reworded without the figures. A 2026-10-25 correction note records both changes.
+The same scan found one such statement in the ERCOT column
+(`col_55e9ccd7116252dd`): transformer lead times "lengthened in the past two
+years". It was removed under the 2026-10-23 instruction to match that column to
+its source, with its own correction note. The fields `quarantineArticle` set were returned to their
+values from before the quarantine. The column passes `columnArtworkReadiness`
+and the reader-copy guard, and the archive route goes from 48 to 49 records.
+The six other public columns have no figure in those fields that their
+sources do not state.
+
+The column numeric check (`authoredColumnQualityResult`) ran only on the
+body, which is why the deck, summary and page description kept a figure the
+body no longer had. With the owner's approval (2026-10-25), the check now also
+covers the headline, deck, summary and page description against the same
+ledger. Each finding names its field (`unsupported_numeric_claims_in_deck:$46`),
+and the generator's repair pass gets a matching instruction to fix the deck or
+headline. On the committed inventory, none of the 22 columns has such a
+figure in those fields, so no column changes state. Spelled-out quantities
+("six months") are still invisible to the extractor in every field. Closing
+that gap is a separate extractor change.
+
+The owner also decided to keep the current source policy. Link-only sources
+remain usable for signal cards and story leads, a column's text and figures
+still come only from text-authorized sources, and the publishing cadence is
+unchanged.

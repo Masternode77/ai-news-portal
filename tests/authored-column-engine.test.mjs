@@ -753,6 +753,20 @@ test('verificationFeedback translates reason codes into actionable directives', 
   assert.match(density, /Preserve attribution and qualifiers/);
 });
 
+test('verificationFeedback sends summary-field numeric findings to the deck or headline', () => {
+  const [deck, meta, title] = verificationFeedback([
+    'unsupported_numeric_claims_in_deck:$46',
+    'unsupported_numeric_claims_in_meta_description:$46',
+    'unsupported_numeric_claims_in_title:250 MW',
+  ]);
+  assert.match(deck, /^The deck cites numbers that are not in the verified claims: \$46\./);
+  assert.match(meta, /^The deck cites numbers/, 'the generator writes the page description from the deck');
+  assert.match(title, /^The headline cites numbers that are not in the verified claims: 250 MW\./);
+  assert.match(deck, /never derive a difference, range, ratio or duration/);
+  const [body] = verificationFeedback(['unsupported_numeric_claims:$46']);
+  assert.match(body, /^Remove or rewrite around these numbers/);
+});
+
 test('quality policy names the offending unsupported numbers', () => {
   const result = authoredColumnQualityResult({
     body: essayBody(),

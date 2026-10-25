@@ -6,8 +6,8 @@
  * was configured and the placeholder stood in anyway, the stage writes the
  * IMAGE_MISSING soft verdict (ADR-004) to `qa_results` and passes it on.
  */
-import { draftId, NewsBrief, renderTemplate, requireImagePrompt } from "@cc/shared";
-import type { ImageAdapter, ImageRequest, QaVerdict, Stage, StageContext } from "@cc/shared";
+import { draftId, NewsBrief, qaRuleEntry, renderTemplate, requireImagePrompt } from "@cc/shared";
+import type { ImageAdapter, ImageRequest, QaVerdict, Severity, Stage, StageContext } from "@cc/shared";
 import type { QaResultInsert } from "@cc/shared";
 import { PAID_IMAGE_PROVIDERS, imageChainOrder, isImageChain } from "../adapters/image/chain.ts";
 import type { ImageChain, ImageChainResult } from "../adapters/image/chain.ts";
@@ -59,10 +59,11 @@ function asChain(adapter: ImageAdapter): Pick<ImageChain, "generateDetailed" | "
   };
 }
 
-export function imageMissingVerdict(result: ImageChainResult, order: readonly string[], reasonCode: string, checkedAt: string): QaVerdict {
+/** Severity comes from `config/qa.yaml` (ADR-004 lists IMAGE_MISSING as soft; the config may change it), default soft when the rule is not listed. */
+export function imageMissingVerdict(result: ImageChainResult, order: readonly string[], reasonCode: string, checkedAt: string, severity: Severity = "soft"): QaVerdict {
   return {
     rule: IMAGE_MISSING,
-    severity: "soft",
+    severity,
     pass: false,
     reason_code: reasonCode,
     evidence: { provider_order: [...order], attempts: result.attempts.map((attempt) => ({ ...attempt })), path: result.image.path },
@@ -122,7 +123,7 @@ export const imageStage: Stage<ImageInput, ImageOutput> = {
       else generated += 1;
       withImages.push({ draft, image });
       if (image.placeholder && realProviderConfigured) {
-        const verdict = imageMissingVerdict(result, order, skipPaid ? "IMAGE_BUDGET_SKIPPED" : "IMAGE_PROVIDERS_FAILED", checkedAt);
+        const verdict = imageMissingVerdict(result, order, skipPaid ? "IMAGE_BUDGET_SKIPPED" : "IMAGE_PROVIDERS_FAILED", checkedAt, qaRuleEntry(ctx.qa, IMAGE_MISSING)?.severity ?? "soft");
         verdicts.push(verdict);
         qaRows.push({ draft_id: rowId, rule: verdict.rule, severity: verdict.severity, pass: verdict.pass, reason_code: verdict.reason_code, evidence: verdict.evidence, checked_at: verdict.checked_at });
       }

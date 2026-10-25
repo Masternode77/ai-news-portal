@@ -4,7 +4,8 @@ import { normalizeSpec } from "./normalize.ts";
 import { scoreSpec } from "./score.ts";
 import { generateSpec } from "./generate.ts";
 import { imageSpec } from "./image.ts";
-import { publishSpec, qaSpec } from "./noop.ts";
+import { qaSpec } from "./qa.ts";
+import { publishSpec } from "./noop.ts";
 
 /** Execution order (target.md §1). */
 export const DEFAULT_STAGE_SPECS: readonly StageSpecAny[] = [
@@ -23,6 +24,7 @@ export { ingestStage } from "./ingest.ts";
 export { normalizeStage } from "./normalize.ts";
 export { scoreStage } from "./score.ts";
 export { generateStage } from "./generate.ts";
-export { publishStage, qaStage } from "./noop.ts";
+export { qaStage } from "./qa.ts";
+export { publishStage } from "./noop.ts";
 export { IMAGE_MISSING, imageAlt, imageMissingVerdict, imagePrompt, imageRequestFor, imageStage } from "./image.ts";
 export * from "./types.ts";

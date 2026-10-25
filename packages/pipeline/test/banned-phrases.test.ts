@@ -13,13 +13,13 @@ const CLEAN = {
   expert_lens_ko: "1.2 GW 계약과 200 MW 1단계 사이의 간극이 핵심이다. 다음에 확인할 신호는 한전의 계통 접속 승인 시점이다.",
 };
 
-test("the inventory compiles from config/banned-phrases.yaml: Korean phrases, the legacy English list, hook starts and six named patterns", () => {
+test("the inventory compiles from config/banned-phrases.yaml: Korean phrases, the legacy English list, hook starts and nine named patterns", () => {
   const config = testBannedPhrases();
   const compiled = compileBannedPhrases(config);
   assert.equal(config.phrases.ko.length, 5);
   assert.equal(config.phrases.en.length, 43, "legacy config/bannedPhrases.yml banned_phrases carried over as data");
   assert.equal(config.hook_starts.en.length, 11, "legacy blockedHookStarts");
-  assert.deepEqual(config.patterns.map((p) => p.name), ["memo_scaffolding", "reads_as", "unsourced_attribution", "exclamation", "emoji", "english_heads"]);
+  assert.deepEqual(config.patterns.map((p) => p.name), ["memo_scaffolding", "reads_as", "unsourced_attribution", "exclamation", "emoji", "english_heads", "prompt_leak_ko", "prompt_leak_en", "generation_field"]);
   assert.equal(compiled.phrases.length, 48);
   assert.equal(compiled.version, config.version);
 });

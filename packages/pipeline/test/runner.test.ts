@@ -5,6 +5,7 @@ import { MemoryLedger } from "../src/ledger/index.ts";
 import { runPipeline } from "../src/runner.ts";
 import { defineStageSpec } from "../src/stages/index.ts";
 import { QaInput, QaOutput } from "../src/stages/types.ts";
+import { emptyQaStats } from "../src/state.ts";
 import { BudgetExceededError } from "../src/budget.ts";
 import { baseRunOptions } from "./helpers.ts";
 
@@ -52,7 +53,7 @@ test("the run row is written before any stage runs (abort tolerance)", async () 
         throw new TypeError("simulated crash");
       },
     },
-    select: (state) => ({ drafts: state.drafts }),
+    select: (state) => ({ drafts: state.drafts, rawItems: state.rawItems, sources: state.sources, candidates: state.candidates }),
     merge: (state) => state,
     counts: () => ({}),
   });
@@ -101,7 +102,7 @@ test("a budget stop marks the run budget_stop and later stages still run", async
         throw new BudgetExceededError(ctx.budget.spentUsd, ctx.budget.limitUsd);
       },
     },
-    select: (state) => ({ drafts: state.drafts }),
+    select: (state) => ({ drafts: state.drafts, rawItems: state.rawItems, sources: state.sources, candidates: state.candidates }),
     merge: (state) => state,
     counts: () => ({}),
   });
@@ -126,10 +127,10 @@ test("a stage that stops on the budget after producing output still ends the run
       run: async (_input, ctx) => {
         ctx.budget.record(0.5);
         ctx.budget.stop("generate stopped before candidate 2/2: next call estimated at USD 1.9000, spent 0.5000 of cap 2.00 after 1 calls");
-        return { passed: [], verdicts: [] };
+        return { passed: [], verdicts: [], stats: emptyQaStats() };
       },
     },
-    select: (state) => ({ drafts: state.drafts }),
+    select: (state) => ({ drafts: state.drafts, rawItems: state.rawItems, sources: state.sources, candidates: state.candidates }),
     merge: (state) => state,
     counts: () => ({ drafted: 1, budget_stopped: 1 }),
   });
