@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { buildClaimLedger } from '../scripts/lib/claim-ledger.mjs';
+import { unsupportedClaimGuard } from '../scripts/lib/unsupported-claim-guard.mjs';
 
 test('claim ledger records numeric claims for published analysis candidates', () => {
   const result = buildClaimLedger({
@@ -158,4 +159,59 @@ test('percent figures in source text become numeric ledger claims', () => {
 
   assert.deepEqual(percentKeys.sort(), ['1.9%', '12 percent', '50%', '79%', 'about 10%']);
   assert.equal(result.summary.unsupported_claim_count, 0);
+});
+
+test('figures that a second source corroborates stay available to the numeric gate', () => {
+  const result = buildClaimLedger({
+    cluster_id: 'sig_corroborated',
+    representative_source: {
+      title: 'Oil price swings widen',
+      cleaned_text: [
+        'Brent crude oil traded between $118 and $72 a barrel in the second quarter of 2026.',
+        'Daily price changes averaged $4 a barrel, compared with $1 a barrel in 2025.',
+      ].join(' '),
+      source_url: 'https://example.com/prices',
+      source_name: 'Price Source',
+    },
+    supporting_sources: [{
+      title: 'Crude imports fall',
+      cleaned_text: 'China imported 8.1 million barrels a day of crude oil in the second quarter of 2026, the least since 2014.',
+      source_url: 'https://example.com/imports',
+      source_name: 'Import Source',
+    }],
+  }, 'article_corroborated');
+  const statusOf = (value, url) => result.claims
+    .filter((claim) => claim.numeric_value === value && claim.source_url === url)
+    .map((claim) => claim.verification_status);
+
+  assert.deepEqual([...new Set(statusOf(2026, 'https://example.com/prices'))], ['verified_primary']);
+  assert.deepEqual([...new Set(statusOf(4, 'https://example.com/prices'))], ['verified_primary']);
+  assert.deepEqual([...new Set(statusOf(2026, 'https://example.com/imports'))], ['verified_primary']);
+
+  const guard = (body) => unsupportedClaimGuard(body, result.claims);
+  assert.equal(guard('In the second quarter of 2026 daily swings averaged $4 a barrel against $1 in 2025.').ok, true);
+  // Corroboration does not let a figure the sources never state through.
+  const derived = guard('The quarter spanned a $46 range in 2026.');
+  assert.equal(derived.ok, false);
+  assert.deepEqual(derived.unsupportedNumbers.map((claim) => claim.raw), ['$46']);
+});
+
+test('a secondary source is credited only for a claim whose named entity it mentions', () => {
+  const representative_source = {
+    title: 'Grid operator update',
+    cleaned_text: 'ERCOT reported 12 GW of new large-load requests during the review period. In addition, 900 megawatts were still awaiting study during the same review period.',
+    source_url: 'https://example.com/grid',
+    source_name: 'Grid Source',
+  };
+  const credited = (supporting) => buildClaimLedger({ cluster_id: 'sig_secondary', representative_source, supporting_sources: [supporting] }, 'article_secondary')
+    .claims.filter((claim) => claim.source_url === representative_source.source_url && claim.numeric_value !== null);
+
+  const mentions = credited({ cleaned_text: 'ERCOT confirmed the totals in a later filing to regulators.', source_url: 'https://example.com/filing', source_name: 'Filing Source' });
+  const gw = mentions.find((claim) => claim.numeric_value === 12);
+  assert.equal(gw.verification_status, 'verified_primary');
+  assert.equal(gw.secondary_source_url, 'https://example.com/filing');
+  const unnamed = mentions.find((claim) => claim.numeric_value === 900);
+  assert.deepEqual(unnamed.entities, []);
+  assert.equal(unnamed.secondary_source_url, '');
+  assert.equal(unnamed.verification_status, 'verified_primary');
 });
