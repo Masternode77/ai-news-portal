@@ -13,7 +13,8 @@ import { runPipeline } from "../src/runner.ts";
 import { DEFAULT_STAGE_SPECS, defineStageSpec } from "../src/stages/index.ts";
 import { IMAGE_MISSING, imageAlt, imagePrompt, imageStage } from "../src/stages/image.ts";
 import { ImageOutput, QaInput, QaOutput } from "../src/stages/types.ts";
-import { baseRunOptions, fixtureAdapters, REPO_ROOT, TEST_PIPELINE_YAML, testBannedPhrases, testScoring } from "./helpers.ts";
+import { emptyQaStats } from "../src/state.ts";
+import { baseRunOptions, fixtureAdapters, REPO_ROOT, TEST_PIPELINE_YAML, testBannedPhrases, testQa, testScoring } from "./helpers.ts";
 
 const NOW = new Date("2026-10-24T00:45:00Z");
 const RUN_ID = "11111111-1111-4111-8111-111111111111";
@@ -62,7 +63,7 @@ async function ctxWith(cfg: PipelineConfig, image: ImageAdapter, fetchImpl: type
   const store = new MemoryImageStore();
   const ledger = new MemoryLedger();
   const runId = await ledger.startRun({ trigger: "local", startedAt: NOW, gitSha: null, flags: {} });
-  const ctx: StageContext = { runId, now: NOW, config: cfg, scoring: testScoring(), bannedPhrases: testBannedPhrases(), logger: silentLogger(), ledger, budget: createBudget(cfg.budget), dryRun: true, replay: true, fixtureName: undefined, fetch: fetchImpl, adapters: { ...fixtureAdapters(db), image, imageStore: store, db } };
+  const ctx: StageContext = { runId, now: NOW, config: cfg, scoring: testScoring(), bannedPhrases: testBannedPhrases(), qa: testQa(), logger: silentLogger(), ledger, budget: createBudget(cfg.budget), dryRun: true, replay: true, fixtureName: undefined, fetch: fetchImpl, adapters: { ...fixtureAdapters(db), image, imageStore: store, db } };
   return { ctx, store, db, ledger };
 }
 
@@ -195,8 +196,8 @@ test("end to end: generate → (stub QA passes all) → image with a failing pro
   const adapters = fixtureAdapters(db, "scoring");
   adapters.image = createImageChain(cfg.image, { placeholder: createPlaceholderImageAdapter(), fixture: createFixtureImageAdapter({ fixturesDir: emptyFixtures }) });
   const passAll = defineStageSpec({
-    stage: { name: "qa", input: QaInput, output: QaOutput, idempotencyKey: () => "qa", run: async (input) => ({ passed: input.drafts, verdicts: [] }) },
-    select: (state) => ({ drafts: state.drafts }),
+    stage: { name: "qa", input: QaInput, output: QaOutput, idempotencyKey: () => "qa", run: async (input) => ({ passed: input.drafts, verdicts: [], stats: emptyQaStats() }) },
+    select: (state) => ({ drafts: state.drafts, rawItems: state.rawItems, sources: state.sources, candidates: state.candidates }),
     merge: (state, output) => ({ ...state, passed: output.passed, verdicts: output.verdicts }),
     counts: (output) => ({ qa_passed: output.passed.length }),
   });

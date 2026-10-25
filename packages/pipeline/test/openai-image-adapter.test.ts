@@ -5,7 +5,7 @@ import type { ImageRequest, StageContext } from "@cc/shared";
 import { ImageError, MemoryImageStore, createOpenAiImageAdapter, extractOpenAiImage, imageCostEstimate } from "../src/adapters/index.ts";
 import { createBudget } from "../src/budget.ts";
 import { MemoryLedger } from "../src/ledger/index.ts";
-import { fixtureAdapters, TEST_PIPELINE_YAML, testBannedPhrases, testScoring } from "./helpers.ts";
+import { fixtureAdapters, TEST_PIPELINE_YAML, testBannedPhrases, testQa, testScoring } from "./helpers.ts";
 
 const IMAGE_YAML = TEST_PIPELINE_YAML.replace("image: { provider: placeholder, fallback_chain: [placeholder] }", `image:
   provider: openai
@@ -20,7 +20,7 @@ const IMAGE_YAML = TEST_PIPELINE_YAML.replace("image: { provider: placeholder, f
 function ctxWith(fetchImpl: typeof globalThis.fetch, yaml = IMAGE_YAML): { ctx: StageContext; store: MemoryImageStore } {
   const cfg = parsePipelineConfig(yaml, { env: {} }).config;
   const store = new MemoryImageStore();
-  const ctx: StageContext = { runId: "11111111-1111-4111-8111-111111111111", now: new Date("2026-10-24T00:45:00Z"), config: cfg, scoring: testScoring(), bannedPhrases: testBannedPhrases(), logger: silentLogger(), ledger: new MemoryLedger(), budget: createBudget(cfg.budget), dryRun: true, replay: false, fixtureName: undefined, fetch: fetchImpl, adapters: { ...fixtureAdapters(), imageStore: store } };
+  const ctx: StageContext = { runId: "11111111-1111-4111-8111-111111111111", now: new Date("2026-10-24T00:45:00Z"), config: cfg, scoring: testScoring(), bannedPhrases: testBannedPhrases(), qa: testQa(), logger: silentLogger(), ledger: new MemoryLedger(), budget: createBudget(cfg.budget), dryRun: true, replay: false, fixtureName: undefined, fetch: fetchImpl, adapters: { ...fixtureAdapters(), imageStore: store } };
   return { ctx, store };
 }
 

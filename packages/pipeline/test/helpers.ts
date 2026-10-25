@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
-import { parseBannedPhrasesConfig, parsePipelineConfig, parseScoringConfig, parseSourcesConfig, silentLogger } from "@cc/shared";
-import type { BannedPhrasesConfig, PipelineConfig, ScoringConfig, SourceConfig, StageAdapters } from "@cc/shared";
+import { parseBannedPhrasesConfig, parsePipelineConfig, parseQaConfig, parseScoringConfig, parseSourcesConfig, silentLogger } from "@cc/shared";
+import type { BannedPhrasesConfig, PipelineConfig, QaConfig, ScoringConfig, SourceConfig, StageAdapters } from "@cc/shared";
 import {
   createFilePromptRegistry,
   createFixtureLlmAdapter,
@@ -75,6 +75,13 @@ export function testBannedPhrases(overrides: Partial<BannedPhrasesConfig> = {}):
   return { ...bannedCache, ...overrides };
 }
 
+let qaCache: QaConfig | undefined;
+/** The repo's `config/qa.yaml` (Phase 3g); tests override rules on a copy. */
+export function testQa(overrides: Partial<QaConfig> = {}): QaConfig {
+  qaCache ??= parseQaConfig(readFileSync(resolve(REPO_ROOT, "config/qa.yaml"), "utf8"), "config/qa.yaml");
+  return { ...qaCache, ...overrides };
+}
+
 export function fixtureAdapters(db = new MemoryDb(), fixtureName = "sample"): StageAdapters {
   const fixture = createFixtureRssAdapter({ fixturesDir: FIXTURES_DIR, fixtureName });
   return {
@@ -104,6 +111,7 @@ export function baseRunOptions(overrides: Partial<RunOptions> = {}): RunOptions 
     config,
     scoring: testScoring(),
     bannedPhrases: testBannedPhrases(),
+    qa: testQa(),
     overrides: flagOverrides,
     sources: testSources(),
     ledger: new MemoryLedger(),

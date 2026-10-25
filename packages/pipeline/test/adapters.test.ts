@@ -16,6 +16,7 @@ function ctxStub(): StageContext {
     config: options.config,
     scoring: options.scoring,
     bannedPhrases: options.bannedPhrases,
+    qa: options.qa,
     logger: options.logger,
     ledger: options.ledger,
     budget: createBudget(options.config.budget),

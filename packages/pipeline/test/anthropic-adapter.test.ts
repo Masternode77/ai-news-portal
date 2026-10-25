@@ -5,7 +5,7 @@ import type { LlmRequest, StageContext } from "@cc/shared";
 import { ANTHROPIC_VERSION, LlmError, STRUCTURED_OUTPUT_TOOL, costOf, createAnthropicLlmAdapter, estimateCostUsd, parseMessagesResponse } from "../src/adapters/index.ts";
 import { createBudget } from "../src/budget.ts";
 import { MemoryLedger } from "../src/ledger/index.ts";
-import { fixtureAdapters, TEST_PIPELINE_YAML, testBannedPhrases, testScoring } from "./helpers.ts";
+import { fixtureAdapters, TEST_PIPELINE_YAML, testBannedPhrases, testQa, testScoring } from "./helpers.ts";
 
 const LLM_YAML = TEST_PIPELINE_YAML.replace("  provider: fixture\n", `  provider: anthropic
   pricing:
@@ -16,7 +16,7 @@ const LLM_YAML = TEST_PIPELINE_YAML.replace("  provider: fixture\n", `  provider
 
 function ctxWith(fetchImpl: typeof globalThis.fetch): StageContext {
   const cfg = parsePipelineConfig(LLM_YAML, { env: {} }).config;
-  return { runId: "11111111-1111-4111-8111-111111111111", now: new Date("2026-10-20T00:45:00Z"), config: cfg, scoring: testScoring(), bannedPhrases: testBannedPhrases(), logger: silentLogger(), ledger: new MemoryLedger(), budget: createBudget(cfg.budget), dryRun: true, replay: false, fixtureName: undefined, fetch: fetchImpl, adapters: fixtureAdapters() };
+  return { runId: "11111111-1111-4111-8111-111111111111", now: new Date("2026-10-20T00:45:00Z"), config: cfg, scoring: testScoring(), bannedPhrases: testBannedPhrases(), qa: testQa(), logger: silentLogger(), ledger: new MemoryLedger(), budget: createBudget(cfg.budget), dryRun: true, replay: false, fixtureName: undefined, fetch: fetchImpl, adapters: fixtureAdapters() };
 }
 
 const REQUEST: LlmRequest = { task: "news_brief", model: "claude-opus-5-5", system: "sys", messages: [{ role: "user", content: "hello" }], outputSchema: { type: "object", properties: { title_ko: { type: "string" } } }, maxOutputTokens: 500, promptVersion: "2026-10-23.1" };

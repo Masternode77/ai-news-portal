@@ -13,7 +13,7 @@ flags:
     normalize: false             # Phase 3b logic is in; default OFF until Phase 4 (contracts §7). Override: CC_FLAG_STAGES_NORMALIZE=true
     score: false                 # Phase 3c logic is in; default OFF until Phase 4 (contracts §7). Override: CC_FLAG_STAGES_SCORE=true
     generate: false              # Phase 3d news_brief generation is in; default OFF until Phase 4 (contracts §7). Override: CC_FLAG_STAGES_GENERATE=true
-    qa: true
+    qa: false                    # Phase 3g rules are in; default OFF until Phase 4 (contracts §7). Override: CC_FLAG_STAGES_QA=true. Off means nothing passes QA (fail-closed), not pass-through
     image: false
     publish: true
   publish_target: none         # none | staging | production (ADR-006; production only at Phase 5 cutover)
