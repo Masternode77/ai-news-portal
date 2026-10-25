@@ -70,6 +70,12 @@ export function createOpenAiImageAdapter(options: OpenAiImageOptions): ImageAdap
             continue;
           }
           if (!response.ok) throw new ImageError("IMAGE_REQUEST_REJECTED", `http ${response.status}: ${text.slice(0, 300)}`, { status: response.status });
+          // A 2xx means the generation was billed. Record it here, before the reply is parsed, the bytes are
+          // fetched or the store is written: if any of those fail the chain falls back to the placeholder, and
+          // the run's cost and call caps must still see the paid call (Codex P2, PR #66).
+          const costUsd = pricing.usd_per_image;
+          ctx.budget.record(costUsd);
+          ctx.logger.info("image: openai generation charged", { slug: request.slug, model: cfg.model, cost_usd: costUsd, attempt });
           let payload: unknown;
           try {
             payload = JSON.parse(text);
@@ -92,8 +98,6 @@ export function createOpenAiImageAdapter(options: OpenAiImageOptions): ImageAdap
           }
           if (bytes.byteLength === 0) throw new ImageError("IMAGE_RESPONSE_INVALID", "empty image");
           const stored = await ctx.adapters.imageStore.put({ bytes, mime, slug: request.slug, variant: "hero" }, ctx);
-          const costUsd = pricing.usd_per_image;
-          ctx.budget.record(costUsd);
           ctx.logger.info("image: openai generated", { slug: request.slug, model: cfg.model, bytes: stored.bytes, cost_usd: costUsd, attempt });
           return { path: stored.path, alt: request.alt, provenance: { provider: "openai", model: cfg.model, prompt: request.prompt, generatedAt: ctx.now.toISOString() }, placeholder: false, costUsd };
         } finally {

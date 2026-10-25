@@ -38,7 +38,7 @@ export function imageAlt(brief: NewsBrief): string {
 }
 
 export function imageRequestFor(brief: NewsBrief, template: string): ImageRequest {
-  return { prompt: imagePrompt(template, brief), alt: imageAlt(brief), slug: brief.slug, title: brief.title_ko, tags: brief.tags };
+  return { prompt: imagePrompt(template, brief), alt: imageAlt(brief), slug: brief.slug, title: brief.title_ko, summary: brief.summary_ko, tags: brief.tags };
 }
 
 /** A non-chain adapter (tests, custom wiring) is treated as a one-link chain. */
@@ -112,10 +112,13 @@ export const imageStage: Stage<ImageInput, ImageOutput> = {
         budgetStopped += 1;
         ctx.logger.warn("image: budget cannot cover a paid image; placeholder only", { slug: brief.slug, estimate_usd: estimate, spent_usd: ctx.budget.spentUsd, cap_usd: ctx.budget.limitUsd });
       }
+      // Cost is what the budget saw, not what the surviving result claims: a paid generation whose download or
+      // store failed is charged (the adapter records it on the 2xx) but comes back as a free placeholder.
+      const spentBefore = ctx.budget.spentUsd;
       const result = await chain.generateDetailed(request, ctx, { skipPaid });
       const { image } = result;
       failedAttempts += result.attempts.filter((attempt) => !attempt.ok).length;
-      costUsd += image.costUsd;
+      costUsd += ctx.budget.spentUsd - spentBefore;
       if (image.placeholder) placeholders += 1;
       else generated += 1;
       withImages.push({ draft, image });

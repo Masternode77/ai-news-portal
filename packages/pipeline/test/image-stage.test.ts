@@ -5,7 +5,7 @@ import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 import { NewsBrief, draftId, newsBriefSlug, parsePipelineConfig, parsePromptFile, parseSourcesConfig, silentLogger } from "@cc/shared";
 import type { DraftInsert, ImageAdapter, PipelineConfig, StageContext } from "@cc/shared";
-import { createFixtureImageAdapter, createImageChain, createPlaceholderImageAdapter, imageChainOrder, placeholderSvg, placeholderTopic, MemoryImageStore, PLACEHOLDER_IMAGE_PATH, PLACEHOLDER_MODEL } from "../src/adapters/index.ts";
+import { createFixtureImageAdapter, createImageChain, createPlaceholderImageAdapter, imageChainOrder, placeholderSvg, placeholderTopic, placeholderTopicText, MemoryImageStore, PLACEHOLDER_IMAGE_PATH, PLACEHOLDER_MODEL } from "../src/adapters/index.ts";
 import { createBudget } from "../src/budget.ts";
 import { MemoryDb } from "../src/db/index.ts";
 import { MemoryLedger } from "../src/ledger/index.ts";
@@ -98,6 +98,33 @@ test("placeholder first: every passed draft leaves with a deterministic brand SV
   assert.equal(db.rows("qa_results").length, 0);
   assert.equal(placeholderTopic("liquid cooling retrofit", cfg.image.placeholder.topics, "x"), "cooling");
   assert.equal(placeholderTopic("nothing relevant", cfg.image.placeholder.topics, "ai-infrastructure"), "ai-infrastructure");
+});
+
+test("the motif comes from the brief's title, tags and summary only — the prompt template's own vocabulary (\"grid interconnects\") never picks power-grid for a cooling brief", async () => {
+  const cfg = config("image:\n  provider: placeholder\n  fallback_chain: [placeholder]\n  placeholder:\n    default_topic: ai-infrastructure\n    topics:\n      power-grid: [변전소, grid]\n      cooling: [cooling, 냉각]\n");
+  const { ctx, store } = await ctxWith(cfg, chainFor(cfg));
+  const title = "Example, 서울 캠퍼스 액침 냉각 전환으로 PUE 1.15 달성";
+  const url = "https://wire-a.example.com/news/example-seoul-liquid-cooling";
+  const cooling = brief({
+    title_ko: title,
+    source_url: url,
+    slug: newsBriefSlug(url, title),
+    summary_ko: "Example이 서울 캠퍼스의 20 MW 추론 구역을 직접 액체 냉각으로 전환해 설계 PUE를 1.4에서 1.15로 낮췄다고 밝혔다. 열 교환 장치는 랙 열마다 설치됐고 랙 밀도는 80 kW까지 올렸으며, 기존 공랭 설비는 예비 계통으로 남겼다. 운영사는 전환 구역의 서버를 멈추지 않고 열 단위로 공사를 진행했다고 설명했다. 원문은 전환 비용과 공사 기간, 2차 전환 구역의 일정은 밝히지 않았다.",
+    why_it_matters_ko: "국내 운영 중인 캠퍼스에서 공랭을 액체 냉각으로 바꿔 PUE를 낮춘 사례는 드물다. 고밀도 추론 수요가 기존 자산의 재투자 결정을 앞당기고 있다는 신호이며, 전력 단가가 높은 수도권 캠퍼스에서는 냉각 전환이 증설보다 먼저 검토될 수 있다.",
+    expert_lens_ko: "PUE 1.15는 설계 값이고 운영 값은 계절과 부하율에 따라 달라진다. 80 kW 랙 밀도는 열 교환 장치 용량이 상한을 정하므로 다음에 확인할 신호는 운영 PUE 공개와 2차 전환 구역 발표다. 전환 비용이 공개되지 않은 점은 투자 회수 기간 판단을 막고, 임차인 입장에서는 냉각 전환분이 임대료에 어떻게 반영되는지가 협상 변수가 된다.",
+    tags: ["cooling", "pue", "korea"],
+  });
+  const prompt = imagePrompt((await imagePromptFile()).system, cooling);
+  assert.match(prompt, /grid interconnects/, "the template's fixed vocabulary does mention grids");
+  const request = { prompt, alt: imageAlt(cooling), slug: cooling.slug, title: cooling.title_ko, summary: cooling.summary_ko, tags: cooling.tags };
+  assert.doesNotMatch(placeholderTopicText(request), /grid interconnects/, "the matched text excludes the prompt");
+  const out = ImageOutput.parse(await imageStage.run({ passed: [draft(cooling)] }, ctx));
+  const svg = new TextDecoder().decode(store.files.get(out.withImages[0]!.image!.path)!.bytes);
+  assert.match(svg, /COMPUTE CURRENT \/ COOLING/, "a cooling brief gets the cooling motif");
+  assert.doesNotMatch(svg, /POWER-GRID/);
+  const neutral = brief({ title_ko: "데이터센터 업계 소식 묶음", slug: newsBriefSlug(url, "neutral"), summary_ko: "이번 주 업계 소식을 간단히 정리했다. 각 항목의 상세 내용은 원문 링크에서 확인할 수 있으며, 수치는 원문 기준이다. 추가 확인이 필요한 항목은 다음 호에서 다룬다. 이번 호에는 운영사 인사, 협회 일정, 정부 공고 마감일과 같은 짧은 소식만 모았고, 개별 거래나 설비 수치는 담지 않았다. 독자 제보는 다음 호 마감 전까지 받으며, 정리 기준과 누락 항목은 편집부 안내 페이지에 함께 적어 두었다.", tags: ["weekly"] });
+  const out2 = ImageOutput.parse(await imageStage.run({ passed: [draft(neutral)] }, ctx));
+  assert.match(new TextDecoder().decode(store.files.get(out2.withImages[0]!.image!.path)!.bytes), /COMPUTE CURRENT \/ AI-INFRASTRUCTURE/, "no article vocabulary → the default topic, which was unreachable before");
 });
 
 test("every real provider fails: the chain records each attempt, the placeholder stands in, IMAGE_MISSING (soft) is written and the stage still completes", async () => {

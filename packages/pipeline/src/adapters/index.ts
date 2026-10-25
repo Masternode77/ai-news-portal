@@ -36,7 +36,7 @@ export { ANTHROPIC_VERSION, LlmError, STRUCTURED_OUTPUT_TOOL, costOf, createAnth
 export type { AnthropicOptions } from "./llm/anthropic.ts";
 export { createFilePromptRegistry, createMemoryPromptRegistry } from "./prompts/file.ts";
 export type { FilePromptOptions } from "./prompts/file.ts";
-export { createPlaceholderImageAdapter, placeholderSvg, placeholderTopic, staticPlaceholder, PLACEHOLDER_IMAGE_PATH, PLACEHOLDER_MODEL } from "./image/placeholder.ts";
+export { createPlaceholderImageAdapter, placeholderSvg, placeholderTopic, placeholderTopicText, staticPlaceholder, PLACEHOLDER_IMAGE_PATH, PLACEHOLDER_MODEL } from "./image/placeholder.ts";
 export type { PlaceholderOptions } from "./image/placeholder.ts";
 export { FixtureImageRecord, createFixtureImageAdapter, fixtureImagePath } from "./image/fixture.ts";
 export { createOpenAiImageAdapter, extractOpenAiImage, imageCostEstimate } from "./image/openai.ts";

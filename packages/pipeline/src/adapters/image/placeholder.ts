@@ -16,6 +16,11 @@ export interface PlaceholderOptions {
   defaultTopic?: string;
 }
 
+/** The text a placeholder request is matched on: title, tags and summary — never the rendered prompt. */
+export function placeholderTopicText(request: ImageRequest): string {
+  return [request.title ?? "", (request.tags ?? []).join(" "), request.summary ?? ""].join(" ");
+}
+
 /** First topic whose vocabulary appears in the text (case-insensitive), else the default. */
 export function placeholderTopic(text: string, topics: Record<string, readonly string[]>, fallback: string): string {
   const haystack = text.toLowerCase();
@@ -116,7 +121,10 @@ export function createPlaceholderImageAdapter(options: PlaceholderOptions = {}):
   return {
     provider: "placeholder",
     async generate(request: ImageRequest, ctx: StageContext): Promise<ImageResult> {
-      const topic = placeholderTopic(`${request.title ?? ""} ${(request.tags ?? []).join(" ")} ${request.prompt}`, options.topics ?? {}, options.defaultTopic ?? "ai-infrastructure");
+      // Only the article's own fields pick the motif. The rendered prompt is excluded on purpose: its template
+      // instructions name the whole visual vocabulary (grids, cooling loops, …), which would match the first
+      // configured topic for every brief (Codex P2, PR #66).
+      const topic = placeholderTopic(placeholderTopicText(request), options.topics ?? {}, options.defaultTopic ?? "ai-infrastructure");
       const svg = placeholderSvg({ title: request.title ?? request.alt, topic, seed: request.slug });
       const provenance = { provider: "placeholder", model: PLACEHOLDER_MODEL, prompt: request.prompt, generatedAt: ctx.now.toISOString() };
       try {

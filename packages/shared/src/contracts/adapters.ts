@@ -56,8 +56,13 @@ export interface ImageRequest {
   prompt: string;
   alt: string;
   slug: string;
-  /** Phase 3f: the brief's title and tags, so the placeholder can pick a motif without parsing the prompt. */
+  /**
+   * Phase 3f: the brief's own fields, so the placeholder can pick a motif from the article alone. The rendered
+   * `prompt` also holds the template's fixed instructions (its visual vocabulary names grids, cooling loops…),
+   * so it is never used for topic matching.
+   */
   title?: string;
+  summary?: string;
   tags?: readonly string[];
 }
 
