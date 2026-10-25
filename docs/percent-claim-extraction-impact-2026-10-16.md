@@ -261,3 +261,32 @@ records still pass, the six public columns still pass `columnArtworkReadiness`,
 and `col_ba22f5ea8bef96e6` (Hormuz) now passes it with no reasons. Every figure
 in its corrected body is backed by an EIA sentence. The column stays
 quarantined until the owner approves restoring it in a separate change.
+
+**Hormuz restored and source policy (2026-10-25).** The owner approved
+restoring `col_ba22f5ea8bef96e6`. Before lifting the quarantine, every text
+field of the record was checked against its source ledger. The deck, summary
+and page description still read "swung $46 per barrel in eight weeks", the
+derived figure removed from the body on 2026-10-23. All three now give the
+reported $118 and $72 endpoints and dates. The body also kept three statements
+that the extractor does not see because they are spelled out, and that the EIA
+does not report: an "eighteen months" framing, a "next six months" watch
+horizon (twice) and a "double-digit percentages" cost estimate. They were
+reworded without the figures. A 2026-10-25 correction note records both changes.
+The same scan found one such statement in the ERCOT column
+(`col_55e9ccd7116252dd`): transformer lead times "lengthened in the past two
+years". It was removed under the 2026-10-23 instruction to match that column to
+its source, with its own correction note. The fields `quarantineArticle` set were returned to their
+values from before the quarantine. The column passes `columnArtworkReadiness`
+and the reader-copy guard, and the archive route goes from 48 to 49 records.
+The six other public columns have no figure in those fields that their
+sources do not state.
+
+The column numeric check (`authoredColumnQualityResult`) runs only on the
+body, which is why the deck, summary and page description kept a figure the
+body no longer had. Extending it to those fields is a gate change and needs
+the owner's approval.
+
+The owner also decided to keep the current source policy. Link-only sources
+remain usable for signal cards and story leads, a column's text and figures
+still come only from text-authorized sources, and the publishing cadence is
+unchanged.
