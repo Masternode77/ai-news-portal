@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { parsePipelineConfig, silentLogger } from "@cc/shared";
-import type { ImageRequest, StageContext } from "@cc/shared";
+import type { ImageRequest, ImageStore, StageContext } from "@cc/shared";
 import { ImageError, MemoryImageStore, createOpenAiImageAdapter, extractOpenAiImage, imageCostEstimate } from "../src/adapters/index.ts";
 import { createBudget } from "../src/budget.ts";
 import { MemoryLedger } from "../src/ledger/index.ts";
@@ -93,4 +93,21 @@ test("timeouts and dropped connections retry up to max_retries and then surface;
   await assert.rejects(createOpenAiImageAdapter({ apiKey: "k", image: empty.ctx.config.image, backoffMs: 1 }).generate(REQUEST, empty.ctx), (error: unknown) => error instanceof ImageError && error.code === "IMAGE_RESPONSE_INVALID");
   assert.deepEqual(extractOpenAiImage({ data: [{ b64_json: "AA==" }] }), { base64: "AA==", url: null });
   assert.deepEqual(extractOpenAiImage({}), { base64: null, url: null });
+});
+
+test("a 2xx generation is charged before the bytes are fetched or stored: a failing store still records the cost and the call, so the cap cannot be passed by falling back", async () => {
+  const brokenStore: ImageStore = { kind: "broken", async put() { throw new Error("store down"); } };
+  const { ctx } = ctxWith(async () => ok({ data: [{ b64_json: PNG.toString("base64") }] }), IMAGE_YAML.replace("budget: { run_usd: 2.0, soft_warn_usd: 1.5, max_calls: 60 }", "budget: { run_usd: 0.1, soft_warn_usd: 0.05, max_calls: 60 }"));
+  ctx.adapters.imageStore = brokenStore;
+  const adapter = createOpenAiImageAdapter({ apiKey: "k", image: ctx.config.image, backoffMs: 1 });
+  await assert.rejects(adapter.generate(REQUEST, ctx), /store down/);
+  assert.equal(ctx.budget.spentUsd, 0.07, "the generation was billed even though nothing was stored");
+  assert.equal(ctx.budget.calls, 1);
+  assert.equal(ctx.budget.canSpend(0.07), false, "a cap meant for one image does not admit a second one");
+
+  let fetches = 0;
+  const brokenDownload = ctxWith(async (url) => { fetches += 1; return String(url).endsWith("/v1/images/generations") ? ok({ data: [{ url: "https://files.example.test/out.png" }] }) : new Response("gone", { status: 404 }); });
+  await assert.rejects(createOpenAiImageAdapter({ apiKey: "k", image: brokenDownload.ctx.config.image, backoffMs: 1 }).generate(REQUEST, brokenDownload.ctx), (error: unknown) => error instanceof ImageError && error.code === "IMAGE_UNAVAILABLE");
+  assert.equal(brokenDownload.ctx.budget.spentUsd, 0.07, "a failed download after a 2xx is still a paid generation");
+  assert.ok(fetches >= 2);
 });
