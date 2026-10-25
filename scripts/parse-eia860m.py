@@ -4,6 +4,9 @@ from pathlib import Path
 from xml.etree import ElementTree as ET
 
 NS = {'m': 'http://schemas.openxmlformats.org/spreadsheetml/2006/main'}
+# EIA leaves the Technology cell blank for some planned units. Those units are
+# kept (their capacity is real) under this label and counted in the snapshot.
+UNSPECIFIED_TECHNOLOGY = 'Unspecified'
 
 def parse_workbook(path, source_url, retrieved_at):
     raw = Path(path).read_bytes()
@@ -31,7 +34,7 @@ def parse_workbook(path, source_url, retrieved_at):
     columns = {v: k for k, v in headers.items()}
     required = ['Plant ID', 'Generator ID', 'Plant State', 'Technology', 'Net Summer Capacity (MW)', 'Planned Operation Year', 'Planned Operation Month', 'Status']
     if not all(name in columns for name in required): raise ValueError('Missing EIA headers')
-    records, seen, missing = [], set(), 0
+    records, seen, missing, unspecified = [], set(), 0, 0
     for row in rows:
         def get(name): return row.get(columns[name], '').strip()
         if not get('Plant ID').isdigit(): continue
@@ -45,9 +48,11 @@ def parse_workbook(path, source_url, retrieved_at):
         year, month = get('Planned Operation Year'), get('Planned Operation Month')
         if month and (not month.isdigit() or not 1 <= int(month) <= 12): raise ValueError('Invalid planned month')
         if year and (not year.isdigit() or not 1900 <= int(year) <= 2200): raise ValueError('Invalid planned year')
-        records.append({'plantId': ident[0], 'generatorId': ident[1], 'state': get('Plant State'), 'technology': get('Technology'), 'netSummerMW': capacity, 'year': int(year) if year.isdigit() else None, 'month': int(month) if month.isdigit() else None, 'status': get('Status')})
+        technology = get('Technology')
+        if not technology: unspecified += 1; technology = UNSPECIFIED_TECHNOLOGY
+        records.append({'plantId': ident[0], 'generatorId': ident[1], 'state': get('Plant State'), 'technology': technology, 'netSummerMW': capacity, 'year': int(year) if year.isdigit() else None, 'month': int(month) if month.isdigit() else None, 'status': get('Status')})
     if not records: raise ValueError('No planned units')
-    return {'dataset': 'EIA-860M planned generating and storage units', 'asOf': as_of, 'retrievedAt': retrieved_at, 'sourceUrl': source_url, 'sha256': hashlib.sha256(raw).hexdigest(), 'unit': 'MW net summer capacity', 'missingCapacityCount': missing, 'records': records}
+    return {'dataset': 'EIA-860M planned generating and storage units', 'asOf': as_of, 'retrievedAt': retrieved_at, 'sourceUrl': source_url, 'sha256': hashlib.sha256(raw).hexdigest(), 'unit': 'MW net summer capacity', 'missingCapacityCount': missing, 'unspecifiedTechnologyCount': unspecified, 'records': records}
 
 if __name__ == '__main__':
     cli = argparse.ArgumentParser()
@@ -55,4 +60,4 @@ if __name__ == '__main__':
     args = cli.parse_args()
     snapshot = parse_workbook(args.workbook, args.source_url, datetime.datetime.now(datetime.timezone.utc).isoformat())
     Path(args.output).write_text(json.dumps(snapshot, ensure_ascii=False, separators=(',', ':')) + '\n')
-    print(f"Validated {len(snapshot['records'])} planned units; {snapshot['missingCapacityCount']} missing capacities")
+    print(f"Validated {len(snapshot['records'])} planned units; {snapshot['missingCapacityCount']} missing capacities; {snapshot['unspecifiedTechnologyCount']} unspecified technologies")

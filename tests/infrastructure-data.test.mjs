@@ -118,12 +118,14 @@ test('committed EIA-860M snapshot has unique dimensions and internally consisten
   const keys = capacity.records.map((row) => `${row.plantId}:${row.generatorId}`);
   assert.equal(new Set(keys).size, keys.length);
   let missing = 0;
+  let unspecified = 0;
   let rawTotal = 0;
   for (const row of capacity.records) {
     assert.match(row.plantId, /^\d+$/);
     assert.ok(String(row.generatorId).trim());
     assert.match(row.state, /^[A-Z]{2}$/);
     assert.ok(String(row.technology).trim());
+    if (row.technology === 'Unspecified') unspecified += 1;
     assert.ok(String(row.status).trim());
     assert.ok(row.year === null || (Number.isInteger(row.year) && row.year >= 1900 && row.year <= 2200));
     assert.ok(row.month === null || (Number.isInteger(row.month) && row.month >= 1 && row.month <= 12));
@@ -134,6 +136,12 @@ test('committed EIA-860M snapshot has unique dimensions and internally consisten
     }
   }
   assert.equal(capacity.missingCapacityCount, missing);
+  // The parser labels blank EIA technology cells 'Unspecified' and counts them;
+  // snapshots written before that count existed must contain none.
+  assert.equal(capacity.unspecifiedTechnologyCount ?? 0, unspecified, 'Unspecified technology rows do not match the parser count');
+  // A few blank cells are source data. A larger share means the Technology
+  // column mapping broke, so the refresh must not be committed.
+  assert.ok(unspecified <= Math.ceil(capacity.records.length * 0.01), `${unspecified} of ${capacity.records.length} planned units have a blank technology; check the EIA-860M Technology column`);
   const groupedTotal = capacityGroups(capacity.records).reduce((sum, row) => sum + row.netSummerMW, 0);
   assert.ok(Math.abs(groupedTotal - rawTotal) < capacityGroups(capacity.records).length * 0.051);
 });
