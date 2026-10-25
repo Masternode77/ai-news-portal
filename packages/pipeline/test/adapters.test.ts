@@ -2,11 +2,11 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
-import { RawItemInsert } from "@cc/shared";
+import { RawItemInsert, parseSourcesConfig } from "@cc/shared";
 import type { StageContext } from "@cc/shared";
 import { createFixtureLlmAdapter, createFixtureRssAdapter, createPlaceholderImageAdapter, decodeXmlText, parseRssItems, toIsoDate } from "../src/adapters/index.ts";
 import { createBudget } from "../src/budget.ts";
-import { FIXTURES_DIR, baseRunOptions, testSources } from "./helpers.ts";
+import { FIXTURES_DIR, REPO_ROOT, baseRunOptions, testSources } from "./helpers.ts";
 
 function ctxStub(): StageContext {
   const options = baseRunOptions();
@@ -39,6 +39,7 @@ test("parseRssItems handles CDATA, entities and missing fields", () => {
   assert.equal(items[0]?.title, "A & B");
   assert.equal(items[0]?.link, "https://x.test/a?x=1&y=2");
   assert.equal(items[0]?.description, "<p>hi</p>");
+  assert.equal(items[0]?.contentHtml, null);
   assert.equal(items[1]?.title, "Café A");
   assert.equal(toIsoDate(items[0]?.pubDate ?? null), "2026-10-07T07:00:00.000Z");
   assert.equal(toIsoDate("not a date"), null);
@@ -100,4 +101,28 @@ test("budget guard transitions ok -> soft_warn -> exceeded and refuses overspend
   const capped = createBudget({ run_usd: 10, soft_warn_usd: 5, max_calls: 1 });
   capped.record(0.01);
   assert.equal(capped.canSpend(0.01), false, "call cap reached");
+});
+
+test("fixture RSS adapter keeps content:encoded as body_preview (text-stripped, capped) only where the source's rights allow, so replay runs measure the body the generator saw (Phase 3g)", async () => {
+  const parsed = parseRssItems(`<rss xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><item><title>Long item</title><link>https://x.test/c</link><description>short</description><content:encoded><![CDATA[<p>Long &amp; full</p>]]></content:encoded></item></channel></rss>`);
+  assert.equal(parsed[0]?.contentHtml, "<p>Long & full</p>");
+  assert.equal(parsed[0]?.description, "short");
+  const sources = parseSourcesConfig(await readFile(join(REPO_ROOT, "fixtures/sources/scoring.yaml"), "utf8"));
+  const wireA = sources.find((s) => s.id === "scoring-wire-a")!;
+  assert.equal(wireA.text_rights, "full");
+  const adapter = createFixtureRssAdapter({ fixturesDir: FIXTURES_DIR, fixtureName: "scoring" });
+  const ctx = ctxStub();
+  const items = await adapter.fetch(wireA, ctx);
+  const busan = items.find((item) => item.canonical_url.endsWith("/microsoft-busan-1-2gw"))!;
+  const preview = busan.payload?.["body_preview"];
+  assert.equal(typeof preview, "string");
+  assert.match(preview as string, /^Microsoft has signed a 1\.2 GW/);
+  assert.doesNotMatch(preview as string, /<p>/, "HTML stripped");
+  assert.ok((preview as string).length >= 500 && (preview as string).length <= ctx.config.ingest.body_preview_chars, `${(preview as string).length} chars`);
+  assert.equal(typeof busan.payload?.["description"], "string", "the description stays alongside");
+  assert.equal("body_preview" in (items[1]!.payload ?? {}), false, "an item without content:encoded carries only its description");
+  const linkOnly = await adapter.fetch({ ...wireA, text_rights: "link_only" }, ctx);
+  assert.equal("body_preview" in (linkOnly[0]!.payload ?? {}), false, "link_only stores no feed body (3a feedText rule)");
+  const abstractScope = await adapter.fetch({ ...wireA, text_scope: "abstract" }, ctx);
+  assert.equal("body_preview" in (abstractScope[0]!.payload ?? {}), false, "abstract scope keeps the summary only");
 });
