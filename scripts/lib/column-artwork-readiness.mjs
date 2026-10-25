@@ -52,6 +52,7 @@ export function columnArtworkReadiness(column, sourceRecords = [], columns = [],
   // substantive assertions still require the operator's source review.
   const quality = authoredColumnQualityResult({
     body, title: column.title, deck: column.deck, summary: column.summary,
+    metaDescription: column.expertLensFull?.metaDescription,
     thesis: column.stance?.thesis, figures: column.figures,
     ledgerClaims: ledger.claims, sourceText: verified.map(source => source.cleaned_text).join('\n'),
     recentRecords: columns.filter(other => other.id !== column.id),
