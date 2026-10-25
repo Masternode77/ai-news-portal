@@ -44,3 +44,33 @@ test('EIA billion-kilowatthour figures share the key of the spelled-out form', (
   assert.deepEqual(keyOf('gas generation rises 7.3% (123 billion kWh)'), ['7.3|%|=', '123|billion|=']);
   assert.deepEqual(keyOf('a 5 kWh battery'), []);
 });
+
+test('a digit inside another number does not corroborate a figure', () => {
+  const verification = verifyNumericClaim({ numeric_value: 4, unit: 'USD', comparator: '', source_url: 'https://example.com/prices' }, {
+    representative_source: { cleaned_text: 'Daily price swings averaged $4 a barrel in the quarter.' },
+    supporting_sources: [{ cleaned_text: 'Imports fell to their lowest level since 2014, below 8.4 million barrels a day.' }],
+  });
+  assert.deepEqual(verification, { verification_status: 'verified_primary', confidence: 0.88 });
+});
+
+test('a sourced figure that several sources state stays verified_primary with higher confidence', () => {
+  const verification = verifyNumericClaim({ numeric_value: 2026, unit: 'year', comparator: '', source_url: 'https://example.com/prices' }, {
+    representative_source: { cleaned_text: 'Brent prices swung widely in the second quarter of 2026.' },
+    supporting_sources: [{ cleaned_text: 'China imported less crude oil in the second quarter of 2026.' }],
+  });
+  assert.deepEqual(verification, { verification_status: 'verified_primary', confidence: 0.94 });
+});
+
+test('without a source url a figure needs two sources stating the same value and unit', () => {
+  const claim = { numeric_value: 300, unit: 'MW', comparator: '' };
+  const twoSources = {
+    representative_source: { cleaned_text: 'The campus adds 300 MW of load.' },
+    supporting_sources: [{ cleaned_text: 'A second filing also lists 300 MW for the campus.' }],
+  };
+  assert.equal(verifyNumericClaim(claim, twoSources).verification_status, 'verified_multi_source');
+  const otherUnit = {
+    representative_source: { cleaned_text: 'The campus adds 300 MW of load.' },
+    supporting_sources: [{ cleaned_text: 'The operator spent $300 million on the site.' }],
+  };
+  assert.equal(verifyNumericClaim(claim, otherUnit).verification_status, 'insufficient_evidence');
+});

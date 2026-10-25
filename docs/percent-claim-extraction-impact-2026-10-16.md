@@ -235,6 +235,29 @@ EIA sources, and quarantined if that is not possible.
 
 All six remaining public columns now pass `columnArtworkReadiness`.
 
-**Still open.** The numeric gate treats a multi-source match as unverified, and
-the multi-source check is a substring test on the raw value. Changing it is a
-publish-gate change and needs the owner's approval.
+**Multi-source classification (2026-10-25).** The owner approved fixing the
+classification defect that kept the Hormuz column out of the gate. The gate
+itself is unchanged: it still accepts only `verified_primary` rows whose quote
+states the figure and that name a source URL. Two defects decided which rows
+got that status:
+
+- `verifyNumericClaim` counted a source as corroborating whenever the raw
+  digits appeared anywhere in it, so "$4" matched "2014" and "8 million"
+  matched "118". It also ranked corroboration above `verified_primary`, so a
+  figure that two sources state (a year such as 2026) left the gate. A source
+  now corroborates only when it states the same value, unit and qualifier
+  (`numericClaimKey`), and a claim quoted from the source it cites stays
+  `verified_primary`, with confidence 0.94 instead of 0.88 when corroborated.
+  `verified_multi_source` remains only for a claim with no source URL.
+- `attachSecondaryVerification` credited every claim without a named entity
+  to the secondary source (every text includes the empty string), and moved
+  credited claims to `verified_secondary`, which the gate also excludes. It
+  now needs a named entity and records the secondary source without changing
+  the status.
+
+Measured on the committed inventory before and after the change: no news,
+archive or search-index record changes result, the five EIA restoration
+records still pass, the six public columns still pass `columnArtworkReadiness`,
+and `col_ba22f5ea8bef96e6` (Hormuz) now passes it with no reasons. Every figure
+in its corrected body is backed by an EIA sentence. The column stays
+quarantined until the owner approves restoring it in a separate change.
