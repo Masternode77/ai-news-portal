@@ -1,30 +1,13 @@
 /**
  * Phase 2 no-op stages (ingest moved to ingest.ts in 3a, normalize to
  * normalize.ts in 3b, score to score.ts in 3c, generate to generate.ts in 3d,
- * image to image.ts in 3f). Each one validates its input, logs that the real
- * implementation lands in a later Phase 3 module, and returns an empty (or
- * pass-through) output. QA fails closed: with no rules installed nothing
- * passes, so publish never receives a draft by accident.
+ * image to image.ts in 3f, qa to qa.ts in 3g). The publish stage is the last
+ * one left here until 3h: it validates its input and publishes nothing while
+ * `flags.publish_target` is `none`.
  */
 import type { Stage } from "@cc/shared";
 import { defineStageSpec } from "./spec.ts";
-import {
-  PublishInput,
-  PublishOutput,
-  QaInput,
-  QaOutput,
-} from "./types.ts";
-
-export const qaStage: Stage<QaInput, QaOutput> = {
-  name: "qa",
-  input: QaInput,
-  output: QaOutput,
-  idempotencyKey: (input) => `qa:${input.drafts.length}`,
-  async run(input, ctx) {
-    ctx.logger.info("qa: no rules installed, failing closed (Phase 3g)", { drafts: input.drafts.length });
-    return { passed: [], verdicts: [] };
-  },
-};
+import { PublishInput, PublishOutput } from "./types.ts";
 
 export const publishStage: Stage<PublishInput, PublishOutput> = {
   name: "publish",
@@ -62,13 +45,6 @@ export const publishStage: Stage<PublishInput, PublishOutput> = {
     return { published };
   },
 };
-
-export const qaSpec = defineStageSpec({
-  stage: qaStage,
-  select: (state) => ({ drafts: state.drafts }),
-  merge: (state, output) => ({ ...state, passed: output.passed, verdicts: output.verdicts }),
-  counts: (output) => ({ qa_passed: output.passed.length, verdicts: output.verdicts.length }),
-});
 
 export const publishSpec = defineStageSpec({
   stage: publishStage,

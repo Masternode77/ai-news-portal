@@ -96,6 +96,21 @@ interface Result {
     decisions: { canonical_url: string; source_id: string; slug: string | null; ok: boolean; error: string | null; model: string | null; cost_usd: number; input_tokens: number; output_tokens: number; grounding_numbers: number; grounding_ungrounded: string[]; quote_max_words: number; banned_matches: string[]; title_ko: string | null }[];
     ms: number;
   };
+  qaStats?: {
+    drafts: number;
+    passed: number;
+    rejected: number;
+    held: number;
+    verdicts: number;
+    hard_failed: number;
+    soft_failed: number;
+    auto_passed: number;
+    rule_errors: number;
+    rules: number;
+    by_rule: Record<string, { checked: number; passed: number; failed: number; auto_passed: number }>;
+    decisions: { draft_id: string; slug: string | null; title_ko: string | null; source_id: string | null; outcome: string; failed_rules: string[]; auto_passed_rules: string[]; failed_evidence: Record<string, Record<string, unknown>> }[];
+    ms: number;
+  };
   imageStats?: {
     passed: number;
     with_images: number;
@@ -105,7 +120,9 @@ interface Result {
     budget_stopped: number;
     image_missing: number;
     cost_usd: number;
-    decisions: { slug: string; provider: string; placeholder: boolean; path: string; cost_usd: number; attempts: { provider: string; ok: boolean; code: string | null; error: string | null; ms: number }[] }[];
+    rejected?: number;
+    held?: number;
+    decisions: { slug: string; provider: string; placeholder: boolean; path: string; cost_usd: number; attempts: { provider: string; ok: boolean; code: string | null; error: string | null; ms: number }[]; disposition?: string }[];
     ms: number;
   };
   ledger?: { deadLetters: { ref_id: string; error: string }[] };
@@ -261,10 +278,38 @@ export function summarize(result: Result): string {
   lines.push("");
   
 
+  const qa = result.qaStats;
+  if (qa) {
+    lines.push("");
+    lines.push(`### QA (3g) — drafts ${qa.drafts} · passed ${qa.passed} · rejected ${qa.rejected} · held ${qa.held} · verdicts ${qa.verdicts} (hard failed ${qa.hard_failed}, soft failed ${qa.soft_failed}, auto-passed ${qa.auto_passed}) · rule errors ${qa.rule_errors} · rules ${qa.rules} · ${qa.ms} ms`);
+    lines.push("");
+    lines.push("| rule | checked | passed | failed | auto-passed | pass rate |");
+    lines.push("|---|---|---|---|---|---|");
+    for (const [rule, stat] of Object.entries(qa.by_rule)) {
+      const rate = stat.checked > 0 ? `${((stat.passed / stat.checked) * 100).toFixed(0)}%` : "—";
+      lines.push(`| ${cell(rule)} | ${stat.checked} | ${stat.passed} | ${stat.failed} | ${stat.auto_passed} | ${rate} |`);
+    }
+    if (qa.decisions.length > 0) {
+      lines.push("");
+      lines.push("| draft | source | outcome | failed rules | evidence |");
+      lines.push("|---|---|---|---|---|");
+      for (const d of qa.decisions) {
+        const failed = d.failed_rules.map((rule) => (d.auto_passed_rules.includes(rule) ? `${rule} (auto_pass)` : rule)).join(", ");
+        const evidence = Object.entries(d.failed_evidence)
+          .map(([rule, ev]) => {
+            const { params: _params, qa_version: _version, ...rest } = ev;
+            return `${rule}: ${JSON.stringify(rest)}`;
+          })
+          .join("; ");
+        lines.push(`| ${cell(d.slug ?? d.title_ko ?? d.draft_id)} | ${cell(d.source_id ?? "")} | ${cell(d.outcome)} | ${cell(failed)} | ${cell(evidence.length > 400 ? `${evidence.slice(0, 400)}…` : evidence)} |`);
+      }
+    }
+  }
+
   const image = result.imageStats;
   if (image && (image.passed > 0 || image.with_images > 0)) {
     lines.push("");
-    lines.push(`### Image (3f) — passed ${image.passed} · with images ${image.with_images} · generated ${image.generated} · placeholders ${image.placeholders} · failed attempts ${image.failed_attempts} · budget-skipped ${image.budget_stopped} · IMAGE_MISSING ${image.image_missing} · USD ${image.cost_usd.toFixed(4)} · ${image.ms} ms`);
+    lines.push(`### Image (3f) — passed ${image.passed} · with images ${image.with_images} · generated ${image.generated} · placeholders ${image.placeholders} · failed attempts ${image.failed_attempts} · budget-skipped ${image.budget_stopped} · IMAGE_MISSING ${image.image_missing} (rejected ${image.rejected ?? 0}, held ${image.held ?? 0}) · USD ${image.cost_usd.toFixed(4)} · ${image.ms} ms`);
     lines.push("");
     lines.push("| slug | provider | placeholder | path | USD | attempts |");
     lines.push("|---|---|---|---|---|---|");
@@ -273,7 +318,7 @@ export function summarize(result: Result): string {
     }
   } else if (image) {
     lines.push("");
-    lines.push(`### Image (3f) — no QA-passed drafts reached the stage (passed ${image.passed}); provider order and placeholders are covered by the unit tests until 3g lands`);
+    lines.push(`### Image (3f) — no QA-passed drafts reached the stage (passed ${image.passed}); provider order and placeholders are covered by the unit tests`);
   }
 
   lines.push("| stage | status | duration ms |");

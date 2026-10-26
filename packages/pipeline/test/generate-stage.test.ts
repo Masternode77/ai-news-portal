@@ -11,7 +11,7 @@ import { MemoryLedger } from "../src/ledger/index.ts";
 import { runPipeline } from "../src/runner.ts";
 import { SCHEMA_INVALID, generateStage, groundingCheck, longestCommonRun, numberTokens, parseDraft, readerFields, sourcePacket } from "../src/stages/generate.ts";
 import { GenerateOutput } from "../src/stages/types.ts";
-import { baseRunOptions, fixtureAdapters, REPO_ROOT, TEST_PIPELINE_YAML, testBannedPhrases, testScoring } from "./helpers.ts";
+import { baseRunOptions, fixtureAdapters, REPO_ROOT, TEST_PIPELINE_YAML, testBannedPhrases, testQa, testScoring } from "./helpers.ts";
 
 const NOW = new Date("2026-10-20T00:45:00Z");
 const RUN_ID = "11111111-1111-4111-8111-111111111111";
@@ -77,7 +77,7 @@ async function run(db: MemoryDb, items: RawItemInsert[], sources: SourceConfig[]
   const file = await promptFile();
   const prompts = createMemoryPromptRegistry({ news_brief: systemOverride === undefined ? file : { ...file, system: systemOverride } });
   const runId = await ledger.startRun({ trigger: "local", startedAt: NOW, gitSha: null, flags: {} });
-  const ctx: StageContext = { runId, now: NOW, config: cfg, scoring: testScoring(), bannedPhrases: testBannedPhrases(), logger: silentLogger(), ledger, budget, dryRun: true, replay: true, fixtureName: undefined, fetch: () => Promise.reject(new Error("no network")), adapters: { ...fixtureAdapters(db), llm, prompts, db } };
+  const ctx: StageContext = { runId, now: NOW, config: cfg, scoring: testScoring(), bannedPhrases: testBannedPhrases(), qa: testQa(), logger: silentLogger(), ledger, budget, dryRun: true, replay: true, fixtureName: undefined, fetch: () => Promise.reject(new Error("no network")), adapters: { ...fixtureAdapters(db), llm, prompts, db } };
   return GenerateOutput.parse(await generateStage.run({ selected: items.map((item) => ({ ...candidate(item), run_id: runId })), rawItems: items, sources }, ctx));
 }
 

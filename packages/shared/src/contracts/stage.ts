@@ -7,7 +7,7 @@
  * `ctx.fixtureName` tells fixture adapters which recording to load.
  */
 import type { z } from "zod";
-import type { BannedPhrasesConfig, PipelineConfig, ScoringConfig, StageName } from "../schema/index.ts";
+import type { BannedPhrasesConfig, PipelineConfig, QaConfig, ScoringConfig, StageName } from "../schema/index.ts";
 import type { ImageAdapter, ImageStore, LlmAdapter, PromptRegistry, PublisherAdapter, SourceAdapter } from "./adapters.ts";
 import type { Budget, DbPort, Ledger } from "./db.ts";
 import type { Logger } from "../logger.ts";
@@ -35,6 +35,8 @@ export interface StageContext {
   scoring: ScoringConfig;
   /** `config/banned-phrases.yaml` (Phase 3d): the inventory the prompt renders and the guard matches. */
   bannedPhrases: BannedPhrasesConfig;
+  /** `config/qa.yaml` (Phase 3g): ordered rules, severity, auto_pass, thresholds. */
+  qa: QaConfig;
   logger: Logger;
   ledger: Ledger;
   budget: Budget;

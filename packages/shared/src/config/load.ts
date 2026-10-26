@@ -9,11 +9,12 @@ import {
   PromptFile as PromptFileSchema,
   PromptFrontMatter as PromptFrontMatterSchema,
   PipelineConfig as PipelineConfigSchema,
+  QaConfig as QaConfigSchema,
   RedirectsConfig as RedirectsConfigSchema,
   ScoringConfig as ScoringConfigSchema,
   SourcesConfig as SourcesConfigSchema,
 } from "../schema/index.ts";
-import type { BannedPhrasesConfig, PipelineConfig, PromptFile, RedirectsConfig, ScoringConfig, SourcesConfig } from "../schema/index.ts";
+import type { BannedPhrasesConfig, PipelineConfig, PromptFile, QaConfig, RedirectsConfig, ScoringConfig, SourcesConfig } from "../schema/index.ts";
 import { ConfigError } from "./errors.ts";
 import { applyFlagOverrides } from "./flags.ts";
 import type { FlagOverride } from "./flags.ts";
@@ -76,6 +77,14 @@ export function parseBannedPhrasesConfig(text: string, path?: string): BannedPhr
 
 export async function loadBannedPhrasesConfig(path: string): Promise<BannedPhrasesConfig> {
   return parseBannedPhrasesConfig(await readConfigFile(path), path);
+}
+
+export function parseQaConfig(text: string, path?: string): QaConfig {
+  return parseWith(QaConfigSchema, text, path);
+}
+
+export async function loadQaConfig(path: string): Promise<QaConfig> {
+  return parseQaConfig(await readConfigFile(path), path);
 }
 
 const FRONT_MATTER = /^---\r?\n([\s\S]*?)\r?\n---\r?\n?([\s\S]*)$/;

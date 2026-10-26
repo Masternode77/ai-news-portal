@@ -6,8 +6,8 @@
  * was configured and the placeholder stood in anyway, the stage writes the
  * IMAGE_MISSING soft verdict (ADR-004) to `qa_results` and passes it on.
  */
-import { draftId, NewsBrief, renderTemplate, requireImagePrompt } from "@cc/shared";
-import type { ImageAdapter, ImageRequest, QaVerdict, Stage, StageContext } from "@cc/shared";
+import { draftId, NewsBrief, qaRuleEntry, renderTemplate, requireImagePrompt } from "@cc/shared";
+import type { DraftInsert, ImageAdapter, ImageRequest, QaVerdict, Severity, Stage, StageContext } from "@cc/shared";
 import type { QaResultInsert } from "@cc/shared";
 import { PAID_IMAGE_PROVIDERS, imageChainOrder, isImageChain } from "../adapters/image/chain.ts";
 import type { ImageChain, ImageChainResult } from "../adapters/image/chain.ts";
@@ -59,10 +59,11 @@ function asChain(adapter: ImageAdapter): Pick<ImageChain, "generateDetailed" | "
   };
 }
 
-export function imageMissingVerdict(result: ImageChainResult, order: readonly string[], reasonCode: string, checkedAt: string): QaVerdict {
+/** Severity comes from `config/qa.yaml` (ADR-004 lists IMAGE_MISSING as soft; the config may change it), default soft when the rule is not listed. */
+export function imageMissingVerdict(result: ImageChainResult, order: readonly string[], reasonCode: string, checkedAt: string, severity: Severity = "soft"): QaVerdict {
   return {
     rule: IMAGE_MISSING,
-    severity: "soft",
+    severity,
     pass: false,
     reason_code: reasonCode,
     evidence: { provider_order: [...order], attempts: result.attempts.map((attempt) => ({ ...attempt })), path: result.image.path },
@@ -95,6 +96,9 @@ export const imageStage: Stage<ImageInput, ImageOutput> = {
     let failedAttempts = 0;
     let budgetStopped = 0;
     let costUsd = 0;
+    let rejected = 0;
+    let held = 0;
+    const statusUpdates: DraftInsert[] = [];
 
     for (const draft of input.passed) {
       const parsed = NewsBrief.safeParse(draft.body["brief"]);
@@ -120,18 +124,35 @@ export const imageStage: Stage<ImageInput, ImageOutput> = {
       costUsd += ctx.budget.spentUsd - spentBefore;
       if (image.placeholder) placeholders += 1;
       else generated += 1;
-      withImages.push({ draft, image });
+      // The IMAGE_MISSING entry of config/qa.yaml is a gate, not a label (Codex PR #72 P2): a disabled entry
+      // emits nothing, a hard entry rejects the draft, a soft entry without auto_pass holds it for review,
+      // and only a soft auto_pass entry (ADR-004 default) forwards the placeholder draft to publish.
+      let disposition: "forward" | "rejected" | "held" = "forward";
       if (image.placeholder && realProviderConfigured) {
-        const verdict = imageMissingVerdict(result, order, skipPaid ? "IMAGE_BUDGET_SKIPPED" : "IMAGE_PROVIDERS_FAILED", checkedAt);
-        verdicts.push(verdict);
-        qaRows.push({ draft_id: rowId, rule: verdict.rule, severity: verdict.severity, pass: verdict.pass, reason_code: verdict.reason_code, evidence: verdict.evidence, checked_at: verdict.checked_at });
+        const entry = qaRuleEntry(ctx.qa, IMAGE_MISSING);
+        if (!entry || entry.enabled) {
+          const severity = entry?.severity ?? "soft";
+          const verdict = imageMissingVerdict(result, order, skipPaid ? "IMAGE_BUDGET_SKIPPED" : "IMAGE_PROVIDERS_FAILED", checkedAt, severity);
+          verdicts.push(verdict);
+          qaRows.push({ draft_id: rowId, rule: verdict.rule, severity: verdict.severity, pass: verdict.pass, reason_code: verdict.reason_code, evidence: verdict.evidence, checked_at: verdict.checked_at });
+          if (severity === "hard") disposition = "rejected";
+          else if (entry && !entry.auto_pass) disposition = "held";
+        }
+      }
+      if (disposition === "forward") withImages.push({ draft, image });
+      else {
+        if (disposition === "rejected") rejected += 1;
+        else held += 1;
+        statusUpdates.push({ ...draft, id: rowId, review_status: disposition === "rejected" ? "rejected" : "pending" });
+        ctx.logger.warn("image: draft not forwarded; IMAGE_MISSING entry decided", { slug: brief.slug, disposition, path: image.path });
       }
       if (decisions.length < DECISION_SAMPLE) {
-        decisions.push({ slug: brief.slug, provider: image.provenance.provider, placeholder: image.placeholder, path: image.path, cost_usd: image.costUsd, attempts: result.attempts.map((attempt) => ({ ...attempt })) });
+        decisions.push({ slug: brief.slug, provider: image.provenance.provider, placeholder: image.placeholder, path: image.path, cost_usd: image.costUsd, attempts: result.attempts.map((attempt) => ({ ...attempt })), disposition });
       }
     }
 
     if (qaRows.length > 0) await ctx.adapters.db.upsert("qa_results", qaRows as unknown as Record<string, unknown>[], ["draft_id", "rule", "checked_at"]);
+    if (statusUpdates.length > 0) await ctx.adapters.db.upsert("drafts", statusUpdates as unknown as Record<string, unknown>[], ["candidate_id", "content_type", "prompt_version"]);
 
     const stats: ImageStats = {
       passed: input.passed.length,
@@ -141,11 +162,13 @@ export const imageStage: Stage<ImageInput, ImageOutput> = {
       failed_attempts: failedAttempts,
       budget_stopped: budgetStopped,
       image_missing: verdicts.length,
+      rejected,
+      held,
       cost_usd: Number(costUsd.toFixed(6)),
       decisions,
       ms: Date.now() - started,
     };
-    ctx.logger.info("image: finished", { passed: stats.passed, generated, placeholders, failed_attempts: failedAttempts, budget_stopped: budgetStopped, image_missing: stats.image_missing, cost_usd: stats.cost_usd, provider_order: [...order], prompt_version: template.version });
+    ctx.logger.info("image: finished", { passed: stats.passed, generated, placeholders, failed_attempts: failedAttempts, budget_stopped: budgetStopped, image_missing: stats.image_missing, rejected, held, cost_usd: stats.cost_usd, provider_order: [...order], prompt_version: template.version });
     return { withImages, verdicts, stats };
   },
 };
@@ -162,6 +185,8 @@ export const imageSpec = defineStageSpec({
     failed_attempts: output.stats.failed_attempts,
     budget_stopped: output.stats.budget_stopped,
     image_missing: output.stats.image_missing,
+    rejected: output.stats.rejected,
+    held: output.stats.held,
     cost_usd_milli: Math.round(output.stats.cost_usd * 1000),
   }),
 });

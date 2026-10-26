@@ -1,0 +1,64 @@
+# Compute Current rebuild — QA gate rules (Phase 3g, ADR-004, contracts.md §4, brief Appendix B).
+# Validated strictly by packages/shared/src/schema/qa.ts (QaConfig); unknown keys fail the run.
+# The QA stage runs every `stage: qa` rule below IN THIS ORDER on every draft and records every
+# verdict in qa_results with a reason_code (R6) — it does not stop at the first hard failure, so the
+# tuning data is complete. Final decision per draft: any hard fail → rejected (drafts.review_status
+# 'rejected'); any soft fail without auto_pass → held for human review ('pending'); otherwise passed.
+# One rule = one file: packages/pipeline/src/qa/rules/<RULE>.ts, named after the reason_code it emits.
+# Adding a rule is that file + a unit test + one entry here (ADR-004 "규칙 추가"); a listed rule with
+# no file fails the run, a file that is not listed never runs. Thresholds only live here — changing a
+# number is a config change plus a `version` bump and a docs/shadow/tuning-log.md row (Phase 4).
+#
+# Codes ADR-004 assigns to earlier stages are enforced there with the same reason_code and are not
+# repeated here: DATE_INVALID (3a ingest), DUPLICATE_OF_PUBLISHED (3b normalize), RIGHTS_VIOLATION
+# (3a/3c rights gates), EXTRACTION_CONTAMINATED (3a extractor; boilerplate metrics are a 3a follow-up),
+# BUDGET_EXCEEDED (3d generate / runner). INSIGHT_DENSITY_LOW and HUMAN_STYLE_LOW are insight_essay
+# rules and arrive with 3e.
+
+version: "2026-10-25.1"
+
+rules:
+  # ---- hard: a failing verdict rejects the draft -------------------------------------------------
+  - rule: SCHEMA_INVALID             # body.brief must parse as NewsBrief (source fields and slug present)
+    severity: hard
+  - rule: SOURCE_UNREACHABLE         # the draft's raw item exists; a full-text source must have extraction.ok and enough body
+    severity: hard
+    params: { min_source_chars: 500 }   # legacy source-extraction-fail-closed: 500 (ADR-004)
+  - rule: QUOTE_TOO_LONG             # longest run of consecutive words shared with the source, and the number of quoted spans
+    severity: hard
+    params: { max_quote_words: 20, max_quotes: 1 }   # Josh 2026-10-18: ≤ 20 words, once
+  - rule: SIMILARITY_TOO_HIGH        # shingle overlap and verbatim sentences against the source text (legacy copyright-safe guard + policy file)
+    severity: hard
+    params: { overlap_max: 0.22, shingle_words: 8, sentence_reuse_max: 0.15, copied_sentence_min_chars: 45 }
+  - rule: UNGROUNDED_NUMBER          # every number in the reader-facing fields must appear in the source (3d groundingCheck)
+    severity: hard
+    params: { max_ungrounded: 0 }
+  - rule: UNGROUNDED_ENTITY          # Latin-script proper nouns in the draft must appear in the source text
+    severity: hard
+    params: { max_ungrounded: 0, min_chars: 3, allow: [Compute Current] }
+  - rule: LANG_MISMATCH              # *_ko fields: Hangul share of letters
+    severity: hard
+    params: { min_hangul_ratio: 0.6 }   # ADR-004 initial value; "확인 필요 2"
+  - rule: BANNED_PATTERN             # config/banned-phrases.yaml inventory (3d guard, now blocking)
+    severity: hard
+  # ---- soft: a failing verdict is recorded; auto_pass true lets the draft through (Phase 4 shadow) ----
+  - rule: RUBRIC_BELOW_TARGET        # candidate rubric total (3c) below target
+    severity: soft
+    auto_pass: true
+    params: { min_total: 0.70 }         # ADR-004 "< 70/100" on the 0–1 total
+  - rule: READABILITY_LOW            # average sentence length and repeated sentence openings
+    severity: soft
+    auto_pass: true
+    params: { max_avg_sentence_words: 40, max_same_opening: 3, opening_words: 2 }
+  - rule: SEO_FIELDS_MISSING         # title length for SERP and a description-length first paragraph (OG image is 3h)
+    severity: soft
+    auto_pass: true
+    params: { title_max_chars: 70, description_min_chars: 80 }
+  - rule: THIN_EXPERT_LENS           # expert_lens_ko: sentences and concrete tokens (numbers, units, proper nouns)
+    severity: soft
+    auto_pass: true
+    params: { min_sentences: 3, min_concrete: 3 }
+  - rule: IMAGE_MISSING              # emitted by the image stage when a configured provider failed and the placeholder stood in.
+    severity: soft                   # This entry is the gate: enabled false → no verdict; hard → the draft is rejected (not published);
+    auto_pass: true                  # soft without auto_pass → held for review (drafts.review_status pending); soft + auto_pass → published with the placeholder
+    stage: image

@@ -9,6 +9,7 @@ import {
   CandidateReasons,
   DraftInsert,
   ImageResult,
+  JsonRecord,
   NonNegativeInt,
   QaVerdict,
   RawItemInsert,
@@ -204,6 +205,8 @@ export const ImageAttemptRecord = z.strictObject({
   ms: NonNegativeInt,
 });
 export const ImageDecision = z.strictObject({
+  /** Phase 3g follow-up: where the draft went — forwarded to publish, or rejected / held by the IMAGE_MISSING entry of config/qa.yaml. */
+  disposition: z.enum(["forward", "rejected", "held"]),
   slug: z.string(),
   provider: z.string(),
   placeholder: z.boolean(),
@@ -223,8 +226,11 @@ export const ImageStats = z.strictObject({
   failed_attempts: NonNegativeInt,
   /** Drafts whose paid provider was skipped because the run budget could not cover another image. */
   budget_stopped: NonNegativeInt,
-  /** IMAGE_MISSING soft verdicts written (a real provider was configured but the draft got a placeholder). */
+  /** IMAGE_MISSING verdicts written (a real provider was configured but the draft got a placeholder). */
   image_missing: NonNegativeInt,
+  /** Drafts the IMAGE_MISSING entry rejected (severity hard) or held (soft without auto_pass) instead of forwarding. */
+  rejected: NonNegativeInt,
+  held: NonNegativeInt,
   cost_usd: z.number().nonnegative(),
   decisions: z.array(ImageDecision).max(100),
   ms: NonNegativeInt,
@@ -232,7 +238,49 @@ export const ImageStats = z.strictObject({
 export type ImageStats = z.infer<typeof ImageStats>;
 
 export function emptyImageStats(): ImageStats {
-  return { passed: 0, with_images: 0, generated: 0, placeholders: 0, failed_attempts: 0, budget_stopped: 0, image_missing: 0, cost_usd: 0, decisions: [], ms: 0 };
+  return { passed: 0, with_images: 0, generated: 0, placeholders: 0, failed_attempts: 0, budget_stopped: 0, image_missing: 0, rejected: 0, held: 0, cost_usd: 0, decisions: [], ms: 0 };
+}
+
+/** One draft's QA decision (Phase 3g); the first 100 are mirrored into the `--json` output. */
+export const QaDecision = z.strictObject({
+  draft_id: z.string(),
+  slug: z.string().nullable(),
+  title_ko: z.string().nullable(),
+  source_id: z.string().nullable(),
+  outcome: z.enum(["passed", "rejected", "held"]),
+  failed_rules: z.array(z.string()),
+  /** Soft rules that failed but let the draft through (config auto_pass). */
+  auto_passed_rules: z.array(z.string()),
+  /** Evidence of the failed verdicts, by rule (what the step summary shows). */
+  failed_evidence: z.record(z.string(), JsonRecord),
+});
+export type QaDecision = z.infer<typeof QaDecision>;
+
+export const QaRuleStat = z.strictObject({ checked: NonNegativeInt, passed: NonNegativeInt, failed: NonNegativeInt, auto_passed: NonNegativeInt });
+export type QaRuleStat = z.infer<typeof QaRuleStat>;
+
+export const QaStats = z.strictObject({
+  drafts: NonNegativeInt,
+  passed: NonNegativeInt,
+  rejected: NonNegativeInt,
+  held: NonNegativeInt,
+  verdicts: NonNegativeInt,
+  hard_failed: NonNegativeInt,
+  soft_failed: NonNegativeInt,
+  auto_passed: NonNegativeInt,
+  /** Rules that threw; each is recorded as a failing verdict. */
+  rule_errors: NonNegativeInt,
+  /** Enabled `stage: qa` rules in the config. */
+  rules: NonNegativeInt,
+  /** Per-rule pass-rate report (brief 3g "규칙별 통과율 리포트"). */
+  by_rule: z.record(z.string(), QaRuleStat),
+  decisions: z.array(QaDecision).max(100),
+  ms: NonNegativeInt,
+});
+export type QaStats = z.infer<typeof QaStats>;
+
+export function emptyQaStats(): QaStats {
+  return { drafts: 0, passed: 0, rejected: 0, held: 0, verdicts: 0, hard_failed: 0, soft_failed: 0, auto_passed: 0, rule_errors: 0, rules: 0, by_rule: {}, decisions: [], ms: 0 };
 }
 
 export const DraftWithImage = z.strictObject({
@@ -257,6 +305,7 @@ export const PipelineState = z.strictObject({
   drafts: z.array(DraftInsert),
   verdicts: z.array(QaVerdict),
   passed: z.array(DraftInsert),
+  qaStats: QaStats,
   imageStats: ImageStats,
   withImages: z.array(DraftWithImage),
   published: z.array(PublishedRef),
@@ -296,6 +345,7 @@ export function initialState(sources: SourceConfig[]): PipelineState {
     drafts: [],
     verdicts: [],
     passed: [],
+    qaStats: emptyQaStats(),
     imageStats: emptyImageStats(),
     withImages: [],
     published: [],
