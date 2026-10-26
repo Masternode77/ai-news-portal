@@ -94,6 +94,9 @@ test("UNGROUNDED_NUMBER and UNGROUNDED_ENTITY: a number or a Latin name that is 
   assert.deepEqual(e.evidence["ungrounded"], ["Nvidia", "Oracle"]);
   assert.equal((await check("UNGROUNDED_ENTITY", draft({ ...BRIEF, expert_lens_ko: `${BRIEF.expert_lens_ko} Nvidia도 검토 중이다.` }), evidence(), { allow: ["Nvidia"] })).pass, true, "allow list");
   assert.deepEqual(latinProperNouns("RFS와 PPA는 GW 단위다. Microsoft and Example Data Centers.", 3).filter((x) => /[a-z]/.test(x)), ["Microsoft", "Example Data Centers"]);
+  assert.deepEqual(latinProperNouns("계약을 맺은 Microsoft\nMicrosoft가 밝혔다", 3), ["Microsoft"], "a newline between reader fields never fuses two names (Codex PR #72 P2)");
+  const fieldEdge = await check("UNGROUNDED_ENTITY", draft({ ...BRIEF, title_ko: "부산 1.2 GW 계약을 맺은 Microsoft", summary_ko: `Microsoft가 ${BRIEF.summary_ko}` }), evidence());
+  assert.equal(fieldEdge.pass, true, JSON.stringify(fieldEdge.evidence));
 });
 
 test("LANG_MISMATCH and BANNED_PATTERN: an English-heavy brief and a banned phrase fail", async () => {

@@ -142,8 +142,21 @@ test("the image stage takes IMAGE_MISSING's severity from config/qa.yaml (stage:
   assert.equal(soft.out.verdicts[0]!.rule, IMAGE_MISSING);
   assert.equal(soft.out.verdicts[0]!.severity, "soft");
   assert.equal(soft.db.rows("qa_results")[0]!["severity"], "soft");
-  const hard = await run(withRule(testQa(), IMAGE_MISSING, { severity: "hard" }));
+  assert.equal(soft.out.withImages.length, 1, "soft + auto_pass (the shipped default) forwards the placeholder draft");
+  const hard = await run(withRule(testQa(), IMAGE_MISSING, { severity: "hard", auto_pass: undefined }));
   assert.equal(hard.out.verdicts[0]!.severity, "hard", "one config line changes how a missing image is judged");
+  assert.equal(hard.out.withImages.length, 0, "and a hard entry keeps the draft away from publish");
+  assert.equal(hard.out.stats.rejected, 1);
+  assert.equal(hard.db.rows("drafts")[0]!["review_status"], "rejected");
+  const holding = await run(withRule(testQa(), IMAGE_MISSING, { auto_pass: false }));
+  assert.equal(holding.out.withImages.length, 0);
+  assert.equal(holding.out.stats.held, 1);
+  assert.equal(holding.db.rows("drafts")[0]!["review_status"], "pending", "soft without auto_pass goes to the human-review queue");
+  const disabled = await run(withRule(testQa(), IMAGE_MISSING, { enabled: false }));
+  assert.equal(disabled.out.verdicts.length, 0, "a disabled entry emits nothing");
+  assert.equal(disabled.out.withImages.length, 1);
+  assert.equal(disabled.db.rows("qa_results").length, 0);
+  assert.equal(disabled.out.stats.decisions[0]!.disposition, "forward");
 });
 
 test("end to end on the scoring fixture: generate → qa → image → publish(none) with the real rules: one draft passes and gets a placeholder, one is rejected for an ungrounded number, 24 qa_results rows, the rejected draft row is marked", async () => {

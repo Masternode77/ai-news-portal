@@ -58,7 +58,7 @@ rules:
     severity: soft
     auto_pass: true
     params: { min_sentences: 3, min_concrete: 3 }
-  - rule: IMAGE_MISSING              # emitted by the image stage when a configured provider failed and the placeholder stood in
-    severity: soft
-    auto_pass: true
+  - rule: IMAGE_MISSING              # emitted by the image stage when a configured provider failed and the placeholder stood in.
+    severity: soft                   # This entry is the gate: enabled false → no verdict; hard → the draft is rejected (not published);
+    auto_pass: true                  # soft without auto_pass → held for review (drafts.review_status pending); soft + auto_pass → published with the placeholder
     stage: image

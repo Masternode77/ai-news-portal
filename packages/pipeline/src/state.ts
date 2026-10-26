@@ -205,6 +205,8 @@ export const ImageAttemptRecord = z.strictObject({
   ms: NonNegativeInt,
 });
 export const ImageDecision = z.strictObject({
+  /** Phase 3g follow-up: where the draft went — forwarded to publish, or rejected / held by the IMAGE_MISSING entry of config/qa.yaml. */
+  disposition: z.enum(["forward", "rejected", "held"]),
   slug: z.string(),
   provider: z.string(),
   placeholder: z.boolean(),
@@ -224,8 +226,11 @@ export const ImageStats = z.strictObject({
   failed_attempts: NonNegativeInt,
   /** Drafts whose paid provider was skipped because the run budget could not cover another image. */
   budget_stopped: NonNegativeInt,
-  /** IMAGE_MISSING soft verdicts written (a real provider was configured but the draft got a placeholder). */
+  /** IMAGE_MISSING verdicts written (a real provider was configured but the draft got a placeholder). */
   image_missing: NonNegativeInt,
+  /** Drafts the IMAGE_MISSING entry rejected (severity hard) or held (soft without auto_pass) instead of forwarding. */
+  rejected: NonNegativeInt,
+  held: NonNegativeInt,
   cost_usd: z.number().nonnegative(),
   decisions: z.array(ImageDecision).max(100),
   ms: NonNegativeInt,
@@ -233,7 +238,7 @@ export const ImageStats = z.strictObject({
 export type ImageStats = z.infer<typeof ImageStats>;
 
 export function emptyImageStats(): ImageStats {
-  return { passed: 0, with_images: 0, generated: 0, placeholders: 0, failed_attempts: 0, budget_stopped: 0, image_missing: 0, cost_usd: 0, decisions: [], ms: 0 };
+  return { passed: 0, with_images: 0, generated: 0, placeholders: 0, failed_attempts: 0, budget_stopped: 0, image_missing: 0, rejected: 0, held: 0, cost_usd: 0, decisions: [], ms: 0 };
 }
 
 /** One draft's QA decision (Phase 3g); the first 100 are mirrored into the `--json` output. */
