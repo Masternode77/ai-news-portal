@@ -110,9 +110,22 @@ test("budget exhaustion after the first draft ends the run as budget_stop (exit 
   assert.equal(result.stages.find((s: { stage: string }) => s.stage === "generate")?.status, "done");
 });
 
-test("a live run is refused in Phase 2 and usage errors exit 2", async () => {
-  assert.equal((await cli(["run"])).code, 2);
-  assert.equal((await cli(["run", "--replay"])).code, 2, "a bare --replay would write the real run ledger");
+test("Phase 4 gates: a run without --dry-run must be --live and needs the Supabase names; --replay and fixtures never reach a real database; the production target is refused until Phase 5", async () => {
+  const bare = await cli(["run"], { SUPABASE_URL: "", SUPABASE_SERVICE_ROLE_KEY: "" });
+  assert.equal(bare.code, 2);
+  assert.match(bare.stderr, /must read the live feeds: add --live/);
+  const replay = await cli(["run", "--replay"]);
+  assert.equal(replay.code, 2);
+  assert.match(replay.stderr, /--replay requires --dry-run/);
+  const liveNoDb = await cli(["run", "--live"], { SUPABASE_URL: "", SUPABASE_SERVICE_ROLE_KEY: "" });
+  assert.equal(liveNoDb.code, 2, "no network is touched before the config check fails");
+  assert.match(liveNoDb.stderr, /SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY are required without --dry-run/);
+  const production = await cli(["run", "--dry-run", "--replay", "--json"], { CC_FLAG_PUBLISH_TARGET: "production" });
+  assert.equal(production.code, 2);
+  assert.match(production.stderr, /publish_target production is the Phase 5 cutover/);
+});
+
+test("usage errors exit 2", async () => {
   assert.equal((await cli(["frobnicate"])).code, 2);
   assert.equal((await cli(["run", "--dry-run", "--trigger", "cron"])).code, 2);
   const missing = await cli(["run", "--dry-run", "--config", "config/does-not-exist.yaml"]);

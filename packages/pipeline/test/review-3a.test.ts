@@ -132,7 +132,9 @@ test("--live wires the real adapters; the default wires fixtures for rss and htm
   assert.equal(fixtures.sources["rss"]?.fetchDetailed, undefined);
   assert.equal(fixtures.sources["html"]?.type, "html");
   assert.equal(typeof fixtures.sources["html"]?.fetch, "function");
-  assert.throws(() => parseCli(["run", "--live"]), /requires --dry-run/);
+  assert.doesNotThrow(() => parseCli(["run", "--live"]), "Phase 4: a live run without --dry-run writes the staging project (the Supabase names are checked in main)");
+  assert.throws(() => parseCli(["run", "--replay"]), /--replay requires --dry-run/);
+  assert.throws(() => parseCli(["run"]), /add --live/, "a fixture run never reaches a real database");
   assert.throws(() => parseCli(["run", "--dry-run", "--live", "--replay"]), /mutually exclusive/);
   assert.equal(IngestConfig.parse({}).extract_bodies, true);
 });
