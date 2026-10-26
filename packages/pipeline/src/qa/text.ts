@@ -74,7 +74,9 @@ export function quotedSpans(text: string): string[] {
 const LATIN_STOP = new Set(["the", "a", "an", "and", "or", "of", "in", "on", "at", "to", "for", "with", "by", "from", "as", "is", "are", "was", "were", "this", "that", "these", "those", "it", "its", "new", "but", "if", "not"]);
 export function latinProperNouns(text: string, minChars: number): string[] {
   const out = new Set<string>();
-  for (const match of text.matchAll(/\b([A-Z][A-Za-z0-9&.-]*(?:\s+[A-Z][A-Za-z0-9&.-]*)*)\b/gu)) {
+  // Horizontal whitespace only: readerText() joins the fields with newlines, and a name at the end of the
+  // title must never fuse with a name at the start of the summary (Codex PR #72 P2).
+  for (const match of text.matchAll(/\b([A-Z][A-Za-z0-9&.-]*(?:[ \t]+[A-Z][A-Za-z0-9&.-]*)*)\b/gu)) {
     const token = match[1]!.replace(/[.]+$/u, "");
     if (token.length < minChars) continue;
     if (LATIN_STOP.has(token.toLowerCase())) continue;

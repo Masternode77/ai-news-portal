@@ -120,7 +120,9 @@ interface Result {
     budget_stopped: number;
     image_missing: number;
     cost_usd: number;
-    decisions: { slug: string; provider: string; placeholder: boolean; path: string; cost_usd: number; attempts: { provider: string; ok: boolean; code: string | null; error: string | null; ms: number }[] }[];
+    rejected?: number;
+    held?: number;
+    decisions: { slug: string; provider: string; placeholder: boolean; path: string; cost_usd: number; attempts: { provider: string; ok: boolean; code: string | null; error: string | null; ms: number }[]; disposition?: string }[];
     ms: number;
   };
   publishStats?: {
@@ -320,7 +322,7 @@ export function summarize(result: Result): string {
   const image = result.imageStats;
   if (image && (image.passed > 0 || image.with_images > 0)) {
     lines.push("");
-    lines.push(`### Image (3f) — passed ${image.passed} · with images ${image.with_images} · generated ${image.generated} · placeholders ${image.placeholders} · failed attempts ${image.failed_attempts} · budget-skipped ${image.budget_stopped} · IMAGE_MISSING ${image.image_missing} · USD ${image.cost_usd.toFixed(4)} · ${image.ms} ms`);
+    lines.push(`### Image (3f) — passed ${image.passed} · with images ${image.with_images} · generated ${image.generated} · placeholders ${image.placeholders} · failed attempts ${image.failed_attempts} · budget-skipped ${image.budget_stopped} · IMAGE_MISSING ${image.image_missing} (rejected ${image.rejected ?? 0}, held ${image.held ?? 0}) · USD ${image.cost_usd.toFixed(4)} · ${image.ms} ms`);
     lines.push("");
     lines.push("| slug | provider | placeholder | path | USD | attempts |");
     lines.push("|---|---|---|---|---|---|");
