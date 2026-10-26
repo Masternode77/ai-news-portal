@@ -91,6 +91,16 @@ image:                         # Phase 3f. Placeholder first (Josh, B안 2026-10
       cloud-capacity: [cloud, capacity, hyperscale, region, availability zone, 클라우드, 용량, 리전]
       data-centers: [data center, campus, colocation, 데이터센터, 캠퍼스, 코로케이션]
 
+publish:                       # Phase 3h site publisher (ADR-005). Whether anything is written is flags.publish_target; this block is how
+  base_url: https://www.computecurrent.com
+  slug_conflict: update        # update | skip | fail — an existing slug written by a different draft; a re-run of the same draft always updates in place
+  redirects_sync: true         # upsert config/redirects.yaml into the redirects table on every publishing run (R8)
+  revalidate:
+    enabled: false             # Phase 4 preview / Phase 5 production. A failed revalidation is counted, never fatal (ISR expires within 300 s)
+    token_env: CC_REVALIDATE_TOKEN   # name only; the value stays in the environment (sent as x-prerender-revalidate)
+    timeout_ms: 10000
+    extra_paths: ["/"]         # revalidated after every publishing run, in addition to the published slugs
+
 notify:
   telegram:
     enabled: false             # Phase 3i

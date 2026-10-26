@@ -3,7 +3,7 @@
  * cc-pipeline — CLI entry (brief Phase 2 §3, Phase 3a `--live`).
  *
  *   pipeline run [--stage <name>[,<name>]] [--dry-run] [--live] [--fixture <name>] [--replay]
- *                [--config <path>] [--sources <path>] [--scoring <path>] [--banned-phrases <path>] [--qa <path>] [--fixtures-dir <dir>] [--prompts-dir <dir>] [--images-dir <dir>]
+ *                [--config <path>] [--sources <path>] [--scoring <path>] [--banned-phrases <path>] [--qa <path>] [--redirects <path>] [--fixtures-dir <dir>] [--prompts-dir <dir>] [--images-dir <dir>]
  *                [--trigger schedule|dispatch|local] [--json] [--log-level <level>]
  *
  * Exit codes: 0 done · 1 partial/budget_stop · 2 failed, usage or config error.
@@ -20,9 +20,8 @@ import { realpathSync } from "node:fs";
 import { resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 import { createClient } from "@supabase/supabase-js";
-import { ConfigError, createLogger, isLogLevel, loadBannedPhrasesConfig, loadPipelineConfig, loadQaConfig, loadScoringConfig, loadSourcesConfig } from "@cc/shared";
-import type { DbPort, Ledger, Logger, PipelineConfig, RunTrigger, SourceAdapter, LlmAdapter,
-  StageAdapters, StageName, ImageAdapter, ImageProvider } from "@cc/shared";
+import { ConfigError, createLogger, isLogLevel, loadBannedPhrasesConfig, loadPipelineConfig, loadQaConfig, loadRedirectsConfig, loadScoringConfig, loadSourcesConfig } from "@cc/shared";
+import type { DbPort, ImageAdapter, ImageProvider, Ledger, LlmAdapter, Logger, PipelineConfig, PublisherAdapter, RedirectsConfig, RunTrigger, SourceAdapter, StageAdapters, StageName } from "@cc/shared";
 import {
   HostPacer,
   createDisabledLlmAdapter,
@@ -32,7 +31,7 @@ import {
   createFixtureLlmAdapter,
   createFixtureRssAdapter,
   createLiveRssAdapter,
-  createNoopPublisher,
+  createSitePublisher,
   createPlaceholderImageAdapter,
   createFixtureImageAdapter,
   createOpenAiImageAdapter,
@@ -49,7 +48,7 @@ import { notifyConsole } from "../src/notify/console.ts";
 import { disabledFetch, runPipeline } from "../src/runner.ts";
 
 const USAGE = `usage: pipeline run [--stage <name>[,<name>]] [--dry-run] [--live] [--fixture <name>] [--replay]
-                    [--config <path>] [--sources <path>] [--scoring <path>] [--banned-phrases <path>] [--qa <path>] [--fixtures-dir <dir>] [--prompts-dir <dir>] [--images-dir <dir>]
+                    [--config <path>] [--sources <path>] [--scoring <path>] [--banned-phrases <path>] [--qa <path>] [--redirects <path>] [--fixtures-dir <dir>] [--prompts-dir <dir>] [--images-dir <dir>]
                     [--trigger schedule|dispatch|local] [--json] [--log-level debug|info|warn|error]`;
 
 export interface Cli {
@@ -64,6 +63,7 @@ export interface Cli {
   scoring: string;
   bannedPhrases: string;
   qa: string;
+  redirects: string;
   fixturesDir: string;
   promptsDir: string;
   /** Phase 3f: where generated image bytes are written; unset keeps them in memory for the run. */
@@ -88,6 +88,7 @@ export function parseCli(argv: string[]): Cli {
       scoring: { type: "string", default: "config/scoring.yaml" },
       "banned-phrases": { type: "string", default: "config/banned-phrases.yaml" },
       qa: { type: "string", default: "config/qa.yaml" },
+      redirects: { type: "string", default: "config/redirects.yaml" },
       "fixtures-dir": { type: "string", default: "fixtures" },
       "prompts-dir": { type: "string", default: "prompts" },
       "images-dir": { type: "string" },
@@ -118,6 +119,7 @@ export function parseCli(argv: string[]): Cli {
     scoring: values.scoring,
     bannedPhrases: values["banned-phrases"],
     qa: values.qa,
+    redirects: values.redirects,
     fixturesDir: values["fixtures-dir"],
     promptsDir: values["prompts-dir"],
     imagesDir: values["images-dir"],
@@ -166,7 +168,15 @@ export function buildImageAdapter(config: PipelineConfig, env: NodeJS.ProcessEnv
   return createImageChain(config.image, adapters);
 }
 
-export function buildAdapters(cli: Cli, config: PipelineConfig, env: NodeJS.ProcessEnv = {}): StageAdapters {
+/** The site publisher: rows through the run's DB, redirects from config, ISR revalidation with a name-only token (required only when enabled). */
+export function buildSitePublisher(config: PipelineConfig, env: NodeJS.ProcessEnv, redirects: RedirectsConfig): PublisherAdapter {
+  const tokenEnv = config.publish.revalidate.token_env;
+  const revalidateToken = env[tokenEnv];
+  if (config.publish.revalidate.enabled && !revalidateToken) throw new ConfigError(`${tokenEnv} is required when publish.revalidate.enabled is true (name only; the value stays in the environment)`);
+  return createSitePublisher({ publish: config.publish, redirects, revalidateToken });
+}
+
+export function buildAdapters(cli: Cli, config: PipelineConfig, env: NodeJS.ProcessEnv = {}, redirects: RedirectsConfig = []): StageAdapters {
   const fixtureName = cli.fixture ?? "sample";
   const fixturesDir = resolve(cli.fixturesDir);
   let sources: Record<string, SourceAdapter>;
@@ -184,7 +194,7 @@ export function buildAdapters(cli: Cli, config: PipelineConfig, env: NodeJS.Proc
     llm: buildLlmAdapter(config, env, fixturesDir),
     image: buildImageAdapter(config, env, fixturesDir),
     imageStore: cli.imagesDir ? createLocalImageStore({ dir: resolve(cli.imagesDir) }) : new MemoryImageStore(),
-    publishers: { site: createNoopPublisher({ baseUrl: "https://www.computecurrent.com" }) },
+    publishers: { site: buildSitePublisher(config, env, redirects) },
     db: new MemoryDb(),
     prompts: createFilePromptRegistry({ promptsDir: resolve(cli.promptsDir) }),
   };
@@ -232,7 +242,8 @@ export async function main(argv: string[], env: NodeJS.ProcessEnv, stdout: (line
     const scoring = await loadScoringConfig(resolve(cli.scoring));
     const bannedPhrases = await loadBannedPhrasesConfig(resolve(cli.bannedPhrases));
     const qa = await loadQaConfig(resolve(cli.qa));
-    const adapters = buildAdapters(cli, loaded.config, env);
+    const redirects = await loadRedirectsConfig(resolve(cli.redirects));
+    const adapters = buildAdapters(cli, loaded.config, env, redirects);
 
     let ledger: Ledger;
     let db: DbPort;
@@ -287,7 +298,8 @@ export async function main(argv: string[], env: NodeJS.ProcessEnv, stdout: (line
             scoreStats: result.state.scoreStats,
             generateStats: result.state.generateStats,
             qaStats: result.state.qaStats,
-        imageStats: result.state.imageStats,
+            imageStats: result.state.imageStats,
+            publishStats: result.state.publishStats,
             ledger: dump,
           },
           null,

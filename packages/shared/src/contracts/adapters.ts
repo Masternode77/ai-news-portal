@@ -96,16 +96,34 @@ export interface ImageStore {
 
 export type PublisherTarget = "site" | "blog" | "social";
 
+export type PublishAction = "inserted" | "updated" | "skipped";
+
 export interface PublishResult {
   slug: string;
   url: string;
+  /** Phase 3h: what the store did (`skipped` = slug conflict under `publish.slug_conflict: skip`). */
+  action?: PublishAction;
+  /** Phase 3h: the publications row id (deterministic from the slug for pipeline rows). */
+  id?: string;
+}
+
+/** Phase 3h: outcome of an on-demand ISR revalidation pass; never thrown, always reported. */
+export interface RevalidateResult {
+  requested: number;
+  ok: number;
+  failed: number;
+  /** True when revalidation is disabled in config (nothing was requested). */
+  skipped: boolean;
+  errors: string[];
 }
 
 export interface PublisherAdapter {
   readonly target: PublisherTarget;
-  /** Idempotent: an existing slug is updated in place, never duplicated. */
+  /** Idempotent: an existing slug is updated in place, never duplicated (`publish.slug_conflict` decides a slug taken by another draft). */
   publish(item: PublicationInsert, ctx: StageContext): Promise<PublishResult>;
   unpublish?(slug: string, ctx: StageContext): Promise<void>;
-  /** Site publisher only: on-demand ISR revalidation. */
-  revalidate?(paths: string[], ctx: StageContext): Promise<void>;
+  /** Site publisher only: on-demand ISR revalidation of the given paths; a failure is reported, never thrown. */
+  revalidate?(paths: string[], ctx: StageContext): Promise<RevalidateResult>;
+  /** Site publisher only (Phase 3h): upsert config/redirects.yaml into the redirects table; returns rows written. */
+  syncRedirects?(ctx: StageContext): Promise<number>;
 }
