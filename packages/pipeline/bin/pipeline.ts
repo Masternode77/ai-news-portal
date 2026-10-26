@@ -16,10 +16,12 @@
  * Source adapters are fixtures unless `--live` swaps in the real RSS/Atom and
  * Epoch index adapters (Phase 3a). A fixture run also seeds the memory DB from
  * `fixtures/db/<fixture>.json` when that file exists (Phase 3b: publications
- * to dedupe against). Every run needs `--dry-run` (memory ledger
- * and DB, nothing written) until Phase 4 wires Supabase: a bare `--replay`
- * would keep adapters offline but still write the real run ledger. `--live`
- * cannot be combined with `--replay`, which forbids all network access.
+ * to dedupe against). `--dry-run` keeps the ledger and DB in memory (nothing
+ * written). Phase 4 (ADR-006 M4): without `--dry-run` the run writes the
+ * Supabase ledger and tables named by SUPABASE_URL / SUPABASE_SERVICE_ROLE_KEY
+ * (the staging project), so it must be `--live` (fixtures and `--replay`
+ * never reach a real database) and `flags.publish_target` may be `none` or
+ * `staging` only — `production` is refused until the Phase 5 cutover.
  */
 import { parseArgs } from "node:util";
 import { readFile } from "node:fs/promises";
@@ -118,7 +120,10 @@ export function parseCli(argv: string[]): Cli {
   const logLevel = values["log-level"];
   if (!isLogLevel(logLevel)) throw new UsageError(`--log-level must be debug|info|warn|error, got "${logLevel}"`);
   if (values.live && values.replay) throw new UsageError("--live and --replay are mutually exclusive (--replay forbids network access)");
-  if (values.live && !values["dry-run"]) throw new UsageError("--live requires --dry-run until Phase 4 (nothing is written outside the memory ledger)");
+  // Phase 4: a run without --dry-run writes the real ledger and DB (Supabase, names only), so it must read the
+  // live feeds — fixture or replayed rows never reach a real database.
+  if (positionals[0] === "run" && values.replay && !values["dry-run"]) throw new UsageError("--replay requires --dry-run (recorded fixtures never reach the real ledger or database)");
+  if (positionals[0] === "run" && !values.live && !values["dry-run"]) throw new UsageError("without --dry-run the run writes the real ledger and database, so it must read the live feeds: add --live (or --dry-run for the memory ledger)");
   const stages = values.stage === undefined ? undefined : values.stage.split(",").map((name) => name.trim()).filter(Boolean);
   if (stages !== undefined && stages.length === 0) throw new UsageError("--stage needs at least one stage name");
   return {
@@ -283,9 +288,6 @@ export async function main(argv: string[], env: NodeJS.ProcessEnv, stdout: (line
     logger = createLogger({ name: "cc-pipeline", level: cli.logLevel, sink: (line) => process.stderr.write(`${line}\n`) });
     if (cli.command === "ops") return await runOps(cli, env, stdout, logger);
 
-    if (!cli.dryRun) {
-      throw new UsageError("Phase 3a writes nothing outside the memory ledger: pass --dry-run (add --live for real feeds or --replay to forbid network access); real ledger writes land in Phase 4");
-    }
     const realFetch = globalThis.fetch;
     if (cli.replay) {
       // Defense in depth: the runner injects a throwing ctx.fetch; this closes the global door for adapters too.
@@ -299,6 +301,8 @@ export async function main(argv: string[], env: NodeJS.ProcessEnv, stdout: (line
     const bannedPhrases = await loadBannedPhrasesConfig(resolve(cli.bannedPhrases));
     const qa = await loadQaConfig(resolve(cli.qa));
     const redirects = await loadRedirectsConfig(resolve(cli.redirects));
+    // The production target is the Phase 5 cutover (CLAUDE.md §4); until then only none (dry decisions) and staging exist.
+    if (loaded.config.flags.publish_target === "production") throw new ConfigError("flags.publish_target production is the Phase 5 cutover; use none or staging (CC_FLAG_PUBLISH_TARGET) until then");
     const adapters = buildAdapters(cli, loaded.config, env, redirects);
     const notifier = buildNotifier(loaded.config, env);
     // Same rule as the stages: the notifier reaches the network through the (possibly disabled) fetch only.
@@ -328,7 +332,7 @@ export async function main(argv: string[], env: NodeJS.ProcessEnv, stdout: (line
       db = memory;
     } else {
       const client = buildSupabase(env, realFetch);
-      if (!client) throw new ConfigError("SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY are required without --dry-run (names only; values stay in the environment)");
+      if (!client) throw new ConfigError("SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY are required without --dry-run (names only; values stay in the environment): the Phase 4 shadow writes the staging project's ledger and tables");
       ledger = new SupabaseLedger(client);
       db = new SupabaseDb(client);
     }

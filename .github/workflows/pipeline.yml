@@ -1,16 +1,23 @@
 name: Pipeline v2 (rebuild)
 
-# Phase 3i (ADR-002): the scheduled runtime of the rebuilt pipeline. Shipped
-# DISABLED — manual dispatch only, every run is --dry-run (memory ledger and
-# DB, nothing written outside the job) and the cron block stays commented
-# until the Phase 4 shadow starts. Turning the schedule on is a schedule
-# change (CLAUDE.md §3) and needs Josh's approval; removing --dry-run is the
-# Phase 4 M4 step. No pull_request trigger: secrets must never reach a fork.
+# Phase 3i (ADR-002): the scheduled runtime of the rebuilt pipeline. Manual
+# dispatch only until the Phase 4 shadow is live: `dry_run` (default true)
+# keeps the ledger and DB in memory; `dry_run=false` + `live=true` writes the
+# staging Supabase project named by the SUPABASE_URL / SUPABASE_SERVICE_ROLE_KEY
+# secrets (ADR-006 M4, Phase 4 approved 2026-10-26). The cron block stays
+# commented until the secrets are registered and the first dispatched shadow
+# run is green; uncommenting it is a schedule change (CLAUDE.md §3). The
+# production publish target is refused by the CLI until the Phase 5 cutover.
+# No pull_request trigger: secrets must never reach a fork.
 on:
   workflow_dispatch:
     inputs:
+      dry_run:
+        description: "Memory ledger and DB, nothing written (--dry-run). false = Phase 4 shadow: writes the staging Supabase project (requires live=true and the SUPABASE_* secrets)"
+        type: boolean
+        default: true
       live:
-        description: "Read the live feeds (--live) instead of replaying a fixture (--replay)"
+        description: "Read the live feeds (--live) instead of replaying a fixture (--replay); required when dry_run is false"
         type: boolean
         default: false
       fixture:
@@ -67,6 +74,8 @@ jobs:
       OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
       TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
       TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
       CC_FLAG_PUBLISH_TARGET: ${{ inputs.publish_target }}
       CC_FLAG_NOTIFY_TELEGRAM: ${{ inputs.notify && 'true' || 'false' }}
       CC_FLAG_STAGES_NORMALIZE: ${{ inputs.stages_on && 'true' || 'false' }}
@@ -86,9 +95,10 @@ jobs:
           cache: npm
       - name: Install dependencies
         run: npm ci
-      - name: Pipeline run (dry-run; the ledger row, the summary and the Telegram message are the evidence)
+      - name: Pipeline run (the ledger row, the summary and the Telegram message are the evidence)
         id: run
         env:
+          DRY_RUN: ${{ inputs.dry_run }}
           LIVE: ${{ inputs.live }}
           FIXTURE: ${{ inputs.fixture }}
           SOURCES: ${{ inputs.sources }}
@@ -100,8 +110,13 @@ jobs:
           else
             mode="--replay --fixture $FIXTURE --sources $SOURCES"
           fi
-          # --dry-run is fixed here until Phase 4 M4 (CLAUDE.md §4): memory ledger and DB, nothing written.
-          node packages/pipeline/bin/pipeline.ts run --dry-run $mode --trigger dispatch --json --log-level "$LOG_LEVEL" \
+          if [ "$DRY_RUN" = "true" ]; then
+            dry="--dry-run"
+          else
+            # Phase 4 shadow (ADR-006 M4): the CLI refuses this without --live and without the SUPABASE_* names.
+            dry=""
+          fi
+          node packages/pipeline/bin/pipeline.ts run $dry $mode --trigger dispatch --json --log-level "$LOG_LEVEL" \
             > pipeline-run.json 2> pipeline-run.log
           code=$?
           set -e
