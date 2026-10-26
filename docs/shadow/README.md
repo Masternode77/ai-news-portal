@@ -17,7 +17,7 @@
 | 입력 | 어디에 | 비고 |
 |---|---|---|
 | Supabase **staging 프로젝트**(ADR-006 M2: 별도 프로젝트 권장 — 같은 마이그레이션을 그대로 적용하고 스키마 분기 코드가 필요 없다) | Supabase 대시보드 | `supabase/migrations/0001_init.sql` → `0002_candidates_rubric.sql` 순서로 SQL 편집기에서 적용(사전 승인 항목, 2026-10-18 승인·프로젝트 미정) |
-| `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY` | GitHub Actions secrets(파이프라인) | 이름 그대로. 사이트 프리뷰는 `SUPABASE_URL` + `SUPABASE_ANON_KEY` + `SITE_DATA_SOURCE=supabase`(Vercel 환경 변수, 승인 항목) |
+| `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY` | GitHub Actions secrets(파이프라인) | 이름 그대로. 샘플 검토용 사이트 프리뷰는 **별도 v2 프리뷰 Vercel 프로젝트**(§2-5)에 `SUPABASE_URL` + `SUPABASE_ANON_KEY` + `SITE_DATA_SOURCE=supabase`(Vercel 프로젝트 신설·환경 변수 = 승인 항목; 프로덕션 프로젝트 불변) |
 | `ANTHROPIC_API_KEY` | Actions secret | `config/pipeline.yaml` `llm.provider`를 `anthropic`으로 바꾸는 커밋과 함께(지금은 `fixture`) |
 | `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID` | Actions secrets | 첫 메시지는 dispatch `notify=true`로 확인 |
 | (선택) `OPENAI_API_KEY` | Actions secret | 이미지 공급자 전환은 3f notes §5.2 결정 후 |
@@ -29,8 +29,8 @@
 2. **secrets 등록** — §1의 이름으로 Actions secrets. 값은 세션·로그·문서에 두지 않는다.
 3. **드라이런 dispatch** — `pipeline.yml` 수동 실행: `dry_run=true, live=true, stages_on=true, publish_target=none, notify=true`. 기대: step summary에 funnel·"Notify (3i)" 절, Telegram에 요약 1건(`notify.sent true`). 실패하면 secrets 이름부터 확인한다.
 4. **첫 staging 쓰기** — `dry_run=false, live=true, stages_on=true, publish_target=staging, notify=true, ops_check=true`. CLI는 `--live` 없이 또는 `SUPABASE_*` 이름 없이 non-dry-run을 거부하고, `production` 타깃은 Phase 5까지 거부한다. 기대: `pipeline_runs` 행 1(`started` → `done|partial`), `stage_events` 7, `publications` ≥ 0, `ops` OK.
-5. **프리뷰 사이트** — Vercel 프리뷰(`rebuild/v2`)에 `SITE_DATA_SOURCE=supabase`, `SUPABASE_URL`, `SUPABASE_ANON_KEY`(staging anon). `/healthz`가 `dataSource supabase`·`publishedCount`를 보고하면 된다. Root Directory는 아직 레거시 그대로(Phase 5 M6).
-6. **스케줄 켜기** — 3·4가 green이면 `pipeline.yml`의 `schedule` 주석을 해제하는 1줄 PR(스케줄 변경 = CLAUDE.md §3 승인 항목; Phase 4 착수 승인에 포함된 것으로 보되 secrets 등록 전에는 켜지 않는다 — 켜면 3회/일 ConfigError 런만 쌓인다). 동시에 `llm.provider: anthropic`.
+5. **프리뷰 사이트** — 현재 Vercel 프로젝트는 Root Directory가 레거시(루트 `vercel.json` → `npm run build`·`dist`)라 `rebuild/v2` 프리뷰도 레거시 앱을 빌드하고, `apps/site`의 `/healthz`·`publications` 읽기는 그 배포에 없다(Root Directory 전환은 Phase 5 M6). 따라서 환경 변수만 넣어서는 아무것도 보이지 않는다. 샘플 검토용 프리뷰는 **별도 Vercel 프로젝트**로 만든다: 같은 레포, Root Directory `apps/site`, Production Branch `rebuild/v2`, 환경 변수 `SITE_DATA_SOURCE=supabase`·`SUPABASE_URL`·`SUPABASE_ANON_KEY`(staging anon). Vercel 프로젝트 신설은 CLAUDE.md §3 승인 항목이고 프로덕션 프로젝트는 건드리지 않는다. 확인: 그 프로젝트의 `/healthz`가 `dataSource supabase`·`publishedCount`를 보고한다. 프로젝트 없이도 샘플 검토는 가능하다 — staging Supabase 대시보드의 `publications` 테이블(`status published`)을 직접 읽는다(대체 경로).
+6. **스케줄 켜기** — 3·4가 green이면 `pipeline.yml`의 `schedule` 주석을 해제하고 `llm.provider: anthropic`으로 바꾸는 1줄 PR. 스케줄 변경은 CLAUDE.md §3·AGENTS.md의 **별도 명시 승인 항목**이라 Phase 4 착수 승인에 포함되지 않는다 — 스케줄 활성화를 지정한 승인 문구를 `docs/STATUS.md` `decisions`에 날짜와 함께 남긴 뒤에만 PR을 연다. 승인이 있어도 secrets 등록 전에는 켜지 않는다 — 켜면 3회/일 ConfigError 런만 쌓인다.
 7. **매 런 기록** — `compare.md`에 run_id·슬롯·funnel·비용·notify를 한 줄씩(Telegram 요약을 그대로 옮겨도 된다). `pipeline ops --json`을 하루 1회.
 8. **샘플 검토** — Josh가 staging `publications`(프리뷰 URL)에서 "발행했을 글"을 읽고 `compare.md` §3에 오탐/미탐 표시. 조정은 `config/{scoring,qa,banned-phrases}.yaml` **값만** 바꾸고 `version`을 올리며 `tuning-log.md`에 적는다.
 9. **롤백 드릴** — §4. 1회 실측.
@@ -59,4 +59,4 @@
 ## 5. 이 세션이 할 수 있는 것 / 없는 것
 
 - 할 수 있음: 코드·워크플로·문서·`compare.md` 갱신(Josh가 Telegram 요약이나 step summary를 붙여 주면), 설정 튜닝 PR, `pipeline ops --from <덤프>` 분석.
-- 없음: secrets 값 취급, Supabase SQL 적용(대시보드), Vercel 환경 변수 변경, 실제 dispatch(Actions 트리거는 가능하나 secrets 없이는 ConfigError). 피드 호스트·Vercel 로그 접근 불가.
+- 없음: secrets 값 취급, Supabase SQL 적용(대시보드), Vercel 프로젝트 신설·환경 변수 변경(§3 승인 항목; Josh가 지시하면 Vercel 커넥터로 대신할 수는 있다). dispatch는 Actions 트리거로 가능하나 secrets 없이는 ConfigError로 끝난다. 피드 호스트·Vercel 로그 접근 불가.
