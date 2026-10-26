@@ -2,7 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { execFile } from "node:child_process";
 import { promisify } from "node:util";
-import { mkdtemp, readFile, writeFile } from "node:fs/promises";
+import { mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 import { parsePipelineConfig, parseSourcesConfig } from "@cc/shared";
@@ -181,4 +181,61 @@ test("publish_target staging in a dry run (Phase 3h): the QA-passed draft is pub
   assert.equal(quiet.publishStats.published, 0);
   assert.equal(quiet.publishStats.decisions[0].action, "dry");
   assert.equal(quiet.funnel.published, 0);
+});
+
+test("3i: every run ends with the ADR-007 summary in the log and the JSON; Telegram is off by default (skipped), CC_FLAG_NOTIFY_TELEGRAM=true under --replay records a failed, soft delivery and the token never leaks; enabled without the token is a config error", async () => {
+  const off = await cli(["run", "--dry-run", "--replay", "--json"]);
+  assert.equal(off.code, 0, off.stderr);
+  const outOff = JSON.parse(off.stdout) as { notify: { channel: string; sent: boolean; skipped: string | null; attempts: number }; summary: { text: string; kind: string; zero_published_reasons: string[]; cost: { calls: number; cap_usd: number } }; budget: { calls: number; state: string } };
+  assert.deepEqual(outOff.notify, { ...outOff.notify, channel: "telegram", sent: false, skipped: "disabled", attempts: 0 });
+  assert.equal(outOff.summary.kind, "run_summary");
+  assert.match(outOff.summary.text, /^\[CC pipeline\] \d{4}-\d{2}-\d{2} \d{2}:\d{2} KST · run [0-9a-f]{8} · done\nfetched \d+ \(sources /);
+  assert.deepEqual(outOff.summary.zero_published_reasons, ["normalize: skipped (flag_off)"], "the first blocker with the default flags");
+  assert.equal(outOff.summary.cost.cap_usd, 2);
+  assert.equal(outOff.budget.state, "ok");
+  assert.ok(off.stderr.includes('"msg":"run summary"'));
+
+  const on = await cli(["run", "--dry-run", "--replay", "--json"], { CC_FLAG_NOTIFY_TELEGRAM: "true", TELEGRAM_BOT_TOKEN: "111:secret-token-value", TELEGRAM_CHAT_ID: "42" });
+  assert.equal(on.code, 0, "a failed delivery is soft; the run result stands");
+  const outOn = JSON.parse(on.stdout) as { notify: { sent: boolean; skipped: string | null; attempts: number; error: string | null }; ledger: { runs: { flags: Record<string, unknown> }[] } };
+  assert.deepEqual([outOn.notify.sent, outOn.notify.skipped, outOn.notify.attempts], [false, null, 1]);
+  assert.match(outOn.notify.error!, /^NETWORK_DISABLED: replay mode forbids network access/);
+  assert.equal(outOn.ledger.runs[0]!.flags["notify_telegram"], true, "the override is in the run's flag snapshot");
+  assert.ok(!on.stdout.includes("secret-token-value") && !on.stderr.includes("secret-token-value"), "the token never reaches stdout or the log");
+  assert.ok(on.stderr.includes("telegram delivery failed (soft"));
+
+  const missing = await cli(["run", "--dry-run", "--replay", "--json"], { CC_FLAG_NOTIFY_TELEGRAM: "true", TELEGRAM_BOT_TOKEN: "", TELEGRAM_CHAT_ID: "" });
+  assert.equal(missing.code, 2);
+  assert.match(missing.stderr, /TELEGRAM_BOT_TOKEN is required when notify.telegram.enabled is true/);
+  assert.equal((await cli(["run", "--dry-run", "--replay", "--json"], { CC_FLAG_NOTIFY_TELEGRAM: "maybe" })).code, 2, "a non-boolean flag value fails loudly");
+});
+
+test("3i: pipeline ops --from assesses a run dump; a fresh completed run is ok (exit 0), a stale ledger exits 1, Supabase without names is a config error", async () => {
+  const fresh = await cli(["run", "--dry-run", "--replay", "--json"]);
+  assert.equal(fresh.code, 0, fresh.stderr);
+  const dir = await mkdtemp(join(tmpdir(), "cc-ops-"));
+  const freshFile = join(dir, "fresh.json");
+  await writeFile(freshFile, fresh.stdout);
+  const ok = await cli(["ops", "--from", freshFile, "--json"]);
+  assert.equal(ok.code, 0, ok.stderr);
+  const report = JSON.parse(ok.stdout) as { status: string; last_success: { status: string } | null; text: string; stale_after_hours: number };
+  assert.equal(report.status, "ok");
+  assert.equal(report.last_success?.status, "done");
+  assert.equal(report.stale_after_hours, 12, "config/pipeline.yaml slot_hours 8 × 1.5");
+  assert.match(report.text, /^\[CC ops\] .* · OK\n/);
+
+  const dump = JSON.parse(fresh.stdout) as { ledger: { runs: { started_at: string; ended_at: string | null }[] } };
+  const twoDaysAgo = new Date(Date.now() - 48 * 3_600_000).toISOString();
+  dump.ledger.runs[0]!.started_at = twoDaysAgo;
+  dump.ledger.runs[0]!.ended_at = twoDaysAgo;
+  const staleFile = join(dir, "stale.json");
+  await writeFile(staleFile, JSON.stringify(dump));
+  const stale = await cli(["ops", "--from", staleFile]);
+  assert.equal(stale.code, 1);
+  assert.match(stale.stdout, /· STALE\n/);
+
+  const noDb = await cli(["ops"], { SUPABASE_URL: "", SUPABASE_SERVICE_ROLE_KEY: "" });
+  assert.equal(noDb.code, 2);
+  assert.match(noDb.stderr, /SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY are required/);
+  await rm(dir, { recursive: true, force: true });
 });
