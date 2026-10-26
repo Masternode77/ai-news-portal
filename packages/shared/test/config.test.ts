@@ -174,9 +174,13 @@ test("publish block (Phase 3h): documented defaults when absent, strict keys, a 
   assert.throws(() => parsePipelineConfig(`${SAMPLE_PIPELINE_YAML}\npublish: { slug_conflict: overwrite }\n`, { env: {} }), ConfigError);
   assert.throws(() => parsePipelineConfig(`${SAMPLE_PIPELINE_YAML}\npublish: { base_url: https://x.test, extra: 1 }\n`, { env: {} }), (e: unknown) => e instanceof ConfigError && /extra/.test(e.message));
   const redirects = await loadRedirectsConfig(resolve(import.meta.dirname, "../../../config/redirects.yaml"));
-  assert.equal(redirects.length, 4);
-  assert.ok(redirects.every((r) => r.status === 301 && r.from_path.startsWith("/") && r.to_path.startsWith("/")));
-  assert.equal(new Set(redirects.map((r) => r.from_path)).size, 4);
+  assert.equal(redirects.length, 17);
+  assert.ok(redirects.every((r) => (r.status === 301 || r.status === 410) && r.from_path.startsWith("/") && r.to_path.startsWith("/")));
+  assert.equal(redirects.filter((r) => r.status === 301).length, 4);
+  // 410 rows (2026-10-26): the 13 columns quarantined after the preserve list; Gone has no Location, so to_path is the placeholder "/".
+  assert.deepEqual(redirects.filter((r) => r.status === 410).map((r) => r.to_path), Array(13).fill("/"));
+  assert.ok(redirects.filter((r) => r.status === 410).every((r) => /^\/column\/.+-2026-08-\d\d\/$/.test(r.from_path)));
+  assert.equal(new Set(redirects.map((r) => r.from_path)).size, 17);
   assert.ok(redirects.some((r) => r.from_path === "/author/rowan-hale/" && r.to_path === "/author/josh-inn/"));
 });
 

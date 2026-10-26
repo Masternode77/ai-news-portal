@@ -305,7 +305,7 @@ Phase 3a 개정 — 선택 필드 3개(단순 소스는 여전히 ≤10줄). `ex
 
 `config/pipeline.yaml` `publish`(Phase 3h, `PublishConfig`, 전부 기본값 있음): `base_url`(발행 URL·revalidate 요청의 루트), `slug_conflict: update|skip|fail`(다른 초안이 쓴 slug; 같은 초안의 재발행은 항상 제자리 갱신), `redirects_sync`(매 발행 런에 `config/redirects.yaml`을 `redirects` 테이블로 upsert), `revalidate { enabled(기본 false), token_env(기본 CC_REVALIDATE_TOKEN — 환경 변수 **이름**), timeout_ms, extra_paths(기본 ["/"]) }`. 무엇을 쓸지는 `flags.publish_target`이, 어떻게 쓸지는 이 블록이 정한다.
 
-`config/redirects.yaml`(Phase 3h, `RedirectsConfig`, CLI `--redirects`): `[{ from_path, to_path, status: 301|410 }]`, `from_path` 유일·둘 다 루트 상대 경로. 초기 4행(vercel.json의 4건; astro.config 1건은 중복). 격리 컬럼은 404 유지(ADR-005).
+`config/redirects.yaml`(Phase 3h, `RedirectsConfig`, CLI `--redirects`): `[{ from_path, to_path, status: 301|410 }]`, `from_path` 유일·둘 다 루트 상대 경로. 초기 4행(vercel.json의 4건; astro.config 1건은 중복) + 보존 목록 이후 격리된 컬럼 13건의 410 행(2026-10-26 Josh 결정; `to_path`는 `/`로 두고 410 응답에는 Location이 없다). 보존 목록 시점부터 404였던 격리 컬럼 2건은 그대로 404(ADR-005).
 
 `config/qa.yaml`: 규칙 목록·순서·severity·임계값·`auto_pass`(soft).
 
