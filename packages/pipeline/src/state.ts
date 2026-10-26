@@ -289,8 +289,37 @@ export const DraftWithImage = z.strictObject({
 });
 export type DraftWithImage = z.infer<typeof DraftWithImage>;
 
-export const PublishedRef = z.strictObject({ slug: z.string(), url: z.string() });
+export const PublishedRef = z.strictObject({ slug: z.string(), url: z.string(), action: z.enum(["inserted", "updated", "skipped"]).optional(), id: z.string().optional() });
 export type PublishedRef = z.infer<typeof PublishedRef>;
+
+/** Phase 3h: one line per publish candidate (`dry` = publish_target none, nothing written). */
+export const PublishDecision = z.strictObject({
+  draft_id: z.string(),
+  slug: z.string().nullable(),
+  action: z.enum(["inserted", "updated", "skipped", "failed", "dry"]),
+  url: z.string().nullable(),
+  error: z.string().nullable(),
+});
+export type PublishDecision = z.infer<typeof PublishDecision>;
+
+export const PublishStats = z.strictObject({
+  target: z.enum(["none", "staging", "production"]),
+  candidates: NonNegativeInt,
+  published: NonNegativeInt,
+  inserted: NonNegativeInt,
+  updated: NonNegativeInt,
+  skipped: NonNegativeInt,
+  failed: NonNegativeInt,
+  redirects_synced: NonNegativeInt,
+  revalidate: z.strictObject({ requested: NonNegativeInt, ok: NonNegativeInt, failed: NonNegativeInt, skipped: z.boolean() }),
+  decisions: z.array(PublishDecision).max(100),
+  ms: NonNegativeInt,
+});
+export type PublishStats = z.infer<typeof PublishStats>;
+
+export function emptyPublishStats(): PublishStats {
+  return { target: "none", candidates: 0, published: 0, inserted: 0, updated: 0, skipped: 0, failed: 0, redirects_synced: 0, revalidate: { requested: 0, ok: 0, failed: 0, skipped: true }, decisions: [], ms: 0 };
+}
 
 export const PipelineState = z.strictObject({
   sources: z.array(SourceConfig),
@@ -309,6 +338,7 @@ export const PipelineState = z.strictObject({
   imageStats: ImageStats,
   withImages: z.array(DraftWithImage),
   published: z.array(PublishedRef),
+  publishStats: PublishStats,
 });
 export type PipelineState = z.infer<typeof PipelineState>;
 
@@ -349,5 +379,6 @@ export function initialState(sources: SourceConfig[]): PipelineState {
     imageStats: emptyImageStats(),
     withImages: [],
     published: [],
+    publishStats: emptyPublishStats(),
   };
 }

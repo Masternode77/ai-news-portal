@@ -125,6 +125,19 @@ interface Result {
     decisions: { slug: string; provider: string; placeholder: boolean; path: string; cost_usd: number; attempts: { provider: string; ok: boolean; code: string | null; error: string | null; ms: number }[]; disposition?: string }[];
     ms: number;
   };
+  publishStats?: {
+    target: string;
+    candidates: number;
+    published: number;
+    inserted: number;
+    updated: number;
+    skipped: number;
+    failed: number;
+    redirects_synced: number;
+    revalidate: { requested: number; ok: number; failed: number; skipped: boolean };
+    decisions: { draft_id: string; slug: string | null; action: string; url: string | null; error: string | null }[];
+    ms: number;
+  };
   ledger?: { deadLetters: { ref_id: string; error: string }[] };
 }
 
@@ -319,6 +332,17 @@ export function summarize(result: Result): string {
   } else if (image) {
     lines.push("");
     lines.push(`### Image (3f) — no QA-passed drafts reached the stage (passed ${image.passed}); provider order and placeholders are covered by the unit tests`);
+  }
+
+  const publish = result.publishStats;
+  if (publish && publish.candidates > 0) {
+    lines.push("");
+    const revalidate = publish.revalidate.skipped ? "revalidate off" : `revalidate ${publish.revalidate.ok}/${publish.revalidate.requested} ok (${publish.revalidate.failed} failed)`;
+    lines.push(`### Publish (3h) — target ${cell(publish.target)} · candidates ${publish.candidates} · published ${publish.published} (inserted ${publish.inserted}, updated ${publish.updated}) · skipped ${publish.skipped} · failed ${publish.failed} · redirects synced ${publish.redirects_synced} · ${revalidate} · ${publish.ms} ms`);
+    lines.push("");
+    lines.push("| slug | action | url | error |");
+    lines.push("|---|---|---|---|");
+    for (const d of publish.decisions) lines.push(`| ${cell(d.slug ?? d.draft_id)} | ${cell(d.action)} | ${d.url ? link(d.url) : ""} | ${cell(d.error ?? "")} |`);
   }
 
   lines.push("| stage | status | duration ms |");

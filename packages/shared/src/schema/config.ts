@@ -161,6 +161,31 @@ export const NormalizeConfig = z.strictObject({
 });
 export type NormalizeConfig = z.infer<typeof NormalizeConfig>;
 
+/**
+ * Phase 3h site publisher. `publish_target` (flags) decides whether anything is written;
+ * this block decides how. Revalidation is off until the Phase 4 preview deployment: a
+ * failed revalidation never fails a publication (ADR-005: ISR expires within 300 s).
+ */
+export const PublishConfig = z.strictObject({
+  /** Public URL root for published refs and revalidation requests. */
+  base_url: z.string().url().default("https://www.computecurrent.com"),
+  /** An existing slug written by a *different* draft: update in place (default), skip it, or fail that publication. A re-run of the same draft always updates in place. */
+  slug_conflict: z.enum(["update", "skip", "fail"]).default("update"),
+  /** Upsert config/redirects.yaml into the redirects table on every publishing run. */
+  redirects_sync: z.boolean().default(true),
+  revalidate: z
+    .strictObject({
+      enabled: z.boolean().default(false),
+      /** Name of the environment variable holding the ISR bypass token (`x-prerender-revalidate`); the value stays in the environment. */
+      token_env: z.string().regex(/^[A-Z][A-Z0-9_]*$/, "an environment variable name").default("CC_REVALIDATE_TOKEN"),
+      timeout_ms: z.number().int().positive().max(60_000).default(10_000),
+      /** Paths revalidated after every publishing run in addition to the published slugs. */
+      extra_paths: z.array(z.string().startsWith("/")).max(20).default(["/"]),
+    })
+    .prefault({}),
+});
+export type PublishConfig = z.infer<typeof PublishConfig>;
+
 export const PipelineConfig = z.strictObject({
   schedule: ScheduleConfig,
   flags: z.strictObject({
@@ -175,6 +200,7 @@ export const PipelineConfig = z.strictObject({
   /** Optional in YAML; every field has a documented default. */
   ingest: IngestConfig.prefault({}),
   normalize: NormalizeConfig.prefault({}),
+  publish: PublishConfig.prefault({}),
 });
 export type PipelineConfig = z.infer<typeof PipelineConfig>;
 

@@ -39,3 +39,10 @@ export function draftId(candidateId: string, contentType: string, promptVersion:
 export function newsBriefSlug(canonicalUrl: string, title: string): string {
   return `news/${createHash("sha1").update(`${canonicalUrl}|${title}`).digest("hex").slice(0, 16)}`;
 }
+
+export const PUBLICATION_ID_NAMESPACE = "computecurrent:publication";
+
+/** Phase 3h: a publications row id derived from the slug, so a re-publish of the same slug keeps its id. */
+export function publicationId(slug: string): string {
+  return deterministicUuid(PUBLICATION_ID_NAMESPACE, slug);
+}

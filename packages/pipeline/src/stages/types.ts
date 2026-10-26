@@ -1,7 +1,7 @@
 /** Per-stage input/output schemas. Each stage parses both (P2). */
 import { z } from "zod";
 import { CandidateInsert, DraftInsert, NonNegativeInt, QaVerdict, RawItemInsert, SourceConfig } from "@cc/shared";
-import { DraftWithImage, GenerateStats, ImageStats, NormalizeStats, PublishedRef, ScoreStats, SourceStats, QaStats } from "../state.ts";
+import { DraftWithImage, GenerateStats, ImageStats, NormalizeStats, PublishedRef, ScoreStats, SourceStats, QaStats, PublishStats } from "../state.ts";
 
 export const IngestInput = z.strictObject({ sources: z.array(SourceConfig) });
 export type IngestInput = z.infer<typeof IngestInput>;
@@ -47,7 +47,7 @@ export type ImageInput = z.infer<typeof ImageInput>;
 export const ImageOutput = z.strictObject({ withImages: z.array(DraftWithImage), verdicts: z.array(QaVerdict), stats: ImageStats });
 export type ImageOutput = z.infer<typeof ImageOutput>;
 
-export const PublishInput = z.strictObject({ withImages: z.array(DraftWithImage) });
+export const PublishInput = z.strictObject({ withImages: z.array(DraftWithImage), rawItems: z.array(RawItemInsert) });
 export type PublishInput = z.infer<typeof PublishInput>;
-export const PublishOutput = z.strictObject({ published: z.array(PublishedRef) });
+export const PublishOutput = z.strictObject({ published: z.array(PublishedRef), stats: PublishStats });
 export type PublishOutput = z.infer<typeof PublishOutput>;

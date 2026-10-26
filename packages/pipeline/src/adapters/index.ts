@@ -46,4 +46,6 @@ export type { ImageAttempt, ImageChain, ImageChainOptions, ImageChainResult } fr
 export { ImageError, errorCodeOf as imageErrorCodeOf } from "./image/errors.ts";
 export { MemoryImageStore, createLocalImageStore, imagePath } from "./image-store/memory.ts";
 export { createNoopPublisher } from "./publisher/noop.ts";
+export { PublishError, createSitePublisher, publicationUrl } from "./publisher/site.ts";
+export type { SitePublisher, SitePublisherOptions } from "./publisher/site.ts";
 export { HostPacer } from "./source/pacer.ts";

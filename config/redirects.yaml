@@ -1,0 +1,19 @@
+# Compute Current rebuild — URL redirects (Phase 3h, ADR-005 R8, contracts.md §4).
+# Validated strictly by packages/shared/src/schema/config.ts (RedirectsConfig): from_path unique, both
+# paths root-relative, status 301 or 410. The site publisher upserts these rows into the `redirects`
+# table on every publishing run (publish.redirects_sync); the site answers them from that table, so
+# the legacy vercel.json / astro.config.mjs rules can be retired at the Phase 5 cutover.
+# Source: docs/diagnosis/05-preserve-list.csv (vercel.json 4 rows; the astro.config.mjs row duplicates
+# the second one). The two quarantined columns stay 404 on purpose (ADR-005: same slug if restored).
+- from_path: /column/malaysia-collapsed-a-multi-billion-dollar-server-smuggling-route-2026-10-04
+  to_path: /column/malaysia-server-trade-gap-permit-enforcement-2026-10-04/
+  status: 301
+- from_path: /column/malaysia-collapsed-a-multi-billion-dollar-server-smuggling-route-2026-10-04/
+  to_path: /column/malaysia-server-trade-gap-permit-enforcement-2026-10-04/
+  status: 301
+- from_path: /author/rowan-hale
+  to_path: /author/josh-inn/
+  status: 301
+- from_path: /author/rowan-hale/
+  to_path: /author/josh-inn/
+  status: 301
