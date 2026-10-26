@@ -6,7 +6,7 @@
 
 | # | run_id | 슬롯(KST) | status | fetched (ok/cfg) | new | scored | gate | drafts | qa | published | cost USD | notify | 비고 |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| | | | | | | | | | | | | | |
+| 0 | `1f37243a`(dry-run, 원장 없음) | 2026-10-27 02:25(dispatch) | partial | 200 (74/80) | 200 | 197 | 19 | 2 | 2 | 0 (none, would 2) | 0.00 | off | secrets 등록 전 첫 전 단계 라이브 dispatch(run 40368348551, `main` `2b40ebcf`): fixture LLM·placeholder 이미지. gate 19 = full 3·brief 16, relevance 하한 미달 155. 선택 1위 uk-desnz "COP31 pavilion partners"(relevance 0.698·total 0.87)는 채점 오탐 후보 → §3 샘플 검토 대상. 실패: insidehpc `SOURCE_UNREACHABLE` ×3, hpcwire `HTTP_403` ×2, capacity-media `HOST_NOT_ALLOWED` ×1(소스 후속 목록과 일치) |
 
 ## 2. 일별 집계 (완료 기준 1·2·5)
 
