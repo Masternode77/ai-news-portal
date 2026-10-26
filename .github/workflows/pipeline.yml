@@ -150,11 +150,16 @@ jobs:
 
   # ADR-007: the heartbeat is the ledger. Reads pipeline_runs and exits 1 when the latest completed
   # run is older than slot_hours × 1.5, no run ever completed, or the last two finished runs failed.
-  # Phase 4 wires the GitHub-issue alarm (operations-monitor semantics) on top of this exit code.
+  # Phase 4 (3i notes §5.3, Josh 2026-10-26): the GitHub-issue alarm sits on top of that exit code —
+  # one issue found by its body marker, written only on a state transition, closed on recovery,
+  # reopened on relapse; exit 2 (no verdict) is the alert state `unknown`, never healthy.
   ops-check:
     if: ${{ inputs.ops_check }}
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    permissions:
+      contents: read
+      issues: write   # the alarm issue only; the run job above keeps contents: read
     env:
       SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
       SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
@@ -171,14 +176,30 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Ops check against the run ledger
+        id: ops
         run: |
           if [ -z "$SUPABASE_URL" ] || [ -z "$SUPABASE_SERVICE_ROLE_KEY" ]; then
             echo "## Ops check skipped: SUPABASE_URL / SUPABASE_SERVICE_ROLE_KEY not configured (names only)" >> "$GITHUB_STEP_SUMMARY"
+            echo "exit_code=skipped" >> "$GITHUB_OUTPUT"
             exit 0
           fi
           set +e
           node packages/pipeline/bin/pipeline.ts ops --json > ops.json
           code=$?
           set -e
-          { echo "## Ops check (exit $code)"; echo '```'; node -e "process.stdout.write(require('./ops.json').text + '\n')"; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
-          exit $code
+          echo "exit_code=$code" >> "$GITHUB_OUTPUT"
+          echo "ops exit code: $code (0 ok, 1 alert, 2 usage/config/fetch error)"
+          { echo "## Ops check (exit $code)"; echo '```'; node -e "try { process.stdout.write(require('./ops.json').text + '\\n') } catch { process.stdout.write('no ops verdict (see the job log)\\n') }"; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
+      - name: "Ops alarm issue (marker, write on transition only, close on recovery)"
+        if: ${{ always() && steps.ops.outputs.exit_code != 'skipped' && steps.ops.outputs.exit_code != '' }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          OPS_EXIT_CODE: ${{ steps.ops.outputs.exit_code }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          node packages/pipeline/tools/ops-issue-sync.ts --report ops.json --exit-code "$OPS_EXIT_CODE" --run-url "$RUN_URL" --json | tee ops-issue.json
+          { echo "### Ops alarm issue"; echo '```'; cat ops-issue.json; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
+      - name: Fail the job on an ops alert (the alarm issue is the durable signal; this keeps the run red too)
+        if: ${{ always() && steps.ops.outputs.exit_code != 'skipped' && steps.ops.outputs.exit_code != '' && steps.ops.outputs.exit_code != '0' }}
+        run: |
+          echo "ops exit code ${{ steps.ops.outputs.exit_code }}"; exit 1

@@ -89,10 +89,11 @@ test("a slug already written by another draft follows publish.slug_conflict: upd
 test("syncRedirects upserts config/redirects.yaml into the redirects table idempotently; publish.redirects_sync false writes nothing", async () => {
   const { ctx, db } = ctxWith();
   const publisher = createSitePublisher({ publish: ctx.config.publish, redirects: REDIRECTS });
-  assert.equal(await publisher.syncRedirects(ctx), 4);
-  assert.equal(await publisher.syncRedirects(ctx), 4);
+  assert.equal(await publisher.syncRedirects(ctx), 17);
+  assert.equal(await publisher.syncRedirects(ctx), 17);
   const rows = db.rows("redirects");
-  assert.equal(rows.length, 4);
+  assert.equal(rows.length, 17);
+  assert.equal(rows.filter((r) => r["status"] === 410).length, 13);
   assert.deepEqual(rows.find((r) => r["from_path"] === "/author/rowan-hale"), { from_path: "/author/rowan-hale", to_path: "/author/josh-inn/", status: 301 });
   const off = ctxWith("publish: { base_url: https://example.test, redirects_sync: false }");
   assert.equal(await createSitePublisher({ publish: off.ctx.config.publish, redirects: REDIRECTS }).syncRedirects(off.ctx), 0);
