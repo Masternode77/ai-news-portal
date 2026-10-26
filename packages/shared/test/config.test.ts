@@ -179,3 +179,21 @@ test("publish block (Phase 3h): documented defaults when absent, strict keys, a 
   assert.equal(new Set(redirects.map((r) => r.from_path)).size, 4);
   assert.ok(redirects.some((r) => r.from_path === "/author/rowan-hale/" && r.to_path === "/author/josh-inn/"));
 });
+
+test("notify block (Phase 3i): Telegram defaults when only `enabled` is given, strict keys, upper-case env names, run outcomes in `on`; CC_FLAG_NOTIFY_TELEGRAM overrides the switch", () => {
+  const notify = parsePipelineConfig(SAMPLE_PIPELINE_YAML, { env: {} }).config.notify;
+  assert.deepEqual(notify.telegram, { enabled: false, bot_token_env: "TELEGRAM_BOT_TOKEN", chat_id_env: "TELEGRAM_CHAT_ID", base_url: "https://api.telegram.org", timeout_ms: 10000, max_retries: 1, retry_backoff_ms: 1000, max_chars: 3800, on: ["done", "partial", "budget_stop", "failed"] });
+  assert.deepEqual(notify.summary, { timezone: "Asia/Seoul", top_failures: 3, max_published: 5 });
+  const custom = parsePipelineConfig(SAMPLE_PIPELINE_YAML.replace("notify: { telegram: { enabled: false } }", "notify: { telegram: { enabled: true, on: [failed, budget_stop], max_chars: 1000 }, summary: { timezone: UTC, top_failures: 5 } }"), { env: {} }).config.notify;
+  assert.deepEqual(custom.telegram.on, ["failed", "budget_stop"]);
+  assert.equal(custom.telegram.max_chars, 1000);
+  assert.equal(custom.summary.timezone, "UTC");
+  assert.throws(() => parsePipelineConfig(SAMPLE_PIPELINE_YAML.replace("notify: { telegram: { enabled: false } }", "notify: { telegram: { enabled: false, bot_token: abc } }"), { env: {} }), (e: unknown) => e instanceof ConfigError && /bot_token/.test(e.message), "a token value has no place in the config (strict)");
+  assert.throws(() => parsePipelineConfig(SAMPLE_PIPELINE_YAML.replace("notify: { telegram: { enabled: false } }", "notify: { telegram: { enabled: false, bot_token_env: telegram_token } }"), { env: {} }), ConfigError);
+  assert.throws(() => parsePipelineConfig(SAMPLE_PIPELINE_YAML.replace("notify: { telegram: { enabled: false } }", "notify: { telegram: { enabled: false, on: [started] } }"), { env: {} }), ConfigError, "started is never notified");
+  assert.throws(() => parsePipelineConfig(SAMPLE_PIPELINE_YAML.replace("notify: { telegram: { enabled: false } }", "notify: { telegram: { enabled: false, max_chars: 5000 } }"), { env: {} }), ConfigError, "above the Bot API limit");
+  const overridden = parsePipelineConfig(SAMPLE_PIPELINE_YAML, { env: { CC_FLAG_NOTIFY_TELEGRAM: "true" } });
+  assert.equal(overridden.config.notify.telegram.enabled, true);
+  assert.deepEqual(overridden.overrides.map((o) => [o.env, o.path, o.value]), [["CC_FLAG_NOTIFY_TELEGRAM", "notify.telegram.enabled", true]]);
+  assert.throws(() => parsePipelineConfig(SAMPLE_PIPELINE_YAML, { env: { CC_FLAG_NOTIFY_TELEGRAM: "maybe" } }), ConfigError);
+});

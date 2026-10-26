@@ -2,7 +2,8 @@
 /**
  * Renders a `pipeline run --json` result as Markdown for the GitHub Actions
  * step summary (rebuild-ci.yml, ingest-live-dry-run job): funnel, per-source table,
- * extraction totals, normalize decisions (3b), score verdicts (3c), generated drafts (3d) and dead letters by taxonomy code.
+ * extraction totals, normalize decisions (3b), score verdicts (3c), generated drafts (3d), the run summary and
+ * notifier outcome (3i) and dead letters by taxonomy code.
  *
  *   node packages/pipeline/tools/ingest-dry-run-summary.ts <result.json>
  */
@@ -29,6 +30,9 @@ interface Result {
   runId: string;
   status: string;
   live?: boolean;
+  /** Phase 3i: the run summary (ADR-007 text) and the notifier outcome. */
+  summary?: { text: string; kind: string; failures: { code: string; count: number; sample: string | null }[]; zero_published_reasons: string[]; cost: { spent_usd: number; cap_usd: number; calls: number; state: string } };
+  notify?: { channel: string; sent: boolean; skipped: string | null; attempts: number; error: string | null; ms: number };
   funnel: Record<string, unknown>;
   stages: { stage: string; status: string; counts: Record<string, number>; reason?: string; durationMs: number }[];
   sourceStats?: {
@@ -343,6 +347,18 @@ export function summarize(result: Result): string {
     lines.push("| slug | action | url | error |");
     lines.push("|---|---|---|---|");
     for (const d of publish.decisions) lines.push(`| ${cell(d.slug ?? d.draft_id)} | ${cell(d.action)} | ${d.url ? link(d.url) : ""} | ${cell(d.error ?? "")} |`);
+  }
+
+  if (result.summary) {
+    const notify = result.notify;
+    const delivery = !notify ? "no notifier" : notify.sent ? `${notify.channel} sent (${notify.attempts} attempt${notify.attempts === 1 ? "" : "s"}, ${notify.ms} ms)` : notify.skipped ? `${notify.channel} skipped (${notify.skipped})` : `${notify.channel} failed (soft): ${cell(notify.error ?? "")}`;
+    lines.push("");
+    lines.push(`### Notify (3i) — ${result.summary.kind} · ${delivery} · cost USD ${result.summary.cost.spent_usd.toFixed(2)} / cap ${result.summary.cost.cap_usd.toFixed(2)} (${result.summary.cost.state}, ${result.summary.cost.calls} calls)`);
+    lines.push("");
+    lines.push("```");
+    lines.push(result.summary.text);
+    lines.push("```");
+    lines.push("");
   }
 
   lines.push("| stage | status | duration ms |");

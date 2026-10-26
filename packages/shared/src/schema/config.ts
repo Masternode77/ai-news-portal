@@ -115,9 +115,49 @@ export const ImageConfig = z
   });
 export type ImageConfig = z.infer<typeof ImageConfig>;
 
-export const NotifyConfig = z.strictObject({
-  telegram: z.strictObject({ enabled: z.boolean() }),
+const EnvName = z.string().regex(/^[A-Z][A-Z0-9_]*$/, "an environment variable name");
+
+/** Run outcomes that can trigger a notification (a run is never notified while `started`). */
+export const NotifyOn = z.enum(["done", "partial", "budget_stop", "failed"]);
+export type NotifyOn = z.infer<typeof NotifyOn>;
+
+/**
+ * Telegram delivery of the run summary (Phase 3i, ADR-007). Off by default. The bot token and the chat id
+ * are read from the environment by NAME only and never logged; a delivery failure is soft (counted and
+ * logged, never a run failure). Plain text, no parse mode, so no escaping can break a message.
+ */
+export const TelegramNotifyConfig = z.strictObject({
+  enabled: z.boolean(),
+  bot_token_env: EnvName.default("TELEGRAM_BOT_TOKEN"),
+  chat_id_env: EnvName.default("TELEGRAM_CHAT_ID"),
+  base_url: z.string().url().default("https://api.telegram.org"),
+  timeout_ms: z.number().int().positive().max(60_000).default(10_000),
+  /** Retries on 429 / 5xx / network errors only (never on another 4xx, never in --replay). */
+  max_retries: z.number().int().nonnegative().max(3).default(1),
+  retry_backoff_ms: z.number().int().nonnegative().max(30_000).default(1000),
+  /** Bot API messages are capped at 4096 characters; a longer summary is cut with a marker (head first). */
+  max_chars: z.number().int().min(200).max(4096).default(3800),
+  /** Which run outcomes are sent; the others are reported as `status_filtered`. */
+  on: z.array(NotifyOn).min(1).default(["done", "partial", "budget_stop", "failed"]),
 });
+export type TelegramNotifyConfig = z.infer<typeof TelegramNotifyConfig>;
+
+/** Shape of the run summary text (Phase 3i); the same text goes to the log, the --json output and Telegram. */
+export const NotifySummaryConfig = z.strictObject({
+  /** Local time zone of the header (ADR-007 shows KST); fixed offsets, no DST. */
+  timezone: z.enum(["Asia/Seoul", "UTC"]).default("Asia/Seoul"),
+  /** Failure codes listed ("failures (top 3)"). */
+  top_failures: z.number().int().positive().max(10).default(3),
+  /** Published lines listed before the rest folds into "+N more". */
+  max_published: z.number().int().positive().max(20).default(5),
+});
+export type NotifySummaryConfig = z.infer<typeof NotifySummaryConfig>;
+
+export const NotifyConfig = z.strictObject({
+  telegram: TelegramNotifyConfig,
+  summary: NotifySummaryConfig.prefault({}),
+});
+export type NotifyConfig = z.infer<typeof NotifyConfig>;
 
 export const IngestConfig = z.strictObject({
   /** Feeds fetched at the same time (legacy: unbounded Promise.all). */

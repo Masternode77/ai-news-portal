@@ -11,3 +11,13 @@ export function resolveGitSha(env: NodeJS.ProcessEnv = process.env, cwd: string 
     return null;
   }
 }
+
+/** The Actions run page (`GITHUB_SERVER_URL/GITHUB_REPOSITORY/actions/runs/GITHUB_RUN_ID`) when the process is one; null elsewhere. */
+export function resolveRunUrl(env: NodeJS.ProcessEnv = process.env): string | null {
+  const server = env["GITHUB_SERVER_URL"];
+  const repo = env["GITHUB_REPOSITORY"];
+  const runId = env["GITHUB_RUN_ID"];
+  if (!server || !repo || !runId) return null;
+  if (!/^https?:\/\/[^\s/]+$/.test(server) || !/^[\w.-]+\/[\w.-]+$/.test(repo) || !/^\d+$/.test(runId)) return null;
+  return `${server}/${repo}/actions/runs/${runId}`;
+}
