@@ -10,4 +10,8 @@ export { initialState, PipelineState, SourceStats, DraftWithImage, PublishedRef 
 export * from "./notify/index.ts";
 export { assessOperations, formatOpsReport } from "./ops/check.ts";
 export type { OpsOptions, OpsReport, OpsRunRef, OpsStatus } from "./ops/check.ts";
+export { alarmState, findOpsIssue, OPS_ISSUE_MARKER, OPS_ISSUE_TITLE, planOpsIssue, readIssueState, renderOpsIssue } from "./ops/issue.ts";
+export type { OpsAlarmState, OpsIssueContext, OpsIssuePlan, OpsIssueRef } from "./ops/issue.ts";
+export { applyOpsIssuePlan, createGitHubIssuesClient, GitHubIssuesError } from "./ops/github-issues.ts";
+export type { GitHubIssuesClient, GitHubIssuesClientOptions, OpsIssueResult } from "./ops/github-issues.ts";
 export { resolveGitSha, resolveRunUrl } from "./git.ts";
