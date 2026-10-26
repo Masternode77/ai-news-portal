@@ -13,6 +13,7 @@
  */
 import { Funnel, STAGE_NAMES } from "@cc/shared";
 import type {
+  BudgetState,
   DbPort,
   FlagOverride,
   Funnel as FunnelType,
@@ -80,9 +81,16 @@ export interface RunResult {
   status: Exclude<RunStatus, "started">;
   funnel: FunnelType;
   costTotalUsd: number;
+  /** Phase 3i: what the summary reports against the cap. `spent_usd` equals costTotalUsd. */
+  budget: { spent_usd: number; calls: number; state: BudgetState; stop_reason: string | null };
   stages: StageResult[];
   state: PipelineState;
   durationMs: number;
+}
+
+/** A run that threw outside a stage carries its ledger id so the failure notice can name it (Phase 3i). */
+export interface RunCrashError extends Error {
+  runId?: string;
 }
 
 export const NETWORK_DISABLED_MESSAGE = "NETWORK_DISABLED: replay mode forbids network access";
@@ -262,6 +270,7 @@ export async function runPipeline(options: RunOptions): Promise<RunResult> {
       status,
       funnel,
       costTotalUsd: budget.spentUsd,
+      budget: { spent_usd: budget.spentUsd, calls: budget.calls, state: budget.state(), stop_reason: budget.stopReason },
       stages: stageResults,
       state,
       durationMs: endedAt.getTime() - startedAt.getTime(),
@@ -274,6 +283,7 @@ export async function runPipeline(options: RunOptions): Promise<RunResult> {
     const endedAt = clock();
     await ledger.finishRun(runId, endedAt, { status: "failed", funnel: buildFunnel(runId, startedAt, state, [...errors, message], completed), costTotalUsd: budget.spentUsd, error: message });
     runLogger.error("run failed outside a stage", { error: message });
+    if (error instanceof Error) (error as RunCrashError).runId = runId;
     throw error;
   }
 }

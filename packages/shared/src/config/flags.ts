@@ -19,6 +19,8 @@ export interface FlagOverride {
 export interface FlagSnapshot {
   stages: StageFlags;
   publish_target: PublishTarget;
+  /** Phase 3i: `notify.telegram.enabled` after overrides (`CC_FLAG_NOTIFY_TELEGRAM`). */
+  notify_telegram: boolean;
   overrides: FlagOverride[];
 }
 
@@ -39,6 +41,7 @@ export function applyFlagOverrides(
   const overrides: FlagOverride[] = [];
   const stages: Record<string, boolean> = { ...config.flags.stages };
   let publishTarget: string = config.flags.publish_target;
+  let notifyTelegram = config.notify.telegram.enabled;
 
   for (const [key, raw] of Object.entries(env)) {
     if (!key.startsWith(FLAG_ENV_PREFIX) || raw === undefined) continue;
@@ -58,12 +61,19 @@ export function applyFlagOverrides(
       overrides.push({ env: key, path: "flags.publish_target", raw, value: publishTarget });
       continue;
     }
-    throw new ConfigError(`${key}: unknown flag (known: CC_FLAG_STAGES_<STAGE>, CC_FLAG_PUBLISH_TARGET)`);
+    if (name === "NOTIFY_TELEGRAM") {
+      // The Telegram switch lives in notify.telegram.enabled; the override keeps the same path (contracts §7).
+      notifyTelegram = parseBoolean(key, raw);
+      overrides.push({ env: key, path: "notify.telegram.enabled", raw, value: notifyTelegram });
+      continue;
+    }
+    throw new ConfigError(`${key}: unknown flag (known: CC_FLAG_STAGES_<STAGE>, CC_FLAG_PUBLISH_TARGET, CC_FLAG_NOTIFY_TELEGRAM)`);
   }
 
   const parsed = PipelineConfigSchema.safeParse({
     ...config,
     flags: { stages, publish_target: publishTarget },
+    notify: { ...config.notify, telegram: { ...config.notify.telegram, enabled: notifyTelegram } },
   });
   if (!parsed.success) {
     throw new ConfigError(`flag override produced an invalid config: ${parsed.error.issues.map((i) => `${i.path.join(".")}: ${i.message}`).join("; ")}`);
@@ -75,6 +85,7 @@ export function flagSnapshot(config: PipelineConfig, overrides: FlagOverride[] =
   return {
     stages: { ...config.flags.stages },
     publish_target: config.flags.publish_target,
+    notify_telegram: config.notify.telegram.enabled,
     overrides: overrides.map((o) => ({ ...o })),
   };
 }
