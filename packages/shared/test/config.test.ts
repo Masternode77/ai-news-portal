@@ -9,6 +9,7 @@ import {
   ConfigError,
   loadBannedPhrasesConfig,
   loadPipelineConfig,
+  loadRedirectsConfig,
   loadScoringConfig,
   loadSourcesConfig,
   parseBannedPhrasesConfig,
@@ -160,4 +161,21 @@ test("prompt files (Phase 3d) carry a strict YAML front matter and the body is t
   assert.throws(() => parsePromptFile(head.replace("news_brief", "poem") + "body"), ConfigError, "task must be an LlmTask");
   assert.throws(() => parsePromptFile(head.replace("---\n", "temperature: 0.2\n---\n").replace(/^temperature/m, "---\ntask: news_brief\nversion: 1\nmodel_hint: m\noutput_schema: NewsBriefDraft\nmax_output_tokens: 10\ntemperature") + "body"), ConfigError, "unknown keys fail (strict)");
   assert.throws(() => parsePromptFile(head.replace("2500", "0") + "body"), ConfigError, "max_output_tokens must be positive");
+});
+
+test("publish block (Phase 3h): documented defaults when absent, strict keys, a lowercase token_env or an unknown slug_conflict is rejected; config/redirects.yaml loads with unique root paths", async () => {
+  const defaults = parsePipelineConfig(SAMPLE_PIPELINE_YAML, { env: {} }).config.publish;
+  assert.deepEqual(defaults, { base_url: "https://www.computecurrent.com", slug_conflict: "update", redirects_sync: true, revalidate: { enabled: false, token_env: "CC_REVALIDATE_TOKEN", timeout_ms: 10000, extra_paths: ["/"] } });
+  const custom = parsePipelineConfig(`${SAMPLE_PIPELINE_YAML}\npublish: { base_url: https://preview.example.test, slug_conflict: skip, revalidate: { enabled: true, extra_paths: ["/", "/sitemap.xml"] } }\n`, { env: {} }).config.publish;
+  assert.equal(custom.slug_conflict, "skip");
+  assert.equal(custom.revalidate.enabled, true);
+  assert.deepEqual(custom.revalidate.extra_paths, ["/", "/sitemap.xml"]);
+  assert.throws(() => parsePipelineConfig(`${SAMPLE_PIPELINE_YAML}\npublish: { revalidate: { token_env: lower_case } }\n`, { env: {} }), ConfigError);
+  assert.throws(() => parsePipelineConfig(`${SAMPLE_PIPELINE_YAML}\npublish: { slug_conflict: overwrite }\n`, { env: {} }), ConfigError);
+  assert.throws(() => parsePipelineConfig(`${SAMPLE_PIPELINE_YAML}\npublish: { base_url: https://x.test, extra: 1 }\n`, { env: {} }), (e: unknown) => e instanceof ConfigError && /extra/.test(e.message));
+  const redirects = await loadRedirectsConfig(resolve(import.meta.dirname, "../../../config/redirects.yaml"));
+  assert.equal(redirects.length, 4);
+  assert.ok(redirects.every((r) => r.status === 301 && r.from_path.startsWith("/") && r.to_path.startsWith("/")));
+  assert.equal(new Set(redirects.map((r) => r.from_path)).size, 4);
+  assert.ok(redirects.some((r) => r.from_path === "/author/rowan-hale/" && r.to_path === "/author/josh-inn/"));
 });

@@ -162,3 +162,23 @@ test("scoring fixture through generate, qa and image (Phase 3g): one draft passe
   assert.equal(result.funnel.qa_passed, 1);
   assert.equal(result.funnel.published, 0);
 });
+
+test("publish_target staging in a dry run (Phase 3h): the QA-passed draft is published into the memory DB, redirects are synced, revalidation stays off; none publishes nothing", async () => {
+  const flags = { CC_FLAG_STAGES_NORMALIZE: "true", CC_FLAG_STAGES_SCORE: "true", CC_FLAG_STAGES_GENERATE: "true", CC_FLAG_STAGES_QA: "true", CC_FLAG_STAGES_IMAGE: "true" };
+  const args = ["run", "--dry-run", "--replay", "--fixture", "scoring", "--sources", "fixtures/sources/scoring.yaml", "--stage", "ingest,normalize,score,generate,qa,image,publish", "--json"];
+  const staging = await cli(args, { ...flags, CC_FLAG_PUBLISH_TARGET: "staging" });
+  assert.equal(staging.code, 0, staging.stderr);
+  const result = JSON.parse(staging.stdout);
+  assert.equal(result.status, "done");
+  const p = result.publishStats;
+  assert.deepEqual([p.target, p.candidates, p.published, p.inserted, p.failed, p.redirects_synced, p.revalidate.skipped], ["staging", 1, 1, 1, 0, 4, true]);
+  assert.equal(result.funnel.published, 1);
+  assert.match(p.decisions[0].url, /^https:\/\/www\.computecurrent\.com\/news\/[0-9a-f]{16}\/$/);
+  const none = await cli(args, flags);
+  assert.equal(none.code, 0, none.stderr);
+  const quiet = JSON.parse(none.stdout);
+  assert.equal(quiet.publishStats.target, "none");
+  assert.equal(quiet.publishStats.published, 0);
+  assert.equal(quiet.publishStats.decisions[0].action, "dry");
+  assert.equal(quiet.funnel.published, 0);
+});
