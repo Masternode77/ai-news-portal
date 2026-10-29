@@ -46,3 +46,13 @@ test("flagSnapshot records the applied state for the run ledger", () => {
   assert.equal(snapshot.publish_target, "none");
   assert.equal(snapshot.overrides[0]?.env, "CC_FLAG_STAGES_GENERATE");
 });
+
+test("CC_FLAG_LLM_PROVIDER switches llm.provider for the Phase 4 shadow and rejects unknown providers; the snapshot records it", () => {
+  const { config, overrides } = applyFlagOverrides(base(), { CC_FLAG_LLM_PROVIDER: "anthropic" });
+  assert.equal(config.llm.provider, "anthropic");
+  assert.deepEqual(overrides.map((o) => [o.env, o.path, o.value]), [["CC_FLAG_LLM_PROVIDER", "llm.provider", "anthropic"]]);
+  assert.equal(flagSnapshot(config, overrides).llm_provider, "anthropic");
+  assert.equal(flagSnapshot(base()).llm_provider, "fixture");
+  assert.throws(() => applyFlagOverrides(base(), { CC_FLAG_LLM_PROVIDER: "openai" }), ConfigError);
+  assert.equal(base().llm.provider, "fixture");
+});

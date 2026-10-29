@@ -1,14 +1,16 @@
 name: Pipeline v2 (rebuild)
 
-# Phase 3i (ADR-002): the scheduled runtime of the rebuilt pipeline. Manual
-# dispatch only until the Phase 4 shadow is live: `dry_run` (default true)
-# keeps the ledger and DB in memory; `dry_run=false` + `live=true` writes the
-# staging Supabase project named by the SUPABASE_URL / SUPABASE_SERVICE_ROLE_KEY
-# secrets (ADR-006 M4, Phase 4 approved 2026-10-26). The cron block stays
-# commented until the secrets are registered and the first dispatched shadow
-# run is green; uncommenting it is a schedule change (CLAUDE.md §3). The
-# production publish target is refused by the CLI until the Phase 5 cutover.
-# No pull_request trigger: secrets must never reach a fork.
+# Phase 3i (ADR-002): the scheduled runtime of the rebuilt pipeline. Two ways in.
+# `workflow_dispatch` takes inputs: `dry_run` (default true) keeps the ledger and
+# DB in memory; `dry_run=false` + `live=true` writes the staging Supabase project
+# named by the SUPABASE_URL / SUPABASE_SERVICE_ROLE_KEY secrets (ADR-006 M4).
+# `schedule` is the Phase 4 shadow itself (enabled 2026-10-29 under Josh's explicit
+# schedule approval of 2026-10-26, CLAUDE.md §3): a scheduled run carries no inputs,
+# so the `github.event_name == 'schedule'` expressions below pin it to live feeds,
+# staging writes, every stage on, the real model (CC_FLAG_LLM_PROVIDER=anthropic),
+# the Telegram summary, the ops check and the alarm issue. The production publish
+# target is refused by the CLI until the Phase 5 cutover. No pull_request trigger:
+# secrets must never reach a fork.
 on:
   workflow_dispatch:
     inputs:
@@ -38,6 +40,11 @@ on:
         type: choice
         default: none
         options: [none, staging]
+      llm_provider:
+        description: "llm.provider for this run (CC_FLAG_LLM_PROVIDER): fixture replays recorded drafts; anthropic calls the Messages API (needs ANTHROPIC_API_KEY, spends money up to budget.run_usd)"
+        type: choice
+        default: fixture
+        options: [fixture, anthropic, disabled]
       notify:
         description: "Send the run summary to Telegram (notify.telegram via CC_FLAG_NOTIFY_TELEGRAM; needs TELEGRAM_BOT_TOKEN and TELEGRAM_CHAT_ID secrets)"
         type: boolean
@@ -51,9 +58,9 @@ on:
         type: choice
         default: info
         options: [debug, info, warn, error]
-  # Phase 4 (ADR-002 — enable only with Josh's approval, CLAUDE.md §3 schedule change):
-  # schedule:
-  #   - cron: "45 15,23,7 * * *"   # 00:45 / 08:45 / 16:45 KST, mirrors config/pipeline.yaml schedule.cron
+  # Phase 4 shadow (ADR-002; schedule approval Josh 2026-10-26, enabled 2026-10-29). Mirrors config/pipeline.yaml schedule.cron.
+  schedule:
+    - cron: "45 15,23,7 * * *"   # 00:45 / 08:45 / 16:45 KST
 
 permissions:
   contents: read
@@ -68,21 +75,24 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 45
     env:
-      # Secrets by name only (absent → empty → the CLI treats them as unset). Phase 3: none is required
-      # because llm.provider is fixture, image.provider is placeholder and notify.telegram is off.
+      # Secrets by name only (absent → empty → the CLI treats them as unset). A scheduled run needs all of
+      # SUPABASE_URL / SUPABASE_SERVICE_ROLE_KEY / ANTHROPIC_API_KEY / TELEGRAM_BOT_TOKEN / TELEGRAM_CHAT_ID;
+      # a dispatch with the defaults (dry run, fixture model, no Telegram) needs none.
       ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
       OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
       TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
       TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
       SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
       SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
-      CC_FLAG_PUBLISH_TARGET: ${{ inputs.publish_target }}
-      CC_FLAG_NOTIFY_TELEGRAM: ${{ inputs.notify && 'true' || 'false' }}
-      CC_FLAG_STAGES_NORMALIZE: ${{ inputs.stages_on && 'true' || 'false' }}
-      CC_FLAG_STAGES_SCORE: ${{ inputs.stages_on && 'true' || 'false' }}
-      CC_FLAG_STAGES_GENERATE: ${{ inputs.stages_on && 'true' || 'false' }}
-      CC_FLAG_STAGES_QA: ${{ inputs.stages_on && 'true' || 'false' }}
-      CC_FLAG_STAGES_IMAGE: ${{ inputs.stages_on && 'true' || 'false' }}
+      # A scheduled run has no inputs: it is always the shadow run (staging, every stage, Telegram, anthropic).
+      CC_FLAG_PUBLISH_TARGET: ${{ github.event_name == 'schedule' && 'staging' || inputs.publish_target }}
+      CC_FLAG_NOTIFY_TELEGRAM: ${{ (github.event_name == 'schedule' || inputs.notify) && 'true' || 'false' }}
+      CC_FLAG_LLM_PROVIDER: ${{ github.event_name == 'schedule' && 'anthropic' || inputs.llm_provider }}
+      CC_FLAG_STAGES_NORMALIZE: ${{ (github.event_name == 'schedule' || inputs.stages_on) && 'true' || 'false' }}
+      CC_FLAG_STAGES_SCORE: ${{ (github.event_name == 'schedule' || inputs.stages_on) && 'true' || 'false' }}
+      CC_FLAG_STAGES_GENERATE: ${{ (github.event_name == 'schedule' || inputs.stages_on) && 'true' || 'false' }}
+      CC_FLAG_STAGES_QA: ${{ (github.event_name == 'schedule' || inputs.stages_on) && 'true' || 'false' }}
+      CC_FLAG_STAGES_IMAGE: ${{ (github.event_name == 'schedule' || inputs.stages_on) && 'true' || 'false' }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
@@ -98,11 +108,12 @@ jobs:
       - name: Pipeline run (the ledger row, the summary and the Telegram message are the evidence)
         id: run
         env:
-          DRY_RUN: ${{ inputs.dry_run }}
-          LIVE: ${{ inputs.live }}
-          FIXTURE: ${{ inputs.fixture }}
-          SOURCES: ${{ inputs.sources }}
-          LOG_LEVEL: ${{ inputs.log_level }}
+          DRY_RUN: ${{ github.event_name == 'schedule' && 'false' || inputs.dry_run }}
+          LIVE: ${{ github.event_name == 'schedule' && 'true' || inputs.live }}
+          FIXTURE: ${{ inputs.fixture || 'scoring' }}
+          SOURCES: ${{ inputs.sources || 'fixtures/sources/scoring.yaml' }}
+          LOG_LEVEL: ${{ inputs.log_level || 'info' }}
+          TRIGGER: ${{ github.event_name == 'schedule' && 'schedule' || 'dispatch' }}
         run: |
           set +e
           if [ "$LIVE" = "true" ]; then
@@ -116,7 +127,7 @@ jobs:
             # Phase 4 shadow (ADR-006 M4): the CLI refuses this without --live and without the SUPABASE_* names.
             dry=""
           fi
-          node packages/pipeline/bin/pipeline.ts run $dry $mode --trigger dispatch --json --log-level "$LOG_LEVEL" \
+          node packages/pipeline/bin/pipeline.ts run $dry $mode --trigger "$TRIGGER" --json --log-level "$LOG_LEVEL" \
             > pipeline-run.json 2> pipeline-run.log
           code=$?
           set -e
@@ -154,7 +165,7 @@ jobs:
   # one issue found by its body marker, written only on a state transition, closed on recovery,
   # reopened on relapse; exit 2 (no verdict) is the alert state `unknown`, never healthy.
   ops-check:
-    if: ${{ inputs.ops_check }}
+    if: ${{ github.event_name == 'schedule' || inputs.ops_check }}
     runs-on: ubuntu-latest
     timeout-minutes: 10
     permissions:
