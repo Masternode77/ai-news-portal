@@ -47,7 +47,7 @@ test("staging: a QA-passed draft becomes one publications row — brief fields a
   const out = PublishOutput.parse(await publishStage.run(input, ctx));
   assert.equal(out.published.length, 1);
   assert.deepEqual(out.published[0], { slug: BRIEF.slug, url: `https://example.test/${BRIEF.slug}/`, action: "inserted", id: publicationId(BRIEF.slug) });
-  assert.deepEqual([out.stats.published, out.stats.inserted, out.stats.updated, out.stats.skipped, out.stats.failed, out.stats.redirects_synced], [1, 1, 0, 0, 0, 4]);
+  assert.deepEqual([out.stats.published, out.stats.inserted, out.stats.updated, out.stats.skipped, out.stats.failed, out.stats.redirects_synced], [1, 1, 0, 0, 0, 17]);
   assert.equal(out.stats.revalidate.skipped, true, "revalidation is off by default");
   const row = (db.rows("publications") as PublicationRow[])[0]!;
   assert.equal(row.title, BRIEF.title_ko);
@@ -63,7 +63,7 @@ test("staging: a QA-passed draft becomes one publications row — brief fields a
   assert.equal(row.publisher, "pipeline");
   assert.equal(row.status, "published");
   assert.equal(row.published_at, NOW.toISOString());
-  assert.equal(db.rows("redirects").length, 4);
+  assert.equal(db.rows("redirects").length, 17);
   const again = PublishOutput.parse(await publishStage.run(input, ctx));
   assert.equal(again.stats.updated, 1);
   assert.equal(db.rows("publications").length, 1);
@@ -96,7 +96,7 @@ test("end to end on the scoring fixture with publish_target staging: generate �
   assert.equal(result.status, "done", JSON.stringify(result.stages));
   const publish = result.stages.find((s) => s.stage === "publish")!;
   assert.equal(publish.status, "done");
-  assert.deepEqual([publish.counts["candidates"], publish.counts["published"], publish.counts["inserted"], publish.counts["failed"], publish.counts["redirects_synced"], publish.counts["revalidate_failed"]], [1, 1, 1, 0, 4, 0]);
+  assert.deepEqual([publish.counts["candidates"], publish.counts["published"], publish.counts["inserted"], publish.counts["failed"], publish.counts["redirects_synced"], publish.counts["revalidate_failed"]], [1, 1, 1, 0, 17, 0]);
   assert.equal(result.funnel.qa_passed, 1);
   assert.equal(result.funnel.published, 1);
   const rows = db.rows("publications") as PublicationRow[];

@@ -184,7 +184,7 @@ test("publish_target staging in a dry run (Phase 3h): the QA-passed draft is pub
   const result = JSON.parse(staging.stdout);
   assert.equal(result.status, "done");
   const p = result.publishStats;
-  assert.deepEqual([p.target, p.candidates, p.published, p.inserted, p.failed, p.redirects_synced, p.revalidate.skipped], ["staging", 1, 1, 1, 0, 4, true]);
+  assert.deepEqual([p.target, p.candidates, p.published, p.inserted, p.failed, p.redirects_synced, p.revalidate.skipped], ["staging", 1, 1, 1, 0, 17, true]);
   assert.equal(result.funnel.published, 1);
   assert.match(p.decisions[0].url, /^https:\/\/www\.computecurrent\.com\/news\/[0-9a-f]{16}\/$/);
   const none = await cli(args, flags);

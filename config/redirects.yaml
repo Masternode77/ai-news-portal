@@ -4,7 +4,12 @@
 # table on every publishing run (publish.redirects_sync); the site answers them from that table, so
 # the legacy vercel.json / astro.config.mjs rules can be retired at the Phase 5 cutover.
 # Source: docs/diagnosis/05-preserve-list.csv (vercel.json 4 rows; the astro.config.mjs row duplicates
-# the second one). The two quarantined columns stay 404 on purpose (ADR-005: same slug if restored).
+# the second one). The two columns that were already quarantined when the preserve list was taken stay 404 on
+# purpose (ADR-005: same slug if restored).
+# 410 rows (Josh decision 2026-10-26, 3h notes §5.1): the 13 columns that were indexed in the preserve list
+# but are quarantined now (not_public in `migrate-legacy-publications.ts --dry-run`) answer 410 Gone, which
+# tells search engines to drop them (R8: every preserved URL ends in 200, 301 or 410). A 410 has no Location,
+# so to_path is unused for these rows and set to / only because the column is NOT NULL.
 - from_path: /column/malaysia-collapsed-a-multi-billion-dollar-server-smuggling-route-2026-10-04
   to_path: /column/malaysia-server-trade-gap-permit-enforcement-2026-10-04/
   status: 301
@@ -17,3 +22,42 @@
 - from_path: /author/rowan-hale/
   to_path: /author/josh-inn/
   status: 301
+- from_path: /column/switch-s-ipo-is-a-grid-timing-disclosure-test-not-a-demand-story-2026-08-28/
+  to_path: /
+  status: 410
+- from_path: /column/sandbox-escapes-move-liability-from-model-risk-to-infrastructure-2026-08-28/
+  to_path: /
+  status: 410
+- from_path: /column/quantum-networking-hardware-is-not-ai-infrastructure-yet-2026-08-25/
+  to_path: /
+  status: 410
+- from_path: /column/nvidia-s-500-billion-financing-bet-assumes-compute-acts-like-inf-2026-08-24/
+  to_path: /
+  status: 410
+- from_path: /column/amd-s-taalas-bet-only-pays-if-inference-models-stop-changing-2026-08-23/
+  to_path: /
+  status: 410
+- from_path: /column/delta-s-150kw-cdu-is-a-retrofit-admission-not-a-roadmap-win-2026-08-23/
+  to_path: /
+  status: 410
+- from_path: /column/gym-class-hack-shifts-agent-liability-from-theory-to-contract-2026-08-23/
+  to_path: /
+  status: 410
+- from_path: /column/efficiency-as-strategy-means-supply-stays-tight-longer-than-cape-2026-08-22/
+  to_path: /
+  status: 410
+- from_path: /column/eaton-s-quantum-contract-is-a-grid-planning-bet-not-a-quantum-be-2026-08-22/
+  to_path: /
+  status: 410
+- from_path: /column/sk-hynix-s-tiered-memory-pitch-is-a-margin-defense-play-not-an-a-2026-08-21/
+  to_path: /
+  status: 410
+- from_path: /column/amazon-s-gilroy-site-proves-zoning-lead-time-beats-community-con-2026-08-20/
+  to_path: /
+  status: 410
+- from_path: /column/nvidia-s-800-vdc-hybrid-rack-is-a-substation-queue-workaround-no-2026-08-18/
+  to_path: /
+  status: 410
+- from_path: /column/samsung-s-vertical-stacking-play-moves-the-constraint-from-memor-2026-08-17/
+  to_path: /
+  status: 410
