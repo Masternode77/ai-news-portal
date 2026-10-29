@@ -106,14 +106,16 @@ test("no verdict (exit 2) is the alert state unknown, never healthy; its body sa
 
 interface Call { method: string; url: string; body: unknown; auth: string | null }
 
-function fakeGitHub(issues: unknown[], failWith?: number) {
+function fakeGitHub(issues: unknown[], failWith?: number, morePages: unknown[][] = []) {
   const calls: Call[] = [];
+  const pages = [issues, ...morePages];
   const fetch: typeof globalThis.fetch = async (input, init) => {
     const url = String(input);
     const headers = new Headers(init?.headers);
     calls.push({ method: init?.method ?? "GET", url, body: init?.body ? JSON.parse(String(init.body)) : null, auth: headers.get("authorization") });
     if (failWith) return new Response(JSON.stringify({ message: "nope" }), { status: failWith });
-    if (url.endsWith("/issues?state=all&per_page=100&sort=updated&direction=desc")) return new Response(JSON.stringify(issues), { status: 200 });
+    const listMatch = /\/issues\?state=all&per_page=100&sort=updated&direction=desc&page=(\d+)$/.exec(url);
+    if (listMatch) return new Response(JSON.stringify(pages[Number(listMatch[1]) - 1] ?? []), { status: 200 });
     if (/\/issues$/.test(url)) return new Response(JSON.stringify({ number: 101, html_url: "https://github.com/o/r/issues/101" }), { status: 201 });
     if (/\/issues\/\d+\/comments$/.test(url)) return new Response(JSON.stringify({ id: 5 }), { status: 201 });
     if (/\/issues\/\d+$/.test(url)) return new Response(JSON.stringify({ number: Number(url.split("/").pop()), html_url: `https://github.com/o/r/issues/${url.split("/").pop()}` }), { status: 200 });
@@ -134,7 +136,7 @@ test("GitHub client: bearer token only in the header, create / comment-then-upda
   assert.deepEqual([closed.action, closed.number], ["close", 7]);
   const methods = gh.calls.map((c) => `${c.method} ${c.url.replace("https://api.github.com/repos/o/r", "")}`);
   assert.deepEqual(methods, [
-    "GET /issues?state=all&per_page=100&sort=updated&direction=desc",
+    "GET /issues?state=all&per_page=100&sort=updated&direction=desc&page=1",
     "POST /issues",
     "POST /issues/7/comments",
     "PATCH /issues/7",
@@ -182,4 +184,28 @@ test("ops-issue-sync tool: args, report reading (absent / invalid → unknown), 
   assert.equal(await syncOpsIssue(live, { GITHUB_TOKEN: "ghs_secret", GITHUB_REPOSITORY: "o/r" }, (l) => out.push(l), { fetch: fakeGitHub([], 500).fetch, now: NOW }), 1);
   assert.match(out[0] ?? "", /HTTP 500/);
   assert.ok(out.join("\n").indexOf("ghs_secret") === -1);
+});
+
+
+test("GitHub client pagination: a full first page without the alarm walks on; an open alarm issue stops the walk; a closed one does not; maxPages caps it", async () => {
+  const filler = (from: number, count: number, extra: Partial<OpsIssueRef> = {}) => Array.from({ length: count }, (_, i) => ({ number: from + i, state: "open", title: `other ${from + i}`, body: "unrelated", ...extra }));
+  // Page 1 full of other issues, page 2 holds the alarm: found after two requests.
+  const sunk = fakeGitHub(filler(1000, 100), undefined, [[...filler(500, 30), issue({ number: 7 })]]);
+  const client = createGitHubIssuesClient({ repo: "o/r", token: "t", fetch: sunk.fetch });
+  const rows = await client.list();
+  assert.equal(rows.length, 131);
+  assert.equal(findOpsIssue(rows)?.number, 7);
+  assert.equal(sunk.calls.length, 2);
+  // An open alarm issue on a full first page stops the walk after one request.
+  const early = fakeGitHub([issue({ number: 7 }), ...filler(2000, 99)], undefined, [filler(3000, 100)]);
+  assert.equal((await createGitHubIssuesClient({ repo: "o/r", token: "t", fetch: early.fetch }).list()).length, 100);
+  assert.equal(early.calls.length, 1);
+  // A closed alarm issue on page 1 does not stop the walk: the open one on page 2 wins.
+  const closedFirst = fakeGitHub([issue({ number: 5, state: "closed" }), ...filler(2000, 99)], undefined, [[issue({ number: 9 })]]);
+  const found = findOpsIssue(await createGitHubIssuesClient({ repo: "o/r", token: "t", fetch: closedFirst.fetch }).list());
+  assert.deepEqual([found?.number, closedFirst.calls.length], [9, 2]);
+  // maxPages bounds the walk when every page is full.
+  const endless = fakeGitHub(filler(1, 100), undefined, [filler(101, 100), filler(201, 100), filler(301, 100)]);
+  assert.equal((await createGitHubIssuesClient({ repo: "o/r", token: "t", fetch: endless.fetch, maxPages: 2 }).list()).length, 200);
+  assert.equal(endless.calls.length, 2);
 });

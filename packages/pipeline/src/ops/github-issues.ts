@@ -6,6 +6,7 @@
  * `fetch` is injected so the tests and the dry run never reach GitHub.
  */
 import type { OpsIssuePlan, OpsIssueRef } from "./issue.ts";
+import { OPS_ISSUE_MARKER } from "./issue.ts";
 
 export interface GitHubIssuesClientOptions {
   /** `owner/name` (GITHUB_REPOSITORY in Actions). */
@@ -14,6 +15,8 @@ export interface GitHubIssuesClientOptions {
   fetch: typeof globalThis.fetch;
   apiBase?: string;
   userAgent?: string;
+  /** Pages of 100 issues (newest updated first) to walk when looking for the alarm issue; default 20. */
+  maxPages?: number;
 }
 
 export class GitHubIssuesError extends Error {
@@ -57,9 +60,18 @@ export function createGitHubIssuesClient(options: GitHubIssuesClientOptions): Gi
 
   return {
     async list() {
-      // The most recently updated 100 issues: the alarm issue is touched on every transition, so it is among them.
-      const rows = await request<Array<{ number: number; state: string; title: string; body: string | null; pull_request?: unknown }>>("GET", "/issues?state=all&per_page=100&sort=updated&direction=desc");
-      return rows.map((row) => ({ number: row.number, state: row.state === "open" ? "open" : "closed", title: row.title, body: row.body ?? null, pull_request: row.pull_request }));
+      // Newest updated first, 100 per page. An unchanged alarm issue is deliberately never rewritten, so it can
+      // sink below the first page; walk on until an open alarm issue is seen, the pages run out, or maxPages
+      // (Codex PR #76). A closed alarm issue does not stop the walk: an open one further down must win.
+      const maxPages = Math.max(1, options.maxPages ?? 20);
+      const all: OpsIssueRef[] = [];
+      for (let page = 1; page <= maxPages; page += 1) {
+        const rows = await request<Array<{ number: number; state: string; title: string; body: string | null; pull_request?: unknown }>>("GET", `/issues?state=all&per_page=100&sort=updated&direction=desc&page=${page}`);
+        for (const row of rows) all.push({ number: row.number, state: row.state === "open" ? "open" : "closed", title: row.title, body: row.body ?? null, pull_request: row.pull_request });
+        const openAlarmSeen = rows.some((row) => !row.pull_request && row.state === "open" && typeof row.body === "string" && row.body.includes(OPS_ISSUE_MARKER));
+        if (rows.length < 100 || openAlarmSeen) break;
+      }
+      return all;
     },
     create(title, body) {
       return request("POST", "/issues", { title, body });

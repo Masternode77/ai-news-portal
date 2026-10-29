@@ -197,8 +197,14 @@ jobs:
           OPS_EXIT_CODE: ${{ steps.ops.outputs.exit_code }}
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         run: |
-          node packages/pipeline/tools/ops-issue-sync.ts --report ops.json --exit-code "$OPS_EXIT_CODE" --run-url "$RUN_URL" --json | tee ops-issue.json
-          { echo "### Ops alarm issue"; echo '```'; cat ops-issue.json; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
+          # No pipe here: the default `bash -e` shell has no pipefail, so piping into tee would hide a failed sync (Codex PR #76).
+          set +e
+          node packages/pipeline/tools/ops-issue-sync.ts --report ops.json --exit-code "$OPS_EXIT_CODE" --run-url "$RUN_URL" --json > ops-issue.json
+          code=$?
+          set -e
+          cat ops-issue.json
+          { echo "### Ops alarm issue (sync exit $code)"; echo '```'; cat ops-issue.json; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
+          exit $code
       - name: Fail the job on an ops alert (the alarm issue is the durable signal; this keeps the run red too)
         if: ${{ always() && steps.ops.outputs.exit_code != 'skipped' && steps.ops.outputs.exit_code != '' && steps.ops.outputs.exit_code != '0' }}
         run: |
