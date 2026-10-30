@@ -10,7 +10,7 @@
  * flags; an invalid one fails the load.
  */
 import { z } from "zod";
-import { NonNegativeInt, UnitInterval } from "./tables.ts";
+import { NonNegativeInt, ReviewStatus, UnitInterval } from "./tables.ts";
 
 export const RUBRIC_AXES = ["relevance", "timeliness", "impact", "reader_value", "insight_potential"] as const;
 export type RubricAxis = (typeof RUBRIC_AXES)[number];
@@ -171,6 +171,14 @@ export const SelectionConfig = z.strictObject({
    * caps it at `brief` in code (fail-closed; AGENTS.md forbids long-form from an unverified source).
    */
   abstract_max_tier: CandidateTier,
+  /**
+   * Phase 4 (2026-10-30, shadow runs 2·3): a passing candidate whose `news_brief` draft for the *current* prompt
+   * version carries one of these review statuses is not selected again — the row gets `PREVIOUSLY_REJECTED`
+   * (rejected) or `PENDING_REVIEW` (pending) instead of a slot. Without it a hard-QA rejection was regenerated
+   * every run (same two items in runs 2 and 3, ≈ $0.09 each) while the item stayed in the feeds. An empty list
+   * selects regardless; a new prompt version re-qualifies everything automatically.
+   */
+  skip_review_status: z.array(ReviewStatus).default(["rejected", "pending"]),
 });
 export type SelectionConfig = z.infer<typeof SelectionConfig>;
 

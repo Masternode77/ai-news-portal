@@ -10,7 +10,7 @@
 # scripts/lib/relevance-classifier.mjs rules re-expressed as data
 # (docs/migration/notes/3c-scoring-selection.md §1); the other axes are new.
 
-version: "2026-10-23.3"        # candidates.rubric_version = score/<version>; bump when a rule, weight or term changes
+version: "2026-10-30.1"        # candidates.rubric_version = score/<version>; bump when a rule, weight or term changes (2026-10-30.1: selection.skip_review_status)
 
 weights:                       # total = Σ weight × axis score (must sum to 1)
   relevance: 0.35
@@ -29,6 +29,7 @@ insight_trigger: 0.7           # insight_potential ≥ this marks the candidate 
 selection:                     # the per-cycle count comes from config/pipeline.yaml caps.briefs_per_cycle
   per_source_max: 1            # at most one selected candidate per source and run (legacy source-repeat penalty)
   abstract_max_tier: brief     # text_scope: abstract sources (arXiv) never reach tier full (legacy signal_card cap)
+  skip_review_status: [rejected, pending]   # Phase 4: a passing candidate whose news_brief draft (current prompt version) was hard-rejected or is held is not selected again (PREVIOUSLY_REJECTED / PENDING_REVIEW); [] = select regardless
   # No knob for a full-rights item without a positive extraction (payload.extraction.ok = true): the stage scores it on its
   # feed text as rewrite_only and caps it at brief in code (fail-closed, AGENTS.md; Codex PR #61).
 

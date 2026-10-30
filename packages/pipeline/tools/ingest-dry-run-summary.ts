@@ -70,6 +70,7 @@ interface Result {
     below_relevance?: number;
     selected: number;
     not_selected: number;
+    skipped_reviewed?: number;
     insight_eligible: number;
     shortfall: number;
     decisions: {
@@ -241,7 +242,7 @@ export function summarize(result: Result): string {
   const scoreStage = result.stages.find((stage) => stage.stage === "score");
   if (score && scoreStage?.status === "done") {
     lines.push("");
-    lines.push(`### Score (3c) — candidates ${score.candidates} · passed ${score.passed} (full ${score.full}, brief ${score.brief}) · below threshold ${score.below_threshold}${score.below_relevance !== undefined ? ` (${score.below_relevance} on relevance)` : ""} · selected ${score.selected} (not selected ${score.not_selected}, shortfall ${score.shortfall}) · insight-eligible ${score.insight_eligible} · ${score.ms} ms`);
+    lines.push(`### Score (3c) — candidates ${score.candidates} · passed ${score.passed} (full ${score.full}, brief ${score.brief}) · below threshold ${score.below_threshold}${score.below_relevance !== undefined ? ` (${score.below_relevance} on relevance)` : ""} · selected ${score.selected} (not selected ${score.not_selected}${score.skipped_reviewed ? `, skipped reviewed ${score.skipped_reviewed}` : ""}, shortfall ${score.shortfall}) · insight-eligible ${score.insight_eligible} · ${score.ms} ms`);
     if (score.decisions.length > 0) {
       lines.push("");
       lines.push(`<details><summary>Verdicts by total (first ${Math.min(score.decisions.length, 40)} of ${score.candidates})</summary>`);

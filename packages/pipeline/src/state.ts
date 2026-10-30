@@ -125,6 +125,8 @@ export const ScoreStats = z.strictObject({
   selected: NonNegativeInt,
   /** Passed but beyond the cycle cap or the per-source cap. */
   not_selected: NonNegativeInt,
+  /** Passed but skipped because a news_brief draft for the current prompt version was rejected or is held (selection.skip_review_status). */
+  skipped_reviewed: NonNegativeInt,
   insight_eligible: NonNegativeInt,
   /** caps.briefs_per_cycle.min minus selected, when positive (never filled from below the threshold). */
   shortfall: NonNegativeInt,
@@ -134,7 +136,7 @@ export const ScoreStats = z.strictObject({
 export type ScoreStats = z.infer<typeof ScoreStats>;
 
 export function emptyScoreStats(): ScoreStats {
-  return { candidates: 0, passed: 0, full: 0, brief: 0, below_threshold: 0, below_relevance: 0, selected: 0, not_selected: 0, insight_eligible: 0, shortfall: 0, decisions: [], ms: 0 };
+  return { candidates: 0, passed: 0, full: 0, brief: 0, below_threshold: 0, below_relevance: 0, selected: 0, not_selected: 0, skipped_reviewed: 0, insight_eligible: 0, shortfall: 0, decisions: [], ms: 0 };
 }
 
 /** One generation attempt (Phase 3d); the first 100 are mirrored into the `--json` output. */
