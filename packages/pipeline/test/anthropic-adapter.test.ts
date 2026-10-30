@@ -1,8 +1,9 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { parsePipelineConfig, silentLogger } from "@cc/shared";
+import { z } from "zod";
+import { NewsBriefDraft, parsePipelineConfig, silentLogger } from "@cc/shared";
 import type { LlmRequest, StageContext } from "@cc/shared";
-import { ANTHROPIC_VERSION, LlmError, STRUCTURED_OUTPUT_TOOL, costOf, createAnthropicLlmAdapter, estimateCostUsd, parseMessagesResponse } from "../src/adapters/index.ts";
+import { ANTHROPIC_VERSION, LlmError, costOf, createAnthropicLlmAdapter, estimateCostUsd, parseMessagesResponse, toStructuredOutputSchema } from "../src/adapters/index.ts";
 import { createBudget } from "../src/budget.ts";
 import { MemoryLedger } from "../src/ledger/index.ts";
 import { fixtureAdapters, TEST_PIPELINE_YAML, testBannedPhrases, testQa, testScoring } from "./helpers.ts";
@@ -19,15 +20,16 @@ function ctxWith(fetchImpl: typeof globalThis.fetch): StageContext {
   return { runId: "11111111-1111-4111-8111-111111111111", now: new Date("2026-10-20T00:45:00Z"), config: cfg, scoring: testScoring(), bannedPhrases: testBannedPhrases(), qa: testQa(), logger: silentLogger(), ledger: new MemoryLedger(), budget: createBudget(cfg.budget), dryRun: true, replay: false, fixtureName: undefined, fetch: fetchImpl, adapters: fixtureAdapters() };
 }
 
-const REQUEST: LlmRequest = { task: "news_brief", model: "claude-opus-5-5", system: "sys", messages: [{ role: "user", content: "hello" }], outputSchema: { type: "object", properties: { title_ko: { type: "string" } } }, maxOutputTokens: 500, promptVersion: "2026-10-23.1" };
+const REQUEST: LlmRequest = { task: "news_brief", model: "claude-opus-5-5", system: "sys", messages: [{ role: "user", content: "hello" }], outputSchema: { type: "object", properties: { title_ko: { type: "string", minLength: 10 } }, required: ["title_ko"] }, maxOutputTokens: 500, promptVersion: "2026-10-23.1" };
 
 function ok(body: unknown, status = 200): Response {
   return new Response(JSON.stringify(body), { status, headers: { "content-type": "application/json" } });
 }
 
-const MESSAGE = { id: "msg_1", model: "claude-opus-5-5", stop_reason: "tool_use", content: [{ type: "text", text: "Here you go." }, { type: "tool_use", id: "t1", name: STRUCTURED_OUTPUT_TOOL, input: { title_ko: "제목" } }], usage: { input_tokens: 1000, output_tokens: 500, cache_read_input_tokens: 200 } };
+// A Claude 5 structured-output reply: a (summarised, possibly empty) thinking block, then the JSON as text.
+const MESSAGE = { id: "msg_1", model: "claude-opus-5-5", stop_reason: "end_turn", content: [{ type: "thinking", thinking: "", signature: "sig" }, { type: "text", text: "{\"title_ko\":\"제목\"}" }], usage: { input_tokens: 1000, output_tokens: 500, cache_read_input_tokens: 200 } };
 
-test("the Anthropic adapter posts a Messages request with the schema as a forced tool, parses the tool input, prices the usage and records the budget", async () => {
+test("the Anthropic adapter posts a Messages request with the schema as output_config.format (no forced tool), parses the JSON text, prices the usage and records the budget", async () => {
   const calls: { url: string; init: RequestInit }[] = [];
   const ctx = ctxWith(async (url, init) => {
     calls.push({ url: String(url), init: init ?? {} });
@@ -44,16 +46,40 @@ test("the Anthropic adapter posts a Messages request with the schema as a forced
   assert.equal(body["model"], "claude-opus-5-5");
   assert.equal(body["max_tokens"], 500);
   assert.equal(body["system"], "sys");
-  assert.deepEqual(body["tool_choice"], { type: "tool", name: STRUCTURED_OUTPUT_TOOL });
-  assert.deepEqual((body["tools"] as { input_schema: unknown }[])[0]!.input_schema, REQUEST.outputSchema);
+  assert.equal(body["tools"], undefined, "no tool: forced tool_choice is a 400 on Claude Opus 5.5 / Fable 5.1 / Sonnet 5.5");
+  assert.equal(body["tool_choice"], undefined);
+  assert.equal(body["thinking"], undefined, "thinking stays at the model default (adaptive)");
+  assert.deepEqual(body["output_config"], { format: { type: "json_schema", schema: { type: "object", properties: { title_ko: { type: "string" } }, required: ["title_ko"], additionalProperties: false } } }, "minLength stripped, additionalProperties: false added");
   assert.deepEqual(response.json, { title_ko: "제목" });
-  assert.equal(response.text, "Here you go.");
+  assert.equal(response.text, "{\"title_ko\":\"제목\"}");
   assert.deepEqual(response.usage, { inputTokens: 1000, outputTokens: 500, cacheReadTokens: 200 });
   assert.equal(response.costUsd, costOf(response.usage, ctx.config.llm.pricing["claude-opus-5-5"]!));
   assert.equal(response.costUsd, 0.01408, "1000×4 + 500×20 + 200×0.4 per million");
-  assert.equal(response.stopReason, "tool_use");
+  assert.equal(response.stopReason, "end_turn");
   assert.equal(ctx.budget.spentUsd, 0.01408);
   assert.equal(ctx.budget.calls, 1);
+});
+
+test("the structured-output schema drops every constraint keyword the API rejects, keeps property names intact and closes every object", () => {
+  const draft = toStructuredOutputSchema(z.toJSONSchema(NewsBriefDraft) as Record<string, unknown>);
+  assert.equal(draft["$schema"], undefined);
+  assert.equal(draft["additionalProperties"], false);
+  assert.deepEqual(draft["required"], ["title_ko", "summary_ko", "why_it_matters_ko", "expert_lens_ko", "tags"]);
+  const props = draft["properties"] as Record<string, Record<string, unknown>>;
+  assert.deepEqual(props["title_ko"], { type: "string" }, "minLength / maxLength gone");
+  assert.deepEqual(props["summary_ko"], { type: "string" });
+  assert.deepEqual(props["tags"], { type: "array", items: { type: "string" } }, "minItems / maxItems and the item minLength gone");
+  assert.equal(JSON.stringify(draft).includes("minLength"), false);
+
+  const tricky = toStructuredOutputSchema({ type: "object", properties: { pattern: { type: "string", pattern: "^a" }, nested: { type: "object", properties: { n: { type: "integer", minimum: 1 } } } }, $defs: { default: { type: "number", multipleOf: 2 } } });
+  const tp = tricky["properties"] as Record<string, Record<string, unknown>>;
+  assert.deepEqual(tp["pattern"], { type: "string" }, "a property named like a keyword survives; the keyword inside it is removed");
+  assert.deepEqual(tp["nested"], { type: "object", properties: { n: { type: "integer" } }, additionalProperties: false }, "nested objects are closed too");
+  assert.deepEqual((tricky["$defs"] as Record<string, unknown>)["default"], { type: "number" }, "a $defs entry named `default` survives");
+
+  const original = { type: "object", properties: { a: { type: "string", maxLength: 3 } } };
+  toStructuredOutputSchema(original);
+  assert.equal((original.properties.a as Record<string, unknown>)["maxLength"], 3, "the input schema is not mutated");
 });
 
 test("429 and 5xx retry with backoff, then surface as LLM_UNAVAILABLE; a 4xx is rejected at once; a model without pricing is refused before any call", async () => {
@@ -79,9 +105,9 @@ test("429 and 5xx retry with backoff, then surface as LLM_UNAVAILABLE; a 4xx is 
   let rejected = 0;
   const bad = ctxWith(async () => {
     rejected += 1;
-    return ok({ error: { type: "invalid_request_error", message: "bad" } }, 400);
+    return ok({ type: "error", error: { type: "invalid_request_error", message: "tool_choice: type \"tool\" and \"any\" are not supported for this model." } }, 400);
   });
-  await assert.rejects(createAnthropicLlmAdapter({ apiKey: "k", llm: bad.config.llm, backoffMs: 1 }).complete(REQUEST, bad), (error: unknown) => error instanceof LlmError && error.code === "LLM_REQUEST_REJECTED" && !/k"/.test(error.message));
+  await assert.rejects(createAnthropicLlmAdapter({ apiKey: "k", llm: bad.config.llm, backoffMs: 1 }).complete(REQUEST, bad), (error: unknown) => error instanceof LlmError && error.code === "LLM_REQUEST_REJECTED" && /not supported for this model/.test(error.message) && !/k"/.test(error.message));
   assert.equal(rejected, 1, "no retry on a rejection");
 
   let called = 0;
@@ -102,7 +128,7 @@ test("a hung request times out and retries; network errors retry; the replay fet
   });
   const response = await createAnthropicLlmAdapter({ apiKey: "k", llm: slow.config.llm, backoffMs: 1 }).complete(REQUEST, slow);
   assert.equal(attempts, 2);
-  assert.equal(response.stopReason, "tool_use");
+  assert.equal(response.stopReason, "end_turn");
 
   const offline = ctxWith(() => Promise.reject(new TypeError("fetch failed")));
   await assert.rejects(createAnthropicLlmAdapter({ apiKey: "k", llm: offline.config.llm, backoffMs: 1 }).complete(REQUEST, offline), (error: unknown) => error instanceof LlmError && error.code === "LLM_UNAVAILABLE" && /fetch failed/.test(error.message));
@@ -138,12 +164,20 @@ test("a body that stalls or drops after the headers arrived is retried like a fa
   assert.equal(exhausted, 3, "max_retries 2 → three attempts, then the body timeout surfaces");
 });
 
-test("response parsing tolerates text-only replies and missing usage; the cost estimate scales with input size", () => {
-  const parsed = parseMessagesResponse({ content: [{ type: "text", text: "{\"a\":1}" }], stop_reason: "end_turn" }, "fallback-model");
-  assert.equal(parsed.json, undefined);
-  assert.equal(parsed.text, "{\"a\":1}");
-  assert.deepEqual(parsed.usage, { inputTokens: 0, outputTokens: 0, cacheReadTokens: 0 });
-  assert.equal(parsed.model, "fallback-model");
+test("response parsing: JSON text becomes `json` only for structured requests, a truncated reply leaves it undefined, usage defaults to 0; the cost estimate scales with input size", () => {
+  const plain = parseMessagesResponse({ content: [{ type: "text", text: "{\"a\":1}" }], stop_reason: "end_turn" }, "fallback-model");
+  assert.equal(plain.json, undefined, "no outputSchema → text stays text");
+  assert.equal(plain.text, "{\"a\":1}");
+  assert.deepEqual(plain.usage, { inputTokens: 0, outputTokens: 0, cacheReadTokens: 0 });
+  assert.equal(plain.model, "fallback-model");
+
+  const structured = parseMessagesResponse({ content: [{ type: "thinking", thinking: "" }, { type: "text", text: "{\"a\":1}" }], stop_reason: "end_turn" }, "m", { expectJson: true });
+  assert.deepEqual(structured.json, { a: 1 });
+
+  const truncated = parseMessagesResponse({ content: [{ type: "text", text: "{\"a\":" }], stop_reason: "max_tokens" }, "m", { expectJson: true });
+  assert.equal(truncated.json, undefined, "the stage reports SCHEMA_INVALID with the stop reason");
+  assert.equal(truncated.stopReason, "max_tokens");
+
   assert.equal(parseMessagesResponse(null, "m").stopReason, "unknown");
   const pricing = { input_per_mtok: 4, output_per_mtok: 20, cache_read_per_mtok: 0.4 };
   assert.equal(estimateCostUsd(0, 0, pricing), 0);

@@ -3,7 +3,7 @@ task: news_brief
 version: 2026-10-24.1
 model_hint: claude-opus-5-5
 output_schema: NewsBriefDraft
-max_output_tokens: 2500
+max_output_tokens: 8000
 ---
 당신은 computecurrent.com의 선임 편집자다. 독자는 한국의 데이터센터·클라우드·전력·반도체 인프라 실무자와 투자자다. 입력으로 받은 **원문 패킷 한 건**을 한국어 뉴스 브리프로 재서술한다. 반환은 지정된 구조화 출력(JSON) 한 건뿐이며, 그 밖의 텍스트는 쓰지 않는다.
 

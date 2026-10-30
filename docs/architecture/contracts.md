@@ -98,7 +98,8 @@ export const LlmResponse = z.object({
 // Phase 3d: 프롬프트 파일 레지스트리(StageAdapters.prompts). 파일 구현은 prompts/<task>.md를 읽어 §6 머리말을 strict 검증하고 캐시한다.
 export interface PromptRegistry { get(task: LlmTask): Promise<PromptFile> }
 // Anthropic 어댑터(adapters/llm/anthropic.ts)는 ctx.fetch로만 Messages API를 호출한다(--replay에서 throw, R7). outputSchema가 있으면
-// 단일 tool(emit_result) 강제 호출로 구조화 출력을 받고, 429/5xx/네트워크/타임아웃은 llm.max_retries까지 지수 백오프, 4xx는 즉시
+// output_config.format(json_schema; 제약 키워드는 toStructuredOutputSchema가 제거하고 zod가 검증 — 강제 tool_choice는 Claude 5 모델이 400, 2026-10-30)로
+// 구조화 출력을 받고(응답 text = JSON), 429/5xx/네트워크/타임아웃은 llm.max_retries까지 지수 백오프, 4xx는 즉시
 // LLM_REQUEST_REJECTED, 비용은 llm.pricing[model]로 계산해 budget.record(행 없는 모델은 LLM_PRICING_MISSING). 키는 ANTHROPIC_API_KEY(이름만).
 
 export interface ImageAdapter {

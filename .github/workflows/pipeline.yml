@@ -164,8 +164,13 @@ jobs:
   # Phase 4 (3i notes §5.3, Josh 2026-10-26): the GitHub-issue alarm sits on top of that exit code —
   # one issue found by its body marker, written only on a state transition, closed on recovery,
   # reopened on relapse; exit 2 (no verdict) is the alert state `unknown`, never healthy.
+  # Runs after the `run` job (needs + always()): the first shadow runs (2026-10-30, 41025582174 /
+  # 41026056302) started both jobs together, so the check read the ledger before its own run had
+  # finished and re-alarmed `never` on a ledger that was about to recover. always() keeps the check
+  # on a failed or cancelled run — that is exactly when the alarm has to fire.
   ops-check:
-    if: ${{ github.event_name == 'schedule' || inputs.ops_check }}
+    needs: run
+    if: ${{ always() && (github.event_name == 'schedule' || inputs.ops_check) }}
     runs-on: ubuntu-latest
     timeout-minutes: 10
     permissions:
