@@ -122,3 +122,15 @@ test("collectFailures and zeroPublishedReasons are empty for a clean run with pu
   const withId = formatRunCrash({ runId: "0123456789abcdef", startedAt: "2026-10-17T15:45:00.000Z", timezone: "UTC", error: "TypeError: boom", trigger: "schedule", runUrl: null });
   assert.equal(withId, "[CC pipeline] ⚠ 2026-10-17 15:45 UTC · run 01234567 · FAILED\ncrashed outside a stage (TypeError): TypeError: boom");
 });
+
+test("an all-seen ingest is the stopping stage only when nothing was scored — seen items are re-scored every run (run 375fc076, 2026-10-30)", async () => {
+  const { result } = await scoringRun(STAGING_YAML, { only: ["ingest", "normalize", "score"] });
+  assert.equal(result.funnel.published, 0);
+  assert.ok(result.funnel.items_scored > 0, "the scoring fixture scores every candidate");
+  const seen = { ...result, funnel: { ...result.funnel, items_new: 0 } };
+  const reasons = zeroPublishedReasons(seen);
+  assert.equal(reasons.length, 1);
+  assert.doesNotMatch(reasons[0]!, /^ingest:/, `new 0 but ${seen.funnel.items_scored} scored: ingest is not where the flow stopped (got ${reasons[0]})`);
+  const nothing = { ...seen, funnel: { ...seen.funnel, items_scored: 0 }, state: { ...seen.state, normalizeStats: { ...seen.state.normalizeStats, pool: 0, candidates: 0 } } };
+  assert.match(zeroPublishedReasons(nothing)[0]!, /^ingest: 0 new items \(13 fetched, all seen\)$/);
+});

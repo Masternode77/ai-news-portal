@@ -139,7 +139,8 @@ export function zeroPublishedReasons(result: RunResult): string[] {
       empty: () => {
         if (f.sources_configured > 0 && f.sources_ok === 0) return `ingest: 0/${f.sources_configured} sources ok`;
         if (f.items_fetched === 0) return "ingest: 0 items fetched";
-        if (f.items_new === 0) return `ingest: 0 new items (${f.items_fetched} fetched, all seen)`;
+        // Seen items are re-scored every run (3c: nothing is carried over), so "all seen" stops the flow only when nothing was scored.
+        if (f.items_new === 0 && f.items_scored === 0) return `ingest: 0 new items (${f.items_fetched} fetched, all seen)`;
         return null;
       },
     },

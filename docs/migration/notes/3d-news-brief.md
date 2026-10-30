@@ -103,3 +103,6 @@
 7. **model_hint vs config** — 프롬프트의 `model_hint`는 문서용이고 실제 모델은 `llm.models.news_brief`다. 둘이 다르면 경고만 할지, config가 항상 이기게 둘지(현재) 확정 필요.
 8. **금칙어 인벤토리 공존** — Phase 5까지 레거시 `config/bannedPhrases.yml`(레거시 가드 `scripts/lib/banned-phrases.mjs`가 읽음, 손대지 않음 — CLAUDE.md §6)과 리빌드 `config/banned-phrases.yaml`이 공존한다. 영문 43/11구는 데이터로 이관해 두 파일의 내용이 같고, 한국어 문구·패턴은 새 파일에만 있다. 컷오버 PR에서 레거시 파일·가드를 퇴역시키고 AGENTS.md의 정본 경로를 새 파일로 바꾼다.
 9. **structured outputs 후속** — `stop_reason: max_tokens`(JSON 잘림)·`refusal`은 지금 `SCHEMA_INVALID` dead letter로만 남는다. 라이브 발생률을 보고 `max_output_tokens`·`output_config.effort`(기본 medium) 조정 여부를 정한다. `strict: true` 도구 방식은 쓰지 않는다(도구 호출이 필요 없는 추출).
+10. **거절 초안 재생성 루프(2026-10-30 run 2·3)** — 선택은 매 런 전체 풀을 재채점하고(3c, 이월 없음) 3b 중복 제거는 발행본만 보므로, hard-QA로 거절된 후보가 피드에 남아 있는 동안 같은 2건이 매 런 다시 선택·생성된다(런당 ≈ $0.09, 3런/일 ≈ $0.26/일 — 예산 안이지만 낭비이고 신규 후보 슬롯을 막는다). 제안(Phase 4 소규모 PR, 승인 필요): 3c 선택 직전에 `drafts`에서 같은 `candidate_id`·`content_type`·현재 `prompt_version`의 초안이 `review_status = rejected`(hard)이면 선택에서 제외하고 `candidates.reject_reason = PREVIOUSLY_REJECTED`로 남긴다(프롬프트·QA `version`이 오르면 다시 자격). 보류(`pending`) 초안은 Josh 판정 전까지 제외.
+11. **grounding 숫자 축약** — run 3 샘플 "450억"(원문 추정 "$45B")·"1"은 `compare.md` §3 대조 대상. 원문이 `B`/`M`/`K` 축약이면 `NUMBER` 정규식에 통화 축약(`$45B`, `45M`)을 더하는 코드 후속(테스트 포함), 아니면 프롬프트 규칙("원문이 쓰지 않은 단위로 환산하지 않는다")의 version 상승.
+
