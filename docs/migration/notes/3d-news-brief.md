@@ -86,9 +86,11 @@
 
 테스트: `generate-stage.test.ts` 7(금칙어 보고·미해결 placeholder 실패 포함), `banned-phrases.test.ts` 5, `anthropic-adapter.test.ts` 5(가짜 fetch: 강제 tool 호출·429/5xx 백오프·4xx 즉시 거부·타임아웃·본문 읽기 재시도·replay 차단·가격 없는 모델 거부), shared `parsePromptFile` 1 + `banned-phrases.yaml` strict 로드 1 → 전체 183, `v2:typecheck` 0 errors.
 
-### 4.2 라이브 dry-run
+### 4.2 라이브 실행 (2026-10-30, Phase 4 첫 staging 런)
 
-미실행 — Anthropic API 키 미수령(세션·CI에는 키가 없고 R7상 CI는 fixture만 읽는다). 키 수령 후 절차: `config/pipeline.yaml` `llm.provider: anthropic`(또는 별도 config) + 환경 `ANTHROPIC_API_KEY`(이름만)에서 `CC_FLAG_STAGES_NORMALIZE=true CC_FLAG_STAGES_SCORE=true CC_FLAG_STAGES_GENERATE=true npm run v2:pipeline -- run --dry-run --live --stage ingest,normalize,score,generate --json`(Josh Mac 또는 시크릿 있는 수동 dispatch). 비용 상한 추정: 후보 2건 × (입력 ≤12,000자 ≈ 4,000토큰 × $4/M + 출력 ≤2,500토큰 × $20/M) ≈ $0.13/런, `budget.run_usd 2.0` 안.
+- **첫 호출은 400** — run 41026056302(`rebuild/v2` `9ef757d9`, `llm_provider=anthropic`, 선택 2건): 두 호출 모두 `LLM_REQUEST_REJECTED: http 400 … tool_choice: type "tool" and "any" are not supported for this model.` Claude Opus 5.5(및 Fable 5.1·Sonnet 5.5)는 강제 tool 호출을 거부한다(공식 가이드 "Breaking change: forced tool use is rejected"; 모델 제한이지 thinking 때문이 아님). 초안 0 → dead letter 2, 비용 0.00, 런 `partial`. fixture 테스트로는 잡을 수 없는 종류의 결함이었다.
+- **수정** — `adapters/llm/anthropic.ts`: 구조화 출력을 `tools` + `tool_choice` 대신 **`output_config.format = { type: json_schema, schema }`**로 요청하고 응답 text 블록을 JSON으로 파싱해 `json`으로 돌려준다(추출 목적의 강제 호출은 structured outputs로 대체하라는 가이드 그대로). API가 받는 스키마는 `toStructuredOutputSchema()`가 만든다: `$schema`·`minLength`/`maxLength`·`pattern`·`minimum`/`maximum`·`multipleOf`·`minItems`/`maxItems` 등 거부되는 제약을 제거하고 모든 object에 `additionalProperties: false`(필수)를 둔다. 제약은 스테이지가 zod `NewsBriefDraft`로 그대로 검증한다(`SCHEMA_INVALID`). 속성 이름은 키워드로 취급하지 않는다(`pattern`이라는 필드가 살아남는 테스트). thinking은 모델 기본(adaptive)에 두고 `max_tokens`가 thinking + 본문의 상한이므로 `prompts/news_brief.md` `max_output_tokens`를 2500 → **8000**으로 올렸다(규칙·문체 불변이라 `version` 유지; 예산 추정은 호출당 ≈ 4,000토큰 × $4/M + 8,000 × $20/M ≈ $0.18, 런당 2건 ≈ $0.35 — `budget.run_usd 2.0` 안). 테스트 `anthropic-adapter.test.ts` 6건(요청 모양·스키마 정리·재시도·타임아웃·파싱).
+- **재실행 결과**는 `docs/shadow/compare.md` 런 표에 적는다(통과율·비용·stop_reason).
 
 ## 5. 열린 질문
 
@@ -100,3 +102,7 @@
 6. **한·영 동일 사건** — 3c 열린 질문 그대로: 같은 사건 2건이 모두 선택되면 브리프도 2건이다. 3c(묶기) 또는 3g(중복 QA)에서 처리.
 7. **model_hint vs config** — 프롬프트의 `model_hint`는 문서용이고 실제 모델은 `llm.models.news_brief`다. 둘이 다르면 경고만 할지, config가 항상 이기게 둘지(현재) 확정 필요.
 8. **금칙어 인벤토리 공존** — Phase 5까지 레거시 `config/bannedPhrases.yml`(레거시 가드 `scripts/lib/banned-phrases.mjs`가 읽음, 손대지 않음 — CLAUDE.md §6)과 리빌드 `config/banned-phrases.yaml`이 공존한다. 영문 43/11구는 데이터로 이관해 두 파일의 내용이 같고, 한국어 문구·패턴은 새 파일에만 있다. 컷오버 PR에서 레거시 파일·가드를 퇴역시키고 AGENTS.md의 정본 경로를 새 파일로 바꾼다.
+9. **structured outputs 후속** — `stop_reason: max_tokens`(JSON 잘림)·`refusal`은 지금 `SCHEMA_INVALID` dead letter로만 남는다. 라이브 발생률을 보고 `max_output_tokens`·`output_config.effort`(기본 medium) 조정 여부를 정한다. `strict: true` 도구 방식은 쓰지 않는다(도구 호출이 필요 없는 추출).
+10. **거절 초안 재생성 루프(2026-10-30 run 2·3)** — 선택은 매 런 전체 풀을 재채점하고(3c, 이월 없음) 3b 중복 제거는 발행본만 보므로, hard-QA로 거절된 후보가 피드에 남아 있는 동안 같은 2건이 매 런 다시 선택·생성된다(런당 ≈ $0.09, 3런/일 ≈ $0.26/일 — 예산 안이지만 낭비이고 신규 후보 슬롯을 막는다). 제안(Phase 4 소규모 PR, 승인 필요): 3c 선택 직전에 `drafts`에서 같은 `candidate_id`·`content_type`·현재 `prompt_version`의 초안이 `review_status = rejected`(hard)이면 선택에서 제외하고 `candidates.reject_reason = PREVIOUSLY_REJECTED`로 남긴다(프롬프트·QA `version`이 오르면 다시 자격). 보류(`pending`) 초안은 Josh 판정 전까지 제외.
+11. **grounding 숫자 축약** — run 3 샘플 "450억"(원문 추정 "$45B")·"1"은 `compare.md` §3 대조 대상. 원문이 `B`/`M`/`K` 축약이면 `NUMBER` 정규식에 통화 축약(`$45B`, `45M`)을 더하는 코드 후속(테스트 포함), 아니면 프롬프트 규칙("원문이 쓰지 않은 단위로 환산하지 않는다")의 version 상승.
+

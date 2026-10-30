@@ -56,7 +56,7 @@ budget:
   max_calls: 60
 
 llm:
-  provider: fixture            # anthropic | fixture | disabled (openrouter: not implemented, ADR-002). anthropic needs ANTHROPIC_API_KEY in the environment (name only)
+  provider: fixture            # anthropic | fixture | disabled (openrouter: not implemented, ADR-002). anthropic needs ANTHROPIC_API_KEY in the environment (name only). The file default stays fixture so replay tests and CI never call the API; the Phase 4 shadow sets CC_FLAG_LLM_PROVIDER=anthropic in pipeline.yml (schedule runs always, dispatch via the llm_provider input)
   models:
     curate: claude-haiku-5-5
     news_brief: claude-opus-5-5
