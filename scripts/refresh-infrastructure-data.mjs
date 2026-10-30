@@ -4,6 +4,7 @@ import { join } from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { normalizeDemand } from './lib/infrastructure-data.mjs';
 import { EIA_ORIGIN, listedEditions, selectPublishedWorkbook, workbookCandidates } from './lib/eia860m-discovery.mjs';
+import { UpstreamError, diagnose, statusError, withRetry } from './lib/upstream-retry.mjs';
 const root = new URL('../src/data/grid/', import.meta.url);
 async function commit(name, snapshot) {
   const target = new URL(name, root), temporary = new URL(`${name}.tmp`, root);
@@ -15,9 +16,11 @@ async function independent(name, fn) {
   try { results.push({ dataset: name, status: await fn() }); }
   catch (error) {
     // Never log an upstream response body, request URL, or child-process output.
-    const known = new Set(['Demand fetch failed','Incomplete balancing authority coverage','Demand snapshot would regress','Capacity discovery failed','No supported EIA workbook','Untrusted workbook URL','Workbook unavailable or oversized','Workbook too large','Workbook response invalid','Workbook edition mismatch','Workbook parse failed']);
-    const diagnostic = known.has(error.message) ? error.message : error.code ? `operation failed (${String(error.code).replace(/[^A-Z0-9_]/gi,'')})` : `operation failed (${error.name || 'Error'})`;
+    const known = new Set(['Demand fetch failed','Incomplete balancing authority coverage','Demand snapshot would regress','Capacity discovery failed','No supported EIA workbook','Untrusted workbook URL','Workbook unavailable','Workbook too large','Workbook response invalid','Workbook edition mismatch','Workbook parse failed']);
+    const diagnostic = diagnose(error, known);
     results.push({ dataset: name, status: 'failed; previous validated snapshot retained', diagnostic }); process.exitCode = 1;
+    // Surface the reason on the run summary, not only inside the step log.
+    if (process.env.GITHUB_ACTIONS) console.log(`::error title=${name} refresh failed::${diagnostic}`);
   }
 }
 await independent('EIA-930', async () => {
@@ -25,9 +28,13 @@ await independent('EIA-930', async () => {
   const url = new URL('https://api.eia.gov/v2/electricity/rto/region-data/data/');
   for (const [k,v] of Object.entries({ api_key: process.env.EIA_API_KEY, frequency:'hourly', 'data[0]':'value', 'facets[type][]':'D', start: new Date(Date.now()-7*86400000).toISOString().slice(0,13), 'sort[0][column]':'period', 'sort[0][direction]':'asc', length:'5000' })) url.searchParams.set(k,v);
   for (const ba of ['ERCO','PJM','AZPS']) url.searchParams.append('facets[respondent][]', ba);
-  const response = await fetch(url, { signal: AbortSignal.timeout(45000) });
-  if (!response.ok) throw new Error('Demand fetch failed');
-  const next = normalizeDemand(await response.json());
+  // Each attempt gets its own timeout, which also covers reading the body.
+  const payload = await withRetry(async () => {
+    const response = await fetch(url, { signal: AbortSignal.timeout(45000) });
+    if (!response.ok) throw await statusError(response, 'Demand fetch failed');
+    return response.json();
+  });
+  const next = normalizeDemand(payload);
   if (['ERCO','PJM','AZPS'].some(ba => !next.records.some(r => r.respondent === ba))) throw new Error('Incomplete balancing authority coverage');
   const previous = JSON.parse(await readFile(new URL('demand.json',root),'utf8'));
   if (next.asOf < previous.asOf) throw new Error('Demand snapshot would regress');
@@ -35,13 +42,17 @@ await independent('EIA-930', async () => {
 });
 await independent('EIA-860M', async () => {
   const base = 'https://www.eia.gov/electricity/data/eia860m/';
-  const landing = await fetch(base, { signal: AbortSignal.timeout(30000) });
-  if (!landing.ok) throw new Error('Capacity discovery failed');
+  const html = await withRetry(async () => {
+    const landing = await fetch(base, { signal: AbortSignal.timeout(30000) });
+    if (!landing.ok) throw await statusError(landing, 'Capacity discovery failed');
+    const page = await landing.text();
+    // A landing page with no recognisable edition links is an error or
+    // challenge page, not proof that nothing newer exists. Challenge pages
+    // clear on their own, so it is retried before discovery fails.
+    if (!listedEditions(page).length) throw new UpstreamError('Capacity discovery failed', { transient: true });
+    return page;
+  });
   const previous = JSON.parse(await readFile(new URL('capacity.json', root),'utf8'));
-  const html = await landing.text();
-  // A landing page with no recognisable edition links is an error or
-  // challenge page, not proof that nothing newer exists.
-  if (!listedEditions(html).length) throw new Error('Capacity discovery failed');
   const candidates = workbookCandidates(html, { previousAsOf: previous.asOf });
   if (!candidates.length) return 'no newer monthly edition';
   const MAX_BYTES = 32000000;
@@ -50,15 +61,19 @@ await independent('EIA-860M', async () => {
   // redirects: EIA origin, .xlsx path, non-HTML content type, ZIP signature.
   // A placeholder redirect is skipped; an off-origin or malformed response
   // fails the refresh.
+  // A stalled or 5xx download is retried once; an oversized one is not.
   const published = await selectPublishedWorkbook(candidates, async (candidate) => {
     const url = new URL(candidate.path, base);
     if (url.origin !== EIA_ORIGIN) throw new Error('Untrusted workbook URL');
-    const response = await fetch(url, { signal: AbortSignal.timeout(60000) });
-    if (!response.ok || Number(response.headers.get('content-length')) > MAX_BYTES) throw new Error('Workbook unavailable or oversized');
-    const chunks=[]; let size=0;
-    for await (const chunk of response.body) { size+=chunk.length; if(size>MAX_BYTES) throw new Error('Workbook too large'); chunks.push(chunk); }
-    const bytes = Buffer.concat(chunks);
-    return { ok: true, finalUrl: response.url, contentType: response.headers.get('content-type') || '', head: bytes.subarray(0, 4), bytes };
+    return withRetry(async () => {
+      const response = await fetch(url, { signal: AbortSignal.timeout(60000) });
+      if (!response.ok) throw await statusError(response, 'Workbook unavailable');
+      if (Number(response.headers.get('content-length')) > MAX_BYTES) { await response.body?.cancel().catch(() => {}); throw new Error('Workbook too large'); }
+      const chunks=[]; let size=0;
+      for await (const chunk of response.body) { size+=chunk.length; if(size>MAX_BYTES) throw new Error('Workbook too large'); chunks.push(chunk); }
+      const bytes = Buffer.concat(chunks);
+      return { ok: true, finalUrl: response.url, contentType: response.headers.get('content-type') || '', head: bytes.subarray(0, 4), bytes };
+    }, { attempts: 2 });
   });
   if (!published) return `no newer monthly edition (${candidates[0].date} is listed but not published yet)`;
   const { candidate: latest, result } = published;
