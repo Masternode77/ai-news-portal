@@ -50,7 +50,10 @@ export interface ReviewEntry {
   published_at_source: string | null;
   brief: { title_ko: string | null; summary_ko: string | null; why_it_matters_ko: string | null; expert_lens_ko: string | null; tags: string[] };
   checks: { grounding_pass: boolean | null; ungrounded: string[]; quote_max_words: number | null; banned_matches: number | null };
-  qa: Array<{ rule: string; severity: string; pass: boolean; reason_code: string; evidence: Record<string, unknown> }>;
+  /** Newest verdict per rule (a regenerated draft keeps its id, so older evaluations share it). */
+  qa: Array<{ rule: string; severity: string; pass: boolean; reason_code: string; evidence: Record<string, unknown>; checked_at: string }>;
+  /** Verdicts from earlier evaluations of the same draft id that the table does not show. */
+  qa_hidden: number;
   source_chars: number;
   source_head: string;
   excerpts: ReviewExcerpt[];
@@ -60,6 +63,8 @@ const DEFAULT_LIMIT = 5;
 const DEFAULT_WINDOW = 160;
 const MAX_SNIPPETS = 3;
 const HEAD_CHARS = 400;
+/** Verdict rows read per draft, newest first; the current evaluation is always in the first rows. */
+const QA_ROWS_LIMIT = 200;
 
 function str(value: unknown): string | null {
   return typeof value === "string" && value.length > 0 ? value : null;
@@ -137,7 +142,12 @@ export async function collectReview(db: DbPort, options: ReviewOptions = {}): Pr
     const grounding = record(checks["grounding"]);
     const banned = record(checks["banned"]);
     const ungrounded = Array.isArray(grounding["ungrounded"]) ? (grounding["ungrounded"] as unknown[]).filter((value): value is string => typeof value === "string") : [];
-    const qaRows = await db.select<QaResultRow>("qa_results", { draft_id: draft.id }, { orderBy: { column: "checked_at", ascending: true }, limit: 100 });
+    // A draft regenerated under the same rubric and prompt version keeps its id (generate upserts it) while every
+    // evaluation adds verdicts keyed by checked_at, so the table shows the newest verdict per rule, with its time,
+    // and counts the older ones instead of mixing evaluations of different bodies (Codex, PR #79).
+    const qaRows = await db.select<QaResultRow>("qa_results", { draft_id: draft.id }, { orderBy: { column: "checked_at", ascending: false }, limit: QA_ROWS_LIMIT });
+    const latest = new Map<string, QaResultRow>();
+    for (const row of qaRows) if (!latest.has(row.rule)) latest.set(row.rule, row);
     const item = await sourceFor(db, draft);
     const text = item ? bodyTextOf(item) : "";
     entries.push({
@@ -166,7 +176,8 @@ export async function collectReview(db: DbPort, options: ReviewOptions = {}): Pr
         quote_max_words: typeof checks["quote_max_words"] === "number" ? (checks["quote_max_words"] as number) : null,
         banned_matches: Array.isArray(banned["matches"]) ? (banned["matches"] as unknown[]).length : null,
       },
-      qa: qaRows.map((row) => ({ rule: row.rule, severity: row.severity, pass: row.pass, reason_code: row.reason_code, evidence: row.evidence })),
+      qa: [...latest.values()].map((row) => ({ rule: row.rule, severity: row.severity, pass: row.pass, reason_code: row.reason_code, evidence: row.evidence, checked_at: row.checked_at })),
+      qa_hidden: qaRows.length - latest.size,
       source_chars: text.length,
       source_head: oneLine(text.slice(0, HEAD_CHARS)),
       excerpts: ungrounded.map((token) => excerptsFor(text, token, window)),
@@ -210,9 +221,11 @@ export function formatReview(entries: ReviewEntry[], options: ReviewOptions = {}
     lines.push(`**checks**: grounding ${entry.checks.grounding_pass === null ? "?" : entry.checks.grounding_pass ? "pass" : "fail"}${entry.checks.ungrounded.length ? ` (ungrounded: ${entry.checks.ungrounded.map((token) => `\`${token}\``).join(", ")})` : ""} · quote_max_words ${entry.checks.quote_max_words ?? "?"} · banned matches ${entry.checks.banned_matches ?? "?"}`);
     lines.push("");
     if (entry.qa.length > 0) {
-      lines.push("| rule | severity | pass | reason_code | evidence |");
-      lines.push("|---|---|---|---|---|");
-      for (const verdict of entry.qa) lines.push(`| ${cell(verdict.rule)} | ${cell(verdict.severity)} | ${verdict.pass ? "✓" : "✗"} | ${cell(verdict.reason_code)} | ${cell(shortEvidence(verdict.evidence))} |`);
+      lines.push(`**QA** (newest verdict per rule${entry.qa_hidden > 0 ? ` · ${entry.qa_hidden} older verdict${entry.qa_hidden === 1 ? "" : "s"} from earlier evaluations of this draft hidden` : ""}):`);
+      lines.push("");
+      lines.push("| rule | severity | pass | reason_code | checked_at | evidence |");
+      lines.push("|---|---|---|---|---|---|");
+      for (const verdict of entry.qa) lines.push(`| ${cell(verdict.rule)} | ${cell(verdict.severity)} | ${verdict.pass ? "✓" : "✗"} | ${cell(verdict.reason_code)} | ${cell(verdict.checked_at)} | ${cell(shortEvidence(verdict.evidence))} |`);
       lines.push("");
     }
     lines.push(`**원문 머리** (${HEAD_CHARS}자): ${entry.source_head || "—"}`);

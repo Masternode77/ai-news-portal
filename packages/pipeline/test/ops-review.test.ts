@@ -23,6 +23,8 @@ async function seeded(): Promise<MemoryDb> {
   await db.insert("qa_results", [
     { id: "77777777-7777-4777-8777-777777777771", draft_id: DRAFT, rule: "UNGROUNDED_NUMBER", severity: "hard", pass: false, reason_code: "UNGROUNDED_NUMBER", evidence: { numbers: 2, ungrounded: ["450억", "1"], max_ungrounded: 0, source_text: true }, checked_at: "2026-10-30T08:34:37.000Z" },
     { id: "77777777-7777-4777-8777-777777777772", draft_id: DRAFT, rule: "RUBRIC_BELOW_TARGET", severity: "soft", pass: false, reason_code: "RUBRIC_BELOW_TARGET", evidence: { total: 0.61 }, checked_at: "2026-10-30T08:34:37.100Z" },
+    // An earlier evaluation of the same draft id (the body before regeneration passed grounding): must not show.
+    { id: "77777777-7777-4777-8777-777777777773", draft_id: DRAFT, rule: "UNGROUNDED_NUMBER", severity: "hard", pass: true, reason_code: "UNGROUNDED_NUMBER", evidence: { numbers: 1, ungrounded: [], max_ungrounded: 0, source_text: true }, checked_at: "2026-10-30T08:24:40.000Z" },
   ]);
   return db;
 }
@@ -52,7 +54,11 @@ test("collectReview joins drafts, QA verdicts and the source item; run and statu
   assert.equal(entry.brief.title_ko, "TSMC 450억 달러 투자");
   assert.deepEqual(entry.checks.ungrounded, ["450억", "1"]);
   assert.equal(entry.checks.grounding_pass, false);
-  assert.equal(entry.qa.length, 2);
+  assert.equal(entry.qa.length, 2, "one verdict per rule");
+  assert.equal(entry.qa_hidden, 1, "the earlier evaluation's verdict is counted, not shown");
+  const grounding = entry.qa.find((verdict) => verdict.rule === "UNGROUNDED_NUMBER")!;
+  assert.equal(grounding.pass, false, "the newest verdict for the rule wins over the older pass");
+  assert.equal(grounding.checked_at, "2026-10-30T08:34:37.000Z");
   assert.equal(entry.source_chars, SOURCE_TEXT.length);
   assert.equal(entry.excerpts[0]!.token, "450억");
   assert.match(entry.excerpts[0]!.snippets[0]!, /«45»B/);
@@ -71,7 +77,9 @@ test("collectReview joins drafts, QA verdicts and the source item; run and statu
   assert.match(markdown, /^# Shadow review — run `11111111-1111-4111-8111-111111111111` · 1 draft\n/);
   assert.match(markdown, /## 1\. TSMC 450억 달러 투자/);
   assert.match(markdown, /review_status \*\*rejected\*\*/);
-  assert.match(markdown, /\| UNGROUNDED_NUMBER \| hard \| ✗ \| UNGROUNDED_NUMBER \|/);
+  assert.match(markdown, /\*\*QA\*\* \(newest verdict per rule · 1 older verdict from earlier evaluations of this draft hidden\):/);
+  assert.match(markdown, /\| UNGROUNDED_NUMBER \| hard \| ✗ \| UNGROUNDED_NUMBER \| 2026-10-30T08:34:37\.000Z \|/);
+  assert.doesNotMatch(markdown, /\| UNGROUNDED_NUMBER \| hard \| ✓ \|/, "the older passing verdict is not rendered");
   assert.match(markdown, /\*\*원문 대조 `450억`\*\* \(검색: `450`, `45`\):\n- .*«45»B/);
   assert.match(markdown, /\*\*원문 대조 `1`\*\*/);
   assert.match(formatReview([], { status: "rejected" }), /No drafts matched\./);
