@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { parsePipelineConfig, parseSourcesConfig, rawItemId, silentLogger, SelectionConfig } from "@cc/shared";
-import type { CandidateInsert, PipelineConfig, RawItemInsert, ScoringConfig, SourceConfig, StageContext } from "@cc/shared";
+import type { CandidateInsert, DbPort, PipelineConfig, RawItemInsert, Row, ScoringConfig, SelectOptions, SourceConfig, StageContext, TableName } from "@cc/shared";
 import { createBudget } from "../src/budget.ts";
 import { MemoryDb } from "../src/db/index.ts";
 import { MemoryLedger } from "../src/ledger/index.ts";
@@ -21,6 +21,9 @@ import {
   scoreRelevance,
   scoreStage,
   scoreTimeliness,
+  REVIEW_IN_CHUNK,
+  reviewedRawItems,
+  selectInAll,
 } from "../src/stages/score.ts";
 import { ScoreOutput } from "../src/stages/types.ts";
 import { baseRunOptions, fixtureAdapters, REPO_ROOT, TEST_PIPELINE_YAML, testBannedPhrases, testQa, testScoring } from "./helpers.ts";
@@ -357,4 +360,47 @@ test("a passing candidate whose news_brief draft for the current prompt was reje
   const unfiltered = await run(db, items, sources, noSkip);
   assert.equal(find(unfiltered).selected, true, "an empty skip list selects regardless");
   assert.equal(unfiltered.stats.skipped_reviewed, 0);
+});
+
+test("the review lookups read every matching row: a backend that caps one select (PostgREST max-rows) is paged by id and the in-list goes in chunks, so a rejected draft past the first page still blocks its candidate", async () => {
+  const inner = new MemoryDb();
+  const CAP = 3;
+  const calls: { table: TableName; values: number; options: SelectOptions }[] = [];
+  // A DbPort that behaves like Supabase with max-rows = 3: whatever limit the caller asks for, one response holds at most 3 rows.
+  const capped: DbPort = {
+    kind: "supabase",
+    insert: (table, rows) => inner.insert(table, rows),
+    upsert: (table, rows, keys) => inner.upsert(table, rows, keys),
+    select: (table, where, options) => inner.select(table, where, options),
+    update: (table, where, patch) => inner.update(table, where, patch),
+    selectIn: (table, column, values, options = {}) => {
+      calls.push({ table, values: values.length, options });
+      return inner.selectIn(table, column, values, { ...options, limit: Math.min(options.limit ?? CAP, CAP) });
+    },
+  };
+  const total = REVIEW_IN_CHUNK + 7; // more than one in-chunk, and more than one page per chunk
+  const rawIds = Array.from({ length: total }, (_, i) => `raw-${String(i).padStart(3, "0")}`);
+  const candidates: Row[] = rawIds.map((rawId, i) => ({ id: `cand-${String(i).padStart(3, "0")}`, raw_item_id: rawId, run_id: RUN_ID, rubric_version: "score/x", scores: {}, total: 1, tier: "brief", selected: false, reject_reason: null, rubric: null, created_at: NOW.toISOString() }));
+  await inner.insert("candidates", candidates);
+  const drafts: Row[] = candidates.map((c, i) => ({ id: `draft-${String(i).padStart(3, "0")}`, candidate_id: c["id"], run_id: RUN_ID, content_type: "news_brief", prompt_version: "v1", model: "test", body: {}, input_tokens: 0, output_tokens: 0, cost_usd: 0, review_status: i % 2 === 0 ? "rejected" : "pending", created_at: NOW.toISOString() }));
+  await inner.insert("drafts", drafts);
+
+  // The default page size (1000) is far above the backend cap: the pager must still read everything.
+  const all = await selectInAll<{ id: string; raw_item_id: string }>(capped, "candidates", "raw_item_id", rawIds, ["id", "raw_item_id"]);
+  assert.equal(all.length, total, "every candidate row comes back despite the per-response cap");
+  assert.deepEqual([...new Set(all.map((row) => row.id))].length, total);
+  assert.ok(calls.every((call) => call.values <= REVIEW_IN_CHUNK), "the in-list never exceeds one chunk");
+  assert.ok(calls.every((call) => call.options.orderBy?.column === "id" && call.options.offset !== undefined), "pages are ordered by id with an explicit offset");
+  assert.ok(calls.some((call) => (call.options.offset ?? 0) > 0), "a second page was requested");
+  assert.ok(calls.some((call) => call.options.offset === CAP), "the offset advances by the rows actually returned, not by the requested page size");
+
+  // Without the pager, the capped backend returns only CAP candidates and the rest would be re-selected.
+  assert.equal((await capped.selectIn("candidates", "raw_item_id", rawIds, { columns: ["id"] })).length, CAP);
+
+  calls.length = 0;
+  const reviewed = await reviewedRawItems(capped, rawIds, "v1", ["rejected", "pending"]);
+  assert.equal(reviewed.size, total, "every item with a rejected or pending draft is excluded, not just the first page");
+  assert.equal(reviewed.get("raw-000"), "rejected");
+  assert.equal(reviewed.get("raw-001"), "pending");
+  assert.ok(calls.filter((call) => call.table === "drafts").every((call) => call.values <= REVIEW_IN_CHUNK));
 });

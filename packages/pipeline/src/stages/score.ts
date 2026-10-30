@@ -42,6 +42,7 @@ import type {
   SourceConfig,
   Stage,
   StageContext,
+  TableName,
   TimelinessConfig,
   WeightedTerm,
 } from "@cc/shared";
@@ -475,19 +476,48 @@ export function selectionOrder(a: Scored, b: Scored): number {
   return b.total - a.total || b.scores.timeliness - a.scores.timeliness || a.doc.item.canonical_url.localeCompare(b.doc.item.canonical_url);
 }
 
+/** `in (...)` values per select: they travel in the PostgREST URL, so the list is kept short. */
+export const REVIEW_IN_CHUNK = 50;
+/** Rows per page of a review lookup; one Supabase response is capped at the project's max-rows (1000 by default). */
+export const REVIEW_PAGE_SIZE = 1000;
+
+/**
+ * Every row whose `column` is one of `values`, however many there are: the values go in chunks and each
+ * chunk is paged by `id` until an empty page. The offset advances by the rows actually returned and a
+ * short page does not end the loop, because the backend may cap a response below the requested size
+ * (Supabase `max-rows` is a project setting); that costs one empty read per chunk. A single capped select
+ * would silently drop the rows past the cap, and a dropped row here lets a rejected or held candidate back
+ * into the selection (Codex, PR #79).
+ */
+export async function selectInAll<T extends Row & { id: string }>(db: DbPort, table: TableName, column: string, values: readonly string[], columns: readonly string[], pageSize = REVIEW_PAGE_SIZE): Promise<T[]> {
+  const out: T[] = [];
+  const projected = columns.includes("id") ? columns : ["id", ...columns];
+  for (const chunk of chunks(values, REVIEW_IN_CHUNK)) {
+    for (let offset = 0; ; ) {
+      const page = await db.selectIn<T>(table, column, chunk, { columns: projected, orderBy: { column: "id", ascending: true }, limit: pageSize, offset });
+      if (page.length === 0) break;
+      out.push(...page);
+      offset += page.length;
+    }
+  }
+  return out;
+}
+
 /**
  * Raw items among `rawItemIds` that already have a `news_brief` draft for `promptVersion` whose
  * review_status is in `statuses`, mapped to that status (rejected wins over pending). Looked up through
  * `candidates` by raw_item_id, so the result does not depend on the rubric version the draft was made
- * under; a new prompt version re-qualifies everything.
+ * under; a new prompt version re-qualifies everything. Both lookups read every matching row (`selectInAll`):
+ * an item collects one candidate per rubric version and one draft per prompt version, so the join grows
+ * past one page over time.
  */
 export async function reviewedRawItems(db: DbPort, rawItemIds: readonly string[], promptVersion: string, statuses: readonly ReviewStatus[]): Promise<Map<string, ReviewStatus>> {
   const out = new Map<string, ReviewStatus>();
   if (rawItemIds.length === 0 || statuses.length === 0) return out;
-  const candidates = await db.selectIn<{ id: string; raw_item_id: string }>("candidates", "raw_item_id", rawItemIds, { columns: ["id", "raw_item_id"] });
+  const candidates = await selectInAll<{ id: string; raw_item_id: string }>(db, "candidates", "raw_item_id", rawItemIds, ["id", "raw_item_id"]);
   if (candidates.length === 0) return out;
   const rawByCandidate = new Map(candidates.map((row) => [row.id, row.raw_item_id]));
-  const drafts = await db.selectIn<{ candidate_id: string; content_type: string; prompt_version: string; review_status: ReviewStatus }>("drafts", "candidate_id", [...rawByCandidate.keys()], { columns: ["candidate_id", "content_type", "prompt_version", "review_status"] });
+  const drafts = await selectInAll<{ id: string; candidate_id: string; content_type: string; prompt_version: string; review_status: ReviewStatus }>(db, "drafts", "candidate_id", [...rawByCandidate.keys()], ["candidate_id", "content_type", "prompt_version", "review_status"]);
   for (const draft of drafts) {
     if (draft.content_type !== "news_brief" || draft.prompt_version !== promptVersion || !statuses.includes(draft.review_status)) continue;
     const rawId = rawByCandidate.get(draft.candidate_id);
