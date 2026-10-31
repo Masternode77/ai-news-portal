@@ -34,4 +34,4 @@
 
 | 일시 | R1 | R2 | R3 | R4 | 총 소요 | 메모 |
 |---|---|---|---|---|---|---|
-| | | | | | | |
+| 2026-10-31 13:19~13:21 KST (04:19:32Z~04:21:11Z) | **≈ 1분** — `schedule` 주석 커밋 `3e9e9521` 04:19:32Z → PR #82 생성 → CI 대기 없이 merge `c3ed823e` 04:20:3xZ(비상 경로: 보호 규칙 없음, 머지 즉시 `main`의 `on`은 `workflow_dispatch`만) | 0분 — 진행 중 런 없음(04:20Z `in_progress` 0) | 생략 — 프리뷰 `SITE_DATA_SOURCE`는 그대로(README §4 "또는 그대로 둠"; 프로덕션과 무관) | 프로덕션 READY 유지(`ai-news-portal` production `cb797925` release v0.0.68, 04:20Z) — `main` push로 레거시 재빌드 1건 BUILDING(리빌드 변경은 레거시 입력 무변경). `ops` `stale`는 12h(slot_hours × 1.5) 무런 뒤에만 나와 기다리지 않음 — 알람 경로는 run 1·3의 `never`→`ok`(#78 create→close)로 이미 검증 | **≈ 1분 40초**(비활성→복구 PR #83 merge `b992038b` 04:21:11Z) | Josh 지시(2026-10-31) "schedule 주석 PR 방식". 목표 ≤ 5분 충족. 복구 후 `on`: `workflow_dispatch` + `schedule`(cron 불변). 중간에 cron 슬롯 없음(다음 07:45Z) |
