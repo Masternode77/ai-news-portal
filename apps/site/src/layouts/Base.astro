@@ -5,10 +5,13 @@ interface Props {
   title: string;
   description?: string;
   noindex?: boolean;
+  /** Root-relative canonical path; defaults to the request path. */
+  canonicalPath?: string;
 }
 
-const { title, description = "Compute Current — AI 인프라 인텔리전스", noindex = false } = Astro.props;
+const { title, description = "Compute Current — AI 인프라 인텔리전스", noindex = false, canonicalPath } = Astro.props;
 const robots = noindex || !siteIndexable() ? "noindex, nofollow" : "index, follow";
+const canonical = new URL(canonicalPath ?? Astro.url.pathname, Astro.site ?? Astro.url).toString();
 ---
 
 <!doctype html>
@@ -19,6 +22,8 @@ const robots = noindex || !siteIndexable() ? "noindex, nofollow" : "index, follo
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="robots" content={robots} />
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" type="application/rss+xml" title="Compute Current RSS" href="/rss.xml" />
     <meta name="generator" content={Astro.generator} />
     <style>
       :root {
@@ -79,16 +84,60 @@ const robots = noindex || !siteIndexable() ? "noindex, nofollow" : "index, follo
         max-width: 100%;
         height: auto;
       }
+      nav.site a,
+      footer a {
+        margin-right: 12px;
+      }
+      nav.site {
+        margin-top: 4px;
+        font-size: 0.9375rem;
+      }
+      nav.site a {
+        font-weight: 400;
+        color: var(--muted);
+      }
+      ul.publications {
+        padding-left: 18px;
+      }
+      ul.publications li {
+        margin-bottom: 8px;
+      }
+      .pager {
+        display: flex;
+        gap: 16px;
+        margin-top: 24px;
+      }
     </style>
   </head>
   <body>
     <header>
       <a href="/">Compute Current</a>
       <span class="muted"> · AI infrastructure intelligence</span>
+      <nav class="site" aria-label="사이트">
+        <a href="/archive/">아카이브</a>
+        <a href="/column/">The Current</a>
+        <a href="/category/power-grid/">전력·계통</a>
+        <a href="/category/data-centers/">데이터센터</a>
+        <a href="/region/korea/">한국</a>
+        <a href="/about/">소개</a>
+      </nav>
     </header>
     <main>
       <slot />
     </main>
-    <footer>Compute Current rebuild skeleton (Phase 2). Content is served from the publications store only.</footer>
+    <footer>
+      <p>
+        <a href="/about/">About</a>
+        <a href="/editorial-policy/">Editorial Policy</a>
+        <a href="/methodology/">Methodology</a>
+        <a href="/ai-disclosure/">AI-assisted Disclosure</a>
+        <a href="/advertising-policy/">Advertising</a>
+        <a href="/privacy/">Privacy</a>
+        <a href="/terms/">Terms</a>
+        <a href="/contact/">Contact</a>
+        <a href="/rss.xml">RSS</a>
+      </p>
+      <p>© Compute Current</p>
+    </footer>
   </body>
 </html>

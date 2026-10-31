@@ -39,7 +39,7 @@
 | 정책 8: about, advertising-policy, ai-disclosure, contact, editorial-policy, methodology, privacy, terms | 200 prerender | 레거시 문구를 Markdown으로 추출(코드 복사 아님, P9). ai-disclosure·methodology는 새 파이프라인 기준으로 고쳐 쓰고 Josh 검토 |
 | `/rss.xml`, `/ko/rss.xml`, `/sitemap.xml`, `/robots.txt`, `/ads.txt` | 200 | `publications`; ads.txt는 `PUBLIC_ADSENSE_CLIENT`(이름) 유무에 따라 레거시와 같은 두 형태 |
 | `/ko/` | 301 → `/` (새 콘텐츠는 전부 한국어) | — |
-| hubs 1+3, entities 1+5, glossary, data 1+3, radar, search, briefing, follow, newsletter, pricing, sample, subscribe | 301 → 가장 가까운 페이지(예: `/entities/equinix/` → `/company/equinix/`, `/hubs/texas/` → `/region/us/`, `/data/*` → `/category/power-grid/`, 상업·안내 → `/about/`) | `config/redirects.yaml` |
+| hubs 1+3, entities 1+5, glossary, data 1+3, radar, search, briefing, follow, newsletter, pricing, sample, subscribe | 301 → 가장 가까운 페이지: `/entities/equinix/`·`/entities/digital-realty/` → 같은 `/company/`, 나머지 entities·`/data/*` → `/category/power-grid/`, `/entities/` → `/archive/`, hubs → `/region/us/`, `/glossary/` → `/methodology/`, `/search/` → `/archive/`, `/radar/` → `/`, 상업·구독(briefing·newsletter·pricing·sample·subscribe) → `/contact/`, `/follow/` → `/about/` | `config/redirects.yaml`(24행) |
 | `/data/*.csv` 3 | 410 | `config/redirects.yaml` |
 
 리다이렉트 처리: 사이트 미들웨어가 라우트 응답이 404일 때만 `redirects` 테이블(anon RLS 읽기, 인스턴스 캐시 5분)을 조회해 301/410으로 바꾼다. 정상 페이지는 DB 조회가 늘지 않는다.

@@ -1,32 +1,17 @@
 ---
 import Base from "../layouts/Base.astro";
-import { listPublications } from "../lib/repo";
-import { formatDate } from "../lib/render";
+import PublicationList from "../components/PublicationList.astro";
+import { allPublications } from "../lib/repo";
 
-const loaded = await listPublications(50);
+const loaded = await allPublications();
 if (loaded instanceof Response) {
   return loaded;
 }
-const rows = loaded;
+const rows = loaded.slice(0, 20);
 ---
 
-<Base title="Compute Current — AI 인프라 인텔리전스">
+<Base title="Compute Current — AI 인프라 인텔리전스" canonicalPath="/">
   <h1>최근 발행</h1>
-  {
-    rows.length === 0 ? (
-      <p class="muted" data-empty-state>아직 발행된 글이 없습니다. 파이프라인이 첫 발행을 마치면 이곳에 표시됩니다.</p>
-    ) : (
-      <ul>
-        {rows.map((row) => (
-          <li>
-            <a href={`/${row.slug}/`}>{row.title}</a>
-            <span class="muted">
-              {" "}
-              · <time datetime={row.published_at}>{formatDate(row.published_at)}</time> · {row.content_type}
-            </span>
-          </li>
-        ))}
-      </ul>
-    )
-  }
+  <PublicationList rows={rows} empty="아직 발행된 글이 없습니다. 파이프라인이 첫 발행을 마치면 이곳에 표시됩니다." />
+  {loaded.length > rows.length && <p><a href="/archive/">전체 아카이브 →</a></p>}
 </Base>

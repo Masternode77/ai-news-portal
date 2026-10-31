@@ -1,0 +1,30 @@
+---
+import Base from "../layouts/Base.astro";
+import { policyPage, policyTitle } from "../lib/policy-pages";
+
+const page = policyPage(Astro.params.page ?? "");
+if (!page) {
+  return new Response("Not found", { status: 404, headers: { "content-type": "text/plain; charset=utf-8" } });
+}
+---
+
+<Base title={`${page.eyebrow} | Compute Current`} description={page.description} canonicalPath={`/${page.slug}/`}>
+  <article lang="en">
+    <p class="muted">{page.eyebrow}</p>
+    <h1>{page.title}</h1>
+    <p>{page.lede}</p>
+    {
+      page.sections.map((section) => (
+        <section>
+          <h2>{section.heading}</h2>
+          {section.paragraphs.map((paragraph) => (
+            <p set:html={paragraph} />
+          ))}
+        </section>
+      ))
+    }
+    <nav aria-label="Related pages">
+      {page.related.map((slug) => <a href={`/${slug}/`}>{policyTitle(slug)}</a>)}
+    </nav>
+  </article>
+</Base>

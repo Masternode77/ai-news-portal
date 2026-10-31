@@ -1,0 +1,32 @@
+---
+import { contentLabel, publicationPath } from "../lib/listing";
+import { formatDate } from "../lib/render";
+import type { PublicationRow } from "../lib/render";
+
+interface Props {
+  rows: PublicationRow[];
+  empty?: string;
+}
+
+const { rows, empty = "아직 이 목록에 발행된 글이 없습니다." } = Astro.props;
+---
+
+{
+  rows.length === 0 ? (
+    <p class="muted" data-empty-state>
+      {empty}
+    </p>
+  ) : (
+    <ul class="publications">
+      {rows.map((row) => (
+        <li>
+          <a href={publicationPath(row)}>{row.title}</a>
+          <span class="muted">
+            {" "}
+            · <time datetime={row.published_at}>{formatDate(row.published_at)}</time> · {contentLabel(row)}
+          </span>
+        </li>
+      ))}
+    </ul>
+  )
+}

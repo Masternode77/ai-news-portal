@@ -1,0 +1,26 @@
+---
+import Base from "../../layouts/Base.astro";
+import PublicationList from "../../components/PublicationList.astro";
+import Pager from "../../components/Pager.astro";
+import { allPublications } from "../../lib/repo";
+import { archivePath, archiveRoute, paginate } from "../../lib/listing";
+
+const loaded = await allPublications();
+if (loaded instanceof Response) {
+  return loaded;
+}
+const route = archiveRoute(Astro.params.page, loaded.length);
+if (route.kind === "redirect") {
+  return Astro.redirect(route.location, 301);
+}
+if (route.kind === "not_found") {
+  return new Response("Not found", { status: 404, headers: { "content-type": "text/plain; charset=utf-8" } });
+}
+const { items, page, pages } = paginate(loaded, route.page);
+---
+
+<Base title={`아카이브 ${page}페이지 | Compute Current`} description="Compute Current 전체 발행 목록" canonicalPath={archivePath(page)}>
+  <h1>아카이브 · {page}페이지</h1>
+  <PublicationList rows={items} />
+  <Pager page={page} pages={pages} />
+</Base>

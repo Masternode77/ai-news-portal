@@ -26,6 +26,15 @@ on:
         type: choice
         default: info
         options: [debug, info, warn, error]
+      verify_base_url:
+        description: "Phase 5: also check the 136 preserved URLs on this deployment (e.g. https://www.computecurrent.com after the cutover); empty = skip"
+        type: string
+        default: ""
+      verify_content:
+        description: "Content the verified deployment should serve: legacy (the 12 migrated legacy pages) or none (an empty preview)"
+        type: choice
+        default: legacy
+        options: [legacy, none]
 
 permissions:
   contents: read
@@ -88,8 +97,44 @@ jobs:
           CC_FLAG_PUBLISH_TARGET: staging   # 3h: rows land in the run's memory DB (--dry-run); revalidation stays off in config
         run: |
           npm run --silent v2:pipeline -- run --dry-run --replay --fixture scoring --sources fixtures/sources/scoring.yaml --stage ingest,normalize,score,generate,qa,image,publish --json > generate-dry-run.json
-          node -e "const r=require('./generate-dry-run.json'); const g=r.generateStats; console.log(JSON.stringify({status:r.status, selected:g.selected, drafted:g.drafted, failed:g.failed, grounding:g.grounding, pass_rate:g.grounding_pass_rate, quote_max_words:g.quote_max_words, banned:g.banned, cost_usd:g.cost_usd, drafts:g.decisions.map(d=>[d.source_id, d.ok, d.slug, d.grounding_ungrounded, d.banned_matches])}, null, 2)); if (r.status !== 'done' || g.selected !== 2 || g.drafted !== 2 || g.failed !== 0 || g.grounding.checked !== 2 || g.grounding.passed !== 1 || g.banned.checked !== 2 || g.banned.passed !== 2) process.exit(1); const q=r.qaStats; console.log(JSON.stringify({qa: {drafts: q.drafts, passed: q.passed, rejected: q.rejected, held: q.held, verdicts: q.verdicts, rules: q.rules, rule_errors: q.rule_errors, decisions: q.decisions.map(d=>[d.source_id, d.outcome, d.failed_rules])}})); if (q.drafts !== 2 || q.passed !== 1 || q.rejected !== 1 || q.held !== 0 || q.rule_errors !== 0 || q.verdicts !== q.drafts * q.rules) process.exit(1); const img=r.stages.find(s=>s.stage==='image'); const i=r.imageStats; console.log(JSON.stringify({image: img, imageStats: {passed: i.passed, with_images: i.with_images, placeholders: i.placeholders, image_missing: i.image_missing}})); if (!img || img.status !== 'done' || i.passed !== 1 || i.with_images !== 1 || i.placeholders !== 1) process.exit(1); const p=r.publishStats; console.log(JSON.stringify({publish: {target: p.target, candidates: p.candidates, published: p.published, inserted: p.inserted, failed: p.failed, redirects_synced: p.redirects_synced, revalidate: p.revalidate, decisions: p.decisions.map(d=>[d.slug, d.action])}, funnel_published: r.funnel.published})); if (p.target !== 'staging' || p.candidates !== 1 || p.published !== 1 || p.inserted !== 1 || p.failed !== 0 || p.redirects_synced !== 17 || p.revalidate.skipped !== true || r.funnel.published !== 1) process.exit(1); const n=r.notify; console.log(JSON.stringify({notify: n, summary_head: r.summary.text.split('\\n')[0], failures: r.summary.failures})); if (!n || n.channel !== 'telegram' || n.skipped !== 'disabled' || n.sent !== false || !/^\\[CC pipeline\\] .* · done$/.test(r.summary.text.split('\\n')[0]) || r.summary.failures[0]?.code !== 'UNGROUNDED_NUMBER' || r.budget.state !== 'ok') process.exit(1)"
+          node -e "const r=require('./generate-dry-run.json'); const g=r.generateStats; console.log(JSON.stringify({status:r.status, selected:g.selected, drafted:g.drafted, failed:g.failed, grounding:g.grounding, pass_rate:g.grounding_pass_rate, quote_max_words:g.quote_max_words, banned:g.banned, cost_usd:g.cost_usd, drafts:g.decisions.map(d=>[d.source_id, d.ok, d.slug, d.grounding_ungrounded, d.banned_matches])}, null, 2)); if (r.status !== 'done' || g.selected !== 2 || g.drafted !== 2 || g.failed !== 0 || g.grounding.checked !== 2 || g.grounding.passed !== 1 || g.banned.checked !== 2 || g.banned.passed !== 2) process.exit(1); const q=r.qaStats; console.log(JSON.stringify({qa: {drafts: q.drafts, passed: q.passed, rejected: q.rejected, held: q.held, verdicts: q.verdicts, rules: q.rules, rule_errors: q.rule_errors, decisions: q.decisions.map(d=>[d.source_id, d.outcome, d.failed_rules])}})); if (q.drafts !== 2 || q.passed !== 1 || q.rejected !== 1 || q.held !== 0 || q.rule_errors !== 0 || q.verdicts !== q.drafts * q.rules) process.exit(1); const img=r.stages.find(s=>s.stage==='image'); const i=r.imageStats; console.log(JSON.stringify({image: img, imageStats: {passed: i.passed, with_images: i.with_images, placeholders: i.placeholders, image_missing: i.image_missing}})); if (!img || img.status !== 'done' || i.passed !== 1 || i.with_images !== 1 || i.placeholders !== 1) process.exit(1); const p=r.publishStats; console.log(JSON.stringify({publish: {target: p.target, candidates: p.candidates, published: p.published, inserted: p.inserted, failed: p.failed, redirects_synced: p.redirects_synced, revalidate: p.revalidate, decisions: p.decisions.map(d=>[d.slug, d.action])}, funnel_published: r.funnel.published})); if (p.target !== 'staging' || p.candidates !== 1 || p.published !== 1 || p.inserted !== 1 || p.failed !== 0 || p.redirects_synced !== 44 || p.revalidate.skipped !== true || r.funnel.published !== 1) process.exit(1); const n=r.notify; console.log(JSON.stringify({notify: n, summary_head: r.summary.text.split('\\n')[0], failures: r.summary.failures})); if (!n || n.channel !== 'telegram' || n.skipped !== 'disabled' || n.sent !== false || !/^\\[CC pipeline\\] .* · done$/.test(r.summary.text.split('\\n')[0]) || r.summary.failures[0]?.code !== 'UNGROUNDED_NUMBER' || r.budget.state !== 'ok') process.exit(1)"
           node packages/pipeline/tools/ingest-dry-run-summary.ts generate-dry-run.json >> "$GITHUB_STEP_SUMMARY"
+      # Phase 5 (R8): the site answers every preserved URL (docs/diagnosis/05-preserve-list.csv) with the
+      # planned 200/301/410. The dev server reads the committed legacy JSON and config/redirects.yaml; no network.
+      - name: Site URL parity — 136 preserved URLs (astro dev, legacy JSON)
+        env:
+          SITE_DATA_SOURCE: legacy_json
+          SITE_INDEXABLE: "true"
+        run: |
+          (cd apps/site && nohup npx astro dev --port 4321 > ../../astro-dev.log 2>&1 &)
+          for i in $(seq 1 90); do curl -sf -o /dev/null http://localhost:4321/healthz && break; sleep 1; done
+          node apps/site/tools/verify-urls.ts --base http://localhost:4321 --markdown >> "$GITHUB_STEP_SUMMARY" || { node apps/site/tools/verify-urls.ts --base http://localhost:4321 | grep -v '^ok'; tail -n 40 astro-dev.log; exit 1; }
+
+  # Manual only (Phase 5): check the preserved URLs on a deployed site — the v2 preview before the cutover,
+  # https://www.computecurrent.com after it (docs/migration/phase5-cutover.md §4 steps 8, 9, 11). No secrets;
+  # a preview behind Vercel Deployment Protection answers 401 and fails the check.
+  verify-urls-remote:
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.verify_base_url != '' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - name: Setup Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '22.22.0'
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Verify preserved URLs
+        env:
+          VERIFY_BASE_URL: ${{ inputs.verify_base_url }}
+          VERIFY_CONTENT: ${{ inputs.verify_content }}
+        run: |
+          node apps/site/tools/verify-urls.ts --base "$VERIFY_BASE_URL" --content "$VERIFY_CONTENT" --markdown >> "$GITHUB_STEP_SUMMARY" || { node apps/site/tools/verify-urls.ts --base "$VERIFY_BASE_URL" --content "$VERIFY_CONTENT" | grep -v '^ok'; exit 1; }
 
   # Manual only (brief Phase 3 common procedure 4): the cloud session cannot reach
   # the feed hosts, so this job is the evidence path for "items_fetched per cycle

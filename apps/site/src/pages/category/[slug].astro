@@ -1,0 +1,21 @@
+---
+import Base from "../../layouts/Base.astro";
+import PublicationList from "../../components/PublicationList.astro";
+import { allPublications } from "../../lib/repo";
+import { filterByTerm, findTerm, termPath } from "../../lib/taxonomy";
+
+const term = findTerm("category", Astro.params.slug ?? "");
+if (!term) {
+  return new Response("Not found", { status: 404, headers: { "content-type": "text/plain; charset=utf-8" } });
+}
+const loaded = await allPublications();
+if (loaded instanceof Response) {
+  return loaded;
+}
+const rows = filterByTerm(loaded, term);
+---
+
+<Base title={`${term.labelKo} | Compute Current`} description={`${term.label} — Compute Current 발행 목록`} canonicalPath={termPath(term)} noindex={rows.length === 0}>
+  <h1>{term.labelKo}{term.labelKo !== term.label && <span class="muted"> · {term.label}</span>}</h1>
+  <PublicationList rows={rows} />
+</Base>
