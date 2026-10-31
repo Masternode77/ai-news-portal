@@ -108,6 +108,8 @@ test("UNGROUNDED_NUMBER and UNGROUNDED_ENTITY: a number or a Latin name that is 
   assert.deepEqual(loose.evidence["ungrounded"], ["Portugal Azores"]);
   assert.deepEqual(loose.evidence["token_grounded"], ["Nottinghamshire Newark"]);
   await assert.rejects(check("UNGROUNDED_ENTITY", rebuilt, sourceWithPlaces, { token_fallback: "yes" }), /QA_PARAM_INVALID/);
+  const substring = await check("UNGROUNDED_ENTITY", draft({ ...BRIEF, expert_lens_ko: `${BRIEF.expert_lens_ko} Arm Microsoft 협력도 거론된다.` }), evidence({ sourceText: `${BODY} Microsoft is building a solar farm.` }), { token_fallback: true });
+  assert.deepEqual(substring.evidence["ungrounded"], ["Arm Microsoft"], "a token matches whole words only: Arm is not inside farm (Codex PR #80)");
 });
 
 test("LANG_MISMATCH and BANNED_PATTERN: an English-heavy brief and a banned phrase fail", async () => {

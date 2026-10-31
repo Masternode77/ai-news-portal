@@ -6,7 +6,8 @@
  * `token_fallback` (Phase 4, compare.md §3): a multi-word name the source does not carry verbatim still
  * grounds when every token of at least `min_chars` is in the source — the draft rebuilds two grounded
  * names in Korean word order ("Nottinghamshire Newark" for "Newark … Nottinghamshire"); a token the
- * source never has ("Portugal" against "Portuguese") still fails.
+ * source never has ("Portugal" against "Portuguese") still fails, and a token is matched as a whole
+ * word, so "Arm" is not found inside "farm" (Codex PR #80).
  */
 import type { QaRule } from "@cc/shared";
 import { briefOf, latinProperNouns, readerText } from "../text.ts";
@@ -24,10 +25,11 @@ export const rule: QaRule = {
     const tokenFallback = boolParam(config, "token_fallback", false);
     const entities = latinProperNouns(readerText(brief), minChars).filter((e) => /[a-z]/.test(e));
     const tokenGrounded: string[] = [];
+    const hasWord = (token: string): boolean => new RegExp(`(?<![\\p{L}\\p{N}])${token.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}(?![\\p{L}\\p{N}])`, "iu").test(haystack);
     const byTokens = (entity: string): boolean => {
       const tokens = entity.split(/\s+/u).filter((token) => token.length >= minChars);
       if (tokens.length === 0 || !entity.includes(" ")) return false;
-      return tokens.every((token) => haystack.includes(token.toLowerCase()));
+      return tokens.every((token) => hasWord(token));
     };
     const ungrounded = entities.filter((e) => {
       if (allow.has(e.toLowerCase()) || haystack.includes(e.toLowerCase())) return false;

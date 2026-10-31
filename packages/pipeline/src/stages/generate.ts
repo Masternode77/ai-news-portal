@@ -46,22 +46,32 @@ const BANNED_SAMPLE = 20;
 // ---------------------------------------------------------------------------
 /**
  * A number with an optional scale: a run of Korean scale words (조/억/만/천, so `2천억` is 2 × 10³ × 10⁸),
- * one English word (trillion/billion/million/thousand, bn, mn), or a currency-style letter (`$45B`,
- * `€5M`, `1.2K`; the letter must not start a longer word, so `5MW`, `10GB` and `HBM3E` stay unscaled).
- * Phase 4 shadow evidence: `$45B` in a source never met `450억` in the draft (compare.md §3).
+ * one English word (trillion/billion/million/thousand, bn, mn, capitalised or not), or a currency-style
+ * letter — upper-case `B`/`M`/`K` and lower-case `k` (`$45B`, `€5M`, `1.2K`, `10k`). Lower-case `b` and
+ * `m` are not scales: `300 m` is a length, not 300 million (Codex PR #80). The letter must not start a
+ * longer word, so `5MW`, `10GB` and `HBM3E` stay unscaled. The expression is case-sensitive for that
+ * reason, so the word forms list their capitalised spellings. Phase 4 shadow evidence: `$45B` in a
+ * source never met `450억` in the draft (compare.md §3).
  */
-const NUMBER = /(\d+(?:[.,]\d+)*)(?:\s*(?:((?:조|억|만|천)+)|(trillion|billion|bn|million|mn|thousand|[bmk])(?![a-z])))?/giu;
+const NUMBER = /(\d+(?:[.,]\d+)*)(?:\s*(?:((?:조|억|만|천)+)|([Tt]rillion|[Bb]illion|[Bb]n|[Mm]illion|[Mm]n|[Tt]housand|[BMKk])(?![A-Za-z])))?/gu;
 const SCALE: Record<string, number> = { 조: 1e12, 억: 1e8, 만: 1e4, 천: 1e3, trillion: 1e12, billion: 1e9, bn: 1e9, b: 1e9, million: 1e6, mn: 1e6, m: 1e6, thousand: 1e3, k: 1e3 };
 /** Korean month digits (`7월`) ground on the English month name in the source (`July`): the source never carries the digit. */
 const MONTH_SUFFIX = /^월(?!간)/u;
 const MONTH_NAMES: Record<string, number> = { jan: 1, january: 1, feb: 2, february: 2, mar: 3, march: 3, apr: 4, april: 4, may: 5, jun: 6, june: 6, jul: 7, july: 7, aug: 8, august: 8, sep: 9, sept: 9, september: 9, oct: 10, october: 10, nov: 11, november: 11, dec: 12, december: 12 };
-const MONTH_WORD = /\b(jan(?:uary)?|feb(?:ruary)?|mar(?:ch)?|apr(?:il)?|may|jun(?:e)?|jul(?:y)?|aug(?:ust)?|sep(?:t|tember)?|oct(?:ober)?|nov(?:ember)?|dec(?:ember)?)\b\.?/giu;
+/**
+ * Full month names stand on their own. `May` and the three-letter abbreviations are ordinary words too
+ * ("construction may begin", "mar", "dec"), so they count only next to a day or a year: `3 May 2026`,
+ * `May 30`, `Sept. 16`, `Sep 2026` (Codex PR #80).
+ */
+const MONTH_FULL = /\b(january|february|march|april|june|july|august|september|october|november|december)\b/giu;
+const MONTH_SHORT = /(?:\b\d{1,2}(?:st|nd|rd|th)?\s+(jan|feb|mar|apr|may|jun|jul|aug|sep|sept|oct|nov|dec)\b\.?)|(?:\b(jan|feb|mar|apr|may|jun|jul|aug|sep|sept|oct|nov|dec)\b\.?,?\s+\d{1,4}\b)/giu;
 
 /** Month numbers (1–12) the source names in English, so a Korean `7월` claim can ground on "July". */
 export function monthsNamed(text: string): Set<number> {
   const out = new Set<number>();
-  for (const match of text.matchAll(MONTH_WORD)) {
-    const month = MONTH_NAMES[match[1]!.toLowerCase()];
+  for (const match of text.matchAll(MONTH_FULL)) out.add(MONTH_NAMES[match[1]!.toLowerCase()]!);
+  for (const match of text.matchAll(MONTH_SHORT)) {
+    const month = MONTH_NAMES[(match[1] ?? match[2])!.toLowerCase()];
     if (month !== undefined) out.add(month);
   }
   return out;
@@ -96,7 +106,7 @@ export interface NumberClaim {
   scaled: boolean;
   /** The bare number without its scale, so a source "2.1 billion" also grounds an unscaled draft "2.1". */
   bare: string;
-  /** 1–12 when the claim is a Korean month (`7월`); such a claim also grounds on the English month name. */
+  /** 1–12 when the claim is a Korean month (`7월`, raw keeps the suffix); such a claim also grounds on the English month name. */
   month: number | null;
 }
 
@@ -143,7 +153,8 @@ export function numberClaims(text: string): NumberClaim[] {
     }
     close();
     const month = !scale && /^\d+$/u.test(bare) && value >= 1 && value <= 12 && MONTH_SUFFIX.test(after) ? value : null;
-    out.push({ raw: raw.trim(), key: canonicalKey(value, multiplier), scaled: Boolean(scale), bare, month });
+    // A month claim is written `7월`, so it never shares its dedup identity with a bare `7` elsewhere in the draft (Codex PR #80).
+    out.push({ raw: month === null ? raw.trim() : `${raw.trim()}월`, key: canonicalKey(value, multiplier), scaled: Boolean(scale), bare, month });
   }
   close();
   return out;

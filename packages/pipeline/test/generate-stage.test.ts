@@ -219,8 +219,20 @@ test("checks: number claims are Korean-aware (scale words, counters), grounding 
   assert.deepEqual(numberTokens("3억 600만 유로와 1조 2,000억 300만 원, 5천 3억"), ["3억 600만", "1조 2,000억 300만", "5천", "3억"], "falling scales chain; a rising pair does not");
   assert.deepEqual(groundingCheck("3억 600만 유로", "€3 million and €600 million").ungrounded, ["3억 600만"], "the halves of a compound numeral no longer ground it");
   assert.equal(groundingCheck("2024년 7월 이후 승인 39건", "39 projects approved since July 2024").pass, true, "7월 grounds on July");
-  assert.deepEqual(groundingCheck("12월까지 연장", "extended until the end of the year").ungrounded, ["12"], "a month the source never names stays ungrounded");
-  assert.deepEqual(groundingCheck("3개월간 7월", "three months, July").numbers, ["7"], "3개월 is a counter; 7월 is a month");
+  assert.deepEqual(groundingCheck("12월까지 연장", "extended until the end of the year").ungrounded, ["12월"], "a month the source never names stays ungrounded");
+  assert.deepEqual(groundingCheck("3개월간 7월", "three months, July").numbers, ["7월"], "3개월 is a counter; 7월 is a month");
+  // Codex PR #80: modal "may" and bare abbreviations are not months; a month claim never covers a bare number with the same digits; lower-case m is a metre.
+  assert.deepEqual(groundingCheck("5월 착공 예정이다.", "Construction may begin next year.").ungrounded, ["5월"], "modal may is not a month");
+  assert.equal(groundingCheck("5월 착공", "works start on 3 May 2026").pass, true);
+  assert.equal(groundingCheck("5월 착공", "works start May 30").pass, true);
+  assert.equal(groundingCheck("9월 발표", "announced Sept. 16").pass, true);
+  assert.deepEqual(groundingCheck("3월·12월", "They mar the plan and dec is short").ungrounded, ["3월", "12월"], "bare abbreviations without a day or year are words");
+  assert.deepEqual(groundingCheck("7월 전력 용량은 7 GW다.", "In July, power capacity will reach 2 GW.").ungrounded, ["7"], "the grounded month does not cover a bare 7");
+  assert.deepEqual(groundingCheck("투자액은 3억 달러다.", "The cable extends for 300 m.").ungrounded, ["3억"], "300 m is a length, not 300 million");
+  assert.equal(groundingCheck("투자액은 3억 달러다.", "a $300M investment").pass, true);
+  assert.equal(groundingCheck("10k 랙", "10,000 racks").pass, true, "lower-case k stays a thousand");
+  assert.equal(groundingCheck("50억 파운드", "a £5bn deal").pass, true);
+  assert.equal(groundingCheck("50억 파운드", "a £5Bn deal").pass, true);
   assert.deepEqual(groundingCheck("단일 신규 원전 1기", "nearly 1.1 gigawatts").ungrounded, ["1"], "1.1 does not ground a bare 1 (compare.md §3 row 2 stays a correct rejection)");
   assert.equal(longestCommonRun("the first 200 MW phase is scheduled to reach", BUSAN), 9);
   assert.equal(longestCommonRun("완전히 다른 문장", BUSAN), 0);
