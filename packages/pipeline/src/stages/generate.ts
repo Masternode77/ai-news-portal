@@ -47,15 +47,16 @@ const BANNED_SAMPLE = 20;
 /**
  * A number with an optional scale: a run of Korean scale words (조/억/만/천, so `2천억` is 2 × 10³ × 10⁸),
  * one English word (trillion/billion/million/thousand, bn, mn, capitalised or not), or a currency-style
- * letter — upper-case `B`/`M`/`K` and lower-case `k` (`$45B`, `€5M`, `1.2K`, `10k`). Lower-case `b` and
- * `m` are not scales: `300 m` is a length, not 300 million (Codex PR #80). The letter must not start a
- * longer word, so `5MW`, `10GB` and `HBM3E` stay unscaled. The letters are case-sensitive, the words are
- * not (`BILLION` in a headline still scales), so the words are spelled as per-letter classes instead of
- * an `i` flag. Phase 4 shadow evidence: `$45B` in a source never met `450억` in the draft (compare.md §3).
+ * letter — upper-case `B`/`M`/`K` and lower-case `k` written directly after the digits (`$45B`, `€5M`,
+ * `1.2K`, `10k`). A letter after a space is a unit, not a scale: `300 K` is a temperature and `300 m` a
+ * length (Codex PR #80); lower-case `b`/`m` never scale. The letter must not start a longer word, so
+ * `5MW`, `10GB` and `HBM3E` stay unscaled. The letters are case-sensitive, the words are not (`BILLION`
+ * in a headline still scales), so the words are spelled as per-letter classes instead of an `i` flag.
+ * Phase 4 shadow evidence: `$45B` in a source never met `450억` in the draft (compare.md §3).
  */
 const anyCase = (word: string): string => [...word].map((char) => `[${char.toUpperCase()}${char.toLowerCase()}]`).join("");
 const SCALE_WORDS = ["trillion", "billion", "bn", "million", "mn", "thousand"].map(anyCase).join("|");
-const NUMBER = new RegExp(`(\\d+(?:[.,]\\d+)*)(?:\\s*(?:((?:조|억|만|천)+)|(${SCALE_WORDS}|[BMKk])(?![A-Za-z])))?`, "gu");
+const NUMBER = new RegExp(`(\\d+(?:[.,]\\d+)*)(?:\\s*((?:조|억|만|천)+)|\\s*(${SCALE_WORDS})(?![A-Za-z])|([BMKk])(?![A-Za-z]))?`, "gu");
 const SCALE: Record<string, number> = { 조: 1e12, 억: 1e8, 만: 1e4, 천: 1e3, trillion: 1e12, billion: 1e9, bn: 1e9, b: 1e9, million: 1e6, mn: 1e6, m: 1e6, thousand: 1e3, k: 1e3 };
 /** Korean month digits (`7월`) ground on the English month name in the source (`July`): the source never carries the digit. */
 const MONTH_SUFFIX = /^월(?!간)/u;
@@ -128,10 +129,10 @@ export function numberClaims(text: string): NumberClaim[] {
     open = null;
   };
   for (const match of text.matchAll(NUMBER)) {
-    const [raw, digits, ko, en] = match;
+    const [raw, digits, ko, word, letter] = match;
     const start = match.index ?? 0;
     const end = start + raw.length;
-    const scale = ko ?? en?.toLowerCase();
+    const scale = ko ?? (word ?? letter)?.toLowerCase();
     const after = text.slice(end);
     if (!scale && COUNTER.test(after)) {
       close();
