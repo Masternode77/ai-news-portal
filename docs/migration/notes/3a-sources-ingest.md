@@ -124,7 +124,7 @@ kept 0이지만 정상 동작: `google-cloud-tpu-releases`(30건 전부 10일 �
 | berkeley-lab-news | 3 | `HTTP_403` | `/feed/atom/` 403, `news.lbl.gov/feed/` → 같은 호스트로 리다이렉트 후 403 | **비활성** — 자동 수집 차단을 우회하지 않는다(UA 위장 없음) |
 | neso | 3 | `HTTP_404 /rss.xml` | `/news-and-events/rss.xml`·`/news-and-events/feed` 404, `/news/feed`는 HTML(`FEED_PARSE`) | **비활성**(영국 계통은 ofgem·uk-desnz) |
 
-결과: 활성 80 → 76(전부 수집 가능), `reviewed_at` 2026-10-31. 다시 켜려면 `enabled: true` + `reviewed_at`을 올린다(자동 비활성이 기록된 DB에서도 그날 이후 날짜면 복귀). 범위 밖 관찰: tier 1 `nrc-news`는 간헐 403(2026-10-31 02:45Z·12:16Z 실패, 그 사이 런은 성공) — 이번 정리에서 손대지 않는다. `fetch failed`의 하위 원인(`error.cause.code`)은 현재 로그에 남지 않는다(진단 개선은 코드 변경이라 별도 제안).
+결과: 활성 80 → 76, `reviewed_at` 2026-10-31. 최종 설정 확인 run 41200596432(`7666939d`): **sources 76/76 ok · 실패 0 · 상태 `done`**(fetched 200 → scored 195 → gate 14). 다시 켜려면 `enabled: true` + `reviewed_at`을 올린다(자동 비활성이 기록된 DB에서도 그날 이후 날짜면 복귀). 범위 밖 관찰: tier 1 `nrc-news`는 간헐 403(2026-10-31 02:45Z·12:16Z 실패, 그 사이 런은 성공) — 이번 정리에서 손대지 않는다. `fetch failed`의 하위 원인(`error.cause.code`)은 현재 로그에 남지 않는다(진단 개선은 코드 변경이라 별도 제안).
 
 ## 5. 열린 질문 (Josh)
 
