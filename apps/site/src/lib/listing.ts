@@ -10,8 +10,12 @@
 import type { PublicationRow } from "@cc/shared";
 
 export const ARCHIVE_PAGE_SIZE = 18;
-/** Rows a listing page reads: every page filters this one list, so all pages agree on what exists. */
-export const LISTING_LIMIT = 1000;
+/**
+ * Rows a listing page reads: every page filters this one list, so all pages agree on what exists. The
+ * Supabase repo reads it in pages of 1,000 (Codex PR #85), so the archive, taxonomy pages and the sitemap
+ * see the whole catalog up to this ceiling (≈ 5 years at today's 5 publications a day).
+ */
+export const LISTING_LIMIT = 10000;
 
 export interface Page<T> {
   items: T[];

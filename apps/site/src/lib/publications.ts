@@ -67,7 +67,8 @@ export interface SiteSupabaseResponse {
 export interface SiteSupabaseQuery {
   eq(column: string, value: unknown): SiteSupabaseQuery;
   order(column: string, options: { ascending: boolean }): SiteSupabaseQuery;
-  limit(count: number): SiteSupabaseQuery;
+  /** Inclusive row window (PostgREST Range); a page never exceeds the project's max-rows setting. */
+  range(from: number, to: number): SiteSupabaseQuery;
   maybeSingle(): PromiseLike<{ data: unknown; error: { message: string } | null }>;
   then<T>(onfulfilled: (value: SiteSupabaseResponse) => T): PromiseLike<T>;
 }
@@ -84,6 +85,8 @@ export function resolveDataSource(env: SiteEnv): DataSource {
 }
 
 const DEFAULT_LIMIT = 50;
+/** One request reads at most this many rows (PostgREST's default max-rows); longer lists are read page by page. */
+export const SUPABASE_PAGE_SIZE = 1000;
 
 function emptyRepo(detail?: string): PublicationsRepo {
   return {
@@ -120,11 +123,27 @@ function parseRows(data: unknown[] | null | undefined): { rows: PublicationRowTy
 
 export function createSupabaseRepo(client: SiteSupabaseLike): PublicationsRepo {
   const columns = PUBLICATION_COLUMNS.join(",");
+  // Newest first, slug as the tie-break so consecutive pages neither skip nor repeat rows with the same published_at.
   const fetchList = async (limit: number): Promise<{ rows: PublicationRowType[]; invalid: number; error: string | null }> => {
+    const rows: PublicationRowType[] = [];
+    let invalid = 0;
     try {
-      const result = await client.from("publications").select(columns).eq("status", "published").order("published_at", { ascending: false }).limit(limit);
-      if (result.error) return { rows: [], invalid: 0, error: result.error.message };
-      return { ...parseRows(result.data), error: null };
+      for (let from = 0; from < limit; from += SUPABASE_PAGE_SIZE) {
+        const to = Math.min(limit, from + SUPABASE_PAGE_SIZE) - 1;
+        const result = await client
+          .from("publications")
+          .select(columns)
+          .eq("status", "published")
+          .order("published_at", { ascending: false })
+          .order("slug", { ascending: true })
+          .range(from, to);
+        if (result.error) return { rows: [], invalid: 0, error: result.error.message };
+        const page = parseRows(result.data);
+        rows.push(...page.rows);
+        invalid += page.invalid;
+        if ((result.data?.length ?? 0) < to - from + 1) break;
+      }
+      return { rows, invalid, error: null };
     } catch (error) {
       return { rows: [], invalid: 0, error: error instanceof Error ? error.message : String(error) };
     }

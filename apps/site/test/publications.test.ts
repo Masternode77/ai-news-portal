@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { resolve } from "node:path";
 import { PublicationRow } from "@cc/shared";
 import { legacyUuid, mapLegacyCollections, mapLegacyColumn, mapLegacyNews } from "../src/lib/legacy-json.ts";
-import { DataUnavailableError, createLegacyJsonRepo, createPublicationsRepo, createSupabaseRepo, resolveDataSource } from "../src/lib/publications.ts";
+import { DataUnavailableError, SUPABASE_PAGE_SIZE, createLegacyJsonRepo, createPublicationsRepo, createSupabaseRepo, resolveDataSource } from "../src/lib/publications.ts";
 import type { SiteSupabaseLike, SiteSupabaseQuery } from "../src/lib/publications.ts";
 
 const REPO_ROOT = resolve(import.meta.dirname, "../../..");
@@ -31,6 +31,7 @@ const validRow = {
 function fakeSupabase(rows: unknown[], error: { message: string } | null = null): { client: SiteSupabaseLike; calls: string[] } {
   const calls: string[] = [];
   const query = (head: boolean): SiteSupabaseQuery => {
+    let window: [number, number] = [0, rows.length - 1];
     const q: SiteSupabaseQuery = {
       eq: (column, value) => {
         calls.push(`eq:${column}=${String(value)}`);
@@ -40,12 +41,14 @@ function fakeSupabase(rows: unknown[], error: { message: string } | null = null)
         calls.push(`order:${column}:${options.ascending ? "asc" : "desc"}`);
         return q;
       },
-      limit: (count) => {
-        calls.push(`limit:${count}`);
+      range: (from, to) => {
+        calls.push(`range:${from}-${to}`);
+        window = [from, to];
         return q;
       },
       maybeSingle: () => Promise.resolve({ data: rows[0] ?? null, error }),
-      then: (onfulfilled) => Promise.resolve(head ? { data: null, error, count: error ? null : rows.length } : { data: error ? null : rows, error }).then(onfulfilled),
+      then: (onfulfilled) =>
+        Promise.resolve(head ? { data: null, error, count: error ? null : rows.length } : { data: error ? null : rows.slice(window[0], window[1] + 1), error }).then(onfulfilled),
     };
     return q;
   };
@@ -95,7 +98,8 @@ test("supabase repo reads published rows only, drops invalid rows and reports an
   assert.equal(rows[0]?.slug, "news/0123456789abcdef");
   assert.ok(calls.includes("eq:status=published"));
   assert.ok(calls.includes("order:published_at:desc"));
-  assert.ok(calls.includes("limit:10"));
+  assert.ok(calls.includes("order:slug:asc"), "slug breaks published_at ties so pages neither skip nor repeat rows");
+  assert.ok(calls.includes("range:0-9"));
   assert.ok(calls[0]?.startsWith("select:publications:"));
   assert.equal((await repo.get("news/0123456789abcdef"))?.title, "발행된 브리프");
 
@@ -234,4 +238,19 @@ test("createPublicationsRepo wires legacy_json to the repo root when asked", asy
   const repo = createPublicationsRepo({ SITE_DATA_SOURCE: "legacy_json" }, { repoRoot: REPO_ROOT });
   assert.equal(repo.source, "legacy_json");
   assert.ok((await repo.list()).length >= 1);
+});
+
+test("supabase repo reads long lists page by page (Codex PR #85): more than one page of rows comes back whole", async () => {
+  const many = Array.from({ length: SUPABASE_PAGE_SIZE + 250 }, (_, i) => ({
+    ...validRow,
+    id: `7d7f0d6e-3e7e-4a39-9a2e-${String(i).padStart(12, "0")}`,
+    slug: `news/${i.toString(16).padStart(16, "0")}`,
+  }));
+  const { client, calls } = fakeSupabase(many);
+  const repo = createSupabaseRepo(client);
+  const rows = await repo.list({ limit: 10000 });
+  assert.equal(rows.length, SUPABASE_PAGE_SIZE + 250);
+  assert.deepEqual(calls.filter((c) => c.startsWith("range:")), ["range:0-999", "range:1000-1999"], "a short page ends the read");
+  const capped = await createSupabaseRepo(fakeSupabase(many).client).list({ limit: 1100 });
+  assert.equal(capped.length, 1100, "the limit still caps the result");
 });
