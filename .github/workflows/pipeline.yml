@@ -59,9 +59,9 @@ on:
         default: info
         options: [debug, info, warn, error]
   # Phase 4 shadow (ADR-002; schedule approval Josh 2026-10-26, enabled 2026-10-29). Mirrors config/pipeline.yaml schedule.cron.
-  # ROLLBACK DRILL R1 (docs/shadow/README.md §4, Josh 2026-10-31): schedule disabled by this PR; re-enabled by the next.
-  # schedule:
-  #   - cron: "45 15,23,7 * * *"   # 00:45 / 08:45 / 16:45 KST
+  # Rollback drill 2026-10-31 (docs/shadow/README.md §4, compare.md §4): disabled by PR #82, re-enabled by the next PR.
+  schedule:
+    - cron: "45 15,23,7 * * *"   # 00:45 / 08:45 / 16:45 KST
 
 permissions:
   contents: read
