@@ -8,9 +8,13 @@ name: Pipeline v2 (rebuild)
 # schedule approval of 2026-10-26, CLAUDE.md §3): a scheduled run carries no inputs,
 # so the `github.event_name == 'schedule'` expressions below pin it to live feeds,
 # staging writes, every stage on, the real model (CC_FLAG_LLM_PROVIDER=anthropic),
-# the Telegram summary, the ops check and the alarm issue. The production publish
-# target is refused by the CLI until the Phase 5 cutover. No pull_request trigger:
-# secrets must never reach a fork.
+# the Telegram summary, the ops check and the alarm issue. Phase 5 cutover step 10
+# (docs/migration/phase5-cutover.md §4, Josh 2026-10-31 "D1~D5 권고안대로 승인, 컷오버
+# 진행해"): a scheduled run now publishes to production, i.e. the SUPABASE_PROD_URL /
+# SUPABASE_PROD_SERVICE_ROLE_KEY project, with the cutover flag CC_ALLOW_PRODUCTION_PUBLISH
+# set only for that run (or a dispatch that picks publish_target=production). Dispatch
+# defaults stay a dry run, and staging remains the tuning project. No pull_request
+# trigger: secrets must never reach a fork.
 on:
   workflow_dispatch:
     inputs:
@@ -36,10 +40,10 @@ on:
         type: boolean
         default: true
       publish_target:
-        description: "flags.publish_target: none reports would-publish rows, staging writes them to the run's memory DB under --dry-run"
+        description: "flags.publish_target: none reports would-publish rows; staging / production write them (memory DB under --dry-run; with dry_run=false + live=true, staging writes the SUPABASE_* project and production the SUPABASE_PROD_* project)"
         type: choice
         default: none
-        options: [none, staging]
+        options: [none, staging, production]
       llm_provider:
         description: "llm.provider for this run (CC_FLAG_LLM_PROVIDER): fixture replays recorded drafts; anthropic calls the Messages API (needs ANTHROPIC_API_KEY, spends money up to budget.run_usd)"
         type: choice
@@ -58,7 +62,7 @@ on:
         type: choice
         default: info
         options: [debug, info, warn, error]
-  # Phase 4 shadow (ADR-002; schedule approval Josh 2026-10-26, enabled 2026-10-29). Mirrors config/pipeline.yaml schedule.cron.
+  # ADR-002 schedule (approval Josh 2026-10-26, enabled 2026-10-29; production publishing from the Phase 5 cutover). Mirrors config/pipeline.yaml schedule.cron.
   # Rollback drill 2026-10-31 (docs/shadow/README.md §4, compare.md §4): disabled by PR #82, re-enabled by the next PR.
   schedule:
     - cron: "45 15,23,7 * * *"   # 00:45 / 08:45 / 16:45 KST
@@ -77,16 +81,21 @@ jobs:
     timeout-minutes: 45
     env:
       # Secrets by name only (absent → empty → the CLI treats them as unset). A scheduled run needs all of
-      # SUPABASE_URL / SUPABASE_SERVICE_ROLE_KEY / ANTHROPIC_API_KEY / TELEGRAM_BOT_TOKEN / TELEGRAM_CHAT_ID;
-      # a dispatch with the defaults (dry run, fixture model, no Telegram) needs none.
+      # SUPABASE_PROD_URL / SUPABASE_PROD_SERVICE_ROLE_KEY / ANTHROPIC_API_KEY / TELEGRAM_BOT_TOKEN / TELEGRAM_CHAT_ID;
+      # a dispatch with the defaults (dry run, fixture model, no Telegram) needs none. The CLI picks the
+      # Supabase pair from the publish target (packages/pipeline/src/supabase-env.ts).
       ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
       OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
       TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
       TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
       SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
       SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
-      # A scheduled run has no inputs: it is always the shadow run (staging, every stage, Telegram, anthropic).
-      CC_FLAG_PUBLISH_TARGET: ${{ github.event_name == 'schedule' && 'staging' || inputs.publish_target }}
+      SUPABASE_PROD_URL: ${{ secrets.SUPABASE_PROD_URL }}
+      SUPABASE_PROD_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_PROD_SERVICE_ROLE_KEY }}
+      # A scheduled run has no inputs: it is always the production run (every stage, Telegram, anthropic).
+      CC_FLAG_PUBLISH_TARGET: ${{ github.event_name == 'schedule' && 'production' || inputs.publish_target }}
+      # Phase 5 cutover flag: without it the CLI refuses a non-dry-run production publish.
+      CC_ALLOW_PRODUCTION_PUBLISH: ${{ (github.event_name == 'schedule' || inputs.publish_target == 'production') && 'true' || '' }}
       CC_FLAG_NOTIFY_TELEGRAM: ${{ (github.event_name == 'schedule' || inputs.notify) && 'true' || 'false' }}
       CC_FLAG_LLM_PROVIDER: ${{ github.event_name == 'schedule' && 'anthropic' || inputs.llm_provider }}
       CC_FLAG_STAGES_NORMALIZE: ${{ (github.event_name == 'schedule' || inputs.stages_on) && 'true' || 'false' }}
@@ -180,6 +189,10 @@ jobs:
     env:
       SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
       SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+      SUPABASE_PROD_URL: ${{ secrets.SUPABASE_PROD_URL }}
+      SUPABASE_PROD_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_PROD_SERVICE_ROLE_KEY }}
+      # Read the ledger the run job wrote: `pipeline ops` picks the pair from the same publish target.
+      CC_FLAG_PUBLISH_TARGET: ${{ github.event_name == 'schedule' && 'production' || inputs.publish_target }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
@@ -195,8 +208,13 @@ jobs:
       - name: Ops check against the run ledger
         id: ops
         run: |
-          if [ -z "$SUPABASE_URL" ] || [ -z "$SUPABASE_SERVICE_ROLE_KEY" ]; then
-            echo "## Ops check skipped: SUPABASE_URL / SUPABASE_SERVICE_ROLE_KEY not configured (names only)" >> "$GITHUB_STEP_SUMMARY"
+          if [ "$CC_FLAG_PUBLISH_TARGET" = "production" ]; then
+            url="$SUPABASE_PROD_URL"; key="$SUPABASE_PROD_SERVICE_ROLE_KEY"; names="SUPABASE_PROD_URL / SUPABASE_PROD_SERVICE_ROLE_KEY"
+          else
+            url="$SUPABASE_URL"; key="$SUPABASE_SERVICE_ROLE_KEY"; names="SUPABASE_URL / SUPABASE_SERVICE_ROLE_KEY"
+          fi
+          if [ -z "$url" ] || [ -z "$key" ]; then
+            echo "## Ops check skipped: $names not configured (names only)" >> "$GITHUB_STEP_SUMMARY"
             echo "exit_code=skipped" >> "$GITHUB_OUTPUT"
             exit 0
           fi

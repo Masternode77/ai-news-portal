@@ -48,7 +48,10 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Plan (dry-run)
-        run: node packages/pipeline/tools/migrate-legacy-publications.ts --dry-run | tee plan.json
+        # `| tee` without pipefail reported success when the tool exited non-zero (2026-10-31 run 41188813585).
+        run: |
+          set -o pipefail
+          node packages/pipeline/tools/migrate-legacy-publications.ts --dry-run | tee plan.json
       - name: Apply
         if: ${{ inputs.mode == 'apply' }}
         env:
@@ -59,6 +62,7 @@ jobs:
           SUPABASE_PROD_URL: ${{ inputs.target == 'production' && secrets.SUPABASE_PROD_URL || '' }}
           SUPABASE_PROD_SERVICE_ROLE_KEY: ${{ inputs.target == 'production' && secrets.SUPABASE_PROD_SERVICE_ROLE_KEY || '' }}
         run: |
+          set -o pipefail
           if [ "$TARGET" = "production" ]; then
             if [ "$CONFIRM" != "M5 approved" ]; then
               echo "target=production needs confirm='M5 approved' (STOP-THE-LINE approval item)"; exit 2

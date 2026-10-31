@@ -5,7 +5,7 @@ import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 import { NewsBrief, draftId, newsBriefSlug, parsePipelineConfig, parsePromptFile, parseSourcesConfig, silentLogger } from "@cc/shared";
 import type { DraftInsert, ImageAdapter, PipelineConfig, StageContext } from "@cc/shared";
-import { createFixtureImageAdapter, createImageChain, createPlaceholderImageAdapter, imageChainOrder, placeholderSvg, placeholderTopic, placeholderTopicText, MemoryImageStore, PLACEHOLDER_IMAGE_PATH, PLACEHOLDER_MODEL } from "../src/adapters/index.ts";
+import { createFixtureImageAdapter, createImageChain, createPlaceholderImageAdapter, imageChainOrder, placeholderSvg, placeholderTopic, placeholderTopicText, MemoryImageStore, PLACEHOLDER_IMAGE_PATH, PLACEHOLDER_MODEL, createStaticImageStore } from "../src/adapters/index.ts";
 import { createBudget } from "../src/budget.ts";
 import { MemoryDb } from "../src/db/index.ts";
 import { MemoryLedger } from "../src/ledger/index.ts";
@@ -98,6 +98,23 @@ test("placeholder first: every passed draft leaves with a deterministic brand SV
   assert.equal(db.rows("qa_results").length, 0);
   assert.equal(placeholderTopic("liquid cooling retrofit", cfg.image.placeholder.topics, "x"), "cooling");
   assert.equal(placeholderTopic("nothing relevant", cfg.image.placeholder.topics, "ai-infrastructure"), "ai-infrastructure");
+});
+
+test("a served run (static store, Codex PR #86): no generated path reaches the row — the deployed static placeholder does, with model static, and no IMAGE_MISSING", async () => {
+  const cfg = config("image:\n  provider: placeholder\n  fallback_chain: [placeholder]\n  placeholder:\n    default_topic: ai-infrastructure\n    topics:\n      power-grid: [변전소, grid]\n");
+  const { ctx, store } = await ctxWith(cfg, chainFor(cfg));
+  ctx.adapters = { ...ctx.adapters, imageStore: createStaticImageStore() };
+  const out = ImageOutput.parse(await imageStage.run({ passed: [draft(brief())] }, ctx));
+  assert.equal(out.withImages.length, 1);
+  const image = out.withImages[0]!.image!;
+  assert.equal(image.path, PLACEHOLDER_IMAGE_PATH, "a path the site serves (apps/site/public/images/placeholder-brief.svg)");
+  assert.doesNotMatch(image.path, /\/images\/generated\//);
+  assert.equal(image.provenance.provider, "placeholder");
+  assert.equal(image.provenance.model, "static");
+  assert.equal(image.placeholder, true);
+  assert.deepEqual(out.verdicts, [], "the static placeholder is still an image: IMAGE_MISSING is not written");
+  assert.equal(store.files.size, 0, "nothing was stored");
+  await assert.rejects(createStaticImageStore().put({ bytes: new Uint8Array([1]), mime: "image/svg+xml", slug: "news/x", variant: "hero" }, ctx), /IMAGE_STORE_STATIC/);
 });
 
 test("the motif comes from the brief's title, tags and summary only — the prompt template's own vocabulary (\"grid interconnects\") never picks power-grid for a cooling brief", async () => {

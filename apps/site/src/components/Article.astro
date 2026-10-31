@@ -1,5 +1,6 @@
 ---
 import { bodySections, formatDate } from "../lib/render";
+import { contentLabel } from "../lib/listing";
 import type { PublicationRow } from "../lib/render";
 
 interface Props {
@@ -13,7 +14,7 @@ const sections = bodySections(publication.body);
 <article>
   <h1>{publication.title}</h1>
   <p class="muted">
-    <time datetime={publication.published_at}>{formatDate(publication.published_at)}</time> · {publication.content_type}
+    <time datetime={publication.published_at}>{formatDate(publication.published_at)}</time> · {contentLabel(publication)}
     {publication.category && <span> · {publication.category}</span>}
   </p>
   {publication.image && <img src={publication.image.path} alt={publication.image.alt} loading="lazy" />}

@@ -2,8 +2,9 @@ name: Shadow review (Phase 4)
 
 # Phase 4 M4 step 8 (docs/shadow/README.md): the sample review. `pipeline review` reads one run's drafts
 # (or the newest drafts with a review status) with their QA verdicts and short source excerpts around every
-# number QA could not ground from the **staging** project, and writes the markdown to the step summary and
-# an artifact, so docs/shadow/compare.md §3 can be filled without opening the database. Read-only: nothing
+# number QA could not ground from the staging project (or, from the Phase 5 cutover, the production project
+# with target=production), and writes the markdown to the step summary and an artifact, so
+# docs/shadow/compare.md §3 can be filled without opening the database. Read-only: nothing
 # is written, the Supabase secrets are used by name only, and no pull_request trigger (secrets never reach a fork).
 on:
   workflow_dispatch:
@@ -25,6 +26,11 @@ on:
         description: "Characters of source text kept on each side of a matched number (20..2000)"
         type: string
         default: "160"
+      target:
+        description: "Project to read: staging (SUPABASE_URL / SUPABASE_SERVICE_ROLE_KEY) or production (SUPABASE_PROD_URL / SUPABASE_PROD_SERVICE_ROLE_KEY)"
+        type: choice
+        default: staging
+        options: [staging, production]
 
 permissions:
   contents: read
@@ -40,6 +46,10 @@ jobs:
     env:
       SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
       SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+      SUPABASE_PROD_URL: ${{ secrets.SUPABASE_PROD_URL }}
+      SUPABASE_PROD_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_PROD_SERVICE_ROLE_KEY }}
+      # `pipeline review` picks the pair from the publish target (read-only; no cutover flag needed).
+      CC_FLAG_PUBLISH_TARGET: ${{ inputs.target == 'production' && 'production' || 'staging' }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
