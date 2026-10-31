@@ -45,11 +45,40 @@ const BANNED_SAMPLE = 20;
 // deterministic checks
 // ---------------------------------------------------------------------------
 /**
- * A number with an optional scale: a run of Korean scale words (조/억/만/천, so `2천억` is 2 × 10³ × 10⁸)
- * or one English word (trillion/billion/million/thousand, bn, mn).
+ * A number with an optional scale: a run of Korean scale words (조/억/만/천, so `2천억` is 2 × 10³ × 10⁸),
+ * one English word (trillion/billion/million/thousand, bn, mn, capitalised or not), or a currency-style
+ * letter — upper-case `B`/`M`/`K` and lower-case `k` written directly after the digits (`$45B`, `€5M`,
+ * `1.2K`, `10k`). A letter after a space is a unit, not a scale: `300 K` is a temperature and `300 m` a
+ * length (Codex PR #80); lower-case `b`/`m` never scale. The letter must not start a longer word, so
+ * `5MW`, `10GB` and `HBM3E` stay unscaled. The letters are case-sensitive, the words are not (`BILLION`
+ * in a headline still scales), so the words are spelled as per-letter classes instead of an `i` flag.
+ * Phase 4 shadow evidence: `$45B` in a source never met `450억` in the draft (compare.md §3).
  */
-const NUMBER = /(\d+(?:[.,]\d+)*)(?:\s*(?:((?:조|억|만|천)+)|(trillion|billion|bn|million|mn|thousand)(?![a-z])))?/giu;
-const SCALE: Record<string, number> = { 조: 1e12, 억: 1e8, 만: 1e4, 천: 1e3, trillion: 1e12, billion: 1e9, bn: 1e9, million: 1e6, mn: 1e6, thousand: 1e3 };
+const anyCase = (word: string): string => [...word].map((char) => `[${char.toUpperCase()}${char.toLowerCase()}]`).join("");
+const SCALE_WORDS = ["trillion", "billion", "bn", "million", "mn", "thousand"].map(anyCase).join("|");
+const NUMBER = new RegExp(`(\\d+(?:[.,]\\d+)*)(?:\\s*((?:조|억|만|천)+)|\\s*(${SCALE_WORDS})(?![A-Za-z])|([BMKk])(?![A-Za-z]))?`, "gu");
+const SCALE: Record<string, number> = { 조: 1e12, 억: 1e8, 만: 1e4, 천: 1e3, trillion: 1e12, billion: 1e9, bn: 1e9, b: 1e9, million: 1e6, mn: 1e6, m: 1e6, thousand: 1e3, k: 1e3 };
+/** Korean month digits (`7월`) ground on the English month name in the source (`July`): the source never carries the digit. */
+const MONTH_SUFFIX = /^월(?!간)/u;
+const MONTH_NAMES: Record<string, number> = { jan: 1, january: 1, feb: 2, february: 2, mar: 3, march: 3, apr: 4, april: 4, may: 5, jun: 6, june: 6, jul: 7, july: 7, aug: 8, august: 8, sep: 9, sept: 9, september: 9, oct: 10, october: 10, nov: 11, november: 11, dec: 12, december: 12 };
+/**
+ * Full month names stand on their own. `May` and the three-letter abbreviations are ordinary words too
+ * ("construction may begin", "mar", "dec"), so they count only next to a day or a year: `3 May 2026`,
+ * `May 30`, `Sept. 16`, `Sep 2026` (Codex PR #80).
+ */
+const MONTH_FULL = /\b(january|february|march|april|june|july|august|september|october|november|december)\b/giu;
+const MONTH_SHORT = /(?:\b\d{1,2}(?:st|nd|rd|th)?\s+(jan|feb|mar|apr|may|jun|jul|aug|sep|sept|oct|nov|dec)\b\.?)|(?:\b(jan|feb|mar|apr|may|jun|jul|aug|sep|sept|oct|nov|dec)\b\.?,?\s+\d{1,4}\b)/giu;
+
+/** Month numbers (1–12) the source names in English, so a Korean `7월` claim can ground on "July". */
+export function monthsNamed(text: string): Set<number> {
+  const out = new Set<number>();
+  for (const match of text.matchAll(MONTH_FULL)) out.add(MONTH_NAMES[match[1]!.toLowerCase()]!);
+  for (const match of text.matchAll(MONTH_SHORT)) {
+    const month = MONTH_NAMES[(match[1] ?? match[2])!.toLowerCase()];
+    if (month !== undefined) out.add(month);
+  }
+  return out;
+}
 
 /** The multiplier a scale token stands for; a Korean run multiplies its characters. */
 export function scaleMultiplier(scale: string | undefined): number {
@@ -80,22 +109,57 @@ export interface NumberClaim {
   scaled: boolean;
   /** The bare number without its scale, so a source "2.1 billion" also grounds an unscaled draft "2.1". */
   bare: string;
+  /** 1–12 when the claim is a Korean month (`7월`, raw keeps the suffix); such a claim also grounds on the English month name. */
+  month: number | null;
 }
 
-/** Numeric claims in a text, Korean-aware: thousands separators dropped, scale words applied, counters skipped. */
+/**
+ * Numeric claims in a text, Korean-aware: thousands separators dropped, scale words applied, counters
+ * skipped. A compound Korean numeral — scaled groups separated by whitespace with strictly falling scales,
+ * `3억 600만` or `1조 2,000억` — is one claim worth their sum (Phase 4: the two halves of `3억 600만` never met
+ * the source's "306 million"). `N월` with N in 1–12 is flagged as a month.
+ */
 export function numberClaims(text: string): NumberClaim[] {
   const out: NumberClaim[] = [];
+  let open: { start: number; end: number; value: number; multiplier: number } | null = null;
+  const close = (): void => {
+    if (!open) return;
+    const key = canonicalKey(open.value, 1);
+    out.push({ raw: text.slice(open.start, open.end).trim(), key, scaled: true, bare: key, month: null });
+    open = null;
+  };
   for (const match of text.matchAll(NUMBER)) {
-    const [raw, digits, ko, en] = match;
-    const scale = ko ?? en?.toLowerCase();
-    const after = text.slice((match.index ?? 0) + raw.length);
-    if (!scale && COUNTER.test(after)) continue;
+    const [raw, digits, ko, word, letter] = match;
+    const start = match.index ?? 0;
+    const end = start + raw.length;
+    const scale = ko ?? (word ?? letter)?.toLowerCase();
+    const after = text.slice(end);
+    if (!scale && COUNTER.test(after)) {
+      close();
+      continue;
+    }
     const bare = (digits ?? "").replace(/,(?=\d{3}(?:\D|$))/g, "");
     const value = Number.parseFloat(bare);
-    if (!Number.isFinite(value)) continue;
-    const key = canonicalKey(value, scaleMultiplier(scale));
-    out.push({ raw: raw.trim(), key, scaled: Boolean(scale), bare });
+    if (!Number.isFinite(value)) {
+      close();
+      continue;
+    }
+    const multiplier = scaleMultiplier(scale);
+    if (ko) {
+      if (open && multiplier < open.multiplier && /^\s*$/u.test(text.slice(open.end, start))) {
+        open = { start: open.start, end, value: open.value + value * multiplier, multiplier };
+        continue;
+      }
+      close();
+      open = { start, end, value: value * multiplier, multiplier };
+      continue;
+    }
+    close();
+    const month = !scale && /^\d+$/u.test(bare) && value >= 1 && value <= 12 && MONTH_SUFFIX.test(after) ? value : null;
+    // A month claim is written `7월`, so it never shares its dedup identity with a bare `7` elsewhere in the draft (Codex PR #80).
+    out.push({ raw: month === null ? raw.trim() : `${raw.trim()}월`, key: canonicalKey(value, multiplier), scaled: Boolean(scale), bare, month });
   }
+  close();
   return out;
 }
 
@@ -125,6 +189,7 @@ export function groundingCheck(draftText: string, sourceText: string): Grounding
     source.add(claim.key);
     source.add(claim.bare);
   }
+  const months = monthsNamed(sourceText);
   const seen = new Set<string>();
   const numbers: string[] = [];
   const ungrounded: string[] = [];
@@ -132,7 +197,7 @@ export function groundingCheck(draftText: string, sourceText: string): Grounding
     if (seen.has(claim.raw)) continue;
     seen.add(claim.raw);
     numbers.push(claim.raw);
-    const grounded = claim.scaled ? source.has(claim.key) : source.has(claim.key) || source.has(claim.bare);
+    const grounded = claim.scaled ? source.has(claim.key) : source.has(claim.key) || source.has(claim.bare) || (claim.month !== null && months.has(claim.month));
     if (!grounded) ungrounded.push(claim.raw);
   }
   return { numbers, ungrounded, pass: ungrounded.length === 0 };

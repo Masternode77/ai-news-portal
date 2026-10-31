@@ -24,6 +24,14 @@ export function numberParam(config: QaRuleConfig, key: string, fallback: number)
   return value;
 }
 
+/** A boolean param with a default; anything but true/false fails loudly. */
+export function boolParam(config: QaRuleConfig, key: string, fallback: boolean): boolean {
+  const value = config.params[key];
+  if (value === undefined) return fallback;
+  if (typeof value !== "boolean") throw new Error(`QA_PARAM_INVALID: ${config.rule}.params.${key} must be true or false`);
+  return value;
+}
+
 export function stringListParam(config: QaRuleConfig, key: string, fallback: string[] = []): string[] {
   const value = config.params[key];
   if (value === undefined) return fallback;

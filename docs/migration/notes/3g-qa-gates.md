@@ -24,7 +24,7 @@ Phase 3 모듈 g(`REBUILD_BRIEF.md` §6: `qa/rules/*`(hard 13 → soft 7), `qa/r
 | 추출 플로어 | 본문 < 500자면 fail-closed | `SOURCE_UNREACHABLE` hard, `min_source_chars: 500`. full 권리 소스는 `extraction.ok === false`(시도 후 실패)도 실패. rewrite_only·link_only는 Josh 결정(재서술 허용)대로 raw item 존재만 요구 |
 | 금칙어 인벤토리와 매치 규칙 | 부분 문자열·대소문자 무시·공백 유연 | `BANNED_PATTERN` hard = 3d `checks/banned-phrases.ts`의 같은 함수(`config/banned-phrases.yaml`: `phrases` ko/en, `hook_starts`, `patterns`). 3d는 보고, 3g는 차단. D2 결함은 규칙 단위 테스트가 막는다 |
 | 수치 근거 검사 | 수치가 출처에 있어야 함(의도) | `UNGROUNDED_NUMBER` hard = 3d `groundingCheck`(한국어 단위어·콤마·소수 정규화 토큰; 부분 문자열 아님) `max_ungrounded: 0` |
-| 출처 충실도(고유명사) | 앞 30 claim 어휘 유사도 | `UNGROUNDED_ENTITY` hard: 독자 노출 필드의 라틴 고유명사(대문자 시작·소문자 포함, 전체 대문자 약어 제외)가 출처 텍스트·소스명·`allow` 목록에 없으면 실패. 복수 단어 이름은 가로 공백으로만 이어진다 — 필드 사이의 줄바꿈이 제목 끝 이름과 요약 첫 이름을 붙이지 않는다(Codex PR #72 P2) |
+| 출처 충실도(고유명사) | 앞 30 claim 어휘 유사도 | `UNGROUNDED_ENTITY` hard: 독자 노출 필드의 라틴 고유명사(대문자 시작·소문자 포함, 전체 대문자 약어 제외)가 출처 텍스트·소스명·`allow` 목록에 없으면 실패. 복수 단어 이름은 가로 공백으로만 이어진다 — 필드 사이의 줄바꿈이 제목 끝 이름과 요약 첫 이름을 붙이지 않는다(Codex PR #72 P2). Phase 4 `params.token_fallback`(기본 false, `config/qa.yaml` 2026-10-31.1에서 true): 복수 단어 이름이 통째로 없으면 토큰별(≥ `min_chars`) 개별 근거로 통과시키고 evidence `token_grounded`에 남긴다 — shadow run 4의 "Nottinghamshire Newark"(원문 "Newark … Nottinghamshire")가 이유; "Portugal Azores"(원문 "Portuguese")는 여전히 실패 |
 | hard/soft, reason_code, 판정 영속 | ADR-004 표 | 규칙 20개 중 qa 스테이지 12개(hard 8, soft 4), image 스테이지 1개(`IMAGE_MISSING`), 상류 단계 5개, 3e 2개 — §3 "코드 배치" |
 | 사람 검토 큐 | 없음(격리 목록) | soft 실패 + `auto_pass` 아님 → `drafts.review_status = pending`(ADR-004). 노출(Telegram 링크)은 3i |
 
@@ -90,7 +90,7 @@ fetched 13 (5/5 ok) → new 13 → scored 13 → gate 6 → selected 2 → draft
 ## 5. 열린 질문
 
 1. **`LANG_MISMATCH` 0.6** — ADR-004 "확인 필요 2". 영문 고유명사·단위가 많은 브리프(fixture wire-a는 한글 비율 약 0.9)에서 샘플로 검증 후 조정(설정만).
-2. **`UNGROUNDED_ENTITY` 범위** — 라틴 고유명사만. 한국어 기관·인물명(예: "한전"은 출처 영문 "KEPCO"와 대응)은 결정적으로 가르기 어렵다. Phase 4에서 오탐·미탐을 보고 `allow` 목록 또는 한·영 별칭 표(설정)로 보강할지 결정.
+2. **`UNGROUNDED_ENTITY` 범위** — 라틴 고유명사만. 한국어 기관·인물명(예: "한전"은 출처 영문 "KEPCO"와 대응)은 결정적으로 가르기 어렵다. Phase 4에서 오탐·미탐을 보고 `allow` 목록 또는 한·영 별칭 표(설정)로 보강할지 결정. 2026-10-31: 한국어 어순으로 재조합된 라틴 바이그램 미탐(`compare.md` §3 5·6행)은 `token_fallback`으로 해소(위 표); 한국어 고유명사는 그대로 범위 밖.
 3. **`EXTRACTION_CONTAMINATED`** — ADR-004 hard 13 중 유일한 미구현. 보일러플레이트 비율 0.08·문장 완성도 0.92는 추출기(3a) 측정값이므로 `payload.extraction`에 지표를 남기는 3a 후속 + `SOURCE_UNREACHABLE` 옆 규칙 1파일. 승인 대상 아님(코드만), 3h 전후 소규모 PR 제안.
 4. **기사 간 반복·`TRANSLATION_TOO_CLOSE`** — 발행본이 쌓이는 Phase 4 shadow에서 `recentPublishedTitles` 기반 규칙과 임베딩 유사도(비용 측정 후 soft)로 추가.
 5. **held 초안의 처리** — `pending` 초안은 다음 런에서 같은 draft id로 다시 판정되고(upsert), 사람 승인(`approved`) → 발행 경로는 3h 퍼블리셔·3i Telegram 링크에서 잇는다. `auto_pass`를 끄는 시점(soft → 실제 큐)은 Phase 4 첫 주 통과율을 보고.

@@ -97,6 +97,19 @@ test("UNGROUNDED_NUMBER and UNGROUNDED_ENTITY: a number or a Latin name that is 
   assert.deepEqual(latinProperNouns("계약을 맺은 Microsoft\nMicrosoft가 밝혔다", 3), ["Microsoft"], "a newline between reader fields never fuses two names (Codex PR #72 P2)");
   const fieldEdge = await check("UNGROUNDED_ENTITY", draft({ ...BRIEF, title_ko: "부산 1.2 GW 계약을 맺은 Microsoft", summary_ko: `Microsoft가 ${BRIEF.summary_ko}` }), evidence());
   assert.equal(fieldEdge.pass, true, JSON.stringify(fieldEdge.evidence));
+  // token_fallback (Phase 4, compare.md §3): two grounded names rebuilt in Korean word order ground token by token; a token the source never has does not.
+  const rebuilt = draft({ ...BRIEF, expert_lens_ko: `${BRIEF.expert_lens_ko} Nottinghamshire Newark 인근 태양광과 Portugal Azores 농가 지원도 있다.` });
+  const sourceWithPlaces = evidence({ sourceText: `${BODY} The solar park near Newark in Nottinghamshire and Portuguese aid for farmers in the Azores were also approved.` });
+  const strict = await check("UNGROUNDED_ENTITY", rebuilt, sourceWithPlaces);
+  assert.deepEqual(strict.evidence["ungrounded"], ["Nottinghamshire Newark", "Portugal Azores"], "default: verbatim only");
+  assert.equal(strict.evidence["token_fallback"], false);
+  const loose = await check("UNGROUNDED_ENTITY", rebuilt, sourceWithPlaces, { token_fallback: true });
+  assert.equal(loose.pass, false, "Portugal is not in the source (only Portuguese)");
+  assert.deepEqual(loose.evidence["ungrounded"], ["Portugal Azores"]);
+  assert.deepEqual(loose.evidence["token_grounded"], ["Nottinghamshire Newark"]);
+  await assert.rejects(check("UNGROUNDED_ENTITY", rebuilt, sourceWithPlaces, { token_fallback: "yes" }), /QA_PARAM_INVALID/);
+  const substring = await check("UNGROUNDED_ENTITY", draft({ ...BRIEF, expert_lens_ko: `${BRIEF.expert_lens_ko} Arm Microsoft 협력도 거론된다.` }), evidence({ sourceText: `${BODY} Microsoft is building a solar farm.` }), { token_fallback: true });
+  assert.deepEqual(substring.evidence["ungrounded"], ["Arm Microsoft"], "a token matches whole words only: Arm is not inside farm (Codex PR #80)");
 });
 
 test("LANG_MISMATCH and BANNED_PATTERN: an English-heavy brief and a banned phrase fail", async () => {
