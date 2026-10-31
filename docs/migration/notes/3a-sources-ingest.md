@@ -112,6 +112,20 @@
 
 kept 0이지만 정상 동작: `google-cloud-tpu-releases`(30건 전부 10일 밖), `theregister-data-centre`(25), `eia-press`(12), `uk-dsit`(20), `fabricated-knowledge`(20), `arxiv-cs-*` 3개(일요일 빈 피드), `ofgem`(빈 피드), `epoch-ai-gradient-updates`(색인 146 KB에서 21일 창 내 링크 0 — 최근 글 부재 또는 색인 구조 변경, 다음 런에서 확인). `google-cloud-ai-releases`의 `section_missing` 13은 Gemini 섹션이 없는 날짜(의도). 긴 제목 절단·`date_future` 보고·Drupal 날짜·Atom(gov.uk)·RDF 경로 모두 라이브에서 확인됐다.
 
+### 4.2 소스 정리 (2026-10-31, Josh "소스 실패 정리 진행해")
+
+컷오버 뒤 첫 프로덕션 런(pipeline run 41196169446)이 `partial`이었던 원인은 소스 5곳의 고정 실패다(요약 `failures (top 3)`에는 3코드만 보여 neso 404가 가려져 있었다). 2026-10-30 이후 모든 라이브 런(41027154027 · 41161355341 · 41196169446)에서 같은 코드로 실패했고, staging에서는 5연속 실패로 이미 자동 비활성(`auto_disable_after: 5`)됐다. 세션은 피드 호스트에 닿지 않아 후보 URL을 임시 probe 행으로 넣고 `rebuild-ci.yml` › `ingest-live-dry-run`(run 41200305904, 메모리 전용·secrets 없음)에서 확인했다.
+
+| source | tier | 실패 | 확인한 후보(러너 결과) | 조치 |
+|---|---|---|---|---|
+| capacity-media | 2 | `HOST_NOT_ALLOWED capacityglobal.com` — 매체가 도메인을 옮겨 피드가 허용 호스트 밖으로 리다이렉트 | `https://www.capacityglobal.com/feed/` 수집·채점 OK, `https://capacityglobal.com/feed/` OK | **URL 교체** |
+| insidehpc | 2 | `SOURCE_UNREACHABLE fetch failed`(연결/TLS, 2026-10-18 이후 확인한 모든 라이브 런) | `www.insidehpc.com/feed/`·`/feed/atom/` 모두 `fetch failed` | **비활성**(HPC는 hpcwire·nextplatform) |
+| venturebeat-ai | 3 | `SOURCE_UNREACHABLE http 429`(2026-10-18 이후 확인한 모든 라이브 런) | `venturebeat.com/feed/`도 429 | **비활성**(AI는 techcrunch-ai·siliconangle-ai) |
+| berkeley-lab-news | 3 | `HTTP_403` | `/feed/atom/` 403, `news.lbl.gov/feed/` → 같은 호스트로 리다이렉트 후 403 | **비활성** — 자동 수집 차단을 우회하지 않는다(UA 위장 없음) |
+| neso | 3 | `HTTP_404 /rss.xml` | `/news-and-events/rss.xml`·`/news-and-events/feed` 404, `/news/feed`는 HTML(`FEED_PARSE`) | **비활성**(영국 계통은 ofgem·uk-desnz) |
+
+결과: 활성 80 → 76(전부 수집 가능), `reviewed_at` 2026-10-31. 다시 켜려면 `enabled: true` + `reviewed_at`을 올린다(자동 비활성이 기록된 DB에서도 그날 이후 날짜면 복귀). 범위 밖 관찰: tier 1 `nrc-news`는 간헐 403(2026-10-31 02:45Z·12:16Z 실패, 그 사이 런은 성공) — 이번 정리에서 손대지 않는다. `fetch failed`의 하위 원인(`error.cause.code`)은 현재 로그에 남지 않는다(진단 개선은 코드 변경이라 별도 제안).
+
 ## 5. 열린 질문 (Josh)
 
 1. 재서술 금지 매체 목록(→ `text_rights: link_only`). 수령 전까지 53개 상업 매체는 `rewrite_only`.

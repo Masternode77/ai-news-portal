@@ -185,15 +185,17 @@
   terms_url: https://techcrunch.com/rss-terms-of-use/
   reviewed_at: 2026-09-05
 
+# Disabled 2026-10-31: HTTP 429 on every checked live run since 2026-10-18, also for /feed/ (rebuild-ci run 41200305904);
+# the publisher rate-limits the runner. AI coverage stays with techcrunch-ai and siliconangle-ai.
 - id: venturebeat-ai
   name: VentureBeat AI
   type: rss
   url: https://venturebeat.com/category/ai/feed/
   tier: 3
-  enabled: true
+  enabled: false
   text_rights: rewrite_only
   terms_url: https://venturebeat.com/terms-of-service/
-  reviewed_at: 2026-09-05
+  reviewed_at: 2026-10-31
 
 - id: theregister-data-centre
   name: The Register
@@ -332,14 +334,16 @@
   terms_url: https://www.taborcommunications.com/terms-of-use/
   reviewed_at: 2026-09-05
 
+# Disabled 2026-10-31: `fetch failed` (connection/TLS) on every checked live run since 2026-10-18, also for www. and /feed/atom/
+# (rebuild-ci run 41200305904). HPC coverage stays with hpcwire and nextplatform.
 - id: insidehpc
   name: insideHPC
   type: rss
   url: https://insidehpc.com/feed/
   tier: 2
-  enabled: true
+  enabled: false
   text_rights: rewrite_only
-  reviewed_at: 2026-09-05
+  reviewed_at: 2026-10-31
 
 - id: blocks-and-files
   name: Blocks & Files
@@ -370,6 +374,8 @@
   text_rights: rewrite_only
   reviewed_at: 2026-09-05
 
+# 2026-10-31: the old capacitymedia.com feed redirects to capacityglobal.com (HOST_NOT_ALLOWED on every run since 2026-10-30);
+# the new feed was checked on the runner (rebuild-ci run 41200305904).
 - id: capacity-media
   name: Capacity Media
   type: rss
@@ -378,7 +384,7 @@
   enabled: true
   text_rights: rewrite_only
   terms_url: https://www.capacityglobal.com/terms-conditions/
-  reviewed_at: 2026-09-05
+  reviewed_at: 2026-10-31
 
 - id: doe-newsroom
   name: U.S. Department of Energy
@@ -838,15 +844,17 @@
   reviewed_at: 2026-09-10
   language: en
 
+# Disabled 2026-10-31: HTTP 403 for /feed/, /feed/atom/ and news.lbl.gov (redirects to the same host) on every run since
+# 2026-10-30 (rebuild-ci run 41200305904): the site blocks automated readers; we do not work around it.
 - id: berkeley-lab-news
   name: Berkeley Lab News Center
   type: rss
   url: https://newscenter.lbl.gov/feed/
   tier: 3
-  enabled: true
+  enabled: false
   text_rights: rewrite_only
   terms_url: https://www.lbl.gov/disclaimers/
-  reviewed_at: 2026-09-10
+  reviewed_at: 2026-10-31
   language: en
 
 - id: semianalysis
@@ -953,87 +961,15 @@
   reviewed_at: 2026-09-10
   language: en
 
+# Disabled 2026-10-31: /rss.xml is 404 since 2026-10-30 and no replacement feed was found (/news-and-events/rss.xml and
+# /news-and-events/feed 404, /news/feed is HTML; rebuild-ci run 41200305904). UK grid coverage stays with ofgem and uk-desnz.
 - id: neso
   name: National Energy System Operator
   type: rss
   url: https://www.neso.energy/rss.xml
   tier: 3
-  enabled: true
+  enabled: false
   text_rights: rewrite_only
   terms_url: https://www.neso.energy/terms-and-conditions
-  reviewed_at: 2026-09-10
+  reviewed_at: 2026-10-31
   language: en
-
-# TEMPORARY probe rows (2026-10-31 source cleanup): candidate feed URLs checked on the runner, removed before merge.
-
-- id: probe-capacity-bare
-  name: Probe probe-capacity-bare
-  type: rss
-  url: https://capacityglobal.com/feed/
-  tier: 3
-  enabled: true
-  text_rights: rewrite_only
-
-- id: probe-neso-news-events-rss
-  name: Probe probe-neso-news-events-rss
-  type: rss
-  url: https://www.neso.energy/news-and-events/rss.xml
-  tier: 3
-  enabled: true
-  text_rights: rewrite_only
-
-- id: probe-neso-news-events-feed
-  name: Probe probe-neso-news-events-feed
-  type: rss
-  url: https://www.neso.energy/news-and-events/feed
-  tier: 3
-  enabled: true
-  text_rights: rewrite_only
-
-- id: probe-neso-news-feed
-  name: Probe probe-neso-news-feed
-  type: rss
-  url: https://www.neso.energy/news/feed
-  tier: 3
-  enabled: true
-  text_rights: rewrite_only
-
-- id: probe-lbl-news
-  name: Probe probe-lbl-news
-  type: rss
-  url: https://news.lbl.gov/feed/
-  tier: 3
-  enabled: true
-  text_rights: rewrite_only
-
-- id: probe-lbl-atom
-  name: Probe probe-lbl-atom
-  type: rss
-  url: https://newscenter.lbl.gov/feed/atom/
-  tier: 3
-  enabled: true
-  text_rights: rewrite_only
-
-- id: probe-insidehpc-www
-  name: Probe probe-insidehpc-www
-  type: rss
-  url: https://www.insidehpc.com/feed/
-  tier: 3
-  enabled: true
-  text_rights: rewrite_only
-
-- id: probe-insidehpc-atom
-  name: Probe probe-insidehpc-atom
-  type: rss
-  url: https://insidehpc.com/feed/atom/
-  tier: 3
-  enabled: true
-  text_rights: rewrite_only
-
-- id: probe-venturebeat-main
-  name: Probe probe-venturebeat-main
-  type: rss
-  url: https://venturebeat.com/feed/
-  tier: 3
-  enabled: true
-  text_rights: rewrite_only
