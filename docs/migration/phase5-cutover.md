@@ -59,7 +59,7 @@
 | 9 | **컷오버**: `ai-news-portal` Root Directory → `apps/site`, Production 재배포 | Josh 또는 세션(Vercel 커넥터) | **D2 + 프로덕션 배포** | URL 검증 www 136/136, `/healthz` ok |
 | 10 | 파이프라인 프로덕션 전환: schedule 식 `publish_target: production` + 프로덕션 secrets 선택(1~2행 PR) | 세션 | **스케줄 변경** | 첫 cron 런 funnel·Telegram·발행 링크 200 |
 | 11 | M7 48h 모니터링: +1h·+24h·+48h URL 검증, ops-check·이슈 알람, Telegram, Vercel runtime errors | 세션 | — | `docs/STATUS.md` 기록 |
-| 12 | `docs/runbook.md`·`docs/postmortem.md` | 세션 | PR | 브리프 항목 5·6 |
+| 12 | `docs/runbook.md`·`docs/postmortem.md` — **작성됨(PR #85)** | 세션 | PR | 브리프 항목 5·6 |
 | 13 | M8 레거시 제거 PR(제안만, draft) | 세션 | **Josh 별도 승인 전 머지 금지** | — |
 
 1~3·12는 결정과 무관하게 바로 진행한다. 4~10은 D1~D5 답을 받은 뒤 순서대로.
