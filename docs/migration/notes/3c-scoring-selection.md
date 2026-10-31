@@ -134,3 +134,5 @@
 3. **같은 사건의 한·영 두 기사**: 둘 다 통과하면 소스가 다를 때 둘 다 선택될 수 있다. 3d 이전에 (a) 3b에 교차 언어 묶기(임베딩, Phase 4), (b) 선택 단계에서 `korea_major`·수치 신호 동일 시 묶기 규칙, (c) 그대로 두고 3d LLM이 중복을 보고하게 하기 — 권고는 (a)를 Phase 4 shadow 데이터로 결정.
 4. **impact·reader_value·insight 축의 초기 계수**는 레거시 근거 없이 새로 정했다(§3). Phase 4 shadow run에서 Josh가 "발행했을 글" 표시로 재조정하는 대상이다. 지금 바꾸고 싶은 값이 있으면 `config/scoring.yaml`만 고치면 된다.
 5. **`candidates.rubric` 컬럼(0002)**: 0001 미적용 상태라 두 파일을 함께 적용하면 된다. 0001에 합쳐 한 파일로 둘지(적용 전이니 가능), 분리 유지할지.
+6. **거절·보류 초안의 재선택(결정 2026-10-30, Josh 승인)** — shadow 런 2·3에서 같은 후보 2건이 연속 선택·생성됐다(3b 중복 제거는 발행본만 보고, 선택은 매 런 전체 풀을 재채점). `selection.skip_review_status: [rejected, pending]`(`config/scoring.yaml`, version 2026-10-30.1)로 현재 `news_brief` 프롬프트 버전의 초안이 hard-QA 거절(`rejected`) 또는 보류(`pending`)인 후보는 슬롯을 차지하지 않는다(`PREVIOUSLY_REJECTED`·`PENDING_REVIEW`, `ScoreStats.skipped_reviewed`). 조인은 `raw_item_id` → `candidates`(모든 rubric 버전) → `drafts`라 rubric 버전 상승은 제외를 풀지 않고, 프롬프트 `version` 상승이 재자격이다. 빈 목록이면 예전처럼 선택한다(운영자가 일시 재실행에 쓴다). 두 조회는 `selectInAll`(in-list 50개 단위 + `id` 정렬 페이징, 빈 페이지까지)로 전부 읽는다 — 한 응답은 Supabase `max-rows`(기본 1000)에 잘리므로 단일 select면 그 뒤의 거절 초안이 빠져 재선택된다(Codex, PR #79).
+

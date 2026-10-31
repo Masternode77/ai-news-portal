@@ -56,13 +56,16 @@ import { resolveGitSha, resolveRunUrl } from "../src/git.ts";
 import { buildRunSummary, createTelegramNotifier, formatRunCrash, notifyConsole, renderNotification } from "../src/notify/index.ts";
 import type { SummaryOptions } from "../src/notify/index.ts";
 import { assessOperations, formatOpsReport } from "../src/ops/check.ts";
+import { REVIEW_STATUSES, collectReview, formatReview } from "../src/ops/review.ts";
+import type { ReviewStatusFilter } from "../src/ops/review.ts";
 import { disabledFetch, runPipeline } from "../src/runner.ts";
 import type { RunCrashError, RunResult } from "../src/runner.ts";
 
 const USAGE = `usage: pipeline run [--stage <name>[,<name>]] [--dry-run] [--live] [--fixture <name>] [--replay]
                     [--config <path>] [--sources <path>] [--scoring <path>] [--banned-phrases <path>] [--qa <path>] [--redirects <path>] [--fixtures-dir <dir>] [--prompts-dir <dir>] [--images-dir <dir>]
                     [--trigger schedule|dispatch|local] [--json] [--log-level debug|info|warn|error]
-       pipeline ops [--from <runs.json>] [--config <path>] [--json] [--log-level debug|info|warn|error]`;
+       pipeline ops [--from <runs.json>] [--config <path>] [--json] [--log-level debug|info|warn|error]
+       pipeline review [--run <run_id>] [--status rejected|pending|none|approved|any] [--limit <n>] [--window <chars>] [--json] [--log-level debug|info|warn|error]`;
 
 export interface Cli {
   command: string | undefined;
@@ -83,6 +86,11 @@ export interface Cli {
   imagesDir: string | undefined;
   /** Phase 3i `ops`: assess a JSON dump (a `pipeline run --json` result, `{ runs }` or a bare array) instead of Supabase. */
   from: string | undefined;
+  /** Phase 4 `review`: one run's drafts, or the newest drafts with a review status; windows of source text around ungrounded numbers. */
+  reviewRun: string | undefined;
+  reviewStatus: ReviewStatusFilter;
+  reviewLimit: number;
+  reviewWindow: number;
   trigger: RunTrigger;
   json: boolean;
   logLevel: "debug" | "info" | "warn" | "error";
@@ -108,6 +116,10 @@ export function parseCli(argv: string[]): Cli {
       "prompts-dir": { type: "string", default: "prompts" },
       "images-dir": { type: "string" },
       from: { type: "string" },
+      run: { type: "string" },
+      status: { type: "string", default: "rejected" },
+      limit: { type: "string", default: "5" },
+      window: { type: "string", default: "160" },
       trigger: { type: "string", default: "local" },
       json: { type: "boolean", default: false },
       "log-level": { type: "string", default: "info" },
@@ -124,6 +136,12 @@ export function parseCli(argv: string[]): Cli {
   // live feeds — fixture or replayed rows never reach a real database.
   if (positionals[0] === "run" && values.replay && !values["dry-run"]) throw new UsageError("--replay requires --dry-run (recorded fixtures never reach the real ledger or database)");
   if (positionals[0] === "run" && !values.live && !values["dry-run"]) throw new UsageError("without --dry-run the run writes the real ledger and database, so it must read the live feeds: add --live (or --dry-run for the memory ledger)");
+  const reviewStatus = values.status;
+  if (!(REVIEW_STATUSES as readonly string[]).includes(reviewStatus)) throw new UsageError(`--status must be ${REVIEW_STATUSES.join("|")}, got "${reviewStatus}"`);
+  const reviewLimit = Number(values.limit);
+  const reviewWindow = Number(values.window);
+  if (!Number.isInteger(reviewLimit) || reviewLimit < 1 || reviewLimit > 100) throw new UsageError(`--limit must be an integer 1..100, got "${values.limit}"`);
+  if (!Number.isInteger(reviewWindow) || reviewWindow < 20 || reviewWindow > 2000) throw new UsageError(`--window must be an integer 20..2000, got "${values.window}"`);
   const stages = values.stage === undefined ? undefined : values.stage.split(",").map((name) => name.trim()).filter(Boolean);
   if (stages !== undefined && stages.length === 0) throw new UsageError("--stage needs at least one stage name");
   return {
@@ -143,6 +161,10 @@ export function parseCli(argv: string[]): Cli {
     promptsDir: values["prompts-dir"],
     imagesDir: values["images-dir"],
     from: values.from,
+    reviewRun: values.run,
+    reviewStatus: reviewStatus as ReviewStatusFilter,
+    reviewLimit,
+    reviewWindow,
     trigger,
     json: values.json,
     logLevel,
@@ -269,6 +291,21 @@ async function runOps(cli: Cli, env: NodeJS.ProcessEnv, stdout: (line: string) =
   return report.status === "ok" ? 0 : 1;
 }
 
+/**
+ * `pipeline review` (Phase 4 M4 step 8): the sample-review dump. Reads one run's drafts (or the newest drafts
+ * with a review status) with their QA verdicts and source excerpts from Supabase (names only) and prints
+ * markdown (or JSON). Read-only; exit 0 even when nothing matched (the text says so).
+ */
+async function runReview(cli: Cli, env: NodeJS.ProcessEnv, stdout: (line: string) => void, logger: Logger): Promise<number> {
+  const client = buildSupabase(env, globalThis.fetch);
+  if (!client) throw new ConfigError("review reads drafts, qa_results and raw_items from Supabase: SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY are required (names only; values stay in the environment)");
+  const options = { runId: cli.reviewRun, status: cli.reviewStatus, limit: cli.reviewLimit, window: cli.reviewWindow };
+  const entries = await collectReview(new SupabaseDb(client), options);
+  logger.info("review", { drafts: entries.length, run_id: cli.reviewRun ?? null, status: cli.reviewRun ? null : cli.reviewStatus, limit: cli.reviewLimit });
+  stdout(cli.json ? JSON.stringify(entries, null, 2) : formatReview(entries, options));
+  return 0;
+}
+
 /** True when this file is the process entry, also through the `cc-pipeline` bin symlink or a symlinked checkout. */
 function isMainModule(): boolean {
   const entry = process.argv[1];
@@ -284,9 +321,10 @@ export async function main(argv: string[], env: NodeJS.ProcessEnv, stdout: (line
   let logger: Logger | undefined;
   try {
     const cli = parseCli(argv);
-    if (cli.command !== "run" && cli.command !== "ops") throw new UsageError(USAGE);
+    if (cli.command !== "run" && cli.command !== "ops" && cli.command !== "review") throw new UsageError(USAGE);
     logger = createLogger({ name: "cc-pipeline", level: cli.logLevel, sink: (line) => process.stderr.write(`${line}\n`) });
     if (cli.command === "ops") return await runOps(cli, env, stdout, logger);
+    if (cli.command === "review") return await runReview(cli, env, stdout, logger);
 
     const realFetch = globalThis.fetch;
     if (cli.replay) {

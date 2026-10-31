@@ -1,0 +1,77 @@
+name: Shadow review (Phase 4)
+
+# Phase 4 M4 step 8 (docs/shadow/README.md): the sample review. `pipeline review` reads one run's drafts
+# (or the newest drafts with a review status) with their QA verdicts and short source excerpts around every
+# number QA could not ground from the **staging** project, and writes the markdown to the step summary and
+# an artifact, so docs/shadow/compare.md §3 can be filled without opening the database. Read-only: nothing
+# is written, the Supabase secrets are used by name only, and no pull_request trigger (secrets never reach a fork).
+on:
+  workflow_dispatch:
+    inputs:
+      run_id:
+        description: "pipeline_runs.id whose drafts to review (empty = newest drafts with the status below)"
+        type: string
+        default: ""
+      status:
+        description: "review_status filter when run_id is empty (any = every status)"
+        type: choice
+        default: rejected
+        options: [rejected, pending, none, approved, any]
+      limit:
+        description: "Max drafts (1..100)"
+        type: string
+        default: "5"
+      window:
+        description: "Characters of source text kept on each side of a matched number (20..2000)"
+        type: string
+        default: "160"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: cc-shadow-review
+  cancel-in-progress: false
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - name: Setup Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '22.22.0'
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Review dump (drafts · QA verdicts · source excerpts)
+        env:
+          RUN_ID: ${{ inputs.run_id }}
+          STATUS: ${{ inputs.status }}
+          LIMIT: ${{ inputs.limit }}
+          WINDOW: ${{ inputs.window }}
+        run: |
+          if [ -n "$RUN_ID" ]; then
+            scope="--run $RUN_ID"
+          else
+            scope="--status $STATUS"
+          fi
+          node packages/pipeline/bin/pipeline.ts review $scope --limit "$LIMIT" --window "$WINDOW" > review.md
+          cat review.md >> "$GITHUB_STEP_SUMMARY"
+          wc -c review.md
+      - name: "Upload review artifact (90 days)"
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: shadow-review-${{ github.run_id }}
+          path: review.md
+          retention-days: 90
+          if-no-files-found: warn

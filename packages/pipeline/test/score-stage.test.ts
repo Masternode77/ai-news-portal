@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { parsePipelineConfig, parseSourcesConfig, rawItemId, silentLogger, SelectionConfig } from "@cc/shared";
-import type { CandidateInsert, PipelineConfig, RawItemInsert, ScoringConfig, SourceConfig, StageContext } from "@cc/shared";
+import type { CandidateInsert, DbPort, PipelineConfig, RawItemInsert, Row, ScoringConfig, SelectOptions, SourceConfig, StageContext, TableName } from "@cc/shared";
 import { createBudget } from "../src/budget.ts";
 import { MemoryDb } from "../src/db/index.ts";
 import { MemoryLedger } from "../src/ledger/index.ts";
@@ -21,6 +21,9 @@ import {
   scoreRelevance,
   scoreStage,
   scoreTimeliness,
+  REVIEW_IN_CHUNK,
+  reviewedRawItems,
+  selectInAll,
 } from "../src/stages/score.ts";
 import { ScoreOutput } from "../src/stages/types.ts";
 import { baseRunOptions, fixtureAdapters, REPO_ROOT, TEST_PIPELINE_YAML, testBannedPhrases, testQa, testScoring } from "./helpers.ts";
@@ -140,7 +143,7 @@ test("thresholds, weights and caps come from config only: the same candidates ch
   assert.equal(wide.stats.selected, 2, "selection.per_source_max keeps the third (same-source) story out even with room in the cycle cap");
   assert.equal(wide.candidates[2]?.reject_reason, rejectReason(NOT_SELECTED, { source_cap: "b", rank: 3 }));
 
-  const twoPerSource = testScoring({ thresholds: { full: 0.4, brief: 0.3, relevance_min: 0.55 }, selection: { per_source_max: 2, abstract_max_tier: "brief" } });
+  const twoPerSource = testScoring({ thresholds: { full: 0.4, brief: 0.3, relevance_min: 0.55 }, selection: { per_source_max: 2, abstract_max_tier: "brief", skip_review_status: ["rejected", "pending"] } });
   const three = await run(new MemoryDb(), items, sources, twoPerSource, config("{ min: 1, max: 3 }"));
   assert.equal(three.stats.selected, 3);
 
@@ -194,7 +197,7 @@ test("a full-rights item without a positive extraction (failed or never attempte
   assert.match(bad!.rubric!.reasons.reader_value, /rights=full→rewrite_only\(extraction_failed/);
   assert.match(never!.rubric!.reasons.reader_value, /rights=full→rewrite_only\(extraction_missing/);
   assert.equal(bad!.scores.reader_value, Number((good!.scores.reader_value - testScoring().reader_value.text_rights.full + testScoring().reader_value.text_rights.rewrite_only).toFixed(3)));
-  const permissive = await run(new MemoryDb(), [failed, missing], [full], testScoring({ thresholds: { full: 0.1, brief: 0.05, relevance_min: 0 }, selection: { per_source_max: 2, abstract_max_tier: "full" } }));
+  const permissive = await run(new MemoryDb(), [failed, missing], [full], testScoring({ thresholds: { full: 0.1, brief: 0.05, relevance_min: 0 }, selection: { per_source_max: 2, abstract_max_tier: "full", skip_review_status: ["rejected", "pending"] } }));
   assert.deepEqual(permissive.candidates.map((c) => c.rubric?.tier), ["brief", "brief"], "no threshold or selection setting lifts the cap (fail-closed)");
   assert.throws(() => SelectionConfig.parse({ per_source_max: 2, abstract_max_tier: "brief", unextracted_max_tier: "full" }), "the schema has no knob for it");
   const rewrite = raw("b", "https://b.example.com/x", title, BUSAN);
@@ -311,4 +314,93 @@ test("numeric separators survive normalisation: decimal commas and thousands sep
   assert.match(impact, /money_million\(\$1,400 million\)/, impact);
   assert.doesNotMatch(impact, /capacity_gw\(2 gw\)/, "a decimal comma must not split the figure");
   assert.match(out.candidates[0]!.rubric!.reasons.reader_value, /figures\(/);
+});
+
+test("a passing candidate whose news_brief draft for the current prompt was rejected or is held takes no slot (PREVIOUSLY_REJECTED / PENDING_REVIEW); approved drafts, other prompt versions and an empty skip list leave the selection alone", async () => {
+  const { candidateId, draftId, requireLlmPrompt } = await import("@cc/shared");
+  const db = new MemoryDb();
+  const sources = [src("a", { tier: 1, text_rights: "full" }), src("b"), src("c", { tier: 3, text_rights: "link_only" })];
+  const items = [
+    raw("a", "https://a.example.com/busan", "Microsoft signs 1.2 GW capacity agreement with Example Data Centers in Busan", BUSAN),
+    raw("b", "https://b.example.com/kepco", "KEPCO energises 345 kV substation for Saemangeum data center cluster", KEPCO),
+    raw("c", "https://c.example.com/hbm", "Nvidia and SK hynix expand HBM4 supply agreement for 2027", HBM),
+  ];
+  const baseline = await run(db, items, sources);
+  assert.ok(baseline.selected.length >= 1 && baseline.stats.passed >= 2, "the fixture must pass at least two candidates");
+  const top = baseline.selected[0]!;
+  const promptVersion = requireLlmPrompt(await fixtureAdapters(db).prompts.get("news_brief")).version;
+  const candidateRowId = candidateId(top.raw_item_id, top.rubric_version);
+  assert.equal((await db.select("candidates", { id: candidateRowId })).length, 1, "the baseline run stored the candidate row the draft points at");
+  const draft = { id: draftId(candidateRowId, "news_brief", promptVersion), candidate_id: candidateRowId, run_id: RUN_ID, content_type: "news_brief", prompt_version: promptVersion, model: "test", body: {}, input_tokens: 0, output_tokens: 0, cost_usd: 0, review_status: "rejected", created_at: NOW.toISOString() };
+  await db.insert("drafts", [draft]);
+  const find = (out: ScoreOutput) => out.candidates.find((row) => row.raw_item_id === top.raw_item_id)!;
+
+  const rejected = await run(db, items, sources);
+  assert.equal(find(rejected).selected, false);
+  assert.match(find(rejected).reject_reason!, new RegExp(`^PREVIOUSLY_REJECTED: review_status=rejected,prompt_version=${promptVersion.replace(/\./g, "\\.")},rank=\\d+$`));
+  assert.equal(rejected.stats.skipped_reviewed, 1);
+  assert.equal(rejected.stats.passed, baseline.stats.passed, "the skip happens after the thresholds: passed is unchanged");
+  assert.equal(rejected.stats.selected, Math.min(2, baseline.stats.passed - 1), "the slot goes to the next passing candidate");
+  assert.equal(rejected.stats.not_selected, baseline.stats.passed - rejected.stats.selected - 1);
+  assert.ok(rejected.selected.every((row) => row.raw_item_id !== top.raw_item_id));
+  assert.ok(rejected.stats.decisions.some((decision) => decision.reject_reason?.startsWith("PREVIOUSLY_REJECTED")), "the decision sample carries the reason");
+
+  await db.update("drafts", { candidate_id: candidateRowId }, { review_status: "pending" });
+  assert.match(find(await run(db, items, sources)).reject_reason!, /^PENDING_REVIEW: review_status=pending,/);
+
+  await db.update("drafts", { candidate_id: candidateRowId }, { review_status: "approved" });
+  assert.equal(find(await run(db, items, sources)).selected, true, "an approved draft does not block the candidate");
+
+  await db.update("drafts", { candidate_id: candidateRowId }, { review_status: "rejected", prompt_version: "1999-01-01.1" });
+  assert.equal(find(await run(db, items, sources)).selected, true, "a rejection under another prompt version re-qualifies the item");
+
+  await db.update("drafts", { candidate_id: candidateRowId }, { prompt_version: promptVersion });
+  const base = testScoring();
+  const noSkip = { ...base, selection: { ...base.selection, skip_review_status: [] } } as ScoringConfig;
+  const unfiltered = await run(db, items, sources, noSkip);
+  assert.equal(find(unfiltered).selected, true, "an empty skip list selects regardless");
+  assert.equal(unfiltered.stats.skipped_reviewed, 0);
+});
+
+test("the review lookups read every matching row: a backend that caps one select (PostgREST max-rows) is paged by id and the in-list goes in chunks, so a rejected draft past the first page still blocks its candidate", async () => {
+  const inner = new MemoryDb();
+  const CAP = 3;
+  const calls: { table: TableName; values: number; options: SelectOptions }[] = [];
+  // A DbPort that behaves like Supabase with max-rows = 3: whatever limit the caller asks for, one response holds at most 3 rows.
+  const capped: DbPort = {
+    kind: "supabase",
+    insert: (table, rows) => inner.insert(table, rows),
+    upsert: (table, rows, keys) => inner.upsert(table, rows, keys),
+    select: (table, where, options) => inner.select(table, where, options),
+    update: (table, where, patch) => inner.update(table, where, patch),
+    selectIn: (table, column, values, options = {}) => {
+      calls.push({ table, values: values.length, options });
+      return inner.selectIn(table, column, values, { ...options, limit: Math.min(options.limit ?? CAP, CAP) });
+    },
+  };
+  const total = REVIEW_IN_CHUNK + 7; // more than one in-chunk, and more than one page per chunk
+  const rawIds = Array.from({ length: total }, (_, i) => `raw-${String(i).padStart(3, "0")}`);
+  const candidates: Row[] = rawIds.map((rawId, i) => ({ id: `cand-${String(i).padStart(3, "0")}`, raw_item_id: rawId, run_id: RUN_ID, rubric_version: "score/x", scores: {}, total: 1, tier: "brief", selected: false, reject_reason: null, rubric: null, created_at: NOW.toISOString() }));
+  await inner.insert("candidates", candidates);
+  const drafts: Row[] = candidates.map((c, i) => ({ id: `draft-${String(i).padStart(3, "0")}`, candidate_id: c["id"], run_id: RUN_ID, content_type: "news_brief", prompt_version: "v1", model: "test", body: {}, input_tokens: 0, output_tokens: 0, cost_usd: 0, review_status: i % 2 === 0 ? "rejected" : "pending", created_at: NOW.toISOString() }));
+  await inner.insert("drafts", drafts);
+
+  // The default page size (1000) is far above the backend cap: the pager must still read everything.
+  const all = await selectInAll<{ id: string; raw_item_id: string }>(capped, "candidates", "raw_item_id", rawIds, ["id", "raw_item_id"]);
+  assert.equal(all.length, total, "every candidate row comes back despite the per-response cap");
+  assert.deepEqual([...new Set(all.map((row) => row.id))].length, total);
+  assert.ok(calls.every((call) => call.values <= REVIEW_IN_CHUNK), "the in-list never exceeds one chunk");
+  assert.ok(calls.every((call) => call.options.orderBy?.column === "id" && call.options.offset !== undefined), "pages are ordered by id with an explicit offset");
+  assert.ok(calls.some((call) => (call.options.offset ?? 0) > 0), "a second page was requested");
+  assert.ok(calls.some((call) => call.options.offset === CAP), "the offset advances by the rows actually returned, not by the requested page size");
+
+  // Without the pager, the capped backend returns only CAP candidates and the rest would be re-selected.
+  assert.equal((await capped.selectIn("candidates", "raw_item_id", rawIds, { columns: ["id"] })).length, CAP);
+
+  calls.length = 0;
+  const reviewed = await reviewedRawItems(capped, rawIds, "v1", ["rejected", "pending"]);
+  assert.equal(reviewed.size, total, "every item with a rejected or pending draft is excluded, not just the first page");
+  assert.equal(reviewed.get("raw-000"), "rejected");
+  assert.equal(reviewed.get("raw-001"), "pending");
+  assert.ok(calls.filter((call) => call.table === "drafts").every((call) => call.values <= REVIEW_IN_CHUNK));
 });

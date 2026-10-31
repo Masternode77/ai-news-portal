@@ -14,28 +14,35 @@
  *             in all; the rest are NOT_SELECTED with their rank. Fewer passing
  *             candidates than `caps.briefs_per_cycle.min` is reported as a
  *             shortfall, never filled from below the threshold.
+ *   skip    = Phase 4: a passing candidate whose `news_brief` draft for the current
+ *             prompt version has a review_status in `selection.skip_review_status`
+ *             (rejected, pending) takes no slot — PREVIOUSLY_REJECTED / PENDING_REVIEW
+ *             — so a hard-QA rejection is not regenerated every run (shadow runs 2·3).
  *
  * Every candidate is upserted into `candidates` (raw_item_id + rubric_version =
  * score/<version>) with `scores`, `total`, `selected`, `reject_reason` and
  * `rubric { tier, rank, insight_eligible, reasons }` (ADR-003, R6).
  */
-import { RELEVANCE_DIMENSIONS, candidateId, rawItemId } from "@cc/shared";
+import { RELEVANCE_DIMENSIONS, candidateId, rawItemId, requireLlmPrompt } from "@cc/shared";
 import type {
   CandidateInsert,
   CandidateReasons,
   CandidateTier,
+  DbPort,
   ImpactConfig,
   InsightPotentialConfig,
   RawItemInsert,
   ReaderValueConfig,
   RelevanceConfig,
   RelevanceDimension,
+  ReviewStatus,
   Row,
   RubricScores,
   ScoringConfig,
   SourceConfig,
   Stage,
   StageContext,
+  TableName,
   TimelinessConfig,
   WeightedTerm,
 } from "@cc/shared";
@@ -46,6 +53,10 @@ import { ScoreInput, ScoreOutput } from "./types.ts";
 
 export const BELOW_THRESHOLD = "BELOW_THRESHOLD";
 export const NOT_SELECTED = "NOT_SELECTED";
+/** Phase 4: a news_brief draft for this item and the current prompt version was hard-rejected by QA. */
+export const PREVIOUSLY_REJECTED = "PREVIOUSLY_REJECTED";
+/** Phase 4: a news_brief draft for this item and the current prompt version is held for review (soft QA, not auto_pass). */
+export const PENDING_REVIEW = "PENDING_REVIEW";
 const DECISION_SAMPLE = 100;
 const UPSERT_CHUNK = 50;
 const REASON_TERMS = 3;
@@ -465,6 +476,58 @@ export function selectionOrder(a: Scored, b: Scored): number {
   return b.total - a.total || b.scores.timeliness - a.scores.timeliness || a.doc.item.canonical_url.localeCompare(b.doc.item.canonical_url);
 }
 
+/** `in (...)` values per select: they travel in the PostgREST URL, so the list is kept short. */
+export const REVIEW_IN_CHUNK = 50;
+/** Rows per page of a review lookup; one Supabase response is capped at the project's max-rows (1000 by default). */
+export const REVIEW_PAGE_SIZE = 1000;
+
+/**
+ * Every row whose `column` is one of `values`, however many there are: the values go in chunks and each
+ * chunk is paged by `id` until an empty page. The offset advances by the rows actually returned and a
+ * short page does not end the loop, because the backend may cap a response below the requested size
+ * (Supabase `max-rows` is a project setting); that costs one empty read per chunk. A single capped select
+ * would silently drop the rows past the cap, and a dropped row here lets a rejected or held candidate back
+ * into the selection (Codex, PR #79).
+ */
+export async function selectInAll<T extends Row & { id: string }>(db: DbPort, table: TableName, column: string, values: readonly string[], columns: readonly string[], pageSize = REVIEW_PAGE_SIZE): Promise<T[]> {
+  const out: T[] = [];
+  const projected = columns.includes("id") ? columns : ["id", ...columns];
+  for (const chunk of chunks(values, REVIEW_IN_CHUNK)) {
+    for (let offset = 0; ; ) {
+      const page = await db.selectIn<T>(table, column, chunk, { columns: projected, orderBy: { column: "id", ascending: true }, limit: pageSize, offset });
+      if (page.length === 0) break;
+      out.push(...page);
+      offset += page.length;
+    }
+  }
+  return out;
+}
+
+/**
+ * Raw items among `rawItemIds` that already have a `news_brief` draft for `promptVersion` whose
+ * review_status is in `statuses`, mapped to that status (rejected wins over pending). Looked up through
+ * `candidates` by raw_item_id, so the result does not depend on the rubric version the draft was made
+ * under; a new prompt version re-qualifies everything. Both lookups read every matching row (`selectInAll`):
+ * an item collects one candidate per rubric version and one draft per prompt version, so the join grows
+ * past one page over time.
+ */
+export async function reviewedRawItems(db: DbPort, rawItemIds: readonly string[], promptVersion: string, statuses: readonly ReviewStatus[]): Promise<Map<string, ReviewStatus>> {
+  const out = new Map<string, ReviewStatus>();
+  if (rawItemIds.length === 0 || statuses.length === 0) return out;
+  const candidates = await selectInAll<{ id: string; raw_item_id: string }>(db, "candidates", "raw_item_id", rawItemIds, ["id", "raw_item_id"]);
+  if (candidates.length === 0) return out;
+  const rawByCandidate = new Map(candidates.map((row) => [row.id, row.raw_item_id]));
+  const drafts = await selectInAll<{ id: string; candidate_id: string; content_type: string; prompt_version: string; review_status: ReviewStatus }>(db, "drafts", "candidate_id", [...rawByCandidate.keys()], ["candidate_id", "content_type", "prompt_version", "review_status"]);
+  for (const draft of drafts) {
+    if (draft.content_type !== "news_brief" || draft.prompt_version !== promptVersion || !statuses.includes(draft.review_status)) continue;
+    const rawId = rawByCandidate.get(draft.candidate_id);
+    if (!rawId) continue;
+    const current = out.get(rawId);
+    if (current === undefined || (draft.review_status === "rejected" && current !== "rejected")) out.set(rawId, draft.review_status);
+  }
+  return out;
+}
+
 export const scoreStage: Stage<ScoreInput, ScoreOutput> = {
   name: "score",
   input: ScoreInput,
@@ -485,14 +548,25 @@ export const scoreStage: Stage<ScoreInput, ScoreOutput> = {
       return scoreCandidate(scoreDoc(candidate, item, sources.get(item.source_id), compiled), cfg, compiled, ctx.now);
     });
 
-    // Selection: passing candidates in order, one per source, up to the cycle cap.
+    // Selection: passing candidates in order, one per source, up to the cycle cap. A candidate whose draft for
+    // the current prompt was rejected or is held (selection.skip_review_status) takes no slot (Phase 4).
     const passing = scored.filter((entry) => entry.tier !== null).sort(selectionOrder);
+    const skipStatuses: readonly ReviewStatus[] = cfg.selection.skip_review_status ?? [];
+    const promptVersion = skipStatuses.length > 0 && passing.length > 0 ? requireLlmPrompt(await ctx.adapters.prompts.get("news_brief")).version : null;
+    const reviewed = promptVersion === null ? new Map<string, ReviewStatus>() : await reviewedRawItems(ctx.adapters.db, passing.map((entry) => entry.doc.candidate.raw_item_id), promptVersion, skipStatuses);
     const rank = new Map<Scored, number>();
     const rejectReasons = new Map<Scored, string>();
     const perSource = new Map<string, number>();
     const selected: Scored[] = [];
+    let skippedReviewed = 0;
     passing.forEach((entry, index) => {
       rank.set(entry, index + 1);
+      const review = reviewed.get(entry.doc.candidate.raw_item_id);
+      if (review !== undefined) {
+        skippedReviewed += 1;
+        rejectReasons.set(entry, rejectReason(review === "rejected" ? PREVIOUSLY_REJECTED : PENDING_REVIEW, { review_status: review, prompt_version: promptVersion ?? "", rank: index + 1 }));
+        return;
+      }
       const sourceId = entry.doc.item.source_id;
       const used = perSource.get(sourceId) ?? 0;
       if (selected.length >= caps.max) rejectReasons.set(entry, rejectReason(NOT_SELECTED, { rank: index + 1, max: caps.max }));
@@ -548,15 +622,17 @@ export const scoreStage: Stage<ScoreInput, ScoreOutput> = {
       below_threshold: scored.length - passing.length,
       below_relevance: belowRelevance,
       selected: selected.length,
-      not_selected: passing.length - selected.length,
+      not_selected: passing.length - selected.length - skippedReviewed,
+      skipped_reviewed: skippedReviewed,
       insight_eligible: scored.filter((entry) => entry.insightEligible).length,
       shortfall: Math.max(0, caps.min - selected.length),
       decisions,
       ms: Date.now() - started,
     };
     for (const entry of selected) ctx.logger.info("score: candidate selected", { source_id: entry.doc.item.source_id, url: entry.doc.item.canonical_url, total: entry.total, tier: entry.tier, rank: rank.get(entry), scores: entry.scores });
+    if (skippedReviewed > 0) ctx.logger.info("score: reviewed candidates skipped", { skipped: skippedReviewed, statuses: skipStatuses, prompt_version: promptVersion, urls: passing.filter((entry) => reviewed.has(entry.doc.candidate.raw_item_id)).map((entry) => entry.doc.item.canonical_url).slice(0, 10) });
     if (stats.shortfall > 0) ctx.logger.warn("score: fewer passing candidates than caps.briefs_per_cycle.min", { selected: stats.selected, min: caps.min, passed: stats.passed, candidates: stats.candidates });
-    ctx.logger.info("score: candidates scored", { candidates: stats.candidates, passed: stats.passed, full: stats.full, brief: stats.brief, below_threshold: stats.below_threshold, below_relevance: stats.below_relevance, selected: stats.selected, not_selected: stats.not_selected, insight_eligible: stats.insight_eligible, shortfall: stats.shortfall, rubric_version: version });
+    ctx.logger.info("score: candidates scored", { candidates: stats.candidates, passed: stats.passed, full: stats.full, brief: stats.brief, below_threshold: stats.below_threshold, below_relevance: stats.below_relevance, selected: stats.selected, not_selected: stats.not_selected, skipped_reviewed: stats.skipped_reviewed, insight_eligible: stats.insight_eligible, shortfall: stats.shortfall, rubric_version: version });
     return { candidates: rows, selected: selected.map((entry) => rows[scored.indexOf(entry)]!), stats };
   },
 };
