@@ -286,8 +286,10 @@ async function runOps(cli: Cli, env: NodeJS.ProcessEnv, stdout: (line: string) =
     if (!Array.isArray(raw)) throw new UsageError(`--from ${cli.from}: expected an array of pipeline_runs rows, a { runs } object or a pipeline --json result`);
     rows = raw.map((row) => PipelineRunRow.parse(row));
   } else {
-    const client = buildSupabase(env, globalThis.fetch);
-    if (!client) throw new ConfigError("ops without --from reads pipeline_runs from Supabase: SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY are required (names only; values stay in the environment)");
+    // Read the project the runs are written to: publish_target production means the production pair (Codex PR #85).
+    const names = supabaseEnvFor(loaded.config.flags.publish_target);
+    const client = buildSupabase(env, globalThis.fetch, names);
+    if (!client) throw new ConfigError(`ops without --from reads pipeline_runs from Supabase: ${names.url} and ${names.key} are required (names only; values stay in the environment)`);
     rows = await new SupabaseDb(client).select<PipelineRunRow>("pipeline_runs", {}, { orderBy: { column: "started_at", ascending: false }, limit: 200 });
   }
   const report = assessOperations(rows, { now: new Date(), slotHours: loaded.config.schedule.slot_hours });
@@ -303,8 +305,11 @@ async function runOps(cli: Cli, env: NodeJS.ProcessEnv, stdout: (line: string) =
  * markdown (or JSON). Read-only; exit 0 even when nothing matched (the text says so).
  */
 async function runReview(cli: Cli, env: NodeJS.ProcessEnv, stdout: (line: string) => void, logger: Logger): Promise<number> {
-  const client = buildSupabase(env, globalThis.fetch);
-  if (!client) throw new ConfigError("review reads drafts, qa_results and raw_items from Supabase: SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY are required (names only; values stay in the environment)");
+  // Same project selection as `run` and `ops`: publish_target production reads the production pair (Codex PR #85).
+  const loaded = await loadPipelineConfig(resolve(cli.config), env);
+  const names = supabaseEnvFor(loaded.config.flags.publish_target);
+  const client = buildSupabase(env, globalThis.fetch, names);
+  if (!client) throw new ConfigError(`review reads drafts, qa_results and raw_items from Supabase: ${names.url} and ${names.key} are required (names only; values stay in the environment)`);
   const options = { runId: cli.reviewRun, status: cli.reviewStatus, limit: cli.reviewLimit, window: cli.reviewWindow };
   const entries = await collectReview(new SupabaseDb(client), options);
   logger.info("review", { drafts: entries.length, run_id: cli.reviewRun ?? null, status: cli.reviewRun ? null : cli.reviewStatus, limit: cli.reviewLimit });

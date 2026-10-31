@@ -259,5 +259,12 @@ test("3i: pipeline ops --from assesses a run dump; a fresh completed run is ok (
   const noDb = await cli(["ops"], { SUPABASE_URL: "", SUPABASE_SERVICE_ROLE_KEY: "" });
   assert.equal(noDb.code, 2);
   assert.match(noDb.stderr, /SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY are required/);
+  // Readers follow publish_target like `run` does (Codex PR #85): production reads the production pair, never staging.
+  const prodOps = await cli(["ops"], { CC_FLAG_PUBLISH_TARGET: "production", SUPABASE_URL: "https://staging.test", SUPABASE_SERVICE_ROLE_KEY: "x", SUPABASE_PROD_URL: "", SUPABASE_PROD_SERVICE_ROLE_KEY: "" });
+  assert.equal(prodOps.code, 2);
+  assert.match(prodOps.stderr, /SUPABASE_PROD_URL and SUPABASE_PROD_SERVICE_ROLE_KEY are required/);
+  const prodReview = await cli(["review"], { CC_FLAG_PUBLISH_TARGET: "production", SUPABASE_URL: "https://staging.test", SUPABASE_SERVICE_ROLE_KEY: "x", SUPABASE_PROD_URL: "", SUPABASE_PROD_SERVICE_ROLE_KEY: "" });
+  assert.equal(prodReview.code, 2);
+  assert.match(prodReview.stderr, /review reads drafts.*SUPABASE_PROD_URL and SUPABASE_PROD_SERVICE_ROLE_KEY are required/);
   await rm(dir, { recursive: true, force: true });
 });
