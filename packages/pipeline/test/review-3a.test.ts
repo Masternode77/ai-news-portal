@@ -3,8 +3,8 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { EMPTY_SOURCE_HEALTH, IngestConfig, parsePipelineConfig } from "@cc/shared";
 import type { SourceHealth } from "@cc/shared";
-import { buildAdapters, parseCli } from "../bin/pipeline.ts";
-import { decodeBody, detectCharset, safeFetchText } from "../src/adapters/index.ts";
+import { buildAdapters, parseCli, withoutPaidImageProviders } from "../bin/pipeline.ts";
+import { decodeBody, detectCharset, isImageChain, safeFetchText } from "../src/adapters/index.ts";
 import { paragraphs } from "../src/lib/html.ts";
 import { registrableDomain, repairFeedLink } from "../src/lib/url.ts";
 import { healthAfter } from "../src/stages/ingest.ts";
@@ -145,6 +145,18 @@ test("image store by run kind (Codex PR #86): a real run gets the static store w
   assert.equal(buildAdapters(parseCli(["run", "--live", "--images-dir", ".cache/images"]), config).imageStore.kind, "static");
   assert.equal(buildAdapters(parseCli(["run", "--dry-run", "--replay"]), config).imageStore.kind, "memory");
   assert.equal(buildAdapters(parseCli(["run", "--dry-run", "--replay", "--images-dir", ".cache/images"]), config).imageStore.kind, "local");
+});
+
+test("a served run never pays for an image it cannot keep (Codex PR #86): openai drops out of its chain, a dry run keeps it", () => {
+  const { config } = parsePipelineConfig(TEST_PIPELINE_YAML, { env: {} });
+  const openaiFirst = { ...config, image: { ...config.image, provider: "openai" as const, fallback_chain: ["placeholder" as const] } };
+  const env = { OPENAI_API_KEY: "test-key-name-only" };
+  const served = buildAdapters(parseCli(["run", "--live"]), openaiFirst, env).image;
+  const dry = buildAdapters(parseCli(["run", "--dry-run", "--replay"]), openaiFirst, env).image;
+  assert.ok(isImageChain(served) && isImageChain(dry));
+  assert.deepEqual([...served.order], ["placeholder"]);
+  assert.deepEqual([...dry.order], ["openai", "placeholder"]);
+  assert.deepEqual(withoutPaidImageProviders({ ...config.image, provider: "fixture", fallback_chain: ["openai", "placeholder"] }), { ...config.image, provider: "fixture", fallback_chain: ["placeholder"] });
 });
 
 test("the step summary neutralises Markdown in feed text and keeps urls as autolinks", () => {
