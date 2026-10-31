@@ -1,0 +1,19 @@
+---
+import Base from "../../layouts/Base.astro";
+import PublicationList from "../../components/PublicationList.astro";
+import Pager from "../../components/Pager.astro";
+import { allPublications } from "../../lib/repo";
+import { paginate } from "../../lib/listing";
+
+const loaded = await allPublications();
+if (loaded instanceof Response) {
+  return loaded;
+}
+const { items, page, pages } = paginate(loaded, 1);
+---
+
+<Base title="아카이브 | Compute Current" description="Compute Current 전체 발행 목록" canonicalPath="/archive/" noindex={loaded.length === 0}>
+  <h1>아카이브</h1>
+  <PublicationList rows={items} />
+  <Pager page={page} pages={pages} />
+</Base>

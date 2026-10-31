@@ -1,0 +1,38 @@
+---
+import Base from "../../layouts/Base.astro";
+import PublicationList from "../../components/PublicationList.astro";
+import { allPublications } from "../../lib/repo";
+import { AUTHOR } from "../../lib/author";
+import { isColumn } from "../../lib/listing";
+
+if (Astro.params.slug !== AUTHOR.slug) {
+  return Astro.rewrite("/404");
+}
+const loaded = await allPublications();
+if (loaded instanceof Response) {
+  return loaded;
+}
+const columns = loaded.filter(isColumn).slice(0, 8);
+---
+
+<Base title={`${AUTHOR.name} | Compute Current`} description={AUTHOR.bio} canonicalPath={`/author/${AUTHOR.slug}/`}>
+  <p class="muted">{AUTHOR.column}</p>
+  <h1>{AUTHOR.name}</h1>
+  <p class="muted">{AUTHOR.role}</p>
+  <p>{AUTHOR.bio}</p>
+  <h2>How this column works</h2>
+  <p>{AUTHOR.disclosure}</p>
+  <p>
+    Essays are drafted with AI assistance from source-linked evidence, must pass the site’s quality gates before publication, and are corrected after the fact by
+    the author when a reader or a source shows an error. Full detail lives in the <a href="/ai-disclosure/">AI-assisted disclosure</a>, the <a
+      href="/editorial-policy/">editorial policy</a
+    >, and the <a href="/terms/">terms of use</a>.
+  </p>
+  <h2>Standing positions</h2>
+  <ul>
+    {AUTHOR.positions.map((position) => <li>{position}</li>)}
+  </ul>
+  <h2>Recent columns</h2>
+  <PublicationList rows={columns} />
+  <p><a href="/column/">All columns →</a></p>
+</Base>

@@ -1,10 +1,18 @@
 /** Request-time repository for pages: reads process.env so Vercel runtime variables apply without a rebuild. */
 import { createClient } from "@supabase/supabase-js";
+import { loadRedirectsConfig } from "@cc/shared";
 import { DataUnavailableError, createPublicationsRepo } from "./publications.ts";
 import type { PublicationsRepo, SiteSupabaseLike } from "./publications.ts";
 import type { PublicationRow } from "@cc/shared";
+import { LISTING_LIMIT } from "./listing.ts";
+import { createRedirectLoader, createRedirectLookup, noRedirects } from "./redirects.ts";
+import type { RedirectLookup } from "./redirects.ts";
 
 let cached: PublicationsRepo | null = null;
+let redirects: RedirectLookup | null = null;
+
+// Structural cast: the supabase-js builder satisfies the minimal chain the site uses.
+const supabaseFactory = (url: string, key: string): SiteSupabaseLike => createClient(url, key) as unknown as SiteSupabaseLike;
 
 export function siteRepo(): PublicationsRepo {
   cached ??= createPublicationsRepo(
@@ -14,12 +22,27 @@ export function siteRepo(): PublicationsRepo {
       SUPABASE_ANON_KEY: process.env["SUPABASE_ANON_KEY"],
       LEGACY_DATA_DIR: process.env["LEGACY_DATA_DIR"],
     },
-    {
-      // Structural cast: the supabase-js builder satisfies the minimal chain the repo uses.
-      supabaseFactory: (url, key) => createClient(url, key) as unknown as SiteSupabaseLike,
-    },
+    { supabaseFactory },
   );
   return cached;
+}
+
+/** Redirect rules for the middleware: the `redirects` table under supabase, config/redirects.yaml otherwise. */
+export function siteRedirects(): RedirectLookup {
+  if (redirects) return redirects;
+  const loader = createRedirectLoader(
+    {
+      SITE_DATA_SOURCE: process.env["SITE_DATA_SOURCE"],
+      SUPABASE_URL: process.env["SUPABASE_URL"],
+      SUPABASE_ANON_KEY: process.env["SUPABASE_ANON_KEY"],
+      REDIRECTS_FILE: process.env["REDIRECTS_FILE"],
+    },
+    { supabaseFactory, loadFile: loadRedirectsConfig },
+  );
+  redirects = loader
+    ? createRedirectLookup(loader, { onError: (error) => console.error(JSON.stringify({ level: "warn", msg: "redirects load failed", error: error instanceof Error ? error.message : String(error) })) })
+    : noRedirects;
+  return redirects;
 }
 
 export function siteIndexable(): boolean {
@@ -46,6 +69,11 @@ export async function listPublications(limit: number): Promise<PublicationRow[] 
     if (error instanceof DataUnavailableError) return serviceUnavailable(error);
     throw error;
   }
+}
+
+/** Every published row a listing page filters (newest first), or the 503 response to return instead. */
+export async function allPublications(): Promise<PublicationRow[] | Response> {
+  return listPublications(LISTING_LIMIT);
 }
 
 /** One publication, null when it does not exist, or the 503 response to return instead. */

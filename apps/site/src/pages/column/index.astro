@@ -1,0 +1,18 @@
+---
+import Base from "../../layouts/Base.astro";
+import PublicationList from "../../components/PublicationList.astro";
+import { allPublications } from "../../lib/repo";
+import { isColumn } from "../../lib/listing";
+
+const loaded = await allPublications();
+if (loaded instanceof Response) {
+  return loaded;
+}
+const rows = loaded.filter(isColumn);
+---
+
+<Base title="The Current | Compute Current" description="Josh Jiwoon Inn의 AI 인프라 칼럼 The Current" canonicalPath="/column/" noindex={rows.length === 0}>
+  <h1>The Current</h1>
+  <p class="muted">Compute Current 창립자·편집인 <a href="/author/josh-inn/">Josh Jiwoon Inn</a>의 칼럼.</p>
+  <PublicationList rows={rows} />
+</Base>

@@ -1,6 +1,6 @@
 {
   "extends": "astro/tsconfigs/strict",
-  "include": [".astro/types.d.ts", "src/**/*", "test/**/*"],
+  "include": [".astro/types.d.ts", "src/**/*", "test/**/*", "tools/**/*"],
   "exclude": ["dist", ".vercel"],
   "compilerOptions": {
     "noEmit": true,

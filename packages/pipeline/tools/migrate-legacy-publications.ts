@@ -10,21 +10,33 @@
  *   not_public   the record exists but is no longer public (quarantined, draft…)
  *   missing      no legacy record for the preserved URL
  *
- * Only --dry-run exists here. Writing the rows to the real database is the
- * M5 cutover step and needs Josh's approval (brief §5.6); the plan this tool
- * prints is what that step will apply.
+ * --dry-run prints the plan. --apply (Phase 5 M5, docs/migration/phase5-cutover.md
+ * step 7) writes it: the ready rows are upserted into `publications` by slug and
+ * config/redirects.yaml into `redirects` by from_path, both idempotent, then the
+ * written slugs are read back. Running it against production is a STOP-THE-LINE
+ * approval item (ADR-006 M5): `--target production` also needs
+ * CC_ALLOW_PRODUCTION_PUBLISH=true and uses SUPABASE_PROD_URL /
+ * SUPABASE_PROD_SERVICE_ROLE_KEY; `--target staging` uses SUPABASE_URL /
+ * SUPABASE_SERVICE_ROLE_KEY (names only). A plan with a missing record is never
+ * applied.
  *
  *   node packages/pipeline/tools/migrate-legacy-publications.ts --dry-run [--json <out.json>]
  *     [--news src/data/latest-news.json] [--columns src/data/authored-columns.json]
  *     [--preserve docs/diagnosis/05-preserve-list.csv]
+ *   node packages/pipeline/tools/migrate-legacy-publications.ts --apply --target staging|production
+ *     [--redirects config/redirects.yaml]
  */
 import { readFile, writeFile } from "node:fs/promises";
 import { realpathSync } from "node:fs";
 import { resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 import { parseArgs } from "node:util";
-import { mapLegacyCollections } from "@cc/shared";
-import type { PublicationRow } from "@cc/shared";
+import { createClient } from "@supabase/supabase-js";
+import { loadRedirectsConfig, mapLegacyCollections } from "@cc/shared";
+import type { DbPort, PublicationRow, RedirectsConfig } from "@cc/shared";
+import { SupabaseDb } from "../src/db/supabase.ts";
+import type { SupabaseLike } from "../src/ledger/supabase.ts";
+import { productionAllowed, supabaseEnvFor, PRODUCTION_ALLOW_ENV } from "../src/supabase-env.ts";
 
 export interface PreserveRow {
   url: string;
@@ -165,6 +177,26 @@ export async function loadAndPlan(paths: { news: string; columns: string; preser
   return planLegacyMigration({ news, columns, preserve });
 }
 
+export interface ApplyResult {
+  publications_upserted: number;
+  redirects_upserted: number;
+  /** Written slugs found again on a read-back. */
+  verified: number;
+  slugs: string[];
+}
+
+/** Writes the ready rows and the redirect rules; idempotent (upserts by slug and from_path). */
+export async function applyLegacyMigration(plan: MigrationPlan, redirects: RedirectsConfig, db: DbPort): Promise<ApplyResult> {
+  if (plan.counts.missing > 0) throw new Error(`MIGRATION_PLAN_INCOMPLETE: ${plan.counts.missing} preserved page(s) have no legacy record`);
+  const readySlugs = new Set(plan.entries.filter((e) => e.status === "ready").map((e) => e.slug));
+  const rows = plan.rows.filter((row) => readySlugs.has(row.slug));
+  if (rows.length !== readySlugs.size) throw new Error(`MIGRATION_PLAN_INCONSISTENT: ${readySlugs.size} ready entries but ${rows.length} mapped rows`);
+  await db.upsert("publications", rows as unknown as Record<string, unknown>[], ["slug"]);
+  await db.upsert("redirects", redirects as unknown as Record<string, unknown>[], ["from_path"]);
+  const back = await db.selectIn<{ slug: string }>("publications", "slug", [...readySlugs], { columns: ["slug"] });
+  return { publications_upserted: rows.length, redirects_upserted: redirects.length, verified: back.length, slugs: rows.map((r) => r.slug) };
+}
+
 function isMainModule(): boolean {
   const entry = process.argv[1];
   if (!entry) return false;
@@ -184,12 +216,39 @@ if (isMainModule()) {
       news: { type: "string", default: "src/data/latest-news.json" },
       columns: { type: "string", default: "src/data/authored-columns.json" },
       preserve: { type: "string", default: "docs/diagnosis/05-preserve-list.csv" },
+      redirects: { type: "string", default: "config/redirects.yaml" },
+      target: { type: "string" },
       json: { type: "string" },
     },
   });
-  if (values.apply || !values["dry-run"]) {
-    process.stderr.write("migrate-legacy-publications: only --dry-run is implemented in Phase 3h; writing the rows is the Phase 5 M5 step and needs approval (ADR-006)\n");
+  if (values.apply === values["dry-run"]) {
+    process.stderr.write("migrate-legacy-publications: pass exactly one of --dry-run or --apply\n");
     process.exitCode = 2;
+  } else if (values.apply) {
+    const target = values.target;
+    if (target !== "staging" && target !== "production") {
+      process.stderr.write("migrate-legacy-publications: --apply needs --target staging|production\n");
+      process.exitCode = 2;
+    } else if (target === "production" && !productionAllowed(process.env)) {
+      process.stderr.write(`migrate-legacy-publications: --target production also needs ${PRODUCTION_ALLOW_ENV}=true (Phase 5 M5 is a STOP-THE-LINE approval item)\n`);
+      process.exitCode = 2;
+    } else {
+      const names = supabaseEnvFor(target);
+      const url = process.env[names.url];
+      const key = process.env[names.key];
+      if (!url || !key) {
+        process.stderr.write(`migrate-legacy-publications: ${names.url} and ${names.key} are required (names only; values stay in the environment)\n`);
+        process.exitCode = 2;
+      } else {
+        const plan = await loadAndPlan({ news: resolve(values.news), columns: resolve(values.columns), preserve: resolve(values.preserve) });
+        const redirects = await loadRedirectsConfig(resolve(values.redirects));
+        // Structural cast: SupabaseClient satisfies the minimal shape SupabaseDb needs.
+        const db = new SupabaseDb(createClient(url, key) as unknown as SupabaseLike);
+        const result = await applyLegacyMigration(plan, redirects, db);
+        process.stdout.write(`${JSON.stringify({ target, counts: plan.counts, ...result }, null, 2)}\n`);
+        process.exitCode = result.verified === result.publications_upserted ? 0 : 1;
+      }
+    }
   } else {
     const plan = await loadAndPlan({ news: resolve(values.news), columns: resolve(values.columns), preserve: resolve(values.preserve) });
     const summary = { counts: plan.counts, entries: plan.entries };

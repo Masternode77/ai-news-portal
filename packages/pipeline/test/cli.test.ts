@@ -110,7 +110,7 @@ test("budget exhaustion after the first draft ends the run as budget_stop (exit 
   assert.equal(result.stages.find((s: { stage: string }) => s.stage === "generate")?.status, "done");
 });
 
-test("Phase 4 gates: a run without --dry-run must be --live and needs the Supabase names; --replay and fixtures never reach a real database; the production target is refused until Phase 5", async () => {
+test("Phase 4 gates: a run without --dry-run must be --live and needs the Supabase names; --replay and fixtures never reach a real database; a real production run needs the cutover flag", async () => {
   const bare = await cli(["run"], { SUPABASE_URL: "", SUPABASE_SERVICE_ROLE_KEY: "" });
   assert.equal(bare.code, 2);
   assert.match(bare.stderr, /must read the live feeds: add --live/);
@@ -120,9 +120,18 @@ test("Phase 4 gates: a run without --dry-run must be --live and needs the Supaba
   const liveNoDb = await cli(["run", "--live"], { SUPABASE_URL: "", SUPABASE_SERVICE_ROLE_KEY: "" });
   assert.equal(liveNoDb.code, 2, "no network is touched before the config check fails");
   assert.match(liveNoDb.stderr, /SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY are required without --dry-run/);
-  const production = await cli(["run", "--dry-run", "--replay", "--json"], { CC_FLAG_PUBLISH_TARGET: "production" });
+  // Phase 5 cutover flag: publish_target production alone is refused for a real run …
+  const production = await cli(["run", "--live"], { CC_FLAG_PUBLISH_TARGET: "production", SUPABASE_URL: "https://staging.test", SUPABASE_SERVICE_ROLE_KEY: "x" });
   assert.equal(production.code, 2);
-  assert.match(production.stderr, /publish_target production is the Phase 5 cutover/);
+  assert.match(production.stderr, /a real run needs CC_ALLOW_PRODUCTION_PUBLISH=true as well/);
+  // … with the allow variable it needs the production names, never the staging pair …
+  const prodNoDb = await cli(["run", "--live"], { CC_FLAG_PUBLISH_TARGET: "production", CC_ALLOW_PRODUCTION_PUBLISH: "true", SUPABASE_URL: "https://staging.test", SUPABASE_SERVICE_ROLE_KEY: "x", SUPABASE_PROD_URL: "", SUPABASE_PROD_SERVICE_ROLE_KEY: "" });
+  assert.equal(prodNoDb.code, 2, "no network is touched before the config check fails");
+  assert.match(prodNoDb.stderr, /SUPABASE_PROD_URL and SUPABASE_PROD_SERVICE_ROLE_KEY are required for a production run/);
+  // … and a --dry-run with production stays in memory.
+  const dry = await cli(["run", "--dry-run", "--replay", "--json"], { CC_FLAG_PUBLISH_TARGET: "production" });
+  assert.equal(dry.code, 0);
+  assert.equal(JSON.parse(dry.stdout).status, "done");
 });
 
 test("usage errors exit 2", async () => {
@@ -184,7 +193,7 @@ test("publish_target staging in a dry run (Phase 3h): the QA-passed draft is pub
   const result = JSON.parse(staging.stdout);
   assert.equal(result.status, "done");
   const p = result.publishStats;
-  assert.deepEqual([p.target, p.candidates, p.published, p.inserted, p.failed, p.redirects_synced, p.revalidate.skipped], ["staging", 1, 1, 1, 0, 17, true]);
+  assert.deepEqual([p.target, p.candidates, p.published, p.inserted, p.failed, p.redirects_synced, p.revalidate.skipped], ["staging", 1, 1, 1, 0, 44, true]);
   assert.equal(result.funnel.published, 1);
   assert.match(p.decisions[0].url, /^https:\/\/www\.computecurrent\.com\/news\/[0-9a-f]{16}\/$/);
   const none = await cli(args, flags);
@@ -250,5 +259,12 @@ test("3i: pipeline ops --from assesses a run dump; a fresh completed run is ok (
   const noDb = await cli(["ops"], { SUPABASE_URL: "", SUPABASE_SERVICE_ROLE_KEY: "" });
   assert.equal(noDb.code, 2);
   assert.match(noDb.stderr, /SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY are required/);
+  // Readers follow publish_target like `run` does (Codex PR #85): production reads the production pair, never staging.
+  const prodOps = await cli(["ops"], { CC_FLAG_PUBLISH_TARGET: "production", SUPABASE_URL: "https://staging.test", SUPABASE_SERVICE_ROLE_KEY: "x", SUPABASE_PROD_URL: "", SUPABASE_PROD_SERVICE_ROLE_KEY: "" });
+  assert.equal(prodOps.code, 2);
+  assert.match(prodOps.stderr, /SUPABASE_PROD_URL and SUPABASE_PROD_SERVICE_ROLE_KEY are required/);
+  const prodReview = await cli(["review"], { CC_FLAG_PUBLISH_TARGET: "production", SUPABASE_URL: "https://staging.test", SUPABASE_SERVICE_ROLE_KEY: "x", SUPABASE_PROD_URL: "", SUPABASE_PROD_SERVICE_ROLE_KEY: "" });
+  assert.equal(prodReview.code, 2);
+  assert.match(prodReview.stderr, /review reads drafts.*SUPABASE_PROD_URL and SUPABASE_PROD_SERVICE_ROLE_KEY are required/);
   await rm(dir, { recursive: true, force: true });
 });

@@ -1,0 +1,22 @@
+---
+import { archivePath } from "../lib/listing";
+
+interface Props {
+  page: number;
+  pages: number;
+}
+
+const { page, pages } = Astro.props;
+---
+
+{
+  pages > 1 && (
+    <nav class="pager" aria-label="아카이브 페이지">
+      {page > 1 && <a href={archivePath(page - 1)} rel="prev">← 이전</a>}
+      <span class="muted">
+        {page} / {pages}
+      </span>
+      {page < pages && <a href={archivePath(page + 1)} rel="next">다음 →</a>}
+    </nav>
+  )
+}
