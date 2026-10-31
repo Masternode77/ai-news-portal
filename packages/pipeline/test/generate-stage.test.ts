@@ -233,6 +233,8 @@ test("checks: number claims are Korean-aware (scale words, counters), grounding 
   assert.equal(groundingCheck("10k 랙", "10,000 racks").pass, true, "lower-case k stays a thousand");
   assert.equal(groundingCheck("50억 파운드", "a £5bn deal").pass, true);
   assert.equal(groundingCheck("50억 파운드", "a £5Bn deal").pass, true);
+  assert.equal(groundingCheck("투자액은 450억 달러다.", "INVESTMENT OF $45 BILLION").pass, true, "scale words stay case-insensitive while the letters are not (Codex PR #80)");
+  assert.deepEqual(numberTokens("5 Billion, 5 BN, 5 Mn, 5 THOUSAND"), ["5 Billion", "5 BN", "5 Mn", "5 THOUSAND"]);
   assert.deepEqual(groundingCheck("단일 신규 원전 1기", "nearly 1.1 gigawatts").ungrounded, ["1"], "1.1 does not ground a bare 1 (compare.md §3 row 2 stays a correct rejection)");
   assert.equal(longestCommonRun("the first 200 MW phase is scheduled to reach", BUSAN), 9);
   assert.equal(longestCommonRun("완전히 다른 문장", BUSAN), 0);

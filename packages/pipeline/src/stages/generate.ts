@@ -49,11 +49,13 @@ const BANNED_SAMPLE = 20;
  * one English word (trillion/billion/million/thousand, bn, mn, capitalised or not), or a currency-style
  * letter — upper-case `B`/`M`/`K` and lower-case `k` (`$45B`, `€5M`, `1.2K`, `10k`). Lower-case `b` and
  * `m` are not scales: `300 m` is a length, not 300 million (Codex PR #80). The letter must not start a
- * longer word, so `5MW`, `10GB` and `HBM3E` stay unscaled. The expression is case-sensitive for that
- * reason, so the word forms list their capitalised spellings. Phase 4 shadow evidence: `$45B` in a
- * source never met `450억` in the draft (compare.md §3).
+ * longer word, so `5MW`, `10GB` and `HBM3E` stay unscaled. The letters are case-sensitive, the words are
+ * not (`BILLION` in a headline still scales), so the words are spelled as per-letter classes instead of
+ * an `i` flag. Phase 4 shadow evidence: `$45B` in a source never met `450억` in the draft (compare.md §3).
  */
-const NUMBER = /(\d+(?:[.,]\d+)*)(?:\s*(?:((?:조|억|만|천)+)|([Tt]rillion|[Bb]illion|[Bb]n|[Mm]illion|[Mm]n|[Tt]housand|[BMKk])(?![A-Za-z])))?/gu;
+const anyCase = (word: string): string => [...word].map((char) => `[${char.toUpperCase()}${char.toLowerCase()}]`).join("");
+const SCALE_WORDS = ["trillion", "billion", "bn", "million", "mn", "thousand"].map(anyCase).join("|");
+const NUMBER = new RegExp(`(\\d+(?:[.,]\\d+)*)(?:\\s*(?:((?:조|억|만|천)+)|(${SCALE_WORDS}|[BMKk])(?![A-Za-z])))?`, "gu");
 const SCALE: Record<string, number> = { 조: 1e12, 억: 1e8, 만: 1e4, 천: 1e3, trillion: 1e12, billion: 1e9, bn: 1e9, b: 1e9, million: 1e6, mn: 1e6, m: 1e6, thousand: 1e3, k: 1e3 };
 /** Korean month digits (`7월`) ground on the English month name in the source (`July`): the source never carries the digit. */
 const MONTH_SUFFIX = /^월(?!간)/u;
