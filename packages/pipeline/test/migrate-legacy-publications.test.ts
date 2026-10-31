@@ -41,3 +41,42 @@ test("dry-run over the committed legacy JSON and the real preserve list: every p
   for (const entry of plan.entries.filter((e) => e.status === "not_public")) assert.ok(entry.public_status, `${entry.slug} should report the legacy public_status`);
   assert.ok(plan.counts.legacy_image_paths >= 5, "legacy hero images live under /generated/** (404 on the new site until M5 asset migration)");
 });
+
+test("apply (Phase 5 M5): the 12 ready rows and every redirect rule are upserted idempotently and read back; an incomplete plan is never applied", async () => {
+  const { MemoryDb } = await import("../src/db/memory.ts");
+  const { loadRedirectsConfig } = await import("@cc/shared");
+  const { applyLegacyMigration } = await import("../tools/migrate-legacy-publications.ts");
+  const plan = await loadAndPlan({
+    news: resolve(REPO_ROOT, "src/data/latest-news.json"),
+    columns: resolve(REPO_ROOT, "src/data/authored-columns.json"),
+    preserve: resolve(REPO_ROOT, "docs/diagnosis/05-preserve-list.csv"),
+  });
+  const redirects = await loadRedirectsConfig(resolve(REPO_ROOT, "config/redirects.yaml"));
+  const db = new MemoryDb();
+  const first = await applyLegacyMigration(plan, redirects, db);
+  assert.deepEqual([first.publications_upserted, first.redirects_upserted, first.verified], [12, 44, 12]);
+  const again = await applyLegacyMigration(plan, redirects, db);
+  assert.equal(again.verified, 12);
+  assert.equal(db.rows("publications").length, 12, "a re-run updates in place");
+  assert.equal(db.rows("redirects").length, 44);
+  for (const row of db.rows("publications")) assert.ok(PublicationRow.safeParse(row).success);
+  const incomplete = { ...plan, counts: { ...plan.counts, missing: 1 } };
+  await assert.rejects(applyLegacyMigration(incomplete, redirects, new MemoryDb()), /MIGRATION_PLAN_INCOMPLETE/);
+});
+
+test("apply CLI gates: one mode at a time, a target is required, production needs the cutover flag and the production names", async () => {
+  const { spawnSync } = await import("node:child_process");
+  const run = (args: string[], env: Record<string, string> = {}) =>
+    spawnSync(process.execPath, [resolve(REPO_ROOT, "packages/pipeline/tools/migrate-legacy-publications.ts"), ...args], {
+      cwd: REPO_ROOT,
+      env: { PATH: process.env["PATH"] ?? "", ...env },
+      encoding: "utf8",
+    });
+  assert.equal(run(["--apply", "--dry-run"]).status, 2);
+  assert.match(run(["--apply"]).stderr, /--apply needs --target staging\|production/);
+  assert.match(run(["--apply", "--target", "production"], { SUPABASE_PROD_URL: "https://p.test", SUPABASE_PROD_SERVICE_ROLE_KEY: "k" }).stderr, /also needs CC_ALLOW_PRODUCTION_PUBLISH=true/);
+  const noNames = run(["--apply", "--target", "production"], { CC_ALLOW_PRODUCTION_PUBLISH: "true", SUPABASE_URL: "https://staging.test", SUPABASE_SERVICE_ROLE_KEY: "k" });
+  assert.equal(noNames.status, 2);
+  assert.match(noNames.stderr, /SUPABASE_PROD_URL and SUPABASE_PROD_SERVICE_ROLE_KEY are required/);
+  assert.match(run(["--apply", "--target", "staging"]).stderr, /SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY are required/);
+});

@@ -48,9 +48,9 @@
 
 | # | 단계 | 누가 | 승인 | 검증 |
 |---|---|---|---|---|
-| 1 | 사이트 동등성 PR(§3 라우트, 미들웨어, 피드, 정책 페이지, 이미지 12개) | 세션 | PR 머지(Josh) | `v2:typecheck`·`v2:test`·`v2:build`, 루트 `astro check` |
+| 1 | 사이트 동등성 PR(§3 라우트, 미들웨어, 피드, 정책 페이지, 이미지 12개) — **구현됨(PR #85, 로컬 136/136)** | 세션 | PR 머지(Josh) | `v2:typecheck`·`v2:test`·`v2:build`, 루트 `astro check` |
 | 2 | URL 검증 도구 + `rebuild-ci.yml` dispatch 잡(`verify_urls_base`) | 세션 | 1과 같은 PR | staging 프리뷰 대상 136/136 기대값 일치(데이터 없는 404 제외 표시) |
-| 3 | `migrate-legacy-publications.ts --apply`(서비스 롤 이름만, 대상 프로젝트 확인 프롬프트) + `publish_target: production` CLI 허용(컷오버 플래그) | 세션 | PR 머지(Josh) | 단위 테스트(메모리 DB), `--dry-run` 결과 불변 |
+| 3 | `migrate-legacy-publications.ts --apply --target staging\|production` + `.github/workflows/legacy-migrate.yml`(dispatch, production은 confirm `M5 approved`) + CLI 컷오버 플래그(`publish_target: production`은 `--dry-run` 또는 `CC_ALLOW_PRODUCTION_PUBLISH=true` + `SUPABASE_PROD_*` 이름) — **구현됨(PR #85)** | 세션 | PR 머지(Josh) | 단위 테스트(메모리 DB 12행·redirects 44행 멱등, CLI 인터록), `--dry-run` 결과 불변 |
 | 4 | D1 프로덕션 Supabase 생성 + 0001→0002 | Josh | **D1** | 테이블 9 + RLS |
 | 5 | Actions secrets(이름) `SUPABASE_PROD_URL`·`SUPABASE_PROD_SERVICE_ROLE_KEY`, Vercel `ai-news-portal` Production env(이름) `SITE_DATA_SOURCE=supabase`·`SUPABASE_URL`·`SUPABASE_ANON_KEY`·`SITE_INDEXABLE=true`(+ `PUBLIC_ADSENSE_CLIENT` 유지) | Josh | **§3 env 변경** | 이름 존재 확인(값 미열람) |
 | 6 | `legacy-final` 태그 + 레거시 Supabase 백업 | 세션(태그)·Josh(백업) | **D5** | `git ls-remote --tags` |

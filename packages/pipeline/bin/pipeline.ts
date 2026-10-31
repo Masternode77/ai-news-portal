@@ -21,7 +21,11 @@
  * Supabase ledger and tables named by SUPABASE_URL / SUPABASE_SERVICE_ROLE_KEY
  * (the staging project), so it must be `--live` (fixtures and `--replay`
  * never reach a real database) and `flags.publish_target` may be `none` or
- * `staging` only — `production` is refused until the Phase 5 cutover.
+ * `staging` freely. Phase 5 cutover flag: `production` is accepted in a
+ * `--dry-run` (memory only) and, for a real run, only with
+ * CC_ALLOW_PRODUCTION_PUBLISH=true; it then writes the project named by
+ * SUPABASE_PROD_URL / SUPABASE_PROD_SERVICE_ROLE_KEY instead of the staging pair
+ * (docs/migration/phase5-cutover.md step 10).
  */
 import { parseArgs } from "node:util";
 import { readFile } from "node:fs/promises";
@@ -29,6 +33,8 @@ import { realpathSync } from "node:fs";
 import { resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 import { createClient } from "@supabase/supabase-js";
+import { PRODUCTION_ALLOW_ENV, STAGING_SUPABASE_ENV, productionAllowed, supabaseEnvFor } from "../src/supabase-env.ts";
+import type { SupabaseEnvNames } from "../src/supabase-env.ts";
 import { ConfigError, PipelineRunRow, createLogger, isLogLevel, loadBannedPhrasesConfig, loadPipelineConfig, loadQaConfig, loadRedirectsConfig, loadScoringConfig, loadSourcesConfig } from "@cc/shared";
 import type { DbPort, ImageAdapter, ImageProvider, Ledger, LlmAdapter, Logger, Notifier, PipelineConfig, PublisherAdapter, RedirectsConfig, RunTrigger, SourceAdapter, StageAdapters, StageName } from "@cc/shared";
 import {
@@ -256,9 +262,9 @@ export function buildAdapters(cli: Cli, config: PipelineConfig, env: NodeJS.Proc
 }
 
 /** The ledger keeps the real fetch even in --replay, where the global fetch is disabled for adapters. */
-function buildSupabase(env: NodeJS.ProcessEnv, fetchImpl: typeof globalThis.fetch): SupabaseLike | null {
-  const url = env["SUPABASE_URL"];
-  const key = env["SUPABASE_SERVICE_ROLE_KEY"];
+function buildSupabase(env: NodeJS.ProcessEnv, fetchImpl: typeof globalThis.fetch, names: SupabaseEnvNames = STAGING_SUPABASE_ENV): SupabaseLike | null {
+  const url = env[names.url];
+  const key = env[names.key];
   if (!url || !key) return null;
   // Structural cast: SupabaseClient satisfies the minimal shape the ledger needs.
   return createClient(url, key, { global: { fetch: fetchImpl } }) as unknown as SupabaseLike;
@@ -339,8 +345,12 @@ export async function main(argv: string[], env: NodeJS.ProcessEnv, stdout: (line
     const bannedPhrases = await loadBannedPhrasesConfig(resolve(cli.bannedPhrases));
     const qa = await loadQaConfig(resolve(cli.qa));
     const redirects = await loadRedirectsConfig(resolve(cli.redirects));
-    // The production target is the Phase 5 cutover (CLAUDE.md §4); until then only none (dry decisions) and staging exist.
-    if (loaded.config.flags.publish_target === "production") throw new ConfigError("flags.publish_target production is the Phase 5 cutover; use none or staging (CC_FLAG_PUBLISH_TARGET) until then");
+    // Phase 5 cutover flag (CLAUDE.md §4): a real production run needs both publish_target production and the allow
+    // variable, and writes the production project's names; a --dry-run with production stays in memory.
+    const target = loaded.config.flags.publish_target;
+    if (target === "production" && !cli.dryRun && !productionAllowed(env)) {
+      throw new ConfigError(`flags.publish_target production writes the production project: a real run needs ${PRODUCTION_ALLOW_ENV}=true as well (set only by the Phase 5 cutover change, docs/migration/phase5-cutover.md step 10)`);
+    }
     const adapters = buildAdapters(cli, loaded.config, env, redirects);
     const notifier = buildNotifier(loaded.config, env);
     // Same rule as the stages: the notifier reaches the network through the (possibly disabled) fetch only.
@@ -369,8 +379,15 @@ export async function main(argv: string[], env: NodeJS.ProcessEnv, stdout: (line
       }
       db = memory;
     } else {
-      const client = buildSupabase(env, realFetch);
-      if (!client) throw new ConfigError("SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY are required without --dry-run (names only; values stay in the environment): the Phase 4 shadow writes the staging project's ledger and tables");
+      const names = supabaseEnvFor(target);
+      const client = buildSupabase(env, realFetch, names);
+      if (!client) {
+        throw new ConfigError(
+          target === "production"
+            ? `${names.url} and ${names.key} are required for a production run (names only; values stay in the environment)`
+            : `${names.url} and ${names.key} are required without --dry-run (names only; values stay in the environment): the Phase 4 shadow writes the staging project's ledger and tables`,
+        );
+      }
       ledger = new SupabaseLedger(client);
       db = new SupabaseDb(client);
     }
