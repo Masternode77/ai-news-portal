@@ -149,3 +149,44 @@ test("verdict params: a non-numeric param is a loud configuration error, not a s
   assert.throws(() => numberParam(entry("X", { k: "20" }), "k", 1), /QA_PARAM_INVALID/);
   assert.equal(numberParam(entry("X", {}), "k", 7), 7);
 });
+
+test("DUPLICATE_EVENT: a title whose event signature (numbers by value + Latin names) matches a recent title is rejected; calendar figures, small signatures and unrelated stories pass", async () => {
+  const dup = QA_RULES.get("DUPLICATE_EVENT")!;
+  const cfg = entry("DUPLICATE_EVENT", { min_shared: 3, min_jaccard: 0.5 });
+  const withTitle = (title_ko: string) => draft({ ...BRIEF, title_ko });
+  // compare.md §3 row 13: the run-5 DOE release and the run-8 power-eng write-up of the same loan.
+  const published = "미 에너지부, Constellation 원전 출력증강에 최대 50억 달러 조건부 대출…약 1.1GW 추가";
+  const second = await dup.check(withTitle("DOE, Constellation 원전 업레이트에 최대 50억 달러 조건부 대출 약정…약 1.1GW 증설"), evidence({ recentPublishedTitles: [published] }), cfg);
+  assert.equal(second.pass, false);
+  const match = second.evidence["duplicate_of"] as { title: string; shared: string[]; jaccard: number };
+  assert.equal(match.title, published);
+  assert.equal(match.shared.length, 3, JSON.stringify(match));
+  assert.equal(match.jaccard, 0.75);
+  // "$5 billion" in English and "50억 달러" in Korean are one value.
+  assert.equal((await dup.check(withTitle("Constellation gets $5 billion DOE loan for 1.1GW of uprates"), evidence({ recentPublishedTitles: [published] }), cfg)).pass, false);
+  // Another DOE loan: shares only the agency and a currency word, not the amount or the borrower.
+  assert.equal((await dup.check(withTitle("미 에너지부, Alliant Energy에 51억 달러 대출 집행… 아이오와·위스콘신에 2.6GW 이상 발전 용량 추가"), evidence({ recentPublishedTitles: [published] }), cfg)).pass, true);
+  // Same day, same capacity and voltage, different project: dates are not part of the signature (with them, 4 shared).
+  const daySig = await dup.check(withTitle("영국, 10월 30일 Sea Link 2 GW·345 kV 해저 송전망 승인"), evidence({ recentPublishedTitles: ["영국, 10월 30일 Frodsham Solar 2 GW·345 kV 태양광 승인"] }), cfg);
+  assert.equal(daySig.pass, true, JSON.stringify(daySig.evidence));
+  assert.deepEqual((daySig.evidence["signature"] as string[]).sort(), ["#2", "#345", "sea link"]);
+  // Whole numeric dates are calendar figures too (Codex PR #84): same company, same day, different site and size.
+  const isoDay = await dup.check(withTitle("Microsoft, 2026-10-30 부산 100MW 데이터센터 착공"), evidence({ recentPublishedTitles: ["Microsoft, 2026-10-30 서울 200MW 데이터센터 착공"] }), cfg);
+  assert.equal(isoDay.pass, true, JSON.stringify(isoDay.evidence));
+  assert.deepEqual((isoDay.evidence["signature"] as string[]).sort(), ["#100", "microsoft"]);
+  for (const date of ["2026/10/30", "10/30/2026", "30.10.2026"]) {
+    const signature = (await dup.check(withTitle(`Microsoft, ${date} 부산 100MW 착공`), evidence({ recentPublishedTitles: [] }), cfg)).evidence["signature"] as string[];
+    assert.deepEqual([...signature].sort(), ["#100", "microsoft"], date);
+  }
+  // A multi-word name is one element and a code's digits are not a figure: two COP31 stories that share National Grid are not one event.
+  const cop = await dup.check(withTitle("National Grid, COP31에서 송전망 투자 계획 발표"), evidence({ recentPublishedTitles: ["Kraken·National Grid·Octopus·SSE, COP31 영국관 공식 파트너로 참여"] }), cfg);
+  assert.equal(cop.pass, true, JSON.stringify(cop.evidence));
+  assert.deepEqual((cop.evidence["signature"] as string[]).sort(), ["cop31", "national grid"]);
+  // A title with fewer than min_shared signature elements is never a duplicate (documented limit).
+  assert.equal((await dup.check(withTitle("미국 에너지부, 계통 기자재 공급망에 2억3,700만 달러 지원 공모"), evidence({ recentPublishedTitles: ["미국 에너지부, 계통 기자재 공급망에 2억3,700만 달러 지원 공모"] }), cfg)).pass, true);
+  // Nothing to compare with: pass, and the evidence says so.
+  const alone = await dup.check(withTitle(published), evidence({ recentPublishedTitles: [] }), cfg);
+  assert.equal(alone.pass, true);
+  assert.equal(alone.evidence["compared"], 0);
+  await assert.rejects(async () => dup.check(withTitle(published), evidence(), entry("DUPLICATE_EVENT", { min_shared: "3" })), /QA_PARAM_INVALID: DUPLICATE_EVENT\.params\.min_shared/);
+});

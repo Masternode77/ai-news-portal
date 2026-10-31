@@ -152,7 +152,7 @@ export interface QaEvidence {
   sourceText: string | null;               // 3d sourceTextOf(raw item, source): 제목·본문·소스명·발행일
   source?: SourceConfig; rawItem?: RawItemInsert; candidate?: CandidateInsert;
   bannedPhrases: BannedPhrasesConfig;      // config/banned-phrases.yaml
-  recentPublishedTitles: string[];         // 기사 간 반복 규칙용(Phase 4), 3g는 []
+  recentPublishedTitles: string[];         // 기사 간 규칙용(Phase 4 DUPLICATE_EVENT): normalize.published_window_days 안의 발행본 제목 + 같은 런에서 먼저 통과한 초안 제목, 초안 자신의 slug 제외. DUPLICATE_EVENT가 꺼져 있으면 읽지 않고 []
   now: Date;                               // checked_at
 }
 export const QaVerdict = z.object({
