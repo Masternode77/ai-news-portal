@@ -16,7 +16,7 @@
  * logged, never swallowed.
  */
 import { draftId, rawItemId } from "@cc/shared";
-import type { CandidateInsert, DraftInsert, QaEvidence, QaResultInsert, QaRuleConfig, QaVerdict, RawItemInsert, SourceConfig, Stage, StageContext } from "@cc/shared";
+import type { CandidateInsert, DbPort, DraftInsert, QaEvidence, QaResultInsert, QaRuleConfig, QaVerdict, RawItemInsert, Row, SourceConfig, Stage, StageContext } from "@cc/shared";
 import { QA_RULES } from "../qa/registry.ts";
 import type { QaDecision, QaRuleStat, QaStats } from "../state.ts";
 import { sourceTextOf } from "./generate.ts";
@@ -54,8 +54,32 @@ export function decide(verdicts: QaVerdict[], entries: Map<string, QaRuleConfig>
   return { outcome: hard ? "rejected" : held ? "held" : "passed", failed, autoPassed };
 }
 
+/**
+ * Titles of the publications inside the comparison window (newest first), for the cross-article
+ * rules (DUPLICATE_EVENT). The window is `normalize.published_window_days`, the same one normalize
+ * uses for its title comparison, read in pages so a large archive is never cut to one select.
+ */
+export async function recentPublications(db: DbPort, now: Date, windowDays: number, pageSize: number): Promise<{ slug: string; title: string }[]> {
+  const since = now.getTime() - windowDays * 24 * 60 * 60 * 1000;
+  const out: { slug: string; title: string }[] = [];
+  for (let offset = 0; ; offset += pageSize) {
+    const page = await db.select<Row>("publications", { status: "published" }, { columns: ["slug", "title", "published_at"], limit: pageSize, offset, orderBy: { column: "published_at", ascending: false } });
+    for (const row of page) {
+      const at = typeof row["published_at"] === "string" ? Date.parse(row["published_at"]) : Number.NaN;
+      if (Number.isFinite(at) && at < since) return out;
+      if (typeof row["slug"] === "string" && typeof row["title"] === "string") out.push({ slug: row["slug"], title: row["title"] });
+    }
+    if (page.length < pageSize) return out;
+  }
+}
+
 export function draftRowId(draft: DraftInsert): string {
   return draft.id ?? draftId(draft.candidate_id, draft.content_type, draft.prompt_version);
+}
+
+function draftSlug(draft: DraftInsert): string | null {
+  const slug = (draft.body["brief"] as { slug?: unknown } | undefined)?.slug;
+  return typeof slug === "string" ? slug : null;
 }
 
 export const qaStage: Stage<QaInput, QaOutput> = {
@@ -71,6 +95,11 @@ export const qaStage: Stage<QaInput, QaOutput> = {
     const sources = new Map<string, SourceConfig>(input.sources.map((source) => [source.id, source]));
     const candidates = new Map<string, CandidateInsert>(input.candidates.filter((c) => c.id).map((c) => [c.id!, c]));
     const checkedAt = ctx.now;
+    const published = rules.some((r) => r.rule === "DUPLICATE_EVENT")
+      ? await recentPublications(ctx.adapters.db, ctx.now, ctx.config.normalize.published_window_days, ctx.config.normalize.published_page_size)
+      : [];
+    /** Titles of drafts that passed earlier in this run: two outlets' takes on one event in the same run are duplicates too. */
+    const passedTitles: { slug: string; title: string }[] = [];
 
     const passed: DraftInsert[] = [];
     const verdicts: QaVerdict[] = [];
@@ -97,7 +126,7 @@ export const qaStage: Stage<QaInput, QaOutput> = {
         rawItem: item,
         candidate: candidates.get(draft.candidate_id),
         bannedPhrases: ctx.bannedPhrases,
-        recentPublishedTitles: [],
+        recentPublishedTitles: [...published, ...passedTitles].filter((p) => p.slug !== draftSlug(draft)).map((p) => p.title),
         now: checkedAt,
       };
 
@@ -132,8 +161,11 @@ export const qaStage: Stage<QaInput, QaOutput> = {
       verdicts.push(...own);
 
       const decision = decide(own, entries);
-      if (decision.outcome === "passed") passed.push(draft);
-      else {
+      if (decision.outcome === "passed") {
+        passed.push(draft);
+        const title = (draft.body["brief"] as { title_ko?: unknown } | undefined)?.title_ko;
+        if (typeof title === "string") passedTitles.push({ slug: draftSlug(draft) ?? id, title });
+      } else {
         if (decision.outcome === "rejected") rejected += 1;
         else held += 1;
         statusUpdates.push({ ...draft, id, review_status: decision.outcome === "rejected" ? "rejected" : "pending" });
