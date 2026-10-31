@@ -66,6 +66,11 @@ jobs:
           fi
           node packages/pipeline/bin/pipeline.ts review $scope --limit "$LIMIT" --window "$WINDOW" > review.md
           cat review.md >> "$GITHUB_STEP_SUMMARY"
+          # Also in the job log (collapsed): the step summary and the artifact store are not readable through the
+          # REST API, and a session that cannot reach the artifact blob host still reads job logs.
+          echo "::group::review.md"
+          cat review.md
+          echo "::endgroup::"
           wc -c review.md
       - name: "Upload review artifact (90 days)"
         if: always()
