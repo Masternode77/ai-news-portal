@@ -6,7 +6,7 @@ import { AUTHOR } from "../../lib/author";
 import { isColumn } from "../../lib/listing";
 
 if (Astro.params.slug !== AUTHOR.slug) {
-  return new Response("Not found", { status: 404, headers: { "content-type": "text/plain; charset=utf-8" } });
+  return Astro.rewrite("/404");
 }
 const loaded = await allPublications();
 if (loaded instanceof Response) {
@@ -24,8 +24,9 @@ const columns = loaded.filter(isColumn).slice(0, 8);
   <p>{AUTHOR.disclosure}</p>
   <p>
     Essays are drafted with AI assistance from source-linked evidence, must pass the site’s quality gates before publication, and are corrected after the fact by
-    the author when a reader or a source shows an error. Full detail lives in the <a href="/ai-disclosure/">AI-assisted disclosure</a>, the
-    <a href="/editorial-policy/">editorial policy</a>, and the <a href="/terms/">terms of use</a>.
+    the author when a reader or a source shows an error. Full detail lives in the <a href="/ai-disclosure/">AI-assisted disclosure</a>, the <a
+      href="/editorial-policy/">editorial policy</a
+    >, and the <a href="/terms/">terms of use</a>.
   </p>
   <h2>Standing positions</h2>
   <ul>

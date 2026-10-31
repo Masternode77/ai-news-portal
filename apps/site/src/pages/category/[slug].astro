@@ -6,7 +6,7 @@ import { filterByTerm, findTerm, termPath } from "../../lib/taxonomy";
 
 const term = findTerm("category", Astro.params.slug ?? "");
 if (!term) {
-  return new Response("Not found", { status: 404, headers: { "content-type": "text/plain; charset=utf-8" } });
+  return Astro.rewrite("/404");
 }
 const loaded = await allPublications();
 if (loaded instanceof Response) {

@@ -14,7 +14,7 @@ if (route.kind === "redirect") {
   return Astro.redirect(route.location, 301);
 }
 if (route.kind === "not_found") {
-  return new Response("Not found", { status: 404, headers: { "content-type": "text/plain; charset=utf-8" } });
+  return Astro.rewrite("/404");
 }
 const { items, page, pages } = paginate(loaded, route.page);
 ---

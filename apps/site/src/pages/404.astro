@@ -1,0 +1,10 @@
+---
+// Rendered for paths no route matches. The middleware still sees status 404 and turns
+// legacy URLs into 301/410 first, so this page shows only for addresses that never existed.
+import Base from "../layouts/Base.astro";
+---
+
+<Base title="페이지를 찾을 수 없습니다 | Compute Current" noindex>
+  <h1>페이지를 찾을 수 없습니다</h1>
+  <p>요청한 주소에 해당하는 글이 없습니다. <a href="/">최근 발행</a> 또는 <a href="/archive/">아카이브</a>에서 찾아 주세요.</p>
+</Base>
