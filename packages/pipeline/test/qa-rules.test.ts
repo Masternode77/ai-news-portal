@@ -170,6 +170,14 @@ test("DUPLICATE_EVENT: a title whose event signature (numbers by value + Latin n
   const daySig = await dup.check(withTitle("영국, 10월 30일 Sea Link 2 GW·345 kV 해저 송전망 승인"), evidence({ recentPublishedTitles: ["영국, 10월 30일 Frodsham Solar 2 GW·345 kV 태양광 승인"] }), cfg);
   assert.equal(daySig.pass, true, JSON.stringify(daySig.evidence));
   assert.deepEqual((daySig.evidence["signature"] as string[]).sort(), ["#2", "#345", "sea link"]);
+  // Whole numeric dates are calendar figures too (Codex PR #84): same company, same day, different site and size.
+  const isoDay = await dup.check(withTitle("Microsoft, 2026-10-30 부산 100MW 데이터센터 착공"), evidence({ recentPublishedTitles: ["Microsoft, 2026-10-30 서울 200MW 데이터센터 착공"] }), cfg);
+  assert.equal(isoDay.pass, true, JSON.stringify(isoDay.evidence));
+  assert.deepEqual((isoDay.evidence["signature"] as string[]).sort(), ["#100", "microsoft"]);
+  for (const date of ["2026/10/30", "10/30/2026", "30.10.2026"]) {
+    const signature = (await dup.check(withTitle(`Microsoft, ${date} 부산 100MW 착공`), evidence({ recentPublishedTitles: [] }), cfg)).evidence["signature"] as string[];
+    assert.deepEqual([...signature].sort(), ["#100", "microsoft"], date);
+  }
   // A multi-word name is one element and a code's digits are not a figure: two COP31 stories that share National Grid are not one event.
   const cop = await dup.check(withTitle("National Grid, COP31에서 송전망 투자 계획 발표"), evidence({ recentPublishedTitles: ["Kraken·National Grid·Octopus·SSE, COP31 영국관 공식 파트너로 참여"] }), cfg);
   assert.equal(cop.pass, true, JSON.stringify(cop.evidence));

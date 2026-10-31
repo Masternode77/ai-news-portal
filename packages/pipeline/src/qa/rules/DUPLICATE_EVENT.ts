@@ -23,7 +23,8 @@ import { numberClaims } from "../../stages/generate.ts";
 import { briefOf, latinProperNouns } from "../text.ts";
 import { numberParam, verdict } from "../verdict.ts";
 
-const CALENDAR = /\d{4}\s*년|\d{1,2}\s*월(?:\s*\d{1,2}\s*일)?|\d{1,2}\s*일|\b(?:19|20)\d{2}\b/gu;
+/** Whole numeric dates first (2026-10-30, 2026/10/30, 10/30/2026, 30.10.2026), then Korean and bare-year forms (Codex PR #84). */
+const CALENDAR = /\b\d{4}[-/.]\d{1,2}[-/.]\d{1,2}\b|\b\d{1,2}[-/.]\d{1,2}[-/.]\d{2,4}\b|\d{4}\s*년|\d{1,2}\s*월(?:\s*\d{1,2}\s*일)?|\d{1,2}\s*일|\b(?:19|20)\d{2}\b/gu;
 /** Codes that start with a letter and carry digits (COP31, H100e, SL4): a name, not a figure. */
 const CODE = /[A-Za-z][A-Za-z0-9-]*\d[A-Za-z0-9-]*/gu;
 
