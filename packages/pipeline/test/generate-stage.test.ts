@@ -204,12 +204,24 @@ test("checks: number claims are Korean-aware (scale words, counters), grounding 
   assert.deepEqual(groundingCheck("투자액은 2.1 million 달러다.", "Investment was $2.1 billion.").ungrounded, ["2.1 million"], "a scaled claim must match the canonical value, not just the digits");
   assert.equal(groundingCheck("21억 달러와 2.1 billion", "Investment was $2.1 billion.").pass, true);
   assert.deepEqual(groundingCheck("1.2조원", "1.2 GW").ungrounded, ["1.2조"]);
-  assert.deepEqual(numberTokens("투자액은 2천억 달러, 1조2천억 원"), ["2천억", "1조", "2천억"], "a run of Korean scale words is one claim");
+  assert.deepEqual(numberTokens("투자액은 2천억 달러, 1조2천억 원"), ["2천억", "1조2천억"], "a run of Korean scale words is one claim, and falling scales chain into one compound numeral");
   assert.deepEqual(groundingCheck("투자액은 2천억 달러다.", "Investment was $2000.").ungrounded, ["2천억"], "a compound scale is not its numeric prefix");
   assert.equal(groundingCheck("2천억 달러", "$200 billion").pass, true, "2천억 = 2 × 10³ × 10⁸ = 200 billion");
   assert.equal(groundingCheck("투자액 20.1억 달러", "Investment $2.01 billion").pass, true, "decimal scales compare by value, not by floating-point tails");
   assert.equal(groundingCheck("1.5만 가구", "15,000 homes").pass, true);
   assert.equal(groundingCheck("수치가 없는 문장", BUSAN).pass, true);
+  // Phase 4 shadow evidence (compare.md §3): currency letters, compound Korean numerals, month digits.
+  assert.equal(groundingCheck("450억 달러(45B 달러) 규모 팹", "a proposed $45B NAND flash fab").pass, true, "$45B is 45 billion");
+  assert.deepEqual(groundingCheck("450억 달러", "a $45 million fab").ungrounded, ["450억"], "M is not B");
+  assert.deepEqual(numberTokens("10GB HBM3E 5MW 345kV $45B €5M 1.2K"), ["10", "3", "5", "345", "45B", "5M", "1.2K"], "a letter that starts a longer word is a unit, not a scale");
+  assert.equal(groundingCheck("1.2K 랙", "1,200 racks").pass, true);
+  assert.equal(groundingCheck("Austria에 3억 600만 유로, Czechia에 9억 5,100만 유로", "€306 million to Austria and €951 million to Czechia").pass, true, "3억 600만 is one claim worth 306 million");
+  assert.deepEqual(numberTokens("3억 600만 유로와 1조 2,000억 300만 원, 5천 3억"), ["3억 600만", "1조 2,000억 300만", "5천", "3억"], "falling scales chain; a rising pair does not");
+  assert.deepEqual(groundingCheck("3억 600만 유로", "€3 million and €600 million").ungrounded, ["3억 600만"], "the halves of a compound numeral no longer ground it");
+  assert.equal(groundingCheck("2024년 7월 이후 승인 39건", "39 projects approved since July 2024").pass, true, "7월 grounds on July");
+  assert.deepEqual(groundingCheck("12월까지 연장", "extended until the end of the year").ungrounded, ["12"], "a month the source never names stays ungrounded");
+  assert.deepEqual(groundingCheck("3개월간 7월", "three months, July").numbers, ["7"], "3개월 is a counter; 7월 is a month");
+  assert.deepEqual(groundingCheck("단일 신규 원전 1기", "nearly 1.1 gigawatts").ungrounded, ["1"], "1.1 does not ground a bare 1 (compare.md §3 row 2 stays a correct rejection)");
   assert.equal(longestCommonRun("the first 200 MW phase is scheduled to reach", BUSAN), 9);
   assert.equal(longestCommonRun("완전히 다른 문장", BUSAN), 0);
   assert.equal(longestCommonRun("", BUSAN), 0);

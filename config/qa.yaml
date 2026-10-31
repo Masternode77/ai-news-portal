@@ -15,7 +15,7 @@
 # BUDGET_EXCEEDED (3d generate / runner). INSIGHT_DENSITY_LOW and HUMAN_STYLE_LOW are insight_essay
 # rules and arrive with 3e.
 
-version: "2026-10-25.1"
+version: "2026-10-31.1"
 
 rules:
   # ---- hard: a failing verdict rejects the draft -------------------------------------------------
@@ -35,7 +35,7 @@ rules:
     params: { max_ungrounded: 0 }
   - rule: UNGROUNDED_ENTITY          # Latin-script proper nouns in the draft must appear in the source text
     severity: hard
-    params: { max_ungrounded: 0, min_chars: 3, allow: [Compute Current] }
+    params: { max_ungrounded: 0, min_chars: 3, allow: [Compute Current], token_fallback: true }   # token_fallback: a rebuilt two-name bigram grounds token by token (Phase 4 compare.md §3)
   - rule: LANG_MISMATCH              # *_ko fields: Hangul share of letters
     severity: hard
     params: { min_hangul_ratio: 0.6 }   # ADR-004 initial value; "확인 필요 2"
