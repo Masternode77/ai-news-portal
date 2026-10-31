@@ -154,8 +154,8 @@ test("scoring fixture through generate, qa and image (Phase 3g): one draft passe
   assert.equal(qa.passed, 1);
   assert.equal(qa.rejected, 1);
   assert.equal(qa.held, 0);
-  assert.equal(qa.rules, 12, "the 12 stage: qa rules of config/qa.yaml (IMAGE_MISSING belongs to the image stage)");
-  assert.equal(qa.verdicts, 24, "every rule on every draft, no early stop");
+  assert.equal(qa.rules, 13, "the 13 stage: qa rules of config/qa.yaml (IMAGE_MISSING belongs to the image stage)");
+  assert.equal(qa.verdicts, 26, "every rule on every draft, no early stop");
   assert.equal(qa.rule_errors, 0);
   const byOutcome = Object.fromEntries(qa.decisions.map((d: { source_id: string; outcome: string; failed_rules: string[]; failed_evidence: Record<string, Record<string, unknown>> }) => [d.source_id, d]));
   assert.equal(byOutcome["scoring-wire-a"].outcome, "passed");

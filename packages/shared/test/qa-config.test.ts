@@ -11,9 +11,9 @@ test("config/qa.yaml (Phase 3g) loads strictly: ordered rules, hard before soft,
   const qa = await loadQaConfig(path);
   assert.match(qa.version, /^\d{4}-\d{2}-\d{2}\.\d+$/);
   const codes = qa.rules.map((r) => r.rule);
-  assert.deepEqual(codes.slice(0, 8), ["SCHEMA_INVALID", "SOURCE_UNREACHABLE", "QUOTE_TOO_LONG", "SIMILARITY_TOO_HIGH", "UNGROUNDED_NUMBER", "UNGROUNDED_ENTITY", "LANG_MISMATCH", "BANNED_PATTERN"], "ADR-004 hard rules first, in the order the stage runs them");
-  assert.ok(qa.rules.slice(0, 8).every((r) => r.severity === "hard" && r.auto_pass === undefined && r.enabled && r.stage === "qa"));
-  assert.ok(qa.rules.slice(8).every((r) => r.severity === "soft" && r.auto_pass === true), "soft rules start with auto_pass for the Phase 4 shadow");
+  assert.deepEqual(codes.slice(0, 9), ["SCHEMA_INVALID", "SOURCE_UNREACHABLE", "QUOTE_TOO_LONG", "SIMILARITY_TOO_HIGH", "UNGROUNDED_NUMBER", "UNGROUNDED_ENTITY", "LANG_MISMATCH", "BANNED_PATTERN", "DUPLICATE_EVENT"], "ADR-004 hard rules first (DUPLICATE_EVENT added in Phase 4), in the order the stage runs them");
+  assert.ok(qa.rules.slice(0, 9).every((r) => r.severity === "hard" && r.auto_pass === undefined && r.enabled && r.stage === "qa"));
+  assert.ok(qa.rules.slice(9).every((r) => r.severity === "soft" && r.auto_pass === true), "soft rules start with auto_pass for the Phase 4 shadow");
   assert.equal(new Set(codes).size, codes.length);
   assert.equal(qaRuleEntry(qa, "IMAGE_MISSING")?.stage, "image");
   assert.equal(qaRuleEntry(qa, "IMAGE_MISSING")?.severity, "soft");

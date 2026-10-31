@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { mkdtemp, readFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
-import { parsePipelineConfig, parseSourcesConfig, silentLogger } from "@cc/shared";
+import { parsePipelineConfig, parseSourcesConfig, rawItemId, silentLogger } from "@cc/shared";
 import type { QaConfig, QaRuleConfig, StageContext } from "@cc/shared";
 import { createFixtureImageAdapter, createImageChain, createPlaceholderImageAdapter, MemoryImageStore } from "../src/adapters/index.ts";
 import { createBudget } from "../src/budget.ts";
@@ -36,11 +36,11 @@ test("every enabled qa rule runs on every draft in config order with no early st
   assert.notEqual(clean.id, dirty.id);
   const out = QaOutput.parse(await qaStage.run(input([clean, dirty]), ctx));
   const order = activeRules(ctx.qa).map((r) => r.rule);
-  assert.equal(order.length, 12);
+  assert.equal(order.length, 13);
   assert.equal(order.includes("IMAGE_MISSING"), false, "stage: image entries are not qa rules");
-  assert.equal(out.verdicts.length, 24, "12 rules × 2 drafts");
-  assert.deepEqual(out.verdicts.slice(0, 12).map((v) => v.rule), order, "config order on the clean draft");
-  assert.deepEqual(out.verdicts.slice(12).map((v) => v.rule), order, "config order on the failing draft — the stage does not stop at the first hard failure");
+  assert.equal(out.verdicts.length, 26, "13 rules × 2 drafts");
+  assert.deepEqual(out.verdicts.slice(0, 13).map((v) => v.rule), order, "config order on the clean draft");
+  assert.deepEqual(out.verdicts.slice(13).map((v) => v.rule), order, "config order on the failing draft — the stage does not stop at the first hard failure");
   for (const v of out.verdicts) {
     assert.equal(v.reason_code, v.rule);
     assert.equal(v.evidence["qa_version"], ctx.qa.version);
@@ -49,7 +49,7 @@ test("every enabled qa rule runs on every draft in config order with no early st
   }
   assert.deepEqual(out.passed.map((d) => d.id), [clean.id]);
   const rows = db.rows("qa_results");
-  assert.equal(rows.length, 24, "every verdict is a qa_results row (R6)");
+  assert.equal(rows.length, 26, "every verdict is a qa_results row (R6)");
   assert.deepEqual(rows.filter((r) => r["draft_id"] === dirty.id && r["pass"] === false).map((r) => r["rule"]), ["UNGROUNDED_NUMBER", "BANNED_PATTERN"]);
   assert.equal(rows.filter((r) => r["draft_id"] === clean.id && r["pass"] === false).length, 0);
   const statusRows = db.rows("drafts");
@@ -57,7 +57,7 @@ test("every enabled qa rule runs on every draft in config order with no early st
   assert.equal(statusRows[0]!["id"], dirty.id);
   assert.equal(statusRows[0]!["review_status"], "rejected");
   const s = out.stats;
-  assert.deepEqual([s.drafts, s.passed, s.rejected, s.held, s.verdicts, s.hard_failed, s.soft_failed, s.auto_passed, s.rule_errors, s.rules], [2, 1, 1, 0, 24, 2, 0, 0, 0, 12]);
+  assert.deepEqual([s.drafts, s.passed, s.rejected, s.held, s.verdicts, s.hard_failed, s.soft_failed, s.auto_passed, s.rule_errors, s.rules], [2, 1, 1, 0, 26, 2, 0, 0, 0, 13]);
   assert.deepEqual(s.by_rule["UNGROUNDED_NUMBER"], { checked: 2, passed: 1, failed: 1, auto_passed: 0 });
   assert.deepEqual(s.by_rule["BANNED_PATTERN"], { checked: 2, passed: 1, failed: 1, auto_passed: 0 });
   assert.equal(s.decisions.length, 2);
@@ -102,10 +102,10 @@ test("a configured rule without a file fails the run (QA_RULE_UNKNOWN); a disabl
   await assert.rejects(qaStage.run(input([draft()]), ctxWith(unknown).ctx), new RegExp(`${QA_RULE_UNKNOWN}: config/qa.yaml lists NOT_A_RULE`));
   const disabled = ctxWith(withRule(testQa(), "SCHEMA_INVALID", { enabled: false }));
   const out = QaOutput.parse(await qaStage.run(input([draft()]), disabled.ctx));
-  assert.equal(out.stats.rules, 11);
-  assert.equal(out.verdicts.length, 11);
+  assert.equal(out.stats.rules, 12);
+  assert.equal(out.verdicts.length, 12);
   assert.equal("SCHEMA_INVALID" in out.stats.by_rule, false);
-  assert.equal(disabled.db.rows("qa_results").length, 11);
+  assert.equal(disabled.db.rows("qa_results").length, 12);
   const imageOnly: QaConfig = { ...testQa(), rules: [{ rule: "IMAGE_MISSING", severity: "soft", enabled: true, stage: "image", params: {}, auto_pass: true }] };
   assert.deepEqual(activeRules(imageOnly), [], "an image-stage entry is never run by qa and needs no qa rule file");
   const nothing = QaOutput.parse(await qaStage.run(input([draft()]), ctxWith(imageOnly).ctx));
@@ -123,7 +123,7 @@ test("a rule that throws becomes a failing verdict (QA_RULE_ERROR) and the stage
   assert.equal(out.stats.rule_errors, 1);
   assert.equal(out.stats.rejected, 1);
   assert.deepEqual(out.passed, []);
-  assert.equal(out.verdicts.length, 12, "the other rules still ran");
+  assert.equal(out.verdicts.length, 13, "the other rules still ran");
   assert.equal(db.rows("qa_results").filter((r) => r["rule"] === "SOURCE_UNREACHABLE")[0]!["pass"], false);
 });
 
@@ -159,7 +159,7 @@ test("the image stage takes IMAGE_MISSING's severity from config/qa.yaml (stage:
   assert.equal(disabled.out.stats.decisions[0]!.disposition, "forward");
 });
 
-test("end to end on the scoring fixture: generate → qa → image → publish(none) with the real rules: one draft passes and gets a placeholder, one is rejected for an ungrounded number, 24 qa_results rows, the rejected draft row is marked", async () => {
+test("end to end on the scoring fixture: generate → qa → image → publish(none) with the real rules: one draft passes and gets a placeholder, one is rejected for an ungrounded number, 26 qa_results rows, the rejected draft row is marked", async () => {
   const cfg = parsePipelineConfig(TEST_PIPELINE_YAML, { env: {} }).config;
   const db = new MemoryDb();
   const sources = parseSourcesConfig(await readFile(resolve(REPO_ROOT, "fixtures/sources/scoring.yaml"), "utf8"));
@@ -167,13 +167,13 @@ test("end to end on the scoring fixture: generate → qa → image → publish(n
   assert.equal(result.status, "done", JSON.stringify(result.stages));
   const qa = result.stages.find((s) => s.stage === "qa")!;
   assert.equal(qa.status, "done");
-  assert.deepEqual([qa.counts["drafts"], qa.counts["qa_passed"], qa.counts["rejected"], qa.counts["held"], qa.counts["verdicts"], qa.counts["rule_errors"]], [2, 1, 1, 0, 24, 0]);
+  assert.deepEqual([qa.counts["drafts"], qa.counts["qa_passed"], qa.counts["rejected"], qa.counts["held"], qa.counts["verdicts"], qa.counts["rule_errors"]], [2, 1, 1, 0, 26, 0]);
   assert.equal(result.state.qaStats.passed, 1);
   const decisions = Object.fromEntries(result.state.qaStats.decisions.map((d) => [d.source_id, d]));
   assert.equal(decisions["scoring-wire-a"]!.outcome, "passed");
   assert.equal(decisions["scoring-wire-b"]!.outcome, "rejected");
   assert.ok(decisions["scoring-wire-b"]!.failed_rules.includes("UNGROUNDED_NUMBER"));
-  assert.equal(db.rows("qa_results").length, 24);
+  assert.equal(db.rows("qa_results").length, 26);
   const rejected = db.rows("drafts").filter((r) => r["review_status"] === "rejected");
   assert.equal(rejected.length, 1);
   assert.equal(((rejected[0]!["body"] as Record<string, unknown>)["source"] as Record<string, unknown>)["source_id"], "scoring-wire-b");
@@ -182,4 +182,31 @@ test("end to end on the scoring fixture: generate → qa → image → publish(n
   assert.equal(result.funnel.qa_passed, 1);
   assert.equal(result.funnel.published, 0);
   assert.equal(result.stages.find((s) => s.stage === "publish")?.status, "done");
+});
+
+test("DUPLICATE_EVENT in the stage: a publication inside normalize.published_window_days and a draft that passed earlier in the same run both count; an older publication and the draft's own slug do not", async () => {
+  const { ctx, db } = ctxWith();
+  const day = 24 * 60 * 60 * 1000;
+  const publication = (slug: string, title: string, at: Date) => ({
+    id: rawItemId(slug), draft_id: null, slug, content_type: "news_brief", title, body: {}, image: null,
+    sources: [{ url: `https://press.example.com/${slug}`, name: "src", published_at: at.toISOString() }],
+    published_at: at.toISOString(), updated_at: at.toISOString(), publisher: "pipeline", status: "published", legacy_id: null, noindex: false, tags: [], category: null, region: null,
+  });
+  await db.insert("publications", [
+    publication("news/doe-constellation", "미 에너지부, Constellation 원전 출력증강에 최대 50억 달러 조건부 대출…약 1.1GW 추가", new Date(NOW.getTime() - day)),
+    publication("news/busan-old", "Microsoft, 부산에 1.2 GW 용량 계약…Example Data Centers와 KEPCO 345 kV", new Date(NOW.getTime() - 30 * day)),
+    publication("news/00000000000000aa", "Example Data Centers, Busan 1.2 GW Microsoft 계약 KEPCO 345 kV", new Date(NOW.getTime() - day)),
+  ]);
+  const titled = (title_ko: string, slug: string, promptVersion: string) => draft({ ...BRIEF, title_ko, slug }, { promptVersion });
+  const repeat = titled("DOE, Constellation 원전 업레이트에 최대 50억 달러 조건부 대출 약정…약 1.1GW 증설", "news/00000000000000bb", "2026-10-25.2");
+  const first = titled("Microsoft, 부산 AI 데이터센터 캠퍼스에 1.2 GW 용량 계약…KEPCO 345 kV 변전소 연결", "news/00000000000000aa", "2026-10-25.3");
+  const sameRun = titled("KEPCO 345 kV 변전소로 Microsoft 부산 1.2 GW 캠퍼스 연결", "news/00000000000000cc", "2026-10-25.4");
+  const out = QaOutput.parse(await qaStage.run(input([repeat, first, sameRun]), ctx));
+  const rows = Object.fromEntries(db.rows("qa_results").filter((r) => r["rule"] === "DUPLICATE_EVENT").map((r) => [r["draft_id"], r]));
+  assert.equal(rows[repeat.id!]!["pass"], false, "same event as a publication inside the window");
+  assert.equal((rows[repeat.id!]!["evidence"] as { duplicate_of: { title: string } }).duplicate_of.title.startsWith("미 에너지부, Constellation"), true);
+  assert.equal(rows[first.id!]!["pass"], true, "the 30-day-old publication is outside the 7-day window and news/00000000000000aa is the draft's own slug");
+  assert.equal((rows[first.id!]!["evidence"] as { compared: number }).compared, 1, "only news/doe-constellation is compared");
+  assert.equal(rows[sameRun.id!]!["pass"], false, "the same event as a draft that passed earlier in this run");
+  assert.deepEqual(out.passed.map((d) => d.id), [first.id]);
 });

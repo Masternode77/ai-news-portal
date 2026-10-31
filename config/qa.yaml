@@ -15,7 +15,7 @@
 # BUDGET_EXCEEDED (3d generate / runner). INSIGHT_DENSITY_LOW and HUMAN_STYLE_LOW are insight_essay
 # rules and arrive with 3e.
 
-version: "2026-10-31.1"
+version: "2026-10-31.2"
 
 rules:
   # ---- hard: a failing verdict rejects the draft -------------------------------------------------
@@ -41,6 +41,9 @@ rules:
     params: { min_hangul_ratio: 0.6 }   # ADR-004 initial value; "확인 필요 2"
   - rule: BANNED_PATTERN             # config/banned-phrases.yaml inventory (3d guard, now blocking)
     severity: hard
+  - rule: DUPLICATE_EVENT            # the draft title's event signature (numbers by value + Latin names) against publications in normalize.published_window_days and earlier passes of the run
+    severity: hard
+    params: { min_shared: 3, min_jaccard: 0.5 }   # Phase 4 compare.md §3 row 13: DOE ↔ power-eng Constellation loan, shared 3 · Jaccard 0.75
   # ---- soft: a failing verdict is recorded; auto_pass true lets the draft through (Phase 4 shadow) ----
   - rule: RUBRIC_BELOW_TARGET        # candidate rubric total (3c) below target
     severity: soft
