@@ -243,10 +243,10 @@ const FETCH_CAUSE_DEPTH = 3;
 
 /** `CODE: message` (or whichever of the two exists) of one link in a cause chain; the first entry stands in for an AggregateError. */
 function causeLabel(cause: unknown): string | null {
-  if (cause === null || typeof cause !== "object") return typeof cause === "string" && cause.length > 0 ? cause : null;
+  if (cause === null || typeof cause !== "object") return typeof cause === "string" && cause.trim().length > 0 ? cause.trim() : null;
   const record = cause as { code?: unknown; message?: unknown; errors?: unknown };
   const code = typeof record.code === "string" && record.code.length > 0 ? record.code : null;
-  let message = typeof record.message === "string" && record.message.length > 0 ? record.message : null;
+  let message = typeof record.message === "string" && record.message.trim().length > 0 ? record.message.trim() : null;
   if (Array.isArray(record.errors) && record.errors.length > 0) {
     const first = causeLabel(record.errors[0]);
     const more = record.errors.length > 1 ? ` +${record.errors.length - 1}` : "";

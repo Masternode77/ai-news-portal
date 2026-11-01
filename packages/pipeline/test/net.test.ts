@@ -142,6 +142,11 @@ test("describeFetchError stays one bounded line and accepts non-Error values", (
   assert.ok(!long.includes("\n"), "single line");
   assert.ok(long.endsWith("…"));
   assert.equal(describeFetchError("socket hang up"), "socket hang up");
+  // OpenSSL messages end in a newline; the label is trimmed before the closing parenthesis (live insidehpc, run 41319045089).
+  assert.equal(
+    describeFetchError(new TypeError("fetch failed", { cause: coded("ERR_SSL_SSL/TLS_ALERT_HANDSHAKE_FAILURE", "ssl3_read_bytes:ssl/tls alert handshake failure:SSL alert number 40\n") })),
+    "fetch failed (cause: ERR_SSL_SSL/TLS_ALERT_HANDSHAKE_FAILURE: ssl3_read_bytes:ssl/tls alert handshake failure:SSL alert number 40)",
+  );
 });
 
 test("a connect/TLS failure before any response keeps its cause in the SOURCE_UNREACHABLE detail", async () => {

@@ -973,13 +973,3 @@
   terms_url: https://www.neso.energy/terms-and-conditions
   reviewed_at: 2026-10-31
   language: en
-
-# TEMPORARY probe row (2026-11-01, fetch-failed cause logging): insidehpc's feed on the runner, removed before merge.
-
-- id: probe-insidehpc
-  name: Probe insideHPC
-  type: rss
-  url: https://insidehpc.com/feed/
-  tier: 3
-  enabled: true
-  text_rights: rewrite_only
