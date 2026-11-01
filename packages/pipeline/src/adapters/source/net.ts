@@ -222,8 +222,7 @@ async function readBody(response: Response, maxBytes: number, timeoutMs: number)
     // report it as SOURCE_UNREACHABLE so the per-source retry applies to it as well.
     if (error instanceof SourceFetchError) throw error;
     await reader.cancel().catch(() => undefined);
-    const detail = error instanceof Error ? error.message : String(error);
-    throw new SourceFetchError("SOURCE_UNREACHABLE", isTimeout(error) ? `timeout while reading body after ${timeoutMs} ms` : `body stream failed: ${detail}`);
+    throw new SourceFetchError("SOURCE_UNREACHABLE", isTimeout(error) ? `timeout while reading body after ${timeoutMs} ms` : `body stream failed: ${describeFetchError(error)}`);
   }
   const merged = new Uint8Array(bytes);
   let offset = 0;
@@ -237,6 +236,45 @@ async function readBody(response: Response, maxBytes: number, timeoutMs: number)
 
 function isTimeout(error: unknown): boolean {
   return error instanceof Error && (error.name === "TimeoutError" || error.name === "AbortError");
+}
+
+const FETCH_ERROR_DETAIL_MAX = 300;
+const FETCH_CAUSE_DEPTH = 3;
+
+/** `CODE: message` (or whichever of the two exists) of one link in a cause chain; the first entry stands in for an AggregateError. */
+function causeLabel(cause: unknown): string | null {
+  if (cause === null || typeof cause !== "object") return typeof cause === "string" && cause.trim().length > 0 ? cause.trim() : null;
+  const record = cause as { code?: unknown; message?: unknown; errors?: unknown };
+  const code = typeof record.code === "string" && record.code.length > 0 ? record.code : null;
+  let message = typeof record.message === "string" && record.message.trim().length > 0 ? record.message.trim() : null;
+  if (Array.isArray(record.errors) && record.errors.length > 0) {
+    const first = causeLabel(record.errors[0]);
+    const more = record.errors.length > 1 ? ` +${record.errors.length - 1}` : "";
+    if (first) message = message ? `${message} [${first}${more}]` : `${first}${more}`;
+  }
+  if (code && message) return message.includes(code) ? message : `${code}: ${message}`;
+  return code ?? message;
+}
+
+/**
+ * Error text for a request that failed before a response arrived. undici reports
+ * every connect, DNS and TLS failure as `TypeError: fetch failed` and keeps the
+ * reason on `error.cause` (`UNABLE_TO_VERIFY_LEAF_SIGNATURE`, `ECONNRESET`,
+ * an AggregateError of per-address `ECONNREFUSED`, ...), so the cause chain is
+ * appended — a bare "fetch failed" cannot be diagnosed from the run log. One
+ * line, bounded, no request headers (only messages and codes are read).
+ */
+export function describeFetchError(error: unknown): string {
+  const base = error instanceof Error ? error.message : String(error);
+  const parts: string[] = [];
+  let cause: unknown = error instanceof Error ? (error as { cause?: unknown }).cause : undefined;
+  for (let depth = 0; depth < FETCH_CAUSE_DEPTH && cause !== undefined && cause !== null; depth += 1) {
+    const label = causeLabel(cause);
+    if (label && label !== base && !parts.includes(label)) parts.push(label);
+    cause = typeof cause === "object" ? (cause as { cause?: unknown }).cause : undefined;
+  }
+  const text = (parts.length > 0 ? `${base} (cause: ${parts.join(" <- ")})` : base).replace(/\s+/g, " ").trim();
+  return text.length > FETCH_ERROR_DETAIL_MAX ? `${text.slice(0, FETCH_ERROR_DETAIL_MAX - 1)}…` : text;
 }
 
 /**
@@ -278,8 +316,7 @@ export async function safeFetchText(url: string, options: SafeFetchOptions): Pro
       });
     } catch (error) {
       if (error instanceof SourceFetchError) throw error;
-      const detail = error instanceof Error ? error.message : String(error);
-      throw new SourceFetchError("SOURCE_UNREACHABLE", isTimeout(error) ? `timeout after ${options.timeoutMs} ms` : detail);
+      throw new SourceFetchError("SOURCE_UNREACHABLE", isTimeout(error) ? `timeout after ${options.timeoutMs} ms` : describeFetchError(error));
     }
     if ([301, 302, 303, 307, 308].includes(response.status)) {
       const location = response.headers.get("location");
