@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { FEED_CONTENT_TYPES, SourceFetchError, isPublicAddress, safeFetchText } from "../src/adapters/source/net.ts";
+import { FEED_CONTENT_TYPES, SourceFetchError, describeFetchError, isPublicAddress, safeFetchText } from "../src/adapters/source/net.ts";
 import type { SafeFetchOptions } from "../src/adapters/source/net.ts";
 
 type Handler = (url: string, init: RequestInit | undefined) => Response | Promise<Response>;
@@ -113,4 +113,41 @@ test("DNS resolution is bounded by the request timeout", async () => {
   );
   assert.ok(Date.now() - started < 1000, "the stalled resolver did not hold the request");
   await assert.rejects(safeFetchText("https://feeds.test/x", options(() => ok("<rss/>"), { resolveHost: async () => { throw new Error("servfail"); } })), /dns_resolution_empty/);
+});
+
+const coded = (code: string, message: string): Error => Object.assign(new Error(message), { code });
+
+test("describeFetchError appends the undici cause chain to a bare 'fetch failed'", () => {
+  assert.equal(describeFetchError(new TypeError("fetch failed")), "fetch failed", "no cause: unchanged");
+  assert.equal(
+    describeFetchError(new TypeError("fetch failed", { cause: coded("UNABLE_TO_VERIFY_LEAF_SIGNATURE", "unable to verify the first certificate") })),
+    "fetch failed (cause: UNABLE_TO_VERIFY_LEAF_SIGNATURE: unable to verify the first certificate)",
+  );
+  // A message that already names the code is not prefixed twice.
+  assert.equal(describeFetchError(new TypeError("fetch failed", { cause: coded("ECONNRESET", "read ECONNRESET") })), "fetch failed (cause: read ECONNRESET)");
+  // Happy-eyeballs failures: an AggregateError of per-address errors stands in by its first entry and a count.
+  const aggregate = Object.assign(new AggregateError([coded("ECONNREFUSED", "connect ECONNREFUSED 93.184.216.34:443"), coded("ENETUNREACH", "connect ENETUNREACH 2606:2800::1:443")], ""), { code: "ECONNREFUSED" });
+  assert.equal(describeFetchError(new TypeError("fetch failed", { cause: aggregate })), "fetch failed (cause: connect ECONNREFUSED 93.184.216.34:443 +1)");
+  // Nested causes are walked (bounded depth) and joined; a code-only cause still shows.
+  const nested = Object.assign(new Error("Client network socket disconnected before secure TLS connection was established"), { code: "ECONNRESET", cause: { code: "ERR_SSL_WRONG_VERSION_NUMBER" } });
+  assert.equal(
+    describeFetchError(new TypeError("fetch failed", { cause: nested })),
+    "fetch failed (cause: ECONNRESET: Client network socket disconnected before secure TLS connection was established <- ERR_SSL_WRONG_VERSION_NUMBER)",
+  );
+});
+
+test("describeFetchError stays one bounded line and accepts non-Error values", () => {
+  const long = describeFetchError(new TypeError("fetch failed", { cause: coded("EPROTO", `ssl handshake failure\n${"x".repeat(500)}`) }));
+  assert.ok(long.length <= 300, `bounded (${long.length})`);
+  assert.ok(!long.includes("\n"), "single line");
+  assert.ok(long.endsWith("…"));
+  assert.equal(describeFetchError("socket hang up"), "socket hang up");
+});
+
+test("a connect/TLS failure before any response keeps its cause in the SOURCE_UNREACHABLE detail", async () => {
+  const failing = () => { throw new TypeError("fetch failed", { cause: coded("CERT_HAS_EXPIRED", "certificate has expired") }); };
+  await assert.rejects(
+    safeFetchText("https://feeds.test/x", options(failing)),
+    (e: unknown) => e instanceof SourceFetchError && e.code === "SOURCE_UNREACHABLE" && e.message === "SOURCE_UNREACHABLE: fetch failed (cause: CERT_HAS_EXPIRED: certificate has expired)",
+  );
 });
