@@ -126,6 +126,15 @@ kept 0이지만 정상 동작: `google-cloud-tpu-releases`(30건 전부 10일 �
 
 결과: 활성 80 → 76, `reviewed_at` 2026-10-31. 최종 설정 확인 run 41200596432(`7666939d`): **sources 76/76 ok · 실패 0 · 상태 `done`**(fetched 200 → scored 195 → gate 14). 다시 켜려면 `enabled: true` + `reviewed_at`을 올린다(자동 비활성이 기록된 DB에서도 그날 이후 날짜면 복귀). 범위 밖 관찰: tier 1 `nrc-news`는 간헐 403(2026-10-31 02:45Z·12:16Z 실패, 그 사이 런은 성공) — 이번 정리에서 손대지 않는다. `fetch failed`의 하위 원인(`error.cause.code`)은 현재 로그에 남지 않는다(진단 개선은 코드 변경이라 별도 제안).
 
+### 4.3 `fetch failed` 원인 로깅 (2026-11-01, Josh "fetch failed 원인 로깅 개선 PR 진행해")
+
+undici는 연결·DNS·TLS 실패를 모두 `TypeError: fetch failed`로 던지고 원인은 `error.cause`에만 둔다. 그래서 원장·로그에는 `SOURCE_UNREACHABLE: fetch failed`만 남았다(insidehpc 2026-10-18 이후 매 런, etnews 2026-10-31 1회). `net.ts` `describeFetchError`가 cause 사슬(`CODE: message`, AggregateError는 첫 항목 + 개수, 깊이 3)을 한 줄 300자 이내로 덧붙인다. 코드(`SOURCE_UNREACHABLE`)·재시도·timeout 문구는 그대로다. 임시 probe 행으로 러너에서 확인한 결과(rebuild-ci run 41319045089, 메모리 전용):
+
+| source | 기록된 detail | 해석 |
+|---|---|---|
+| insidehpc(probe) | `fetch failed (cause: ERR_SSL_SSL/TLS_ALERT_HANDSHAKE_FAILURE: … ssl/tls alert handshake failure … SSL alert number 40)` | 서버가 러너의 TLS ClientHello를 handshake_failure(alert 40)로 거절. 인증서 체인 문제가 아니라 서버 측 거부(암호군·클라이언트 지문 차단 추정) → §4.2 비활성 유지가 맞음 |
+| datacenterpost | `fetch failed (cause: UND_ERR_CONNECT_TIMEOUT: Connect Timeout Error (attempted address: datacenterpost.com:443, timeout: 10000ms))` | 일시적 연결 타임아웃(재시도 1회 후). 같은 날 schedule 런에서는 정상 → 관찰만 |
+
 ## 5. 열린 질문 (Josh)
 
 1. 재서술 금지 매체 목록(→ `text_rights: link_only`). 수령 전까지 53개 상업 매체는 `rewrite_only`.
