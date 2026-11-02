@@ -6,7 +6,7 @@ import { parseSourcesConfig } from "@cc/shared";
 import { convertLegacyRegistry, readLegacyRegistry } from "../tools/migrate-legacy-registry.ts";
 import { REPO_ROOT } from "./helpers.ts";
 
-const LEGACY = resolve(REPO_ROOT, "config/sourceRegistry.yml");
+const LEGACY = resolve(REPO_ROOT, "fixtures/legacy/sourceRegistry.yml");
 
 function tally<T>(items: T[], key: (item: T) => string): Record<string, number> {
   const counts: Record<string, number> = {};

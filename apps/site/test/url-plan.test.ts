@@ -11,7 +11,7 @@ const ROOT = resolve(import.meta.dirname, "../../..");
 async function plan() {
   const urls = parsePreserveList(await readFile(resolve(ROOT, "docs/diagnosis/05-preserve-list.csv"), "utf8"));
   const redirects = await loadRedirectsConfig(resolve(ROOT, "config/redirects.yaml"));
-  const publishedSlugs = await legacyPublishedSlugs(resolve(ROOT, "src/data"));
+  const publishedSlugs = await legacyPublishedSlugs(resolve(ROOT, "fixtures/legacy"));
   return { urls, ctx: { redirects, publishedSlugs } };
 }
 

@@ -200,8 +200,8 @@ test("legacy column mapper reads the editorial body and the stance thesis", () =
   assert.equal(result.withoutBody, 1);
 });
 
-test("legacy_json repo maps the committed reader pages from the real src/data files with editorial bodies", async () => {
-  const repo = createLegacyJsonRepo(resolve(REPO_ROOT, "src/data"));
+test("legacy_json repo maps the committed reader pages from the frozen legacy JSON (fixtures/legacy) with editorial bodies", async () => {
+  const repo = createLegacyJsonRepo(resolve(REPO_ROOT, "fixtures/legacy"));
   const rows = await repo.list({ limit: 500 });
   const news = rows.filter((r) => r.slug.startsWith("news/"));
   const columns = rows.filter((r) => r.slug.startsWith("column/"));

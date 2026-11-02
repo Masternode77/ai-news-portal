@@ -29,7 +29,7 @@ test("plan: a public record is ready, a quarantined one is not_public with its s
 });
 
 test("dry-run over the committed legacy JSON and the real preserve list: every preserved URL is accounted for, the 5 EIA news pages are ready, every ready row is a valid publications row", async () => {
-  const plan = await loadAndPlan({ news: resolve(REPO_ROOT, "src/data/latest-news.json"), columns: resolve(REPO_ROOT, "src/data/authored-columns.json"), preserve: resolve(REPO_ROOT, "docs/diagnosis/05-preserve-list.csv") });
+  const plan = await loadAndPlan({ news: resolve(REPO_ROOT, "fixtures/legacy/latest-news.json"), columns: resolve(REPO_ROOT, "fixtures/legacy/authored-columns.json"), preserve: resolve(REPO_ROOT, "docs/diagnosis/05-preserve-list.csv") });
   assert.equal(plan.counts.preserved, 25, "5 news + 20 columns in the preserve list");
   assert.equal(plan.counts.expected_404, 2);
   assert.equal(plan.counts.missing, 0, JSON.stringify(plan.entries.filter((e) => e.status === "missing")));
@@ -47,8 +47,8 @@ test("apply (Phase 5 M5): the 12 ready rows and every redirect rule are upserted
   const { loadRedirectsConfig } = await import("@cc/shared");
   const { applyLegacyMigration } = await import("../tools/migrate-legacy-publications.ts");
   const plan = await loadAndPlan({
-    news: resolve(REPO_ROOT, "src/data/latest-news.json"),
-    columns: resolve(REPO_ROOT, "src/data/authored-columns.json"),
+    news: resolve(REPO_ROOT, "fixtures/legacy/latest-news.json"),
+    columns: resolve(REPO_ROOT, "fixtures/legacy/authored-columns.json"),
     preserve: resolve(REPO_ROOT, "docs/diagnosis/05-preserve-list.csv"),
   });
   const redirects = await loadRedirectsConfig(resolve(REPO_ROOT, "config/redirects.yaml"));

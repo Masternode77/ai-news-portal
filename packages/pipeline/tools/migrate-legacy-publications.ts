@@ -1,7 +1,7 @@
 /**
  * migrate-legacy-publications — Phase 3h dry-run planner for the Phase 5 (M5)
- * legacy migration (ADR-006). It reads the committed legacy JSON
- * (src/data/latest-news.json, src/data/authored-columns.json), maps the public
+ * legacy migration (ADR-006). It reads the legacy JSON, frozen in fixtures/legacy
+ * since M8 (latest-news.json, authored-columns.json), maps the public
  * reader pages onto `publications` rows with the same mapper the site uses for
  * SITE_DATA_SOURCE=legacy_json (`@cc/shared` mapLegacyCollections), and checks
  * the preserve list (docs/diagnosis/05-preserve-list.csv) against them:
@@ -21,7 +21,7 @@
  * applied.
  *
  *   node packages/pipeline/tools/migrate-legacy-publications.ts --dry-run [--json <out.json>]
- *     [--news src/data/latest-news.json] [--columns src/data/authored-columns.json]
+ *     [--news fixtures/legacy/latest-news.json] [--columns fixtures/legacy/authored-columns.json]
  *     [--preserve docs/diagnosis/05-preserve-list.csv]
  *   node packages/pipeline/tools/migrate-legacy-publications.ts --apply --target staging|production
  *     [--redirects config/redirects.yaml]
@@ -213,8 +213,8 @@ if (isMainModule()) {
     options: {
       "dry-run": { type: "boolean", default: false },
       apply: { type: "boolean", default: false },
-      news: { type: "string", default: "src/data/latest-news.json" },
-      columns: { type: "string", default: "src/data/authored-columns.json" },
+      news: { type: "string", default: "fixtures/legacy/latest-news.json" },
+      columns: { type: "string", default: "fixtures/legacy/authored-columns.json" },
       preserve: { type: "string", default: "docs/diagnosis/05-preserve-list.csv" },
       redirects: { type: "string", default: "config/redirects.yaml" },
       target: { type: "string" },
