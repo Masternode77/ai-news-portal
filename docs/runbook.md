@@ -49,7 +49,7 @@
 ## 6. 장애 시 롤백
 
 1. 사이트 이상(5xx, URL 검증 실패): Vercel `ai-news-portal` → Deployments에서 직전 정상 Production 배포를 **Instant Rollback**한다(1분 이내).
-2. 컷오버 자체를 되돌릴 때: 1을 한 뒤 Root Directory를 비우고 Production env(`SITE_DATA_SOURCE`·`SUPABASE_URL`·`SUPABASE_ANON_KEY`·`SITE_INDEXABLE`)를 제거한다.
+2. 컷오버 자체를 되돌릴 때: 1을 한 뒤 Root Directory를 비우고 Production env(`SITE_DATA_SOURCE`·`SUPABASE_URL`·`SUPABASE_ANON_KEY`·`SITE_INDEXABLE`)를 제거한다. M8(레거시 제거) 머지 뒤에는 `main`에 레거시 빌드가 없으므로 먼저 M8 머지 커밋을 `git revert`하는 PR을 머지하거나 6(`legacy-final`)으로 간다. 1(Instant Rollback)은 M8과 무관하게 동작한다.
 3. 파이프라인이 잘못 발행할 때: `.github/workflows/pipeline.yml`의 `schedule`을 주석 처리하는 PR을 머지한다(드릴 실측 1분 40초). 이미 나간 글은 `publications.status`를 비공개로 바꾼다(데이터 변경 승인).
 4. 비용 폭주: `config/pipeline.yaml` `budget.run_usd`를 낮추거나 `CC_FLAG_STAGES_GENERATE=false`로 dispatch한다. 생성만 멈추고 QA 통과분은 발행된다.
 5. 확인: `rebuild-ci.yml` dispatch `verify_base_url=https://www.computecurrent.com`(136 URL), `/healthz`, `pipeline ops`.
