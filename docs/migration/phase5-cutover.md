@@ -69,7 +69,7 @@
 | 상황 | 조치 | 목표 시간 |
 |---|---|---|
 | 컷오버 직후 사이트 이상(5xx, URL 검증 실패) | Vercel `ai-news-portal` → Deployments → 직전 레거시 Production 배포 **Instant Rollback** | ≤ 1분 |
-| 롤백 뒤 정리 | Root Directory 비우기(레거시 빌드 복귀), Production env 4개 제거 | ≤ 5분 |
+| 롤백 뒤 정리 | Root Directory 비우기(레거시 빌드 복귀), Production env 4개 제거. M8 머지 뒤에는 `main`에 레거시가 없으므로 M8 머지 커밋 revert PR 또는 `legacy-final` 재배포가 먼저다 | ≤ 5분(M8 전) |
 | 파이프라인 이상 발행 | `pipeline.yml` schedule 주석 PR(드릴 실측 1분 40초) 또는 `publications.status` 비공개(승인) | ≤ 5분 |
 | 데이터 손상 | 프로덕션 DB는 이관 12행 + 신규 발행분뿐 → `--apply` 재실행(멱등 upsert) | — |
 | 최후 수단 | `legacy-final` 태그 체크아웃 → 재배포 | ≤ 15분 |

@@ -1,6 +1,7 @@
 /**
  * Maps the legacy git-committed JSON records (src/data/latest-news.json,
- * src/data/authored-columns.json) onto PublicationRow so the new site can
+ * src/data/authored-columns.json; frozen in fixtures/legacy since M8) onto
+ * PublicationRow so the new site can
  * serve them during the strangler period (ADR-006 SITE_DATA_SOURCE=legacy_json)
  * and so the Phase 5 migration tool (packages/pipeline/tools/migrate-legacy-publications.ts,
  * Phase 3h) reuses the same mapper. Moved here from apps/site/src/lib/legacy-json.ts in 3h;

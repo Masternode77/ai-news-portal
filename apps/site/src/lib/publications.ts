@@ -233,7 +233,7 @@ export function createLegacyJsonRepo(dataDir: string, fs: { readFile: typeof rea
 
 export interface RepoDeps {
   supabaseFactory?: SupabaseFactory;
-  /** Repository root used to locate legacy src/data when LEGACY_DATA_DIR is unset. */
+  /** Repository root used to locate the frozen legacy JSON (fixtures/legacy) when LEGACY_DATA_DIR is unset. */
   repoRoot?: string;
 }
 
@@ -247,6 +247,6 @@ export function createPublicationsRepo(env: SiteEnv, deps: RepoDeps = {}): Publi
     if (!deps.supabaseFactory) return misconfiguredRepo("supabase", "supabase client factory not provided");
     return createSupabaseRepo(deps.supabaseFactory(url, key));
   }
-  const dataDir = env.LEGACY_DATA_DIR ?? resolve(deps.repoRoot ?? resolve(process.cwd(), "../.."), "src/data");
+  const dataDir = env.LEGACY_DATA_DIR ?? resolve(deps.repoRoot ?? resolve(process.cwd(), "../.."), "fixtures/legacy");
   return createLegacyJsonRepo(dataDir);
 }

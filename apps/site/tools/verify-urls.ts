@@ -63,7 +63,7 @@ async function check(base: string, item: PreservedUrl, expected: Expected, fetch
 export async function verify(options: { base: string; content: "legacy" | "none"; fetchImpl?: typeof fetch; concurrency?: number }): Promise<CheckResult[]> {
   const urls = parsePreserveList(await readFile(resolve(ROOT, "docs/diagnosis/05-preserve-list.csv"), "utf8"));
   const redirects = await loadRedirectsConfig(resolve(ROOT, "config/redirects.yaml"));
-  const publishedSlugs = options.content === "legacy" ? await legacyPublishedSlugs(resolve(ROOT, "src/data")) : new Set<string>();
+  const publishedSlugs = options.content === "legacy" ? await legacyPublishedSlugs(resolve(ROOT, "fixtures/legacy")) : new Set<string>();
   const fetchImpl = options.fetchImpl ?? fetch;
   const results: CheckResult[] = new Array(urls.length);
   let next = 0;
