@@ -1,6 +1,8 @@
 ---
+import MetaLine from "./MetaLine.astro";
 import { bodySections, formatDate } from "../lib/render";
-import { contentLabel } from "../lib/listing";
+import { termPath } from "../lib/taxonomy";
+import { LEAD_SECTION_KEYS, LENS_SECTION_KEYS, LONGFORM_SECTION_KEYS, byline, isSubheading, contentLang, displayImage, isEssay, primaryCategory, sectionHeading, textLang } from "../lib/view";
 import type { PublicationRow } from "../lib/render";
 
 interface Props {
@@ -8,41 +10,91 @@ interface Props {
 }
 
 const { publication } = Astro.props;
-const sections = bodySections(publication.body);
+const lang = contentLang(publication);
+const sections = bodySections(publication.body).map((section) => {
+  const sectionLang = textLang(section.paragraphs.join(" "));
+  return { ...section, lang: sectionLang, heading: sectionHeading(section.key, section.heading, sectionLang) };
+});
+const deck = sections.find((section) => section.key === "deck");
+const lead = sections.find((section) => LEAD_SECTION_KEYS.includes(section.key));
+const rest = sections.filter((section) => section !== deck && section !== lead);
+const image = displayImage(publication);
+const author = byline(publication);
+const term = primaryCategory(publication);
+const crumb = isEssay(publication) ? { href: "/column/", label: "The Current" } : term ? { href: termPath(term), label: term.label } : { href: "/archive/", label: "Archive" };
+const essay = isEssay(publication);
 ---
 
-<article>
-  <h1>{publication.title}</h1>
-  <p class="muted">
-    <time datetime={publication.published_at}>{formatDate(publication.published_at)}</time> · {contentLabel(publication)}
-    {publication.category && <span> · {publication.category}</span>}
-  </p>
-  {publication.image && <img src={publication.image.path} alt={publication.image.alt} loading="lazy" />}
+<article class="article" data-cat={term?.slug}>
+  <div class="article-head">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><a href={crumb.href}>{crumb.label}</a></nav>
+    <h1 lang={lang}>{publication.title}</h1>
+    {deck && deck.paragraphs.map((paragraph) => <p class="deck" lang={deck.lang} data-section="deck">{paragraph}</p>)}
+    <MetaLine row={publication} dateStyle="long" />
+    <div class="byline" style="margin-top:16px">
+      <span class="avatar" aria-hidden="true">{author.initials}</span>
+      <div>
+        <strong>{author.href ? <a href={author.href}>{author.name}</a> : author.name}</strong><br /><span>{author.role}</span>
+      </div>
+    </div>
+  </div>
   {
-    sections.map((section) => (
-      <section data-section={section.key}>
-        {section.heading && <h2>{section.heading}</h2>}
-        {section.paragraphs.map((paragraph) => (
-          <p>{paragraph}</p>
-        ))}
-      </section>
-    ))
-  }
-  {
-    publication.sources.length > 0 && (
-      <section data-section="sources">
-        <h2>출처</h2>
-        <ul>
-          {publication.sources.map((source: PublicationRow["sources"][number]) => (
-            <li>
-              <a href={source.url} rel="noopener nofollow" target="_blank">
-                {source.name}
-              </a>
-              {source.published_at && <span class="muted"> · {formatDate(source.published_at)}</span>}
-            </li>
-          ))}
-        </ul>
-      </section>
+    image && (
+      <figure class="article-hero">
+        <img src={image.path} alt={image.alt} width="1200" height="675" fetchpriority="high" />
+      </figure>
     )
   }
+  <div class="prose">
+    {
+      lead && (
+        <section class="summary-box" data-section={lead.key} lang={lead.lang}>
+          {lead.heading && <h2 class="kicker">{lead.heading}</h2>}
+          {lead.paragraphs.map((paragraph) => (
+            <p>{paragraph}</p>
+          ))}
+        </section>
+      )
+    }
+    {
+      rest.map((section) => (
+        <section data-section={section.key} class={LENS_SECTION_KEYS.includes(section.key) ? "lens" : undefined} lang={section.lang}>
+          {section.heading && <h2>{section.heading}</h2>}
+          {section.paragraphs.map((paragraph, index) =>
+            LONGFORM_SECTION_KEYS.includes(section.key) && isSubheading(paragraph, section.paragraphs[index + 1]) ? <h3>{paragraph}</h3> : <p>{paragraph}</p>,
+          )}
+        </section>
+      ))
+    }
+    {
+      publication.sources.length > 0 && (
+        <section data-section="sources">
+          <h2>Sources</h2>
+          <ul class="sources">
+            {publication.sources.map((source: PublicationRow["sources"][number]) => (
+              <li>
+                <a href={source.url} rel="noopener nofollow" target="_blank">
+                  {source.name}
+                  {source.published_at && <span>{formatDate(source.published_at)}</span>}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )
+    }
+    <p class="disclosure">
+      {
+        essay ? (
+          <>
+            The Current is written by Josh Jiwoon Inn with AI assistance in drafting. It does not claim interviews or first-hand reporting, and every number is
+            attributed to a named source.
+          </>
+        ) : (
+          <>This brief was drafted with AI assistance from public sources; every number is attributed to the sources above.</>
+        )
+      }{" "}
+      See the <a href="/ai-disclosure/">AI-assisted Disclosure</a> and <a href="/methodology/">Methodology</a>.
+    </p>
+  </div>
 </article>

@@ -1,0 +1,27 @@
+---
+interface Props {
+  current?: string | undefined;
+}
+
+const { current } = Astro.props;
+// Every link is a live route (no redirects): docs/migration/phase5-cutover.md §3.
+const links: { href: string; label: string }[] = [
+  { href: "/archive/", label: "Latest" },
+  { href: "/column/", label: "The Current" },
+  { href: "/category/power-grid/", label: "Power & Grid" },
+  { href: "/category/data-centers/", label: "Data Centers" },
+  { href: "/category/semiconductors/", label: "Semiconductors" },
+  { href: "/category/capital-markets/", label: "Capital Markets" },
+  { href: "/region/korea/", label: "Korea" },
+  { href: "/about/", label: "About" },
+];
+---
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="/"><span class="brand-mark" aria-hidden="true"></span>Compute Current</a>
+    <nav class="site-nav" aria-label="Site">
+      {links.map((link) => <a href={link.href} aria-current={link.href === current ? "page" : undefined}>{link.label}</a>)}
+    </nav>
+  </div>
+</header>

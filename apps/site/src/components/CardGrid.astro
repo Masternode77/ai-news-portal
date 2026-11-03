@@ -1,0 +1,14 @@
+---
+import Card from "./Card.astro";
+import type { PublicationRow } from "../lib/render";
+
+interface Props {
+  rows: PublicationRow[];
+}
+
+const { rows } = Astro.props;
+---
+
+<div class="cards">
+  {rows.map((row) => <Card row={row} />)}
+</div>

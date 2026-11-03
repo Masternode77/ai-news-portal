@@ -1,0 +1,31 @@
+---
+import MetaLine from "./MetaLine.astro";
+import { publicationPath } from "../lib/listing";
+import { contentLang, displayImage, excerpt, primaryCategory } from "../lib/view";
+import type { PublicationRow } from "../lib/render";
+
+interface Props {
+  row: PublicationRow;
+}
+
+const { row } = Astro.props;
+const image = displayImage(row);
+const term = primaryCategory(row);
+// Without real artwork the card becomes a text card: category bar + summary, never the placeholder.
+const summary = image ? "" : excerpt(row, 200);
+---
+
+<a class={image ? "card" : "card text"} href={publicationPath(row)} data-cat={term?.slug}>
+  {
+    image && (
+      <div class="card-media">
+        <img src={image.path} alt={image.alt} width="640" height="360" loading="lazy" decoding="async" />
+      </div>
+    )
+  }
+  <div class="card-body">
+    <MetaLine row={row} />
+    <h3 lang={contentLang(row)}>{row.title}</h3>
+    {summary && <p lang={contentLang(row)}>{summary}</p>}
+  </div>
+</a>
