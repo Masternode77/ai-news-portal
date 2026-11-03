@@ -19,8 +19,14 @@ if (route.kind === "not_found") {
 const { items, page, pages } = paginate(loaded, route.page);
 ---
 
-<Base title={`아카이브 ${page}페이지 | Compute Current`} description="Compute Current 전체 발행 목록" canonicalPath={archivePath(page)}>
-  <h1>아카이브 · {page}페이지</h1>
-  <PublicationList rows={items} />
-  <Pager page={page} pages={pages} />
+<Base title={`Archive, page ${page} | Compute Current`} description="Everything Compute Current has published, newest first." canonicalPath={archivePath(page)} current="/archive/">
+  <header class="page-head">
+    <div class="kicker">Archive</div>
+    <h1>Latest · page {page}</h1>
+    <p>Briefs, analysis and columns, newest first.</p>
+  </header>
+  <div class="section">
+    <PublicationList rows={items} />
+    <Pager page={page} pages={pages} />
+  </div>
 </Base>

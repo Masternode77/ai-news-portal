@@ -8,23 +8,27 @@ if (!page) {
 }
 ---
 
-<Base title={`${page.eyebrow} | Compute Current`} description={page.description} canonicalPath={`/${page.slug}/`}>
-  <article lang="en">
-    <p class="muted">{page.eyebrow}</p>
-    <h1>{page.title}</h1>
-    <p>{page.lede}</p>
-    {
-      page.sections.map((section) => (
-        <section>
-          <h2>{section.heading}</h2>
-          {section.paragraphs.map((paragraph) => (
-            <p set:html={paragraph} />
-          ))}
-        </section>
-      ))
-    }
-    <nav aria-label="Related pages">
-      {page.related.map((slug) => <a href={`/${slug}/`}>{policyTitle(slug)}</a>)}
-    </nav>
+<Base title={`${page.eyebrow} | Compute Current`} description={page.description} canonicalPath={`/${page.slug}/`} current={`/${page.slug}/`}>
+  <article lang="en" class="article">
+    <header class="article-head">
+      <div class="kicker">{page.eyebrow}</div>
+      <h1>{page.title}</h1>
+      <p class="deck">{page.lede}</p>
+    </header>
+    <div class="prose">
+      {
+        page.sections.map((section) => (
+          <section>
+            <h2>{section.heading}</h2>
+            {section.paragraphs.map((paragraph) => (
+              <p set:html={paragraph} />
+            ))}
+          </section>
+        ))
+      }
+      <nav class="related-nav" aria-label="Related pages">
+        {page.related.map((slug) => <a href={`/${slug}/`}>{policyTitle(slug)}</a>)}
+      </nav>
+    </div>
   </article>
 </Base>

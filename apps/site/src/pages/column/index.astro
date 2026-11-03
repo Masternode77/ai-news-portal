@@ -1,5 +1,6 @@
 ---
 import Base from "../../layouts/Base.astro";
+import CardGrid from "../../components/CardGrid.astro";
 import PublicationList from "../../components/PublicationList.astro";
 import { allPublications } from "../../lib/repo";
 import { isColumn } from "../../lib/listing";
@@ -11,8 +12,19 @@ if (loaded instanceof Response) {
 const rows = loaded.filter(isColumn);
 ---
 
-<Base title="The Current | Compute Current" description="Josh Jiwoon Inn의 AI 인프라 칼럼 The Current" canonicalPath="/column/" noindex={rows.length === 0}>
-  <h1>The Current</h1>
-  <p class="muted">Compute Current 창립자·편집인 <a href="/author/josh-inn/">Josh Jiwoon Inn</a>의 칼럼.</p>
-  <PublicationList rows={rows} />
+<Base
+  title="The Current | Compute Current"
+  description="The Current: Josh Jiwoon Inn's column on the constraints behind AI infrastructure."
+  canonicalPath="/column/"
+  noindex={rows.length === 0}
+  current="/column/"
+>
+  <header class="page-head">
+    <div class="kicker">Column</div>
+    <h1>The Current</h1>
+    <p>Columns by <a href="/author/josh-inn/" style="color:var(--accent)">Josh Jiwoon Inn</a>, Compute Current's founder and editor: where the real constraints in AI infrastructure sit, who pays for them, and what to watch next.</p>
+  </header>
+  <div class="section">
+    {rows.length === 0 ? <PublicationList rows={rows} empty="No columns have been published yet." /> : <CardGrid rows={rows} />}
+  </div>
 </Base>

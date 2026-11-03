@@ -12,8 +12,14 @@ if (loaded instanceof Response) {
 const { items, page, pages } = paginate(loaded, 1);
 ---
 
-<Base title="아카이브 | Compute Current" description="Compute Current 전체 발행 목록" canonicalPath="/archive/" noindex={loaded.length === 0}>
-  <h1>아카이브</h1>
-  <PublicationList rows={items} />
-  <Pager page={page} pages={pages} />
+<Base title="Archive | Compute Current" description="Everything Compute Current has published, newest first." canonicalPath="/archive/" noindex={loaded.length === 0} current="/archive/">
+  <header class="page-head">
+    <div class="kicker">Archive</div>
+    <h1>Latest</h1>
+    <p>Briefs, analysis and columns, newest first.</p>
+  </header>
+  <div class="section">
+    <PublicationList rows={items} />
+    <Pager page={page} pages={pages} />
+  </div>
 </Base>

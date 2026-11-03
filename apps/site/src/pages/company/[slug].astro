@@ -3,6 +3,7 @@ import Base from "../../layouts/Base.astro";
 import PublicationList from "../../components/PublicationList.astro";
 import { allPublications } from "../../lib/repo";
 import { filterByTerm, findTerm, termPath } from "../../lib/taxonomy";
+import { TERM_KIND_LABEL, termBlurb } from "../../lib/view";
 
 const term = findTerm("company", Astro.params.slug ?? "");
 if (!term) {
@@ -13,9 +14,16 @@ if (loaded instanceof Response) {
   return loaded;
 }
 const rows = filterByTerm(loaded, term);
+const path = termPath(term);
 ---
 
-<Base title={`${term.labelKo} | Compute Current`} description={`${term.label} — Compute Current 발행 목록`} canonicalPath={termPath(term)} noindex={rows.length === 0}>
-  <h1>{term.labelKo}{term.labelKo !== term.label && <span class="muted"> · {term.label}</span>}</h1>
-  <PublicationList rows={rows} />
+<Base title={`${term.label} | Compute Current`} description={termBlurb(term)} canonicalPath={path} noindex={rows.length === 0} current={path}>
+  <header class="page-head">
+    <div class="kicker">{TERM_KIND_LABEL[term.kind]}</div>
+    <h1>{term.label}</h1>
+    <p>{termBlurb(term)}</p>
+  </header>
+  <div class="section">
+    <PublicationList rows={rows} empty={`Nothing on ${term.label} has been published yet.`} />
+  </div>
 </Base>

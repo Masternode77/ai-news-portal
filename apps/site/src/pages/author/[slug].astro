@@ -16,23 +16,31 @@ const columns = loaded.filter(isColumn).slice(0, 8);
 ---
 
 <Base title={`${AUTHOR.name} | Compute Current`} description={AUTHOR.bio} canonicalPath={`/author/${AUTHOR.slug}/`}>
-  <p class="muted">{AUTHOR.column}</p>
-  <h1>{AUTHOR.name}</h1>
-  <p class="muted">{AUTHOR.role}</p>
-  <p>{AUTHOR.bio}</p>
-  <h2>How this column works</h2>
-  <p>{AUTHOR.disclosure}</p>
-  <p>
-    Essays are drafted with AI assistance from source-linked evidence, must pass the site’s quality gates before publication, and are corrected after the fact by
-    the author when a reader or a source shows an error. Full detail lives in the <a href="/ai-disclosure/">AI-assisted disclosure</a>, the <a
-      href="/editorial-policy/">editorial policy</a
-    >, and the <a href="/terms/">terms of use</a>.
-  </p>
-  <h2>Standing positions</h2>
-  <ul>
-    {AUTHOR.positions.map((position) => <li>{position}</li>)}
-  </ul>
-  <h2>Recent columns</h2>
-  <PublicationList rows={columns} />
-  <p><a href="/column/">All columns →</a></p>
+  <header class="page-head">
+    <div class="kicker">{AUTHOR.column}</div>
+    <h1>{AUTHOR.name}</h1>
+    <p>{AUTHOR.role}</p>
+  </header>
+  <div class="prose" style="margin-left:0">
+    <p>{AUTHOR.bio}</p>
+    <h2>How this column works</h2>
+    <p>{AUTHOR.disclosure}</p>
+    <p>
+      Essays are drafted with AI assistance from source-linked evidence, must pass the site’s quality gates before publication, and are corrected after the fact by
+      the author when a reader or a source shows an error. Full detail lives in the <a href="/ai-disclosure/">AI-assisted disclosure</a>, the <a
+        href="/editorial-policy/">editorial policy</a
+      >, and the <a href="/terms/">terms of use</a>.
+    </p>
+    <h2>Standing positions</h2>
+    <ul>
+      {AUTHOR.positions.map((position) => <li>{position}</li>)}
+    </ul>
+  </div>
+  <section class="section" aria-labelledby="recent-title">
+    <div class="section-head">
+      <h2 id="recent-title">Recent columns</h2>
+      <a href="/column/">All columns →</a>
+    </div>
+    <PublicationList rows={columns} />
+  </section>
 </Base>
