@@ -82,16 +82,14 @@ Agents working in this repository must preserve that product boundary. Treat eve
 
 ## Banned Generic Patterns
 
-Do not generate or preserve generic patterns in reader-facing article copy. The canonical phrase inventory lives in `config/bannedPhrases.yml`; update that config and the publishing guard together instead of copying blocked strings into prompts, fallback copy, or article data.
+Do not generate or preserve generic patterns in reader-facing article copy. The canonical phrase inventory lives in `config/banned-phrases.yaml`: the prompt renders it through `{{banned_phrases}}` and the QA rule `BANNED_PATTERN` enforces it. Change that file (and bump its `version`) instead of copying blocked strings into prompts, fallback copy, or article data.
 
 ## Content Generation Scope
 
-For content generation, curation, extraction, editorial prompts, article QA, and archive/search article shaping under `scripts/lib/`, also follow `scripts/lib/AGENTS.override.md`.
+Content generation, curation, extraction, prompts, article QA and publishing live in `packages/pipeline/` and are driven by data: `prompts/` (versioned prompt files), `config/sources.yaml`, `config/scoring.yaml`, `config/qa.yaml` (one rule = one file under `packages/pipeline/src/qa/rules/`), `config/banned-phrases.yaml` and `config/pipeline.yaml`. For that work also follow `CLAUDE.md` §6 and `docs/architecture/contracts.md`.
 
 If changing prompts, fallback editorial copy, quality gates, source extraction, article enrichment, category/tag logic, or publish readiness checks, treat these editorial standards as acceptance criteria. Do not weaken extraction QA, repetition checks, source-fidelity checks, or product-fit boundaries without an explicit user request.
 
 ## Article Image Workflow
 
-Use the active Codex session's native image-generation capability for newly requested article artwork. Register the visually reviewed output through `scripts/import-codex-image.mjs`; follow `docs/codex-image-workflow.md`. Do not request or configure an OpenAI API key or copy Codex/ChatGPT credentials to CI for this workflow. Scheduled publication consumes registered local artwork and uses the existing local fallback when none is available; do not describe that fallback as Codex-generated.
-
-Each newly authored column needs its own newly generated image. Do not reuse the source news image or a shared topic-library image as the completed column artwork. After creating a column, run the image queue for its ID, generate and visually review its native artwork, then import it with the queued fingerprint. Existing shared column images are replacement jobs; a valid unique image for the same column is preserved on retries. For Mac scheduled runs, follow `docs/mac-column-image-automation.md`.
+Article images come from the pipeline image stage: `config/pipeline.yaml` `image.provider`, then `image.fallback_chain`, which always ends in the brand placeholder. Until a hosted image store is approved (a new external service connection is an approval item), served runs record the deployed static placeholder. The `openai` provider is opt-in (`OPENAI_API_KEY` by name only, priced per image in `image.pricing`, checked against the run budget). Never describe a placeholder as generated artwork, and never commit generated image bytes. An `insight_essay` requires its own image and falls back to the placeholder when generation fails (`docs/architecture/contracts.md`).
