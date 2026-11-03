@@ -1,0 +1,37 @@
+---
+import MetaLine from "./MetaLine.astro";
+import { isColumn, publicationPath } from "../lib/listing";
+import { byline, contentLang, displayImage, excerpt, primaryCategory } from "../lib/view";
+import type { PublicationRow } from "../lib/render";
+
+interface Props {
+  row: PublicationRow;
+}
+
+const { row } = Astro.props;
+const href = publicationPath(row);
+const image = displayImage(row);
+const deck = excerpt(row, 260);
+const author = byline(row);
+const term = primaryCategory(row);
+---
+
+<section class={image ? "hero" : "hero no-media"} aria-labelledby="hero-title" data-cat={term?.slug}>
+  {
+    image && (
+      <div class="hero-media">
+        <img src={image.path} alt={image.alt} width="1200" height="675" fetchpriority="high" />
+      </div>
+    )
+  }
+  <div class="hero-body">
+    <MetaLine row={row} />
+    <h1 id="hero-title" lang={contentLang(row)}><a href={href}>{row.title}</a></h1>
+    {deck && <p class="deck" lang={contentLang(row)}>{deck}</p>}
+    <div class="byline">
+      <span class="avatar" aria-hidden="true">{author.initials}</span>
+      <div><strong>{author.name}</strong><br /><span>{author.role}</span></div>
+    </div>
+    <a class="btn" href={href}>{isColumn(row) ? "Read the column" : "Read the essay"} →</a>
+  </div>
+</section>

@@ -22,8 +22,8 @@ test("paginate slices by page", () => {
 });
 
 test("labels and indexable filter", () => {
-  assert.equal(contentLabel({ content_type: "news_brief", slug: "news/abc" }), "브리프");
+  assert.equal(contentLabel({ content_type: "news_brief", slug: "news/abc" }), "Brief");
   assert.equal(contentLabel({ content_type: "insight_essay", slug: "column/x-2026-10-01" }), "The Current");
-  assert.equal(contentLabel({ content_type: "legacy_analysis", slug: "news/eia-x" }), "분석");
+  assert.equal(contentLabel({ content_type: "legacy_analysis", slug: "news/eia-x" }), "Analysis");
   assert.deepEqual(indexableRows([{ noindex: false }, { noindex: true }]), [{ noindex: false }]);
 });

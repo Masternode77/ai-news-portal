@@ -1,0 +1,29 @@
+---
+import MetaLine from "./MetaLine.astro";
+import { publicationPath } from "../lib/listing";
+import { contentLang, excerpt } from "../lib/view";
+import type { PublicationRow } from "../lib/render";
+
+interface Props {
+  rows: PublicationRow[];
+}
+
+const { rows } = Astro.props;
+---
+
+<ul class="brief-list">
+  {
+    rows.map((row, index) => {
+      const summary = excerpt(row, 180);
+      return (
+        <li class={index === 0 ? "lead" : undefined}>
+          <a href={publicationPath(row)}>
+            <MetaLine row={row} />
+            <h3 lang={contentLang(row)}>{row.title}</h3>
+            {summary && <p lang={contentLang(row)}>{summary}</p>}
+          </a>
+        </li>
+      );
+    })
+  }
+</ul>

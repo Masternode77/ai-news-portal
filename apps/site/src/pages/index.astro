@@ -1,17 +1,98 @@
 ---
 import Base from "../layouts/Base.astro";
-import PublicationList from "../components/PublicationList.astro";
+import Hero from "../components/Hero.astro";
+import BriefList from "../components/BriefList.astro";
+import CardGrid from "../components/CardGrid.astro";
+import CategoryChips from "../components/CategoryChips.astro";
 import { allPublications } from "../lib/repo";
+import { publicationPath } from "../lib/listing";
+import { contentLang, homeSections } from "../lib/view";
 
 const loaded = await allPublications();
 if (loaded instanceof Response) {
   return loaded;
 }
-const rows = loaded.slice(0, 20);
+const { hero, briefs, recentColumns, columnCards, more } = homeSections(loaded);
 ---
 
-<Base title="Compute Current — AI 인프라 인텔리전스" canonicalPath="/">
-  <h1>최근 발행</h1>
-  <PublicationList rows={rows} empty="아직 발행된 글이 없습니다. 파이프라인이 첫 발행을 마치면 이곳에 표시됩니다." />
-  {loaded.length > rows.length && <p><a href="/archive/">전체 아카이브 →</a></p>}
+<Base title="Compute Current: AI infrastructure intelligence" canonicalPath="/">
+  {
+    loaded.length === 0 ? (
+      <>
+        <header class="page-head"><h1>Compute Current</h1></header>
+        <p class="empty" data-empty-state>
+          Nothing has been published yet. New briefs appear here as soon as the pipeline publishes them.
+        </p>
+      </>
+    ) : (
+      <>
+        {hero ? <Hero row={hero} /> : <h1 class="visually-hidden">Compute Current</h1>}
+
+        {(briefs.length > 0 || recentColumns.length > 0) && (
+          <div class="home-grid section">
+            {briefs.length > 0 && (
+              <section aria-labelledby="briefs-title">
+                <div class="section-head">
+                  <h2 id="briefs-title">Latest briefs</h2>
+                  <a href="/archive/">View all →</a>
+                </div>
+                <BriefList rows={briefs} />
+              </section>
+            )}
+            <aside>
+              {recentColumns.length > 0 && (
+                <section class="panel" aria-labelledby="recent-columns-title">
+                  <h2 id="recent-columns-title">The Current: recent columns</h2>
+                  <ol class="mini-list">
+                    {recentColumns.map((row) => (
+                      <li>
+                        <a href={publicationPath(row)} lang={contentLang(row)}>
+                          {row.title}
+                        </a>
+                      </li>
+                    ))}
+                  </ol>
+                </section>
+              )}
+              <section class="panel" aria-labelledby="topics-title">
+                <h2 id="topics-title">Browse by topic</h2>
+                <CategoryChips />
+              </section>
+            </aside>
+          </div>
+        )}
+
+        {columnCards.length > 0 && (
+          <section class="section" aria-labelledby="columns-title">
+            <div class="section-head">
+              <h2 id="columns-title">The Current</h2>
+              <a href="/column/">All columns →</a>
+            </div>
+            <CardGrid rows={columnCards} />
+          </section>
+        )}
+
+        {more.length > 0 && (
+          <section class="section" aria-labelledby="more-title">
+            <div class="section-head">
+              <h2 id="more-title">More to read</h2>
+              <a href="/archive/">Archive →</a>
+            </div>
+            <CardGrid rows={more} />
+          </section>
+        )}
+
+        <section class="cta">
+          <div>
+            <h2>Everything we have published</h2>
+            <p>Briefs, analysis and columns, newest first. Follow along by RSS.</p>
+          </div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <a class="btn" href="/archive/">Archive</a>
+            <a class="btn ghost" href="/rss.xml">RSS</a>
+          </div>
+        </section>
+      </>
+    )
+  }
 </Base>

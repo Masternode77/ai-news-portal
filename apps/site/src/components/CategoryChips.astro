@@ -1,0 +1,20 @@
+---
+import { taxonomyTerms, termPath } from "../lib/taxonomy";
+
+interface Props {
+  current?: string;
+}
+
+const { current } = Astro.props;
+const terms = taxonomyTerms("category");
+---
+
+<nav class="chips" aria-label="Topics">
+  {
+    terms.map((term) => (
+      <a class="chip" data-cat={term.slug} href={termPath(term)} aria-current={term.slug === current ? "page" : undefined}>
+        {term.label}
+      </a>
+    ))
+  }
+</nav>

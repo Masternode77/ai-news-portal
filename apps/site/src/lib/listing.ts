@@ -60,9 +60,9 @@ export function isColumn(row: Pick<PublicationRow, "slug">): boolean {
 }
 
 const CONTENT_LABEL: Record<PublicationRow["content_type"], string> = {
-  news_brief: "브리프",
-  insight_essay: "인사이트",
-  legacy_analysis: "분석",
+  news_brief: "Brief",
+  insight_essay: "Insight",
+  legacy_analysis: "Analysis",
 };
 
 export function contentLabel(row: Pick<PublicationRow, "content_type" | "slug">): string {

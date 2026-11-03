@@ -7,16 +7,33 @@ interface Props {
 }
 
 const { page, pages } = Astro.props;
+// Numbered window around the current page; addresses come from archivePath(), so URLs are unchanged.
+const first = Math.max(1, Math.min(page - 2, pages - 4));
+const numbers = Array.from({ length: Math.min(5, pages) }, (_, i) => first + i);
 ---
 
 {
   pages > 1 && (
-    <nav class="pager" aria-label="아카이브 페이지">
-      {page > 1 && <a href={archivePath(page - 1)} rel="prev">← 이전</a>}
-      <span class="muted">
-        {page} / {pages}
-      </span>
-      {page < pages && <a href={archivePath(page + 1)} rel="next">다음 →</a>}
+    <nav class="pager" aria-label="Archive pages">
+      {page > 1 && (
+        <a href={archivePath(page - 1)} rel="prev">
+          ← Newer
+        </a>
+      )}
+      {numbers.map((n) =>
+        n === page ? (
+          <span aria-current="page">{n}</span>
+        ) : (
+          <a href={archivePath(n)} aria-label={`Page ${n}`}>
+            {n}
+          </a>
+        ),
+      )}
+      {page < pages && (
+        <a href={archivePath(page + 1)} rel="next">
+          Older →
+        </a>
+      )}
     </nav>
   )
 }

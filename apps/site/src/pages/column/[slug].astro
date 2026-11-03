@@ -1,7 +1,9 @@
 ---
 import Base from "../../layouts/Base.astro";
 import Article from "../../components/Article.astro";
-import { getPublication } from "../../lib/repo";
+import CardGrid from "../../components/CardGrid.astro";
+import { allPublications, getPublication } from "../../lib/repo";
+import { displayImage, excerpt, relatedRows } from "../../lib/view";
 
 const { slug } = Astro.params;
 const loaded = slug ? await getPublication(`column/${slug}`) : null;
@@ -12,8 +14,22 @@ const publication = loaded;
 if (!publication) {
   return Astro.rewrite("/404");
 }
+const catalog = await allPublications();
+const related = catalog instanceof Response ? [] : relatedRows(catalog, publication);
+const description = excerpt(publication, 200) || undefined;
 ---
 
-<Base title={publication.title} noindex={publication.noindex}>
+<Base title={publication.title} description={description} noindex={publication.noindex} image={displayImage(publication)?.path ?? null} type="article" current="/column/">
   <Article publication={publication} />
+  {
+    related.length > 0 && (
+      <section class="section" aria-labelledby="related-title">
+        <div class="section-head">
+          <h2 id="related-title">Related</h2>
+          <a href="/column/">All columns →</a>
+        </div>
+        <CardGrid rows={related} />
+      </section>
+    )
+  }
 </Base>

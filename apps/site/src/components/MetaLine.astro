@@ -1,0 +1,20 @@
+---
+import { contentLabel, isColumn } from "../lib/listing";
+import { displayDate, primaryCategory } from "../lib/view";
+import type { PublicationRow } from "../lib/render";
+
+interface Props {
+  row: PublicationRow;
+  dateStyle?: "short" | "long";
+}
+
+const { row, dateStyle = "short" } = Astro.props;
+const term = primaryCategory(row);
+const label = contentLabel(row);
+---
+
+<div class="meta">
+  {term && <span class="cat" data-cat={term.slug}>{term.label}</span>}
+  <span class={isColumn(row) || row.content_type === "insight_essay" ? "label essay" : "label"}>{label}</span>
+  <time datetime={row.published_at}>{displayDate(row.published_at, dateStyle)}</time>
+</div>
