@@ -286,6 +286,12 @@ test("ADR-009 pipeline regenerate gates: it needs a publish target, the four sta
   const prodDry = await cli(["regenerate", "--dry-run"], { ...stagesOn, CC_FLAG_PUBLISH_TARGET: "production", SUPABASE_URL: "https://staging.test", SUPABASE_SERVICE_ROLE_KEY: "x", SUPABASE_PROD_URL: "", SUPABASE_PROD_SERVICE_ROLE_KEY: "" });
   assert.equal(prodDry.code, 2, "a production dry run reads production, never staging");
   assert.match(prodDry.stderr, /SUPABASE_PROD_URL and SUPABASE_PROD_SERVICE_ROLE_KEY are required/);
+  // Codex PR #95 P1: a real run with the fixture provider would publish recorded replies over real articles.
+  const fixtureLlm = await cli(["regenerate"], { ...stagesOn, CC_FLAG_PUBLISH_TARGET: "staging", CC_FLAG_LLM_PROVIDER: "fixture", SUPABASE_URL: "https://staging.test", SUPABASE_SERVICE_ROLE_KEY: "x" });
+  assert.equal(fixtureLlm.code, 2);
+  assert.match(fixtureLlm.stderr, /regenerate without --dry-run writes real rows, so it needs llm\.provider anthropic.*got \\?"fixture/);
+  const disabledLlm = await cli(["regenerate"], { ...stagesOn, CC_FLAG_PUBLISH_TARGET: "staging", CC_FLAG_LLM_PROVIDER: "disabled", SUPABASE_URL: "https://staging.test", SUPABASE_SERVICE_ROLE_KEY: "x" });
+  assert.equal(disabledLlm.code, 2, "disabled is refused too: nothing would be regenerated");
   const emptySlugs = await cli(["regenerate", "--dry-run", "--slugs", " , "]);
   assert.equal(emptySlugs.code, 2);
   assert.match(emptySlugs.stderr, /--slugs needs at least one slug/);

@@ -365,6 +365,11 @@ async function runRegenerate(cli: Cli, env: NodeJS.ProcessEnv, stdout: (line: st
   if (target === "production" && !cli.dryRun && !productionAllowed(env)) {
     throw new ConfigError(`regenerate with publish_target production writes the production project: a real run needs ${PRODUCTION_ALLOW_ENV}=true as well`);
   }
+  // A real run replaces published rows with what the model writes: a recorded fixture reply (or the shared
+  // sample) must never overwrite a real article, nor fail QA and unpublish one (Codex PR #95 P1).
+  if (!cli.dryRun && config.llm.provider !== "anthropic") {
+    throw new ConfigError(`regenerate without --dry-run writes real rows, so it needs llm.provider anthropic (CC_FLAG_LLM_PROVIDER=anthropic and ANTHROPIC_API_KEY by name); got "${config.llm.provider}"`);
+  }
   const names = supabaseEnvFor(target);
   const client = buildSupabase(env, globalThis.fetch, names);
   if (!client) throw new ConfigError(`regenerate reads the published briefs from Supabase: ${names.url} and ${names.key} are required (names only; values stay in the environment)`);
