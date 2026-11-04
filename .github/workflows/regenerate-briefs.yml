@@ -1,0 +1,111 @@
+name: Regenerate Korean briefs in English (ADR-009)
+
+# Josh 2026-11-04: every article is English. This re-drafts the news briefs that were published in Korean
+# before the switch, in English, from their stored source, and updates each row in place on its slug
+# (`pipeline regenerate`, packages/pipeline/src/ops/regenerate.ts): generate → qa → image → publish with the
+# current prompt and QA config. A brief whose English draft fails QA is unpublished on a real run.
+#
+# Dispatch only, never on a schedule or a pull request (secrets never reach a fork). Its own concurrency
+# group: sharing pipeline.yml's would let a second dispatch cancel a queued scheduled cycle (GitHub keeps one
+# pending run per group); a cycle and a regenerate run touch different slugs, so running side by side is safe.
+# mode=dry-run reads the target project and writes nothing (it still calls the model, within budget.run_usd).
+# Writing production is a STOP-THE-LINE approval item: it runs only with target=production, mode=apply and
+# the confirm text below, which sets the cutover flag CC_ALLOW_PRODUCTION_PUBLISH for that one step.
+# Secrets are used by name only. A run is capped by budget.run_usd (config/pipeline.yaml); dispatch again to
+# continue — targets are selected by their Korean title, so a finished one is never picked twice.
+on:
+  workflow_dispatch:
+    inputs:
+      target:
+        description: "Project: staging (SUPABASE_URL / SUPABASE_SERVICE_ROLE_KEY) or production (SUPABASE_PROD_URL / SUPABASE_PROD_SERVICE_ROLE_KEY)"
+        type: choice
+        default: staging
+        options: [staging, production]
+      mode:
+        description: "dry-run reads and drafts but writes nothing; apply updates the rows and unpublishes QA failures"
+        type: choice
+        default: dry-run
+        options: [dry-run, apply]
+      limit:
+        description: "Briefs per dispatch, newest first (1–100)"
+        type: string
+        default: "8"
+      slugs:
+        description: "Optional comma list of slugs (e.g. news/0123456789abcdef); empty = every published brief with a Korean title"
+        type: string
+        default: ""
+      confirm:
+        description: "For target=production with mode=apply, type: ADR-009 approved"
+        type: string
+        default: ""
+
+permissions:
+  contents: read
+
+concurrency:
+  group: cc-regenerate
+  cancel-in-progress: false
+
+jobs:
+  regenerate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      CC_FLAG_PUBLISH_TARGET: ${{ inputs.target }}
+      CC_FLAG_LLM_PROVIDER: anthropic
+      CC_FLAG_STAGES_GENERATE: "true"
+      CC_FLAG_STAGES_QA: "true"
+      CC_FLAG_STAGES_IMAGE: "true"
+      CC_FLAG_STAGES_PUBLISH: "true"
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      SUPABASE_URL: ${{ inputs.target == 'staging' && secrets.SUPABASE_URL || '' }}
+      SUPABASE_SERVICE_ROLE_KEY: ${{ inputs.target == 'staging' && secrets.SUPABASE_SERVICE_ROLE_KEY || '' }}
+      SUPABASE_PROD_URL: ${{ inputs.target == 'production' && secrets.SUPABASE_PROD_URL || '' }}
+      SUPABASE_PROD_SERVICE_ROLE_KEY: ${{ inputs.target == 'production' && secrets.SUPABASE_PROD_SERVICE_ROLE_KEY || '' }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - name: Setup Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '22.22.0'
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Regenerate
+        env:
+          TARGET: ${{ inputs.target }}
+          MODE: ${{ inputs.mode }}
+          LIMIT: ${{ inputs.limit }}
+          SLUGS: ${{ inputs.slugs }}
+          CONFIRM: ${{ inputs.confirm }}
+        run: |
+          set -o pipefail
+          args=(regenerate --trigger dispatch --json --limit "$LIMIT")
+          if [ -n "$SLUGS" ]; then args+=(--slugs "$SLUGS"); fi
+          if [ "$MODE" = "dry-run" ]; then
+            args+=(--dry-run)
+          elif [ "$TARGET" = "production" ]; then
+            if [ "$CONFIRM" != "ADR-009 approved" ]; then
+              echo "target=production with mode=apply needs confirm='ADR-009 approved' (STOP-THE-LINE approval item)"; exit 2
+            fi
+            export CC_ALLOW_PRODUCTION_PUBLISH=true
+          fi
+          set +e
+          node packages/pipeline/bin/pipeline.ts "${args[@]}" > regenerate.json 2> regenerate.log
+          code=$?
+          set -e
+          node -e "const r=require('./regenerate.json'); process.stdout.write(r.markdown)" >> "$GITHUB_STEP_SUMMARY" || { echo "no report"; tail -n 40 regenerate.log; }
+          tail -n 20 regenerate.log
+          exit $code
+      - name: Upload report
+        if: ${{ always() }}
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: regenerate-${{ inputs.target }}-${{ inputs.mode }}-${{ github.run_id }}
+          path: |
+            regenerate.json
+            regenerate.log
+          retention-days: 90

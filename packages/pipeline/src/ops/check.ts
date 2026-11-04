@@ -64,7 +64,10 @@ export function assessOperations(rows: readonly PipelineRunRow[], options: OpsOp
   const staleAfterHours = options.slotHours * (options.staleFactor ?? 1.5);
   const crashAfterMs = (options.crashAfterHours ?? 2) * HOUR;
   const failingAfter = options.failingAfter ?? 2;
-  const sorted = [...rows].sort((a, b) => Date.parse(b.started_at) - Date.parse(a.started_at));
+  // A `pipeline regenerate` run (ADR-009) re-drafts stored stories; it is not a pipeline cycle and must not
+  // stand in for a missed one.
+  const cycles = rows.filter((r) => !(r.flags && (r.flags as Record<string, unknown>)["mode"] === "regenerate"));
+  const sorted = [...cycles].sort((a, b) => Date.parse(b.started_at) - Date.parse(a.started_at));
   const finished = sorted.filter((r) => r.status !== "started");
   const lastSuccess = finished.find((r) => r.status === "done" || r.status === "partial") ?? null;
   const lastRun = sorted[0] ?? null;

@@ -6,6 +6,12 @@
  *                [--config <path>] [--sources <path>] [--scoring <path>] [--banned-phrases <path>] [--qa <path>] [--redirects <path>] [--fixtures-dir <dir>] [--prompts-dir <dir>] [--images-dir <dir>]
  *                [--trigger schedule|dispatch|local] [--json] [--log-level <level>]
  *   pipeline ops [--from <runs.json>] [--config <path>] [--json] [--log-level <level>]
+ *   pipeline regenerate [--slugs <slug>[,<slug>]] [--limit <n>] [--dry-run] [--keep-failed] [--json]
+ *
+ * `regenerate` (ADR-009): re-drafts published briefs that are still in Korean, in English, from their
+ * stored source and updates them in place (generate → qa → image → publish). It reads the project named by
+ * the publish target (staging, or production behind the cutover interlock), writes nothing with --dry-run,
+ * and on a real run unpublishes a target whose English draft fails QA unless --keep-failed.
  *
  * Exit codes: 0 done · 1 partial/budget_stop · 2 failed, usage or config error.
  * Phase 3i: every finished run ends with one summary (ADR-007 layout) in the log,
@@ -65,6 +71,7 @@ import { buildRunSummary, createTelegramNotifier, formatRunCrash, notifyConsole,
 import type { SummaryOptions } from "../src/notify/index.ts";
 import { assessOperations, formatOpsReport } from "../src/ops/check.ts";
 import { REVIEW_STATUSES, collectReview, formatReview } from "../src/ops/review.ts";
+import { buildRegenerateReport, formatRegenerateReport, planRegeneration, regenerationOutcomes, unpublishFailed } from "../src/ops/regenerate.ts";
 import type { ReviewStatusFilter } from "../src/ops/review.ts";
 import { disabledFetch, runPipeline } from "../src/runner.ts";
 import type { RunCrashError, RunResult } from "../src/runner.ts";
@@ -73,7 +80,8 @@ const USAGE = `usage: pipeline run [--stage <name>[,<name>]] [--dry-run] [--live
                     [--config <path>] [--sources <path>] [--scoring <path>] [--banned-phrases <path>] [--qa <path>] [--redirects <path>] [--fixtures-dir <dir>] [--prompts-dir <dir>] [--images-dir <dir>]
                     [--trigger schedule|dispatch|local] [--json] [--log-level debug|info|warn|error]
        pipeline ops [--from <runs.json>] [--config <path>] [--json] [--log-level debug|info|warn|error]
-       pipeline review [--run <run_id>] [--status rejected|pending|none|approved|any] [--limit <n>] [--window <chars>] [--json] [--log-level debug|info|warn|error]`;
+       pipeline review [--run <run_id>] [--status rejected|pending|none|approved|any] [--limit <n>] [--window <chars>] [--json] [--log-level debug|info|warn|error]
+       pipeline regenerate [--slugs <slug>[,<slug>]] [--limit <n>] [--dry-run] [--keep-failed] [--trigger schedule|dispatch|local] [--json] [--log-level debug|info|warn|error]`;
 
 export interface Cli {
   command: string | undefined;
@@ -99,6 +107,10 @@ export interface Cli {
   reviewStatus: ReviewStatusFilter;
   reviewLimit: number;
   reviewWindow: number;
+  /** ADR-009 `regenerate`: these slugs only (any language); otherwise every published brief with a Korean title, newest first. */
+  slugs: string[] | undefined;
+  /** ADR-009 `regenerate`: leave a target whose English draft fails QA published (default: unpublish it). */
+  keepFailed: boolean;
   trigger: RunTrigger;
   json: boolean;
   logLevel: "debug" | "info" | "warn" | "error";
@@ -128,6 +140,8 @@ export function parseCli(argv: string[]): Cli {
       status: { type: "string", default: "rejected" },
       limit: { type: "string", default: "5" },
       window: { type: "string", default: "160" },
+      slugs: { type: "string" },
+      "keep-failed": { type: "boolean", default: false },
       trigger: { type: "string", default: "local" },
       json: { type: "boolean", default: false },
       "log-level": { type: "string", default: "info" },
@@ -150,6 +164,8 @@ export function parseCli(argv: string[]): Cli {
   const reviewWindow = Number(values.window);
   if (!Number.isInteger(reviewLimit) || reviewLimit < 1 || reviewLimit > 100) throw new UsageError(`--limit must be an integer 1..100, got "${values.limit}"`);
   if (!Number.isInteger(reviewWindow) || reviewWindow < 20 || reviewWindow > 2000) throw new UsageError(`--window must be an integer 20..2000, got "${values.window}"`);
+  const slugs = values.slugs === undefined ? undefined : values.slugs.split(",").map((slug) => slug.trim()).filter(Boolean);
+  if (slugs !== undefined && slugs.length === 0) throw new UsageError("--slugs needs at least one slug");
   const stages = values.stage === undefined ? undefined : values.stage.split(",").map((name) => name.trim()).filter(Boolean);
   if (stages !== undefined && stages.length === 0) throw new UsageError("--stage needs at least one stage name");
   return {
@@ -173,6 +189,8 @@ export function parseCli(argv: string[]): Cli {
     reviewStatus: reviewStatus as ReviewStatusFilter,
     reviewLimit,
     reviewWindow,
+    slugs,
+    keepFailed: values["keep-failed"],
     trigger,
     json: values.json,
     logLevel,
@@ -333,6 +351,80 @@ async function runReview(cli: Cli, env: NodeJS.ProcessEnv, stdout: (line: string
   return 0;
 }
 
+/**
+ * `pipeline regenerate` (ADR-009): see src/ops/regenerate.ts. Targets are read from the project of the publish
+ * target; the run itself writes there only without --dry-run (a dry run seeds a memory DB with what it read).
+ */
+async function runRegenerate(cli: Cli, env: NodeJS.ProcessEnv, stdout: (line: string) => void, logger: Logger): Promise<number> {
+  const loaded = await loadPipelineConfig(resolve(cli.config), env);
+  const config = loaded.config;
+  const target = config.flags.publish_target;
+  if (target === "none") throw new ConfigError("regenerate updates published rows: set flags.publish_target (CC_FLAG_PUBLISH_TARGET) to staging or production");
+  const missing = (["generate", "qa", "image", "publish"] as const).filter((stage) => !config.flags.stages[stage]);
+  if (missing.length > 0) throw new ConfigError(`regenerate runs generate → qa → image → publish: turn on ${missing.map((stage) => `CC_FLAG_STAGES_${stage.toUpperCase()}`).join(", ")}`);
+  if (target === "production" && !cli.dryRun && !productionAllowed(env)) {
+    throw new ConfigError(`regenerate with publish_target production writes the production project: a real run needs ${PRODUCTION_ALLOW_ENV}=true as well`);
+  }
+  const names = supabaseEnvFor(target);
+  const client = buildSupabase(env, globalThis.fetch, names);
+  if (!client) throw new ConfigError(`regenerate reads the published briefs from Supabase: ${names.url} and ${names.key} are required (names only; values stay in the environment)`);
+  const source = new SupabaseDb(client);
+  const plan = await planRegeneration(source, { ...(cli.slugs ? { slugs: cli.slugs } : {}), limit: cli.reviewLimit });
+  logger.info("regenerate: plan", { target, dry_run: cli.dryRun, eligible: plan.eligible, targets: plan.targets.length, skipped: plan.skipped.length });
+
+  let result: RunResult | null = null;
+  let entries = [] as ReturnType<typeof regenerationOutcomes>;
+  if (plan.targets.length > 0) {
+    const sources = await loadSourcesConfig(resolve(cli.sources));
+    const scoring = await loadScoringConfig(resolve(cli.scoring));
+    const bannedPhrases = await loadBannedPhrasesConfig(resolve(cli.bannedPhrases));
+    const qa = await loadQaConfig(resolve(cli.qa));
+    const redirects = await loadRedirectsConfig(resolve(cli.redirects));
+    const candidates = plan.targets.map((t) => t.candidate);
+    const rawItems = plan.targets.map((t) => t.rawItem);
+    let ledger: Ledger;
+    let db: DbPort;
+    if (cli.dryRun) {
+      // Nothing is written: the run sees the published rows it would update and compare against, in memory.
+      ledger = new MemoryLedger();
+      const memory = new MemoryDb();
+      await memory.insert("publications", plan.publications as unknown as Record<string, unknown>[]);
+      await memory.insert("candidates", candidates as unknown as Record<string, unknown>[]);
+      await memory.insert("raw_items", rawItems as unknown as Record<string, unknown>[]);
+      db = memory;
+    } else {
+      ledger = new SupabaseLedger(client);
+      db = source;
+    }
+    const adapters = buildAdapters(cli, config, env, redirects);
+    result = await runPipeline({
+      config,
+      scoring,
+      bannedPhrases,
+      qa,
+      overrides: loaded.overrides,
+      sources,
+      ledger,
+      db,
+      adapters: { ...adapters, db },
+      logger,
+      trigger: cli.trigger,
+      gitSha: resolveGitSha(env),
+      dryRun: cli.dryRun,
+      replay: false,
+      only: ["generate", "qa", "image", "publish"],
+      seed: { rawItems, candidates, selected: candidates },
+      ledgerFlags: { mode: "regenerate", slugs: plan.targets.map((t) => t.slug) },
+    });
+    entries = regenerationOutcomes(plan, result);
+    if (!cli.dryRun && !cli.keepFailed) entries = await unpublishFailed(source, entries, new Date());
+  }
+  const report = buildRegenerateReport({ target, dryRun: cli.dryRun, plan, entries, result });
+  logger.info("regenerate: finished", { run_id: report.run_id, status: report.run_status, cost_usd: report.cost_usd, regenerated: entries.filter((e) => e.outcome === "regenerated").length, qa_failed: entries.filter((e) => e.outcome === "qa_failed").length, kept: entries.filter((e) => e.outcome === "kept").length, remaining: report.remaining });
+  stdout(cli.json ? JSON.stringify({ ...report, markdown: formatRegenerateReport(report) }, null, 2) : formatRegenerateReport(report));
+  return result === null || result.status === "done" ? 0 : 1;
+}
+
 /** True when this file is the process entry, also through the `cc-pipeline` bin symlink or a symlinked checkout. */
 function isMainModule(): boolean {
   const entry = process.argv[1];
@@ -348,10 +440,11 @@ export async function main(argv: string[], env: NodeJS.ProcessEnv, stdout: (line
   let logger: Logger | undefined;
   try {
     const cli = parseCli(argv);
-    if (cli.command !== "run" && cli.command !== "ops" && cli.command !== "review") throw new UsageError(USAGE);
+    if (cli.command !== "run" && cli.command !== "ops" && cli.command !== "review" && cli.command !== "regenerate") throw new UsageError(USAGE);
     logger = createLogger({ name: "cc-pipeline", level: cli.logLevel, sink: (line) => process.stderr.write(`${line}\n`) });
     if (cli.command === "ops") return await runOps(cli, env, stdout, logger);
     if (cli.command === "review") return await runReview(cli, env, stdout, logger);
+    if (cli.command === "regenerate") return await runRegenerate(cli, env, stdout, logger);
 
     const realFetch = globalThis.fetch;
     if (cli.replay) {
