@@ -1,12 +1,12 @@
 # Compute Current — AI Infrastructure Intelligence
 
-[www.computecurrent.com](https://www.computecurrent.com) publishes short, source-linked Korean briefs on AI infrastructure — data centers, power and grid, chips and memory, cloud capacity and policy — for operators, investors and infrastructure strategists. Every brief carries its source link and an expert lens; numbers and names are checked against the source before publication.
+[www.computecurrent.com](https://www.computecurrent.com) publishes short, source-linked English briefs on AI infrastructure — data centers, power and grid, chips and memory, cloud capacity and policy — for operators, investors and infrastructure strategists. Every brief carries its source link and an expert lens; numbers and names are checked against the source before publication.
 
 ## How it works
 
 | Part | What it does |
 |---|---|
-| `packages/pipeline` | Runs on GitHub Actions (`.github/workflows/pipeline.yml`, schedule `45 15,23,7 * * *` UTC = 00:45 / 08:45 / 16:45 KST): ingest the active RSS/Atom and index sources (`config/sources.yaml`) → normalize and dedupe → score and select (`config/scoring.yaml`) → generate a Korean `news_brief` with Claude (`prompts/news_brief.md`) → QA gates (`config/qa.yaml`) → image (brand placeholder) → publish to the Supabase `publications` table. Every run writes the run ledger first, ends with a Telegram summary, and an `ops-check` job keeps one alarm issue (`<!-- cc-ops-alarm -->`) in sync. |
+| `packages/pipeline` | Runs on GitHub Actions (`.github/workflows/pipeline.yml`, schedule `45 15,23,7 * * *` UTC = 00:45 / 08:45 / 16:45 KST): ingest the active RSS/Atom and index sources (`config/sources.yaml`) → normalize and dedupe → score and select (`config/scoring.yaml`) → generate an English `news_brief` with Claude (`prompts/news_brief.md`; Korean-language sources are re-narrated in English, ADR-009) → QA gates (`config/qa.yaml`) → image (brand placeholder) → publish to the Supabase `publications` table. Every run writes the run ledger first, ends with a Telegram summary, and an `ops-check` job keeps one alarm issue (`<!-- cc-ops-alarm -->`) in sync. |
 | `apps/site` | Astro 7 server output on Vercel (project Root Directory `apps/site`, ISR 300 s). Reads published rows only, so a pipeline failure or an empty database never breaks a deploy. Answers all 136 preserved legacy URLs (200 / 301 / 410) through its routes and a redirects middleware. |
 | `packages/shared` | `@cc/shared`: zod schemas, stage and adapter contracts, config loader, feature flags, redacting logger. |
 
