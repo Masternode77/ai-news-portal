@@ -99,8 +99,10 @@ function atSentenceStart(text: string, index: number): boolean {
   return before.length === 0 || /[.!?:\n。]$/u.test(before) || /\n\s*$/u.test(text.slice(0, index));
 }
 
-/** A plain capitalised word ("Operators", "Gigawatt-scale"): at a sentence start it carries no evidence of a name. */
-const PLAIN_CAPITALISED = /^[A-Z][a-z]+(?:-[a-z]+)*$/u;
+/** A plain capitalised word ("A", "Operators", "Gigawatt-scale"): at a sentence start it carries no evidence of a name. */
+const PLAIN_CAPITALISED = /^[A-Z][a-z]*(?:-[a-z]+)*$/u;
+/** A lowercase hyphen suffix is not part of the name: "Brussels-run" is Brussels, "AI-era" is AI (staging run 2026-11-04). */
+const LOWERCASE_SUFFIX = /(?:-[a-z][a-z-]*)+(?=$|[ \t])/gu;
 
 export function latinProperNouns(text: string, minChars: number, options: ProperNounOptions = {}): string[] {
   const out = new Set<string>();
@@ -110,7 +112,7 @@ export function latinProperNouns(text: string, minChars: number, options: Proper
       const [first, ...rest] = run.split(/[ \t]+/u);
       if (first !== undefined && PLAIN_CAPITALISED.test(first)) run = rest.join(" ");
     }
-    const token = run.replace(/[.]+$/u, "");
+    const token = run.replace(LOWERCASE_SUFFIX, "").replace(/[.]+$/u, "");
     if (token.length < minChars) return;
     if (LATIN_STOP.has(token.toLowerCase()) || CALENDAR.has(token.toLowerCase())) return;
     if (/^\d/.test(token)) return;

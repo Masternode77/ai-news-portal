@@ -128,6 +128,10 @@ test("UNGROUNDED_ENTITY on English drafts (ADR-009): a sentence-initial plain wo
   assert.deepEqual(latinProperNouns("The deal was signed by Example Data Centers. Microsoft agreed later in Busan.", 3), ["Example Data Centers", "Microsoft", "Busan"]);
   assert.deepEqual(latinProperNouns("The companies said on Monday. Delivery starts in Busan.", 3, { skipSentenceInitial: true }), ["Busan"]);
   assert.deepEqual(latinProperNouns("Signed in October with Example Data Centers on a Tuesday.", 3, { skipSentenceInitial: true }), ["Example Data Centers"], "calendar words are not names");
+  // Staging run 2026-11-04 (1ee13924): "A Brussels-run channel" and "AI-era capacity" were read as names.
+  assert.deepEqual(latinProperNouns("A Brussels-run channel opens. Demand for AI-era capacity and AI-dense halls grows in Texas-based campuses.", 3, { skipSentenceInitial: true }), ["Brussels", "Texas"], "an article opener is dropped and a lowercase hyphen suffix is not part of the name");
+  const regional = draft({ ...BRIEF, why_it_matters: `${BRIEF.why_it_matters} Investors weighing Southeast Asian platforms and AI-era capacity gain a marker.` });
+  assert.equal((await check("UNGROUNDED_ENTITY", regional, evidence(), { allow: ["Southeast Asian"] })).pass, true, "region framing on the allow list; AI-era is the acronym AI, which is never checked");
   // A Korean-language source: an English brief romanises its names (Saemangeum for 새만금), which the source text cannot carry.
   const romanised = draft({ ...BRIEF, expert_lens: `${BRIEF.expert_lens} A second cluster in Saemangeum is also connected.` });
   const koSource = evidence({ source: source({ language: "ko" }) });

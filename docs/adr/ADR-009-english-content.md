@@ -35,12 +35,13 @@
    - 한국어 고유명사는 원문의 라틴 표기 → 공식 영문명 → 표준 로마자 순으로 쓴다.
    - 한글은 쓰지 않는다.
    - 제목은 sentence case로 쓴다.
-4. **QA**(`config/qa.yaml` 2026-11-04.1)
+4. **QA**(`config/qa.yaml` 2026-11-04.1 → .2: 첫 staging 런의 영어 토큰화 오탐 반영, tuning-log 6행)
    - `LANG_MISMATCH`: `language: en, min_ratio: 0.98`로, 라틴 문자 비율을 본다.
    - `UNGROUNDED_ENTITY`:
      - 문장 첫 단어의 평범한 대문자(`Operators`)와 달력 단어는 고유명사로 보지 않는다.
      - `unchecked_source_languages: [ko]`: 한국어 소스의 로마자 고유명사는 기록만 하고 검사하지 않는다. 문서화된 한계이며, 숫자는 계속 대조한다.
-     - `allow`에 지역 단어 `Asia-Pacific`·`Asia`를 넣었다(APAC 관점용).
+     - `allow`에 지역 단어 `Asia-Pacific`·`Asia`·`Southeast Asia`·`Southeast Asian`을 넣었다(APAC 관점용).
+     - 한 글자 관사("A")도 문장 첫 단어로 보고, 소문자 하이픈 접미어("Brussels-run", "AI-era")는 이름에서 뗀다.
    - 고유명사 추출이 마침표를 넘어 이어 붙던 결함("Monday. Delivery")을 고쳤다. 영어 본문에서 처음 드러났다.
    - `SEO_FIELDS_MISSING` 제목 상한은 90자, `THIN_EXPERT_LENS`는 문장 첫 단어를 구체 토큰으로 세지 않는다.
    - 영어 원문을 영어로 재서술하면 `QUOTE_TOO_LONG`·`SIMILARITY_TOO_HIGH`가 실질적으로 작동하기 시작한다. 임계값은 그대로 두고 staging에서 통과율을 잰다.
