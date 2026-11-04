@@ -229,7 +229,7 @@ export function longestCommonRun(a: string, b: string): number {
 
 /** The reader-facing fields the banned-phrase guard reads. */
 export function readerFields(brief: NewsBriefDraft): Record<string, string> {
-  return { title_ko: brief.title_ko, summary_ko: brief.summary_ko, why_it_matters_ko: brief.why_it_matters_ko, expert_lens_ko: brief.expert_lens_ko };
+  return { title: brief.title, summary: brief.summary, why_it_matters: brief.why_it_matters, expert_lens: brief.expert_lens };
 }
 
 // ---------------------------------------------------------------------------
@@ -254,10 +254,10 @@ export function sourcePacket(item: RawItemInsert, source: SourceConfig | undefin
   const scope = source?.text_scope ?? "full";
   const truncated = body.length > maxChars ? `${body.slice(0, maxChars)} […]` : body;
   const notes: string[] = [];
-  if (rights === "link_only") notes.push("이 소스는 제목과 짧은 요약만 쓸 수 있다. 아는 범위만 짧게 쓴다.");
-  if (scope === "abstract") notes.push("본문은 초록(abstract)뿐이다. 초록이 말한 범위를 넘지 않는다.");
-  if (body.length > maxChars) notes.push(`본문은 ${maxChars}자에서 잘렸다.`);
-  if (body.length === 0) notes.push("본문이 없다. 제목만으로 알 수 있는 사실만 쓴다.");
+  if (rights === "link_only") notes.push("Only the title and a short summary of this source may be used. Write briefly, within what they state.");
+  if (scope === "abstract") notes.push("The body is an abstract only. Do not go beyond what the abstract says.");
+  if (body.length > maxChars) notes.push(`The body was cut at ${maxChars} characters.`);
+  if (body.length === 0) notes.push("There is no body text. Write only what the title itself establishes.");
   return {
     title: item.title,
     source_name: source?.name ?? item.source_id,
@@ -268,12 +268,12 @@ export function sourcePacket(item: RawItemInsert, source: SourceConfig | undefin
     text_scope: scope,
     body_chars: body.length,
     body_text: truncated,
-    note: notes.join(" ") || "본문 전체를 쓸 수 있다.",
+    note: notes.join(" ") || "The full body text may be used.",
   };
 }
 
 export function userMessage(packet: SourcePacket): string {
-  return `원문 패킷:\n${JSON.stringify(packet, null, 2)}`;
+  return `Source packet:\n${JSON.stringify(packet, null, 2)}`;
 }
 
 /** Text the checks compare the draft against: title, body, source name and the publication date. */
@@ -362,7 +362,7 @@ export const generateStage: Stage<GenerateInput, GenerateOutput> = {
         ctx.logger.warn("generate: budget cannot cover the next call; stopping (run ends as budget_stop, drafts so far are kept)", { remaining: budgetStopped, estimate_usd: estimate, spent_usd: ctx.budget.spentUsd, cap_usd: ctx.budget.limitUsd });
         for (const rest of input.selected.slice(index)) {
           const restItem = items.get(rest.raw_item_id);
-          record({ canonical_url: restItem?.canonical_url ?? rest.raw_item_id, source_id: restItem?.source_id ?? "", slug: null, ok: false, error: `BUDGET_EXCEEDED: next call estimated at USD ${estimate.toFixed(4)} would pass the cap`, model: null, cost_usd: 0, input_tokens: 0, output_tokens: 0, grounding_numbers: 0, grounding_ungrounded: [], quote_max_words: 0, banned_matches: [], title_ko: null });
+          record({ canonical_url: restItem?.canonical_url ?? rest.raw_item_id, source_id: restItem?.source_id ?? "", slug: null, ok: false, error: `BUDGET_EXCEEDED: next call estimated at USD ${estimate.toFixed(4)} would pass the cap`, model: null, cost_usd: 0, input_tokens: 0, output_tokens: 0, grounding_numbers: 0, grounding_ungrounded: [], quote_max_words: 0, banned_matches: [], title: null });
         }
         break;
       }
@@ -378,7 +378,7 @@ export const generateStage: Stage<GenerateInput, GenerateOutput> = {
         failed += 1;
         const text = errorText(error);
         await ctx.ledger.deadLetter({ run_id: ctx.runId, stage: "generate", ref_table: "candidates", ref_id: candidateRowId, payload: { canonical_url: item.canonical_url, source_id: item.source_id, model, prompt_version: prompt.version }, error: text });
-        record({ canonical_url: item.canonical_url, source_id: item.source_id, slug: null, ok: false, error: text, model, cost_usd: 0, input_tokens: 0, output_tokens: 0, grounding_numbers: 0, grounding_ungrounded: [], quote_max_words: 0, banned_matches: [], title_ko: null });
+        record({ canonical_url: item.canonical_url, source_id: item.source_id, slug: null, ok: false, error: text, model, cost_usd: 0, input_tokens: 0, output_tokens: 0, grounding_numbers: 0, grounding_ungrounded: [], quote_max_words: 0, banned_matches: [], title: null });
         ctx.logger.error("generate: llm call failed", { source_id: item.source_id, url: item.canonical_url, error: text });
         continue;
       }
@@ -393,7 +393,7 @@ export const generateStage: Stage<GenerateInput, GenerateOutput> = {
         failed += 1;
         const text = errorText(error);
         await ctx.ledger.deadLetter({ run_id: ctx.runId, stage: "generate", ref_table: "candidates", ref_id: candidateRowId, payload: { canonical_url: item.canonical_url, source_id: item.source_id, model: response.model, prompt_version: prompt.version, stop_reason: response.stopReason, reply_chars: response.text.length }, error: text });
-        record({ canonical_url: item.canonical_url, source_id: item.source_id, slug: null, ok: false, error: text, model: response.model, cost_usd: response.costUsd, input_tokens: response.usage.inputTokens, output_tokens: response.usage.outputTokens, grounding_numbers: 0, grounding_ungrounded: [], quote_max_words: 0, banned_matches: [], title_ko: null });
+        record({ canonical_url: item.canonical_url, source_id: item.source_id, slug: null, ok: false, error: text, model: response.model, cost_usd: response.costUsd, input_tokens: response.usage.inputTokens, output_tokens: response.usage.outputTokens, grounding_numbers: 0, grounding_ungrounded: [], quote_max_words: 0, banned_matches: [], title: null });
         ctx.logger.error("generate: reply failed the draft schema", { source_id: item.source_id, url: item.canonical_url, error: text });
         continue;
       }
@@ -406,7 +406,7 @@ export const generateStage: Stage<GenerateInput, GenerateOutput> = {
         slug: newsBriefSlug(item.canonical_url, item.title),
       });
       const sourceText = sourceTextOf(item, source);
-      const draftText = [brief.title_ko, brief.summary_ko, brief.why_it_matters_ko, brief.expert_lens_ko].join("\n");
+      const draftText = [brief.title, brief.summary, brief.why_it_matters, brief.expert_lens].join("\n");
       const grounding = groundingCheck(draftText, sourceText);
       const quoteWords = longestCommonRun(draftText, sourceText);
       groundingChecked += 1;
@@ -437,7 +437,7 @@ export const generateStage: Stage<GenerateInput, GenerateOutput> = {
         review_status: "none",
       };
       drafts.push(row);
-      record({ canonical_url: item.canonical_url, source_id: item.source_id, slug: brief.slug, ok: true, error: null, model: response.model, cost_usd: response.costUsd, input_tokens: response.usage.inputTokens, output_tokens: response.usage.outputTokens, grounding_numbers: grounding.numbers.length, grounding_ungrounded: grounding.ungrounded.slice(0, UNGROUNDED_SAMPLE), quote_max_words: quoteWords, banned_matches: bannedResult.matches.slice(0, BANNED_SAMPLE), title_ko: brief.title_ko });
+      record({ canonical_url: item.canonical_url, source_id: item.source_id, slug: brief.slug, ok: true, error: null, model: response.model, cost_usd: response.costUsd, input_tokens: response.usage.inputTokens, output_tokens: response.usage.outputTokens, grounding_numbers: grounding.numbers.length, grounding_ungrounded: grounding.ungrounded.slice(0, UNGROUNDED_SAMPLE), quote_max_words: quoteWords, banned_matches: bannedResult.matches.slice(0, BANNED_SAMPLE), title: brief.title });
       ctx.logger.info("generate: draft written", { source_id: item.source_id, url: item.canonical_url, slug: brief.slug, model: response.model, cost_usd: response.costUsd, grounding_pass: grounding.pass, ungrounded: grounding.ungrounded, quote_max_words: quoteWords, banned_matches: bannedResult.matches });
     }
 

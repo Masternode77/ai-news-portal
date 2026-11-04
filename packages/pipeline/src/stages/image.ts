@@ -23,9 +23,9 @@ const DECISION_SAMPLE = 100;
 /** `{{title}}`, `{{summary}}`, `{{tags}}`, `{{source}}`, `{{why}}` in the prompt template (strict: an unknown placeholder fails before any provider call). */
 export function imagePrompt(template: string, brief: NewsBrief): string {
   const fields: Record<string, string> = {
-    title: brief.title_ko,
-    summary: brief.summary_ko,
-    why: brief.why_it_matters_ko,
+    title: brief.title,
+    summary: brief.summary,
+    why: brief.why_it_matters,
     tags: brief.tags.join(", "),
     source: brief.source_name,
   };
@@ -34,11 +34,11 @@ export function imagePrompt(template: string, brief: NewsBrief): string {
 
 /** Alt text is editorial metadata the stage owns, never a model output. */
 export function imageAlt(brief: NewsBrief): string {
-  return `${brief.title_ko} — Compute Current 편집 일러스트`;
+  return `${brief.title} — Compute Current editorial illustration`;
 }
 
 export function imageRequestFor(brief: NewsBrief, template: string): ImageRequest {
-  return { prompt: imagePrompt(template, brief), alt: imageAlt(brief), slug: brief.slug, title: brief.title_ko, summary: brief.summary_ko, tags: brief.tags };
+  return { prompt: imagePrompt(template, brief), alt: imageAlt(brief), slug: brief.slug, title: brief.title, summary: brief.summary, tags: brief.tags };
 }
 
 /** A non-chain adapter (tests, custom wiring) is treated as a one-link chain. */

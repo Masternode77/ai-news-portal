@@ -13,7 +13,8 @@
  * same day share them. A draft is a duplicate when its signature shares at least `min_shared`
  * elements with an earlier title AND the Jaccard overlap of the two signatures reaches
  * `min_jaccard`. Titles whose signature is smaller than `min_shared` can never match — a
- * conservative limit: a Korean-only title without figures is not checked.
+ * conservative limit: a title without figures and with fewer names is not checked (an older
+ * Korean title, before ADR-009, still contributes its numbers and Latin names).
  *
  * The earlier titles come from `QaEvidence.recentPublishedTitles`: published rows inside
  * `normalize.published_window_days` plus drafts that already passed earlier in the same run.
@@ -54,7 +55,7 @@ export const rule: QaRule = {
     const minJaccard = numberParam(config, "min_jaccard", 0.5);
     const brief = briefOf(draft);
     if (!brief) return verdict(config, false, { skipped: "brief_invalid" }, evidence.now);
-    const own = eventSignature(brief.title_ko);
+    const own = eventSignature(brief.title);
     let match: { title: string; shared: string[]; jaccard: number } | null = null;
     if (own.size >= minShared) {
       for (const title of evidence.recentPublishedTitles) {

@@ -73,6 +73,7 @@ test("primary category follows taxonomy order and never guesses", () => {
 test("excerpt prefers the deck, then summaries, and clips on a word boundary", () => {
   assert.equal(excerpt(row({ body: { deck: "Deck line.", summary_ko: "요약" } })), "Deck line.");
   assert.equal(excerpt(row({ body: { summary_ko: "첫 문단.\n\n둘째 문단." } })), "첫 문단.");
+  assert.equal(excerpt(row({ body: { summary: "First paragraph.\n\nSecond paragraph." } })), "First paragraph.", "the English brief key (ADR-009)");
   assert.equal(excerpt(row({ body: {} })), "");
   assert.equal(clip("alpha beta gamma delta", 15), "alpha beta…");
   assert.equal(clip("short", 12), "short");
@@ -95,6 +96,8 @@ test("bylines: columns and essays are Josh, briefs are the desk with a source co
 test("section headings follow the section language", () => {
   assert.equal(sectionHeading("why_it_matters_ko", "왜 중요한가", "ko"), "왜 중요한가");
   assert.equal(sectionHeading("why_it_matters", "왜 중요한가", "en"), "Why it matters");
+  assert.equal(sectionHeading("summary", "Summary", "en"), "Summary");
+  assert.equal(sectionHeading("counterpoint", null, "en"), "Counterpoint");
   assert.equal(sectionHeading("unknown", null, "en"), null);
 });
 

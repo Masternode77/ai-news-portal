@@ -12,19 +12,28 @@ export interface BodySection {
   paragraphs: string[];
 }
 
+/**
+ * Body keys in reading order. Briefs are English since ADR-009 (2026-11-04) and
+ * store `summary`, `why_it_matters`, `expert_lens`; rows written before the
+ * switch keep their Korean-era `*_ko` keys and still render (a regenerated row
+ * replaces them). Headings here are fallbacks; view.ts picks the language.
+ */
 const KNOWN_FIELDS: { key: string; heading: string | null }[] = [
   { key: "deck", heading: null },
-  { key: "thesis_ko", heading: "핵심 주장" },
-  { key: "thesis", heading: "핵심 주장" },
-  { key: "summary_ko", heading: "요약" },
+  { key: "thesis_ko", heading: "Key argument" },
+  { key: "thesis", heading: "Key argument" },
+  { key: "summary_ko", heading: "Summary" },
+  { key: "summary", heading: "Summary" },
   { key: "article_body", heading: null },
   { key: "body_ko", heading: null },
-  { key: "why_it_matters_ko", heading: "왜 중요한가" },
-  { key: "why_it_matters", heading: "왜 중요한가" },
+  { key: "why_it_matters_ko", heading: "Why it matters" },
+  { key: "why_it_matters", heading: "Why it matters" },
   { key: "expert_lens_ko", heading: "Expert Lens" },
   { key: "expert_lens", heading: "Expert Lens" },
-  { key: "counterpoint_ko", heading: "반론" },
-  { key: "implications_ko", heading: "시사점" },
+  { key: "counterpoint_ko", heading: "Counterpoint" },
+  { key: "counterpoint", heading: "Counterpoint" },
+  { key: "implications_ko", heading: "Implications" },
+  { key: "implications", heading: "Implications" },
 ];
 
 export function splitParagraphs(text: string): string[] {

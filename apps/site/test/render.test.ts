@@ -15,8 +15,22 @@ test("bodySections orders known fields and skips empty or non-string values", ()
     sections.map((s) => [s.key, s.heading, s.paragraphs.length]),
     [
       ["deck", null, 1],
-      ["summary_ko", "요약", 2],
+      ["summary_ko", "Summary", 2],
       ["expert_lens_ko", "Expert Lens", 1],
+    ],
+  );
+});
+
+test("bodySections reads the English brief keys (ADR-009) in reading order", () => {
+  const sections = bodySections({ expert_lens: "Lens.", why_it_matters: "Why.", summary: "First.\n\nSecond.", counterpoint: "But.", implications: "So." });
+  assert.deepEqual(
+    sections.map((s) => [s.key, s.heading, s.paragraphs.length]),
+    [
+      ["summary", "Summary", 2],
+      ["why_it_matters", "Why it matters", 1],
+      ["expert_lens", "Expert Lens", 1],
+      ["counterpoint", "Counterpoint", 1],
+      ["implications", "Implications", 1],
     ],
   );
 });

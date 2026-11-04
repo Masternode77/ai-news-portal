@@ -1,9 +1,9 @@
 ---
 task: image
-version: 2026-10-24.1
+version: 2026-11-04.1
 model_hint: gpt-image-2
 ---
-Use case: Compute Current public article hero image for a Korean news brief about AI and data center infrastructure.
+Use case: Compute Current public article hero image for an English news brief about AI and data center infrastructure.
 Title: {{title}}
 Summary: {{summary}}
 Tags: {{tags}}

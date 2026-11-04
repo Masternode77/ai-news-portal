@@ -15,7 +15,7 @@
 # BUDGET_EXCEEDED (3d generate / runner). INSIGHT_DENSITY_LOW and HUMAN_STYLE_LOW are insight_essay
 # rules and arrive with 3e.
 
-version: "2026-10-31.2"
+version: "2026-11-04.1"         # ADR-009: English drafts (LANG_MISMATCH language en, UNGROUNDED_ENTITY sentence-initial + Korean-source handling)
 
 rules:
   # ---- hard: a failing verdict rejects the draft -------------------------------------------------
@@ -35,10 +35,14 @@ rules:
     params: { max_ungrounded: 0 }
   - rule: UNGROUNDED_ENTITY          # Latin-script proper nouns in the draft must appear in the source text
     severity: hard
-    params: { max_ungrounded: 0, min_chars: 3, allow: [Compute Current], token_fallback: true }   # token_fallback: a rebuilt two-name bigram grounds token by token (Phase 4 compare.md §3)
-  - rule: LANG_MISMATCH              # *_ko fields: Hangul share of letters
+    # token_fallback: a rebuilt two-name bigram grounds token by token (Phase 4 compare.md §3).
+    # skip_sentence_initial: English capitalises every sentence's first word, which is not evidence of a name (ADR-009).
+    # unchecked_source_languages: an English brief romanises a Korean source's names, which the source cannot carry (ADR-009 gap; numbers still grounded).
+    # allow: our own name and the region words the Asia-Pacific lens may use without the source naming them (ADR-009).
+    params: { max_ungrounded: 0, min_chars: 3, allow: [Compute Current, Asia-Pacific, Asia], token_fallback: true, skip_sentence_initial: true, unchecked_source_languages: [ko] }
+  - rule: LANG_MISMATCH              # reader fields must be in the publication language: Latin-script share of letters
     severity: hard
-    params: { min_hangul_ratio: 0.6 }   # ADR-004 initial value; "확인 필요 2"
+    params: { language: en, min_ratio: 0.98 }   # ADR-009 (2026-11-04): every article is English; was { min_hangul_ratio: 0.6 } for Korean briefs
   - rule: BANNED_PATTERN             # config/banned-phrases.yaml inventory (3d guard, now blocking)
     severity: hard
   - rule: DUPLICATE_EVENT            # the draft title's event signature (numbers by value + Latin names) against publications in normalize.published_window_days and earlier passes of the run
@@ -56,8 +60,8 @@ rules:
   - rule: SEO_FIELDS_MISSING         # title length for SERP and a description-length first paragraph (OG image is 3h)
     severity: soft
     auto_pass: true
-    params: { title_max_chars: 70, description_min_chars: 80 }
-  - rule: THIN_EXPERT_LENS           # expert_lens_ko: sentences and concrete tokens (numbers, units, proper nouns)
+    params: { title_max_chars: 90, description_min_chars: 80 }   # ADR-009: English titles (the prompt aims for 50–90 characters); was 70 for Korean titles
+  - rule: THIN_EXPERT_LENS           # expert_lens: sentences and concrete tokens (numbers, units, proper nouns)
     severity: soft
     auto_pass: true
     params: { min_sentences: 3, min_concrete: 3 }

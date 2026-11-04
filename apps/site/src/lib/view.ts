@@ -3,9 +3,10 @@
  * Node-testable functions that decide what a card, row, hero or article header
  * shows from a publications row. Nothing here reads data or changes a route.
  *
- * The site chrome is English (Josh 2026-11-03: "기본 페이지는 영문"); article
- * text keeps its own language, which contentLang() derives from the title so
- * Korean briefs carry lang="ko" inside an English page.
+ * The site and every article are English (Josh 2026-11-03 for the chrome;
+ * ADR-009, 2026-11-04, for the articles). contentLang() still derives the
+ * language from the title, so a brief published in Korean before the switch
+ * carries lang="ko" until it is regenerated in English.
  */
 import type { PublicationRow } from "@cc/shared";
 import { AUTHOR } from "./author.ts";
@@ -53,7 +54,7 @@ export function primaryCategory(row: Pick<PublicationRow, "title" | "tags" | "ca
   return taxonomyTerms("category").find((term) => matchesTerm(row, term)) ?? null;
 }
 
-const EXCERPT_KEYS = ["deck", "thesis", "thesis_ko", "summary_ko", "article_body", "body_ko", "why_it_matters", "why_it_matters_ko"];
+const EXCERPT_KEYS = ["deck", "thesis", "thesis_ko", "summary", "summary_ko", "article_body", "body_ko", "why_it_matters", "why_it_matters_ko"];
 
 /** A one-paragraph teaser: the first paragraph of the first known summary-like field, cut at a word boundary. */
 export function excerpt(row: Pick<PublicationRow, "body">, max: number = 220): string {
@@ -106,12 +107,15 @@ export function byline(row: Pick<PublicationRow, "slug" | "content_type" | "sour
 const SECTION_HEADINGS: Record<string, { en: string; ko: string }> = {
   thesis: { en: "Key argument", ko: "핵심 주장" },
   thesis_ko: { en: "Key argument", ko: "핵심 주장" },
+  summary: { en: "Summary", ko: "요약" },
   summary_ko: { en: "Summary", ko: "요약" },
   why_it_matters: { en: "Why it matters", ko: "왜 중요한가" },
   why_it_matters_ko: { en: "Why it matters", ko: "왜 중요한가" },
   expert_lens: { en: "Expert Lens", ko: "Expert Lens" },
   expert_lens_ko: { en: "Expert Lens", ko: "Expert Lens" },
+  counterpoint: { en: "Counterpoint", ko: "반론" },
   counterpoint_ko: { en: "Counterpoint", ko: "반론" },
+  implications: { en: "Implications", ko: "시사점" },
   implications_ko: { en: "Implications", ko: "시사점" },
 };
 
@@ -137,7 +141,7 @@ export function isSubheading(paragraph: string, next: string | undefined): boole
 export const LONGFORM_SECTION_KEYS: readonly string[] = ["article_body", "body_ko"];
 
 /** Summary-like sections render as the boxed lead; the rest flow as prose. */
-export const LEAD_SECTION_KEYS: readonly string[] = ["thesis", "thesis_ko", "summary_ko"];
+export const LEAD_SECTION_KEYS: readonly string[] = ["thesis", "thesis_ko", "summary", "summary_ko"];
 export const LENS_SECTION_KEYS: readonly string[] = ["expert_lens", "expert_lens_ko"];
 
 export interface HomeSections<T> {

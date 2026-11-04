@@ -158,7 +158,7 @@ export const GenerateDecision = z.strictObject({
   quote_max_words: NonNegativeInt,
   /** Banned-phrase guard matches (`phrase:…`, `hook_start:…`, `pattern:…`), reported in 3d and blocking in QA 3g. */
   banned_matches: z.array(z.string()).max(20),
-  title_ko: z.string().nullable(),
+  title: z.string().nullable(),
 });
 export type GenerateDecision = z.infer<typeof GenerateDecision>;
 
@@ -247,7 +247,7 @@ export function emptyImageStats(): ImageStats {
 export const QaDecision = z.strictObject({
   draft_id: z.string(),
   slug: z.string().nullable(),
-  title_ko: z.string().nullable(),
+  title: z.string().nullable(),
   source_id: z.string().nullable(),
   outcome: z.enum(["passed", "rejected", "held"]),
   failed_rules: z.array(z.string()),

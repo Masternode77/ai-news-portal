@@ -51,7 +51,7 @@ test("collectReview joins drafts, QA verdicts and the source item; run and statu
   assert.equal(entry.slug, "news/65121580186fd621");
   assert.equal(entry.source_id, "semiconductor-engineering");
   assert.equal(entry.review_status, "rejected");
-  assert.equal(entry.brief.title_ko, "TSMC 450억 달러 투자");
+  assert.equal(entry.brief.title, "TSMC 450억 달러 투자", "a draft stored before ADR-009 still reads through its title_ko key");
   assert.deepEqual(entry.checks.ungrounded, ["450억", "1"]);
   assert.equal(entry.checks.grounding_pass, false);
   assert.equal(entry.qa.length, 2, "one verdict per rule");
