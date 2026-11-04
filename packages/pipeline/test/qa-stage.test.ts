@@ -32,7 +32,7 @@ const input = (drafts: ReturnType<typeof draft>[]) => ({ drafts, rawItems: [rawI
 test("every enabled qa rule runs on every draft in config order with no early stop; every verdict carries reason_code, params and the config version; qa_results and the review status are written; the decision is per draft", async () => {
   const { ctx, db } = ctxWith();
   const clean = draft();
-  const dirty = draft({ ...BRIEF, title_ko: "게임 체인저가 된 부산 1.2 GW 계약", summary_ko: `${BRIEF.summary_ko} 2027년에 다음 단계가 시작된다.` }, { promptVersion: "2026-10-25.2" });
+  const dirty = draft({ ...BRIEF, title: "The strategic significance of the 1.2 GW Busan campus deal", summary: `${BRIEF.summary} The next phase starts in 2027.` }, { promptVersion: "2026-10-25.2" });
   assert.notEqual(clean.id, dirty.id);
   const out = QaOutput.parse(await qaStage.run(input([clean, dirty]), ctx));
   const order = activeRules(ctx.qa).map((r) => r.rule);
@@ -64,13 +64,13 @@ test("every enabled qa rule runs on every draft in config order with no early st
   assert.equal(s.decisions[0]!.outcome, "passed");
   assert.deepEqual(s.decisions[1]!.failed_rules, ["UNGROUNDED_NUMBER", "BANNED_PATTERN"]);
   assert.deepEqual(s.decisions[1]!.failed_evidence["UNGROUNDED_NUMBER"]!["ungrounded"], ["2027"]);
-  assert.deepEqual(s.decisions[1]!.failed_evidence["BANNED_PATTERN"]!["matches"], ["phrase:게임 체인저"]);
+  assert.deepEqual(s.decisions[1]!.failed_evidence["BANNED_PATTERN"]!["matches"], ["phrase:strategic significance"]);
   assert.equal(s.decisions[1]!.source_id, "a");
   assert.equal(qaStage.idempotencyKey(input([dirty, clean])), `qa:${[clean.id, dirty.id].sort().join("|")}`, "order-independent idempotency key");
 });
 
 test("a soft failure holds the draft (review_status pending) unless the config entry has auto_pass; the decision helper never auto-passes a hard rule", async () => {
-  const thin = draft({ ...BRIEF, expert_lens_ko: THIN_LENS });
+  const thin = draft({ ...BRIEF, expert_lens: THIN_LENS });
   const strict = withRule(testQa(), "THIN_EXPERT_LENS", { auto_pass: false });
   const held = ctxWith(strict);
   const outHeld = QaOutput.parse(await qaStage.run(input([thin]), held.ctx));
@@ -197,10 +197,11 @@ test("DUPLICATE_EVENT in the stage: a publication inside normalize.published_win
     publication("news/busan-old", "Microsoft, 부산에 1.2 GW 용량 계약…Example Data Centers와 KEPCO 345 kV", new Date(NOW.getTime() - 30 * day)),
     publication("news/00000000000000aa", "Example Data Centers, Busan 1.2 GW Microsoft 계약 KEPCO 345 kV", new Date(NOW.getTime() - day)),
   ]);
-  const titled = (title_ko: string, slug: string, promptVersion: string) => draft({ ...BRIEF, title_ko, slug }, { promptVersion });
-  const repeat = titled("DOE, Constellation 원전 업레이트에 최대 50억 달러 조건부 대출 약정…약 1.1GW 증설", "news/00000000000000bb", "2026-10-25.2");
-  const first = titled("Microsoft, 부산 AI 데이터센터 캠퍼스에 1.2 GW 용량 계약…KEPCO 345 kV 변전소 연결", "news/00000000000000aa", "2026-10-25.3");
-  const sameRun = titled("KEPCO 345 kV 변전소로 Microsoft 부산 1.2 GW 캠퍼스 연결", "news/00000000000000cc", "2026-10-25.4");
+  // The published rows keep Korean titles (rows from before ADR-009); the English drafts are compared against them by value and name.
+  const titled = (title: string, slug: string, promptVersion: string) => draft({ ...BRIEF, title, slug }, { promptVersion });
+  const repeat = titled("DOE extends up to $5 billion conditional loan for about 1.1GW of Constellation uprates", "news/00000000000000bb", "2026-10-25.2");
+  const first = titled("Microsoft books 1.2 GW in Busan, connected through a KEPCO 345 kV substation", "news/00000000000000aa", "2026-10-25.3");
+  const sameRun = titled("KEPCO links Microsoft's 1.2 GW Busan campus to a 345 kV substation", "news/00000000000000cc", "2026-10-25.4");
   const out = QaOutput.parse(await qaStage.run(input([repeat, first, sameRun]), ctx));
   const rows = Object.fromEntries(db.rows("qa_results").filter((r) => r["rule"] === "DUPLICATE_EVENT").map((r) => [r["draft_id"], r]));
   assert.equal(rows[repeat.id!]!["pass"], false, "same event as a publication inside the window");

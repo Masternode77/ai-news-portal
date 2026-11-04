@@ -4,8 +4,8 @@
  * Text is the legacy site's published copy (src/pages/<slug>.astro, read
  * 2026-10-31), carried as content, not code (P9). Two pages changed where the
  * legacy wording no longer matched the rebuilt site:
- *   - ai-disclosure gains "How Korean briefs are made" (automated briefs and
- *     the checks they pass, packages/pipeline QA gates);
+ *   - ai-disclosure gains "How news briefs are made" (automated briefs and
+ *     the checks they pass, packages/pipeline QA gates; English since ADR-009);
  *   - privacy drops the analytics consent banner text: the rebuilt site loads
  *     no analytics or advertising tags and sets no cookies.
  * Both need Josh's review before the cutover (docs/migration/phase5-cutover.md).
@@ -128,9 +128,9 @@ export const POLICY_PAGES: readonly PolicyPage[] = [
         ],
       },
       {
-        heading: "How Korean briefs are made",
+        heading: "How news briefs are made",
         paragraphs: [
-          "News briefs are drafted in Korean by an AI model from one linked source and published automatically only after automated checks pass: every figure, and every name written in Latin script, must appear in the source; quotations are capped at a short excerpt and wording too close to the source is rejected; banned phrasing and briefs that repeat an event already covered are rejected; and the source link stays on the page. A brief that fails a check is held or rejected, not published.",
+          "News briefs are drafted in English by an AI model from one linked source, which may itself be in English or Korean, and published automatically only after automated checks pass: every figure must appear in the source, and every name must appear in an English-language source; quotations are capped at a short excerpt and wording too close to the source is rejected; banned phrasing and briefs that repeat an event already covered are rejected; and the source link stays on the page. A brief that fails a check is held or rejected, not published.",
         ],
       },
       {

@@ -6,7 +6,8 @@
  *   overlap        = shared word `shingle_words`-grams ÷ draft shingles          → must be ≤ overlap_max
  *   sentence_reuse = copied sentences ÷ draft sentences of ≥ copied_sentence_min_chars → must be ≤ sentence_reuse_max
  * Texts are normalised to lower-case words first, so punctuation and spacing differences do not hide a copy.
- * A Korean re-narration of an English source shares almost nothing; the rule catches pasted passages.
+ * Since ADR-009 an English source is re-narrated in English, so this rule (with QUOTE_TOO_LONG) is the
+ * guard that the brief is a re-narration and not a lightly edited copy.
  */
 import type { QaRule } from "@cc/shared";
 import { briefOf, sentences, shingles, words } from "../text.ts";
@@ -26,7 +27,7 @@ export const rule: QaRule = {
     const brief = briefOf(draft);
     if (!brief) return verdict(config, false, { skipped: "brief_invalid" }, evidence.now);
     if (evidence.sourceText === null) return verdict(config, true, { skipped: "no_source_text" }, evidence.now);
-    const body = [brief.title_ko, brief.summary_ko, brief.why_it_matters_ko, brief.expert_lens_ko].join("\n\n");
+    const body = [brief.title, brief.summary, brief.why_it_matters, brief.expert_lens].join("\n\n");
     const own = shingles(body, n);
     const against = new Set(shingles(evidence.sourceText, n));
     const shared = own.filter((s) => against.has(s)).length;

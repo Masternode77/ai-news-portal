@@ -27,13 +27,13 @@ function config(imageYaml = "image: { provider: placeholder, fallback_chain: [pl
 }
 
 function brief(overrides: Partial<NewsBrief> = {}): NewsBrief {
-  const title = overrides.title_ko ?? "한전, 새만금 데이터센터 클러스터용 345 kV 변전소 가동";
+  const title = overrides.title ?? "KEPCO switches on a 345 kV substation for the Saemangeum data center cluster";
   const url = overrides.source_url ?? "https://wire-b.example.org/news/kepco-saemangeum-345kv";
   return NewsBrief.parse({
-    title_ko: title,
-    summary_ko: "한국전력이 새만금 데이터센터 클러스터에 전력을 공급할 345 kV 변전소를 가동했다고 밝혔다. 1단계 200 MW 공급이 시작됐고, 추가 변압기 증설은 입주 수요에 맞춰 단계적으로 진행된다. 한전은 변전소 가동으로 클러스터 내 첫 데이터센터가 올해 안에 전력을 받게 된다고 설명했다. 원문은 투자 규모와 2단계 일정은 밝히지 않았으며, 송전선 보강 계획도 언급하지 않았다.",
-    why_it_matters_ko: "비수도권 데이터센터 클러스터에 실제 전력 공급이 시작됐다는 신호다. 계통 접속 병목이 풀리는 속도가 입지 결정을 좌우한다는 점에서, 다른 지방 클러스터와 하이퍼스케일러 협상에 참조 사례가 된다.",
-    expert_lens_ko: "345 kV 변전소 가동은 계통 접속의 첫 관문일 뿐이며, 송전선 보강과 변압기 증설 일정이 실제 수용 용량을 결정한다. 1단계 200 MW 이후의 증설 약정이 공개되지 않은 점은 후속 입주 협상의 핵심 변수다. 다음에 확인할 신호는 2단계 접속 승인 시점과 변압기 리드타임이다.",
+    title,
+    summary: "KEPCO said it has energized a 345 kV substation that will supply the Saemangeum data center cluster. Supply for a first 200 MW phase has started, and further transformer additions will follow tenant demand in stages. The utility said the first data center in the cluster will receive power this year. The source gives neither the investment amount nor the schedule for a second phase, and it does not mention transmission upgrades.",
+    why_it_matters: "It signals that power has actually started to flow to a data center cluster outside the capital region. Because the pace at which interconnection bottlenecks clear decides siting, the project becomes a reference case for other regional clusters and for hyperscaler negotiations.",
+    expert_lens: "Energizing a 345 kV substation is only the first gate for interconnection; transmission reinforcement and the transformer schedule decide how much load the site can actually take. That no commitments beyond the first 200 MW phase were disclosed is the key variable for follow-on tenant talks. The next signal is the timing of the second-phase connection approval and transformer lead times.",
     source_url: url,
     source_name: "Wire B",
     published_at_source: "2026-10-19T22:00:00.000Z",
@@ -72,7 +72,7 @@ function chainFor(cfg: PipelineConfig, extra: Partial<Record<"fixture" | "openai
 }
 
 test("placeholder first: every passed draft leaves with a deterministic brand SVG through the image store, no IMAGE_MISSING verdict", async () => {
-  const cfg = config("image:\n  provider: placeholder\n  fallback_chain: [placeholder]\n  placeholder:\n    default_topic: ai-infrastructure\n    topics:\n      power-grid: [변전소, grid]\n      cooling: [cooling, 냉각]\n");
+  const cfg = config("image:\n  provider: placeholder\n  fallback_chain: [placeholder]\n  placeholder:\n    default_topic: ai-infrastructure\n    topics:\n      power-grid: [substation, grid]\n      cooling: [cooling, liquid]\n");
   const { ctx, store, db } = await ctxWith(cfg, chainFor(cfg));
   const b = brief();
   const out = ImageOutput.parse(await imageStage.run({ passed: [draft(b)] }, ctx));
@@ -85,12 +85,12 @@ test("placeholder first: every passed draft leaves with a deterministic brand SV
   assert.equal(image.provenance.model, PLACEHOLDER_MODEL);
   assert.equal(image.alt, imageAlt(b));
   assert.match(image.provenance.prompt, /^Use case: Compute Current/);
-  assert.match(image.provenance.prompt, /Title: 한전, 새만금/);
+  assert.match(image.provenance.prompt, /Title: KEPCO switches on/);
   const stored = store.files.get(image.path)!;
   assert.equal(stored.mime, "image/svg+xml");
   const svg = new TextDecoder().decode(stored.bytes);
   assert.match(svg, /COMPUTE CURRENT \/ POWER-GRID/, "the topic vocabulary picked the motif");
-  assert.equal(svg, placeholderSvg({ title: b.title_ko, topic: "power-grid", seed: b.slug }), "same inputs, same bytes");
+  assert.equal(svg, placeholderSvg({ title: b.title, topic: "power-grid", seed: b.slug }), "same inputs, same bytes");
   assert.deepEqual(out.verdicts, [], "a placeholder-first configuration is a choice, not a failure");
   assert.equal(out.stats.placeholders, 1);
   assert.equal(out.stats.generated, 0);
@@ -101,7 +101,7 @@ test("placeholder first: every passed draft leaves with a deterministic brand SV
 });
 
 test("a served run (static store, Codex PR #86): no generated path reaches the row — the deployed static placeholder does, with model static, and no IMAGE_MISSING", async () => {
-  const cfg = config("image:\n  provider: placeholder\n  fallback_chain: [placeholder]\n  placeholder:\n    default_topic: ai-infrastructure\n    topics:\n      power-grid: [변전소, grid]\n");
+  const cfg = config("image:\n  provider: placeholder\n  fallback_chain: [placeholder]\n  placeholder:\n    default_topic: ai-infrastructure\n    topics:\n      power-grid: [substation, grid]\n");
   const { ctx, store } = await ctxWith(cfg, chainFor(cfg));
   ctx.adapters = { ...ctx.adapters, imageStore: createStaticImageStore() };
   const out = ImageOutput.parse(await imageStage.run({ passed: [draft(brief())] }, ctx));
@@ -118,28 +118,28 @@ test("a served run (static store, Codex PR #86): no generated path reaches the r
 });
 
 test("the motif comes from the brief's title, tags and summary only — the prompt template's own vocabulary (\"grid interconnects\") never picks power-grid for a cooling brief", async () => {
-  const cfg = config("image:\n  provider: placeholder\n  fallback_chain: [placeholder]\n  placeholder:\n    default_topic: ai-infrastructure\n    topics:\n      power-grid: [변전소, grid]\n      cooling: [cooling, 냉각]\n");
+  const cfg = config("image:\n  provider: placeholder\n  fallback_chain: [placeholder]\n  placeholder:\n    default_topic: ai-infrastructure\n    topics:\n      power-grid: [substation, grid]\n      cooling: [cooling, liquid]\n");
   const { ctx, store } = await ctxWith(cfg, chainFor(cfg));
-  const title = "Example, 서울 캠퍼스 액침 냉각 전환으로 PUE 1.15 달성";
+  const title = "Example cuts PUE to 1.15 by moving its Seoul campus to liquid cooling";
   const url = "https://wire-a.example.com/news/example-seoul-liquid-cooling";
   const cooling = brief({
-    title_ko: title,
+    title,
     source_url: url,
     slug: newsBriefSlug(url, title),
-    summary_ko: "Example이 서울 캠퍼스의 20 MW 추론 구역을 직접 액체 냉각으로 전환해 설계 PUE를 1.4에서 1.15로 낮췄다고 밝혔다. 열 교환 장치는 랙 열마다 설치됐고 랙 밀도는 80 kW까지 올렸으며, 기존 공랭 설비는 예비 계통으로 남겼다. 운영사는 전환 구역의 서버를 멈추지 않고 열 단위로 공사를 진행했다고 설명했다. 원문은 전환 비용과 공사 기간, 2차 전환 구역의 일정은 밝히지 않았다.",
-    why_it_matters_ko: "국내 운영 중인 캠퍼스에서 공랭을 액체 냉각으로 바꿔 PUE를 낮춘 사례는 드물다. 고밀도 추론 수요가 기존 자산의 재투자 결정을 앞당기고 있다는 신호이며, 전력 단가가 높은 수도권 캠퍼스에서는 냉각 전환이 증설보다 먼저 검토될 수 있다.",
-    expert_lens_ko: "PUE 1.15는 설계 값이고 운영 값은 계절과 부하율에 따라 달라진다. 80 kW 랙 밀도는 열 교환 장치 용량이 상한을 정하므로 다음에 확인할 신호는 운영 PUE 공개와 2차 전환 구역 발표다. 전환 비용이 공개되지 않은 점은 투자 회수 기간 판단을 막고, 임차인 입장에서는 냉각 전환분이 임대료에 어떻게 반영되는지가 협상 변수가 된다.",
+    summary: "Example said it moved a 20 MW inference zone at its Seoul campus to direct liquid cooling, lowering design PUE from 1.4 to 1.15. Heat exchangers were installed on every rack row and rack density was raised to 80 kW, with the existing air cooling kept as a backup system. The operator said it carried out the work row by row without stopping the servers in the converted zone. The source gives neither the cost nor the duration of the conversion.",
+    why_it_matters: "Cases of an operating campus replacing air cooling with liquid cooling to cut PUE are rare. It signals that dense inference demand is pulling forward reinvestment decisions on existing assets, and where power prices are high a cooling conversion may come before new capacity.",
+    expert_lens: "A PUE of 1.15 is a design value; the operating figure moves with season and load. The heat-exchanger capacity sets the ceiling for 80 kW racks, so the next signal is a published operating PUE and an announcement of a second conversion zone. With the conversion cost undisclosed, the payback period cannot be judged, and for tenants the way the conversion feeds into rent becomes a negotiating point.",
     tags: ["cooling", "pue", "korea"],
   });
   const prompt = imagePrompt((await imagePromptFile()).system, cooling);
   assert.match(prompt, /grid interconnects/, "the template's fixed vocabulary does mention grids");
-  const request = { prompt, alt: imageAlt(cooling), slug: cooling.slug, title: cooling.title_ko, summary: cooling.summary_ko, tags: cooling.tags };
+  const request = { prompt, alt: imageAlt(cooling), slug: cooling.slug, title: cooling.title, summary: cooling.summary, tags: cooling.tags };
   assert.doesNotMatch(placeholderTopicText(request), /grid interconnects/, "the matched text excludes the prompt");
   const out = ImageOutput.parse(await imageStage.run({ passed: [draft(cooling)] }, ctx));
   const svg = new TextDecoder().decode(store.files.get(out.withImages[0]!.image!.path)!.bytes);
   assert.match(svg, /COMPUTE CURRENT \/ COOLING/, "a cooling brief gets the cooling motif");
   assert.doesNotMatch(svg, /POWER-GRID/);
-  const neutral = brief({ title_ko: "데이터센터 업계 소식 묶음", slug: newsBriefSlug(url, "neutral"), summary_ko: "이번 주 업계 소식을 간단히 정리했다. 각 항목의 상세 내용은 원문 링크에서 확인할 수 있으며, 수치는 원문 기준이다. 추가 확인이 필요한 항목은 다음 호에서 다룬다. 이번 호에는 운영사 인사, 협회 일정, 정부 공고 마감일과 같은 짧은 소식만 모았고, 개별 거래나 설비 수치는 담지 않았다. 독자 제보는 다음 호 마감 전까지 받으며, 정리 기준과 누락 항목은 편집부 안내 페이지에 함께 적어 두었다.", tags: ["weekly"] });
+  const neutral = brief({ title: "A short roundup of industry notices this week", slug: newsBriefSlug(url, "neutral"), summary: "This is a short roundup of the week's industry notices. Details of each item are in the linked original, and figures follow the original. Items that need more checking will be covered in the next issue. This issue gathers only short notices such as executive moves, association calendars and deadlines for public announcements, and it carries no individual deals or equipment figures.", tags: ["weekly"] });
   const out2 = ImageOutput.parse(await imageStage.run({ passed: [draft(neutral)] }, ctx));
   assert.match(new TextDecoder().decode(store.files.get(out2.withImages[0]!.image!.path)!.bytes), /COMPUTE CURRENT \/ AI-INFRASTRUCTURE/, "no article vocabulary → the default topic, which was unreachable before");
 });
@@ -151,7 +151,7 @@ test("every real provider fails: the chain records each attempt, the placeholder
   const { ctx, db, ledger } = await ctxWith(cfg, chainFor(cfg, { fixture: createFixtureImageAdapter({ fixturesDir: emptyFixtures }), openai }));
   assert.deepEqual(imageChainOrder(cfg.image), ["fixture", "openai", "placeholder"]);
   const b = brief();
-  const out = ImageOutput.parse(await imageStage.run({ passed: [draft(b), draft(brief({ title_ko: "두 번째 브리프 제목입니다", source_url: "https://wire-b.example.org/news/second" }), undefined, "33333333-3333-4333-8333-333333333333")] }, ctx));
+  const out = ImageOutput.parse(await imageStage.run({ passed: [draft(b), draft(brief({ title: "A second brief title for the provider test", source_url: "https://wire-b.example.org/news/second" }), undefined, "33333333-3333-4333-8333-333333333333")] }, ctx));
   assert.equal(out.withImages.length, 2);
   for (const entry of out.withImages) {
     assert.equal(entry.image?.placeholder, true);
@@ -215,15 +215,15 @@ test("prompt template, alt text, and an invalid draft body (dead letter, image n
   assert.equal(file.task, "image");
   const b = brief();
   const prompt = imagePrompt(file.system, b);
-  assert.match(prompt, /Title: 한전, 새만금 데이터센터 클러스터용 345 kV 변전소 가동/);
+  assert.match(prompt, /Title: KEPCO switches on a 345 kV substation for the Saemangeum data center cluster/);
   assert.match(prompt, /Tags: kepco, power, grid, korea/);
   assert.match(prompt, /Source: Wire B/);
   assert.doesNotMatch(prompt, /\{\{/, "every placeholder was filled");
-  assert.equal(imageAlt(b), "한전, 새만금 데이터센터 클러스터용 345 kV 변전소 가동 — Compute Current 편집 일러스트");
+  assert.equal(imageAlt(b), "KEPCO switches on a 345 kV substation for the Saemangeum data center cluster — Compute Current editorial illustration");
 
   const cfg = config();
   const { ctx, ledger } = await ctxWith(cfg, chainFor(cfg));
-  const out = ImageOutput.parse(await imageStage.run({ passed: [draft(b, { brief: { title_ko: "no" } })] }, ctx));
+  const out = ImageOutput.parse(await imageStage.run({ passed: [draft(b, { brief: { title: "no" } })] }, ctx));
   assert.equal(out.withImages[0]?.image, null);
   const dead = (await ledger.dump()).deadLetters;
   assert.equal(dead.length, 1);

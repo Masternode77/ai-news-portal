@@ -1,5 +1,5 @@
 /**
- * Shared QA test material (Phase 3g): a clean Korean news_brief resting on a reachable
+ * Shared QA test material (Phase 3g): a clean English news_brief (ADR-009) resting on a reachable
  * full-text source, plus the raw item, source, candidate and evidence around it. Rule
  * and stage tests perturb one field at a time from here.
  */
@@ -14,10 +14,10 @@ export const TITLE = "Microsoft signs 1.2 GW capacity agreement with Example Dat
 export const BODY = "Microsoft has signed a 1.2 GW capacity agreement with Example Data Centers for an AI data center campus in Busan, the companies said on Monday. The first 200 MW phase is scheduled to reach ready-for-service in 2028, with grid interconnection secured from KEPCO through a new 345 kV substation and liquid cooling for GPU clusters. Financing of $2.1 billion is being arranged with a consortium of Korean lenders, and the operator said rack densities above 100 kW will be supported from day one. Example Data Centers said the Busan site was chosen for its proximity to the new substation and to subsea cable landings, and that the campus will be built in phases as grid capacity is released.";
 
 export const BRIEF = {
-  title_ko: "Microsoft, 부산 AI 데이터센터 캠퍼스에 1.2 GW 용량 계약 체결",
-  summary_ko: "Microsoft가 Example Data Centers와 부산의 AI 데이터센터 캠퍼스에 대해 1.2 GW 규모의 용량 계약을 맺었다고 두 회사가 월요일 밝혔다. 1단계 200 MW는 2028년 ready-for-service를 목표로 하며, 계통 접속은 KEPCO가 새로 짓는 345 kV 변전소를 통해 확보했다.\n\n캠퍼스는 GPU 클러스터용 액체 냉각을 적용하고, 운영사는 첫날부터 100 kW를 넘는 랙 밀도를 지원한다고 설명했다. 자금은 한국 금융기관 컨소시엄과 21억 달러 규모의 금융 조달을 협의 중이다. 원문은 임대 기간과 단가는 밝히지 않았다.",
-  why_it_matters_ko: "국내에서 단일 하이퍼스케일러가 GW 단위 용량을 한 캠퍼스에 묶는 계약은 드물다. 비수도권 입지와 한전 변전소 신설이 대형 AI 수요의 실제 경로가 되고 있음을 보여주며, 국내 운영사와 금융기관에는 참조 거래가 생긴 셈이다.",
-  expert_lens_ko: "1.2 GW 계약과 200 MW 1단계 사이의 간극이 핵심이다. 2028년 RFS는 345 kV 변전소 준공과 송전 보강이 동시에 맞아야 가능하며, 원문은 그 공정 리스크를 다루지 않는다. 21억 달러 금융은 1단계 규모에 비해 커 보여 후속 단계까지 포함한 약정일 가능성이 있다. 다음에 확인할 신호는 한전의 계통 접속 승인 시점이다.",
+  title: "Microsoft books 1.2 GW of capacity at Example Data Centers' planned campus in Busan",
+  summary: "Microsoft has committed to 1.2 GW of capacity at an AI campus that Example Data Centers plans to build in Busan, the companies announced on Monday. Delivery starts with a 200 MW first phase targeted for ready-for-service in 2028.\n\nPower will come through a new 345 kV substation, with the grid connection secured from KEPCO. The operator plans liquid cooling for its GPU clusters and says racks drawing more than 100 kW will be supported at opening. A group of Korean lenders is arranging $2.1 billion of financing. The lease term and pricing were not disclosed.",
+  why_it_matters: "Gigawatt-scale commitments from a single hyperscaler on one Korean campus are uncommon. Busan secured its grid connection outside the constrained capital region, a sign that new substations now decide where large AI loads can go in Korea, and it gives global operators and lenders a reference deal.",
+  expert_lens: "The gap between the 1.2 GW headline and the 200 MW first phase is the figure that matters. Meeting a 2028 ready-for-service date depends on the 345 kV substation and the related grid work landing on time, a risk the announcement leaves unaddressed. The $2.1 billion financing looks large for a first phase alone, which suggests it may also cover later phases. The next signal is the timing of KEPCO's interconnection approval.",
   tags: ["hyperscale", "korea", "power", "grid", "financing", "cooling"],
   source_url: URL,
   source_name: "Source a",
@@ -54,5 +54,8 @@ export function entry(rule: string, params: Record<string, unknown> = {}, severi
 }
 
 
-/** ≥150 chars, ≥3 sentences, no number and no Latin name: fails THIN_EXPERT_LENS and nothing else. */
-export const THIN_LENS = "이 계약은 중요하다고 본다. 더 지켜볼 일이다. 다음 신호를 기다린다. 이상이다. 끝으로 한 마디를 더 적어 둔다. 그리고 또 한 문장을 더 쓴다. 마지막으로 결론을 맺는다. 시장은 늘 그렇듯 조금 더 기다려 보라고 말한다. 업계 관계자들도 비슷한 이야기를 반복한다. 결국 시간이 답을 줄 것이다.";
+/** ≥300 chars, ≥3 sentences, no number and no mid-sentence name: fails THIN_EXPERT_LENS and nothing else. */
+export const THIN_LENS = "This deal looks important, and it deserves a closer look over time. It is too early to say how it will play out. The market will want more detail before it reacts to the news. Buyers and lenders will keep asking the same questions for a while. Patience remains the only sensible stance for now, until more detail arrives. More clarity should come with the next announcement.";
+
+/** Korean reader text long enough for every field's schema minimum (LANG_MISMATCH tests). */
+export const KOREAN_TEXT = "마이크로소프트가 부산의 인공지능 데이터센터 캠퍼스에 대규모 용량 계약을 맺었다고 두 회사가 밝혔다. ".repeat(8).trim();

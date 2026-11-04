@@ -10,7 +10,7 @@ import { ARCHIVE_PAGE_SIZE, archivePath, indexableRows, pageCount, publicationPa
 
 export const SITE_URL = "https://www.computecurrent.com";
 export const SITE_NAME = "Compute Current";
-export const SITE_DESCRIPTION_KO = "AI 인프라 인텔리전스 — 전력·데이터센터·반도체·클라우드 용량·자본";
+export const SITE_DESCRIPTION = "AI infrastructure intelligence: power, data centers, chips, cloud capacity and capital.";
 
 export function escapeXml(text: string): string {
   return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&apos;");
@@ -22,7 +22,8 @@ export function absoluteUrl(path: string): string {
 
 /** The first non-empty reader-facing text field, for feed descriptions and meta descriptions. */
 export function summaryOf(row: Pick<PublicationRow, "body">, maxChars = 300): string {
-  for (const key of ["summary_ko", "deck", "thesis_ko", "thesis", "why_it_matters_ko", "article_body", "body_ko"]) {
+  // The brief summary first (English since ADR-009, then the Korean-era key of rows published before the switch).
+  for (const key of ["summary", "summary_ko", "deck", "thesis", "thesis_ko", "why_it_matters", "why_it_matters_ko", "article_body", "body_ko"]) {
     const value = row.body[key];
     if (typeof value === "string" && value.trim().length > 0) {
       const text = value.replace(/\s+/g, " ").trim();

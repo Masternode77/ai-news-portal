@@ -32,6 +32,14 @@ export function boolParam(config: QaRuleConfig, key: string, fallback: boolean):
   return value;
 }
 
+/** A string param with a default; anything but a string fails loudly. */
+export function stringParam(config: QaRuleConfig, key: string, fallback: string): string {
+  const value = config.params[key];
+  if (value === undefined) return fallback;
+  if (typeof value !== "string") throw new Error(`QA_PARAM_INVALID: ${config.rule}.params.${key} must be a string`);
+  return value;
+}
+
 export function stringListParam(config: QaRuleConfig, key: string, fallback: string[] = []): string[] {
   const value = config.params[key];
   if (value === undefined) return fallback;

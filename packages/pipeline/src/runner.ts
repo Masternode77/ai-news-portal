@@ -64,6 +64,13 @@ export interface RunOptions {
   clock?: () => Date;
   fetch?: typeof globalThis.fetch;
   stages?: readonly StageSpecAny[];
+  /**
+   * Rows the run starts from instead of ingesting them (`pipeline regenerate`, ADR-009): the candidates, the
+   * selected subset and their raw items, so a run limited to generate → publish can re-draft stored stories.
+   */
+  seed?: Partial<Pick<PipelineState, "rawItems" | "candidates" | "selected">>;
+  /** Extra keys recorded in the ledger row's flags (`mode: "regenerate"`), so such a run is told apart from a cycle. */
+  ledgerFlags?: Record<string, unknown>;
 }
 
 export interface StageResult {
@@ -173,7 +180,7 @@ export async function runPipeline(options: RunOptions): Promise<RunResult> {
     trigger: options.trigger,
     startedAt,
     gitSha: options.gitSha,
-    flags: { ...flags, dry_run: options.dryRun, replay: options.replay, fixture: options.fixtureName ?? null },
+    flags: { ...flags, dry_run: options.dryRun, replay: options.replay, fixture: options.fixtureName ?? null, ...(options.ledgerFlags ?? {}) },
   });
   const runLogger = logger.child({ runId, dryRun: options.dryRun, replay: options.replay });
   runLogger.info("run started", { trigger: options.trigger, gitSha: options.gitSha, publish_target: options.config.flags.publish_target });
@@ -208,7 +215,7 @@ export async function runPipeline(options: RunOptions): Promise<RunResult> {
     adapters: options.adapters,
   };
 
-  let state = initialState(options.sources);
+  let state: PipelineState = { ...initialState(options.sources), ...(options.seed ?? {}) };
   const stageResults: StageResult[] = [];
   const completed = new Set<StageName>();
   let status: RunResult["status"] = "done";

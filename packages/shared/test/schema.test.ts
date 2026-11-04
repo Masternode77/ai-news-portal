@@ -1,22 +1,25 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import {
+  BRIEF_TEXT_FIELDS,
   FUNNEL_COLUMNS,
   Funnel,
   NewsBrief,
+  NewsBriefDraft,
   PublicationRow,
   PublicationSlug,
   PUBLICATION_COLUMNS,
   RawItemInsert,
   STAGE_NAMES,
   TABLE_NAMES,
+  storedBriefField,
 } from "../src/index.ts";
 
 const validBrief = {
-  title_ko: "데이터센터 전력 계약이 바뀌는 이유",
-  summary_ko: "가".repeat(220),
-  why_it_matters_ko: "나".repeat(120),
-  expert_lens_ko: "다".repeat(160),
+  title: "Why data center power contracts are changing",
+  summary: "a".repeat(320),
+  why_it_matters: "b".repeat(220),
+  expert_lens: "c".repeat(320),
   source_url: "https://www.eia.gov/todayinenergy/detail.php?id=1",
   source_name: "EIA",
   published_at_source: "2026-10-17T12:00:00Z",
@@ -32,9 +35,23 @@ test("NewsBrief accepts a conforming brief and rejects extra keys", () => {
 
 test("NewsBrief enforces slug, length and source fields", () => {
   assert.equal(NewsBrief.safeParse({ ...validBrief, slug: "news/short" }).success, false);
-  assert.equal(NewsBrief.safeParse({ ...validBrief, summary_ko: "짧음" }).success, false);
+  assert.equal(NewsBrief.safeParse({ ...validBrief, summary: "too short" }).success, false);
+  assert.equal(NewsBrief.safeParse({ ...validBrief, summary: "a".repeat(2401) }).success, false, "English summaries are capped at 2,400 characters");
   const { source_url: _omit, ...withoutSource } = validBrief;
   assert.equal(NewsBrief.safeParse(withoutSource).success, false);
+});
+
+test("English reader fields (ADR-009): the Korean-era *_ko keys are no longer accepted, but stored rows still read through storedBriefField", () => {
+  assert.deepEqual([...BRIEF_TEXT_FIELDS], ["title", "summary", "why_it_matters", "expert_lens"]);
+  const { title, summary, why_it_matters, expert_lens, ...rest } = validBrief;
+  const korean = { ...rest, title_ko: title, summary_ko: summary, why_it_matters_ko: why_it_matters, expert_lens_ko: expert_lens };
+  assert.equal(NewsBrief.safeParse(korean).success, false);
+  assert.deepEqual(Object.keys(NewsBriefDraft.shape).sort(), ["expert_lens", "summary", "tags", "title", "why_it_matters"]);
+  assert.equal(storedBriefField(validBrief, "title"), "Why data center power contracts are changing");
+  assert.equal(storedBriefField({ title_ko: "한전, 새만금 변전소 가동" }, "title"), "한전, 새만금 변전소 가동", "a row written before the switch still reads");
+  assert.equal(storedBriefField({ title: "English", title_ko: "한국어" }, "title"), "English", "the current key wins");
+  assert.equal(storedBriefField({ title: 3 }, "title"), null);
+  assert.equal(storedBriefField(null, "summary"), null);
 });
 
 test("PublicationSlug keeps legacy news and column paths", () => {

@@ -6,6 +6,7 @@
  * same text goes to the log, the `--json` output and Telegram.
  */
 import type { Funnel, NotifyKind, NotifySummaryConfig, RunStatus, RunTrigger } from "@cc/shared";
+import { storedBriefField } from "@cc/shared";
 import { errorCode } from "../runner.ts";
 import type { RunResult, StageResult } from "../runner.ts";
 
@@ -182,8 +183,7 @@ function publishedRefs(result: RunResult, max: number): SummaryPublished[] {
   for (const { draft } of result.state.withImages) {
     const brief = draft.body["brief"];
     const slug = brief && typeof brief === "object" ? (brief as { slug?: unknown }).slug : undefined;
-    const title = brief && typeof brief === "object" ? (brief as { title_ko?: unknown }).title_ko : undefined;
-    if (typeof slug === "string") bySlug.set(slug, { content_type: draft.content_type, title: typeof title === "string" ? title : null });
+    if (typeof slug === "string") bySlug.set(slug, { content_type: draft.content_type, title: storedBriefField(brief, "title") });
   }
   return result.state.published.slice(0, max).map((p) => {
     const known = bySlug.get(p.slug);

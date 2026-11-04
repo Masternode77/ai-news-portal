@@ -98,7 +98,7 @@ interface Result {
     grounding_pass_rate: number | null;
     banned: { checked: number; passed: number; matches: number };
     quote_max_words: number;
-    decisions: { canonical_url: string; source_id: string; slug: string | null; ok: boolean; error: string | null; model: string | null; cost_usd: number; input_tokens: number; output_tokens: number; grounding_numbers: number; grounding_ungrounded: string[]; quote_max_words: number; banned_matches: string[]; title_ko: string | null }[];
+    decisions: { canonical_url: string; source_id: string; slug: string | null; ok: boolean; error: string | null; model: string | null; cost_usd: number; input_tokens: number; output_tokens: number; grounding_numbers: number; grounding_ungrounded: string[]; quote_max_words: number; banned_matches: string[]; title?: string | null; title_ko?: string | null }[];
     ms: number;
   };
   qaStats?: {
@@ -113,7 +113,7 @@ interface Result {
     rule_errors: number;
     rules: number;
     by_rule: Record<string, { checked: number; passed: number; failed: number; auto_passed: number }>;
-    decisions: { draft_id: string; slug: string | null; title_ko: string | null; source_id: string | null; outcome: string; failed_rules: string[]; auto_passed_rules: string[]; failed_evidence: Record<string, Record<string, unknown>> }[];
+    decisions: { draft_id: string; slug: string | null; title?: string | null; title_ko?: string | null; source_id: string | null; outcome: string; failed_rules: string[]; auto_passed_rules: string[]; failed_evidence: Record<string, Record<string, unknown>> }[];
     ms: number;
   };
   imageStats?: {
@@ -278,7 +278,7 @@ export function summarize(result: Result): string {
       lines.push("| ok | source | title | slug | model | USD | numbers | ungrounded | run | banned | error |");
       lines.push("|---|---|---|---|---|---|---|---|---|---|---|");
       for (const d of generate.decisions.slice(0, 40)) {
-        lines.push(`| ${d.ok ? "✓" : "✗"} | ${cell(d.source_id)} | ${cell(d.title_ko ?? "")} ${link(d.canonical_url)} | ${cell(d.slug ?? "")} | ${cell(d.model ?? "")} | ${d.cost_usd.toFixed(4)} | ${d.grounding_numbers} | ${cell(d.grounding_ungrounded.join(" "))} | ${d.quote_max_words} | ${cell(d.banned_matches.join(" "))} | ${cell(d.error ?? "")} |`);
+        lines.push(`| ${d.ok ? "✓" : "✗"} | ${cell(d.source_id)} | ${cell(d.title ?? d.title_ko ?? "")} ${link(d.canonical_url)} | ${cell(d.slug ?? "")} | ${cell(d.model ?? "")} | ${d.cost_usd.toFixed(4)} | ${d.grounding_numbers} | ${cell(d.grounding_ungrounded.join(" "))} | ${d.quote_max_words} | ${cell(d.banned_matches.join(" "))} | ${cell(d.error ?? "")} |`);
       }
     }
   }
@@ -319,7 +319,7 @@ export function summarize(result: Result): string {
             return `${rule}: ${JSON.stringify(rest)}`;
           })
           .join("; ");
-        lines.push(`| ${cell(d.slug ?? d.title_ko ?? d.draft_id)} | ${cell(d.source_id ?? "")} | ${cell(d.outcome)} | ${cell(failed)} | ${cell(evidence.length > 400 ? `${evidence.slice(0, 400)}…` : evidence)} |`);
+        lines.push(`| ${cell(d.slug ?? d.title ?? d.title_ko ?? d.draft_id)} | ${cell(d.source_id ?? "")} | ${cell(d.outcome)} | ${cell(failed)} | ${cell(evidence.length > 400 ? `${evidence.slice(0, 400)}…` : evidence)} |`);
       }
     }
   }

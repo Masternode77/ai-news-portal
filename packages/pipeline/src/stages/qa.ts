@@ -15,7 +15,7 @@
  * throws becomes a failing verdict carrying the error (fail-closed) and is
  * logged, never swallowed.
  */
-import { draftId, rawItemId } from "@cc/shared";
+import { draftId, rawItemId, storedBriefField } from "@cc/shared";
 import type { CandidateInsert, DbPort, DraftInsert, QaEvidence, QaResultInsert, QaRuleConfig, QaVerdict, RawItemInsert, Row, SourceConfig, Stage, StageContext } from "@cc/shared";
 import { QA_RULES } from "../qa/registry.ts";
 import type { QaDecision, QaRuleStat, QaStats } from "../state.ts";
@@ -163,19 +163,19 @@ export const qaStage: Stage<QaInput, QaOutput> = {
       const decision = decide(own, entries);
       if (decision.outcome === "passed") {
         passed.push(draft);
-        const title = (draft.body["brief"] as { title_ko?: unknown } | undefined)?.title_ko;
-        if (typeof title === "string") passedTitles.push({ slug: draftSlug(draft) ?? id, title });
+        const title = storedBriefField(draft.body["brief"], "title");
+        if (title !== null) passedTitles.push({ slug: draftSlug(draft) ?? id, title });
       } else {
         if (decision.outcome === "rejected") rejected += 1;
         else held += 1;
         statusUpdates.push({ ...draft, id, review_status: decision.outcome === "rejected" ? "rejected" : "pending" });
       }
-      const brief = (draft.body["brief"] ?? null) as { slug?: unknown; title_ko?: unknown } | null;
+      const brief = (draft.body["brief"] ?? null) as { slug?: unknown } | null;
       if (decisions.length < DECISION_SAMPLE) {
         decisions.push({
           draft_id: id,
           slug: typeof brief?.slug === "string" ? brief.slug : null,
-          title_ko: typeof brief?.title_ko === "string" ? brief.title_ko : null,
+          title: storedBriefField(brief, "title"),
           source_id: item?.source_id ?? null,
           outcome: decision.outcome,
           failed_rules: decision.failed,

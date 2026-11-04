@@ -248,7 +248,7 @@ export const PublicationSource = z.strictObject({
   url: HttpUrl,
   name: z.string().min(1),
   published_at: IsoDateTime.nullable(),
-  /** The source's own headline (Phase 3b): normalize compares new items against it, since `publications.title` is the Korean editorial title. */
+  /** The source's own headline (Phase 3b): normalize compares new items against it, since `publications.title` is the editorial title, not the source's. */
   title: z.string().min(1).optional(),
 });
 export type PublicationSource = z.infer<typeof PublicationSource>;

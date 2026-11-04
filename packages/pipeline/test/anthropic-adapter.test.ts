@@ -64,10 +64,10 @@ test("the structured-output schema drops every constraint keyword the API reject
   const draft = toStructuredOutputSchema(z.toJSONSchema(NewsBriefDraft) as Record<string, unknown>);
   assert.equal(draft["$schema"], undefined);
   assert.equal(draft["additionalProperties"], false);
-  assert.deepEqual(draft["required"], ["title_ko", "summary_ko", "why_it_matters_ko", "expert_lens_ko", "tags"]);
+  assert.deepEqual(draft["required"], ["title", "summary", "why_it_matters", "expert_lens", "tags"]);
   const props = draft["properties"] as Record<string, Record<string, unknown>>;
-  assert.deepEqual(props["title_ko"], { type: "string" }, "minLength / maxLength gone");
-  assert.deepEqual(props["summary_ko"], { type: "string" });
+  assert.deepEqual(props["title"], { type: "string" }, "minLength / maxLength gone");
+  assert.deepEqual(props["summary"], { type: "string" });
   assert.deepEqual(props["tags"], { type: "array", items: { type: "string" } }, "minItems / maxItems and the item minLength gone");
   assert.equal(JSON.stringify(draft).includes("minLength"), false);
 

@@ -11,7 +11,7 @@ export const rule: QaRule = {
     const openingWords = numberParam(config, "opening_words", 2);
     const brief = briefOf(draft);
     if (!brief) return verdict(config, false, { skipped: "brief_invalid" }, evidence.now);
-    const sents = sentences([brief.summary_ko, brief.why_it_matters_ko, brief.expert_lens_ko].join("\n"));
+    const sents = sentences([brief.summary, brief.why_it_matters, brief.expert_lens].join("\n"));
     const lengths = sents.map((s) => words(s).length);
     const avg = lengths.length === 0 ? 0 : lengths.reduce((a, b) => a + b, 0) / lengths.length;
     const openings = new Map<string, number>();

@@ -43,10 +43,10 @@ const BUSAN_TITLE = "Microsoft signs 1.2 GW capacity agreement with Example Data
 const BUSAN = "Microsoft has signed a 1.2 GW capacity agreement with Example Data Centers for an AI data center campus in Busan, the companies said on Monday. The first 200 MW phase is scheduled to reach ready-for-service in 2028, with grid interconnection secured from KEPCO through a new 345 kV substation and liquid cooling for GPU clusters. Financing of $2.1 billion is being arranged with a consortium of Korean lenders.";
 
 const GOOD_DRAFT = {
-  title_ko: "Microsoft, 부산 AI 데이터센터 캠퍼스에 1.2 GW 용량 계약 체결",
-  summary_ko: "Microsoft가 Example Data Centers와 부산의 AI 데이터센터 캠퍼스에 대해 1.2 GW 규모의 용량 계약을 맺었다고 두 회사가 월요일 밝혔다. 1단계 200 MW는 2028년 ready-for-service를 목표로 하며, 계통 접속은 KEPCO가 새로 짓는 345 kV 변전소를 통해 확보했다. 자금은 한국 금융기관 컨소시엄과 21억 달러(2.1 billion) 규모로 협의 중이다. 원문은 임대 기간과 단가는 밝히지 않았다.",
-  why_it_matters_ko: "국내에서 단일 하이퍼스케일러가 GW 단위 용량을 한 캠퍼스에 묶는 계약은 드물다. 비수도권 입지와 한전 변전소 신설이 대형 AI 수요의 실제 경로가 되고 있음을 보여주며, 국내 운영사와 금융기관에는 참조 거래가 생긴 셈이다.",
-  expert_lens_ko: "1.2 GW 계약과 200 MW 1단계 사이의 간극이 핵심이다. 2028년 RFS는 345 kV 변전소 준공과 송전 보강이 동시에 맞아야 가능하며, 원문은 그 공정 리스크를 다루지 않는다. 21억 달러 금융은 1단계 규모에 비해 커 보여 후속 단계까지 포함한 약정일 가능성이 있다. 다음에 확인할 신호는 한전의 계통 접속 승인 시점이다.",
+  title: "Microsoft books 1.2 GW at Example Data Centers' planned AI campus in Busan",
+  summary: "Microsoft has committed to 1.2 GW of capacity at an AI campus that Example Data Centers plans to build in Busan, the companies announced on Monday. Delivery starts with a 200 MW first phase targeted for ready-for-service in 2028, and the grid connection comes from KEPCO through a new 345 kV substation.\n\nA group of Korean lenders is arranging $2.1 billion of financing. The lease term and pricing were not disclosed.",
+  why_it_matters: "Gigawatt-scale commitments from a single hyperscaler on one Korean campus are uncommon. Busan secured its grid connection outside the constrained capital region, a sign that new substations now decide where large AI loads can go in Korea, and it gives global operators and lenders a reference deal.",
+  expert_lens: "The gap between the 1.2 GW headline and the 200 MW first phase is the figure that matters. Meeting a 2028 ready-for-service date depends on the 345 kV substation and the related grid work landing on time, a risk the announcement leaves unaddressed. The $2.1 billion financing looks large for a first phase alone, which suggests it may also cover later phases. The next signal is the timing of KEPCO's interconnection approval.",
   tags: ["Hyperscale", "korea", "power", "grid", "financing", "cooling", "extra-seventh"],
 };
 
@@ -109,7 +109,7 @@ test("a selected candidate becomes a schema-valid news_brief draft: the stage fi
   assert.deepEqual(checks.banned, { version: testBannedPhrases().version, matches: [], pass: true }, "the banned-phrase guard runs on every draft and records the inventory version");
   assert.deepEqual(out.stats.banned, { checked: 1, passed: 1, matches: 0 });
   assert.deepEqual(out.stats.decisions[0]?.banned_matches, []);
-  assert.ok(checks.grounding.numbers.includes("1.2") && checks.grounding.numbers.includes("345") && checks.grounding.numbers.includes("2028") && checks.grounding.numbers.includes("21억"), checks.grounding.numbers.join(" "));
+  assert.ok(checks.grounding.numbers.includes("1.2") && checks.grounding.numbers.includes("345") && checks.grounding.numbers.includes("2028") && checks.grounding.numbers.includes("2.1 billion"), checks.grounding.numbers.join(" "));
   assert.ok(checks.quote_max_words >= 2 && checks.quote_max_words <= 20, `shared run ${checks.quote_max_words}`);
   assert.equal(out.stats.drafted, 1);
   assert.equal(out.stats.grounding_pass_rate, 1);
@@ -122,10 +122,11 @@ test("a selected candidate becomes a schema-valid news_brief draft: the stage fi
   assert.equal(request.promptVersion, prompt.version);
   assert.equal(request.cacheKey, item.id);
   assert.equal(request.maxOutputTokens, prompt.max_output_tokens);
-  assert.ok(request.outputSchema && (request.outputSchema as { properties?: Record<string, unknown> }).properties?.["summary_ko"], "the draft schema rides along as JSON Schema");
-  assert.ok(request.system.includes("재서술"), "the system prompt is the prompt file body");
-  assert.ok(request.system.includes('"전략적 의미"') && request.system.includes("느낌표") && !request.system.includes("{{"), "the 금지 표현 line is rendered from config/banned-phrases.yaml");
-  assert.ok(!request.system.includes("strategic significance"), "guard-only English entries stay out of the Korean prompt");
+  assert.ok(request.outputSchema && (request.outputSchema as { properties?: Record<string, unknown> }).properties?.["summary"], "the draft schema rides along as JSON Schema");
+  assert.ok(request.system.includes("re-narration"), "the system prompt is the prompt file body");
+  assert.ok(request.system.includes('"strategic significance"') && request.system.includes("exclamation marks") && request.system.includes('a field that opens with "The development"') && !request.system.includes("{{"), "the banned-expressions line is rendered from config/banned-phrases.yaml (ADR-009: the English entries)");
+  assert.ok(!request.system.includes("전략적 의미"), "Korean-era phrases stay checked but out of the English prompt");
+  assert.ok(request.messages[0]!.content.startsWith("Source packet:"), "the user message is English too");
   assert.ok(request.messages[0]!.content.includes(BUSAN_URL) && request.messages[0]!.content.includes("text_rights"));
 
   assert.equal(db.size("drafts"), 1);
@@ -139,8 +140,8 @@ test("an ungrounded number is reported, not blocked; a reply that fails the sche
   const a = raw("a", BUSAN_URL, BUSAN_TITLE, BUSAN);
   const b = raw("b", "https://b.example.com/kepco", "KEPCO energises 345 kV substation for the Saemangeum cluster", "KEPCO energised a new 345 kV substation serving the Saemangeum data center cluster, adding 1 GW of grid connection capacity.");
   const c = raw("c", "https://c.example.com/x", "Example story three about a substation", "A third story with a 500 MW figure.");
-  const invented = { ...GOOD_DRAFT, summary_ko: `${GOOD_DRAFT.summary_ko} 업계는 2단계 400 MW가 2029년에 온다고 본다.` };
-  const out = await run(db, [a, b, c], [src("a"), src("b"), src("c")], scriptedLlm([response(invented), response({ title_ko: "too short" }), new Error("LLM_UNAVAILABLE: http 503")]), config(), ledger);
+  const invented = { ...GOOD_DRAFT, summary: `${GOOD_DRAFT.summary} The market expects a 400 MW second phase in 2029.` };
+  const out = await run(db, [a, b, c], [src("a"), src("b"), src("c")], scriptedLlm([response(invented), response({ title: "too short" }), new Error("LLM_UNAVAILABLE: http 503")]), config(), ledger);
   assert.equal(out.stats.selected, 3);
   assert.equal(out.stats.drafted, 1);
   assert.equal(out.stats.failed, 2);
@@ -149,7 +150,7 @@ test("an ungrounded number is reported, not blocked; a reply that fails the sche
   assert.equal(out.stats.grounding_pass_rate, 0);
   assert.deepEqual(out.stats.decisions[0]?.grounding_ungrounded, ["400", "2029"], `the invented figures are named: ${out.stats.decisions[0]?.grounding_ungrounded.join(" ")}`);
   assert.ok(out.stats.decisions[1]!.error!.startsWith(`${SCHEMA_INVALID}: `), out.stats.decisions[1]!.error!);
-  assert.match(out.stats.decisions[1]!.error!, /summary_ko/);
+  assert.match(out.stats.decisions[1]!.error!, /summary/);
   assert.equal(out.stats.decisions[2]?.error, "LLM_UNAVAILABLE: http 503");
   const dead = (await ledger.dump()).deadLetters;
   assert.equal(dead.length, 2);
@@ -177,18 +178,18 @@ test("the budget guard stops generation before a call it cannot cover; a first c
 test("a draft that uses a banned phrase or pattern is reported, not blocked; a prompt with an unresolved placeholder fails before any call", async () => {
   const db = new MemoryDb();
   const item = raw("a", BUSAN_URL, BUSAN_TITLE, BUSAN);
-  const dirty = { ...GOOD_DRAFT, title_ko: "Microsoft, 부산에 1.2 GW 계약 — 게임 체인저!", expert_lens_ko: `${GOOD_DRAFT.expert_lens_ko} 업계에 따르면 후속 계약도 논의 중이다.` };
+  const dirty = { ...GOOD_DRAFT, title: "The strategic significance of Microsoft's 1.2 GW Busan deal!", expert_lens: `${GOOD_DRAFT.expert_lens} Industry sources say follow-on deals are being discussed.` };
   const out = await run(db, [item], [src("a")], scriptedLlm([response(dirty)]));
   assert.equal(out.drafts.length, 1, "reported, not blocked (blocking is QA 3g)");
   const checks = out.drafts[0]!.body["checks"] as { banned: { matches: string[]; pass: boolean } };
-  assert.deepEqual(checks.banned, { ...checks.banned, matches: ["phrase:게임 체인저", "pattern:unsourced_attribution", "pattern:exclamation"], pass: false });
+  assert.deepEqual(checks.banned, { ...checks.banned, matches: ["phrase:strategic significance", "pattern:unsourced_attribution_en", "pattern:exclamation"], pass: false });
   assert.deepEqual(out.stats.banned, { checked: 1, passed: 0, matches: 3 });
   assert.deepEqual(out.stats.decisions[0]?.banned_matches, checks.banned.matches);
-  assert.deepEqual(Object.keys(readerFields(GOOD_DRAFT as never)), ["title_ko", "summary_ko", "why_it_matters_ko", "expert_lens_ko"], "tags are not reader copy");
+  assert.deepEqual(Object.keys(readerFields(GOOD_DRAFT as never)), ["title", "summary", "why_it_matters", "expert_lens"], "tags are not reader copy");
 
   const seen: LlmRequest[] = [];
   await assert.rejects(
-    run(new MemoryDb(), [item], [src("a")], scriptedLlm([response(GOOD_DRAFT)], seen), config(), new MemoryLedger(), undefined, "규칙: {{banned_phrases}} 그리고 {{tone}}"),
+    run(new MemoryDb(), [item], [src("a")], scriptedLlm([response(GOOD_DRAFT)], seen), config(), new MemoryLedger(), undefined, "Rules: {{banned_phrases}} and {{tone}}"),
     (e: unknown) => e instanceof Error && e.message.startsWith(TEMPLATE_UNRESOLVED) && e.message.includes("{{tone}}"),
   );
   assert.equal(seen.length, 0, "nothing reaches the model with braces in the prompt");
@@ -249,16 +250,16 @@ test("source packet: rights and scope notes, truncation, and the draft parser's 
   const packet = sourcePacket(long, src("a"), 20);
   assert.equal(packet.body_chars, 50);
   assert.ok(packet.body_text.endsWith(" […]") && packet.body_text.length < 30);
-  assert.match(packet.note, /20자에서 잘렸다/);
+  assert.match(packet.note, /cut at 20 characters/);
   const linkOnly = sourcePacket(raw("c", "https://c.example.com/1", "Title only", ""), src("c", { text_rights: "link_only" }), 1000);
   assert.equal(linkOnly.text_rights, "link_only");
-  assert.match(linkOnly.note, /제목과 짧은 요약만/);
-  assert.match(linkOnly.note, /본문이 없다/);
+  assert.match(linkOnly.note, /Only the title and a short summary/);
+  assert.match(linkOnly.note, /There is no body text/);
   const abstract = sourcePacket(raw("x", "https://x.example.com/1", "Paper", "abstract text"), src("x", { text_rights: "rewrite_only", text_scope: "abstract" }), 1000);
-  assert.match(abstract.note, /초록/);
+  assert.match(abstract.note, /abstract only/);
 
   const fenced = parseDraft(response(undefined as unknown, { json: undefined, text: "```json\n" + JSON.stringify(GOOD_DRAFT) + "\n```" }));
-  assert.equal(fenced.title_ko, GOOD_DRAFT.title_ko);
+  assert.equal(fenced.title, GOOD_DRAFT.title);
   assert.deepEqual(fenced.tags.length, 6);
   assert.throws(() => parseDraft(response(undefined as unknown, { json: undefined, text: "I cannot do that." })), new RegExp(`^Error: ${SCHEMA_INVALID}: reply is not JSON`));
   assert.throws(() => parseDraft(response({ ...GOOD_DRAFT, slug: "news/abc" })), /slug/, "a model may not set the slug");

@@ -50,12 +50,13 @@ test("staging: a QA-passed draft becomes one publications row — brief fields a
   assert.deepEqual([out.stats.published, out.stats.inserted, out.stats.updated, out.stats.skipped, out.stats.failed, out.stats.redirects_synced], [1, 1, 0, 0, 0, 44]);
   assert.equal(out.stats.revalidate.skipped, true, "revalidation is off by default");
   const row = (db.rows("publications") as PublicationRow[])[0]!;
-  assert.equal(row.title, BRIEF.title_ko);
+  assert.equal(row.title, BRIEF.title);
   assert.equal(row.content_type, "news_brief");
   assert.equal(row.draft_id, draft().id);
-  assert.equal(row.body["summary_ko"], BRIEF.summary_ko);
-  assert.equal(row.body["why_it_matters_ko"], BRIEF.why_it_matters_ko);
-  assert.equal(row.body["expert_lens_ko"], BRIEF.expert_lens_ko);
+  assert.equal(row.body["summary"], BRIEF.summary);
+  assert.equal(row.body["why_it_matters"], BRIEF.why_it_matters);
+  assert.equal(row.body["expert_lens"], BRIEF.expert_lens);
+  assert.equal(row.body["summary_ko"], undefined, "nothing is written under the Korean-era keys (ADR-009)");
   assert.deepEqual((row.body["generation"] as Record<string, unknown>)["prompt_version"], "2026-10-25.1");
   assert.deepEqual(row.sources, [{ url: BRIEF.source_url, name: BRIEF.source_name, published_at: BRIEF.published_at_source, title: TITLE }]);
   assert.deepEqual(row.image, IMAGE);
@@ -72,7 +73,7 @@ test("staging: a QA-passed draft becomes one publications row — brief fields a
 
 test("one bad draft is a dead letter, the others still publish; an unsupported content_type is PUBLISH_INPUT_INVALID", async () => {
   const { ctx, db, ledger } = await ctxWith();
-  const broken = draft({ ...BRIEF, title_ko: "" }, { promptVersion: "2026-10-25.2" });
+  const broken = draft({ ...BRIEF, title: "" }, { promptVersion: "2026-10-25.2" });
   const essay = { ...draft(BRIEF, { promptVersion: "2026-10-25.3" }), content_type: "insight_essay" as const };
   const out = PublishOutput.parse(await publishStage.run({ withImages: [{ draft: broken, image: null }, { draft: draft(), image: null }, { draft: essay, image: null }], rawItems: [rawItem()] }, ctx));
   assert.equal(out.stats.published, 1);

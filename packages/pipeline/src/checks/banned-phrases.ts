@@ -3,7 +3,7 @@
  * `config/banned-phrases.yaml` is compiled once per run and every entry is matched on
  * the reader-facing fields of a draft. Phase 3d reports the result on each draft
  * (`drafts.body.checks.banned`) and in the stage stats; QA 3g turns a match into a
- * blocking verdict. The prompt's 금지 표현 line is rendered from the same inventory
+ * blocking verdict. The prompt's banned-expressions line is rendered from the same inventory
  * (`bannedPhrasePromptText`), so the model is told exactly what the guard enforces
  * and a new entry reaches both places with one config change.
  */
@@ -52,7 +52,15 @@ export function bannedPhraseCheck(fields: Record<string, string>, compiled: Comp
   return { version: compiled.version, matches: [...matches], pass: matches.size === 0 };
 }
 
-/** The prompt's 금지 표현 line: the phrases of the language the prompt writes (Korean), quoted, then each pattern's note. */
-export function bannedPhrasePromptText(config: BannedPhrasesConfig): string {
-  return [...config.phrases.ko.map((phrase) => `"${phrase}"`), ...config.patterns.map((pattern) => pattern.note)].join(", ");
+/**
+ * The prompt's banned-expressions line: the phrases of the language the prompt writes (English since
+ * ADR-009), quoted, then the field openings of that language, then each pattern's note. Every entry of
+ * every language is still checked on the draft.
+ */
+export function bannedPhrasePromptText(config: BannedPhrasesConfig, language: "en" | "ko" = "en"): string {
+  return [
+    ...config.phrases[language].map((phrase) => `"${phrase}"`),
+    ...config.hook_starts[language].map((start) => `a field that opens with "${start}"`),
+    ...config.patterns.map((pattern) => pattern.note),
+  ].join(", ");
 }

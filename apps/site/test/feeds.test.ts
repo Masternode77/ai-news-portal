@@ -43,7 +43,9 @@ test("RSS escapes text, links absolute URLs, leaves noindex rows out", () => {
 });
 
 test("summaryOf takes the first reader field and trims long text", () => {
-  assert.equal(summaryOf(row({ body: { deck: "덱", summary_ko: "요약" } })), "요약");
+  assert.equal(summaryOf(row({ body: { deck: "덱", summary_ko: "요약" } })), "요약", "a brief published before ADR-009 still has a summary");
+  assert.equal(summaryOf(row({ body: { deck: "Deck", summary: "English summary." } })), "English summary.");
+  assert.equal(summaryOf(row({ body: { why_it_matters: "Why it matters." } })), "Why it matters.");
   assert.equal(summaryOf(row({ body: { article_body: "가".repeat(400) } })).length, 300);
   assert.equal(summaryOf(row({ body: {} })), "");
 });

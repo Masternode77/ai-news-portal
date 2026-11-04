@@ -268,3 +268,31 @@ test("3i: pipeline ops --from assesses a run dump; a fresh completed run is ok (
   assert.match(prodReview.stderr, /review reads drafts.*SUPABASE_PROD_URL and SUPABASE_PROD_SERVICE_ROLE_KEY are required/);
   await rm(dir, { recursive: true, force: true });
 });
+
+test("ADR-009 pipeline regenerate gates: it needs a publish target, the four stages and the Supabase names of that target; a real production run needs the cutover flag; --slugs must name something", async () => {
+  const stagesOn = { CC_FLAG_STAGES_GENERATE: "true", CC_FLAG_STAGES_QA: "true", CC_FLAG_STAGES_IMAGE: "true", CC_FLAG_STAGES_PUBLISH: "true" };
+  const none = await cli(["regenerate", "--dry-run"], { CC_FLAG_PUBLISH_TARGET: "none" });
+  assert.equal(none.code, 2);
+  assert.match(none.stderr, /regenerate updates published rows: set flags\.publish_target/);
+  const flagsOff = await cli(["regenerate", "--dry-run"], { CC_FLAG_PUBLISH_TARGET: "staging", CC_FLAG_STAGES_GENERATE: "false" });
+  assert.equal(flagsOff.code, 2);
+  assert.match(flagsOff.stderr, /turn on CC_FLAG_STAGES_GENERATE/);
+  const noDb = await cli(["regenerate", "--dry-run"], { ...stagesOn, CC_FLAG_PUBLISH_TARGET: "staging", SUPABASE_URL: "", SUPABASE_SERVICE_ROLE_KEY: "" });
+  assert.equal(noDb.code, 2);
+  assert.match(noDb.stderr, /regenerate reads the published briefs from Supabase: SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY are required/);
+  const prod = await cli(["regenerate"], { ...stagesOn, CC_FLAG_PUBLISH_TARGET: "production", CC_ALLOW_PRODUCTION_PUBLISH: "" });
+  assert.equal(prod.code, 2);
+  assert.match(prod.stderr, /regenerate with publish_target production writes the production project: a real run needs CC_ALLOW_PRODUCTION_PUBLISH=true/);
+  const prodDry = await cli(["regenerate", "--dry-run"], { ...stagesOn, CC_FLAG_PUBLISH_TARGET: "production", SUPABASE_URL: "https://staging.test", SUPABASE_SERVICE_ROLE_KEY: "x", SUPABASE_PROD_URL: "", SUPABASE_PROD_SERVICE_ROLE_KEY: "" });
+  assert.equal(prodDry.code, 2, "a production dry run reads production, never staging");
+  assert.match(prodDry.stderr, /SUPABASE_PROD_URL and SUPABASE_PROD_SERVICE_ROLE_KEY are required/);
+  // Codex PR #95 P1: a real run with the fixture provider would publish recorded replies over real articles.
+  const fixtureLlm = await cli(["regenerate"], { ...stagesOn, CC_FLAG_PUBLISH_TARGET: "staging", CC_FLAG_LLM_PROVIDER: "fixture", SUPABASE_URL: "https://staging.test", SUPABASE_SERVICE_ROLE_KEY: "x" });
+  assert.equal(fixtureLlm.code, 2);
+  assert.match(fixtureLlm.stderr, /regenerate without --dry-run writes real rows, so it needs llm\.provider anthropic.*got \\?"fixture/);
+  const disabledLlm = await cli(["regenerate"], { ...stagesOn, CC_FLAG_PUBLISH_TARGET: "staging", CC_FLAG_LLM_PROVIDER: "disabled", SUPABASE_URL: "https://staging.test", SUPABASE_SERVICE_ROLE_KEY: "x" });
+  assert.equal(disabledLlm.code, 2, "disabled is refused too: nothing would be regenerated");
+  const emptySlugs = await cli(["regenerate", "--dry-run", "--slugs", " , "]);
+  assert.equal(emptySlugs.code, 2);
+  assert.match(emptySlugs.stderr, /--slugs needs at least one slug/);
+});

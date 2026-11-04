@@ -10,6 +10,7 @@
  * caller (CLI) like `pipeline ops`.
  */
 import type { DbPort, DraftRow, QaResultRow, RawItemRow, ReviewStatus } from "@cc/shared";
+import { storedBriefField } from "@cc/shared";
 import { bodyTextOf } from "../stages/normalize.ts";
 
 export const REVIEW_STATUSES = ["rejected", "pending", "none", "approved", "any"] as const;
@@ -48,7 +49,8 @@ export interface ReviewEntry {
   canonical_url: string | null;
   source_title: string | null;
   published_at_source: string | null;
-  brief: { title_ko: string | null; summary_ko: string | null; why_it_matters_ko: string | null; expert_lens_ko: string | null; tags: string[] };
+  /** Reader fields; drafts written before ADR-009 (2026-11-04) store them under the Korean-era `*_ko` keys. */
+  brief: { title: string | null; summary: string | null; why_it_matters: string | null; expert_lens: string | null; tags: string[] };
   checks: { grounding_pass: boolean | null; ungrounded: string[]; quote_max_words: number | null; banned_matches: number | null };
   /** Newest verdict per rule (a regenerated draft keeps its id, so older evaluations share it). */
   qa: Array<{ rule: string; severity: string; pass: boolean; reason_code: string; evidence: Record<string, unknown>; checked_at: string }>;
@@ -164,10 +166,10 @@ export async function collectReview(db: DbPort, options: ReviewOptions = {}): Pr
       source_title: item?.title ?? null,
       published_at_source: item?.published_at_source ?? str(brief["published_at_source"]),
       brief: {
-        title_ko: str(brief["title_ko"]),
-        summary_ko: str(brief["summary_ko"]),
-        why_it_matters_ko: str(brief["why_it_matters_ko"]),
-        expert_lens_ko: str(brief["expert_lens_ko"]),
+        title: storedBriefField(brief, "title"),
+        summary: storedBriefField(brief, "summary"),
+        why_it_matters: storedBriefField(brief, "why_it_matters"),
+        expert_lens: storedBriefField(brief, "expert_lens"),
         tags: Array.isArray(brief["tags"]) ? (brief["tags"] as unknown[]).filter((value): value is string => typeof value === "string") : [],
       },
       checks: {
@@ -204,19 +206,19 @@ export function formatReview(entries: ReviewEntry[], options: ReviewOptions = {}
     return `${lines.join("\n")}\n`;
   }
   entries.forEach((entry, index) => {
-    lines.push(`## ${index + 1}. ${entry.brief.title_ko ?? "(no title)"}`);
+    lines.push(`## ${index + 1}. ${entry.brief.title ?? "(no title)"}`);
     lines.push("");
     lines.push(`- slug \`${entry.slug ?? "?"}\` · source \`${entry.source_id ?? "?"}\` · review_status **${entry.review_status}** · prompt \`${entry.prompt_version}\` · model \`${entry.model}\` · USD ${entry.cost_usd.toFixed(4)}`);
     lines.push(`- draft \`${entry.draft_id}\` · run \`${entry.run_id}\` · created ${entry.created_at}`);
-    lines.push(`- 원문: ${entry.source_title ? `${entry.source_title} — ` : ""}${entry.canonical_url ?? "?"}${entry.published_at_source ? ` (${entry.published_at_source})` : ""} · ${entry.source_chars} chars`);
+    lines.push(`- Source: ${entry.source_title ? `${entry.source_title} — ` : ""}${entry.canonical_url ?? "?"}${entry.published_at_source ? ` (${entry.published_at_source})` : ""} · ${entry.source_chars} chars`);
     lines.push("");
-    lines.push(`**요약**: ${entry.brief.summary_ko ?? "—"}`);
+    lines.push(`**Summary**: ${entry.brief.summary ?? "—"}`);
     lines.push("");
-    lines.push(`**의미**: ${entry.brief.why_it_matters_ko ?? "—"}`);
+    lines.push(`**Why it matters**: ${entry.brief.why_it_matters ?? "—"}`);
     lines.push("");
-    lines.push(`**렌즈**: ${entry.brief.expert_lens_ko ?? "—"}`);
+    lines.push(`**Expert Lens**: ${entry.brief.expert_lens ?? "—"}`);
     lines.push("");
-    lines.push(`태그: ${entry.brief.tags.length ? entry.brief.tags.map((tag) => `\`${tag}\``).join(" ") : "—"}`);
+    lines.push(`Tags: ${entry.brief.tags.length ? entry.brief.tags.map((tag) => `\`${tag}\``).join(" ") : "—"}`);
     lines.push("");
     lines.push(`**checks**: grounding ${entry.checks.grounding_pass === null ? "?" : entry.checks.grounding_pass ? "pass" : "fail"}${entry.checks.ungrounded.length ? ` (ungrounded: ${entry.checks.ungrounded.map((token) => `\`${token}\``).join(", ")})` : ""} · quote_max_words ${entry.checks.quote_max_words ?? "?"} · banned matches ${entry.checks.banned_matches ?? "?"}`);
     lines.push("");
