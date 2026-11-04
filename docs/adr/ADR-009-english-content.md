@@ -30,7 +30,7 @@
    - `NewsBrief`: `title`·`summary`·`why_it_matters`·`expert_lens`. 길이 하한·상한은 영어 기준으로 다시 잡았다(요약 300~2,400자 등).
    - `InsightEssay`: `title`·`thesis`·`body`·`counterpoint`·`implications`. 3e 착수 전이라 데이터가 없다.
    - 이 전환 전에 쓴 초안·발행 행은 `*_ko` 키를 가진다. `storedBriefField()`(`@cc/shared`)와 사이트 렌더러가 두 키를 모두 읽는다. 새 행은 영어 키로만 쓴다.
-3. **프롬프트** `prompts/news_brief.md` 2026-11-04.1을 영어로 다시 썼다. 사실 권위·재서술 규칙은 그대로다. 다음을 더했다.
+3. **프롬프트** `prompts/news_brief.md` 2026-11-04.1을 영어로 다시 썼다(2026-11-04.2: 원문에 없는 상위 지역명으로 넓히지 않는다 — staging 정탐 "Midwest", tuning-log 7행). 사실 권위·재서술 규칙은 그대로다. 다음을 더했다.
    - 한국어 수치는 값을 유지한 채 영어 표기로 쓴다(3억 600만 달러 → $306 million).
    - 한국어 고유명사는 원문의 라틴 표기 → 공식 영문명 → 표준 로마자 순으로 쓴다.
    - 한글은 쓰지 않는다.
