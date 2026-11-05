@@ -10,6 +10,9 @@
  * run (Josh's decision: a brief that cannot pass in English comes down); a target the run never reached
  * (generation error, budget stop) is kept as it is and is picked up again by the next invocation, since
  * targets are selected by their Korean title.
+ * `includeUnpublished` (2026-11-05, with explicit `slugs` only): a brief that an earlier regenerate run
+ * unpublished is read too and re-drafted; when its draft passes, the publisher writes it back as published
+ * on the same row (first `published_at` kept), and when it fails again it simply stays unpublished.
  *
  * Pure planning and reporting live here; the CLI wires the database, ledger and adapters.
  */
@@ -26,13 +29,17 @@ export function isKoreanBrief(row: Pick<PublicationRow, "content_type" | "title"
   return row.content_type === "news_brief" && HANGUL.test(row.title);
 }
 
-export type RegenerateSkipReason = "NO_DRAFT" | "DRAFT_NOT_FOUND" | "CANDIDATE_NOT_FOUND" | "RAW_ITEM_NOT_FOUND" | "ROW_INVALID" | "SLUG_MISMATCH" | "NOT_A_BRIEF";
+export type RegenerateSkipReason = "NOT_FOUND" | "NO_DRAFT" | "DRAFT_NOT_FOUND" | "CANDIDATE_NOT_FOUND" | "RAW_ITEM_NOT_FOUND" | "ROW_INVALID" | "SLUG_MISMATCH" | "NOT_A_BRIEF";
+
+/** The publication's status when the plan read it: `unpublished` only with `includeUnpublished`. */
+export type RegenerateRowStatus = "published" | "unpublished";
 
 export interface RegenerateTarget {
   slug: string;
   title: string;
   published_at: string;
   draft_id: string;
+  status: RegenerateRowStatus;
   candidate: CandidateInsert;
   rawItem: RawItemInsert;
 }
@@ -49,13 +56,15 @@ export interface RegeneratePlan {
   eligible: number;
   targets: RegenerateTarget[];
   skipped: RegenerateSkip[];
-  /** Every published row read, so a dry run can seed its memory DB with what DUPLICATE_EVENT compares against. */
+  /** Every row read (the published ones, plus unpublished targets), so a dry run can seed its memory DB with what the run updates and DUPLICATE_EVENT compares against. */
   publications: PublicationRow[];
 }
 
 export interface PlanOptions {
   /** Regenerate exactly these slugs (any language); otherwise every published brief with a Korean title. */
   slugs?: readonly string[];
+  /** Also read these slugs when they are unpublished (restore after a QA fix); needs `slugs`. */
+  includeUnpublished?: boolean;
   limit: number;
 }
 
@@ -71,8 +80,13 @@ function rawItemIdOf(draft: DraftRow): string | null {
 
 /** Newest first, so the home page turns English first when a run is cut short by `limit` or the budget. */
 export async function planRegeneration(db: DbPort, options: PlanOptions): Promise<RegeneratePlan> {
-  const publications = await db.select<PublicationRow>("publications", { status: "published" }, { columns: PUBLICATION_COLUMNS, orderBy: { column: "published_at", ascending: false }, limit: PUBLICATION_SCAN });
   const wanted = options.slugs && options.slugs.length > 0 ? new Set(options.slugs) : null;
+  if (options.includeUnpublished && !wanted) throw new Error("includeUnpublished needs explicit slugs: a restore never sweeps every unpublished row");
+  const published = await db.select<PublicationRow>("publications", { status: "published" }, { columns: PUBLICATION_COLUMNS, orderBy: { column: "published_at", ascending: false }, limit: PUBLICATION_SCAN });
+  const unpublished = options.includeUnpublished && wanted
+    ? (await db.select<PublicationRow>("publications", { status: "unpublished" }, { columns: PUBLICATION_COLUMNS, orderBy: { column: "published_at", ascending: false }, limit: PUBLICATION_SCAN })).filter((row) => wanted.has(row.slug))
+    : [];
+  const publications = [...published, ...unpublished].sort((a, b) => b.published_at.localeCompare(a.published_at));
   const skipped: RegenerateSkip[] = [];
   const skip = (row: Pick<PublicationRow, "slug" | "title">, reason: RegenerateSkipReason, detail: string | null = null): void => {
     skipped.push({ slug: row.slug, title: row.title, reason, detail });
@@ -81,10 +95,12 @@ export async function planRegeneration(db: DbPort, options: PlanOptions): Promis
   let eligibleRows: PublicationRow[];
   if (wanted) {
     eligibleRows = publications.filter((row) => wanted.has(row.slug));
+    const found = new Set(eligibleRows.map((row) => row.slug));
+    for (const slug of wanted) if (!found.has(slug)) skip({ slug, title: "" }, "NOT_FOUND", options.includeUnpublished ? "no published or unpublished row with this slug" : "no published row with this slug (an unpublished one needs includeUnpublished)");
     for (const row of eligibleRows.filter((r) => r.content_type !== "news_brief")) skip(row, "NOT_A_BRIEF", row.content_type);
     eligibleRows = eligibleRows.filter((row) => row.content_type === "news_brief");
   } else {
-    eligibleRows = publications.filter(isKoreanBrief);
+    eligibleRows = published.filter(isKoreanBrief);
   }
   const picked = eligibleRows.slice(0, options.limit);
 
@@ -133,7 +149,7 @@ export async function planRegeneration(db: DbPort, options: PlanOptions): Promis
       skip(row, "SLUG_MISMATCH", `the raw item now yields ${slug}`);
       continue;
     }
-    targets.push({ slug: row.slug, title: row.title, published_at: row.published_at, draft_id: row.draft_id, candidate: candidate.data, rawItem: rawItem.data });
+    targets.push({ slug: row.slug, title: row.title, published_at: row.published_at, draft_id: row.draft_id, status: row.status === "unpublished" ? "unpublished" : "published", candidate: candidate.data, rawItem: rawItem.data });
   }
   return { eligible: eligibleRows.length, targets, skipped, publications };
 }
@@ -147,7 +163,9 @@ export interface RegenerateEntry {
   outcome: RegenerateOutcome;
   /** QA rules that failed (qa_failed), or why the run did not reach the target (kept). */
   reasons: string[];
-  /** True once the row was set to `unpublished` (a real run's qa_failed target). */
+  /** The row's status before the run: `unpublished` marks a restore target. */
+  previous_status: RegenerateRowStatus;
+  /** True when the row is unpublished after a real run (a qa_failed target, or a restore target that failed again). */
   unpublished: boolean;
 }
 
@@ -159,20 +177,25 @@ export function regenerationOutcomes(plan: RegeneratePlan, result: RunResult): R
   return plan.targets.map((target) => {
     const decision = qa.get(target.slug);
     const newTitle = decision?.title ?? generate.get(target.rawItem.canonical_url)?.title ?? null;
-    if (published.has(target.slug)) return { slug: target.slug, old_title: target.title, new_title: newTitle, outcome: "regenerated", reasons: [], unpublished: false };
-    if (decision && decision.outcome !== "passed") return { slug: target.slug, old_title: target.title, new_title: newTitle, outcome: "qa_failed", reasons: decision.failed_rules, unpublished: false };
+    const base = { slug: target.slug, old_title: target.title, new_title: newTitle, previous_status: target.status };
+    if (published.has(target.slug)) return { ...base, outcome: "regenerated", reasons: [], unpublished: false };
+    if (decision && decision.outcome !== "passed") return { ...base, outcome: "qa_failed", reasons: decision.failed_rules, unpublished: false };
     const gen = generate.get(target.rawItem.canonical_url);
     const reason = gen?.error ?? (decision?.outcome === "passed" ? "PUBLISH_NOT_REACHED" : "NOT_PROCESSED");
-    return { slug: target.slug, old_title: target.title, new_title: newTitle, outcome: "kept", reasons: [reason.slice(0, 200)], unpublished: false };
+    return { ...base, outcome: "kept", reasons: [reason.slice(0, 200)], unpublished: target.status === "unpublished" };
   });
 }
 
-/** A real run takes down the briefs whose English draft QA would not pass; returns the entries with `unpublished` set. */
+/** A real run takes down the briefs whose English draft QA would not pass; returns the entries with `unpublished` set. A restore target that fails again is already unpublished and is not written. */
 export async function unpublishFailed(db: DbPort, entries: readonly RegenerateEntry[], now: Date): Promise<RegenerateEntry[]> {
   const out: RegenerateEntry[] = [];
   for (const entry of entries) {
     if (entry.outcome !== "qa_failed") {
       out.push(entry);
+      continue;
+    }
+    if (entry.previous_status === "unpublished") {
+      out.push({ ...entry, unpublished: true });
       continue;
     }
     await db.update("publications", { slug: entry.slug }, { status: "unpublished", updated_at: now.toISOString() });
@@ -212,6 +235,14 @@ function cell(value: unknown): string {
   return String(value ?? "").replace(/\|/g, "\\|").replace(/\s+/g, " ").trim();
 }
 
+function outcomeCell(entry: RegenerateEntry, dryRun: boolean): string {
+  if (entry.previous_status === "unpublished") {
+    if (entry.outcome === "regenerated") return dryRun ? "regenerated (would restore)" : "regenerated → restored";
+    return `${entry.outcome} (stays unpublished)`;
+  }
+  return `${entry.outcome}${entry.unpublished ? " → unpublished" : ""}`;
+}
+
 /** Markdown for the step summary. */
 export function formatRegenerateReport(report: RegenerateReport): string {
   const counts = { regenerated: 0, qa_failed: 0, kept: 0 };
@@ -224,7 +255,7 @@ export function formatRegenerateReport(report: RegenerateReport): string {
   ];
   if (report.entries.length > 0) {
     lines.push("| slug | outcome | old title | new title | reasons |", "|---|---|---|---|---|");
-    for (const e of report.entries) lines.push(`| ${cell(e.slug)} | ${e.outcome}${e.unpublished ? " → unpublished" : ""} | ${cell(e.old_title)} | ${cell(e.new_title ?? "")} | ${cell(e.reasons.join(", "))} |`);
+    for (const e of report.entries) lines.push(`| ${cell(e.slug)} | ${outcomeCell(e, report.dry_run)} | ${cell(e.old_title)} | ${cell(e.new_title ?? "")} | ${cell(e.reasons.join(", "))} |`);
     lines.push("");
   }
   if (report.skipped.length > 0) {
