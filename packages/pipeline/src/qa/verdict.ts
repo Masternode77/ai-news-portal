@@ -46,3 +46,12 @@ export function stringListParam(config: QaRuleConfig, key: string, fallback: str
   if (!Array.isArray(value) || !value.every((v) => typeof v === "string")) throw new Error(`QA_PARAM_INVALID: ${config.rule}.params.${key} must be a list of strings`);
   return value;
 }
+
+/** A list of string groups (each a list of at least two strings); anything else fails loudly. */
+export function stringGroupsParam(config: QaRuleConfig, key: string): string[][] {
+  const value = config.params[key];
+  if (value === undefined) return [];
+  const valid = Array.isArray(value) && value.every((group) => Array.isArray(group) && group.length >= 2 && group.every((v) => typeof v === "string" && v.trim().length > 0));
+  if (!valid) throw new Error(`QA_PARAM_INVALID: ${config.rule}.params.${key} must be a list of groups, each a list of at least two names`);
+  return value as string[][];
+}

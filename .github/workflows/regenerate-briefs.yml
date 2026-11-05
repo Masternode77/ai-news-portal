@@ -13,6 +13,8 @@ name: Regenerate Korean briefs in English (ADR-009)
 # the confirm text below, which sets the cutover flag CC_ALLOW_PRODUCTION_PUBLISH for that one step.
 # Secrets are used by name only. A run is capped by budget.run_usd (config/pipeline.yaml); dispatch again to
 # continue — targets are selected by their Korean title, so a finished one is never picked twice.
+# include_unpublished (2026-11-05, with slugs only): restore briefs an earlier run unpublished — they are
+# re-drafted with the current prompt and QA config and published again on the same row when they pass.
 on:
   workflow_dispatch:
     inputs:
@@ -34,6 +36,10 @@ on:
         description: "Optional comma list of slugs (e.g. news/0123456789abcdef); empty = every published brief with a Korean title"
         type: string
         default: ""
+      include_unpublished:
+        description: "With slugs only: also re-draft those slugs if an earlier run unpublished them (a passing draft is published again)"
+        type: boolean
+        default: false
       confirm:
         description: "For target=production with mode=apply, type: ADR-009 approved"
         type: string
@@ -80,11 +86,16 @@ jobs:
           MODE: ${{ inputs.mode }}
           LIMIT: ${{ inputs.limit }}
           SLUGS: ${{ inputs.slugs }}
+          INCLUDE_UNPUBLISHED: ${{ inputs.include_unpublished }}
           CONFIRM: ${{ inputs.confirm }}
         run: |
           set -o pipefail
           args=(regenerate --trigger dispatch --json --limit "$LIMIT")
           if [ -n "$SLUGS" ]; then args+=(--slugs "$SLUGS"); fi
+          if [ "$INCLUDE_UNPUBLISHED" = "true" ]; then
+            if [ -z "$SLUGS" ]; then echo "include_unpublished needs slugs: a restore names the briefs it brings back"; exit 2; fi
+            args+=(--include-unpublished)
+          fi
           if [ "$MODE" = "dry-run" ]; then
             args+=(--dry-run)
           elif [ "$TARGET" = "production" ]; then
@@ -98,7 +109,7 @@ jobs:
           code=$?
           set -e
           node -e "const r=require('./regenerate.json'); process.stdout.write(r.markdown)" >> "$GITHUB_STEP_SUMMARY" || { echo "no report"; tail -n 40 regenerate.log; }
-          tail -n 20 regenerate.log
+          tail -n 40 regenerate.log
           exit $code
       - name: Upload report
         if: ${{ always() }}

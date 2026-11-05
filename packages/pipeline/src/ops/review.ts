@@ -192,9 +192,23 @@ function cell(value: unknown): string {
   return String(value ?? "").replace(/\|/g, "\\|").replace(/\s+/g, " ").trim();
 }
 
-function shortEvidence(evidence: Record<string, unknown>): string {
-  const text = JSON.stringify(evidence);
-  return text.length > 160 ? `${text.slice(0, 157)}…` : text;
+/**
+ * Evidence keys that say why a verdict failed. A failing verdict shows them first and leaves out the
+ * rule's params, so the cut at the cell limit never hides the failing names (production regenerate
+ * 2026-11-05: `ungrounded` sat behind `params.allow` and was cut off).
+ */
+const FAILURE_KEYS = ["ungrounded", "quotes", "matches", "duplicate_of", "copied_sample", "skipped"] as const;
+
+export function shortEvidence(evidence: Record<string, unknown>, pass = true): string {
+  let shown = evidence;
+  if (!pass) {
+    const { params: _params, ...rest } = evidence;
+    const first = Object.fromEntries(FAILURE_KEYS.filter((key) => key in rest).map((key) => [key, rest[key]]));
+    shown = { ...first, ...rest };
+  }
+  const limit = pass ? 160 : 320;
+  const text = JSON.stringify(shown);
+  return text.length > limit ? `${text.slice(0, limit - 3)}…` : text;
 }
 
 /** Markdown for the step summary / an artifact: one section per draft. */
@@ -227,7 +241,7 @@ export function formatReview(entries: ReviewEntry[], options: ReviewOptions = {}
       lines.push("");
       lines.push("| rule | severity | pass | reason_code | checked_at | evidence |");
       lines.push("|---|---|---|---|---|---|");
-      for (const verdict of entry.qa) lines.push(`| ${cell(verdict.rule)} | ${cell(verdict.severity)} | ${verdict.pass ? "✓" : "✗"} | ${cell(verdict.reason_code)} | ${cell(verdict.checked_at)} | ${cell(shortEvidence(verdict.evidence))} |`);
+      for (const verdict of entry.qa) lines.push(`| ${cell(verdict.rule)} | ${cell(verdict.severity)} | ${verdict.pass ? "✓" : "✗"} | ${cell(verdict.reason_code)} | ${cell(verdict.checked_at)} | ${cell(shortEvidence(verdict.evidence, verdict.pass))} |`);
       lines.push("");
     }
     lines.push(`**원문 머리** (${HEAD_CHARS}자): ${entry.source_head || "—"}`);

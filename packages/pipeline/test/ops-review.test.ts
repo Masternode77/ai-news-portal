@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { MemoryDb } from "../src/db/index.ts";
-import { REVIEW_STATUSES, collectReview, excerptsFor, formatReview, needlesFor } from "../src/ops/review.ts";
+import { REVIEW_STATUSES, collectReview, excerptsFor, formatReview, needlesFor, shortEvidence } from "../src/ops/review.ts";
 
 const RUN = "11111111-1111-4111-8111-111111111111";
 const OTHER_RUN = "22222222-2222-4222-8222-222222222222";
@@ -83,4 +83,15 @@ test("collectReview joins drafts, QA verdicts and the source item; run and statu
   assert.match(markdown, /\*\*원문 대조 `450억`\*\* \(검색: `450`, `45`\):\n- .*«45»B/);
   assert.match(markdown, /\*\*원문 대조 `1`\*\*/);
   assert.match(formatReview([], { status: "rejected" }), /No drafts matched\./);
+});
+
+test("shortEvidence: a failing verdict shows why first and leaves the params out, so the cell cut never hides the failing names (production regenerate 2026-11-05)", () => {
+  const evidence = { params: { allow: ["Compute Current", "Asia-Pacific", "Asia", "Southeast Asia", "Southeast Asian"], min_chars: 3, max_ungrounded: 0, token_fallback: true, skip_sentence_initial: true, unchecked_source_languages: ["ko"] }, entities: 12, ungrounded: ["Korean"], max_ungrounded: 0 };
+  const failing = shortEvidence(evidence, false);
+  assert.match(failing, /^\{"ungrounded":\["Korean"\]/);
+  assert.doesNotMatch(failing, /"params"/);
+  const passing = shortEvidence(evidence, true);
+  assert.match(passing, /^\{"params"/, "a passing verdict keeps its stored order");
+  assert.ok(passing.length <= 160 && passing.endsWith("…"));
+  assert.ok(shortEvidence({ quotes: ["x".repeat(400)] }, false).length <= 320);
 });

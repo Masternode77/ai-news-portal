@@ -15,7 +15,7 @@
 # BUDGET_EXCEEDED (3d generate / runner). INSIGHT_DENSITY_LOW and HUMAN_STYLE_LOW are insight_essay
 # rules and arrive with 3e.
 
-version: "2026-11-04.2"         # ADR-009: English drafts (LANG_MISMATCH language en, UNGROUNDED_ENTITY sentence-initial + Korean-source handling); .2 adds Southeast Asia(n) to allow
+version: "2026-11-05.1"         # ADR-009: English drafts (LANG_MISMATCH language en, UNGROUNDED_ENTITY sentence-initial + Korean-source handling); 2026-11-04.2 adds Southeast Asia(n) to allow; 2026-11-05.1 adds UNGROUNDED_ENTITY country aliases
 
 rules:
   # ---- hard: a failing verdict rejects the draft -------------------------------------------------
@@ -39,7 +39,52 @@ rules:
     # skip_sentence_initial: English capitalises every sentence's first word, which is not evidence of a name (ADR-009).
     # unchecked_source_languages: an English brief romanises a Korean source's names, which the source cannot carry (ADR-009 gap; numbers still grounded).
     # allow: our own name and the region words the Asia-Pacific lens may use without the source naming them (ADR-009).
-    params: { max_ungrounded: 0, min_chars: 3, allow: [Compute Current, Asia-Pacific, Asia, Southeast Asia, Southeast Asian], token_fallback: true, skip_sentence_initial: true, unchecked_source_languages: [ko] }
+    # aliases: names of the same country — country, short/formal names, demonym. A name grounds when any member of its
+    # group is in the source (whole word; an all-caps member matches in capitals only). Production regenerate 2026-11-05
+    # rejected "Korean" against "South Korea" and "British"/"Great Britain" against "UK" (tuning-log 8). Never add a place
+    # of another extent to a group (England ≠ UK, Europe ≠ EU).
+    params:
+      max_ungrounded: 0
+      min_chars: 3
+      allow: [Compute Current, Asia-Pacific, Asia, Southeast Asia, Southeast Asian]
+      token_fallback: true
+      skip_sentence_initial: true
+      unchecked_source_languages: [ko]
+      aliases:
+        - [Korea, South Korea, Republic of Korea, Korean, Koreans, South Korean]
+        - [UK, U.K., United Kingdom, Britain, Great Britain, British]
+        - [US, U.S., USA, United States, America, American, Americans]
+        - [EU, European Union]
+        - [China, Chinese, PRC]
+        - [Japan, Japanese]
+        - [Taiwan, Taiwanese]
+        - [India, Indian]
+        - [Singapore, Singaporean]
+        - [Malaysia, Malaysian]
+        - [Indonesia, Indonesian]
+        - [Vietnam, Vietnamese]
+        - [Thailand, Thai]
+        - [Philippines, Philippine, Filipino]
+        - [Australia, Australian]
+        - [New Zealand, New Zealander]
+        - [Canada, Canadian]
+        - [Mexico, Mexican]
+        - [Brazil, Brazilian]
+        - [Germany, German]
+        - [France, French]
+        - [Ireland, Irish]
+        - [Netherlands, Dutch]
+        - [Spain, Spanish]
+        - [Italy, Italian]
+        - [Norway, Norwegian]
+        - [Sweden, Swedish]
+        - [Denmark, Danish]
+        - [Finland, Finnish]
+        - [Czechia, Czech Republic, Czech]
+        - [Türkiye, Turkey, Turkish]
+        - [Saudi Arabia, Saudi]
+        - [UAE, United Arab Emirates, Emirati]
+        - [Israel, Israeli]
   - rule: LANG_MISMATCH              # reader fields must be in the publication language: Latin-script share of letters
     severity: hard
     params: { language: en, min_ratio: 0.98 }   # ADR-009 (2026-11-04): every article is English; was { min_hangul_ratio: 0.6 } for Korean briefs
