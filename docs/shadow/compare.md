@@ -19,6 +19,7 @@
 | 10 | `6e67e0b4` | 2026-10-31 13:52(dispatch, **가속 평가 6 · 프롬프트 2026-10-31.1**) | partial | 200 (74/80) | 0 | 186 | 5 | 2 | 1 | **1** | 0.11 | sent ✓ | run 41170274622(`rebuild/v2` `204ac773`). 9번째 staging 런. 선택 2: datacenterpost "The Math and Engineering Behind Data Centers"(run 7에서 "5%포인트"로 거절됐던 후보, 프롬프트 버전 상승으로 재자격) → `news/b2ee805eaee9b0f8` **발행**(이번엔 렌즈가 "6.7%에서 12%까지 벌어져 있다"로 원문 수치만 써 grounding 통과 — 프롬프트 규칙의 직접 효과), uk-desnz "Warm Homes Loan Scheme: Factsheet"(13,766자) → `news/dd92375ef47e9c24` **거절** `UNGROUNDED_NUMBER`("7"·"30", §3 15행 판정 보류). gate 5(같은 풀 소비로 13 → 5). 실패 nrc-news 403 ×1. Telegram 483자. ops-check `ok` |
 | 11 | `1ee13924` | 2026-11-04 21:16(dispatch, **ADR-009 영문 첫 라이브**, 브랜치 `26988935`, 프롬프트 2026-11-04.1 · qa 2026-11-04.1) | done | 200 (75/76) | 137 | 190 | 12 | 2 | 0 | 0 | 0.10 | — | run 41827831552. 거절 2 = `UNGROUNDED_ENTITY` — shadow-review run 41828167242로 재현: "A Brussels-run"(관사 미처리), "AI-era"·"AI-dense"(약어+소문자 접미어), "Southeast Asian"(지역 프레이밍) = 영어 토큰화 오탐 → `a436026b`(qa 2026-11-04.2, tuning-log 6행) |
 | 12 | `18739626` | 2026-11-04 21:22(dispatch, 브랜치 `a436026b`, qa 2026-11-04.2) | partial(nrc-news HTTP_403) | 200 (74/76) | 2 | 190 | 12 | 2 | **1** | **1** | 0.08 | — | run 41828626703. 통과: AMD Q4 가이던스(Tom's Hardware). 거절 1 = `UNGROUNDED_ENTITY` "Midwest"(원문은 Iowa·Wisconsin만 — 정탐, shadow-review run 41828925710) → 프롬프트 2026-11-04.2에 "원문에 없는 상위 지역명으로 넓히지 않는다" 1줄 |
+| 13 | `729cd7da` | 2026-11-05 00:46(**schedule, production** — ADR-009 머지 `cc46ce96` 뒤 첫 cron, 프롬프트 2026-11-04.2 · qa 2026-11-04.2) | done | 200 (76/76) | 72 | 189 | 16 | 2 | **2** | **2** | 0.12 | sent ✓ | run 41861122989. 영문 발행 2: uk-desnz "UK Energy Independence Bill…"(`news/b7db97428099d8c0`), ec-press-corner "EU opens first biomethane matching round…"(`news/1ef1afb442926681`). soft 3건 전부 auto-pass(THIN_EXPERT_LENS 2, READABILITY_LOW 1), hard 0 |
 
 ## 2. 일별 집계 (완료 기준 1·2·5)
 
@@ -76,3 +77,18 @@
 - `THIN_EXPERT_LENS.min_concrete` 3 → 2 — 새 프롬프트가 렌즈에서 숫자를 줄여 soft 실패가 늘었다(auto_pass라 발행 영향 없음).
 
 비차단 관찰: 로거가 정수 `by_method.title_key`를 `[redacted]`로 가린다(키 이름 오인), 연도 추론이 `published_at` 문자열로 근거되는 틈(§3 6행), 렌즈의 배경지식 문장 1건(§3 8행).
+
+## 6. ADR-009 기존 한국어 브리프 영문 재생성 (production, `regenerate-briefs.yml`)
+
+재생성 런은 주기 런이 아니다(원장 `flags.mode = regenerate`, ops 제외). 결과는 대상별로 남긴다.
+
+| 실행 | run · 원장 | 대상 | 재생성 | QA 거절 → 비공개 | 비용 USD | 비고 |
+|---|---|---|---|---|---|---|
+| dry-run (2026-11-04 21:42) | 41831567149 · `6652414f` | 최신 8 / 적격 19 | 6 | (2) | 0.29 | 쓰기 0. 거절 = Samsung SDS 구미·SpaceX 13GW |
+| dry-run (2026-11-04 21:48) | 41832392965 · `c98ca0d3` | 위 2건 | 1 | (1) | 0.07 | SpaceX 통과(모델 편차), Samsung SDS `UNGROUNDED_ENTITY` 재현 |
+| apply 1차 (2026-11-05 10:02) | 41945657366 · `897205e2` | 8 | 7 | 1 | 0.29 | 비공개: Samsung SDS 구미 `news/998d196444fddbaf` — `UNGROUNDED_ENTITY` "Korean"(원문 27자 + 제목 "South Korea") |
+| apply 2차 (2026-11-05 10:05) | 41945996121 · `4e27ec3d` | 8 | 4 | 4 | 0.35 | 비공개: LS일렉트릭 CIRED `a85cf04378827841`(`QUOTE_TOO_LONG` 인용 2개 "Grids for AI," "AI for Grids,"), Altman–Samsung `749481b7399ff99c`·COP31 `c52ebfbcc13976d4`(`UNGROUNDED_ENTITY`), Alliant 중복본 `e82efbd8e7ebf3c4`(`DUPLICATE_EVENT` 정탐) |
+| apply 3차 (2026-11-05 10:08) | 41946543313 · `8b990eb3` | 3 | 2 | 1 | 0.13 | 비공개: Sea Link `d1e939ac6b712454`(`UNGROUNDED_ENTITY`). 남은 한국어 브리프 0 |
+| **합계** | | **19** | **13** | **6** | **0.78** (+ dry-run 0.36) | RSS·기사 페이지 영문 확인, 비공개 URL 404, www 136/136(run 41832277811) |
+
+판정: 비공개 6건 중 **정탐 1**(Alliant 중복본). 나머지 5건은 규칙 과민 — 지명 파생어 4(UNGROUNDED_ENTITY: 국가 형용사·동의어), 짧은 용어 인용 2개 1(QUOTE_TOO_LONG). 한국 관련 3건이 포함돼 ADR-009의 APAC 차별점과 충돌 → Josh B안(2026-11-05): `UNGROUNDED_ENTITY.aliases`(qa 2026-11-05.1, tuning-log 8행) + `regenerate --include-unpublished`로 5건 복구(Alliant 중복본 제외). 근거 표: shadow-review run 41946570828·41946404449·41946759432(job log의 review.md).

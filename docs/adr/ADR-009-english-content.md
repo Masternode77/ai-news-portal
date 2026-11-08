@@ -42,6 +42,7 @@
      - `unchecked_source_languages: [ko]`: 한국어 소스의 로마자 고유명사는 기록만 하고 검사하지 않는다. 문서화된 한계이며, 숫자는 계속 대조한다.
      - `allow`에 지역 단어 `Asia-Pacific`·`Asia`·`Southeast Asia`·`Southeast Asian`을 넣었다(APAC 관점용).
      - 한 글자 관사("A")도 문장 첫 단어로 보고, 소문자 하이픈 접미어("Brussels-run", "AI-era")는 이름에서 뗀다.
+     - `aliases`(2026-11-05, qa 2026-11-05.1): 같은 나라의 이름 묶음(국가명·약칭·정식명·형용사, 예: Korea·South Korea·Korean / UK·Britain·British). 묶음 안의 어느 이름이든 원문에 있으면 근거가 있다. production 재생성에서 "Korean"(원문 "South Korea")·"British" 같은 파생어가 한국·APAC 기사를 거절시켜 추가했다. England·Europe처럼 범위가 다른 지명은 묶지 않는다.
    - 고유명사 추출이 마침표를 넘어 이어 붙던 결함("Monday. Delivery")을 고쳤다. 영어 본문에서 처음 드러났다.
    - `SEO_FIELDS_MISSING` 제목 상한은 90자, `THIN_EXPERT_LENS`는 문장 첫 단어를 구체 토큰으로 세지 않는다.
    - 영어 원문을 영어로 재서술하면 `QUOTE_TOO_LONG`·`SIMILARITY_TOO_HIGH`가 실질적으로 작동하기 시작한다. 임계값은 그대로 두고 staging에서 통과율을 잰다.
@@ -54,6 +55,8 @@
    - 처리하지 못한 건(생성 오류·예산 소진)은 그대로 두고 다음 실행이 다시 집는다.
    - 원장 행에 `flags.mode = "regenerate"`를 남긴다. `pipeline ops`는 이 행을 주기 런으로 세지 않는다.
    - 프로덕션 실행은 승인 항목이다. confirm 문구 `ADR-009 approved`와 `CC_ALLOW_PRODUCTION_PUBLISH`가 둘 다 필요하다.
+   - 실행 결과(2026-11-05, `docs/shadow/compare.md` §6): 19건 → 영문 13 · 비공개 6(정탐 1 = 중복본, 나머지 5 = 규칙 과민).
+   - 복구: `--include-unpublished`(`--slugs`와 함께만, 워크플로 입력 `include_unpublished`)는 지정한 slug가 비공개여도 다시 생성한다. QA를 통과하면 같은 행을 다시 공개하고(id·첫 `published_at` 유지), 또 실패하면 비공개 그대로 두며 쓰지 않는다.
 
 ## Consequences
 

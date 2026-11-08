@@ -295,4 +295,7 @@ test("ADR-009 pipeline regenerate gates: it needs a publish target, the four sta
   const emptySlugs = await cli(["regenerate", "--dry-run", "--slugs", " , "]);
   assert.equal(emptySlugs.code, 2);
   assert.match(emptySlugs.stderr, /--slugs needs at least one slug/);
+  const restoreAll = await cli(["regenerate", "--dry-run", "--include-unpublished"]);
+  assert.equal(restoreAll.code, 2, "a restore must name its briefs");
+  assert.match(restoreAll.stderr, /--include-unpublished needs --slugs/);
 });

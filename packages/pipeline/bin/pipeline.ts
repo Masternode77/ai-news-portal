@@ -6,12 +6,14 @@
  *                [--config <path>] [--sources <path>] [--scoring <path>] [--banned-phrases <path>] [--qa <path>] [--redirects <path>] [--fixtures-dir <dir>] [--prompts-dir <dir>] [--images-dir <dir>]
  *                [--trigger schedule|dispatch|local] [--json] [--log-level <level>]
  *   pipeline ops [--from <runs.json>] [--config <path>] [--json] [--log-level <level>]
- *   pipeline regenerate [--slugs <slug>[,<slug>]] [--limit <n>] [--dry-run] [--keep-failed] [--json]
+ *   pipeline regenerate [--slugs <slug>[,<slug>] [--include-unpublished]] [--limit <n>] [--dry-run] [--keep-failed] [--json]
  *
  * `regenerate` (ADR-009): re-drafts published briefs that are still in Korean, in English, from their
  * stored source and updates them in place (generate → qa → image → publish). It reads the project named by
  * the publish target (staging, or production behind the cutover interlock), writes nothing with --dry-run,
  * and on a real run unpublishes a target whose English draft fails QA unless --keep-failed.
+ * --include-unpublished (with --slugs only) also re-drafts those slugs when an earlier run unpublished them,
+ * and a passing draft is published again on the same row.
  *
  * Exit codes: 0 done · 1 partial/budget_stop · 2 failed, usage or config error.
  * Phase 3i: every finished run ends with one summary (ADR-007 layout) in the log,
@@ -81,7 +83,7 @@ const USAGE = `usage: pipeline run [--stage <name>[,<name>]] [--dry-run] [--live
                     [--trigger schedule|dispatch|local] [--json] [--log-level debug|info|warn|error]
        pipeline ops [--from <runs.json>] [--config <path>] [--json] [--log-level debug|info|warn|error]
        pipeline review [--run <run_id>] [--status rejected|pending|none|approved|any] [--limit <n>] [--window <chars>] [--json] [--log-level debug|info|warn|error]
-       pipeline regenerate [--slugs <slug>[,<slug>]] [--limit <n>] [--dry-run] [--keep-failed] [--trigger schedule|dispatch|local] [--json] [--log-level debug|info|warn|error]`;
+       pipeline regenerate [--slugs <slug>[,<slug>] [--include-unpublished]] [--limit <n>] [--dry-run] [--keep-failed] [--trigger schedule|dispatch|local] [--json] [--log-level debug|info|warn|error]`;
 
 export interface Cli {
   command: string | undefined;
@@ -111,6 +113,8 @@ export interface Cli {
   slugs: string[] | undefined;
   /** ADR-009 `regenerate`: leave a target whose English draft fails QA published (default: unpublish it). */
   keepFailed: boolean;
+  /** `regenerate --include-unpublished` (with --slugs): also restore those slugs when they are unpublished. */
+  includeUnpublished: boolean;
   trigger: RunTrigger;
   json: boolean;
   logLevel: "debug" | "info" | "warn" | "error";
@@ -142,6 +146,7 @@ export function parseCli(argv: string[]): Cli {
       window: { type: "string", default: "160" },
       slugs: { type: "string" },
       "keep-failed": { type: "boolean", default: false },
+      "include-unpublished": { type: "boolean", default: false },
       trigger: { type: "string", default: "local" },
       json: { type: "boolean", default: false },
       "log-level": { type: "string", default: "info" },
@@ -166,6 +171,7 @@ export function parseCli(argv: string[]): Cli {
   if (!Number.isInteger(reviewWindow) || reviewWindow < 20 || reviewWindow > 2000) throw new UsageError(`--window must be an integer 20..2000, got "${values.window}"`);
   const slugs = values.slugs === undefined ? undefined : values.slugs.split(",").map((slug) => slug.trim()).filter(Boolean);
   if (slugs !== undefined && slugs.length === 0) throw new UsageError("--slugs needs at least one slug");
+  if (values["include-unpublished"] && slugs === undefined) throw new UsageError("--include-unpublished needs --slugs: a restore names the briefs it brings back");
   const stages = values.stage === undefined ? undefined : values.stage.split(",").map((name) => name.trim()).filter(Boolean);
   if (stages !== undefined && stages.length === 0) throw new UsageError("--stage needs at least one stage name");
   return {
@@ -191,6 +197,7 @@ export function parseCli(argv: string[]): Cli {
     reviewWindow,
     slugs,
     keepFailed: values["keep-failed"],
+    includeUnpublished: values["include-unpublished"],
     trigger,
     json: values.json,
     logLevel,
@@ -374,8 +381,8 @@ async function runRegenerate(cli: Cli, env: NodeJS.ProcessEnv, stdout: (line: st
   const client = buildSupabase(env, globalThis.fetch, names);
   if (!client) throw new ConfigError(`regenerate reads the published briefs from Supabase: ${names.url} and ${names.key} are required (names only; values stay in the environment)`);
   const source = new SupabaseDb(client);
-  const plan = await planRegeneration(source, { ...(cli.slugs ? { slugs: cli.slugs } : {}), limit: cli.reviewLimit });
-  logger.info("regenerate: plan", { target, dry_run: cli.dryRun, eligible: plan.eligible, targets: plan.targets.length, skipped: plan.skipped.length });
+  const plan = await planRegeneration(source, { ...(cli.slugs ? { slugs: cli.slugs } : {}), includeUnpublished: cli.includeUnpublished, limit: cli.reviewLimit });
+  logger.info("regenerate: plan", { target, dry_run: cli.dryRun, eligible: plan.eligible, targets: plan.targets.length, restore_targets: plan.targets.filter((t) => t.status === "unpublished").length, skipped: plan.skipped.length });
 
   let result: RunResult | null = null;
   let entries = [] as ReturnType<typeof regenerationOutcomes>;
@@ -425,7 +432,9 @@ async function runRegenerate(cli: Cli, env: NodeJS.ProcessEnv, stdout: (line: st
     if (!cli.dryRun && !cli.keepFailed) entries = await unpublishFailed(source, entries, new Date());
   }
   const report = buildRegenerateReport({ target, dryRun: cli.dryRun, plan, entries, result });
-  logger.info("regenerate: finished", { run_id: report.run_id, status: report.run_status, cost_usd: report.cost_usd, regenerated: entries.filter((e) => e.outcome === "regenerated").length, qa_failed: entries.filter((e) => e.outcome === "qa_failed").length, kept: entries.filter((e) => e.outcome === "kept").length, remaining: report.remaining });
+  logger.info("regenerate: finished", { run_id: report.run_id, status: report.run_status, cost_usd: report.cost_usd, regenerated: entries.filter((e) => e.outcome === "regenerated").length, restored: entries.filter((e) => e.outcome === "regenerated" && e.previous_status === "unpublished").length, qa_failed: entries.filter((e) => e.outcome === "qa_failed").length, kept: entries.filter((e) => e.outcome === "kept").length, remaining: report.remaining });
+  // One line per target in the job log: the step summary and the artifact are not readable through the REST API.
+  for (const entry of entries) logger.info("regenerate: target", { slug: entry.slug, outcome: entry.outcome, previous_status: entry.previous_status, unpublished: entry.unpublished, reasons: entry.reasons, new_title: entry.new_title });
   stdout(cli.json ? JSON.stringify({ ...report, markdown: formatRegenerateReport(report) }, null, 2) : formatRegenerateReport(report));
   return result === null || result.status === "done" ? 0 : 1;
 }

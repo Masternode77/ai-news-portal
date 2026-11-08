@@ -129,6 +129,56 @@ test("a regenerate run re-drafts the Korean briefs in English in place: the pass
   assert.match(markdown, /qa_failed → unpublished/);
 });
 
+test("restore (2026-11-05): with explicit slugs and includeUnpublished an unpublished brief is re-drafted and published again on its row; one that fails again stays unpublished without a write; never without slugs", async () => {
+  const { config, db, adapters, sources } = await storedRun();
+  const { busanSlug, busanId, saemangeumSlug } = await koreanEra(db);
+  // An earlier regenerate run took both briefs down (the Busan one, say, for a rule since fixed).
+  await db.update("publications", { slug: busanSlug }, { status: "unpublished", updated_at: LATER.toISOString() });
+  await db.update("publications", { slug: saemangeumSlug }, { status: "unpublished", updated_at: LATER.toISOString() });
+
+  await assert.rejects(planRegeneration(db, { includeUnpublished: true, limit: 10 }), /needs explicit slugs/);
+  const notAsked = await planRegeneration(db, { slugs: [busanSlug, "news/00000000000000ff"], limit: 10 });
+  assert.deepEqual(notAsked.targets, []);
+  assert.deepEqual(notAsked.skipped.map((s) => s.reason), ["NOT_FOUND", "NOT_FOUND"], "an unpublished slug is not found unless the restore is asked for");
+
+  const plan = await planRegeneration(db, { slugs: [busanSlug, saemangeumSlug], includeUnpublished: true, limit: 10 });
+  assert.deepEqual(plan.targets.map((t) => [t.slug, t.status]).sort(), [[busanSlug, "unpublished"], [saemangeumSlug, "unpublished"]].sort());
+  assert.ok(plan.publications.some((p) => p.slug === busanSlug), "the unpublished targets are in the rows a dry run seeds");
+
+  const candidates: CandidateInsert[] = plan.targets.map((t) => t.candidate);
+  const rawItems: RawItemInsert[] = plan.targets.map((t) => t.rawItem);
+  const result = await runPipeline(
+    baseRunOptions({ config, db, adapters: adapters(), sources, fixtureName: "scoring", now: LATER, only: ["generate", "qa", "image", "publish"], seed: { rawItems, candidates, selected: candidates }, ledgerFlags: { mode: "regenerate", slugs: plan.targets.map((t) => t.slug) } }),
+  );
+  let entries = regenerationOutcomes(plan, result);
+  const updates: string[] = [];
+  const watched = Object.assign(Object.create(Object.getPrototypeOf(db)) as MemoryDb, db, {
+    update: async (table: Parameters<MemoryDb["update"]>[0], match: Record<string, unknown>, patch: Record<string, unknown>) => {
+      updates.push(String(match["slug"]));
+      return db.update(table, match, patch);
+    },
+  });
+  entries = await unpublishFailed(watched, entries, LATER);
+  assert.deepEqual(updates, [], "a restore target that fails again is already unpublished: nothing is written");
+
+  const busan = entries.find((e) => e.slug === busanSlug)!;
+  assert.equal(busan.outcome, "regenerated");
+  assert.equal(busan.previous_status, "unpublished");
+  const row = (db.rows("publications") as unknown as PublicationRow[]).find((r) => r.slug === busanSlug)!;
+  assert.equal(row.status, "published", "a passing draft is published again");
+  assert.equal(row.id, busanId);
+  assert.equal(row.published_at, NOW.toISOString(), "the first publication date survives the restore");
+  const saemangeum = entries.find((e) => e.slug === saemangeumSlug)!;
+  assert.equal(saemangeum.outcome, "qa_failed");
+  assert.equal(saemangeum.unpublished, true);
+  assert.equal((db.rows("publications") as unknown as PublicationRow[]).find((r) => r.slug === saemangeumSlug)!.status, "unpublished");
+
+  const markdown = formatRegenerateReport(buildRegenerateReport({ target: "production", dryRun: false, plan, entries, result }));
+  assert.match(markdown, /regenerated → restored/);
+  assert.match(markdown, /qa_failed \(stays unpublished\)/);
+  assert.match(formatRegenerateReport(buildRegenerateReport({ target: "production", dryRun: true, plan, entries, result })), /regenerated \(would restore\)/);
+});
+
 test("a target the run never reached is kept for the next invocation, and an empty plan says there is nothing to do", async () => {
   const { db } = await storedRun();
   await koreanEra(db);

@@ -143,6 +143,36 @@ test("UNGROUNDED_ENTITY on English drafts (ADR-009): a sentence-initial plain wo
   assert.equal((await check("UNGROUNDED_ENTITY", romanised, evidence(), { unchecked_source_languages: ["ko"] })).pass, false, "an English source is still checked");
 });
 
+test("UNGROUNDED_ENTITY aliases (2026-11-05): a demonym or another name of the same country grounds against any member of its group; capitals-only members match in capitals; a place of another extent still fails", async () => {
+  const aliases = [["Korea", "South Korea", "Korean"], ["UK", "United Kingdom", "Britain", "Great Britain", "British"], ["US", "United States", "American"]];
+  // Production regenerate 2026-11-05: the source said "South Korea", the brief said "Korean developers".
+  const gumi = evidence({ sourceText: "Samsung SDS breaks ground on Gumi AI Data Center in South Korea\nWill eventually offer 120MW" });
+  const korean = draft({ ...BRIEF, title: "Samsung SDS starts building a 120MW AI data center in Gumi, South Korea", summary: `Samsung SDS has broken ground in Gumi. ${"Capacity arrives in phases over several years. ".repeat(8)}`, why_it_matters: `The site shows Korean developers looking beyond the capital region. ${"Grid access decides timing. ".repeat(10)}`, expert_lens: `Phased builds follow grid connections. ${"Watch the first-phase figure. ".repeat(12)}` });
+  const strict = await check("UNGROUNDED_ENTITY", korean, gumi, { token_fallback: true });
+  assert.equal(strict.pass, false, "without aliases the demonym is not in the source");
+  assert.deepEqual(strict.evidence["ungrounded"], ["Korean"]);
+  const aliased = await check("UNGROUNDED_ENTITY", korean, gumi, { token_fallback: true, aliases });
+  assert.equal(aliased.pass, true);
+  assert.deepEqual(aliased.evidence["alias_grounded"], ["Korean → Korea"]);
+  // UK in the source grounds Britain, British and Great Britain; England is not in the group and still fails.
+  const pavilion = evidence({ sourceText: "Kraken, National Grid, Octopus Energy and SSE will sponsor the UK Pavilion at COP31." });
+  const british = draft({ ...BRIEF, expert_lens: `${BRIEF.expert_lens} Four British companies back the pavilion, and developers in Great Britain watch connection reform.` });
+  assert.equal((await check("UNGROUNDED_ENTITY", british, pavilion, { token_fallback: true, aliases, allow: ["Microsoft", "Example Data Centers", "Busan", "Korean", "Korea", "KEPCO"] })).pass, true);
+  const england = draft({ ...BRIEF, expert_lens: `${BRIEF.expert_lens} The grid serving eastern England may change.` });
+  const englandVerdict = await check("UNGROUNDED_ENTITY", england, evidence(), { token_fallback: true, aliases });
+  assert.equal(englandVerdict.pass, false);
+  assert.deepEqual(englandVerdict.evidence["ungrounded"], ["England"]);
+  // A capitals-only member matches in capitals only: the pronoun "us" never grounds "American".
+  const american = draft({ ...BRIEF, expert_lens: `${BRIEF.expert_lens} Several American buyers are watching the deal.` });
+  assert.equal((await check("UNGROUNDED_ENTITY", american, evidence({ sourceText: `${BODY} The operator told us the site is ready.` }), { aliases })).pass, false);
+  assert.equal((await check("UNGROUNDED_ENTITY", american, evidence({ sourceText: `${BODY} US buyers are interested.` }), { aliases })).pass, true);
+  // A token of a multi-word name grounds through its group under token_fallback ("Korean Busan" style rebuilds).
+  const rebuilt = draft({ ...BRIEF, expert_lens: `${BRIEF.expert_lens} Lenders see a reference in the Busan Korean market.` });
+  assert.equal((await check("UNGROUNDED_ENTITY", rebuilt, evidence({ sourceText: BODY.replace(/Korean/gu, "South Korea's") }), { token_fallback: true, aliases })).pass, true);
+  await assert.rejects(check("UNGROUNDED_ENTITY", korean, gumi, { aliases: [["Korea"]] }), /QA_PARAM_INVALID/, "a group needs at least two names");
+  await assert.rejects(check("UNGROUNDED_ENTITY", korean, gumi, { aliases: ["Korea", "Korean"] }), /QA_PARAM_INVALID/, "a flat list is not a group list");
+});
+
 test("LANG_MISMATCH and BANNED_PATTERN: a Korean brief fails the English gate (ADR-009), language ko keeps the old gate, and a banned phrase fails", async () => {
   const korean = { ...BRIEF, summary: KOREAN_TEXT, why_it_matters: KOREAN_TEXT, expert_lens: KOREAN_TEXT };
   const l = await check("LANG_MISMATCH", draft(korean), evidence());
