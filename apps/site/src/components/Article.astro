@@ -61,7 +61,11 @@ const essay = isEssay(publication);
         <section data-section={section.key} class={LENS_SECTION_KEYS.includes(section.key) ? "lens" : undefined} lang={section.lang}>
           {section.heading && <h2>{section.heading}</h2>}
           {section.paragraphs.map((paragraph, index) =>
-            LONGFORM_SECTION_KEYS.includes(section.key) && isSubheading(paragraph, section.paragraphs[index + 1]) ? <h3>{paragraph}</h3> : <p>{paragraph}</p>,
+            LONGFORM_SECTION_KEYS.includes(section.key) && isSubheading(paragraph, section.paragraphs[index + 1]) ? (
+              section.heading ? <h3>{paragraph}</h3> : <h2>{paragraph}</h2>
+            ) : (
+              <p>{paragraph}</p>
+            ),
           )}
         </section>
       ))

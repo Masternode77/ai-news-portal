@@ -7,9 +7,12 @@ import type { PublicationRow } from "../lib/render";
 interface Props {
   rows: PublicationRow[];
   empty?: string;
+  /** Heading level for row titles: 2 directly under the page h1 (default), 3 under a section h2. */
+  level?: 2 | 3;
 }
 
-const { rows, empty = "Nothing has been published in this list yet." } = Astro.props;
+const { rows, empty = "Nothing has been published in this list yet.", level = 2 } = Astro.props;
+const Heading = level === 2 ? "h2" : "h3";
 ---
 
 {
@@ -33,7 +36,7 @@ const { rows, empty = "Nothing has been published in this list yet." } = Astro.p
               )}
               <div>
                 <MetaLine row={row} />
-                <h3 lang={lang}>{row.title}</h3>
+                <Heading lang={lang}>{row.title}</Heading>
                 {summary && <p lang={lang}>{summary}</p>}
               </div>
             </a>

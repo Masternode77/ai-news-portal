@@ -25,6 +25,6 @@ const rows = loaded.filter(isColumn);
     <p>Columns by <a href="/author/josh-inn/" style="color:var(--accent)">Josh Jiwoon Inn</a>, Compute Current's founder and editor: where the real constraints in AI infrastructure sit, who pays for them, and what to watch next.</p>
   </header>
   <div class="section">
-    {rows.length === 0 ? <PublicationList rows={rows} empty="No columns have been published yet." /> : <CardGrid rows={rows} />}
+    {rows.length === 0 ? <PublicationList rows={rows} empty="No columns have been published yet." /> : <CardGrid rows={rows} level={2} />}
   </div>
 </Base>

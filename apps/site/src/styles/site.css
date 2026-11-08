@@ -529,7 +529,7 @@ img {
   gap: 8px;
   flex: 1;
 }
-.card h3 {
+.card :is(h2, h3) {
   margin: 0;
   font-size: 18px;
   line-height: 1.4;
@@ -548,7 +548,7 @@ img {
 .card.text {
   border-top: 4px solid var(--cat, var(--line-strong));
 }
-.card.text h3 {
+.card.text :is(h2, h3) {
   font-size: 19px;
 }
 
@@ -607,7 +607,7 @@ img {
   padding: 18px 20px;
   align-items: center;
 }
-.rows a:hover h3 {
+.rows a:hover :is(h2, h3) {
   color: var(--accent);
 }
 .rows .thumb {
@@ -622,7 +622,7 @@ img {
   height: 100%;
   object-fit: cover;
 }
-.rows h3 {
+.rows :is(h2, h3) {
   margin: 4px 0 4px;
   font-size: 18px;
   line-height: 1.4;
@@ -788,7 +788,9 @@ img {
   margin-top: 32px;
   padding: 14px 16px;
   border-radius: var(--radius-sm);
-  background: var(--line);
+  /* White card, not a tinted fill: muted text on --line over --bg was 3.88:1 (Lighthouse color-contrast). */
+  background: var(--surface);
+  border: 1px solid var(--line);
   font-size: 14px;
   line-height: 1.6;
   color: var(--muted);
