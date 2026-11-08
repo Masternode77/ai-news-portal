@@ -56,6 +56,10 @@ test("language follows the text: Hangul is Korean, everything else English", () 
   assert.equal(contentLang(row({ title: "Cooling Capacity Should Set the Envelope" })), "en");
   assert.equal(textLang("RFS 일정"), "ko");
   assert.equal(textLang("RFS schedule"), "en");
+  // 2026-11-08: a restored English brief quoting its Korean source name showed the "요약" kicker.
+  assert.equal(textLang("LS Electric chairman Koo Ja-kyun gave the keynote address on next-generation power grids at the CIRED workshop in Seoul, as reported by 디일렉."), "en", "one Korean word in an English paragraph");
+  assert.equal(textLang("Samsung SDS가 경북 구미에서 AI 데이터센터 건설에 착수했다고 Data Center Dynamics가 보도했다."), "ko", "a Korean paragraph with Latin names");
+  assert.equal(contentLang(row({ title: "Apple, 메모리 가격 급등에 제조 비용 몇 달 새 $33 billion 증가" })), "ko", "a mixed Korean title");
 });
 
 test("a placeholder is never shown as artwork", () => {

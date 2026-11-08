@@ -901,8 +901,10 @@
   reviewed_at: 2026-09-10
   language: en
 
+# Korean-language sources carry English display names (ADR-009, 2026-11-08): the name is shown in the sources list and
+# handed to the model, and a Hangul name ended up in English briefs ("as reported by 디일렉").
 - id: etnews
-  name: "전자신문"
+  name: ETNews
   type: rss
   url: https://rss.etnews.com/Section901.xml
   tier: 2
@@ -922,7 +924,7 @@
   language: ko
 
 - id: electimes
-  name: "전기신문"
+  name: Electric Times
   type: rss
   url: https://www.electimes.com/rss/allArticle.xml
   tier: 2
@@ -932,7 +934,7 @@
   language: ko
 
 - id: thelec
-  name: "디일렉"
+  name: TheElec
   type: rss
   url: https://www.thelec.kr/rss/allArticle.xml
   tier: 2
@@ -942,7 +944,7 @@
   language: ko
 
 - id: datanet
-  name: "데이터넷"
+  name: Datanet
   type: rss
   url: https://www.datanet.co.kr/rss/allArticle.xml
   tier: 3

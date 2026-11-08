@@ -18,6 +18,9 @@
  * a member written in capitals only ("UK", "US") must match in capitals, so the pronoun "us" never grounds
  * "American". A token of a multi-word name grounds the same way under `token_fallback`. Groups are data in
  * config/qa.yaml; a place of another extent (England for the UK, Europe for the EU) is never a member.
+ * Acronym plurals (2026-11-08): "GPUs", "PCs" are acronyms like "GPU", not names — the lowercase plural "s"
+ * used to make them look like names (production restore: Altman–Samsung rejected on "GPUs", "PCs"). A run made
+ * only of acronyms and their plurals is not checked; in a longer name such a token grounds by its singular too.
  * `unchecked_source_languages` (ADR-009): an English brief from a Korean-language source writes Korean
  * names romanised ("Saemangeum" for 새만금), which the source text cannot carry, so for a source whose
  * `language` is listed the rule records the names it found and passes — a documented gap; the numbers
@@ -26,6 +29,14 @@
 import type { QaRule } from "@cc/shared";
 import { briefOf, latinProperNouns, readerText } from "../text.ts";
 import { boolParam, numberParam, stringGroupsParam, stringListParam, verdict } from "../verdict.ts";
+
+/** An acronym's plural ("GPUs", "PCs", "SSDs"): two or more capitals or digits, then a lowercase "s". */
+const ACRONYM_PLURAL = /^([A-Z][A-Z0-9&.-]*[A-Z0-9])s$/u;
+
+/** The run with every acronym plural written as its acronym ("Nvidia GPUs" → "Nvidia GPU"). */
+function singularAcronyms(entity: string): string {
+  return entity.split(/\s+/u).map((token) => token.replace(ACRONYM_PLURAL, "$1")).join(" ");
+}
 
 function escapeRegExp(text: string): string {
   return text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
@@ -50,7 +61,8 @@ export const rule: QaRule = {
     const haystack = sourceText.toLowerCase();
     const tokenFallback = boolParam(config, "token_fallback", false);
     const skipSentenceInitial = boolParam(config, "skip_sentence_initial", true);
-    const entities = latinProperNouns(readerText(brief), minChars, { skipSentenceInitial }).filter((e) => /[a-z]/.test(e));
+    // A run with no lowercase letter once acronym plurals are singular is an acronym run, which is never checked.
+    const entities = latinProperNouns(readerText(brief), minChars, { skipSentenceInitial }).filter((e) => /[a-z]/.test(singularAcronyms(e)));
     const sourceLanguage = evidence.source?.language ?? null;
     if (sourceLanguage !== null && stringListParam(config, "unchecked_source_languages").includes(sourceLanguage)) {
       return verdict(config, true, { skipped: "source_language", source_language: sourceLanguage, entities: entities.length, names: entities.slice(0, 20) }, evidence.now);
@@ -63,7 +75,10 @@ export const rule: QaRule = {
       if (!group) return null;
       return group.find((member) => hasWholeWord(sourceText, member, !/[a-z]/.test(member))) ?? null;
     };
-    const tokenInSource = (token: string): boolean => hasWholeWord(haystack, token, false) || aliasIn(token) !== null;
+    const tokenInSource = (token: string): boolean => {
+      const singular = token.replace(ACRONYM_PLURAL, "$1");
+      return hasWholeWord(haystack, token, false) || (singular !== token && hasWholeWord(haystack, singular, false)) || aliasIn(token) !== null;
+    };
     const byTokens = (entity: string): boolean => {
       const tokens = entity.split(/\s+/u).filter((token) => token.length >= minChars);
       if (tokens.length === 0 || !entity.includes(" ")) return false;
