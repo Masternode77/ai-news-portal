@@ -6,9 +6,12 @@ import type { PublicationRow } from "../lib/render";
 
 interface Props {
   row: PublicationRow;
+  /** Heading level for the title: 3 under a section h2 (default), 2 directly under the page h1. */
+  level?: 2 | 3;
 }
 
-const { row } = Astro.props;
+const { row, level = 3 } = Astro.props;
+const Heading = level === 2 ? "h2" : "h3";
 const image = displayImage(row);
 const term = primaryCategory(row);
 // Without real artwork the card becomes a text card: category bar + summary, never the placeholder.
@@ -25,7 +28,7 @@ const summary = image ? "" : excerpt(row, 200);
   }
   <div class="card-body">
     <MetaLine row={row} />
-    <h3 lang={contentLang(row)}>{row.title}</h3>
+    <Heading lang={contentLang(row)}>{row.title}</Heading>
     {summary && <p lang={contentLang(row)}>{summary}</p>}
   </div>
 </a>

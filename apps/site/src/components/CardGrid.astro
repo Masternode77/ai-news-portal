@@ -4,11 +4,12 @@ import type { PublicationRow } from "../lib/render";
 
 interface Props {
   rows: PublicationRow[];
+  level?: 2 | 3;
 }
 
-const { rows } = Astro.props;
+const { rows, level = 3 } = Astro.props;
 ---
 
 <div class="cards">
-  {rows.map((row) => <Card row={row} />)}
+  {rows.map((row) => <Card row={row} level={level} />)}
 </div>
