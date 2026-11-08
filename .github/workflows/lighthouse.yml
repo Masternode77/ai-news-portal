@@ -1,0 +1,121 @@
+# Lighthouse lab audit of the live site (Josh 2026-11-08: "B안으로 진행해").
+# The cloud session cannot reach www or the PageSpeed Insights API (shared
+# anonymous quota exhausted), so the audit runs on a GitHub runner instead.
+# Read-only: it fetches public pages and writes reports to the step summary and
+# an artifact. No secrets, no checkout, nothing is deployed or committed.
+name: Lighthouse (www)
+
+on:
+  workflow_dispatch:
+    inputs:
+      base_url:
+        description: "Site to audit (no trailing slash)"
+        type: string
+        default: "https://www.computecurrent.com"
+  pull_request:
+    paths:
+      - ".github/workflows/lighthouse.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: lighthouse-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lighthouse:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      BASE_URL: ${{ inputs.base_url || 'https://www.computecurrent.com' }}
+      LIGHTHOUSE_VERSION: "13.6.0"
+      # Home, a legacy analysis article, a column, a category listing.
+      PAGES: >-
+        /
+        /news/eia-data-center-load-timing/
+        /column/cooling-capacity-should-set-the-server-procurement-envelope-2026-09-08/
+        /category/power-grid/
+    steps:
+      - name: Setup Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: "22"
+
+      - name: Run Lighthouse (mobile and desktop, 3 runs each, median kept)
+        run: |
+          set -euo pipefail
+          mkdir -p reports
+          for path in $PAGES; do
+            slug=$(echo "$path" | sed 's#^/##; s#/$##; s#[^A-Za-z0-9]#-#g'); slug=${slug:-home}
+            for form in mobile desktop; do
+              preset=""; [ "$form" = desktop ] && preset="--preset=desktop"
+              for run in 1 2 3; do
+                npx --yes "lighthouse@${LIGHTHOUSE_VERSION}" "${BASE_URL}${path}" $preset \
+                  --only-categories=performance,accessibility,best-practices,seo \
+                  --chrome-flags="--headless=new --no-sandbox" \
+                  --output=json --output-path="reports/${slug}.${form}.${run}.json" --quiet \
+                  || echo "::warning::lighthouse failed for ${path} ${form} run ${run}"
+              done
+            done
+          done
+          ls -la reports
+
+      - name: Summarise
+        run: |
+          node --input-type=module <<'EOF' >> "$GITHUB_STEP_SUMMARY"
+          import { readdirSync, readFileSync, writeFileSync } from "node:fs";
+          const files = readdirSync("reports").filter((f) => f.endsWith(".json"));
+          const groups = new Map();
+          for (const f of files) {
+            const [slug, form] = f.split(".");
+            const r = JSON.parse(readFileSync(`reports/${f}`, "utf8"));
+            if (!r.categories?.performance) continue;
+            const key = `${slug}|${form}`;
+            if (!groups.has(key)) groups.set(key, []);
+            groups.get(key).push(r);
+          }
+          const score = (r, c) => Math.round((r.categories[c]?.score ?? 0) * 100);
+          const ms = (r, a) => r.audits[a]?.numericValue ?? NaN;
+          const rows = [];
+          const opportunities = new Map();
+          for (const [key, runs] of [...groups].sort()) {
+            runs.sort((a, b) => score(a, "performance") - score(b, "performance"));
+            const r = runs[Math.floor(runs.length / 2)];
+            const [slug, form] = key.split("|");
+            rows.push({
+              page: slug, form, runs: runs.length, url: r.finalDisplayedUrl,
+              performance: score(r, "performance"), accessibility: score(r, "accessibility"),
+              best_practices: score(r, "best-practices"), seo: score(r, "seo"),
+              fcp_ms: Math.round(ms(r, "first-contentful-paint")), lcp_ms: Math.round(ms(r, "largest-contentful-paint")),
+              tbt_ms: Math.round(ms(r, "total-blocking-time")), cls: Number(ms(r, "cumulative-layout-shift").toFixed(3)),
+              si_ms: Math.round(ms(r, "speed-index")), ttfb_ms: Math.round(ms(r, "server-response-time")),
+              bytes_kb: Math.round(ms(r, "total-byte-weight") / 1024),
+            });
+            for (const [id, a] of Object.entries(r.audits)) {
+              if (a.score !== null && a.score < 0.9 && ["binary", "numeric", "metricSavings"].includes(a.scoreDisplayMode)) {
+                const o = opportunities.get(id) ?? { title: a.title, pages: new Set() };
+                o.pages.add(`${slug}/${form}`);
+                opportunities.set(id, o);
+              }
+            }
+          }
+          writeFileSync("reports/summary.json", JSON.stringify({ base_url: process.env.BASE_URL, lighthouse: process.env.LIGHTHOUSE_VERSION, rows,
+            failing_audits: [...opportunities].map(([id, o]) => ({ id, title: o.title, pages: [...o.pages] })) }, null, 2));
+          console.log(`## Lighthouse ${process.env.LIGHTHOUSE_VERSION} · ${process.env.BASE_URL}\n`);
+          console.log("Median of 3 runs per page and form factor (lab data, GitHub-hosted runner).\n");
+          console.log("| page | form | runs | Perf | A11y | BP | SEO | FCP ms | LCP ms | TBT ms | CLS | SI ms | TTFB ms | KB |");
+          console.log("|---|---|---|---|---|---|---|---|---|---|---|---|---|---|");
+          for (const x of rows) console.log(`| ${x.page} | ${x.form} | ${x.runs} | ${x.performance} | ${x.accessibility} | ${x.best_practices} | ${x.seo} | ${x.fcp_ms} | ${x.lcp_ms} | ${x.tbt_ms} | ${x.cls} | ${x.si_ms} | ${x.ttfb_ms} | ${x.bytes_kb} |`);
+          console.log("\n### Audits below 0.9 on any median run\n");
+          for (const [id, o] of [...opportunities].sort((a, b) => b[1].pages.size - a[1].pages.size)) console.log(`- \`${id}\` ${o.title} (${[...o.pages].join(", ")})`);
+          EOF
+          cat reports/summary.json
+
+      - name: Upload reports
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: lighthouse-reports
+          path: reports/
+          retention-days: 14
