@@ -15,7 +15,7 @@
 # BUDGET_EXCEEDED (3d generate / runner). INSIGHT_DENSITY_LOW and HUMAN_STYLE_LOW are insight_essay
 # rules and arrive with 3e.
 
-version: "2026-11-05.1"         # ADR-009: English drafts (LANG_MISMATCH language en, UNGROUNDED_ENTITY sentence-initial + Korean-source handling); 2026-11-04.2 adds Southeast Asia(n) to allow; 2026-11-05.1 adds UNGROUNDED_ENTITY country aliases
+version: "2026-11-08.1"         # ADR-009: English drafts (LANG_MISMATCH language en, UNGROUNDED_ENTITY sentence-initial + Korean-source handling); 2026-11-04.2 adds Southeast Asia(n) to allow; 2026-11-05.1 adds UNGROUNDED_ENTITY country aliases; 2026-11-08.1 QUOTE_TOO_LONG count_min_words 4
 
 rules:
   # ---- hard: a failing verdict rejects the draft -------------------------------------------------
@@ -26,7 +26,9 @@ rules:
     params: { min_source_chars: 500 }   # legacy source-extraction-fail-closed: 500 (ADR-004)
   - rule: QUOTE_TOO_LONG             # longest run of consecutive words shared with the source, and the number of quoted spans
     severity: hard
-    params: { max_quote_words: 20, max_quotes: 1 }   # Josh 2026-10-18: ≤ 20 words, once
+    # count_min_words: a quoted span of fewer words is a quoted term (slogan, coined name, one word), not a quotation, and does not
+    # count toward max_quotes (Josh 2026-11-08, after LS Electric "Grids for AI," … "AI for Grids," failed; tuning-log 9). The shared-run cap still applies.
+    params: { max_quote_words: 20, max_quotes: 1, count_min_words: 4 }   # Josh 2026-10-18: ≤ 20 words, once; 2026-11-08: terms of ≤ 3 words are not counted
   - rule: SIMILARITY_TOO_HIGH        # shingle overlap and verbatim sentences against the source text (legacy copyright-safe guard + policy file)
     severity: hard
     params: { overlap_max: 0.22, shingle_words: 8, sentence_reuse_max: 0.15, copied_sentence_min_chars: 45 }

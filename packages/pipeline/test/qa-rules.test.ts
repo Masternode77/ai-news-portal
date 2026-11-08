@@ -6,6 +6,7 @@ import type { DraftInsert, QaEvidence } from "@cc/shared";
 import { QA_RULES } from "../src/qa/registry.ts";
 import { concreteTokens, hangulRatio, latinProperNouns, latinRatio, quotedSpans, sentences, shingles } from "../src/qa/text.ts";
 import { numberParam } from "../src/qa/verdict.ts";
+import { quoteWordCount } from "../src/qa/rules/QUOTE_TOO_LONG.ts";
 import { testBannedPhrases } from "./helpers.ts";
 import { BRIEF, BODY, KOREAN_TEXT, NOW, THIN_LENS, TITLE, candidate, draft, entry, evidence, rawItem, source } from "./qa-fixtures.ts";
 
@@ -73,6 +74,28 @@ test("QUOTE_TOO_LONG: a run of more than max_quote_words shared with the source 
   assert.equal(q.pass, false);
   assert.equal(q.evidence["quoted_spans"], 2);
   assert.equal(quotedSpans('a "one" and “two” and "x"').length, 2, "single characters are not quotes");
+});
+
+test("QUOTE_TOO_LONG count_min_words (Josh 2026-11-08): quoted terms of up to three words do not count toward max_quotes, a longer second quote still fails, and the shared-run cap is unchanged", async () => {
+  // Production regenerate 2026-11-05 (LS Electric, news/a85cf04378827841): two slogan halves, each three words.
+  const slogans = { ...BRIEF, summary: `${BRIEF.summary} He framed it as two parts: "Grids for AI," meaning power for AI loads, and "AI for Grids," meaning AI to run the network.` };
+  const strict = await check("QUOTE_TOO_LONG", draft(slogans), evidence(), { max_quotes: 1 });
+  assert.equal(strict.pass, false, "without the param every span counts");
+  const terms = await check("QUOTE_TOO_LONG", draft(slogans), evidence(), { max_quotes: 1, count_min_words: 4 });
+  assert.equal(terms.pass, true);
+  assert.equal(terms.evidence["quoted_spans"], 0);
+  assert.deepEqual(terms.evidence["short_quotes"], ["Grids for AI,", "AI for Grids,"]);
+  // A four-word quote counts; two of them still exceed max_quotes 1.
+  const twoQuotes = { ...BRIEF, summary: `${BRIEF.summary} The company called it the "first 200 MW phase" and stressed "liquid cooling for GPU clusters" again.` };
+  const counted = await check("QUOTE_TOO_LONG", draft(twoQuotes), evidence(), { max_quotes: 1, count_min_words: 4 });
+  assert.equal(counted.pass, false);
+  assert.equal(counted.evidence["quoted_spans"], 2);
+  // One real quote plus a quoted term passes.
+  const mixed = { ...BRIEF, summary: `${BRIEF.summary} Analysts called the delay "indicative" and the operator said "the campus will be built in phases" as capacity is released.` };
+  assert.equal((await check("QUOTE_TOO_LONG", draft(mixed), evidence(), { max_quotes: 1, count_min_words: 4 })).pass, true);
+  assert.equal(quoteWordCount("Grids for AI,"), 3);
+  assert.equal(quoteWordCount(" — AI — "), 1, "a dash alone is not a word");
+  await assert.rejects(check("QUOTE_TOO_LONG", draft(slogans), evidence(), { count_min_words: "4" }), /QA_PARAM_INVALID/);
 });
 
 test("SIMILARITY_TOO_HIGH: pasted source passages raise the shingle overlap and the copied-sentence share above the legacy limits", async () => {
