@@ -17,7 +17,15 @@ import type { TaxonomyTerm } from "./taxonomy.ts";
 
 export type ContentLang = "ko" | "en";
 
-const HANGUL = /[가-힣]/;
+const HANGUL = /[가-힣]/gu;
+const LATIN = /[A-Za-z]/gu;
+/**
+ * A text is Korean when Hangul makes up at least this share of its letters (Hangul + Latin). One Korean
+ * word inside an English paragraph (a source name such as 디일렉) no longer turns the section Korean
+ * (2026-11-08: a restored English brief showed the "요약" kicker); a Korean paragraph that carries Latin
+ * company names stays Korean.
+ */
+const KOREAN_MIN_SHARE = 0.2;
 
 /** Korean when the title has Hangul; the legacy catalog and policy pages are English. */
 export function contentLang(row: Pick<PublicationRow, "title">): ContentLang {
@@ -26,7 +34,10 @@ export function contentLang(row: Pick<PublicationRow, "title">): ContentLang {
 
 /** Section-level language: a legacy English article can still carry a Korean summary field. */
 export function textLang(text: string): ContentLang {
-  return HANGUL.test(text) ? "ko" : "en";
+  const hangul = text.match(HANGUL)?.length ?? 0;
+  if (hangul === 0) return "en";
+  const latin = text.match(LATIN)?.length ?? 0;
+  return hangul / (hangul + latin) >= KOREAN_MIN_SHARE ? "ko" : "en";
 }
 
 /** The Current columns and insight essays: the rows that lead the home page. */

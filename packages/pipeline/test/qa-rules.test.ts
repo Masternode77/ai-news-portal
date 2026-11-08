@@ -196,6 +196,21 @@ test("UNGROUNDED_ENTITY aliases (2026-11-05): a demonym or another name of the s
   await assert.rejects(check("UNGROUNDED_ENTITY", korean, gumi, { aliases: ["Korea", "Korean"] }), /QA_PARAM_INVALID/, "a flat list is not a group list");
 });
 
+test("UNGROUNDED_ENTITY acronym plurals (2026-11-08): GPUs and PCs are acronyms, not names; in a longer name the plural grounds by its singular; a real name beside them is still checked", async () => {
+  // Production restore 2026-11-08 (Altman–Samsung, news/749481b7399ff99c) was rejected on "GPUs" and "PCs".
+  const plurals = draft({ ...BRIEF, expert_lens: `${BRIEF.expert_lens} Memory sitting in idle PCs could serve GPUs in shared AI halls.` });
+  assert.equal((await check("UNGROUNDED_ENTITY", plurals, evidence(), { token_fallback: true })).pass, true);
+  // "Nvidia GPUs" grounds when the source has Nvidia and GPU (singular); without Nvidia in the source it still fails.
+  const named = draft({ ...BRIEF, expert_lens: `${BRIEF.expert_lens} Racks of Nvidia GPUs are planned for the second phase.` });
+  assert.equal((await check("UNGROUNDED_ENTITY", named, evidence({ sourceText: `${BODY} Nvidia will supply the GPU clusters.` }), { token_fallback: true })).pass, true);
+  const unnamed = await check("UNGROUNDED_ENTITY", named, evidence(), { token_fallback: true });
+  assert.equal(unnamed.pass, false);
+  assert.deepEqual(unnamed.evidence["ungrounded"], ["Nvidia GPUs"]);
+  // A capitalised word ending in "s" is not an acronym plural: "Ross" and "Mrs" stay names.
+  const ross = draft({ ...BRIEF, expert_lens: `${BRIEF.expert_lens} The analyst Ross expects delays.` });
+  assert.deepEqual((await check("UNGROUNDED_ENTITY", ross, evidence())).evidence["ungrounded"], ["Ross"]);
+});
+
 test("LANG_MISMATCH and BANNED_PATTERN: a Korean brief fails the English gate (ADR-009), language ko keeps the old gate, and a banned phrase fails", async () => {
   const korean = { ...BRIEF, summary: KOREAN_TEXT, why_it_matters: KOREAN_TEXT, expert_lens: KOREAN_TEXT };
   const l = await check("LANG_MISMATCH", draft(korean), evidence());

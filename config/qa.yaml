@@ -15,7 +15,7 @@
 # BUDGET_EXCEEDED (3d generate / runner). INSIGHT_DENSITY_LOW and HUMAN_STYLE_LOW are insight_essay
 # rules and arrive with 3e.
 
-version: "2026-11-08.1"         # ADR-009: English drafts (LANG_MISMATCH language en, UNGROUNDED_ENTITY sentence-initial + Korean-source handling); 2026-11-04.2 adds Southeast Asia(n) to allow; 2026-11-05.1 adds UNGROUNDED_ENTITY country aliases; 2026-11-08.1 QUOTE_TOO_LONG count_min_words 4
+version: "2026-11-08.2"         # ADR-009: English drafts (LANG_MISMATCH language en, UNGROUNDED_ENTITY sentence-initial + Korean-source handling); 2026-11-04.2 adds Southeast Asia(n) to allow; 2026-11-05.1 adds UNGROUNDED_ENTITY country aliases; 2026-11-08.1 QUOTE_TOO_LONG count_min_words 4; 2026-11-08.2 UNGROUNDED_ENTITY treats acronym plurals (GPUs, PCs) as acronyms (code)
 
 rules:
   # ---- hard: a failing verdict rejects the draft -------------------------------------------------
