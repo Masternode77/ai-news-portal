@@ -92,7 +92,11 @@
 | **합계** | | **19** | **13** | **6** | **0.78** (+ dry-run 0.36) | RSS·기사 페이지 영문 확인, 비공개 URL 404, www 136/136(run 41832277811) |
 | 복구 dry-run (2026-11-09 00:36) | 42495648523 · `3e8c5af4` | 비공개 5 (`include_unpublished`) | 3 | (2) | 0.20 | qa 2026-11-08.1. 통과 LS일렉트릭·Altman–Samsung·Sea Link, 거절 Samsung SDS·COP31(`UNGROUNDED_ENTITY`) |
 | 복구 apply (2026-11-09 00:41) | 42496006240 · `2fda8151` | 5 | **3 복구** | 2 (비공개 유지, 쓰기 없음) | 0.20 | 복구: LS일렉트릭 `a85cf04378827841`·COP31 `c52ebfbcc13976d4`·Sea Link `d1e939ac6b712454`. 유지: Samsung SDS `998d…` "Seoul"(원문 27자 — 정탐), Altman–Samsung `7494…` "GPUs"·"PCs"(약어 복수형 오탐 → qa 2026-11-08.2). 근거: shadow-review run 42496173883 |
+| Altman 재복구 dry-run (2026-11-09 08:44) | 42536560668 · `831d1c6e` | 1 | 1 | 0 | 0.04 | qa 2026-11-08.2(약어 복수형) — 지적 0 |
+| Altman 재복구 apply (2026-11-09 11:02) | 42548626381 · `98bf97d1` | 1 | **1 복구** | 0 | 0.04 | `news/749481b7399ff99c` 재공개(soft `SEO_FIELDS_MISSING` auto-pass). 페이지 200·영문 확인 |
 
 판정: 비공개 6건 중 **정탐 1**(Alliant 중복본). 나머지 5건은 규칙 과민 — 지명 파생어 4(UNGROUNDED_ENTITY: 국가 형용사·동의어), 짧은 용어 인용 2개 1(QUOTE_TOO_LONG). 한국 관련 3건이 포함돼 ADR-009의 APAC 차별점과 충돌 → Josh B안(2026-11-05): `UNGROUNDED_ENTITY.aliases`(qa 2026-11-05.1, tuning-log 8행) + `regenerate --include-unpublished`로 5건 복구(Alliant 중복본 제외). 근거 표: shadow-review run 41946570828·41946404449·41946759432(job log의 review.md).
 
 복구 뒤(2026-11-08, Josh "복구 승인"): 재생성 대상 19건 → **발행 영문 16** · 비공개 3(Alliant 중복본 = 정탐, Samsung SDS "Seoul" = 원문 27자 정탐, Altman–Samsung "GPUs"·"PCs" = 오탐 → qa 2026-11-08.2 뒤 재복구 대상).
+
+**최종(2026-11-09, Josh "Altman 복구 승인")**: 재생성 대상 19건 → **발행 영문 17** · 비공개 2(Alliant 중복본 `e82efbd8e7ebf3c4` = 같은 사건 중복, Samsung SDS `998d196444fddbaf` = 원문 27자에 없는 "Seoul" — 둘 다 정탐). 재생성·복구 누계 비용 USD 1.62 = apply 1.02(재생성 0.78 + 복구 0.20 + Altman 0.04) + dry-run 0.60(0.36 + 0.20 + 0.04).
