@@ -14,9 +14,15 @@
  * config decides what runs, the registry only says what exists. A rule that
  * throws becomes a failing verdict carrying the error (fail-closed) and is
  * logged, never swallowed.
+ *
+ * Phase 3e: a rule with `content_types` in the config judges only drafts of those types (THIN_EXPERT_LENS
+ * briefs, ESSAY_STRUCTURE essays); the others give that draft no verdict. The cross-article titles a rule
+ * sees (DUPLICATE_EVENT, ESSAY_STRUCTURE) are, newest first, for a brief everything but essays inside
+ * `normalize.published_window_days`, and for an essay the newest `RECENT_ESSAYS` essays whatever their age:
+ * an essay that reads the event a brief reported is the point of the essay, not a duplicate.
  */
 import { draftId, rawItemId, storedBriefField } from "@cc/shared";
-import type { CandidateInsert, DbPort, DraftInsert, QaEvidence, QaResultInsert, QaRuleConfig, QaVerdict, RawItemInsert, Row, SourceConfig, Stage, StageContext } from "@cc/shared";
+import type { CandidateInsert, ContentType, DbPort, DraftInsert, QaEvidence, QaResultInsert, QaRuleConfig, QaVerdict, RawItemInsert, Row, SourceConfig, Stage, StageContext } from "@cc/shared";
 import { QA_RULES } from "../qa/registry.ts";
 import type { QaDecision, QaRuleStat, QaStats } from "../state.ts";
 import { sourceTextOf } from "./generate.ts";
@@ -36,6 +42,16 @@ export function activeRules(config: { rules: QaRuleConfig[] }): QaRuleConfig[] {
     if (!QA_RULES.has(entry.rule)) throw new Error(`${QA_RULE_UNKNOWN}: config/qa.yaml lists ${entry.rule} but packages/pipeline/src/qa/rules/${entry.rule}.ts is not registered`);
   }
   return active;
+}
+
+/** Essays (and the legacy columns) are compared with essays; briefs and legacy analyses with each other. */
+export function isEssayType(contentType: string): boolean {
+  return contentType === "insight_essay";
+}
+
+/** Whether a config entry judges drafts of this content type (no `content_types` = every type). */
+export function appliesTo(entry: QaRuleConfig, contentType: ContentType): boolean {
+  return entry.content_types === undefined || entry.content_types.includes(contentType);
 }
 
 /** The decision the verdicts imply under the config (auto_pass soft fails do not hold the draft). */
@@ -59,27 +75,55 @@ export function decide(verdicts: QaVerdict[], entries: Map<string, QaRuleConfig>
  * rules (DUPLICATE_EVENT). The window is `normalize.published_window_days`, the same one normalize
  * uses for its title comparison, read in pages so a large archive is never cut to one select.
  */
-export async function recentPublications(db: DbPort, now: Date, windowDays: number, pageSize: number): Promise<{ slug: string; title: string }[]> {
+export interface RecentTitle {
+  slug: string;
+  title: string;
+  content_type: string;
+}
+
+export async function recentPublications(db: DbPort, now: Date, windowDays: number, pageSize: number): Promise<RecentTitle[]> {
   const since = now.getTime() - windowDays * 24 * 60 * 60 * 1000;
-  const out: { slug: string; title: string }[] = [];
+  const out: RecentTitle[] = [];
   for (let offset = 0; ; offset += pageSize) {
-    const page = await db.select<Row>("publications", { status: "published" }, { columns: ["slug", "title", "published_at"], limit: pageSize, offset, orderBy: { column: "published_at", ascending: false } });
+    const page = await db.select<Row>("publications", { status: "published" }, { columns: ["slug", "title", "content_type", "published_at"], limit: pageSize, offset, orderBy: { column: "published_at", ascending: false } });
     for (const row of page) {
       const at = typeof row["published_at"] === "string" ? Date.parse(row["published_at"]) : Number.NaN;
       if (Number.isFinite(at) && at < since) return out;
-      if (typeof row["slug"] === "string" && typeof row["title"] === "string") out.push({ slug: row["slug"], title: row["title"] });
+      if (typeof row["slug"] === "string" && typeof row["title"] === "string") {
+        out.push({ slug: row["slug"], title: row["title"], content_type: typeof row["content_type"] === "string" ? row["content_type"] : "news_brief" });
+      }
     }
     if (page.length < pageSize) return out;
   }
+}
+
+/** Published essays an essay draft is compared with (DUPLICATE_EVENT, ESSAY_STRUCTURE's title shape). */
+export const RECENT_ESSAYS = 10;
+
+/** The newest published essays, newest first, whatever their age. */
+export async function recentEssays(db: DbPort, limit: number): Promise<RecentTitle[]> {
+  const rows = await db.select<Row>("publications", { status: "published", content_type: "insight_essay" }, { columns: ["slug", "title", "published_at"], limit, orderBy: { column: "published_at", ascending: false } });
+  return rows.filter((row) => typeof row["slug"] === "string" && typeof row["title"] === "string").map((row) => ({ slug: row["slug"] as string, title: row["title"] as string, content_type: "insight_essay" }));
 }
 
 export function draftRowId(draft: DraftInsert): string {
   return draft.id ?? draftId(draft.candidate_id, draft.content_type, draft.prompt_version);
 }
 
-function draftSlug(draft: DraftInsert): string | null {
-  const slug = (draft.body["brief"] as { slug?: unknown } | undefined)?.slug;
+/** The reader record a draft carries: `body.essay` for an essay, `body.brief` otherwise. */
+function readerRecord(draft: DraftInsert): Record<string, unknown> | null {
+  const record = draft.content_type === "insight_essay" ? draft.body["essay"] : draft.body["brief"];
+  return record && typeof record === "object" ? (record as Record<string, unknown>) : null;
+}
+
+export function draftSlug(draft: DraftInsert): string | null {
+  const slug = readerRecord(draft)?.["slug"];
   return typeof slug === "string" ? slug : null;
+}
+
+/** The draft's title (a Korean-era brief's `title_ko` too). */
+export function draftTitle(draft: DraftInsert): string | null {
+  return draft.content_type === "insight_essay" ? ((t) => (typeof t === "string" ? t : null))(readerRecord(draft)?.["title"]) : storedBriefField(draft.body["brief"], "title");
 }
 
 export const qaStage: Stage<QaInput, QaOutput> = {
@@ -95,11 +139,14 @@ export const qaStage: Stage<QaInput, QaOutput> = {
     const sources = new Map<string, SourceConfig>(input.sources.map((source) => [source.id, source]));
     const candidates = new Map<string, CandidateInsert>(input.candidates.filter((c) => c.id).map((c) => [c.id!, c]));
     const checkedAt = ctx.now;
-    const published = rules.some((r) => r.rule === "DUPLICATE_EVENT")
+    const crossArticle = rules.some((r) => r.rule === "DUPLICATE_EVENT" || r.rule === "ESSAY_STRUCTURE");
+    const published = crossArticle && input.drafts.some((d) => !isEssayType(d.content_type))
       ? await recentPublications(ctx.adapters.db, ctx.now, ctx.config.normalize.published_window_days, ctx.config.normalize.published_page_size)
       : [];
+    /** An essay is compared with the newest essays whatever their age: one a day at most, and the title-shape rule counts consecutive essays, not days. */
+    const essays = crossArticle && input.drafts.some((d) => isEssayType(d.content_type)) ? await recentEssays(ctx.adapters.db, RECENT_ESSAYS) : [];
     /** Titles of drafts that passed earlier in this run: two outlets' takes on one event in the same run are duplicates too. */
-    const passedTitles: { slug: string; title: string }[] = [];
+    const passedTitles: RecentTitle[] = [];
 
     const passed: DraftInsert[] = [];
     const verdicts: QaVerdict[] = [];
@@ -126,12 +173,15 @@ export const qaStage: Stage<QaInput, QaOutput> = {
         rawItem: item,
         candidate: candidates.get(draft.candidate_id),
         bannedPhrases: ctx.bannedPhrases,
-        recentPublishedTitles: [...published, ...passedTitles].filter((p) => p.slug !== draftSlug(draft)).map((p) => p.title),
+        recentPublishedTitles: [...passedTitles.slice().reverse(), ...(isEssayType(draft.content_type) ? essays : published)]
+          .filter((p) => isEssayType(p.content_type) === isEssayType(draft.content_type) && p.slug !== draftSlug(draft))
+          .map((p) => p.title),
         now: checkedAt,
       };
 
       const own: QaVerdict[] = [];
       for (const entry of rules) {
+        if (!appliesTo(entry, draft.content_type)) continue;
         const rule = QA_RULES.get(entry.rule)!;
         let v: QaVerdict;
         try {
@@ -163,19 +213,18 @@ export const qaStage: Stage<QaInput, QaOutput> = {
       const decision = decide(own, entries);
       if (decision.outcome === "passed") {
         passed.push(draft);
-        const title = storedBriefField(draft.body["brief"], "title");
-        if (title !== null) passedTitles.push({ slug: draftSlug(draft) ?? id, title });
+        const title = draftTitle(draft);
+        if (title !== null) passedTitles.push({ slug: draftSlug(draft) ?? id, title, content_type: draft.content_type });
       } else {
         if (decision.outcome === "rejected") rejected += 1;
         else held += 1;
         statusUpdates.push({ ...draft, id, review_status: decision.outcome === "rejected" ? "rejected" : "pending" });
       }
-      const brief = (draft.body["brief"] ?? null) as { slug?: unknown } | null;
       if (decisions.length < DECISION_SAMPLE) {
         decisions.push({
           draft_id: id,
-          slug: typeof brief?.slug === "string" ? brief.slug : null,
-          title: storedBriefField(brief, "title"),
+          slug: draftSlug(draft),
+          title: draftTitle(draft),
           source_id: item?.source_id ?? null,
           outcome: decision.outcome,
           failed_rules: decision.failed,

@@ -95,7 +95,7 @@ Phase 3 모듈 e(`REBUILD_BRIEF.md` §6 3e, Appendix A `insight_essay`). 착수 
 5. **이미지**: 브리프와 같다(플레이스홀더, static store). 레거시 칼럼 7편의 히어로 이미지는 그대로 둔다.
 6. **발행**: `insight_essay`를 `publications` 행에 매핑한다(`column/<slug>-YYYY-MM-DD`, content_type `insight_essay`, 바이라인 Josh Jiwoon Inn).
 7. **사이트**: 새 본문 키(deck·thesis·body·counterpoint·implications)를 렌더링한다. 레거시 키(`article_body`)는 그대로 읽는다. 목록·RSS·사이트맵은 이미 `column/`을 처리한다.
-8. **플래그**: `flags.stages.essay`(기본 false)와 `CC_FLAG_STAGES_ESSAY`. cron에서 켜는 것은 4단계(스케줄 활성) 승인 항목이다.
+8. **플래그**: ~~`flags.stages.essay`와 `CC_FLAG_STAGES_ESSAY`~~ → 구현에서 **`essay.enabled`(기본 false)와 `CC_FLAG_ESSAY`**로 바꿨다(§6). 스테이지 이름이 DB enum(`cc_stage_name`)이라 새 스테이지를 만들면 마이그레이션(승인 항목)이 필요하기 때문이다. cron에서 켜는 것은 4단계(스케줄 활성) 승인 항목이다.
 9. **비용**: 칼럼 1편은 입력 약 6k 토큰(원문 최대 12,000자 포함), 출력 약 3k 토큰이다. `claude-opus-5-5` 단가($4/$20 per Mtok) 기준 약 $0.08~0.12로 추정하며, 실측해서 보고한다. 런당 한도 $2.0 안이다.
 
 ## 4. Josh 결정이 필요한 것
@@ -125,3 +125,41 @@ Phase 3 모듈 e(`REBUILD_BRIEF.md` §6 3e, Appendix A `insight_essay`). 착수 
 
 1. typecheck와 테스트, 그리고 replay 기준 샘플(칼럼 1편 생성 → QA → 발행했을 글).
 2. staging 라이브 런으로 샘플 3편을 만들어 Josh에게 검토용 링크로 보낸다.
+
+## 6. 2단계 구현 기록 (2026-11-16, PR #102)
+
+Josh "3e 1단계 승인"(보이스·템플릿·D1~D4 권고안) → 파일 목록 재제시(약 45개, §5의 20 초과) → **"승인 — PR #102 하나"**와 기본값 E1~E4 권고안.
+
+### 6.1 결정 (E1~E4)
+
+| # | 항목 | 확정 |
+|---|---|---|
+| E1 | 칼럼 대상 | `rubric.insight_eligible`이고 브리프 임계를 통과(tier ≠ null)했으며, 출처가 `text_rights: full`이고 `text_scope`가 abstract가 아니며, 추출이 실패하지 않았고, 본문이 `essay.min_source_chars` 2,000자 이상이며, 그 raw item으로 칼럼 초안을 쓴 적이 없는 후보 중 insight_potential → total 순 최상위 1건 |
+| E2 | 하루 한도(KST) | 오늘 발행 칼럼 ≥ `caps.essays_per_day`(1)이면 건너뜀(`ESSAY_DAILY_CAP`), 오늘 생성 시도 ≥ `essay.max_attempts_per_day`(2)이면 건너뜀(`ESSAY_ATTEMPTS_EXHAUSTED`). 메모리 DB 행처럼 `created_at`이 없으면 시도로 세지 않는다 |
+| E3 | QA | 브리프 hard 규칙 8개를 같은 임계로 적용, `THIN_EXPERT_LENS`는 브리프 전용(`content_types`), 새 soft `ESSAY_STRUCTURE`는 자동 통과 없음 → 위반 시 보류(`pending`) |
+| E4 | 타임아웃 | `llm.timeout_ms` 90 s → 180 s(칼럼 응답 약 3.5k 토큰) |
+
+### 6.2 구조
+
+- **스위치**: `essay.enabled` / `CC_FLAG_ESSAY`(`packages/shared/src/config/flags.ts`, 스냅샷 `essay`). 스테이지 플래그가 아니다.
+- **생성**: generate가 브리프를 다 쓴 뒤 `draftEssay`로 칼럼 1편을 시도한다(`stages/essay.ts`의 순수 함수 + `stages/generate.ts`). 결과는 `generateStats.essay`(`off|drafted|skipped|failed|budget_stopped` + 사유)이고, 비용·토큰은 합계에 들어간다. 초안은 `drafts`(content_type `insight_essay`, `body.essay`·`body.checks`(grounding·quote·banned·words·headings)·`body.source`)에 쓴다.
+- **프롬프트**: `prompts/insight_essay.md`(version 2026-11-16.1, max_output_tokens 8000)는 `<!-- include: ../content/voice/josh_voice.md -->`·`<!-- include: ../content/templates/insight_essay.md -->` 줄로 보이스와 템플릿을 렌더링한다(`adapters/prompts/file.ts` `resolveIncludes`: 상대 경로·레포 안·1단계·front matter 제거). 보이스·템플릿을 바꾸면 프롬프트 version을 올린다. 사용자 메시지 = 소스 패킷 + 최근 칼럼 5편의 제목·소제목.
+- **QA**: `qa/text.ts` `readerOf`가 브리프(`body.brief`)와 칼럼(`body.essay`)을 같은 모양(제목·필드·설명·출처명)으로 넘긴다. 브리프의 필드·순서는 3g와 같아 브리프 판정은 바뀌지 않는다(기존 테스트 전부 그대로 통과). `SCHEMA_INVALID`는 `InsightEssay`를 검증한다. 기사 간 제목(`DUPLICATE_EVENT`, `ESSAY_STRUCTURE`의 대조형 제목)은 브리프는 `normalize.published_window_days` 안의 칼럼 외 전부와, 칼럼은 기간과 무관하게 최근 칼럼 10편(`RECENT_ESSAYS`)과 비교한다(대조형 제목 규칙은 날짜가 아니라 연속 5편을 센다). 같은 사건을 브리프와 칼럼이 함께 다루는 것은 의도된 동작이기 때문이다.
+- **`ESSAY_STRUCTURE`**(soft, qa 2026-11-16.1): 본문 `##` 절 2~3, 반론·관찰 각 `##`로 시작, 소제목 4~6, 소제목 모양(12단어·90자 이하, 끝 구두점 없음 = 사이트가 소제목으로 렌더링하는 조건), 은퇴 소제목, 단어 수(본문 750~1,400 · 절 140~330 · 전체 1,050~2,000 = 템플릿 범위 ± 약 5 %), `##` 외 Markdown, 말줄임표, 질문 첫 문장, "X is a Y, not a Z" 제목(직전 4편에 같은 형태가 있으면 실패).
+- **이미지**: `imageSubjectOf` — 칼럼은 deck을 요약, thesis를 "why"로 써서 `prompts/image.md`를 그대로 쓴다.
+- **발행**: `publicationFromEssay` → `publications` 행(slug `column/<제목 단어>-YYYY-MM-DD`(KST), content_type `insight_essay`, body = `deck`·`thesis`·`article_body`(본문+반론+관찰, `##` 표식을 뗀 소제목 줄)·`meta_description`(deck)·`headings`·출처 필드·checks·generation). 레거시 칼럼과 같은 모양이라 **사이트 코드 변경은 0**이다. 바이라인(Josh Jiwoon Inn)·AI 고지·`/column/` 목록·RSS·사이트맵은 기존 로직이 처리한다. 테스트가 사이트 렌더러를 실행해 소제목이 전부, 그리고 소제목만 h2가 되는지 확인한다.
+- **운영 도구**: `pipeline review`(shadow-review)가 칼럼 전문(deck·thesis·세 절, 소제목은 `####`)·단어 수·소제목을 보여 준다(3단계 샘플 검토용). Telegram 요약에도 칼럼 제목이 나온다.
+
+### 6.3 검증
+
+- `npm run v2:typecheck` 0 errors · `npm run v2:test` **356/356**(신규: `essay.test.ts` 16, CLI 기준 샘플 1, review 1, flags 1) · `npm run v2:build` OK.
+- **replay 기준 샘플**: `CC_FLAG_ESSAY=true CC_FLAG_STAGES_NORMALIZE=true CC_FLAG_STAGES_SCORE=true CC_FLAG_STAGES_GENERATE=true CC_FLAG_STAGES_QA=true CC_FLAG_STAGES_IMAGE=true CC_FLAG_PUBLISH_TARGET=staging npm run v2:pipeline -- run --dry-run --replay --fixture essay --sources fixtures/sources/essay.yaml --stage ingest,normalize,score,generate,qa,image,publish --json` → 1건(tier full, insight 0.975) → drafts 2(브리프 1 · 칼럼 1, 1,309단어 · 소제목 5) → QA 2 통과(verdict 26, 실패 0) → published 2(`news/…` · `column/in-northvale-…-<KST 날짜>`). `CC_FLAG_ESSAY` 없이 같은 명령은 칼럼 `off` · published 1.
+- 기존 기준 샘플(scoring 3g: 초안 2 → 통과 1 · 거절 1, verdict 26 / 3h: published 1)은 값이 그대로다. 단 3g의 `qaStats.rules`는 13 → 14(`ESSAY_STRUCTURE` 포함)로 바뀌었다.
+
+### 6.4 남은 위험·한계
+
+- **근거 규칙의 엄격도**: `UNGROUNDED_ENTITY` 0건·`UNGROUNDED_NUMBER` 0건을 칼럼에도 그대로 적용한다. 분석 글은 원문에 없는 기관·지역명을 쓰고 싶어 하므로 거절이 많을 수 있다. 3단계 샘플에서 실측한 뒤 YAML로만 조정한다.
+- **유사도 비율의 희석**: `SIMILARITY_TOO_HIGH`는 비율이라 1,300단어 칼럼에서는 붙여 넣은 문단이 희석된다. 복사는 `QUOTE_TOO_LONG`의 연속 20단어 상한이 막는다(테스트로 확인). 원문을 촘촘히 바꿔 쓴 표현은 브리프보다 덜 잡힐 수 있다.
+- **스키마 하한**: 본문 4,500자 미만 응답은 호출 비용을 쓰고도 `SCHEMA_INVALID`로 버려진다(구조화 출력에서 길이 제약이 빠지기 때문).
+- **dispatch 입력**: `pipeline.yml`의 workflow_dispatch 입력이 이미 10개다. 3단계에 쓸 `essay` 입력은 GitHub 입력 한도를 확인한 뒤 별도 소변경으로 넣는다(이 PR은 워크플로를 바꾸지 않는다).
+

@@ -95,3 +95,31 @@ test("shortEvidence: a failing verdict shows why first and leaves the params out
   assert.ok(passing.length <= 160 && passing.endsWith("…"));
   assert.ok(shortEvidence({ quotes: ["x".repeat(400)] }, false).length <= 320);
 });
+
+test("Phase 3e: an insight essay is reviewed as written — deck, thesis and the three sections with their headings demoted under the draft heading, word count and headings from the checks", async () => {
+  const db = await seeded();
+  const ESSAY = "77777777-7777-4777-8777-777777777777";
+  await db.insert("drafts", [{
+    id: ESSAY, candidate_id: CAND, run_id: RUN, content_type: "insight_essay", prompt_version: "2026-11-16.1", model: "claude-opus-5-5",
+    body: {
+      essay: { title: "TSMC's capex plan prices a fab, not a market", deck: "A deck.", thesis: "A thesis.", body: "Opening paragraph.\n\n## First section\n\nReasoning.", counterpoint: "## The case against\n\nObjection.", implications: "## Two checkpoints\n\nIf this, then that.", tags: ["chips"], sources: [{ url: "https://semiengineering.com/chip-industry-week-in-review-162/", name: "Semiconductor Engineering", published_at: "2026-10-29T12:00:00.000Z" }], slug: "column/tsmc-capex-2026-11-16" },
+      checks: { grounding: { numbers: [], ungrounded: [], pass: true }, quote_max_words: 4, banned: { matches: [], pass: true }, words: 1234, headings: ["First section", "The case against", "Two checkpoints"] },
+      source: { raw_item_id: RAW, source_id: "semiconductor-engineering" },
+    },
+    input_tokens: 7000, output_tokens: 3200, cost_usd: 0.092, review_status: "none", created_at: "2026-11-16T07:50:00.000Z",
+  }]);
+  const [entry] = await collectReview(db, { status: "none", limit: 1 });
+  assert.equal(entry!.content_type, "insight_essay");
+  assert.equal(entry!.slug, "column/tsmc-capex-2026-11-16");
+  assert.equal(entry!.brief.title, "TSMC's capex plan prices a fab, not a market");
+  assert.equal(entry!.brief.summary, null);
+  assert.equal(entry!.essay!.words, 1234);
+  const text = formatReview([entry!], { status: "none" });
+  assert.match(text, /## 1\. TSMC's capex plan prices a fab, not a market/);
+  assert.match(text, /\*\*Insight essay\*\* · 1234 words · headings: “First section” · “The case against” · “Two checkpoints”/);
+  assert.match(text, /\*\*Deck\*\*: A deck\./);
+  assert.match(text, /^#### First section$/mu);
+  assert.match(text, /^#### Two checkpoints$/mu);
+  assert.doesNotMatch(text, /^## First section$/mu, "essay headings never compete with the per-draft heading");
+  assert.doesNotMatch(text, /\*\*Summary\*\*/);
+});

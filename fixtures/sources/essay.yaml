@@ -1,0 +1,11 @@
+# One fictional full-rights source for the Phase 3e insight-essay fixture (fixtures/rss/essay-grid-wire.xml, with the
+# recorded extraction fixtures/html/essay-grid-wire.json). Used by `pipeline run --dry-run --replay --fixture essay
+# --sources fixtures/sources/essay.yaml` with CC_FLAG_ESSAY=true and the stage flags on (CLAUDE.md §6, 3e).
+- id: essay-grid-wire
+  name: Essay Grid Wire
+  type: rss
+  url: https://www.grid-wire.example.org/feed.xml
+  tier: 1
+  enabled: true
+  text_rights: full
+  language: en

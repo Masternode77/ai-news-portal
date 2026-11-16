@@ -22,14 +22,35 @@
  * every call: when the next call cannot be covered the remaining candidates
  * are reported as budget_stopped (a first call that cannot be covered raises
  * BUDGET_EXCEEDED so the run ends as budget_stop).
+ *
+ * Phase 3e: after the briefs, when `essay.enabled` (CC_FLAG_ESSAY), the stage drafts at most one insight
+ * essay for The Current from the best eligible scored candidate (stages/essay.ts) with
+ * `prompts/insight_essay.md`. It runs the same three checks and lands in `drafts` as content_type
+ * insight_essay with `body.essay`; its outcome is `stats.essay`, its cost is in the totals.
  */
 import { z } from "zod";
-import { NewsBrief, NewsBriefDraft, candidateId, draftId, newsBriefSlug, rawItemId, renderTemplate, requireLlmPrompt } from "@cc/shared";
-import type { CandidateInsert, DraftInsert, LlmResponse, RawItemInsert, SourceConfig, Stage, StageContext } from "@cc/shared";
+import { InsightEssay, InsightEssayDraft, NewsBrief, NewsBriefDraft, candidateId, draftId, newsBriefSlug, rawItemId, renderTemplate, requireLlmPrompt } from "@cc/shared";
+import type { DraftInsert, LlmResponse, RawItemInsert, SourceConfig, Stage, StageContext } from "@cc/shared";
 import { estimateCostUsd } from "../adapters/llm/anthropic.ts";
 import { BudgetExceededError } from "../budget.ts";
 import { bannedPhraseCheck, bannedPhrasePromptText, compileBannedPhrases } from "../checks/banned-phrases.ts";
-import type { GenerateDecision, GenerateStats } from "../state.ts";
+import type { CompiledBannedPhrases } from "../checks/banned-phrases.ts";
+import { emptyEssayStats } from "../state.ts";
+import type { EssayStats, GenerateDecision, GenerateStats } from "../state.ts";
+import {
+  ESSAY_ATTEMPTS_EXHAUSTED,
+  ESSAY_CONTENT_TYPE,
+  ESSAY_DAILY_CAP,
+  NO_ELIGIBLE_CANDIDATE,
+  eligibleEssayCandidates,
+  essayFields,
+  essayHeadings,
+  essayHistory,
+  essayUserMessage,
+  essayWordCount,
+  insightEssaySlug,
+  parseEssayDraft,
+} from "./essay.ts";
 import { bodyTextOf } from "./normalize.ts";
 import { defineStageSpec } from "./spec.ts";
 import { GenerateInput, GenerateOutput } from "./types.ts";
@@ -310,6 +331,135 @@ function errorText(error: unknown): string {
   return error instanceof Error ? error.message : String(error);
 }
 
+// ---------------------------------------------------------------------------
+// the essay (Phase 3e)
+// ---------------------------------------------------------------------------
+export interface EssayRun {
+  draft: DraftInsert | null;
+  stats: EssayStats;
+  costUsd: number;
+  inputTokens: number;
+  outputTokens: number;
+  failed: number;
+}
+
+/** At most one insight essay per run; skips are reported in `stats`, failures are dead letters like a brief's. */
+export async function draftEssay(
+  input: GenerateInput,
+  ctx: StageContext,
+  items: ReadonlyMap<string, RawItemInsert>,
+  sources: ReadonlyMap<string, SourceConfig>,
+  banned: CompiledBannedPhrases,
+): Promise<EssayRun> {
+  const config = ctx.config.essay;
+  const stats = emptyEssayStats(config.enabled);
+  const run: EssayRun = { draft: null, stats, costUsd: 0, inputTokens: 0, outputTokens: 0, failed: 0 };
+  if (!config.enabled || input.candidates === undefined) return run;
+
+  const history = await essayHistory(ctx.adapters.db, ctx.now, config, ctx.config.caps.essays_per_day);
+  const eligible = eligibleEssayCandidates(input.candidates, items, sources, config, history.essayed);
+  stats.published_today = history.publishedToday;
+  stats.attempts_today = history.attemptsToday;
+  stats.eligible = eligible.length;
+  const skip = (reason: string): EssayRun => {
+    stats.outcome = "skipped";
+    stats.reason = reason;
+    ctx.logger.info("generate: no essay this run", { reason, eligible: stats.eligible, published_today: stats.published_today, attempts_today: stats.attempts_today });
+    return run;
+  };
+  if (history.publishedToday >= ctx.config.caps.essays_per_day) return skip(`${ESSAY_DAILY_CAP}: ${history.publishedToday} published today (KST), cap ${ctx.config.caps.essays_per_day}`);
+  if (history.attemptsToday >= config.max_attempts_per_day) return skip(`${ESSAY_ATTEMPTS_EXHAUSTED}: ${history.attemptsToday} drafted today (KST), limit ${config.max_attempts_per_day}`);
+  const pick = eligible[0];
+  if (!pick) return skip(`${NO_ELIGIBLE_CANDIDATE}: none of ${input.candidates.length} scored candidates is insight-eligible with a full-rights source of at least ${config.min_source_chars} chars that was not essayed before`);
+
+  const { candidate, item, source } = pick;
+  const llmConfig = ctx.config.llm;
+  const model = llmConfig.models.insight_essay;
+  const prompt = requireLlmPrompt(await ctx.adapters.prompts.get("insight_essay"));
+  const system = renderTemplate(prompt.system, { banned_phrases: bannedPhrasePromptText(ctx.bannedPhrases) });
+  const outputSchema = z.toJSONSchema(InsightEssayDraft) as Record<string, unknown>;
+  const candidateRowId = candidate.id ?? candidateId(candidate.raw_item_id, candidate.rubric_version);
+  const packet = sourcePacket(item, source, llmConfig.max_source_chars);
+  const message = essayUserMessage(packet, history.recent);
+  const base: GenerateDecision = { canonical_url: item.canonical_url, source_id: item.source_id, slug: null, ok: false, error: null, model: null, cost_usd: 0, input_tokens: 0, output_tokens: 0, grounding_numbers: 0, grounding_ungrounded: [], quote_max_words: 0, banned_matches: [], title: null };
+
+  const estimate = estimateCostUsd(system.length + message.length, prompt.max_output_tokens, llmConfig.pricing[model]);
+  if (!ctx.budget.canSpend(estimate)) {
+    stats.outcome = "budget_stopped";
+    stats.reason = `BUDGET_EXCEEDED: the essay call is estimated at USD ${estimate.toFixed(4)}, spent ${ctx.budget.spentUsd.toFixed(4)} of cap ${ctx.budget.limitUsd.toFixed(2)}`;
+    stats.decision = { ...base, error: stats.reason };
+    ctx.budget.stop(`generate stopped before the essay: ${stats.reason}`);
+    ctx.logger.warn("generate: budget cannot cover the essay; skipped", { estimate_usd: estimate, spent_usd: ctx.budget.spentUsd, cap_usd: ctx.budget.limitUsd });
+    return run;
+  }
+
+  const fail = async (text: string, response: LlmResponse | null): Promise<EssayRun> => {
+    run.failed = 1;
+    stats.outcome = "failed";
+    stats.reason = text;
+    stats.decision = { ...base, error: text, model: response?.model ?? model, cost_usd: response?.costUsd ?? 0, input_tokens: response?.usage.inputTokens ?? 0, output_tokens: response?.usage.outputTokens ?? 0 };
+    await ctx.ledger.deadLetter({ run_id: ctx.runId, stage: "generate", ref_table: "candidates", ref_id: candidateRowId, payload: { content_type: ESSAY_CONTENT_TYPE, canonical_url: item.canonical_url, source_id: item.source_id, model: response?.model ?? model, prompt_version: prompt.version, ...(response ? { stop_reason: response.stopReason, reply_chars: response.text.length } : {}) }, error: text });
+    ctx.logger.error("generate: essay failed", { source_id: item.source_id, url: item.canonical_url, error: text });
+    return run;
+  };
+
+  let response: LlmResponse;
+  try {
+    response = await ctx.adapters.llm.complete(
+      { task: "insight_essay", model, system, messages: [{ role: "user", content: message }], outputSchema, maxOutputTokens: prompt.max_output_tokens, promptVersion: prompt.version, cacheKey: candidate.raw_item_id },
+      ctx,
+    );
+  } catch (error) {
+    if (error instanceof BudgetExceededError) throw error;
+    return fail(errorText(error), null);
+  }
+  run.costUsd = response.costUsd;
+  run.inputTokens = response.usage.inputTokens;
+  run.outputTokens = response.usage.outputTokens;
+
+  let draft: InsightEssayDraft;
+  try {
+    draft = parseEssayDraft(response);
+  } catch (error) {
+    return fail(errorText(error), response);
+  }
+  const essay = InsightEssay.parse({
+    ...draft,
+    sources: [{ url: item.canonical_url, name: source.name, published_at: item.published_at_source ?? item.fetched_at }],
+    slug: insightEssaySlug(draft.title, ctx.now),
+  });
+  const fields = essayFields(essay);
+  const essayText = Object.values(fields).join("\n");
+  const sourceText = sourceTextOf(item, source);
+  const grounding = groundingCheck(essayText, sourceText);
+  const quoteWords = longestCommonRun(essayText, sourceText);
+  const bannedResult = bannedPhraseCheck(fields, banned);
+  const headings = essayHeadings(essay);
+  const words = essayWordCount([fields.deck, fields.thesis, fields.body, fields.counterpoint, fields.implications].join("\n"));
+
+  run.draft = {
+    id: draftId(candidateRowId, ESSAY_CONTENT_TYPE, prompt.version),
+    candidate_id: candidateRowId,
+    run_id: ctx.runId,
+    content_type: ESSAY_CONTENT_TYPE,
+    prompt_version: prompt.version,
+    model: response.model,
+    body: {
+      essay,
+      checks: { grounding: { numbers: grounding.numbers, ungrounded: grounding.ungrounded, pass: grounding.pass }, quote_max_words: quoteWords, banned: { version: bannedResult.version, matches: bannedResult.matches, pass: bannedResult.pass }, words, headings },
+      source: { raw_item_id: candidate.raw_item_id, canonical_url: item.canonical_url, source_id: item.source_id, text_rights: packet.text_rights, text_scope: packet.text_scope, chars: packet.body_chars },
+    },
+    input_tokens: response.usage.inputTokens,
+    output_tokens: response.usage.outputTokens,
+    cost_usd: response.costUsd,
+    review_status: "none",
+  };
+  stats.outcome = "drafted";
+  stats.decision = { ...base, slug: essay.slug, ok: true, model: response.model, cost_usd: response.costUsd, input_tokens: response.usage.inputTokens, output_tokens: response.usage.outputTokens, grounding_numbers: grounding.numbers.length, grounding_ungrounded: grounding.ungrounded.slice(0, UNGROUNDED_SAMPLE), quote_max_words: quoteWords, banned_matches: bannedResult.matches.slice(0, BANNED_SAMPLE), title: essay.title };
+  ctx.logger.info("generate: essay drafted", { source_id: item.source_id, url: item.canonical_url, slug: essay.slug, model: response.model, cost_usd: response.costUsd, words, headings: headings.length, grounding_pass: grounding.pass, ungrounded: grounding.ungrounded, quote_max_words: quoteWords, banned_matches: bannedResult.matches, prompt_version: prompt.version });
+  return run;
+}
+
 export const generateStage: Stage<GenerateInput, GenerateOutput> = {
   name: "generate",
   input: GenerateInput,
@@ -441,6 +591,13 @@ export const generateStage: Stage<GenerateInput, GenerateOutput> = {
       ctx.logger.info("generate: draft written", { source_id: item.source_id, url: item.canonical_url, slug: brief.slug, model: response.model, cost_usd: response.costUsd, grounding_pass: grounding.pass, ungrounded: grounding.ungrounded, quote_max_words: quoteWords, banned_matches: bannedResult.matches });
     }
 
+    const essayRun = await draftEssay(input, ctx, items, sources, banned);
+    if (essayRun.draft) drafts.push(essayRun.draft);
+    failed += essayRun.failed;
+    costUsd += essayRun.costUsd;
+    inputTokens += essayRun.inputTokens;
+    outputTokens += essayRun.outputTokens;
+
     if (drafts.length > 0) await ctx.adapters.db.upsert("drafts", drafts as unknown as Record<string, unknown>[], ["candidate_id", "content_type", "prompt_version"]);
     const stats: GenerateStats = {
       selected: input.selected.length,
@@ -455,16 +612,17 @@ export const generateStage: Stage<GenerateInput, GenerateOutput> = {
       quote_max_words: quoteMax,
       banned: { checked: bannedChecked, passed: bannedPassed, matches: bannedMatches },
       decisions,
+      essay: essayRun.stats,
       ms: Date.now() - started,
     };
-    ctx.logger.info("generate: finished", { selected: stats.selected, drafted: stats.drafted, failed: stats.failed, budget_stopped: stats.budget_stopped, cost_usd: stats.cost_usd, grounding_pass_rate: stats.grounding_pass_rate, quote_max_words: stats.quote_max_words, banned: stats.banned, prompt_version: prompt.version, banned_phrases_version: banned.version, model });
+    ctx.logger.info("generate: finished", { selected: stats.selected, drafted: stats.drafted, failed: stats.failed, budget_stopped: stats.budget_stopped, cost_usd: stats.cost_usd, grounding_pass_rate: stats.grounding_pass_rate, quote_max_words: stats.quote_max_words, banned: stats.banned, essay: stats.essay.outcome, prompt_version: prompt.version, banned_phrases_version: banned.version, model });
     return { drafts, stats };
   },
 };
 
 export const generateSpec = defineStageSpec({
   stage: generateStage,
-  select: (state) => ({ selected: state.selected, rawItems: state.rawItems, sources: state.sources }),
+  select: (state) => ({ selected: state.selected, candidates: state.candidates, rawItems: state.rawItems, sources: state.sources }),
   merge: (state, output) => ({ ...state, drafts: output.drafts, generateStats: output.stats }),
   counts: (output) => ({
     selected: output.stats.selected,
@@ -475,6 +633,7 @@ export const generateSpec = defineStageSpec({
     grounding_passed: output.stats.grounding.passed,
     quote_max_words: output.stats.quote_max_words,
     banned_passed: output.stats.banned.passed,
+    essay_drafted: output.stats.essay.outcome === "drafted" ? 1 : 0,
     cost_usd_milli: Math.round(output.stats.cost_usd * 1000),
   }),
 });

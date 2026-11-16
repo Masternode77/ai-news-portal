@@ -1,8 +1,8 @@
 ---
 version: 2026-11-16.1
-status: draft — awaiting Josh's approval (Phase 3e step 1)
+status: approved — Josh 2026-11-16 ("3e 1단계 승인"). Rendered into prompts/insight_essay.md by an include line: a change here changes the prompt, so bump that prompt's version too
 content_type: insight_essay
-schema: packages/shared/src/schema/content.ts InsightEssay (fields below; changes listed in docs/migration/notes/3e-insight-essay.md §3)
+schema: packages/shared/src/schema/content.ts InsightEssay / InsightEssayDraft (fields below; QA ESSAY_STRUCTURE checks the ranges, config/qa.yaml)
 voice: content/voice/josh_voice.md
 ---
 

@@ -7,7 +7,8 @@
  * not dilute them.
  */
 import { BRIEF_TEXT_FIELDS, NewsBrief } from "@cc/shared";
-import type { DraftInsert } from "@cc/shared";
+import type { ContentType, DraftInsert } from "@cc/shared";
+import { essayFields, essayOf } from "../stages/essay.ts";
 
 /** The reader-facing fields of a news_brief draft, or null when body.brief is not a valid NewsBrief. */
 export function briefOf(draft: DraftInsert): NewsBrief | null {
@@ -18,8 +19,59 @@ export function briefOf(draft: DraftInsert): NewsBrief | null {
 export const READER_FIELDS = BRIEF_TEXT_FIELDS;
 export type ReaderField = (typeof READER_FIELDS)[number];
 
-export function readerText(brief: NewsBrief): string {
-  return READER_FIELDS.map((field) => brief[field]).join("\n");
+/**
+ * What the QA rules read of a draft, whatever its content type (Phase 3e): a news_brief's `body.brief` or an
+ * insight_essay's `body.essay`. `fields` are the reader-facing texts in reading order, title first (an
+ * essay's `##` heading markers removed); a brief's fields and their order are exactly those of 3g, so the
+ * brief verdicts did not change when essays arrived.
+ */
+export interface DraftReader {
+  content_type: ContentType;
+  title: string;
+  slug: string;
+  source_name: string;
+  fields: Record<string, string>;
+  /** The meta description: a brief's first summary paragraph, an essay's deck. */
+  description: string;
+}
+
+export function readerOf(draft: DraftInsert): DraftReader | null {
+  if (draft.content_type === "news_brief") {
+    const brief = briefOf(draft);
+    if (!brief) return null;
+    return {
+      content_type: "news_brief",
+      title: brief.title,
+      slug: brief.slug,
+      source_name: brief.source_name,
+      fields: Object.fromEntries(READER_FIELDS.map((field) => [field, brief[field]])),
+      description: paragraphs(brief.summary)[0] ?? "",
+    };
+  }
+  if (draft.content_type === "insight_essay") {
+    const essay = essayOf(draft);
+    if (!essay) return null;
+    return { content_type: "insight_essay", title: essay.title, slug: essay.slug, source_name: essay.sources[0]?.name ?? "", fields: essayFields(essay), description: essay.deck };
+  }
+  return null;
+}
+
+/** The evidence of a rule that could not read the draft (SCHEMA_INVALID reports why). */
+export function unreadable(draft: DraftInsert): { skipped: string } {
+  return { skipped: draft.content_type === "insight_essay" ? "essay_invalid" : "brief_invalid" };
+}
+
+/** Every reader-facing field, title first, one per line. */
+export function readerText(reader: DraftReader): string {
+  return Object.values(reader.fields).join("\n");
+}
+
+/** The running prose: every field but the title. */
+export function proseText(reader: DraftReader): string {
+  return Object.entries(reader.fields)
+    .filter(([field]) => field !== "title")
+    .map(([, text]) => text)
+    .join("\n");
 }
 
 /** Words: runs of letters and digits (apostrophes, periods and hyphens inside a token kept), lower-cased. */

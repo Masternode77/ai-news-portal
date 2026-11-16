@@ -1,6 +1,6 @@
 /** READABILITY_LOW (soft, ADR-004; legacy repetition detector): average words per sentence ≤ `max_avg_sentence_words`, and no sentence opening (first `opening_words` words) repeats more than `max_same_opening` times. */
 import type { QaRule } from "@cc/shared";
-import { briefOf, sentences, words } from "../text.ts";
+import { proseText, readerOf, sentences, unreadable, words } from "../text.ts";
 import { numberParam, verdict } from "../verdict.ts";
 
 export const rule: QaRule = {
@@ -9,9 +9,9 @@ export const rule: QaRule = {
     const maxAvg = numberParam(config, "max_avg_sentence_words", 40);
     const maxSame = numberParam(config, "max_same_opening", 2);
     const openingWords = numberParam(config, "opening_words", 2);
-    const brief = briefOf(draft);
-    if (!brief) return verdict(config, false, { skipped: "brief_invalid" }, evidence.now);
-    const sents = sentences([brief.summary, brief.why_it_matters, brief.expert_lens].join("\n"));
+    const reader = readerOf(draft);
+    if (!reader) return verdict(config, false, unreadable(draft), evidence.now);
+    const sents = sentences(proseText(reader));
     const lengths = sents.map((s) => words(s).length);
     const avg = lengths.length === 0 ? 0 : lengths.reduce((a, b) => a + b, 0) / lengths.length;
     const openings = new Map<string, number>();

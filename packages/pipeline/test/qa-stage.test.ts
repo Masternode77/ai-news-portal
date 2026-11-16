@@ -11,7 +11,7 @@ import { MemoryDb } from "../src/db/index.ts";
 import { MemoryLedger } from "../src/ledger/index.ts";
 import { runPipeline } from "../src/runner.ts";
 import { IMAGE_MISSING, imageStage } from "../src/stages/image.ts";
-import { QA_RULE_UNKNOWN, activeRules, decide, qaStage } from "../src/stages/qa.ts";
+import { QA_RULE_UNKNOWN, activeRules, appliesTo, decide, qaStage } from "../src/stages/qa.ts";
 import { ImageOutput, QaOutput } from "../src/stages/types.ts";
 import { baseRunOptions, fixtureAdapters, REPO_ROOT, TEST_PIPELINE_YAML, testBannedPhrases, testQa, testScoring } from "./helpers.ts";
 import { BRIEF, NOW, THIN_LENS, candidate, draft, rawItem, source } from "./qa-fixtures.ts";
@@ -35,10 +35,11 @@ test("every enabled qa rule runs on every draft in config order with no early st
   const dirty = draft({ ...BRIEF, title: "The strategic significance of the 1.2 GW Busan campus deal", summary: `${BRIEF.summary} The next phase starts in 2027.` }, { promptVersion: "2026-10-25.2" });
   assert.notEqual(clean.id, dirty.id);
   const out = QaOutput.parse(await qaStage.run(input([clean, dirty]), ctx));
-  const order = activeRules(ctx.qa).map((r) => r.rule);
-  assert.equal(order.length, 13);
+  assert.equal(activeRules(ctx.qa).length, 14);
+  const order = activeRules(ctx.qa).filter((r) => appliesTo(r, "news_brief")).map((r) => r.rule);
+  assert.equal(order.length, 13, "ESSAY_STRUCTURE judges essays only (content_types)");
   assert.equal(order.includes("IMAGE_MISSING"), false, "stage: image entries are not qa rules");
-  assert.equal(out.verdicts.length, 26, "13 rules × 2 drafts");
+  assert.equal(out.verdicts.length, 26, "13 brief rules × 2 drafts");
   assert.deepEqual(out.verdicts.slice(0, 13).map((v) => v.rule), order, "config order on the clean draft");
   assert.deepEqual(out.verdicts.slice(13).map((v) => v.rule), order, "config order on the failing draft — the stage does not stop at the first hard failure");
   for (const v of out.verdicts) {
@@ -57,7 +58,7 @@ test("every enabled qa rule runs on every draft in config order with no early st
   assert.equal(statusRows[0]!["id"], dirty.id);
   assert.equal(statusRows[0]!["review_status"], "rejected");
   const s = out.stats;
-  assert.deepEqual([s.drafts, s.passed, s.rejected, s.held, s.verdicts, s.hard_failed, s.soft_failed, s.auto_passed, s.rule_errors, s.rules], [2, 1, 1, 0, 26, 2, 0, 0, 0, 13]);
+  assert.deepEqual([s.drafts, s.passed, s.rejected, s.held, s.verdicts, s.hard_failed, s.soft_failed, s.auto_passed, s.rule_errors, s.rules], [2, 1, 1, 0, 26, 2, 0, 0, 0, 14]);
   assert.deepEqual(s.by_rule["UNGROUNDED_NUMBER"], { checked: 2, passed: 1, failed: 1, auto_passed: 0 });
   assert.deepEqual(s.by_rule["BANNED_PATTERN"], { checked: 2, passed: 1, failed: 1, auto_passed: 0 });
   assert.equal(s.decisions.length, 2);
@@ -102,9 +103,10 @@ test("a configured rule without a file fails the run (QA_RULE_UNKNOWN); a disabl
   await assert.rejects(qaStage.run(input([draft()]), ctxWith(unknown).ctx), new RegExp(`${QA_RULE_UNKNOWN}: config/qa.yaml lists NOT_A_RULE`));
   const disabled = ctxWith(withRule(testQa(), "SCHEMA_INVALID", { enabled: false }));
   const out = QaOutput.parse(await qaStage.run(input([draft()]), disabled.ctx));
-  assert.equal(out.stats.rules, 12);
-  assert.equal(out.verdicts.length, 12);
+  assert.equal(out.stats.rules, 13, "enabled qa rules, ESSAY_STRUCTURE included");
+  assert.equal(out.verdicts.length, 12, "a brief gets no ESSAY_STRUCTURE verdict");
   assert.equal("SCHEMA_INVALID" in out.stats.by_rule, false);
+  assert.equal(out.stats.by_rule["ESSAY_STRUCTURE"]?.checked, 0);
   assert.equal(disabled.db.rows("qa_results").length, 12);
   const imageOnly: QaConfig = { ...testQa(), rules: [{ rule: "IMAGE_MISSING", severity: "soft", enabled: true, stage: "image", params: {}, auto_pass: true }] };
   assert.deepEqual(activeRules(imageOnly), [], "an image-stage entry is never run by qa and needs no qa rule file");

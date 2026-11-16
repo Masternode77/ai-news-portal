@@ -22,7 +22,10 @@ export interface QaEvidence {
   /** The scored candidate the draft came from (rubric total for RUBRIC_BELOW_TARGET). */
   candidate: CandidateInsert | undefined;
   bannedPhrases: BannedPhrasesConfig;
-  /** Published titles within the dedupe window (3h fills it; empty until then). */
+  /**
+   * Titles of the draft's kind, newest first: drafts that passed earlier in the run, then publications within
+   * `normalize.published_window_days` (Phase 3e: a brief sees everything but essays; an essay sees the newest ten essays whatever their age).
+   */
   recentPublishedTitles: string[];
   /** The run's slot time: every verdict's checked_at. */
   now: Date;

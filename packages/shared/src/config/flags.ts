@@ -23,6 +23,8 @@ export interface FlagSnapshot {
   notify_telegram: boolean;
   /** Phase 4: `llm.provider` after overrides (`CC_FLAG_LLM_PROVIDER`); the file default stays `fixture` so replay tests never call the API. */
   llm_provider: PipelineConfig["llm"]["provider"];
+  /** Phase 3e: `essay.enabled` after overrides (`CC_FLAG_ESSAY`). */
+  essay: boolean;
   overrides: FlagOverride[];
 }
 
@@ -45,6 +47,7 @@ export function applyFlagOverrides(
   let publishTarget: string = config.flags.publish_target;
   let notifyTelegram = config.notify.telegram.enabled;
   let llmProvider: string = config.llm.provider;
+  let essay = config.essay.enabled;
 
   for (const [key, raw] of Object.entries(env)) {
     if (!key.startsWith(FLAG_ENV_PREFIX) || raw === undefined) continue;
@@ -76,7 +79,13 @@ export function applyFlagOverrides(
       overrides.push({ env: key, path: "llm.provider", raw, value: llmProvider });
       continue;
     }
-    throw new ConfigError(`${key}: unknown flag (known: CC_FLAG_STAGES_<STAGE>, CC_FLAG_PUBLISH_TARGET, CC_FLAG_NOTIFY_TELEGRAM, CC_FLAG_LLM_PROVIDER)`);
+    if (name === "ESSAY") {
+      // Phase 3e: essays are not a stage (stage names are a DB enum), so the switch is essay.enabled.
+      essay = parseBoolean(key, raw);
+      overrides.push({ env: key, path: "essay.enabled", raw, value: essay });
+      continue;
+    }
+    throw new ConfigError(`${key}: unknown flag (known: CC_FLAG_STAGES_<STAGE>, CC_FLAG_PUBLISH_TARGET, CC_FLAG_NOTIFY_TELEGRAM, CC_FLAG_LLM_PROVIDER, CC_FLAG_ESSAY)`);
   }
 
   const parsed = PipelineConfigSchema.safeParse({
@@ -84,6 +93,7 @@ export function applyFlagOverrides(
     flags: { stages, publish_target: publishTarget },
     notify: { ...config.notify, telegram: { ...config.notify.telegram, enabled: notifyTelegram } },
     llm: { ...config.llm, provider: llmProvider },
+    essay: { ...config.essay, enabled: essay },
   });
   if (!parsed.success) {
     throw new ConfigError(`flag override produced an invalid config: ${parsed.error.issues.map((i) => `${i.path.join(".")}: ${i.message}`).join("; ")}`);
@@ -97,6 +107,7 @@ export function flagSnapshot(config: PipelineConfig, overrides: FlagOverride[] =
     publish_target: config.flags.publish_target,
     notify_telegram: config.notify.telegram.enabled,
     llm_provider: config.llm.provider,
+    essay: config.essay.enabled,
     overrides: overrides.map((o) => ({ ...o })),
   };
 }

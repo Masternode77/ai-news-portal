@@ -1,6 +1,6 @@
 ---
 version: 2026-11-16.1
-status: draft — awaiting Josh's approval (Phase 3e step 1)
+status: approved — Josh 2026-11-16 ("3e 1단계 승인"). Rendered into prompts/insight_essay.md by an include line: a change here changes the prompt, so bump that prompt's version too
 basis: the seven published legacy columns of The Current (2026-08-17 → 2026-10-11, fixtures/legacy/authored-columns.json, noindex false) and the rules of the legacy persona charter (legacy-final:config/editorial/persona-charter.json v2), rewritten for the rebuild. Josh decided on 2026-11-16 to start 3e from these instead of new voice samples.
 used_by: prompts/insight_essay.md (rendered into the system prompt), QA rules for insight_essay
 ---
