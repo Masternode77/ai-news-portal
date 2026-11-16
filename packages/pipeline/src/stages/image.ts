@@ -7,6 +7,7 @@
  * IMAGE_MISSING soft verdict (ADR-004) to `qa_results` and passes it on.
  */
 import { draftId, NewsBrief, qaRuleEntry, renderTemplate, requireImagePrompt } from "@cc/shared";
+import { essayOf } from "./essay.ts";
 import type { DraftInsert, ImageAdapter, ImageRequest, QaVerdict, Severity, Stage, StageContext } from "@cc/shared";
 import type { QaResultInsert } from "@cc/shared";
 import { PAID_IMAGE_PROVIDERS, imageChainOrder, isImageChain } from "../adapters/image/chain.ts";
@@ -20,8 +21,24 @@ import { ImageInput, ImageOutput } from "./types.ts";
 export const IMAGE_MISSING = "IMAGE_MISSING";
 const DECISION_SAMPLE = 100;
 
+/**
+ * What the image is drawn from. A NewsBrief is one as it stands; an insight essay (Phase 3e) lends its deck as
+ * the summary and its thesis as the "why", so prompts/image.md serves both content types unchanged.
+ */
+export type ImageSubject = Pick<NewsBrief, "title" | "summary" | "why_it_matters" | "tags" | "source_name" | "slug">;
+
+/** The draft's image subject, or null when its reader record does not parse. */
+export function imageSubjectOf(draft: DraftInsert): ImageSubject | null {
+  if (draft.content_type === "insight_essay") {
+    const essay = essayOf(draft);
+    return essay ? { title: essay.title, summary: essay.deck, why_it_matters: essay.thesis, tags: essay.tags, source_name: essay.sources[0]?.name ?? "", slug: essay.slug } : null;
+  }
+  const parsed = NewsBrief.safeParse(draft.body["brief"]);
+  return parsed.success ? parsed.data : null;
+}
+
 /** `{{title}}`, `{{summary}}`, `{{tags}}`, `{{source}}`, `{{why}}` in the prompt template (strict: an unknown placeholder fails before any provider call). */
-export function imagePrompt(template: string, brief: NewsBrief): string {
+export function imagePrompt(template: string, brief: ImageSubject): string {
   const fields: Record<string, string> = {
     title: brief.title,
     summary: brief.summary,
@@ -33,11 +50,11 @@ export function imagePrompt(template: string, brief: NewsBrief): string {
 }
 
 /** Alt text is editorial metadata the stage owns, never a model output. */
-export function imageAlt(brief: NewsBrief): string {
+export function imageAlt(brief: Pick<ImageSubject, "title">): string {
   return `${brief.title} — Compute Current editorial illustration`;
 }
 
-export function imageRequestFor(brief: NewsBrief, template: string): ImageRequest {
+export function imageRequestFor(brief: ImageSubject, template: string): ImageRequest {
   return { prompt: imagePrompt(template, brief), alt: imageAlt(brief), slug: brief.slug, title: brief.title, summary: brief.summary, tags: brief.tags };
 }
 
@@ -101,14 +118,14 @@ export const imageStage: Stage<ImageInput, ImageOutput> = {
     const statusUpdates: DraftInsert[] = [];
 
     for (const draft of input.passed) {
-      const parsed = NewsBrief.safeParse(draft.body["brief"]);
+      const subject = imageSubjectOf(draft);
       const rowId = draft.id ?? draftId(draft.candidate_id, draft.content_type, draft.prompt_version);
-      if (!parsed.success) {
-        await ctx.ledger.deadLetter({ run_id: ctx.runId, stage: "image", ref_table: "drafts", ref_id: rowId, payload: { content_type: draft.content_type, prompt_version: draft.prompt_version }, error: `IMAGE_INPUT_INVALID: draft body has no valid brief (${parsed.error.issues.length} issues)` });
+      if (!subject) {
+        await ctx.ledger.deadLetter({ run_id: ctx.runId, stage: "image", ref_table: "drafts", ref_id: rowId, payload: { content_type: draft.content_type, prompt_version: draft.prompt_version }, error: `IMAGE_INPUT_INVALID: draft body has no valid ${draft.content_type === "insight_essay" ? "essay" : "brief"}` });
         withImages.push({ draft, image: null });
         continue;
       }
-      const brief = parsed.data;
+      const brief = subject;
       const request = imageRequestFor(brief, template.system);
       const skipPaid = paidInChain && !ctx.budget.canSpend(estimate);
       if (skipPaid) {

@@ -8,6 +8,7 @@
 import type { QaRule } from "@cc/shared";
 import { rule as BANNED_PATTERN } from "./rules/BANNED_PATTERN.ts";
 import { rule as DUPLICATE_EVENT } from "./rules/DUPLICATE_EVENT.ts";
+import { rule as ESSAY_STRUCTURE } from "./rules/ESSAY_STRUCTURE.ts";
 import { rule as LANG_MISMATCH } from "./rules/LANG_MISMATCH.ts";
 import { rule as QUOTE_TOO_LONG } from "./rules/QUOTE_TOO_LONG.ts";
 import { rule as READABILITY_LOW } from "./rules/READABILITY_LOW.ts";
@@ -34,6 +35,7 @@ const ALL: readonly QaRule[] = [
   READABILITY_LOW,
   SEO_FIELDS_MISSING,
   THIN_EXPERT_LENS,
+  ESSAY_STRUCTURE,
 ];
 
 export const QA_RULES: ReadonlyMap<string, QaRule> = new Map(ALL.map((rule) => [rule.rule, rule]));

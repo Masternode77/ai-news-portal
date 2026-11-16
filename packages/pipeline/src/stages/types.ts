@@ -29,8 +29,11 @@ export type ScoreInput = z.infer<typeof ScoreInput>;
 export const ScoreOutput = z.strictObject({ candidates: z.array(CandidateInsert), selected: z.array(CandidateInsert), stats: ScoreStats });
 export type ScoreOutput = z.infer<typeof ScoreOutput>;
 
-/** Phase 3d: raw items and sources ride along so the stage can build the source packet (title, body, date, rights). */
-export const GenerateInput = z.strictObject({ selected: z.array(CandidateInsert), rawItems: z.array(RawItemInsert), sources: z.array(SourceConfig) });
+/**
+ * Phase 3d: raw items and sources ride along so the stage can build the source packet (title, body, date, rights).
+ * Phase 3e: every scored candidate rides along too, because the essay candidate need not be among the briefs `selected`.
+ */
+export const GenerateInput = z.strictObject({ selected: z.array(CandidateInsert), candidates: z.array(CandidateInsert).optional(), rawItems: z.array(RawItemInsert), sources: z.array(SourceConfig) });
 export type GenerateInput = z.infer<typeof GenerateInput>;
 export const GenerateOutput = z.strictObject({ drafts: z.array(DraftInsert), stats: GenerateStats });
 export type GenerateOutput = z.infer<typeof GenerateOutput>;

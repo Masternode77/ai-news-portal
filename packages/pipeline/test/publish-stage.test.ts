@@ -71,10 +71,12 @@ test("staging: a QA-passed draft becomes one publications row — brief fields a
   assert.equal(publishStage.idempotencyKey(input), `publish:${BRIEF.slug}`);
 });
 
-test("one bad draft is a dead letter, the others still publish; an unsupported content_type is PUBLISH_INPUT_INVALID", async () => {
+test("one bad draft is a dead letter, the others still publish; an essay without body.essay or an unsupported content_type is PUBLISH_INPUT_INVALID", async () => {
   const { ctx, db, ledger } = await ctxWith();
   const broken = draft({ ...BRIEF, title: "" }, { promptVersion: "2026-10-25.2" });
   const essay = { ...draft(BRIEF, { promptVersion: "2026-10-25.3" }), content_type: "insight_essay" as const };
+  const legacy = { ...draft(BRIEF, { promptVersion: "2026-10-25.4" }), content_type: "legacy_analysis" as const };
+  assert.throws(() => publicationFromDraft({ draft: legacy, image: null }, undefined, ctx), /PUBLISH_INPUT_INVALID: content_type legacy_analysis has no publisher mapping/);
   const out = PublishOutput.parse(await publishStage.run({ withImages: [{ draft: broken, image: null }, { draft: draft(), image: null }, { draft: essay, image: null }], rawItems: [rawItem()] }, ctx));
   assert.equal(out.stats.published, 1);
   assert.equal(out.stats.failed, 2);
@@ -83,7 +85,7 @@ test("one bad draft is a dead letter, the others still publish; an unsupported c
   assert.equal(dump.deadLetters.length, 2);
   assert.ok(dump.deadLetters.every((d) => d.stage === "publish" && d.ref_table === "drafts"));
   assert.match(dump.deadLetters[0]!.error, new RegExp(`${PUBLISH_INPUT_INVALID}: draft body.brief is not a NewsBrief`));
-  assert.match(dump.deadLetters[1]!.error, /insight_essay has no publisher mapping/);
+  assert.match(dump.deadLetters[1]!.error, new RegExp(`${PUBLISH_INPUT_INVALID}: draft body.essay is not an InsightEssay`));
   assert.deepEqual(out.stats.decisions.map((d) => d.action), ["failed", "inserted", "failed"]);
   assert.throws(() => publicationFromDraft({ draft: essay, image: null }, undefined, ctx), /PUBLISH_INPUT_INVALID/);
 });

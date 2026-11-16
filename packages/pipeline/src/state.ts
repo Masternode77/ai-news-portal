@@ -162,6 +162,25 @@ export const GenerateDecision = z.strictObject({
 });
 export type GenerateDecision = z.infer<typeof GenerateDecision>;
 
+/** Phase 3e: the essay attempt of a run (at most one; `essay.enabled` off → outcome `off`). */
+export const EssayStats = z.strictObject({
+  enabled: z.boolean(),
+  outcome: z.enum(["off", "drafted", "skipped", "failed", "budget_stopped"]),
+  /** Why no essay was drafted (ESSAY_DAILY_CAP, ESSAY_ATTEMPTS_EXHAUSTED, NO_ELIGIBLE_CANDIDATE) or what failed (`SCHEMA_INVALID: …`). */
+  reason: z.string().nullable(),
+  /** Candidates that met every eligibility rule (insight-eligible, passed, full rights, enough extracted body, not essayed before). */
+  eligible: NonNegativeInt,
+  /** Essays published and generated earlier in the current KST day. */
+  published_today: NonNegativeInt,
+  attempts_today: NonNegativeInt,
+  decision: GenerateDecision.nullable(),
+});
+export type EssayStats = z.infer<typeof EssayStats>;
+
+export function emptyEssayStats(enabled: boolean = false): EssayStats {
+  return { enabled, outcome: "off", reason: null, eligible: 0, published_today: 0, attempts_today: 0, decision: null };
+}
+
 export const GenerateStats = z.strictObject({
   selected: NonNegativeInt,
   drafted: NonNegativeInt,
@@ -190,12 +209,14 @@ export const GenerateStats = z.strictObject({
     matches: NonNegativeInt,
   }),
   decisions: z.array(GenerateDecision).max(100),
+  /** Phase 3e: the essay attempt; its cost and tokens are included in the totals above, its draft in `drafted`. */
+  essay: EssayStats,
   ms: NonNegativeInt,
 });
 export type GenerateStats = z.infer<typeof GenerateStats>;
 
 export function emptyGenerateStats(): GenerateStats {
-  return { selected: 0, drafted: 0, failed: 0, budget_stopped: 0, cost_usd: 0, input_tokens: 0, output_tokens: 0, grounding: { checked: 0, passed: 0, numbers: 0, ungrounded: 0 }, grounding_pass_rate: null, quote_max_words: 0, banned: { checked: 0, passed: 0, matches: 0 }, decisions: [], ms: 0 };
+  return { selected: 0, drafted: 0, failed: 0, budget_stopped: 0, cost_usd: 0, input_tokens: 0, output_tokens: 0, grounding: { checked: 0, passed: 0, numbers: 0, ungrounded: 0 }, grounding_pass_rate: null, quote_max_words: 0, banned: { checked: 0, passed: 0, matches: 0 }, decisions: [], essay: emptyEssayStats(), ms: 0 };
 }
 
 /** One draft's image outcome (Phase 3f), kept in `--json` and the step summary. */

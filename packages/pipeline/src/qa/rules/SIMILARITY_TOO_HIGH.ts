@@ -10,7 +10,7 @@
  * guard that the brief is a re-narration and not a lightly edited copy.
  */
 import type { QaRule } from "@cc/shared";
-import { briefOf, sentences, shingles, words } from "../text.ts";
+import { readerOf, sentences, shingles, unreadable, words } from "../text.ts";
 import { numberParam, verdict } from "../verdict.ts";
 
 function normalized(text: string): string {
@@ -24,10 +24,10 @@ export const rule: QaRule = {
     const n = numberParam(config, "shingle_words", 8);
     const reuseMax = numberParam(config, "sentence_reuse_max", 0.15);
     const minChars = numberParam(config, "copied_sentence_min_chars", 45);
-    const brief = briefOf(draft);
-    if (!brief) return verdict(config, false, { skipped: "brief_invalid" }, evidence.now);
+    const reader = readerOf(draft);
+    if (!reader) return verdict(config, false, unreadable(draft), evidence.now);
     if (evidence.sourceText === null) return verdict(config, true, { skipped: "no_source_text" }, evidence.now);
-    const body = [brief.title, brief.summary, brief.why_it_matters, brief.expert_lens].join("\n\n");
+    const body = Object.values(reader.fields).join("\n\n");
     const own = shingles(body, n);
     const against = new Set(shingles(evidence.sourceText, n));
     const shared = own.filter((s) => against.has(s)).length;

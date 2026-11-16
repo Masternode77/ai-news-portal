@@ -5,6 +5,11 @@
  * live adapter it keeps the feed body (`content:encoded`) as `body_preview` for
  * sources whose rights allow it, so replay runs carry the text the generator and
  * the QA gates measure (3g SOURCE_UNREACHABLE counts source chars).
+ *
+ * Phase 3e: `fixtures/html/<source-id>.json` (`{ "<item link>": "<extracted text>" }`), when present, stands
+ * in for live body extraction on a `text_rights: full` source: the item carries `body_text` and
+ * `extraction: { ok: true, method: "fixture" }` exactly as the live ingest stage writes them, so a replay
+ * can exercise what only extracted text unlocks (tier full, the essay's `essay.min_source_chars`).
  */
 import { readFile, access } from "node:fs/promises";
 import { join } from "node:path";
@@ -76,6 +81,15 @@ async function exists(path: string): Promise<boolean> {
   }
 }
 
+/** Recorded extractions of one source (`fixtures/html/<source-id>.json`), keyed by item link; empty when the file does not exist. */
+export async function fixtureExtractions(fixturesDir: string, sourceId: string): Promise<Record<string, string>> {
+  const path = join(fixturesDir, "html", `${sourceId}.json`);
+  if (!(await exists(path))) return {};
+  const parsed: unknown = JSON.parse(await readFile(path, "utf8"));
+  if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) throw new Error(`FIXTURE_INVALID: ${path} must map item links to extracted text`);
+  return Object.fromEntries(Object.entries(parsed as Record<string, unknown>).filter((entry): entry is [string, string] => typeof entry[1] === "string"));
+}
+
 export function createFixtureRssAdapter(options: FixtureRssOptions): SourceAdapter {
   return {
     type: "rss",
@@ -89,14 +103,24 @@ export function createFixtureRssAdapter(options: FixtureRssOptions): SourceAdapt
         throw new Error(`FIXTURE_MISSING: ${path} (${error instanceof Error ? error.message : String(error)})`);
       }
       const fetchedAt = ctx.now.toISOString();
-      return parseRssItems(xml).map((item) => ({
-        source_id: source.id,
-        canonical_url: item.link,
-        title: item.title,
-        published_at_source: toIsoDate(item.pubDate),
-        fetched_at: fetchedAt,
-        payload: { guid: item.guid, description: item.description, ...fixtureBodyPreview(source, item, ctx.config.ingest), fixture: path },
-      }));
+      const extracted = source.text_rights === "full" ? await fixtureExtractions(options.fixturesDir, source.id) : {};
+      return parseRssItems(xml).map((item) => {
+        const text = extracted[item.link];
+        return {
+          source_id: source.id,
+          canonical_url: item.link,
+          title: item.title,
+          published_at_source: toIsoDate(item.pubDate),
+          fetched_at: fetchedAt,
+          payload: {
+            guid: item.guid,
+            description: item.description,
+            ...fixtureBodyPreview(source, item, ctx.config.ingest),
+            ...(text ? { body_text: text, extraction: { ok: true, method: "fixture", chars: text.length } } : {}),
+            fixture: path,
+          },
+        };
+      });
     },
   };
 }

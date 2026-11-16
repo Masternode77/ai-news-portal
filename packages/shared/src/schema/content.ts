@@ -60,14 +60,28 @@ export function storedBriefField(raw: unknown, field: BriefTextField): string | 
   return typeof value === "string" ? value : null;
 }
 
+/**
+ * An insight essay for The Current (Phase 3e, Josh 2026-11-16): the reading of one development under Josh
+ * Jiwoon Inn's byline, structured per content/templates/insight_essay.md and voiced per
+ * content/voice/josh_voice.md. Stored as `drafts.body.essay`. Lengths are floors that catch a truncated or
+ * empty reply; the template's word ranges are checked by the soft QA rule ESSAY_STRUCTURE, so a slightly
+ * short essay is held for review instead of being thrown away after the call was paid for.
+ */
 export const InsightEssay = z.strictObject({
+  /** The reading, not the news (template: 40–90 characters, sentence case). */
   title: z.string().min(20).max(120),
-  /** One sentence. */
+  /** One or two sentences under the title; also the meta description. */
+  deck: z.string().min(80).max(400),
+  /** One sentence the essay defends, stated so it could be wrong. */
   thesis: z.string().min(40).max(400),
-  /** Structured per content/templates/insight_essay.md (Phase 3e). */
-  body: z.string().min(5000),
-  counterpoint: z.string().min(200),
-  implications: z.string().min(300),
+  /** The argument in Markdown: opening facts, the reading, then `##` sections (template: 800–1,300 words). */
+  body: z.string().min(4500),
+  /** The strongest case against the thesis, under its own `##` heading (template: 150–300 words). */
+  counterpoint: z.string().min(600),
+  /** Two or three conditional observables, under their own `##` heading (template: 150–300 words). */
+  implications: z.string().min(600),
+  tags: z.array(z.string().min(1)).min(1).max(6),
+  /** Filled by the stage from the candidate; at least one primary source (Josh D1, 2026-11-16). */
   sources: z
     .array(
       z.strictObject({
@@ -76,12 +90,20 @@ export const InsightEssay = z.strictObject({
         published_at: IsoDateTime,
       }),
     )
-    .min(2),
-  /** Always present; `placeholder: true` when generation failed. */
-  image: ImageResult,
+    .min(1),
+  /** Set by the image stage on the publication; a draft carries none. */
+  image: ImageResult.optional(),
   slug: InsightEssaySlug,
 });
 export type InsightEssay = z.infer<typeof InsightEssay>;
+
+/** What the model writes for an essay; sources, slug and image are the stage's (the model never writes URLs or dates it was not given). */
+export const InsightEssayDraft = InsightEssay.pick({ title: true, deck: true, thesis: true, body: true, counterpoint: true, implications: true, tags: true });
+export type InsightEssayDraft = z.infer<typeof InsightEssayDraft>;
+
+/** The reader-facing text fields of an insight_essay, in reading order. */
+export const ESSAY_TEXT_FIELDS = ["title", "deck", "thesis", "body", "counterpoint", "implications"] as const;
+export type EssayTextField = (typeof ESSAY_TEXT_FIELDS)[number];
 
 export const LlmTask = z.enum(["curate", "news_brief", "expert_lens", "insight_essay", "qa_assist"]);
 export type LlmTask = z.infer<typeof LlmTask>;

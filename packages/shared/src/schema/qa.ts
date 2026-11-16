@@ -8,7 +8,7 @@
  * and a file not listed here never runs (the config decides, not the code).
  */
 import { z } from "zod";
-import { Severity } from "./tables.ts";
+import { ContentType, Severity } from "./tables.ts";
 
 /** reason_code style: `UNGROUNDED_NUMBER`. */
 export const QaRuleCode = z.string().regex(/^[A-Z][A-Z0-9_]*$/, "reason_code style name (UPPER_SNAKE)");
@@ -22,6 +22,11 @@ export const QaRuleEntry = z
     auto_pass: z.boolean().optional(),
     /** `qa`: run by the QA stage in list order. `image`: emitted by the image stage, which runs after QA (ADR-004 IMAGE_MISSING). */
     stage: z.enum(["qa", "image"]).default("qa"),
+    /**
+     * Content types the rule judges (Phase 3e); omitted = every type. A draft of another type gets no verdict
+     * from this rule (THIN_EXPERT_LENS reads a brief's expert_lens, ESSAY_STRUCTURE an essay's sections).
+     */
+    content_types: z.array(ContentType).min(1).optional(),
     /** Thresholds and vocabularies the rule reads; each rule validates its own params. */
     params: z.record(z.string(), z.unknown()).default({}),
   })

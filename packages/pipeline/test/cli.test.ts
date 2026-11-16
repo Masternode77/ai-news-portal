@@ -163,8 +163,8 @@ test("scoring fixture through generate, qa and image (Phase 3g): one draft passe
   assert.equal(qa.passed, 1);
   assert.equal(qa.rejected, 1);
   assert.equal(qa.held, 0);
-  assert.equal(qa.rules, 13, "the 13 stage: qa rules of config/qa.yaml (IMAGE_MISSING belongs to the image stage)");
-  assert.equal(qa.verdicts, 26, "every rule on every draft, no early stop");
+  assert.equal(qa.rules, 14, "the 14 stage: qa rules of config/qa.yaml (IMAGE_MISSING belongs to the image stage)");
+  assert.equal(qa.verdicts, 26, "every brief rule (13: ESSAY_STRUCTURE judges essays only) on every draft, no early stop");
   assert.equal(qa.rule_errors, 0);
   const byOutcome = Object.fromEntries(qa.decisions.map((d: { source_id: string; outcome: string; failed_rules: string[]; failed_evidence: Record<string, Record<string, unknown>> }) => [d.source_id, d]));
   assert.equal(byOutcome["scoring-wire-a"].outcome, "passed");
@@ -203,6 +203,29 @@ test("publish_target staging in a dry run (Phase 3h): the QA-passed draft is pub
   assert.equal(quiet.publishStats.published, 0);
   assert.equal(quiet.publishStats.decisions[0].action, "dry");
   assert.equal(quiet.funnel.published, 0);
+});
+
+test("3e replay baseline: the essay fixture drafts a brief and an insight essay from one full-rights item, both pass QA and are published (dry run); without CC_FLAG_ESSAY only the brief", async () => {
+  const env = { CC_FLAG_STAGES_NORMALIZE: "true", CC_FLAG_STAGES_SCORE: "true", CC_FLAG_STAGES_GENERATE: "true", CC_FLAG_STAGES_QA: "true", CC_FLAG_STAGES_IMAGE: "true", CC_FLAG_PUBLISH_TARGET: "staging" };
+  const args = ["run", "--dry-run", "--replay", "--fixture", "essay", "--sources", "fixtures/sources/essay.yaml", "--stage", "ingest,normalize,score,generate,qa,image,publish", "--json"];
+  const on = await cli(args, { ...env, CC_FLAG_ESSAY: "true" });
+  assert.equal(on.code, 0, on.stderr);
+  const result = JSON.parse(on.stdout);
+  assert.equal(result.status, "done");
+  assert.equal(result.sourceStats.extract_ok, 1, "the recorded extraction (fixtures/html/essay-grid-wire.json) stands in for live extraction");
+  assert.equal(result.scoreStats.insight_eligible, 1);
+  assert.equal(result.generateStats.essay.outcome, "drafted");
+  assert.equal(result.generateStats.drafted, 2);
+  assert.equal(result.qaStats.passed, 2);
+  assert.equal(result.qaStats.verdicts, 26, "13 rules on the brief (no ESSAY_STRUCTURE), 13 on the essay (no THIN_EXPERT_LENS)");
+  assert.equal(result.qaStats.by_rule["ESSAY_STRUCTURE"].passed, 1);
+  assert.deepEqual(result.publishStats.decisions.map((d: { slug: string }) => d.slug.split("/")[0]), ["news", "column"]);
+  assert.equal(result.funnel.published, 2);
+  assert.match(result.summary.text, /• insight_essay: \/column\/in-northvale-signed-load-matters-more-than-the-4-8-gw-headline-\d{4}-\d{2}-\d{2}\/ — "In Northvale, signed load matters more than the 4\.8 GW headline"/);
+
+  const off = JSON.parse((await cli(args, env)).stdout);
+  assert.equal(off.generateStats.essay.outcome, "off");
+  assert.equal(off.funnel.published, 1);
 });
 
 test("3i: every run ends with the ADR-007 summary in the log and the JSON; Telegram is off by default (skipped), CC_FLAG_NOTIFY_TELEGRAM=true under --replay records a failed, soft delivery and the token never leaks; enabled without the token is a config error", async () => {

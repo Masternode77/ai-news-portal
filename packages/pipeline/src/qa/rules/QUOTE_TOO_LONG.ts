@@ -9,7 +9,7 @@
  */
 import type { QaRule } from "@cc/shared";
 import { longestCommonRun } from "../../stages/generate.ts";
-import { briefOf, quotedSpans, readerText } from "../text.ts";
+import { quotedSpans, readerOf, readerText, unreadable } from "../text.ts";
 import { numberParam, verdict } from "../verdict.ts";
 
 /** Words in a quoted span: whitespace-separated pieces that carry a letter or a digit. */
@@ -23,9 +23,9 @@ export const rule: QaRule = {
     const maxWords = numberParam(config, "max_quote_words", 20);
     const maxQuotes = numberParam(config, "max_quotes", 1);
     const countMinWords = numberParam(config, "count_min_words", 1);
-    const brief = briefOf(draft);
-    if (!brief) return verdict(config, false, { skipped: "brief_invalid" }, evidence.now);
-    const text = readerText(brief);
+    const reader = readerOf(draft);
+    if (!reader) return verdict(config, false, unreadable(draft), evidence.now);
+    const text = readerText(reader);
     const run = evidence.sourceText === null ? 0 : longestCommonRun(text, evidence.sourceText);
     const spans = quotedSpans(text);
     const quotes = spans.filter((span) => quoteWordCount(span) >= countMinWords);

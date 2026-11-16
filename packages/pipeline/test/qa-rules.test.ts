@@ -30,20 +30,25 @@ test("registry: every rules/*.ts file is registered under its own name and emits
 
 test("a clean brief from a reachable full-text source passes every hard rule and every soft rule", async () => {
   for (const code of QA_RULES.keys()) {
+    if (code === "ESSAY_STRUCTURE") continue; // essays only (config/qa.yaml content_types); covered in qa-essay.test.ts
     const v = await check(code, draft(), evidence());
     assert.equal(v.pass, true, `${code}: ${JSON.stringify(v.evidence)}`);
   }
 });
 
-test("SCHEMA_INVALID: a body whose brief lacks the source fields or has an unsupported content_type fails with the zod issues as evidence", async () => {
+test("SCHEMA_INVALID: a body whose brief lacks the source fields, an essay without body.essay, or an unsupported content_type fails with the zod issues as evidence", async () => {
   const { source_url: _u, ...noSource } = BRIEF;
   const v = await check("SCHEMA_INVALID", draft(noSource), evidence());
   assert.equal(v.pass, false);
   assert.ok((v.evidence["issues"] as string[]).some((i) => i.startsWith("source_url")));
   const essay = { ...draft(), content_type: "insight_essay" as const };
   const w = await check("SCHEMA_INVALID", essay, evidence());
-  assert.equal(w.pass, false);
-  assert.ok((w.evidence["issues"] as string[]).some((i) => /insight_essay/.test(i)));
+  assert.equal(w.pass, false, "an insight_essay is read from body.essay, which a brief body does not have");
+  assert.equal(w.evidence["content_type"], "insight_essay");
+  const legacy = { ...draft(), content_type: "legacy_analysis" as const };
+  const l = await check("SCHEMA_INVALID", legacy, evidence());
+  assert.equal(l.pass, false);
+  assert.ok((l.evidence["issues"] as string[]).some((i) => /legacy_analysis has no QA schema/.test(i)));
 });
 
 test("SOURCE_UNREACHABLE: missing item, a failed extraction on a full source, or too little source text fail; rewrite_only needs only the item", async () => {

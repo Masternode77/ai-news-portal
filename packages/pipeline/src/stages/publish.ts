@@ -12,13 +12,14 @@
  * One failed publication is a dead letter (P5), not a failed run; redirects
  * are synced before the first row; revalidation is reported, never fatal.
  */
-import { NewsBrief, draftId, rawItemId } from "@cc/shared";
+import { InsightEssay, NewsBrief, draftId, rawItemId } from "@cc/shared";
 import type { DraftInsert, PublicationInsert, PublishResult, RawItemInsert, Stage, StageContext } from "@cc/shared";
 import { PublishError } from "../adapters/publisher/site.ts";
 import type { PublishDecision, PublishStats } from "../state.ts";
 import { defineStageSpec } from "./spec.ts";
 import { PublishInput, PublishOutput } from "./types.ts";
 import type { DraftWithImage, PublishedRef } from "../state.ts";
+import { ESSAY_CONTENT_TYPE, essayArticleBody, essayHeadings } from "./essay.ts";
 
 export const NO_PUBLISHER = "NO_PUBLISHER";
 export const PUBLISH_INPUT_INVALID = "PUBLISH_INPUT_INVALID";
@@ -28,10 +29,56 @@ export function draftRowId(draft: DraftInsert): string {
   return draft.id ?? draftId(draft.candidate_id, draft.content_type, draft.prompt_version);
 }
 
+/**
+ * The publications row for an insight essay (Phase 3e). The body has the legacy columns' shape, which the
+ * site already renders for The Current: `deck` under the title, `thesis` as the key-argument box, and
+ * `article_body` — body, counterpoint and implications in one long-form text whose `##` headings become
+ * short paragraphs the site turns into section headings. `headings` feeds the next essays' prompt, and
+ * `meta_description` is the deck. The byline (Josh Jiwoon Inn) and the AI disclosure follow from the
+ * content type on the site (D2).
+ */
+export function publicationFromEssay(entry: DraftWithImage, rawItem: RawItemInsert | undefined, ctx: StageContext): PublicationInsert {
+  const { draft, image } = entry;
+  const parsed = InsightEssay.safeParse(draft.body["essay"]);
+  if (!parsed.success) throw new PublishError(PUBLISH_INPUT_INVALID, `draft body.essay is not an InsightEssay: ${parsed.error.issues.map((i) => `${i.path.join(".") || "<root>"}: ${i.message}`).join("; ")}`);
+  const essay = parsed.data;
+  const sources: PublicationInsert["sources"] = essay.sources.map((source, index) => ({ url: source.url, name: source.name, published_at: source.published_at, ...(index === 0 && rawItem?.title ? { title: rawItem.title } : {}) }));
+  return {
+    draft_id: draftRowId(draft),
+    slug: essay.slug,
+    content_type: ESSAY_CONTENT_TYPE,
+    title: essay.title,
+    body: {
+      deck: essay.deck,
+      thesis: essay.thesis,
+      article_body: essayArticleBody(essay),
+      meta_description: essay.deck,
+      headings: essayHeadings(essay),
+      tags: essay.tags,
+      source_url: essay.sources[0]!.url,
+      source_name: essay.sources[0]!.name,
+      published_at_source: essay.sources[0]!.published_at,
+      checks: draft.body["checks"] ?? null,
+      generation: { prompt_version: draft.prompt_version, model: draft.model, run_id: ctx.runId },
+    },
+    image,
+    sources,
+    published_at: ctx.now.toISOString(),
+    publisher: "pipeline",
+    status: "published",
+    legacy_id: null,
+    noindex: false,
+    tags: essay.tags,
+    category: null,
+    region: null,
+  };
+}
+
 /** The publications row for a news_brief draft: the brief's reader fields are the body, the source becomes the sources list, the stage owns the rest. */
 export function publicationFromDraft(entry: DraftWithImage, rawItem: RawItemInsert | undefined, ctx: StageContext): PublicationInsert {
   const { draft, image } = entry;
-  if (draft.content_type !== "news_brief") throw new PublishError(PUBLISH_INPUT_INVALID, `content_type ${draft.content_type} has no publisher mapping yet (insight_essay arrives with 3e)`);
+  if (draft.content_type === ESSAY_CONTENT_TYPE) return publicationFromEssay(entry, rawItem, ctx);
+  if (draft.content_type !== "news_brief") throw new PublishError(PUBLISH_INPUT_INVALID, `content_type ${draft.content_type} has no publisher mapping`);
   const parsed = NewsBrief.safeParse(draft.body["brief"]);
   if (!parsed.success) throw new PublishError(PUBLISH_INPUT_INVALID, `draft body.brief is not a NewsBrief: ${parsed.error.issues.map((i) => `${i.path.join(".") || "<root>"}: ${i.message}`).join("; ")}`);
   const brief = parsed.data;
@@ -66,8 +113,8 @@ export function publicationFromDraft(entry: DraftWithImage, rawItem: RawItemInse
 }
 
 function slugOf(draft: DraftInsert): string | null {
-  const brief = draft.body["brief"];
-  const slug = brief && typeof brief === "object" ? (brief as { slug?: unknown }).slug : undefined;
+  const record = draft.content_type === ESSAY_CONTENT_TYPE ? draft.body["essay"] : draft.body["brief"];
+  const slug = record && typeof record === "object" ? (record as { slug?: unknown }).slug : undefined;
   return typeof slug === "string" ? slug : null;
 }
 

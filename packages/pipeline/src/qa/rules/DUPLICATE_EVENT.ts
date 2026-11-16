@@ -21,7 +21,7 @@
  */
 import type { QaRule } from "@cc/shared";
 import { numberClaims } from "../../stages/generate.ts";
-import { briefOf, latinProperNouns } from "../text.ts";
+import { latinProperNouns, readerOf, unreadable } from "../text.ts";
 import { numberParam, verdict } from "../verdict.ts";
 
 /** Whole numeric dates first (2026-10-30, 2026/10/30, 10/30/2026, 30.10.2026), then Korean and bare-year forms (Codex PR #84). */
@@ -53,9 +53,9 @@ export const rule: QaRule = {
   check(draft, evidence, config) {
     const minShared = numberParam(config, "min_shared", 3);
     const minJaccard = numberParam(config, "min_jaccard", 0.5);
-    const brief = briefOf(draft);
-    if (!brief) return verdict(config, false, { skipped: "brief_invalid" }, evidence.now);
-    const own = eventSignature(brief.title);
+    const reader = readerOf(draft);
+    if (!reader) return verdict(config, false, unreadable(draft), evidence.now);
+    const own = eventSignature(reader.title);
     let match: { title: string; shared: string[]; jaccard: number } | null = null;
     if (own.size >= minShared) {
       for (const title of evidence.recentPublishedTitles) {

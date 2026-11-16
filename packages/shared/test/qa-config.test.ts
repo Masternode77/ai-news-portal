@@ -13,7 +13,12 @@ test("config/qa.yaml (Phase 3g) loads strictly: ordered rules, hard before soft,
   const codes = qa.rules.map((r) => r.rule);
   assert.deepEqual(codes.slice(0, 9), ["SCHEMA_INVALID", "SOURCE_UNREACHABLE", "QUOTE_TOO_LONG", "SIMILARITY_TOO_HIGH", "UNGROUNDED_NUMBER", "UNGROUNDED_ENTITY", "LANG_MISMATCH", "BANNED_PATTERN", "DUPLICATE_EVENT"], "ADR-004 hard rules first (DUPLICATE_EVENT added in Phase 4), in the order the stage runs them");
   assert.ok(qa.rules.slice(0, 9).every((r) => r.severity === "hard" && r.auto_pass === undefined && r.enabled && r.stage === "qa"));
-  assert.ok(qa.rules.slice(9).every((r) => r.severity === "soft" && r.auto_pass === true), "soft rules start with auto_pass for the Phase 4 shadow");
+  assert.ok(qa.rules.slice(9).every((r) => r.severity === "soft"), "soft rules after the hard ones");
+  assert.ok(qa.rules.slice(9).filter((r) => r.rule !== "ESSAY_STRUCTURE").every((r) => r.auto_pass === true), "soft rules start with auto_pass for the Phase 4 shadow");
+  assert.equal(qaRuleEntry(qa, "ESSAY_STRUCTURE")?.auto_pass, undefined, "3e (Josh E3): a structural miss holds the essay for review");
+  assert.deepEqual(qaRuleEntry(qa, "ESSAY_STRUCTURE")?.content_types, ["insight_essay"]);
+  assert.deepEqual(qaRuleEntry(qa, "THIN_EXPERT_LENS")?.content_types, ["news_brief"]);
+  assert.equal(qaRuleEntry(qa, "SCHEMA_INVALID")?.content_types, undefined, "no content_types = every type");
   assert.equal(new Set(codes).size, codes.length);
   assert.equal(qaRuleEntry(qa, "IMAGE_MISSING")?.stage, "image");
   assert.equal(qaRuleEntry(qa, "IMAGE_MISSING")?.severity, "soft");
@@ -30,6 +35,8 @@ test("config/qa.yaml (Phase 3g) loads strictly: ordered rules, hard before soft,
   assert.throws(() => parseQaConfig(base("  - { rule: SCHEMA_INVALID, severity: hard, stage: publish }"), "qa.yaml"), ConfigError);
   assert.throws(() => parseQaConfig(base("  - { rule: SCHEMA_INVALID, severity: hard, threshold: 1 }"), "qa.yaml"), (e: unknown) => e instanceof ConfigError && /threshold/.test(e.message), "thresholds live under params, unknown keys fail");
   assert.throws(() => parseQaConfig('version: "2026-10-25.1"\nrules: []\n', "qa.yaml"), ConfigError, "at least one rule");
+  assert.throws(() => parseQaConfig(base("  - { rule: SCHEMA_INVALID, severity: hard, content_types: [column] }"), "qa.yaml"), ConfigError, "content_types are content types");
+  assert.throws(() => parseQaConfig(base("  - { rule: SCHEMA_INVALID, severity: hard, content_types: [] }"), "qa.yaml"), ConfigError, "an empty content_types would disable the rule silently");
   assert.throws(() => parseQaConfig(base("  - { rule: SCHEMA_INVALID, severity: hard }").replace('version: "2026-10-25.1"\n', ""), "qa.yaml"), ConfigError, "version is required");
 
   const minimal = parseQaConfig(base("  - { rule: READABILITY_LOW, severity: soft, auto_pass: true, params: { max_avg_sentence_words: 30 } }\n  - { rule: SCHEMA_INVALID, severity: hard, enabled: false }"), "qa.yaml");

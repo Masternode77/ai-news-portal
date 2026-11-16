@@ -27,7 +27,7 @@
  * are still grounded by UNGROUNDED_NUMBER.
  */
 import type { QaRule } from "@cc/shared";
-import { briefOf, latinProperNouns, readerText } from "../text.ts";
+import { latinProperNouns, readerOf, readerText, unreadable } from "../text.ts";
 import { boolParam, numberParam, stringGroupsParam, stringListParam, verdict } from "../verdict.ts";
 
 /** An acronym's plural ("GPUs", "PCs", "SSDs"): two or more capitals or digits, then a lowercase "s". */
@@ -55,14 +55,14 @@ export const rule: QaRule = {
     const allow = new Set(stringListParam(config, "allow").map((s) => s.toLowerCase()));
     const aliasGroups = new Map<string, string[]>();
     for (const group of stringGroupsParam(config, "aliases")) for (const name of group) aliasGroups.set(name.toLowerCase(), group);
-    const brief = briefOf(draft);
-    if (!brief) return verdict(config, false, { skipped: "brief_invalid" }, evidence.now);
-    const sourceText = `${evidence.sourceText ?? ""}\n${evidence.source?.name ?? ""}\n${brief.source_name}`;
+    const reader = readerOf(draft);
+    if (!reader) return verdict(config, false, unreadable(draft), evidence.now);
+    const sourceText = `${evidence.sourceText ?? ""}\n${evidence.source?.name ?? ""}\n${reader.source_name}`;
     const haystack = sourceText.toLowerCase();
     const tokenFallback = boolParam(config, "token_fallback", false);
     const skipSentenceInitial = boolParam(config, "skip_sentence_initial", true);
     // A run with no lowercase letter once acronym plurals are singular is an acronym run, which is never checked.
-    const entities = latinProperNouns(readerText(brief), minChars, { skipSentenceInitial }).filter((e) => /[a-z]/.test(singularAcronyms(e)));
+    const entities = latinProperNouns(readerText(reader), minChars, { skipSentenceInitial }).filter((e) => /[a-z]/.test(singularAcronyms(e)));
     const sourceLanguage = evidence.source?.language ?? null;
     if (sourceLanguage !== null && stringListParam(config, "unchecked_source_languages").includes(sourceLanguage)) {
       return verdict(config, true, { skipped: "source_language", source_language: sourceLanguage, entities: entities.length, names: entities.slice(0, 20) }, evidence.now);

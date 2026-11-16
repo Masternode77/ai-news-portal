@@ -9,7 +9,7 @@
  * only of names does not decide the verdict on its own.
  */
 import type { QaRule } from "@cc/shared";
-import { READER_FIELDS, briefOf, hangulRatio, latinRatio, readerText } from "../text.ts";
+import { hangulRatio, latinRatio, readerOf, readerText, unreadable } from "../text.ts";
 import { numberParam, stringParam, verdict } from "../verdict.ts";
 
 export const rule: QaRule = {
@@ -19,10 +19,10 @@ export const rule: QaRule = {
     if (language !== "en" && language !== "ko") throw new Error(`LANG_MISMATCH: params.language must be en or ko, got "${language}"`);
     const ratioOf = language === "en" ? latinRatio : hangulRatio;
     const min = language === "en" ? numberParam(config, "min_ratio", 0.98) : numberParam(config, "min_ratio", numberParam(config, "min_hangul_ratio", 0.6));
-    const brief = briefOf(draft);
-    if (!brief) return verdict(config, false, { skipped: "brief_invalid" }, evidence.now);
-    const overall = ratioOf(readerText(brief));
-    const fields = Object.fromEntries(READER_FIELDS.map((field) => [field, Number(ratioOf(brief[field]).toFixed(3))]));
+    const reader = readerOf(draft);
+    if (!reader) return verdict(config, false, unreadable(draft), evidence.now);
+    const overall = ratioOf(readerText(reader));
+    const fields = Object.fromEntries(Object.entries(reader.fields).map(([field, text]) => [field, Number(ratioOf(text).toFixed(3))]));
     return verdict(config, overall >= min, { language, ratio: Number(overall.toFixed(3)), min_ratio: min, fields }, evidence.now);
   },
 };

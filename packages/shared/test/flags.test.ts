@@ -56,3 +56,15 @@ test("CC_FLAG_LLM_PROVIDER switches llm.provider for the Phase 4 shadow and reje
   assert.throws(() => applyFlagOverrides(base(), { CC_FLAG_LLM_PROVIDER: "openai" }), ConfigError);
   assert.equal(base().llm.provider, "fixture");
 });
+
+test("CC_FLAG_ESSAY (Phase 3e) switches essay.enabled — essays are not a stage, stage names are a DB enum; default off; the snapshot records it", () => {
+  assert.equal(base().essay.enabled, false, "off unless the file or the environment turns it on");
+  const { config, overrides } = applyFlagOverrides(base(), { CC_FLAG_ESSAY: "true" });
+  assert.equal(config.essay.enabled, true);
+  assert.deepEqual(overrides.map((o) => [o.env, o.path, o.value]), [["CC_FLAG_ESSAY", "essay.enabled", true]]);
+  assert.equal(flagSnapshot(config, overrides).essay, true);
+  assert.equal(flagSnapshot(base()).essay, false);
+  assert.throws(() => applyFlagOverrides(base(), { CC_FLAG_ESSAY: "sometimes" }), /expected a boolean/);
+  assert.throws(() => applyFlagOverrides(base(), { CC_FLAG_STAGES_ESSAY: "true" }), /unknown stage "essay"/);
+  assert.deepEqual({ ...config.essay, enabled: false }, base().essay, "the other essay defaults stay");
+});

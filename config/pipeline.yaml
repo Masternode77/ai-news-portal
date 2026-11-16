@@ -1,6 +1,6 @@
 # Compute Current rebuild — pipeline configuration (contracts.md §4, ADR-002/004/006/007)
 # Validated strictly by packages/shared/src/schema/config.ts; unknown keys fail the run.
-# Environment overrides: CC_FLAG_STAGES_<STAGE>=true|false, CC_FLAG_PUBLISH_TARGET=none|staging|production.
+# Environment overrides: CC_FLAG_STAGES_<STAGE>=true|false, CC_FLAG_PUBLISH_TARGET=none|staging|production, CC_FLAG_NOTIFY_TELEGRAM, CC_FLAG_LLM_PROVIDER, CC_FLAG_ESSAY=true|false.
 
 schedule:
   cron: "45 15,23,7 * * *"   # 00:45 / 08:45 / 16:45 KST (ADR-002)
@@ -24,6 +24,12 @@ caps:
   pool_max_items: 200          # legacy cap was 30 (Phase 0 H1); re-measured in Phase 4. Applied after cross-source dedupe, lowest tiers cut first
   pool_max_age_days: 10
   items_per_source: 6          # newest N per registry id (legacy keyed the cap by display name)
+
+essay:                         # Phase 3e insight essays for The Current (Josh 2026-11-16). Not a stage (stage names are a DB enum): generate/qa/image/publish read this block
+  enabled: false               # default OFF; CC_FLAG_ESSAY=true turns it on. Turning it on in the schedule is step 4 of 3e (approval item)
+  min_source_chars: 2000       # E1: extracted body of a text_rights: full source (D4); the essay also needs insight_eligible (scoring insight_trigger) and the brief threshold
+  max_attempts_per_day: 2      # E2: essay generations per KST day whatever their QA outcome (about USD 0.1–0.2 each); caps.essays_per_day counts published essays
+  recent_essays: 5             # titles and headings of the newest essays go into the prompt so they are not reused
 
 ingest:                        # Phase 3a live ingest; every key is optional (defaults in packages/shared/src/schema/config.ts)
   concurrency: 6               # feeds fetched at once (legacy: unbounded Promise.all)
@@ -67,7 +73,7 @@ llm:
     claude-opus-5-5: { input_per_mtok: 4, output_per_mtok: 20, cache_read_per_mtok: 0.4 }
     claude-sonnet-5-5: { input_per_mtok: 2, output_per_mtok: 10, cache_read_per_mtok: 0.2 }
     claude-haiku-5-5: { input_per_mtok: 0.1, output_per_mtok: 0.5, cache_read_per_mtok: 0.01 }
-  timeout_ms: 90000            # per request; 429/5xx/timeouts retry up to max_retries with backoff
+  timeout_ms: 180000           # per request; 429/5xx/timeouts retry up to max_retries with backoff. 90000 → 180000 (3e, Josh E4 2026-11-16): an essay reply is ~3.5k tokens
   max_retries: 2
   max_source_chars: 12000      # source body sent to the model is cut here (the packet says so)
 

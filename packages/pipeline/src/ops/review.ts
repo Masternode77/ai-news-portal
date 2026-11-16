@@ -3,7 +3,7 @@
  *
  * Reads drafts from the DbPort (one run, or the newest rows with a review
  * status), each draft's QA verdicts and its source item, and renders markdown
- * with the brief as written, the grounding evidence and short excerpts of the
+ * with the brief (or, Phase 3e, the insight essay) as written, the grounding evidence and short excerpts of the
  * source around every number QA could not ground. A reviewer judges false
  * rejections (and false passes) from the step summary without opening the
  * database. Read-only: nothing is written, and the Supabase names come from the
@@ -49,8 +49,11 @@ export interface ReviewEntry {
   canonical_url: string | null;
   source_title: string | null;
   published_at_source: string | null;
-  /** Reader fields; drafts written before ADR-009 (2026-11-04) store them under the Korean-era `*_ko` keys. */
+  content_type: string;
+  /** Reader fields; drafts written before ADR-009 (2026-11-04) store them under the Korean-era `*_ko` keys. An essay fills title and tags only. */
   brief: { title: string | null; summary: string | null; why_it_matters: string | null; expert_lens: string | null; tags: string[] };
+  /** Phase 3e: an insight essay as written (Markdown sections), with its word count and headings; null for a brief. */
+  essay: { deck: string | null; thesis: string | null; body: string | null; counterpoint: string | null; implications: string | null; words: number | null; headings: string[] } | null;
   checks: { grounding_pass: boolean | null; ungrounded: string[]; quote_max_words: number | null; banned_matches: number | null };
   /** Newest verdict per rule (a regenerated draft keeps its id, so older evaluations share it). */
   qa: Array<{ rule: string; severity: string; pass: boolean; reason_code: string; evidence: Record<string, unknown>; checked_at: string }>;
@@ -139,7 +142,10 @@ export async function collectReview(db: DbPort, options: ReviewOptions = {}): Pr
   const entries: ReviewEntry[] = [];
   for (const draft of drafts) {
     const body = record(draft.body);
-    const brief = record(body["brief"]);
+    const isEssay = draft.content_type === "insight_essay";
+    const essay = record(body["essay"]);
+    const brief = isEssay ? essay : record(body["brief"]);
+    const firstSource = record(Array.isArray(essay["sources"]) ? essay["sources"][0] : null);
     const checks = record(body["checks"]);
     const grounding = record(checks["grounding"]);
     const banned = record(checks["banned"]);
@@ -162,16 +168,28 @@ export async function collectReview(db: DbPort, options: ReviewOptions = {}): Pr
       cost_usd: draft.cost_usd,
       slug: str(brief["slug"]),
       source_id: item?.source_id ?? str(record(body["source"])["source_id"]),
-      canonical_url: item?.canonical_url ?? str(brief["source_url"]),
+      canonical_url: item?.canonical_url ?? str(brief["source_url"]) ?? str(firstSource["url"]),
       source_title: item?.title ?? null,
-      published_at_source: item?.published_at_source ?? str(brief["published_at_source"]),
+      published_at_source: item?.published_at_source ?? str(brief["published_at_source"]) ?? str(firstSource["published_at"]),
+      content_type: draft.content_type,
       brief: {
         title: storedBriefField(brief, "title"),
-        summary: storedBriefField(brief, "summary"),
-        why_it_matters: storedBriefField(brief, "why_it_matters"),
-        expert_lens: storedBriefField(brief, "expert_lens"),
+        summary: isEssay ? null : storedBriefField(brief, "summary"),
+        why_it_matters: isEssay ? null : storedBriefField(brief, "why_it_matters"),
+        expert_lens: isEssay ? null : storedBriefField(brief, "expert_lens"),
         tags: Array.isArray(brief["tags"]) ? (brief["tags"] as unknown[]).filter((value): value is string => typeof value === "string") : [],
       },
+      essay: isEssay
+        ? {
+            deck: str(essay["deck"]),
+            thesis: str(essay["thesis"]),
+            body: str(essay["body"]),
+            counterpoint: str(essay["counterpoint"]),
+            implications: str(essay["implications"]),
+            words: typeof checks["words"] === "number" ? (checks["words"] as number) : null,
+            headings: Array.isArray(checks["headings"]) ? (checks["headings"] as unknown[]).filter((value): value is string => typeof value === "string") : [],
+          }
+        : null,
       checks: {
         grounding_pass: typeof grounding["pass"] === "boolean" ? (grounding["pass"] as boolean) : null,
         ungrounded,
@@ -211,6 +229,11 @@ export function shortEvidence(evidence: Record<string, unknown>, pass = true): s
   return text.length > limit ? `${text.slice(0, limit - 3)}…` : text;
 }
 
+/** An essay section for the review page: its `##` headings demoted to `####` so they sit under the draft's own heading. */
+export function demoteHeadings(text: string): string {
+  return text.replace(/^#{1,6}[ \t]+/gmu, "#### ");
+}
+
 /** Markdown for the step summary / an artifact: one section per draft. */
 export function formatReview(entries: ReviewEntry[], options: ReviewOptions = {}): string {
   const scope = options.runId ? `run \`${options.runId}\`` : `status \`${options.status ?? "rejected"}\``;
@@ -226,12 +249,25 @@ export function formatReview(entries: ReviewEntry[], options: ReviewOptions = {}
     lines.push(`- draft \`${entry.draft_id}\` · run \`${entry.run_id}\` · created ${entry.created_at}`);
     lines.push(`- Source: ${entry.source_title ? `${entry.source_title} — ` : ""}${entry.canonical_url ?? "?"}${entry.published_at_source ? ` (${entry.published_at_source})` : ""} · ${entry.source_chars} chars`);
     lines.push("");
-    lines.push(`**Summary**: ${entry.brief.summary ?? "—"}`);
-    lines.push("");
-    lines.push(`**Why it matters**: ${entry.brief.why_it_matters ?? "—"}`);
-    lines.push("");
-    lines.push(`**Expert Lens**: ${entry.brief.expert_lens ?? "—"}`);
-    lines.push("");
+    if (entry.essay) {
+      lines.push(`**Insight essay** · ${entry.essay.words ?? "?"} words · headings: ${entry.essay.headings.length ? entry.essay.headings.map((heading) => `“${heading}”`).join(" · ") : "—"}`);
+      lines.push("");
+      lines.push(`**Deck**: ${entry.essay.deck ?? "—"}`);
+      lines.push("");
+      lines.push(`**Thesis**: ${entry.essay.thesis ?? "—"}`);
+      lines.push("");
+      for (const part of [entry.essay.body, entry.essay.counterpoint, entry.essay.implications]) {
+        lines.push(part ? demoteHeadings(part) : "—");
+        lines.push("");
+      }
+    } else {
+      lines.push(`**Summary**: ${entry.brief.summary ?? "—"}`);
+      lines.push("");
+      lines.push(`**Why it matters**: ${entry.brief.why_it_matters ?? "—"}`);
+      lines.push("");
+      lines.push(`**Expert Lens**: ${entry.brief.expert_lens ?? "—"}`);
+      lines.push("");
+    }
     lines.push(`Tags: ${entry.brief.tags.length ? entry.brief.tags.map((tag) => `\`${tag}\``).join(" ") : "—"}`);
     lines.push("");
     lines.push(`**checks**: grounding ${entry.checks.grounding_pass === null ? "?" : entry.checks.grounding_pass ? "pass" : "fail"}${entry.checks.ungrounded.length ? ` (ungrounded: ${entry.checks.ungrounded.map((token) => `\`${token}\``).join(", ")})` : ""} · quote_max_words ${entry.checks.quote_max_words ?? "?"} · banned matches ${entry.checks.banned_matches ?? "?"}`);

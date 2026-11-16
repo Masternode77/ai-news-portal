@@ -181,9 +181,11 @@ export function zeroPublishedReasons(result: RunResult): string[] {
 function publishedRefs(result: RunResult, max: number): SummaryPublished[] {
   const bySlug = new Map<string, { content_type: string; title: string | null }>();
   for (const { draft } of result.state.withImages) {
-    const brief = draft.body["brief"];
-    const slug = brief && typeof brief === "object" ? (brief as { slug?: unknown }).slug : undefined;
-    if (typeof slug === "string") bySlug.set(slug, { content_type: draft.content_type, title: storedBriefField(brief, "title") });
+    const essay = draft.content_type === "insight_essay";
+    const reader = essay ? draft.body["essay"] : draft.body["brief"];
+    const slug = reader && typeof reader === "object" ? (reader as { slug?: unknown }).slug : undefined;
+    const essayTitle = essay && reader && typeof reader === "object" ? (reader as { title?: unknown }).title : undefined;
+    if (typeof slug === "string") bySlug.set(slug, { content_type: draft.content_type, title: essay ? (typeof essayTitle === "string" ? essayTitle : null) : storedBriefField(reader, "title") });
   }
   return result.state.published.slice(0, max).map((p) => {
     const known = bySlug.get(p.slug);
