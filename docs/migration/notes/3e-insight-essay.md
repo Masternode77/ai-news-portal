@@ -155,6 +155,7 @@ Josh "3e 1단계 승인"(보이스·템플릿·D1~D4 권고안) → 파일 목�
 - `npm run v2:typecheck` 0 errors · `npm run v2:test` **356/356**(신규: `essay.test.ts` 16, CLI 기준 샘플 1, review 1, flags 1) · `npm run v2:build` OK.
 - **replay 기준 샘플**: `CC_FLAG_ESSAY=true CC_FLAG_STAGES_NORMALIZE=true CC_FLAG_STAGES_SCORE=true CC_FLAG_STAGES_GENERATE=true CC_FLAG_STAGES_QA=true CC_FLAG_STAGES_IMAGE=true CC_FLAG_PUBLISH_TARGET=staging npm run v2:pipeline -- run --dry-run --replay --fixture essay --sources fixtures/sources/essay.yaml --stage ingest,normalize,score,generate,qa,image,publish --json` → 1건(tier full, insight 0.975) → drafts 2(브리프 1 · 칼럼 1, 1,309단어 · 소제목 5) → QA 2 통과(verdict 26, 실패 0) → published 2(`news/…` · `column/in-northvale-…-<KST 날짜>`). `CC_FLAG_ESSAY` 없이 같은 명령은 칼럼 `off` · published 1.
 - 기존 기준 샘플(scoring 3g: 초안 2 → 통과 1 · 거절 1, verdict 26 / 3h: published 1)은 값이 그대로다. 단 3g의 `qaStats.rules`는 13 → 14(`ESSAY_STRUCTURE` 포함)로 바뀌었다.
+- CI(`rebuild-ci.yml`): 3g/3h replay 단계의 불변식 `verdicts = drafts × rules`는 `content_types` 뒤로 성립하지 않아(브리프는 `ESSAY_STRUCTURE` verdict가 없다) `verdicts = Σ by_rule.checked`(= 26)로 바꿨고, 3e replay 단계(초안 2 → QA 2 → 발행 2, `ESSAY_STRUCTURE` 통과 1)를 추가했다.
 
 ### 6.4 남은 위험·한계
 
