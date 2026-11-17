@@ -177,3 +177,20 @@ Josh "3e 1단계 승인"(보이스·템플릿·D1~D4 권고안) → 파일 목�
   - 칼럼 후보가 없으면(`NO_ELIGIBLE_CANDIDATE`) 칼럼 없이 끝난다.
 - **검토**: `shadow-review.yml`에 `run_id`를 넣어 칼럼 전문, QA 판정, 원문 발췌를 본다. 통과한 칼럼은 staging `publications`에 발행되고, staging을 읽는 프리뷰에서 렌더링된다.
 
+### 7.1 결과 (2026-11-17)
+
+| 런 | 결과 | 칼럼 | QA | 비용 |
+|---|---|---|---|---|
+| 43999241074 · 43999546544 | staging `fetch failed` → 원인 코드 로깅 뒤 `ENOTFOUND`(복구 직후 DNS) | — | — | $0 |
+| 44001686797 | 칼럼 1편 | "The £12 billion Vanguard decision is a 2030 supply signal for UK site screens" (UK DESNZ, 1,583단어, 소제목 5) | hard 9 통과, 유사도 0.004, `ESSAY_STRUCTURE` 통과, soft 자동 통과 `RUBRIC_BELOW_TARGET`·`READABILITY_LOW` | 칼럼 $0.172 · 런 $0.29 |
+| 44002228964 | 칼럼 1편 | "Britain's clean energy hiring drive chases the electricians data halls need" (UK DESNZ 채용박람회, 1,536단어) | hard 9 통과, 유사도 0.018, `ESSAY_STRUCTURE` 통과 | 칼럼 $0.183 · 런 $0.27 |
+| 44002693147 | 칼럼 없음 | `NO_ELIGIBLE_CANDIDATE`(후보 186 중 자격 0) | — | 런 $0.07 |
+
+관찰은 다음과 같다.
+
+1. **보이스·구조**: 사실 문단 → 판단과 근거 경계 → 마일스톤 사다리 → 반론 양보 → 조건부 관찰 3개 순서가 템플릿대로 나온다. 1인칭은 판단에만 쓰였고 추론 표시가 명시적이다.
+2. **주제 적합도**: 샘플 2는 원문에 데이터센터 언급이 없다(칼럼이 추론임을 명시). 채점 total이 0.556으로 브리프 임계 0.55 바로 위다.
+3. **후보 공급**: 같은 풀에서 자격 후보는 2건이었고 둘 다 uk-desnz였다. 하루 1편 상한이면 날마다 1편이 나오지 않을 수 있다.
+4. **문체 반복**: "The release"로 시작하는 문장이 5~7회다(soft `READABILITY_LOW`, 자동 통과).
+5. **렌더링**: staging 프리뷰(`computecurrent-v2-preview`)에서 deck, Key argument, h2 소제목 5개, 바이라인, AI 고지, 출처가 그대로 나온다.
+
