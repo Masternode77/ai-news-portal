@@ -29,7 +29,7 @@ essay:                         # Phase 3e insight essays for The Current (Josh 2
   enabled: false               # file default OFF (replay tests, CI); CC_FLAG_ESSAY=true turns it on, and scheduled runs set it (3e step 4, Josh 2026-11-17)
   min_source_chars: 2000       # E1: extracted body of a text_rights: full source (D4); the essay also needs insight_eligible (scoring insight_trigger) and the brief threshold
   min_total: 0.60              # E1 topic fit (step-3 tuning 2026-11-17): scoring total floor above the brief threshold (0.55); the off-topic sample scored 0.556
-  max_attempts_per_day: 2      # E2: essay generations per KST day whatever their QA outcome (about USD 0.1–0.2 each); caps.essays_per_day counts published essays
+  max_attempts_per_day: 2      # E2: essay generations per KST day whatever their outcome, failed ones (dead letters) included (about USD 0.2–0.3 each); caps.essays_per_day counts published essays
   recent_essays: 5             # titles and headings of the newest essays go into the prompt so they are not reused
   sample: false                # 3e step 3: CC_FLAG_ESSAY=sample turns essays on and lifts the KST daily limits for staging review runs (refused with publish_target production)
 
@@ -75,7 +75,7 @@ llm:
     claude-opus-5-5: { input_per_mtok: 4, output_per_mtok: 20, cache_read_per_mtok: 0.4 }
     claude-sonnet-5-5: { input_per_mtok: 2, output_per_mtok: 10, cache_read_per_mtok: 0.2 }
     claude-haiku-5-5: { input_per_mtok: 0.1, output_per_mtok: 0.5, cache_read_per_mtok: 0.01 }
-  timeout_ms: 180000           # per request; 429/5xx/timeouts retry up to max_retries with backoff. 90000 → 180000 (3e, Josh E4 2026-11-16): an essay reply is ~3.5k tokens
+  timeout_ms: 240000           # per request; 429/5xx/timeouts retry up to max_retries with backoff. 90000 → 180000 (3e, Josh E4 2026-11-16) → 240000 (2026-11-17): the essay call streams ~85 output tokens/s and its cap is now 12000 tokens (thinking + reply)
   max_retries: 2
   max_source_chars: 12000      # source body sent to the model is cut here (the packet says so)
 

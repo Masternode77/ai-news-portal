@@ -369,7 +369,7 @@ export async function draftEssay(
   };
   // Sample mode (staging review runs) ignores the daily limits; the counts are still reported.
   if (!config.sample && history.publishedToday >= ctx.config.caps.essays_per_day) return skip(`${ESSAY_DAILY_CAP}: ${history.publishedToday} published today (KST), cap ${ctx.config.caps.essays_per_day}`);
-  if (!config.sample && history.attemptsToday >= config.max_attempts_per_day) return skip(`${ESSAY_ATTEMPTS_EXHAUSTED}: ${history.attemptsToday} drafted today (KST), limit ${config.max_attempts_per_day}`);
+  if (!config.sample && history.attemptsToday >= config.max_attempts_per_day) return skip(`${ESSAY_ATTEMPTS_EXHAUSTED}: ${history.attemptsToday} attempts today (KST; drafts and failed generations), limit ${config.max_attempts_per_day}`);
   const pick = eligible[0];
   if (!pick) {
     const counts = Object.entries(stats.ineligible).sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0])).map(([rule, n]) => `${rule} ${n}`).join(", ");

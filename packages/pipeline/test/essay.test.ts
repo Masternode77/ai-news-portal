@@ -169,7 +169,7 @@ test("eligibility (E1, D4): insight-eligible and passed with total ≥ min_total
   assert.equal(ranked[0]!.chars, SOURCE_TEXT.length);
 });
 
-test("history: today's published essays and attempts count from midnight KST; essayed raw items come from every earlier essay draft; legacy headings are read from article_body", async () => {
+test("history: today's published essays and attempts (drafts and failed essay generations) count from midnight KST; essayed raw items come from every earlier essay draft; legacy headings are read from article_body", async () => {
   const db = new MemoryDb();
   await db.upsert("publications", [
     { slug: "column/today-2026-11-16", title: "Today", content_type: "insight_essay", status: "published", published_at: "2026-11-15T16:00:00.000Z", body: { headings: ["One", "Two"] } },
@@ -181,10 +181,15 @@ test("history: today's published essays and attempts count from midnight KST; es
     { id: "d2", candidate_id: "c2", content_type: "insight_essay", prompt_version: "v", created_at: "2026-11-10T00:00:00.000Z", body: { source: { raw_item_id: "r-old" } } },
     { id: "d3", candidate_id: "c3", content_type: "news_brief", prompt_version: "v", created_at: "2026-11-16T00:00:00.000Z", body: { source: { raw_item_id: "r-brief" } } },
   ], ["id"]);
+  await db.insert("dead_letters", [
+    { id: "f1", run_id: RUN_ID, stage: "generate", ref_table: "candidates", ref_id: "c-cut", payload: { content_type: "insight_essay", stop_reason: "max_tokens" }, error: "SCHEMA_INVALID: reply is not JSON", created_at: "2026-11-15T23:00:00.000Z" },
+    { id: "f2", run_id: RUN_ID, stage: "generate", ref_table: "candidates", ref_id: "c-old", payload: { content_type: "insight_essay" }, error: "LLM_TIMEOUT", created_at: "2026-11-14T23:00:00.000Z" },
+    { id: "f3", run_id: RUN_ID, stage: "generate", ref_table: "candidates", ref_id: "c-brief", payload: { canonical_url: "https://x.example/a" }, error: "SCHEMA_INVALID", created_at: "2026-11-15T23:00:00.000Z" },
+  ]);
   const history = await essayHistory(db, NOW, ESSAY_CONFIG, 1);
   assert.equal(history.publishedToday, 1);
-  assert.equal(history.attemptsToday, 1);
-  assert.deepEqual([...history.essayed].sort(), ["r-old", "r-today"], "brief drafts do not mark a raw item as essayed");
+  assert.equal(history.attemptsToday, 2, "today's essay draft and today's failed essay generation; yesterday's failure and brief failures do not count");
+  assert.deepEqual([...history.essayed].sort(), ["r-old", "r-today"], "brief drafts and failed generations do not mark a raw item as essayed");
   assert.deepEqual(history.recent.map((r) => r.title), ["Today", "Yesterday"]);
   assert.deepEqual(history.recent[1]!.headings, ["Six weeks is not weather noise"]);
   assert.deepEqual(storedHeadings({ headings: ["A", 3, "B"] }), ["A", "B"]);
@@ -245,8 +250,13 @@ test("generate skips the essay with a reason: off by default, no candidates, dai
   const tried = new MemoryDb();
   await tried.upsert("drafts", [1, 2].map((n) => ({ id: `d${n}`, candidate_id: `c${n}`, content_type: "insight_essay", prompt_version: "v", created_at: "2026-11-16T00:00:00.000Z", body: { source: { raw_item_id: `r${n}` } } })), ["id"]);
   const a = await generate(tried, config(), { llm: never });
-  assert.match(a.out.stats.essay.reason!, new RegExp(`^${ESSAY_ATTEMPTS_EXHAUSTED}: 2 drafted today`));
+  assert.match(a.out.stats.essay.reason!, new RegExp(`^${ESSAY_ATTEMPTS_EXHAUSTED}: 2 attempts today`));
   assert.equal(a.out.stats.essay.attempts_today, 2);
+
+  const failed = new MemoryDb();
+  await failed.insert("dead_letters", [1, 2].map((n) => ({ id: `f${n}`, run_id: RUN_ID, stage: "generate", ref_table: "candidates", ref_id: `c${n}`, payload: { content_type: "insight_essay", stop_reason: "max_tokens" }, error: "SCHEMA_INVALID: reply is not JSON", created_at: "2026-11-16T00:00:00.000Z" })));
+  const f = await generate(failed, config(), { llm: never });
+  assert.match(f.out.stats.essay.reason!, new RegExp(`^${ESSAY_ATTEMPTS_EXHAUSTED}: 2 attempts today`), "two paid generations that failed exhaust the day like two drafts");
 
   const none = await generate(new MemoryDb(), config(), { llm: never, source: src({ text_rights: "link_only" }) });
   assert.match(none.out.stats.essay.reason!, new RegExp(`^${NO_ELIGIBLE_CANDIDATE}: .*\\(text_rights 1\\)$`));
