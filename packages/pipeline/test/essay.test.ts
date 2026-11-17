@@ -70,7 +70,7 @@ function config(essay = "essay: { enabled: true }\n", budget = "budget: { run_us
   return parsePipelineConfig(yaml, { env: {} }).config;
 }
 
-const ESSAY_CONFIG: EssayConfig = { enabled: true, min_source_chars: 2000, max_attempts_per_day: 2, recent_essays: 5, sample: false };
+const ESSAY_CONFIG: EssayConfig = { enabled: true, min_source_chars: 2000, min_total: 0.6, max_attempts_per_day: 2, recent_essays: 5, sample: false };
 
 function src(overrides: Partial<SourceConfig> = {}): SourceConfig {
   return { id: "essay-grid-wire", name: "Essay Grid Wire", type: "rss", url: "https://www.grid-wire.example.org/feed.xml", tier: 1, enabled: true, text_rights: "full", language: "en", ...overrides };
@@ -142,12 +142,14 @@ test("KST day and slug: midnight KST is 15:00 UTC the day before; the slug is th
   assert.equal(insightEssaySlug("한국어 제목", NOW), "column/essay-2026-11-16", "a title with no ASCII word still yields a valid slug");
 });
 
-test("eligibility (E1, D4): insight-eligible and passed, full rights without an abstract scope, extraction not failed, enough body, never essayed; ranked by insight, total, id", () => {
+test("eligibility (E1, D4): insight-eligible and passed with total ≥ min_total, full rights without an abstract scope, extraction not failed, enough body, never essayed; ranked by insight, total, id", () => {
   const item = raw();
   const essayed = new Set<string>();
   assert.equal(essayIneligibility(cand(item), item, src(), ESSAY_CONFIG, essayed), null);
   assert.equal(essayIneligibility(cand(item, {}, 0.6, false), item, src(), ESSAY_CONFIG, essayed), "not_insight_eligible");
   assert.equal(essayIneligibility(cand(item, {}, 0.9, true, null), item, src(), ESSAY_CONFIG, essayed), "below_threshold");
+  assert.equal(essayIneligibility(cand(item, { total: 0.556 }, 0.9, true, "brief"), item, src(), ESSAY_CONFIG, essayed), "below_min_total", "passed the brief threshold but not the essay's topic-fit floor");
+  assert.equal(essayIneligibility(cand(item, { total: 0.6 }, 0.9, true, "brief"), item, src(), ESSAY_CONFIG, essayed), null, "the floor is inclusive");
   assert.equal(essayIneligibility(cand(item), undefined, src(), ESSAY_CONFIG, essayed), "no_raw_item");
   assert.equal(essayIneligibility(cand(item), item, src({ text_rights: "rewrite_only" }), ESSAY_CONFIG, essayed), "text_rights");
   assert.equal(essayIneligibility(cand(item), item, src({ text_scope: "abstract", extract: { kind: "arxiv_abstract" } }), ESSAY_CONFIG, essayed), "abstract_only");
@@ -160,6 +162,10 @@ test("eligibility (E1, D4): insight-eligible and passed, full rights without an 
   const sources = new Map([["essay-grid-wire", src()]]);
   const ranked = eligibleEssayCandidates([cand(other, { total: 0.9 }, 0.8), cand(item, { total: 0.7 }, 0.95)], items, sources, ESSAY_CONFIG, essayed);
   assert.deepEqual(ranked.map((e) => e.candidate.raw_item_id), [item.id, other.id], "insight potential first, total second");
+  const counts: Record<string, number> = {};
+  const none = eligibleEssayCandidates([cand(other, { total: 0.5 }), cand(item, {}, 0.6, false), cand(item, { total: 0.58 })], items, sources, ESSAY_CONFIG, essayed, counts);
+  assert.equal(none.length, 0);
+  assert.deepEqual(counts, { below_min_total: 2, not_insight_eligible: 1 }, "each rejected candidate counts once, under its first failed rule");
   assert.equal(ranked[0]!.chars, SOURCE_TEXT.length);
 });
 
@@ -243,8 +249,9 @@ test("generate skips the essay with a reason: off by default, no candidates, dai
   assert.equal(a.out.stats.essay.attempts_today, 2);
 
   const none = await generate(new MemoryDb(), config(), { llm: never, source: src({ text_rights: "link_only" }) });
-  assert.match(none.out.stats.essay.reason!, new RegExp(`^${NO_ELIGIBLE_CANDIDATE}`));
+  assert.match(none.out.stats.essay.reason!, new RegExp(`^${NO_ELIGIBLE_CANDIDATE}: .*\\(text_rights 1\\)$`));
   assert.equal(none.out.stats.essay.eligible, 0);
+  assert.deepEqual(none.out.stats.essay.ineligible, { text_rights: 1 });
   assert.equal(none.out.drafts.length, 0);
 });
 

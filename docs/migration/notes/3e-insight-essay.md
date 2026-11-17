@@ -134,7 +134,7 @@ Josh "3e 1단계 승인"(보이스·템플릿·D1~D4 권고안) → 파일 목�
 
 | # | 항목 | 확정 |
 |---|---|---|
-| E1 | 칼럼 대상 | `rubric.insight_eligible`이고 브리프 임계를 통과(tier ≠ null)했으며, 출처가 `text_rights: full`이고 `text_scope`가 abstract가 아니며, 추출이 실패하지 않았고, 본문이 `essay.min_source_chars` 2,000자 이상이며, 그 raw item으로 칼럼 초안을 쓴 적이 없는 후보 중 insight_potential → total 순 최상위 1건 |
+| E1 | 칼럼 대상 | `rubric.insight_eligible`이고 브리프 임계를 통과(tier ≠ null)했고 채점 total이 `essay.min_total` 0.60 이상이며(3단계 튜닝 2026-11-17, §7.2), 출처가 `text_rights: full`이고 `text_scope`가 abstract가 아니며, 추출이 실패하지 않았고, 본문이 `essay.min_source_chars` 2,000자 이상이며, 그 raw item으로 칼럼 초안을 쓴 적이 없는 후보 중 insight_potential → total 순 최상위 1건 |
 | E2 | 하루 한도(KST) | 오늘 발행 칼럼 ≥ `caps.essays_per_day`(1)이면 건너뜀(`ESSAY_DAILY_CAP`), 오늘 생성 시도 ≥ `essay.max_attempts_per_day`(2)이면 건너뜀(`ESSAY_ATTEMPTS_EXHAUSTED`). 메모리 DB 행처럼 `created_at`이 없으면 시도로 세지 않는다 |
 | E3 | QA | 브리프 hard 규칙 8개를 같은 임계로 적용, `THIN_EXPERT_LENS`는 브리프 전용(`content_types`), 새 soft `ESSAY_STRUCTURE`는 자동 통과 없음 → 위반 시 보류(`pending`) |
 | E4 | 타임아웃 | `llm.timeout_ms` 90 s → 180 s(칼럼 응답 약 3.5k 토큰) |
@@ -193,4 +193,14 @@ Josh "3e 1단계 승인"(보이스·템플릿·D1~D4 권고안) → 파일 목�
 3. **후보 공급**: 같은 풀에서 자격 후보는 2건이었고 둘 다 uk-desnz였다. 하루 1편 상한이면 날마다 1편이 나오지 않을 수 있다.
 4. **문체 반복**: "The release"로 시작하는 문장이 5~7회다(soft `READABILITY_LOW`, 자동 통과).
 5. **렌더링**: staging 프리뷰(`computecurrent-v2-preview`)에서 deck, Key argument, h2 소제목 5개, 바이라인, AI 고지, 출처가 그대로 나온다.
+
+### 7.2 튜닝 (2026-11-17, Josh "계속 진행해줘")
+
+§7.1 관찰 2·4에 대한 권고안을 반영했다. 되돌리려면 YAML 값을 0으로 내리거나 프롬프트 버전을 되돌리면 된다.
+
+| 항목 | 변경 | 근거 |
+|---|---|---|
+| 주제 적합도 | `essay.min_total` 0.60(`EssayConfig`, `config/pipeline.yaml`). `essayIneligibility`가 `below_threshold` 다음에 `below_min_total`로 거른다 | 샘플 2(total 0.556, 원문에 데이터센터 언급 없음)는 빠지고 샘플 1(0.610)은 남는다 |
+| 문체 반복 | `prompts/insight_essay.md` 2026-11-16.1 → **2026-11-17.1**: 출처 언급 위치와 호칭을 바꿔 쓰고, 같은 두 단어로 시작하는 문장을 3회 이하로 쓴다(`READABILITY_LOW`의 `max_same_opening 3`·`opening_words 2`와 같은 기준) | 샘플 1·2에서 "The release" 시작 문장이 5~7회 |
+| 진단 | `generateStats.essay.ineligible`: 탈락 후보를 첫 실패 규칙별로 센다. `NO_ELIGIBLE_CANDIDATE` 사유 끝에 `(<규칙> <수>, …)` 꼴로 붙는다 | 샘플 3의 "186 중 0"은 왜 0인지 보여 주지 않았다 |
 

@@ -168,8 +168,10 @@ export const EssayStats = z.strictObject({
   outcome: z.enum(["off", "drafted", "skipped", "failed", "budget_stopped"]),
   /** Why no essay was drafted (ESSAY_DAILY_CAP, ESSAY_ATTEMPTS_EXHAUSTED, NO_ELIGIBLE_CANDIDATE) or what failed (`SCHEMA_INVALID: …`). */
   reason: z.string().nullable(),
-  /** Candidates that met every eligibility rule (insight-eligible, passed, full rights, enough extracted body, not essayed before). */
+  /** Candidates that met every eligibility rule (insight-eligible, passed, total ≥ essay.min_total, full rights, enough extracted body, not essayed before). */
   eligible: NonNegativeInt,
+  /** The other candidates by the first rule they failed (`essayIneligibility`: not_insight_eligible, below_threshold, below_min_total, …). */
+  ineligible: z.record(z.string(), NonNegativeInt).default({}),
   /** Essays published and generated earlier in the current KST day. */
   published_today: NonNegativeInt,
   attempts_today: NonNegativeInt,
@@ -178,7 +180,7 @@ export const EssayStats = z.strictObject({
 export type EssayStats = z.infer<typeof EssayStats>;
 
 export function emptyEssayStats(enabled: boolean = false): EssayStats {
-  return { enabled, outcome: "off", reason: null, eligible: 0, published_today: 0, attempts_today: 0, decision: null };
+  return { enabled, outcome: "off", reason: null, eligible: 0, ineligible: {}, published_today: 0, attempts_today: 0, decision: null };
 }
 
 export const GenerateStats = z.strictObject({

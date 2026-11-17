@@ -230,12 +230,19 @@ export type PublishConfig = z.infer<typeof PublishConfig>;
  * Phase 3e insight essays (The Current, Josh 2026-11-16). Essays are not a pipeline stage — stage names are a
  * database enum (`cc_stage_name`) — so the switch lives here and generate/qa/image/publish read it. Off by
  * default; `CC_FLAG_ESSAY` overrides `enabled`. Eligibility (E1): an insight-eligible candidate that passed the
- * brief threshold, from a `text_rights: full` source (D4) whose extracted body has at least `min_source_chars`.
+ * brief threshold with a scoring total of at least `min_total`, from a `text_rights: full` source (D4) whose
+ * extracted body has at least `min_source_chars`.
  * Daily limits (E2) count the KST day: `caps.essays_per_day` published essays, `max_attempts_per_day` generations.
  */
 export const EssayConfig = z.strictObject({
   enabled: z.boolean().default(false),
   min_source_chars: z.number().int().positive().default(2000),
+  /**
+   * Topic fit (3e step-3 tuning, 2026-11-17): the candidate's scoring total must reach this. The brief
+   * threshold (0.55) lets through items an essay has to stretch to tie to AI infrastructure; 0.60 kept the
+   * Vanguard sample (on topic) and dropped the jobs-fair sample (total 0.556, no data-center mention).
+   */
+  min_total: z.number().min(0).max(1).default(0.6),
   max_attempts_per_day: z.number().int().nonnegative().default(2),
   /** Titles and headings of this many recent essays go into the prompt so openings and headings are not reused. */
   recent_essays: z.number().int().nonnegative().max(20).default(5),
