@@ -12,8 +12,10 @@
  * The best one by insight potential, then total, is written.
  *
  * Limits (E2), per KST day: no essay once `caps.essays_per_day` essays are published; no more than
- * `essay.max_attempts_per_day` generations whatever their QA outcome (the cost guard against a run of
- * rejections). Rows without `created_at` (the memory database) never count as today's attempts.
+ * `essay.max_attempts_per_day` generations whatever their outcome (the cost guard against a run of
+ * rejections). An attempt is an essay draft or an essay dead letter (a reply cut at `max_tokens`, a schema
+ * failure, an LLM error), because a failed generation is paid for but writes no draft (first production
+ * essay run, 2026-11-17). Rows without `created_at` (the memory database) never count as today's attempts.
  */
 import { InsightEssay, InsightEssayDraft } from "@cc/shared";
 import type { CandidateInsert, DbPort, DraftInsert, EssayConfig, LlmResponse, RawItemInsert, Row, SourceConfig } from "@cc/shared";
@@ -32,6 +34,8 @@ const MAX_TAGS = 6;
 const SLUG_MAX = 64;
 /** Prior essay drafts read to know which raw items were essayed and how many attempts today has seen. */
 const HISTORY_DRAFTS = 100;
+/** Newest generate-stage dead letters read to count today's failed essay generations. */
+const HISTORY_DEAD_LETTERS = 100;
 
 /** Midnight KST of the day `now` falls in, as an instant. */
 export function kstDayStart(now: Date): Date {
@@ -230,6 +234,8 @@ export async function essayHistory(db: DbPort, now: Date, config: EssayConfig, e
     orderBy: { column: "published_at", ascending: false },
   });
   const drafts = await db.select<Row>("drafts", { content_type: ESSAY_CONTENT_TYPE }, { columns: ["body", "created_at"], limit: HISTORY_DRAFTS, orderBy: { column: "created_at", ascending: false } });
+  const failures = await db.select<Row>("dead_letters", { stage: "generate", ref_table: "candidates" }, { columns: ["payload", "created_at"], limit: HISTORY_DEAD_LETTERS, orderBy: { column: "created_at", ascending: false } });
+  const failedToday = failures.filter((row) => (row["payload"] as { content_type?: unknown } | null)?.content_type === ESSAY_CONTENT_TYPE && isToday(row["created_at"])).length;
   const essayed = new Set<string>();
   for (const row of drafts) {
     const source = (row["body"] as { source?: { raw_item_id?: unknown } } | null)?.source;
@@ -237,7 +243,7 @@ export async function essayHistory(db: DbPort, now: Date, config: EssayConfig, e
   }
   return {
     publishedToday: publications.filter((row) => isToday(row["published_at"])).length,
-    attemptsToday: drafts.filter((row) => isToday(row["created_at"])).length,
+    attemptsToday: drafts.filter((row) => isToday(row["created_at"])).length + failedToday,
     essayed,
     recent: publications.slice(0, config.recent_essays).map((row) => ({
       title: typeof row["title"] === "string" ? row["title"] : "",

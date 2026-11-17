@@ -174,6 +174,7 @@ export const EssayStats = z.strictObject({
   ineligible: z.record(z.string(), NonNegativeInt).default({}),
   /** Essays published and generated earlier in the current KST day. */
   published_today: NonNegativeInt,
+  /** Essay drafts plus failed essay generations (dead letters) of the current KST day. */
   attempts_today: NonNegativeInt,
   decision: GenerateDecision.nullable(),
 });

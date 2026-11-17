@@ -221,3 +221,19 @@ Josh "3e 1단계 승인"(보이스·템플릿·D1~D4 권고안) → 파일 목�
 - **관찰 (1주)**: 런마다 `generateStats.essay`의 `outcome`·`eligible`·`ineligible`과 Telegram 요약을 본다. 공급이 부족하면 두 가지를 판단한다. 하나는 `config/scoring.yaml` `insight_trigger` 0.7 → 0.6이고, 다른 하나는 `text_rights: full` 소스 추가(현재 82개 중 29개)다.
 - **보류 칼럼 검토**: `shadow-review.yml`을 `target=production status=pending`으로 dispatch한다.
 - **되돌리기**: `pipeline.yml` 1줄을 되돌리는 PR이다(스케줄 변경 = 승인 항목). 발행된 칼럼은 `publications.status`로 비공개 처리한다.
+
+### 8.1 첫 production 칼럼 시도 (2026-11-17, Josh "수동으로 production 런 한 번 돌려줘, essay on")
+
+07:45Z cron은 15:12Z까지 시작되지 않았다(GitHub cron 지연·누락). 그래서 Josh 지시로 `pipeline.yml`을 수동 dispatch했다. 입력은 `dry_run=false live=true stages_on=true publish_target=production llm_provider=anthropic essay=on notify=true`, main `c1a2ae59`다.
+
+- **런 44111671329**(`e3089069`): `partial`, 3분, $0.31.
+  - 브리프 2편 중 1편 발행(`/news/8c10a914c6a5e32f/`), 1편은 `UNGROUNDED_ENTITY`로 거절됐다.
+  - 칼럼은 `ec-press-corner`(EU State aid 공공 대출 보증 규정 협의) 후보로 시도했으나 실패했다. `SCHEMA_INVALID: reply is not JSON (7272 chars, stop_reason max_tokens)`.
+  - 칼럼 호출 수치: input 11,782 · output **8,000**(= `max_output_tokens`) · 약 94초 · $0.207.
+- **원인 1 — 토큰 상한**: `max_tokens`에는 사고(adaptive thinking)와 답이 함께 들어간다. staging 샘플 2편은 비용으로 역산하면 출력이 약 6,200~6,800토큰으로 상한 8,000에 가까웠다. 이번에는 사고가 길어 답이 7,272자에서 잘렸다.
+- **원인 2 — 비용 가드 구멍**: 실패한 생성은 초안 행 없이 dead letter만 남긴다. 그래서 `max_attempts_per_day`(E2)에 세지지 않았다. 고치지 않으면 다음 schedule 런마다 같은 후보를 다시 시도하고, 매번 약 $0.21을 쓰고 실패할 수 있었다.
+- **수정**:
+  - `prompts/insight_essay.md` `max_output_tokens` 8000 → **12000**. 규칙·문체는 그대로라 버전은 올리지 않았다.
+  - `llm.timeout_ms` 180000 → **240000**. 약 85토큰/초 기준으로 12,000토큰이면 약 140초다.
+  - `essayHistory`가 오늘(KST)의 칼럼 dead letter(`dead_letters`, stage generate, `payload.content_type = insight_essay`)를 `attemptsToday`에 더한다. 실패한 raw item은 `essayed`로 표시하지 않으므로 다음 날 다시 시도할 수 있다.
+  - 칼럼 1회 최악 비용은 $0.29(input $0.05 + output 12,000 × $20/M)이고, 하루 최대 약 $0.58이다.
