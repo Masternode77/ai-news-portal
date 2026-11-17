@@ -210,3 +210,14 @@ Josh "3e 1단계 승인"(보이스·템플릿·D1~D4 권고안) → 파일 목�
 
 프롬프트 2026-11-17.1은 아직 라이브 칼럼으로 확인하지 못했다. 같은 raw item은 다시 쓰지 않으므로 새 자격 후보가 있어야 한다.
 
+
+## 8. 4단계 — schedule 런 칼럼 활성 (Josh "A안 승인, PR #104 머지하고 4단계 진행해", 2026-11-17)
+
+이 승인은 §7 샘플 품질 승인(D3)을 겸한다. PR #104는 `1549c9e7`로 머지됐다.
+
+- **변경**: `.github/workflows/pipeline.yml`의 `CC_FLAG_ESSAY`가 schedule 런에서 `true`다. dispatch는 그대로 `essay` 입력(off/on/sample)을 따른다. `config/pipeline.yaml`의 `essay.enabled`는 파일 기본값 `false`로 둔다(replay 테스트·CI가 칼럼을 쓰지 않도록).
+- **동작**: 하루 세 번(00:45·08:45·16:45 KST) 프로덕션 런마다 브리프 뒤에 칼럼 자격 후보를 찾는다(E1). 하루 발행 1편·생성 시도 2회(E2)가 상한이다. QA를 통과하면 자동 발행되고(D3), `ESSAY_STRUCTURE` 위반은 보류(`pending`)로 남는다.
+- **비용**: 칼럼 1편에 약 $0.17~0.18이 든다. 시도 상한 때문에 하루 최대 약 $0.36이고, 런 예산 `budget.run_usd` $2.0 안이다.
+- **관찰 (1주)**: 런마다 `generateStats.essay`의 `outcome`·`eligible`·`ineligible`과 Telegram 요약을 본다. 공급이 부족하면 두 가지를 판단한다. 하나는 `config/scoring.yaml` `insight_trigger` 0.7 → 0.6이고, 다른 하나는 `text_rights: full` 소스 추가(현재 82개 중 29개)다.
+- **보류 칼럼 검토**: `shadow-review.yml`을 `target=production status=pending`으로 dispatch한다.
+- **되돌리기**: `pipeline.yml` 1줄을 되돌리는 PR이다(스케줄 변경 = 승인 항목). 발행된 칼럼은 `publications.status`로 비공개 처리한다.

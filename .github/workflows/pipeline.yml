@@ -108,8 +108,9 @@ jobs:
       CC_FLAG_STAGES_GENERATE: ${{ (github.event_name == 'schedule' || inputs.stages_on) && 'true' || 'false' }}
       CC_FLAG_STAGES_QA: ${{ (github.event_name == 'schedule' || inputs.stages_on) && 'true' || 'false' }}
       CC_FLAG_STAGES_IMAGE: ${{ (github.event_name == 'schedule' || inputs.stages_on) && 'true' || 'false' }}
-      # 3e: essays stay off in scheduled runs until step 4 (an approval item); a dispatch picks off / on / sample.
-      CC_FLAG_ESSAY: ${{ github.event_name != 'schedule' && inputs.essay == 'on' && 'true' || github.event_name != 'schedule' && inputs.essay == 'sample' && 'sample' || 'false' }}
+      # 3e step 4 (Josh 2026-11-17): a scheduled run writes at most one essay under the KST daily limits; a dispatch
+      # picks off / on / sample. Turning it off again is a schedule change (an approval item).
+      CC_FLAG_ESSAY: ${{ github.event_name == 'schedule' && 'true' || inputs.essay == 'on' && 'true' || inputs.essay == 'sample' && 'sample' || 'false' }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
