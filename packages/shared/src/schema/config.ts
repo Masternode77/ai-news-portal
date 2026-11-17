@@ -239,6 +239,12 @@ export const EssayConfig = z.strictObject({
   max_attempts_per_day: z.number().int().nonnegative().default(2),
   /** Titles and headings of this many recent essays go into the prompt so openings and headings are not reused. */
   recent_essays: z.number().int().nonnegative().max(20).default(5),
+  /**
+   * Sample mode (3e step 3, Josh 2026-11-17): the staging review runs ignore the KST daily limits (E2) so a
+   * handful of samples does not take days; everything else holds (one essay a run, never the same raw item
+   * twice, the run budget). Set by `CC_FLAG_ESSAY=sample` and refused with a production publish target.
+   */
+  sample: z.boolean().default(false),
 });
 export type EssayConfig = z.infer<typeof EssayConfig>;
 

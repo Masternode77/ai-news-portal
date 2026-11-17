@@ -25,6 +25,8 @@ export interface FlagSnapshot {
   llm_provider: PipelineConfig["llm"]["provider"];
   /** Phase 3e: `essay.enabled` after overrides (`CC_FLAG_ESSAY`). */
   essay: boolean;
+  /** Phase 3e step 3: `essay.sample` (`CC_FLAG_ESSAY=sample`) — staging samples without the daily limits. */
+  essay_sample: boolean;
   overrides: FlagOverride[];
 }
 
@@ -48,6 +50,7 @@ export function applyFlagOverrides(
   let notifyTelegram = config.notify.telegram.enabled;
   let llmProvider: string = config.llm.provider;
   let essay = config.essay.enabled;
+  let essaySample = config.essay.sample;
 
   for (const [key, raw] of Object.entries(env)) {
     if (!key.startsWith(FLAG_ENV_PREFIX) || raw === undefined) continue;
@@ -81,6 +84,13 @@ export function applyFlagOverrides(
     }
     if (name === "ESSAY") {
       // Phase 3e: essays are not a stage (stage names are a DB enum), so the switch is essay.enabled.
+      // `sample` (3e step 3) turns essays on and lifts the KST daily limits for staging review runs.
+      if (raw.trim().toLowerCase() === "sample") {
+        essay = true;
+        essaySample = true;
+        overrides.push({ env: key, path: "essay.enabled", raw, value: true }, { env: key, path: "essay.sample", raw, value: true });
+        continue;
+      }
       essay = parseBoolean(key, raw);
       overrides.push({ env: key, path: "essay.enabled", raw, value: essay });
       continue;
@@ -93,10 +103,13 @@ export function applyFlagOverrides(
     flags: { stages, publish_target: publishTarget },
     notify: { ...config.notify, telegram: { ...config.notify.telegram, enabled: notifyTelegram } },
     llm: { ...config.llm, provider: llmProvider },
-    essay: { ...config.essay, enabled: essay },
+    essay: { ...config.essay, enabled: essay, sample: essaySample },
   });
   if (!parsed.success) {
     throw new ConfigError(`flag override produced an invalid config: ${parsed.error.issues.map((i) => `${i.path.join(".")}: ${i.message}`).join("; ")}`);
+  }
+  if (parsed.data.essay.sample && parsed.data.flags.publish_target === "production") {
+    throw new ConfigError("essay.sample (CC_FLAG_ESSAY=sample) lifts the daily essay limits and is for staging review runs only; it cannot run with publish_target production");
   }
   return { config: parsed.data, overrides };
 }
@@ -108,6 +121,7 @@ export function flagSnapshot(config: PipelineConfig, overrides: FlagOverride[] =
     notify_telegram: config.notify.telegram.enabled,
     llm_provider: config.llm.provider,
     essay: config.essay.enabled,
+    essay_sample: config.essay.sample,
     overrides: overrides.map((o) => ({ ...o })),
   };
 }

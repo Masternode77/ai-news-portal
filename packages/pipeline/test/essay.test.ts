@@ -70,7 +70,7 @@ function config(essay = "essay: { enabled: true }\n", budget = "budget: { run_us
   return parsePipelineConfig(yaml, { env: {} }).config;
 }
 
-const ESSAY_CONFIG: EssayConfig = { enabled: true, min_source_chars: 2000, max_attempts_per_day: 2, recent_essays: 5 };
+const ESSAY_CONFIG: EssayConfig = { enabled: true, min_source_chars: 2000, max_attempts_per_day: 2, recent_essays: 5, sample: false };
 
 function src(overrides: Partial<SourceConfig> = {}): SourceConfig {
   return { id: "essay-grid-wire", name: "Essay Grid Wire", type: "rss", url: "https://www.grid-wire.example.org/feed.xml", tier: 1, enabled: true, text_rights: "full", language: "en", ...overrides };
@@ -246,6 +246,20 @@ test("generate skips the essay with a reason: off by default, no candidates, dai
   assert.match(none.out.stats.essay.reason!, new RegExp(`^${NO_ELIGIBLE_CANDIDATE}`));
   assert.equal(none.out.stats.essay.eligible, 0);
   assert.equal(none.out.drafts.length, 0);
+});
+
+test("sample mode (CC_FLAG_ESSAY=sample, staging review runs) ignores the KST daily limits but still reports them, and never re-essays a raw item", async () => {
+  const db = new MemoryDb();
+  await db.upsert("publications", [{ slug: "column/x-2026-11-16", title: "x", content_type: "insight_essay", status: "published", published_at: "2026-11-16T00:00:00.000Z", body: {} }], ["slug"]);
+  await db.upsert("drafts", [1, 2].map((n) => ({ id: `d${n}`, candidate_id: `c${n}`, content_type: "insight_essay", prompt_version: "v", created_at: "2026-11-16T00:00:00.000Z", body: { source: { raw_item_id: `r${n}` } } })), ["id"]);
+  const sample = config("essay: { enabled: true, sample: true }\n");
+  const { out } = await generate(db, sample, { llm: scriptedLlm([RECORDED]) });
+  assert.equal(out.stats.essay.outcome, "drafted", String(out.stats.essay.reason));
+  assert.equal(out.stats.essay.published_today, 1);
+  assert.equal(out.stats.essay.attempts_today, 2);
+  await db.upsert("drafts", out.drafts.map((d) => ({ ...d, created_at: "2026-11-16T07:46:00.000Z" })) as unknown as Record<string, unknown>[], ["id"]);
+  const again = await generate(db, sample, { llm: scriptedLlm([new Error("must not be called")]) });
+  assert.match(again.out.stats.essay.reason!, new RegExp(`^${NO_ELIGIBLE_CANDIDATE}`), "the same raw item is never essayed twice, sample or not");
 });
 
 test("generate: a reply that fails the essay schema is a dead letter and stats.essay failed; a budget that cannot cover the essay stops it without a call", async () => {

@@ -164,3 +164,16 @@ Josh "3e 1단계 승인"(보이스·템플릿·D1~D4 권고안) → 파일 목�
 - **스키마 하한**: 본문 4,500자 미만 응답은 호출 비용을 쓰고도 `SCHEMA_INVALID`로 버려진다(구조화 출력에서 길이 제약이 빠지기 때문).
 - **dispatch 입력**: `pipeline.yml`의 workflow_dispatch 입력이 이미 10개다. 3단계에 쓸 `essay` 입력은 GitHub 입력 한도를 확인한 뒤 별도 소변경으로 넣는다(이 PR은 워크플로를 바꾸지 않는다).
 
+## 7. 3단계 — staging 샘플 3편 (Josh "3단계 진행해", 2026-11-17)
+
+- **샘플 모드**: E2 하루 한도(발행 1·시도 2)를 staging에도 그대로 적용하면 샘플 3편에 2~3일이 걸린다. 그래서 `CC_FLAG_ESSAY=sample`(`essay.sample`)로 staging 검토 런에서만 하루 한도를 푼다. 다음은 그대로다.
+  - 런당 1편
+  - 같은 raw item 재작성 금지
+  - 런 예산 $2
+  - production 발행 타깃이면 `ConfigError`로 거부
+- **dispatch 입력**: `pipeline.yml`에 `essay`(`off|on|sample`, 기본 off)를 추가했다. 입력은 11개가 된다. 브랜치에서 비용 없는 fixture dry-run dispatch로 워크플로 유효성을 먼저 확인한다. schedule 런은 `CC_FLAG_ESSAY=false`로 고정이다(4단계 승인 전).
+- **샘플 런**: 브랜치에서 dispatch 1회에 칼럼 최대 1편이 나온다.
+  - 입력: `dry_run=false live=true stages_on=true publish_target=staging llm_provider=anthropic essay=sample notify=false`
+  - 칼럼 후보가 없으면(`NO_ELIGIBLE_CANDIDATE`) 칼럼 없이 끝난다.
+- **검토**: `shadow-review.yml`에 `run_id`를 넣어 칼럼 전문, QA 판정, 원문 발췌를 본다. 통과한 칼럼은 staging `publications`에 발행되고, staging을 읽는 프리뷰에서 렌더링된다.
+
