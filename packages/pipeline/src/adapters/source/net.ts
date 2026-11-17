@@ -278,6 +278,39 @@ export function describeFetchError(error: unknown): string {
 }
 
 /**
+ * The codes and class names along a failed request's cause chain (`ENOTFOUND`, `ECONNREFUSED`,
+ * `UND_ERR_CONNECT_TIMEOUT`, `ConnectTimeoutError`, …), with no message text: the messages carry the host
+ * name, which for the Supabase project is configuration that stays out of the logs (CLAUDE.md §5).
+ */
+export function fetchErrorCodes(error: unknown): string[] {
+  const out: string[] = [];
+  const visit = (node: unknown, depth: number): void => {
+    if (depth > FETCH_CAUSE_DEPTH || node === null || typeof node !== "object") return;
+    const record = node as { code?: unknown; name?: unknown; cause?: unknown; errors?: unknown };
+    for (const value of [record.code, record.name]) {
+      if (typeof value === "string" && /^[A-Za-z_][A-Za-z0-9_]{1,63}$/u.test(value) && value !== "Error" && value !== "TypeError" && !out.includes(value)) out.push(value);
+    }
+    if (Array.isArray(record.errors)) for (const inner of record.errors.slice(0, 3)) visit(inner, depth + 1);
+    visit(record.cause, depth + 1);
+  };
+  visit(error instanceof Error ? (error as { cause?: unknown }).cause : undefined, 0);
+  return out;
+}
+
+/** A fetch whose network failures name their cause codes (never the host), for clients that only report `error.message`. */
+export function withFetchCauseCodes(fetchImpl: typeof globalThis.fetch): typeof globalThis.fetch {
+  return async (input, init) => {
+    try {
+      return await fetchImpl(input, init);
+    } catch (error) {
+      const codes = fetchErrorCodes(error);
+      if (codes.length === 0 || !(error instanceof Error)) throw error;
+      throw new TypeError(`${error.message} (cause: ${codes.join(" <- ")})`, { cause: error });
+    }
+  };
+}
+
+/**
  * Retries `attempt` on SOURCE_UNREACHABLE (timeouts, 5xx, 429, DNS and body
  * stream failures) with linear backoff; any other error is final. Shared by
  * every adapter so `ingest.retry_attempts` means the same for feeds, index

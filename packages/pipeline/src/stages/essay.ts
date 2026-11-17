@@ -6,8 +6,8 @@
  * and the publisher share. Voice and structure live in content/voice/josh_voice.md and
  * content/templates/insight_essay.md, rendered into prompts/insight_essay.md.
  *
- * Eligibility (E1, D4): the candidate passed the brief threshold and is `insight_eligible` (3c
- * `insight_trigger`), its source is `text_rights: full` without an abstract-only scope, extraction did not
+ * Eligibility (E1, D4): the candidate passed the brief threshold with a total of at least `essay.min_total`
+ * and is `insight_eligible` (3c `insight_trigger`), its source is `text_rights: full` without an abstract-only scope, extraction did not
  * fail, the body has at least `essay.min_source_chars`, and no essay was ever drafted from that raw item.
  * The best one by insight potential, then total, is written.
  *
@@ -150,6 +150,7 @@ export interface EssayCandidate {
 export function essayIneligibility(candidate: CandidateInsert, item: RawItemInsert | undefined, source: SourceConfig | undefined, config: EssayConfig, essayed: ReadonlySet<string>): string | null {
   if (!candidate.rubric?.insight_eligible) return "not_insight_eligible";
   if (candidate.rubric.tier === null) return "below_threshold";
+  if (candidate.total < config.min_total) return "below_min_total";
   if (!item || !source) return "no_raw_item";
   if (essayed.has(candidate.raw_item_id)) return "already_essayed";
   if (source.text_rights !== "full") return "text_rights";
@@ -160,19 +161,27 @@ export function essayIneligibility(candidate: CandidateInsert, item: RawItemInse
   return null;
 }
 
-/** Eligible candidates, best first: insight potential, then total, then raw item id (deterministic). */
+/**
+ * Eligible candidates, best first: insight potential, then total, then raw item id (deterministic). When
+ * `ineligible` is given, each rejected candidate's first failed rule (`essayIneligibility`) is counted into it.
+ */
 export function eligibleEssayCandidates(
   candidates: readonly CandidateInsert[],
   items: ReadonlyMap<string, RawItemInsert>,
   sources: ReadonlyMap<string, SourceConfig>,
   config: EssayConfig,
   essayed: ReadonlySet<string>,
+  ineligible?: Record<string, number>,
 ): EssayCandidate[] {
   const out: EssayCandidate[] = [];
   for (const candidate of candidates) {
     const item = items.get(candidate.raw_item_id);
     const source = item ? sources.get(item.source_id) : undefined;
-    if (essayIneligibility(candidate, item, source, config, essayed) !== null) continue;
+    const reason = essayIneligibility(candidate, item, source, config, essayed);
+    if (reason !== null) {
+      if (ineligible) ineligible[reason] = (ineligible[reason] ?? 0) + 1;
+      continue;
+    }
     out.push({ candidate, item: item!, source: source!, chars: bodyTextOf(item!).length });
   }
   return out.sort(

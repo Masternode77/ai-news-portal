@@ -68,3 +68,15 @@ test("CC_FLAG_ESSAY (Phase 3e) switches essay.enabled — essays are not a stage
   assert.throws(() => applyFlagOverrides(base(), { CC_FLAG_STAGES_ESSAY: "true" }), /unknown stage "essay"/);
   assert.deepEqual({ ...config.essay, enabled: false }, base().essay, "the other essay defaults stay");
 });
+
+test("CC_FLAG_ESSAY=sample (3e step 3) turns essays on and sets essay.sample for staging review runs; it is refused with a production publish target", () => {
+  const { config, overrides } = applyFlagOverrides(base(), { CC_FLAG_ESSAY: "sample", CC_FLAG_PUBLISH_TARGET: "staging" });
+  assert.equal(config.essay.enabled, true);
+  assert.equal(config.essay.sample, true);
+  assert.deepEqual(overrides.filter((o) => o.env === "CC_FLAG_ESSAY").map((o) => [o.path, o.value]), [["essay.enabled", true], ["essay.sample", true]]);
+  const snapshot = flagSnapshot(config, overrides);
+  assert.equal(snapshot.essay, true);
+  assert.equal(snapshot.essay_sample, true);
+  assert.equal(applyFlagOverrides(base(), { CC_FLAG_ESSAY: "true" }).config.essay.sample, false, "true is not sample");
+  assert.throws(() => applyFlagOverrides(base(), { CC_FLAG_ESSAY: "sample", CC_FLAG_PUBLISH_TARGET: "production" }), (e: unknown) => e instanceof ConfigError && /staging review runs only/.test(e.message));
+});

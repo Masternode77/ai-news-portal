@@ -62,6 +62,11 @@ on:
         type: choice
         default: info
         options: [debug, info, warn, error]
+      essay:
+        description: "3e insight essay (CC_FLAG_ESSAY): off; on = one essay a run under the KST daily limits; sample = staging review runs without the daily limits (refused with publish_target production)"
+        type: choice
+        default: "off"
+        options: ["off", "on", "sample"]
   # ADR-002 schedule (approval Josh 2026-10-26, enabled 2026-10-29; production publishing from the Phase 5 cutover). Mirrors config/pipeline.yaml schedule.cron.
   # Rollback drill 2026-10-31 (docs/shadow/README.md §4, compare.md §4): disabled by PR #82, re-enabled by the next PR.
   schedule:
@@ -103,6 +108,8 @@ jobs:
       CC_FLAG_STAGES_GENERATE: ${{ (github.event_name == 'schedule' || inputs.stages_on) && 'true' || 'false' }}
       CC_FLAG_STAGES_QA: ${{ (github.event_name == 'schedule' || inputs.stages_on) && 'true' || 'false' }}
       CC_FLAG_STAGES_IMAGE: ${{ (github.event_name == 'schedule' || inputs.stages_on) && 'true' || 'false' }}
+      # 3e: essays stay off in scheduled runs until step 4 (an approval item); a dispatch picks off / on / sample.
+      CC_FLAG_ESSAY: ${{ github.event_name != 'schedule' && inputs.essay == 'on' && 'true' || github.event_name != 'schedule' && inputs.essay == 'sample' && 'sample' || 'false' }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4

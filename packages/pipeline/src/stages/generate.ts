@@ -357,20 +357,24 @@ export async function draftEssay(
   if (!config.enabled || input.candidates === undefined) return run;
 
   const history = await essayHistory(ctx.adapters.db, ctx.now, config, ctx.config.caps.essays_per_day);
-  const eligible = eligibleEssayCandidates(input.candidates, items, sources, config, history.essayed);
+  const eligible = eligibleEssayCandidates(input.candidates, items, sources, config, history.essayed, stats.ineligible);
   stats.published_today = history.publishedToday;
   stats.attempts_today = history.attemptsToday;
   stats.eligible = eligible.length;
   const skip = (reason: string): EssayRun => {
     stats.outcome = "skipped";
     stats.reason = reason;
-    ctx.logger.info("generate: no essay this run", { reason, eligible: stats.eligible, published_today: stats.published_today, attempts_today: stats.attempts_today });
+    ctx.logger.info("generate: no essay this run", { reason, eligible: stats.eligible, ineligible: stats.ineligible, published_today: stats.published_today, attempts_today: stats.attempts_today });
     return run;
   };
-  if (history.publishedToday >= ctx.config.caps.essays_per_day) return skip(`${ESSAY_DAILY_CAP}: ${history.publishedToday} published today (KST), cap ${ctx.config.caps.essays_per_day}`);
-  if (history.attemptsToday >= config.max_attempts_per_day) return skip(`${ESSAY_ATTEMPTS_EXHAUSTED}: ${history.attemptsToday} drafted today (KST), limit ${config.max_attempts_per_day}`);
+  // Sample mode (staging review runs) ignores the daily limits; the counts are still reported.
+  if (!config.sample && history.publishedToday >= ctx.config.caps.essays_per_day) return skip(`${ESSAY_DAILY_CAP}: ${history.publishedToday} published today (KST), cap ${ctx.config.caps.essays_per_day}`);
+  if (!config.sample && history.attemptsToday >= config.max_attempts_per_day) return skip(`${ESSAY_ATTEMPTS_EXHAUSTED}: ${history.attemptsToday} drafted today (KST), limit ${config.max_attempts_per_day}`);
   const pick = eligible[0];
-  if (!pick) return skip(`${NO_ELIGIBLE_CANDIDATE}: none of ${input.candidates.length} scored candidates is insight-eligible with a full-rights source of at least ${config.min_source_chars} chars that was not essayed before`);
+  if (!pick) {
+    const counts = Object.entries(stats.ineligible).sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0])).map(([rule, n]) => `${rule} ${n}`).join(", ");
+    return skip(`${NO_ELIGIBLE_CANDIDATE}: none of ${input.candidates.length} scored candidates is insight-eligible, passed with a total of at least ${config.min_total}, from a full-rights source of at least ${config.min_source_chars} chars, and not essayed before${counts ? ` (${counts})` : ""}`);
+  }
 
   const { candidate, item, source } = pick;
   const llmConfig = ctx.config.llm;

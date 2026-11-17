@@ -1,6 +1,6 @@
 # Compute Current rebuild — pipeline configuration (contracts.md §4, ADR-002/004/006/007)
 # Validated strictly by packages/shared/src/schema/config.ts; unknown keys fail the run.
-# Environment overrides: CC_FLAG_STAGES_<STAGE>=true|false, CC_FLAG_PUBLISH_TARGET=none|staging|production, CC_FLAG_NOTIFY_TELEGRAM, CC_FLAG_LLM_PROVIDER, CC_FLAG_ESSAY=true|false.
+# Environment overrides: CC_FLAG_STAGES_<STAGE>=true|false, CC_FLAG_PUBLISH_TARGET=none|staging|production, CC_FLAG_NOTIFY_TELEGRAM, CC_FLAG_LLM_PROVIDER, CC_FLAG_ESSAY=true|false|sample.
 
 schedule:
   cron: "45 15,23,7 * * *"   # 00:45 / 08:45 / 16:45 KST (ADR-002)
@@ -28,8 +28,10 @@ caps:
 essay:                         # Phase 3e insight essays for The Current (Josh 2026-11-16). Not a stage (stage names are a DB enum): generate/qa/image/publish read this block
   enabled: false               # default OFF; CC_FLAG_ESSAY=true turns it on. Turning it on in the schedule is step 4 of 3e (approval item)
   min_source_chars: 2000       # E1: extracted body of a text_rights: full source (D4); the essay also needs insight_eligible (scoring insight_trigger) and the brief threshold
+  min_total: 0.60              # E1 topic fit (step-3 tuning 2026-11-17): scoring total floor above the brief threshold (0.55); the off-topic sample scored 0.556
   max_attempts_per_day: 2      # E2: essay generations per KST day whatever their QA outcome (about USD 0.1–0.2 each); caps.essays_per_day counts published essays
   recent_essays: 5             # titles and headings of the newest essays go into the prompt so they are not reused
+  sample: false                # 3e step 3: CC_FLAG_ESSAY=sample turns essays on and lifts the KST daily limits for staging review runs (refused with publish_target production)
 
 ingest:                        # Phase 3a live ingest; every key is optional (defaults in packages/shared/src/schema/config.ts)
   concurrency: 6               # feeds fetched at once (legacy: unbounded Promise.all)

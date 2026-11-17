@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { FEED_CONTENT_TYPES, SourceFetchError, describeFetchError, isPublicAddress, safeFetchText } from "../src/adapters/source/net.ts";
+import { FEED_CONTENT_TYPES, SourceFetchError, describeFetchError, fetchErrorCodes, isPublicAddress, safeFetchText, withFetchCauseCodes } from "../src/adapters/source/net.ts";
 import type { SafeFetchOptions } from "../src/adapters/source/net.ts";
 
 type Handler = (url: string, init: RequestInit | undefined) => Response | Promise<Response>;
@@ -155,4 +155,31 @@ test("a connect/TLS failure before any response keeps its cause in the SOURCE_UN
     safeFetchText("https://feeds.test/x", options(failing)),
     (e: unknown) => e instanceof SourceFetchError && e.code === "SOURCE_UNREACHABLE" && e.message === "SOURCE_UNREACHABLE: fetch failed (cause: CERT_HAS_EXPIRED: certificate has expired)",
   );
+});
+
+test("Supabase fetch failures name their cause codes and class names, never the host (3e step 3, 2026-11-17)", async () => {
+  const dns = Object.assign(new Error("getaddrinfo ENOTFOUND abcdefgh.supabase.co"), { code: "ENOTFOUND", hostname: "abcdefgh.supabase.co" });
+  const failed = new TypeError("fetch failed", { cause: dns });
+  assert.deepEqual(fetchErrorCodes(failed), ["ENOTFOUND"]);
+  const refused = new TypeError("fetch failed", { cause: Object.assign(new AggregateError([Object.assign(new Error("connect ECONNREFUSED 10.0.0.1:443"), { code: "ECONNREFUSED" })], "x"), { code: "ECONNREFUSED" }) });
+  assert.deepEqual(fetchErrorCodes(refused), ["ECONNREFUSED", "AggregateError"]);
+  const timeout = new TypeError("fetch failed", { cause: Object.assign(new Error("Connect Timeout Error (attempted address: abcdefgh.supabase.co:443)"), { name: "ConnectTimeoutError", code: "UND_ERR_CONNECT_TIMEOUT" }) });
+  assert.deepEqual(fetchErrorCodes(timeout), ["UND_ERR_CONNECT_TIMEOUT", "ConnectTimeoutError"]);
+  assert.deepEqual(fetchErrorCodes(new TypeError("fetch failed")), []);
+
+  const wrapped = withFetchCauseCodes(async () => {
+    throw failed;
+  });
+  await assert.rejects(wrapped("https://abcdefgh.supabase.co/rest/v1/x"), (error: unknown) => {
+    assert.ok(error instanceof TypeError);
+    assert.equal(error.message, "fetch failed (cause: ENOTFOUND)");
+    assert.doesNotMatch(error.message, /supabase\.co/);
+    return true;
+  });
+  const plain = new TypeError("fetch failed");
+  await assert.rejects(withFetchCauseCodes(async () => {
+    throw plain;
+  })("https://x.example"), (error: unknown) => error === plain, "no cause codes: the original error is rethrown");
+  const ok = new Response("{}", { status: 200 });
+  assert.equal(await withFetchCauseCodes(async () => ok)("https://x.example"), ok);
 });

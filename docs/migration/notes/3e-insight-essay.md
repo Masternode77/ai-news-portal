@@ -134,7 +134,7 @@ Josh "3e 1단계 승인"(보이스·템플릿·D1~D4 권고안) → 파일 목�
 
 | # | 항목 | 확정 |
 |---|---|---|
-| E1 | 칼럼 대상 | `rubric.insight_eligible`이고 브리프 임계를 통과(tier ≠ null)했으며, 출처가 `text_rights: full`이고 `text_scope`가 abstract가 아니며, 추출이 실패하지 않았고, 본문이 `essay.min_source_chars` 2,000자 이상이며, 그 raw item으로 칼럼 초안을 쓴 적이 없는 후보 중 insight_potential → total 순 최상위 1건 |
+| E1 | 칼럼 대상 | `rubric.insight_eligible`이고 브리프 임계를 통과(tier ≠ null)했고 채점 total이 `essay.min_total` 0.60 이상이며(3단계 튜닝 2026-11-17, §7.2), 출처가 `text_rights: full`이고 `text_scope`가 abstract가 아니며, 추출이 실패하지 않았고, 본문이 `essay.min_source_chars` 2,000자 이상이며, 그 raw item으로 칼럼 초안을 쓴 적이 없는 후보 중 insight_potential → total 순 최상위 1건 |
 | E2 | 하루 한도(KST) | 오늘 발행 칼럼 ≥ `caps.essays_per_day`(1)이면 건너뜀(`ESSAY_DAILY_CAP`), 오늘 생성 시도 ≥ `essay.max_attempts_per_day`(2)이면 건너뜀(`ESSAY_ATTEMPTS_EXHAUSTED`). 메모리 DB 행처럼 `created_at`이 없으면 시도로 세지 않는다 |
 | E3 | QA | 브리프 hard 규칙 8개를 같은 임계로 적용, `THIN_EXPERT_LENS`는 브리프 전용(`content_types`), 새 soft `ESSAY_STRUCTURE`는 자동 통과 없음 → 위반 시 보류(`pending`) |
 | E4 | 타임아웃 | `llm.timeout_ms` 90 s → 180 s(칼럼 응답 약 3.5k 토큰) |
@@ -163,4 +163,50 @@ Josh "3e 1단계 승인"(보이스·템플릿·D1~D4 권고안) → 파일 목�
 - **유사도 비율의 희석**: `SIMILARITY_TOO_HIGH`는 비율이라 1,300단어 칼럼에서는 붙여 넣은 문단이 희석된다. 복사는 `QUOTE_TOO_LONG`의 연속 20단어 상한이 막는다(테스트로 확인). 원문을 촘촘히 바꿔 쓴 표현은 브리프보다 덜 잡힐 수 있다.
 - **스키마 하한**: 본문 4,500자 미만 응답은 호출 비용을 쓰고도 `SCHEMA_INVALID`로 버려진다(구조화 출력에서 길이 제약이 빠지기 때문).
 - **dispatch 입력**: `pipeline.yml`의 workflow_dispatch 입력이 이미 10개다. 3단계에 쓸 `essay` 입력은 GitHub 입력 한도를 확인한 뒤 별도 소변경으로 넣는다(이 PR은 워크플로를 바꾸지 않는다).
+
+## 7. 3단계 — staging 샘플 3편 (Josh "3단계 진행해", 2026-11-17)
+
+- **샘플 모드**: E2 하루 한도(발행 1·시도 2)를 staging에도 그대로 적용하면 샘플 3편에 2~3일이 걸린다. 그래서 `CC_FLAG_ESSAY=sample`(`essay.sample`)로 staging 검토 런에서만 하루 한도를 푼다. 다음은 그대로다.
+  - 런당 1편
+  - 같은 raw item 재작성 금지
+  - 런 예산 $2
+  - production 발행 타깃이면 `ConfigError`로 거부
+- **dispatch 입력**: `pipeline.yml`에 `essay`(`off|on|sample`, 기본 off)를 추가했다. 입력은 11개가 된다. 브랜치에서 비용 없는 fixture dry-run dispatch로 워크플로 유효성을 먼저 확인한다. schedule 런은 `CC_FLAG_ESSAY=false`로 고정이다(4단계 승인 전).
+- **샘플 런**: 브랜치에서 dispatch 1회에 칼럼 최대 1편이 나온다.
+  - 입력: `dry_run=false live=true stages_on=true publish_target=staging llm_provider=anthropic essay=sample notify=false`
+  - 칼럼 후보가 없으면(`NO_ELIGIBLE_CANDIDATE`) 칼럼 없이 끝난다.
+- **검토**: `shadow-review.yml`에 `run_id`를 넣어 칼럼 전문, QA 판정, 원문 발췌를 본다. 통과한 칼럼은 staging `publications`에 발행되고, staging을 읽는 프리뷰에서 렌더링된다.
+
+### 7.1 결과 (2026-11-17)
+
+| 런 | 결과 | 칼럼 | QA | 비용 |
+|---|---|---|---|---|
+| 43999241074 · 43999546544 | staging `fetch failed` → 원인 코드 로깅 뒤 `ENOTFOUND`(복구 직후 DNS) | — | — | $0 |
+| 44001686797 | 칼럼 1편 | "The £12 billion Vanguard decision is a 2030 supply signal for UK site screens" (UK DESNZ, 1,583단어, 소제목 5) | hard 9 통과, 유사도 0.004, `ESSAY_STRUCTURE` 통과, soft 자동 통과 `RUBRIC_BELOW_TARGET`·`READABILITY_LOW` | 칼럼 $0.172 · 런 $0.29 |
+| 44002228964 | 칼럼 1편 | "Britain's clean energy hiring drive chases the electricians data halls need" (UK DESNZ 채용박람회, 1,536단어) | hard 9 통과, 유사도 0.018, `ESSAY_STRUCTURE` 통과 | 칼럼 $0.183 · 런 $0.27 |
+| 44002693147 | 칼럼 없음 | `NO_ELIGIBLE_CANDIDATE`(후보 186 중 자격 0) | — | 런 $0.07 |
+
+관찰은 다음과 같다.
+
+1. **보이스·구조**: 사실 문단 → 판단과 근거 경계 → 마일스톤 사다리 → 반론 양보 → 조건부 관찰 3개 순서가 템플릿대로 나온다. 1인칭은 판단에만 쓰였고 추론 표시가 명시적이다.
+2. **주제 적합도**: 샘플 2는 원문에 데이터센터 언급이 없다(칼럼이 추론임을 명시). 채점 total이 0.556으로 브리프 임계 0.55 바로 위다.
+3. **후보 공급**: 같은 풀에서 자격 후보는 2건이었고 둘 다 uk-desnz였다. 하루 1편 상한이면 날마다 1편이 나오지 않을 수 있다.
+4. **문체 반복**: "The release"로 시작하는 문장이 5~7회다(soft `READABILITY_LOW`, 자동 통과).
+5. **렌더링**: staging 프리뷰(`computecurrent-v2-preview`)에서 deck, Key argument, h2 소제목 5개, 바이라인, AI 고지, 출처가 그대로 나온다.
+
+### 7.2 튜닝 (2026-11-17, Josh "계속 진행해줘")
+
+§7.1 관찰 2·4에 대한 권고안을 반영했다. 되돌리려면 YAML 값을 0으로 내리거나 프롬프트 버전을 되돌리면 된다.
+
+| 항목 | 변경 | 근거 |
+|---|---|---|
+| 주제 적합도 | `essay.min_total` 0.60(`EssayConfig`, `config/pipeline.yaml`). `essayIneligibility`가 `below_threshold` 다음에 `below_min_total`로 거른다 | 샘플 2(total 0.556, 원문에 데이터센터 언급 없음)는 빠지고 샘플 1(0.610)은 남는다 |
+| 문체 반복 | `prompts/insight_essay.md` 2026-11-16.1 → **2026-11-17.1**: 출처 언급 위치와 호칭을 바꿔 쓰고, 같은 두 단어로 시작하는 문장을 3회 이하로 쓴다(`READABILITY_LOW`의 `max_same_opening 3`·`opening_words 2`와 같은 기준) | 샘플 1·2에서 "The release" 시작 문장이 5~7회 |
+| 진단 | `generateStats.essay.ineligible`: 탈락 후보를 첫 실패 규칙별로 센다. `NO_ELIGIBLE_CANDIDATE` 사유 끝에 `(<규칙> <수>, …)` 꼴로 붙는다 | 샘플 3의 "186 중 0"은 왜 0인지 보여 주지 않았다 |
+
+튜닝 후 샘플 런 44008702867(`6604255d`, 03:14Z)은 칼럼 없이 끝났다($0). 직전 런 뒤 50분 동안 새 항목은 7건이었고, 후보 186건 중 브리프 임계를 넘은 것은 1건이었다. 칼럼 탈락 사유는 not_insight_eligible 180, below_threshold 5, below_min_total 1이다.
+
+이것은 연속 런으로 staging 풀이 소진된 결과로 본다. 남은 후보는 대부분 48시간이 넘은 항목이라 timeliness가 0.06이다(가중 0.2). 같은 항목이 schedule 런에서 신선할 때(3~8시간, 0.75~1.0) 채점되면 total이 약 0.14~0.19 높다. 샘플 1(Vanguard)은 오래된 상태에서 0.610이었다. 그래서 schedule 런의 칼럼 후보 공급은 staging 샘플이 보여 준 것보다 많을 것이다(추정, 미측정). 4단계 뒤 `eligible`·`ineligible`을 1주 보고 판단한다. 프로덕션 schedule 12런(11/12~11/16)의 풀은 브리프 임계 통과가 1~9건, insight_eligible이 6~13건이었다(교집합은 로그에 없음).
+
+프롬프트 2026-11-17.1은 아직 라이브 칼럼으로 확인하지 못했다. 같은 raw item은 다시 쓰지 않으므로 새 자격 후보가 있어야 한다.
 
