@@ -26,7 +26,7 @@ caps:
   items_per_source: 6          # newest N per registry id (legacy keyed the cap by display name)
 
 essay:                         # Phase 3e insight essays for The Current (Josh 2026-11-16). Not a stage (stage names are a DB enum): generate/qa/image/publish read this block
-  enabled: false               # default OFF; CC_FLAG_ESSAY=true turns it on. Turning it on in the schedule is step 4 of 3e (approval item)
+  enabled: false               # file default OFF (replay tests, CI); CC_FLAG_ESSAY=true turns it on, and scheduled runs set it (3e step 4, Josh 2026-11-17)
   min_source_chars: 2000       # E1: extracted body of a text_rights: full source (D4); the essay also needs insight_eligible (scoring insight_trigger) and the brief threshold
   min_total: 0.60              # E1 topic fit (step-3 tuning 2026-11-17): scoring total floor above the brief threshold (0.55); the off-topic sample scored 0.556
   max_attempts_per_day: 2      # E2: essay generations per KST day whatever their QA outcome (about USD 0.1–0.2 each); caps.essays_per_day counts published essays
