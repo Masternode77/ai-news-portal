@@ -64,6 +64,7 @@ import {
   MemoryImageStore,
   createLocalImageStore,
   createStaticImageStore,
+  withFetchCauseCodes,
 } from "../src/adapters/index.ts";
 import { MemoryDb, SupabaseDb, seedMemoryDb } from "../src/db/index.ts";
 import { MemoryLedger, SupabaseLedger } from "../src/ledger/index.ts";
@@ -307,8 +308,10 @@ function buildSupabase(env: NodeJS.ProcessEnv, fetchImpl: typeof globalThis.fetc
   const url = env[names.url];
   const key = env[names.key];
   if (!url || !key) return null;
-  // Structural cast: SupabaseClient satisfies the minimal shape the ledger needs.
-  return createClient(url, key, { global: { fetch: fetchImpl } }) as unknown as SupabaseLike;
+  // Structural cast: SupabaseClient satisfies the minimal shape the ledger needs. Network failures name their
+  // cause codes (ENOTFOUND, ECONNREFUSED, …), never the host: a bare "fetch failed" from a paused or wrong project
+  // could not be told apart (3e step 3, 2026-11-17).
+  return createClient(url, key, { global: { fetch: withFetchCauseCodes(fetchImpl) } }) as unknown as SupabaseLike;
 }
 
 /**

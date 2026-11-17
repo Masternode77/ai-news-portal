@@ -29,7 +29,7 @@ export {
 export type { ExtractRequest, Extraction } from "./source/extract.ts";
 export { parseFeed } from "./source/feed-parser.ts";
 export type { FeedItem, ParsedFeed } from "./source/feed-parser.ts";
-export { FEED_CONTENT_TYPES, JSON_CONTENT_TYPES, PAGE_CONTENT_TYPES, SourceFetchError, decodeBody, defaultResolver, detectCharset, isPublicAddress, safeFetchText, withRetry } from "./source/net.ts";
+export { FEED_CONTENT_TYPES, JSON_CONTENT_TYPES, PAGE_CONTENT_TYPES, SourceFetchError, decodeBody, defaultResolver, detectCharset, fetchErrorCodes, isPublicAddress, safeFetchText, withFetchCauseCodes, withRetry } from "./source/net.ts";
 export type { HostResolver, SafeFetchOptions, SafeFetchResult } from "./source/net.ts";
 export { createDisabledLlmAdapter, createFixtureLlmAdapter } from "./llm/fixture.ts";
 export { ANTHROPIC_VERSION, LlmError, costOf, createAnthropicLlmAdapter, estimateCostUsd, parseMessagesResponse, toStructuredOutputSchema } from "./llm/anthropic.ts";
