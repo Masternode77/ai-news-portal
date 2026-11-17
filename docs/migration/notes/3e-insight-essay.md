@@ -237,3 +237,21 @@ Josh "3e 1단계 승인"(보이스·템플릿·D1~D4 권고안) → 파일 목�
   - `llm.timeout_ms` 180000 → **240000**. 약 85토큰/초 기준으로 12,000토큰이면 약 140초다.
   - `essayHistory`가 오늘(KST)의 칼럼 dead letter(`dead_letters`, stage generate, `payload.content_type = insight_essay`)를 `attemptsToday`에 더한다. 실패한 raw item은 `essayed`로 표시하지 않으므로 다음 날 다시 시도할 수 있다.
   - 칼럼 1회 최악 비용은 $0.29(input $0.05 + output 12,000 × $20/M)이고, 하루 최대 약 $0.58이다.
+
+### 8.2 첫 production 칼럼 발행 (2026-11-17, Josh "머지 후 수동런으로 바로 확인해")
+
+PR #106을 merge `8eea5c7e`로 머지했고, 배포 `dpl_EqCBE26d…`는 READY다. 같은 입력으로 수동 dispatch를 한 번 더 돌렸다.
+
+- **런 44113712308**(`069c7a16`, main `8eea5c7e`): `partial`, 3분, $0.27. `partial`은 수집 실패 2건(fierce-network HTTP 403, acer-news 미도달) 때문이다.
+  - 새 항목 1, 후보 184, 브리프 임계 통과 8이었다. 발행은 3편으로, 브리프 2편과 **칼럼 1편**이다.
+- **칼럼**: "Europe's AI dividend arrives as equipment exports while its own build costs rise"
+  - 주소: `/column/europe-s-ai-dividend-arrives-as-equipment-exports-while-its-own-2026-11-18/`
+  - 원문: `ec-press-corner` `speech_26_2470`, EU 2026 가을 경제전망 발표 발언이다.
+  - 분량: 1,482단어(본문 969, 반론 235, 함의 214), 소제목 5개.
+  - 생성: 프롬프트 2026-11-17.1, output 6,386토큰(`end_turn`, 상한 12,000 안), 약 70초, $0.171.
+- **QA**: hard 규칙은 모두 통과했다. 유사도 0.015, 숫자 18개가 모두 근거가 있었고 미근거 고유명사는 0개였다. `ESSAY_STRUCTURE`도 통과했다. soft 자동 통과는 두 가지다.
+  - `READABILITY_LOW`: "The Commission"으로 시작하는 문장이 4회로 상한 3을 넘었다. 샘플의 "The release" 5~7회보다 줄었다.
+  - `RUBRIC_BELOW_TARGET`
+- **사이트**: www에서 200으로 열린다. 제목·deck, 섹션 표시 "The Current", 바이라인(Josh Jiwoon Inn), Key argument, h2 소제목 5개, 출처(European Commission, 2026-11-17), AI 고지가 모두 나온다.
+- **KST 11/18 한도**: 발행 1/1, 시도 2/2(앞선 `max_tokens` 실패 1 + 이번 1)다. 이 날은 칼럼을 더 쓰지 않는다.
+- **cron**: 07:45Z 슬롯은 15:23Z에도 시작되지 않았다. 첫 schedule 칼럼 런 확인은 다음 슬롯으로 넘긴다.
