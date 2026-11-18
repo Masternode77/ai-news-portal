@@ -3,7 +3,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { EMPTY_SOURCE_HEALTH, IngestConfig, parsePipelineConfig } from "@cc/shared";
 import type { SourceHealth } from "@cc/shared";
-import { buildAdapters, parseCli, withoutPaidImageProviders } from "../bin/pipeline.ts";
+import { buildAdapters, buildImageAdapter, parseCli, servedRunHostsImages, withoutPaidImageProviders } from "../bin/pipeline.ts";
 import { decodeBody, detectCharset, isImageChain, safeFetchText } from "../src/adapters/index.ts";
 import { paragraphs } from "../src/lib/html.ts";
 import { registrableDomain, repairFeedLink } from "../src/lib/url.ts";
@@ -157,6 +157,27 @@ test("a served run never pays for an image it cannot keep (Codex PR #86): openai
   assert.deepEqual([...served.order], ["placeholder"]);
   assert.deepEqual([...dry.order], ["openai", "placeholder"]);
   assert.deepEqual(withoutPaidImageProviders({ ...config.image, provider: "fixture", fallback_chain: ["openai", "placeholder"] }), { ...config.image, provider: "fixture", fallback_chain: ["placeholder"] });
+});
+
+test("essay images (3e 2026-11-18): a served run that hosts images keeps openai for essays only; without a key the essay link fails soft; a non-hosting run drops it", async () => {
+  const { config } = parsePipelineConfig(TEST_PIPELINE_YAML, { env: {} });
+  const hosted = { ...config, image: { ...config.image, essay: { provider: "openai" as const, fallback_chain: ["placeholder" as const] }, storage: { ...config.image.storage, kind: "supabase" as const } } };
+  assert.equal(servedRunHostsImages(hosted), true);
+  assert.equal(servedRunHostsImages(config), false);
+  const served = buildAdapters(parseCli(["run", "--live"]), hosted, { OPENAI_API_KEY: "test-key-name-only" }).image;
+  assert.ok(isImageChain(served));
+  assert.deepEqual([...served.order], ["placeholder"], "briefs never reach a paid provider");
+  assert.deepEqual([...served.orderFor("insight_essay")], ["openai", "placeholder"]);
+  const notHosted = buildAdapters(parseCli(["run", "--live"]), { ...hosted, image: { ...hosted.image, storage: { ...hosted.image.storage, kind: "none" as const } } }, {}).image;
+  assert.ok(isImageChain(notHosted));
+  assert.deepEqual([...notHosted.orderFor("insight_essay")], ["placeholder"], "a run that cannot keep the bytes never pays for them");
+  const keyless = buildImageAdapter(hosted, {}, "fixtures");
+  assert.ok(isImageChain(keyless));
+  const result = await keyless.generateDetailed({ prompt: "p", alt: "a", slug: "column/x-2026-11-18", title: "x", content_type: "insight_essay" }, { now: new Date("2026-11-18T00:00:00Z"), logger: { warn() {}, info() {}, debug() {}, error() {} }, adapters: { imageStore: { kind: "memory", async put() { throw new Error("IMAGE_STORE_STATIC: test"); } } } } as never);
+  assert.deepEqual(result.attempts.map((a) => [a.provider, a.ok, a.code]), [["openai", false, "IMAGE_KEY_MISSING"], ["placeholder", true, null]]);
+  assert.equal(result.image.placeholder, true);
+  assert.throws(() => buildImageAdapter({ ...hosted, image: { ...hosted.image, provider: "openai" as const } }, {}, "fixtures"), /OPENAI_API_KEY is required/, "openai in the default chain still needs its key at startup");
+  assert.deepEqual(withoutPaidImageProviders(hosted.image).essay, { provider: "placeholder", fallback_chain: ["placeholder"] });
 });
 
 test("the step summary neutralises Markdown in feed text and keeps urls as autolinks", () => {

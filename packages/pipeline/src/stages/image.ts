@@ -10,7 +10,7 @@ import { draftId, NewsBrief, qaRuleEntry, renderTemplate, requireImagePrompt } f
 import { essayOf } from "./essay.ts";
 import type { DraftInsert, ImageAdapter, ImageRequest, QaVerdict, Severity, Stage, StageContext } from "@cc/shared";
 import type { QaResultInsert } from "@cc/shared";
-import { PAID_IMAGE_PROVIDERS, imageChainOrder, isImageChain } from "../adapters/image/chain.ts";
+import { PAID_IMAGE_PROVIDERS, isImageChain } from "../adapters/image/chain.ts";
 import type { ImageChain, ImageChainResult } from "../adapters/image/chain.ts";
 import { imageCostEstimate } from "../adapters/image/openai.ts";
 import { staticPlaceholder } from "../adapters/image/placeholder.ts";
@@ -54,15 +54,17 @@ export function imageAlt(brief: Pick<ImageSubject, "title">): string {
   return `${brief.title} — Compute Current editorial illustration`;
 }
 
-export function imageRequestFor(brief: ImageSubject, template: string): ImageRequest {
-  return { prompt: imagePrompt(template, brief), alt: imageAlt(brief), slug: brief.slug, title: brief.title, summary: brief.summary, tags: brief.tags };
+export function imageRequestFor(brief: ImageSubject, template: string, contentType?: string): ImageRequest {
+  return { prompt: imagePrompt(template, brief), alt: imageAlt(brief), slug: brief.slug, title: brief.title, summary: brief.summary, tags: brief.tags, ...(contentType ? { content_type: contentType } : {}) };
 }
 
-/** A non-chain adapter (tests, custom wiring) is treated as a one-link chain. */
-function asChain(adapter: ImageAdapter): Pick<ImageChain, "generateDetailed" | "order"> {
+/** A non-chain adapter (tests, custom wiring) is treated as a one-link chain for every content type. */
+function asChain(adapter: ImageAdapter): Pick<ImageChain, "generateDetailed" | "order" | "orderFor"> {
   if (isImageChain(adapter)) return adapter;
+  const order = [adapter.provider as ImageChain["order"][number]];
   return {
-    order: [adapter.provider as ImageChain["order"][number]],
+    order,
+    orderFor: () => order,
     async generateDetailed(request, ctx) {
       const started = Date.now();
       try {
@@ -98,10 +100,6 @@ export const imageStage: Stage<ImageInput, ImageOutput> = {
     const config = ctx.config.image;
     const template = requireImagePrompt(await ctx.adapters.prompts.get("image"));
     const chain = asChain(ctx.adapters.image);
-    const order = chain.order;
-    const realProviderConfigured = order.some((provider) => provider !== "placeholder");
-    const paidInChain = order.some((provider) => PAID_IMAGE_PROVIDERS.has(provider));
-    const estimate = paidInChain ? imageCostEstimate(config) : 0;
     const checkedAt = ctx.now.toISOString();
 
     const withImages: DraftWithImage[] = [];
@@ -126,7 +124,12 @@ export const imageStage: Stage<ImageInput, ImageOutput> = {
         continue;
       }
       const brief = subject;
-      const request = imageRequestFor(brief, template.system);
+      // Insight essays may have their own chain (`image.essay`, 3e 2026-11-18); briefs keep the default one.
+      const order = chain.orderFor(draft.content_type);
+      const realProviderConfigured = order.some((provider) => provider !== "placeholder");
+      const paidInChain = order.some((provider) => PAID_IMAGE_PROVIDERS.has(provider));
+      const estimate = paidInChain ? imageCostEstimate(config) : 0;
+      const request = imageRequestFor(brief, template.system, draft.content_type);
       const skipPaid = paidInChain && !ctx.budget.canSpend(estimate);
       if (skipPaid) {
         budgetStopped += 1;
@@ -185,7 +188,7 @@ export const imageStage: Stage<ImageInput, ImageOutput> = {
       decisions,
       ms: Date.now() - started,
     };
-    ctx.logger.info("image: finished", { passed: stats.passed, generated, placeholders, failed_attempts: failedAttempts, budget_stopped: budgetStopped, image_missing: stats.image_missing, rejected, held, cost_usd: stats.cost_usd, provider_order: [...order], prompt_version: template.version });
+    ctx.logger.info("image: finished", { passed: stats.passed, generated, placeholders, failed_attempts: failedAttempts, budget_stopped: budgetStopped, image_missing: stats.image_missing, rejected, held, cost_usd: stats.cost_usd, provider_order: [...chain.order], essay_provider_order: [...chain.orderFor("insight_essay")], prompt_version: template.version });
     return { withImages, verdicts, stats };
   },
 };

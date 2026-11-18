@@ -13,6 +13,20 @@ export class ImageError extends Error {
   }
 }
 
+/**
+ * A provider that cannot run in this environment (3e 2026-11-18: `OPENAI_API_KEY` missing while only the essay
+ * chain names openai). Every call fails with `code`, so the chain falls back to the placeholder and IMAGE_MISSING
+ * (soft) records why — an image never blocks the briefs of a run.
+ */
+export function createUnavailableImageAdapter(provider: string, code: string, message: string): { provider: string; generate(): Promise<never> } {
+  return {
+    provider,
+    async generate(): Promise<never> {
+      throw new ImageError(code, message);
+    },
+  };
+}
+
 export function errorCodeOf(error: unknown): string {
   if (error instanceof ImageError) return error.code;
   if (error instanceof Error) {

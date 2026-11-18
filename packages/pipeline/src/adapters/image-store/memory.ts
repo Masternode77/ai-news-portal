@@ -19,8 +19,8 @@ const EXTENSION: Record<ImageMime, string> = {
   "image/webp": "webp",
 };
 
-/** `/images/generated/<slug>/<variant>.<ext>`: a site-relative path the publisher can later rehost. */
-export function imagePath(slug: string, variant: string, mime: ImageMime): string {
+/** `<slug>/<variant>.<ext>` with every segment reduced to `[A-Za-z0-9._-]`; throws on an empty slug. */
+export function imageKey(slug: string, variant: string, mime: ImageMime): string {
   const safeSlug = slug
     .split("/")
     .map((segment) => segment.replace(/[^A-Za-z0-9._-]+/g, "-").replace(/^[.-]+|[.-]+$/g, ""))
@@ -28,7 +28,12 @@ export function imagePath(slug: string, variant: string, mime: ImageMime): strin
     .join("/");
   const safeVariant = variant.replace(/[^A-Za-z0-9_-]+/g, "-") || "hero";
   if (!safeSlug) throw new Error("IMAGE_STORE_SLUG_INVALID: empty slug");
-  return `/images/generated/${safeSlug}/${safeVariant}.${EXTENSION[mime]}`;
+  return `${safeSlug}/${safeVariant}.${EXTENSION[mime]}`;
+}
+
+/** `/images/generated/<slug>/<variant>.<ext>`: a site-relative path the publisher can later rehost. */
+export function imagePath(slug: string, variant: string, mime: ImageMime): string {
+  return `/images/generated/${imageKey(slug, variant, mime)}`;
 }
 
 export class MemoryImageStore implements ImageStore {

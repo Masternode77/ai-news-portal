@@ -281,3 +281,20 @@ PR #106을 merge `8eea5c7e`로 머지했고, 배포 `dpl_EqCBE26d…`는 READY�
   - (b) Vercel Blob(새 서비스 연결 = 승인 항목).
   - (c) 파이프라인이 이미지를 레포에 커밋하는 방식. main 자동 push라 쓰지 않는다.
 - **범위**: 칼럼만이다. 브리프는 지금처럼 플레이스홀더로 두어 비용을 키우지 않는다(칼럼 하루 최대 1편 × 이미지 1장).
+
+### 8.4 칼럼 이미지 자동 생성 (2026-11-18, Josh "머지 승인을 한다. 이미 선택 권고안 대로 진행해")
+
+PR #107은 merge `e47bba1e`로 머지됐고 배포 `dpl_E8mtJSAY…`는 READY다.
+- `publication-image.yml` production apply(런 44244625759)가 첫 칼럼 행의 `image`를 Higgsfield 파일로 바꿨고, 다시 읽어 확인했다(`verified: true`).
+- www 칼럼 페이지에 `<figure class="article-hero">`와 `og:image`가 나온다.
+
+이어서 권고안을 구현했다. 생성기는 OpenAI `gpt-image-2`, 저장은 Supabase Storage와 사이트 `/media`, 대상은 칼럼만이다.
+
+| 부분 | 내용 |
+|---|---|
+| 체인 | `image.essay`(`ImageChainConfig`)가 있으면 insight_essay가 그 체인을 쓴다. 브리프는 기본 체인(플레이스홀더)이다. `ImageRequest.content_type`, `ImageChain.orderFor(contentType)`, 스테이지는 초안마다 체인을 고른다. |
+| 플래그 | `CC_FLAG_ESSAY_IMAGE=openai`(빈 값은 무시, 스냅샷 `essay_image`). `pipeline.yml`은 schedule 런과 `dry_run=false`·`llm_provider=anthropic`·`essay≠off` dispatch에만 `openai`를 준다. 그 밖(replay·CI·fixture)은 `placeholder`다. |
+| 저장 | `image.storage { kind: supabase, bucket: article-images, public_path: /media }`. served 런은 그 런의 Supabase 클라이언트(service role, 새 시크릿 없음)로 공개 버킷을 첫 사용 때 만들고(이미지 MIME만, 10 MB), `<slug>/<variant>-<sha256 10자>.<ext>`로 올린다. 행 경로는 `/media/<key>`다. 플레이스홀더 SVG는 거절해 정적 플레이스홀더로 남긴다. `kind: none`이면 예전처럼 정적 store를 쓰고 유료 공급자를 체인에서 뺀다. |
+| 사이트 | `apps/site/src/pages/media/[...path].ts` + `src/lib/media.ts`. 키 모양(영숫자·`._-` 세그먼트 8개 이하, webp/png/jpg)과 `SITE_DATA_SOURCE=supabase`·https `SUPABASE_URL`일 때만 `<SUPABASE_URL>/storage/v1/object/public/<bucket>/<key>`를 가져온다. 응답은 `cache-control: public, max-age=31536000, immutable`이고, 그 밖은 404다. 버킷 이름은 `MEDIA_BUCKET`(선택, 기본 `article-images`)이라 Vercel 환경 변수를 바꿀 필요가 없다. |
+| 키 없음 | 칼럼 체인만 openai인데 `OPENAI_API_KEY`가 없으면 `IMAGE_KEY_MISSING`으로 플레이스홀더를 쓰고 `IMAGE_MISSING`(soft, 자동 통과)을 남긴다. 런과 브리프는 그대로 간다. 기본 체인에 openai를 두면 예전처럼 시작 시 `ConfigError`다. |
+| 비용 | 칼럼 1편당 이미지 1장, `image.pricing gpt-image-2` $0.07(ADR-007 추정 — Josh 확인 필요)이다. 하루 칼럼 상한 1편이라 하루 최대 약 $0.07~0.14다. |

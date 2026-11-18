@@ -64,6 +64,8 @@ export interface ImageRequest {
   title?: string;
   summary?: string;
   tags?: readonly string[];
+  /** 3e (2026-11-18): the draft's content type; a chain with `image.essay` routes insight essays to it. */
+  content_type?: string;
 }
 
 export interface ImageAdapter {
