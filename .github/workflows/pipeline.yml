@@ -113,7 +113,8 @@ jobs:
       CC_FLAG_ESSAY: ${{ github.event_name == 'schedule' && 'true' || inputs.essay == 'on' && 'true' || inputs.essay == 'sample' && 'sample' || 'false' }}
       # 3e (Josh 2026-11-18): essay images come from OpenAI (gpt-image-2) in scheduled runs and in real anthropic
       # dispatches that write essays; everything else keeps the placeholder (no image API call, no cost).
-      CC_FLAG_ESSAY_IMAGE: ${{ (github.event_name == 'schedule' || (inputs.dry_run == false && inputs.llm_provider == 'anthropic' && inputs.essay != 'off')) && 'openai' || 'placeholder' }}
+      # Without the OPENAI_API_KEY secret the essay keeps the placeholder quietly instead of logging IMAGE_KEY_MISSING.
+      CC_FLAG_ESSAY_IMAGE: ${{ secrets.OPENAI_API_KEY != '' && (github.event_name == 'schedule' || (inputs.dry_run == false && inputs.llm_provider == 'anthropic' && inputs.essay != 'off')) && 'openai' || 'placeholder' }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4

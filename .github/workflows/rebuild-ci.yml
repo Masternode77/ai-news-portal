@@ -61,8 +61,12 @@ jobs:
           cache: npm
       - name: Install dependencies
         run: npm ci
-      - name: Audit production dependencies
-        run: npm audit --omit=dev --audit-level=high
+      - name: Audit production dependencies (dated exceptions in config/audit-allowlist.json)
+        # npm audit exits 1 whenever it finds anything, so its JSON goes to the gate, which fails on a high or
+        # critical advisory that is not allowlisted or is past its expiry (Josh 2026-11-18), and on a bad report.
+        run: |
+          npm audit --omit=dev --json > audit.json || true
+          node packages/pipeline/tools/audit-gate.ts --audit audit.json --allow config/audit-allowlist.json
       - name: Typecheck (tsc + astro check)
         run: npm run v2:typecheck
       - name: Test (node --test, fixtures only)
