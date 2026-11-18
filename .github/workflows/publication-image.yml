@@ -1,0 +1,105 @@
+name: Publication image (3e)
+
+# Attach a hero image to one published row (packages/pipeline/tools/set-publication-image.ts). The image file
+# is committed under apps/site/public/generated/articles/<dir>/ and deployed before this runs; the tool checks
+# the file is in the checkout, then points `publications.image` at it and reads it back. Dispatch only, no
+# pull_request trigger (secrets never reach a fork). mode=dry-run reads the row and prints the before/after.
+# Writing production is a STOP-THE-LINE approval item: target=production with mode=apply needs the confirm
+# text below, which sets CC_ALLOW_PRODUCTION_PUBLISH for this one step. Secrets are used by name only.
+on:
+  workflow_dispatch:
+    inputs:
+      target:
+        description: "Project: staging (SUPABASE_URL / SUPABASE_SERVICE_ROLE_KEY) or production (SUPABASE_PROD_URL / SUPABASE_PROD_SERVICE_ROLE_KEY)"
+        type: choice
+        default: staging
+        options: [staging, production]
+      mode:
+        description: "dry-run reads the row and prints the change; apply writes it"
+        type: choice
+        default: dry-run
+        options: [dry-run, apply]
+      slug:
+        description: "publications.slug, e.g. column/<title>-YYYY-MM-DD"
+        type: string
+        required: true
+      path:
+        description: "Site-relative image path, e.g. /generated/articles/<dir>/hero.webp (must exist in the checkout)"
+        type: string
+        required: true
+      alt:
+        description: "Alt text"
+        type: string
+        required: true
+      provider:
+        description: "Image provenance provider (higgsfield, openai, …)"
+        type: string
+        default: higgsfield
+      model:
+        description: "Image provenance model"
+        type: string
+        default: ""
+      prompt:
+        description: "Image provenance prompt"
+        type: string
+        default: ""
+      confirm:
+        description: "For target=production with mode=apply, type: image approved"
+        type: string
+        default: ""
+
+permissions:
+  contents: read
+
+concurrency:
+  group: cc-publication-image
+  cancel-in-progress: false
+
+jobs:
+  image:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - name: Setup Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '22.22.0'
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Set the image
+        env:
+          TARGET: ${{ inputs.target }}
+          MODE: ${{ inputs.mode }}
+          CONFIRM: ${{ inputs.confirm }}
+          SLUG: ${{ inputs.slug }}
+          IMAGE_PATH: ${{ inputs.path }}
+          ALT: ${{ inputs.alt }}
+          PROVIDER: ${{ inputs.provider }}
+          MODEL: ${{ inputs.model }}
+          PROMPT: ${{ inputs.prompt }}
+          SUPABASE_URL: ${{ inputs.target == 'staging' && secrets.SUPABASE_URL || '' }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ inputs.target == 'staging' && secrets.SUPABASE_SERVICE_ROLE_KEY || '' }}
+          SUPABASE_PROD_URL: ${{ inputs.target == 'production' && secrets.SUPABASE_PROD_URL || '' }}
+          SUPABASE_PROD_SERVICE_ROLE_KEY: ${{ inputs.target == 'production' && secrets.SUPABASE_PROD_SERVICE_ROLE_KEY || '' }}
+        run: |
+          set -o pipefail
+          if [ "$MODE" = "apply" ] && [ "$TARGET" = "production" ]; then
+            if [ "$CONFIRM" != "image approved" ]; then
+              echo "target=production with mode=apply needs confirm='image approved' (STOP-THE-LINE approval item)"; exit 2
+            fi
+            export CC_ALLOW_PRODUCTION_PUBLISH=true
+          fi
+          args=(--"$MODE" --target "$TARGET" --slug "$SLUG" --path "$IMAGE_PATH" --alt "$ALT" --provider "$PROVIDER" --prompt "$PROMPT")
+          if [ -n "$MODEL" ]; then args+=(--model "$MODEL"); fi
+          node packages/pipeline/tools/set-publication-image.ts "${args[@]}" | tee result.json
+          {
+            echo "### Publication image — $TARGET · $MODE"
+            echo '```json'
+            cat result.json
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
