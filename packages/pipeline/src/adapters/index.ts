@@ -43,8 +43,10 @@ export { createOpenAiImageAdapter, extractOpenAiImage, imageCostEstimate } from 
 export type { OpenAiImageOptions } from "./image/openai.ts";
 export { PAID_IMAGE_PROVIDERS, createImageChain, imageChainOrder, isImageChain } from "./image/chain.ts";
 export type { ImageAttempt, ImageChain, ImageChainOptions, ImageChainResult } from "./image/chain.ts";
-export { ImageError, errorCodeOf as imageErrorCodeOf } from "./image/errors.ts";
-export { IMAGE_STORE_STATIC, MemoryImageStore, createLocalImageStore, createStaticImageStore, imagePath } from "./image-store/memory.ts";
+export { ImageError, createUnavailableImageAdapter, errorCodeOf as imageErrorCodeOf } from "./image/errors.ts";
+export { IMAGE_STORE_STATIC, MemoryImageStore, createLocalImageStore, createStaticImageStore, imageKey, imagePath } from "./image-store/memory.ts";
+export { IMAGE_STORE_UPLOAD_FAILED, createSupabaseImageStore, hashedImageKey } from "./image-store/supabase.ts";
+export type { SupabaseImageStoreOptions, SupabaseStorageLike } from "./image-store/supabase.ts";
 export { createNoopPublisher } from "./publisher/noop.ts";
 export { PublishError, createSitePublisher, publicationUrl } from "./publisher/site.ts";
 export type { SitePublisher, SitePublisherOptions } from "./publisher/site.ts";

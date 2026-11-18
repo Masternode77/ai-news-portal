@@ -80,3 +80,16 @@ test("CC_FLAG_ESSAY=sample (3e step 3) turns essays on and sets essay.sample for
   assert.equal(applyFlagOverrides(base(), { CC_FLAG_ESSAY: "true" }).config.essay.sample, false, "true is not sample");
   assert.throws(() => applyFlagOverrides(base(), { CC_FLAG_ESSAY: "sample", CC_FLAG_PUBLISH_TARGET: "production" }), (e: unknown) => e instanceof ConfigError && /staging review runs only/.test(e.message));
 });
+
+test("CC_FLAG_ESSAY_IMAGE (3e 2026-11-18) gives essays their own image chain ending in the placeholder; empty leaves the file value; an unknown provider fails", () => {
+  assert.equal(base().image.essay, undefined, "no essay chain unless set");
+  assert.equal(base().image.storage.kind, "none", "nothing is hosted unless the file says so");
+  const { config, overrides } = applyFlagOverrides(base(), { CC_FLAG_ESSAY_IMAGE: "openai" });
+  assert.deepEqual(config.image.essay, { provider: "openai", fallback_chain: ["placeholder"] });
+  assert.equal(config.image.provider, base().image.provider, "the default chain (briefs) is untouched");
+  assert.deepEqual(overrides.map((o) => [o.env, o.path, o.value]), [["CC_FLAG_ESSAY_IMAGE", "image.essay.provider", "openai"]]);
+  assert.equal(flagSnapshot(config, overrides).essay_image, "openai");
+  assert.equal(flagSnapshot(base()).essay_image, null);
+  assert.equal(applyFlagOverrides(base(), { CC_FLAG_ESSAY_IMAGE: "" }).config.image.essay, undefined);
+  assert.throws(() => applyFlagOverrides(base(), { CC_FLAG_ESSAY_IMAGE: "dalle" }), /image/);
+});

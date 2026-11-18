@@ -27,6 +27,8 @@ export interface FlagSnapshot {
   essay: boolean;
   /** Phase 3e step 3: `essay.sample` (`CC_FLAG_ESSAY=sample`) — staging samples without the daily limits. */
   essay_sample: boolean;
+  /** 3e (Josh 2026-11-18): `image.essay.provider` after overrides (`CC_FLAG_ESSAY_IMAGE`); null = essays use the default chain. */
+  essay_image: string | null;
   overrides: FlagOverride[];
 }
 
@@ -51,6 +53,7 @@ export function applyFlagOverrides(
   let llmProvider: string = config.llm.provider;
   let essay = config.essay.enabled;
   let essaySample = config.essay.sample;
+  let essayImage: PipelineConfig["image"]["essay"] = config.image.essay;
 
   for (const [key, raw] of Object.entries(env)) {
     if (!key.startsWith(FLAG_ENV_PREFIX) || raw === undefined) continue;
@@ -95,7 +98,16 @@ export function applyFlagOverrides(
       overrides.push({ env: key, path: "essay.enabled", raw, value: essay });
       continue;
     }
-    throw new ConfigError(`${key}: unknown flag (known: CC_FLAG_STAGES_<STAGE>, CC_FLAG_PUBLISH_TARGET, CC_FLAG_NOTIFY_TELEGRAM, CC_FLAG_LLM_PROVIDER, CC_FLAG_ESSAY)`);
+    if (name === "ESSAY_IMAGE") {
+      // 3e (Josh 2026-11-18): the provider that draws essay images (openai in served runs); the placeholder stays the
+      // fallback. The schema below rejects an unknown provider.
+      const provider = raw.trim();
+      if (provider === "") continue; // an unset workflow expression leaves the file value
+      essayImage = { provider: provider as NonNullable<PipelineConfig["image"]["essay"]>["provider"], fallback_chain: ["placeholder"] };
+      overrides.push({ env: key, path: "image.essay.provider", raw, value: provider });
+      continue;
+    }
+    throw new ConfigError(`${key}: unknown flag (known: CC_FLAG_STAGES_<STAGE>, CC_FLAG_PUBLISH_TARGET, CC_FLAG_NOTIFY_TELEGRAM, CC_FLAG_LLM_PROVIDER, CC_FLAG_ESSAY, CC_FLAG_ESSAY_IMAGE)`);
   }
 
   const parsed = PipelineConfigSchema.safeParse({
@@ -104,6 +116,7 @@ export function applyFlagOverrides(
     notify: { ...config.notify, telegram: { ...config.notify.telegram, enabled: notifyTelegram } },
     llm: { ...config.llm, provider: llmProvider },
     essay: { ...config.essay, enabled: essay, sample: essaySample },
+    image: { ...config.image, ...(essayImage ? { essay: essayImage } : {}) },
   });
   if (!parsed.success) {
     throw new ConfigError(`flag override produced an invalid config: ${parsed.error.issues.map((i) => `${i.path.join(".")}: ${i.message}`).join("; ")}`);
@@ -122,6 +135,7 @@ export function flagSnapshot(config: PipelineConfig, overrides: FlagOverride[] =
     llm_provider: config.llm.provider,
     essay: config.essay.enabled,
     essay_sample: config.essay.sample,
+    essay_image: config.image.essay?.provider ?? null,
     overrides: overrides.map((o) => ({ ...o })),
   };
 }

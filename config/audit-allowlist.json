@@ -1,0 +1,11 @@
+{
+  "$comment": "Dated exceptions to the production dependency audit (rebuild-ci: npm audit --omit=dev, gate packages/pipeline/tools/audit-gate.ts). Each entry names one advisory, why it is accepted, and an expiry; an expired entry fails CI again. Remove an entry once a patched release is installed. Josh 2026-11-18: astro 7.4.12 + a dated picomatch exception.",
+  "advisories": [
+    {
+      "id": "GHSA-fc5q-39xc-vjpf",
+      "package": "picomatch",
+      "reason": "ReDoS in extglob matching (picomatch <=4.0.7). No patched release exists as of 2026-11-18 (4.0.7 is the latest). It is pulled in by astro/vite/unstorage for build-time globbing; the site never passes visitor input to a glob.",
+      "expires": "2026-12-15"
+    }
+  ]
+}

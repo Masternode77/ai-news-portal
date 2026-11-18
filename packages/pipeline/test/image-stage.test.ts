@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { mkdtemp, readFile, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
-import { NewsBrief, draftId, newsBriefSlug, parsePipelineConfig, parsePromptFile, parseSourcesConfig, silentLogger } from "@cc/shared";
+import { InsightEssay, NewsBrief, draftId, newsBriefSlug, parsePipelineConfig, parsePromptFile, parseSourcesConfig, silentLogger } from "@cc/shared";
 import type { DraftInsert, ImageAdapter, PipelineConfig, StageContext } from "@cc/shared";
 import { createFixtureImageAdapter, createImageChain, createPlaceholderImageAdapter, imageChainOrder, placeholderSvg, placeholderTopic, placeholderTopicText, MemoryImageStore, PLACEHOLDER_IMAGE_PATH, PLACEHOLDER_MODEL, createStaticImageStore } from "../src/adapters/index.ts";
 import { createBudget } from "../src/budget.ts";
@@ -262,4 +262,35 @@ test("end to end: generate → (stub QA passes all) → image with a failing pro
   assert.equal(result.funnel.qa_passed, 2);
   assert.equal(result.costTotalUsd, 0);
   assert.notEqual(PLACEHOLDER_IMAGE_PATH, result.state.withImages[0]!.image!.path, "the generated SVG, not the static file");
+});
+
+test("essays have their own chain (image.essay, 3e 2026-11-18): the essay gets the generated image, the brief keeps the placeholder with no IMAGE_MISSING", async () => {
+  const cfg = config("image:\n  provider: placeholder\n  fallback_chain: [placeholder]\n  essay: { provider: openai }\n  pricing:\n    gpt-image-2: { usd_per_image: 0.07 }\n");
+  assert.deepEqual(imageChainOrder(cfg.image), ["placeholder"]);
+  assert.deepEqual(imageChainOrder(cfg.image, "insight_essay"), ["openai", "placeholder"]);
+  const seen: (string | undefined)[] = [];
+  const openai: ImageAdapter = {
+    provider: "openai",
+    async generate(request, ctx) {
+      seen.push(request.content_type);
+      ctx.budget.record(0.07);
+      return { path: `/media/${request.slug}/hero-abc.webp`, alt: request.alt, provenance: { provider: "openai", model: "gpt-image-2", prompt: request.prompt, generatedAt: ctx.now.toISOString() }, placeholder: false, costUsd: 0.07 };
+    },
+  };
+  const chain = chainFor(cfg, { openai });
+  assert.deepEqual(chain.orderFor("insight_essay"), ["openai", "placeholder"]);
+  assert.deepEqual(chain.orderFor("news_brief"), ["placeholder"]);
+  const { ctx } = await ctxWith(cfg, chain);
+  const recorded = JSON.parse(await readFile(resolve(REPO_ROOT, "fixtures/llm/insight_essay/7472701d-b59f-55b0-a309-ca4b4aed22de.json"), "utf8")) as { json: Record<string, unknown> };
+  const essay = InsightEssay.parse({ ...recorded.json, sources: [{ url: "https://www.grid-wire.example.org/reports/northvale-queue-4-8gw", name: "Essay Grid Wire", published_at: "2026-11-13T01:00:00.000Z" }], slug: "column/in-northvale-signed-load-matters-more-2026-11-16" });
+  const essayDraft: DraftInsert = { id: draftId(CANDIDATE_ID, "insight_essay", "2026-11-17.1"), candidate_id: CANDIDATE_ID, run_id: RUN_ID, content_type: "insight_essay", prompt_version: "2026-11-17.1", model: "fixture", body: { essay }, input_tokens: 0, output_tokens: 0, cost_usd: 0, review_status: "none" };
+  const out = ImageOutput.parse(await imageStage.run({ passed: [draft(brief()), essayDraft] }, ctx));
+  assert.deepEqual(seen, ["insight_essay"], "only the essay reaches the paid provider");
+  const [briefImage, essayImage] = out.withImages.map((entry) => entry.image);
+  assert.equal(briefImage?.placeholder, true);
+  assert.equal(essayImage?.placeholder, false);
+  assert.equal(essayImage?.path, "/media/column/in-northvale-signed-load-matters-more-2026-11-16/hero-abc.webp");
+  assert.equal(out.verdicts.length, 0, "a placeholder brief under a placeholder-only chain is the design, not a missing image");
+  assert.equal(out.stats.generated, 1);
+  assert.equal(out.stats.cost_usd, 0.07);
 });
