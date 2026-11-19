@@ -298,3 +298,36 @@ PR #107은 merge `e47bba1e`로 머지됐고 배포 `dpl_E8mtJSAY…`는 READY다
 | 사이트 | `apps/site/src/pages/media/[...path].ts` + `src/lib/media.ts`. 키 모양(영숫자·`._-` 세그먼트 8개 이하, webp/png/jpg)과 `SITE_DATA_SOURCE=supabase`·https `SUPABASE_URL`일 때만 `<SUPABASE_URL>/storage/v1/object/public/<bucket>/<key>`를 가져온다. 응답은 `cache-control: public, max-age=31536000, immutable`이고, 그 밖은 404다. 버킷 이름은 `MEDIA_BUCKET`(선택, 기본 `article-images`)이라 Vercel 환경 변수를 바꿀 필요가 없다. |
 | 키 없음 | 칼럼 체인만 openai인데 `OPENAI_API_KEY`가 없으면 `IMAGE_KEY_MISSING`으로 플레이스홀더를 쓰고 `IMAGE_MISSING`(soft, 자동 통과)을 남긴다. 런과 브리프는 그대로 간다. 기본 체인에 openai를 두면 예전처럼 시작 시 `ConfigError`다. |
 | 비용 | 칼럼 1편당 이미지 1장, `image.pricing gpt-image-2` $0.07(ADR-007 추정 — Josh 확인 필요)이다. 하루 칼럼 상한 1편이라 하루 최대 약 $0.07~0.14다. |
+
+### 8.5 Higgsfield 칼럼 이미지 (2026-11-19, Josh "A안 승인")
+
+**왜 이 경로인가**
+- OpenAI Images API는 API 키만 받는다(OAuth 없음). `OPENAI_API_KEY` 시크릿이 없어서 `pipeline.yml`은 칼럼에도 플레이스홀더를 준다(PR #108).
+- Higgsfield는 Claude 커넥터(OAuth)로 이미 연결돼 있지만 Actions에서 부를 API 키는 없다. 그래서 생성은 Claude 예약 작업이 하고, 저장과 행 연결은 Actions 워크플로가 한다.
+- 승인 범위(Josh "A안 승인"): 이 PR 머지, 반복 예약 작업 생성, 그 작업의 production 이미지 쓰기(confirm `image approved`)를 상시 승인으로.
+
+**흐름**
+1. 예약 작업이 `publication-image.yml`을 `target=production mode=list-missing`으로 dispatch한다. 잡 로그의 JSON `missing[]`(slug·title·deck·thesis·tags)을 읽고, 비어 있으면 끝낸다.
+2. 칼럼마다 Higgsfield `generate_image`를 부른다: `gpt_image_2_6`, 16:9, `1536x864`, resolution `2k`, quality `high`, webp. 프롬프트는 아래 규칙을 따른다.
+3. `target=production mode=apply slug=<slug> source_url=<CDN URL> alt=<한 문장> provider=higgsfield model=gpt_image_2_6 prompt=<프롬프트> confirm="image approved"`로 dispatch한다.
+4. 워크플로가 URL을 받는다(허용 호스트, 리다이렉트 거부, 10 MB, magic bytes). 버킷 `article-images`에 `<slug>/hero-<sha256 10자>.webp`로 올리고, 행을 `/media/<key>`로 바꾼 뒤 다시 읽어 확인한다(`verified: true`).
+5. 사이트는 ISR 만료(300 s) 뒤 대표 이미지와 `og:image`를 보여 준다.
+
+**프롬프트 규칙** (첫 칼럼 이미지와 같은 결, `prompts/image.md` 제약)
+- "Photorealistic editorial hero image for an article on <주제>."로 시작하고, 칼럼 thesis를 하나의 물리적 장면(설비·부지·송전·냉각·건설 현장 등)으로 옮긴다. 은유는 장면 안의 사물로만 표현한다.
+- 16:9 넓은 구도, 주 피사체 하나, 카드·OpenGraph 크롭을 위한 차분한 여백, 자연광, 다큐멘터리 산업 사진 톤.
+- 금지: 로고·브랜드·읽히는 글자·숫자·워터마크·사람·국기·보케 장식·보라색 그라데이션.
+- alt는 장면을 영어 한 문장으로 쓴다.
+
+**설정·코드**
+- `config/pipeline.yaml` `image.import { allowed_hosts: [d8j0ntlcm91z4.cloudfront.net], max_bytes: 10485760, timeout_ms: 30000 }`(스키마 `ImageImportConfig`, contracts 개정 15). 파이프라인 런은 이 값을 읽지 않는다.
+- `set-publication-image.ts`
+  - `--source-url`: `checkSourceUrl`·`downloadSourceImage`·`sniffImageMime`·`plannedImportPath`·`storeSourceImage`. 행을 먼저 읽어(`planImage`) slug가 틀리면 아무것도 올리지 않는다. dry-run은 받고 검사만 한다. 저장 경로가 계획과 다르면 `IMAGE_STORE_PATH_MISMATCH`.
+  - `--list-missing`: `listMissingImages`·`needsImage`. 이미지가 없거나 플레이스홀더인 최신 파이프라인 칼럼(`legacy_id` 없음, 최신 50편 중 최대 `--limit`)만 고른다. 레거시 칼럼은 건드리지 않는다.
+  - 로그는 stderr, stdout은 JSON 결과만이다.
+- 워크플로: `mode`에 `list-missing` 추가, `source_url` 입력 추가, `slug`·`path`·`alt` 필수 해제(도구가 검사), `run-name`에 target·mode·slug.
+
+**한계**
+- 파일 크기: Higgsfield 2k high webp는 약 1.4 MB다(첫 칼럼 원본 1,397,026 바이트). 재압축하려면 `sharp`(lockfile에 astro의 optional 의존성으로 이미 있음)를 `packages/pipeline` 의존성으로 선언해야 하고, 이는 패키지 추가 승인 항목이다. `/media`는 immutable 캐시라 첫 요청 뒤에는 CDN이 내준다.
+- 예약 작업은 Higgsfield·GitHub 도구가 있는 Claude 세션에 묶인다. 그 세션이 끝나면 작업도 멈춘다. 그때는 `list-missing`으로 밀린 칼럼을 확인하고 같은 절차를 손으로 돌린다.
+- 비용: Higgsfield 크레딧 장당 2.75(2k high). 칼럼은 하루 최대 1편이다.

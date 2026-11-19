@@ -1,11 +1,18 @@
 name: Publication image (3e)
+run-name: "Publication image — ${{ inputs.target }} · ${{ inputs.mode }}${{ inputs.slug != '' && format(' · {0}', inputs.slug) || '' }}"
 
-# Attach a hero image to one published row (packages/pipeline/tools/set-publication-image.ts). The image file
-# is committed under apps/site/public/generated/articles/<dir>/ and deployed before this runs; the tool checks
-# the file is in the checkout, then points `publications.image` at it and reads it back. Dispatch only, no
-# pull_request trigger (secrets never reach a fork). mode=dry-run reads the row and prints the before/after.
-# Writing production is a STOP-THE-LINE approval item: target=production with mode=apply needs the confirm
-# text below, which sets CC_ALLOW_PRODUCTION_PUBLISH for this one step. Secrets are used by name only.
+# Attach a hero image to one published row (packages/pipeline/tools/set-publication-image.ts). Two sources:
+# - path: a file committed under apps/site/public/generated/articles/<dir>/ and deployed before this runs; the tool
+#   checks the file is in the checkout.
+# - source_url (Josh 2026-11-19 A안): an https URL on a config/pipeline.yaml image.import.allowed_hosts host
+#   (Higgsfield's CDN). The tool downloads it, uploads it to the project's image bucket like a served run and
+#   points the row at /media/<key>; nothing is committed.
+# The tool then sets `publications.image` and reads it back. mode=dry-run reads the row and prints the
+# before/after without uploading or writing; mode=list-missing prints the newest pipeline essays whose image is
+# missing or the placeholder (read-only; the scheduled image task reads it from the log). Dispatch only, no
+# pull_request trigger (secrets never reach a fork). Writing production is a STOP-THE-LINE approval item:
+# target=production with mode=apply needs the confirm text below, which sets CC_ALLOW_PRODUCTION_PUBLISH for this
+# one step. Secrets are used by name only.
 on:
   workflow_dispatch:
     inputs:
@@ -15,22 +22,26 @@ on:
         default: staging
         options: [staging, production]
       mode:
-        description: "dry-run reads the row and prints the change; apply writes it"
+        description: "dry-run reads the row and prints the change; apply writes it; list-missing prints essays without an image (other inputs ignored)"
         type: choice
         default: dry-run
-        options: [dry-run, apply]
+        options: [dry-run, apply, list-missing]
       slug:
-        description: "publications.slug, e.g. column/<title>-YYYY-MM-DD"
+        description: "publications.slug, e.g. column/<title>-YYYY-MM-DD (dry-run/apply)"
         type: string
-        required: true
+        default: ""
       path:
-        description: "Site-relative image path, e.g. /generated/articles/<dir>/hero.webp (must exist in the checkout)"
+        description: "Site-relative image path, e.g. /generated/articles/<dir>/hero.webp (must exist in the checkout). Give path or source_url"
         type: string
-        required: true
+        default: ""
+      source_url:
+        description: "https URL on an image.import.allowed_hosts host (Higgsfield CDN); uploaded to the image bucket. Give path or source_url"
+        type: string
+        default: ""
       alt:
-        description: "Alt text"
+        description: "Alt text (dry-run/apply)"
         type: string
-        required: true
+        default: ""
       provider:
         description: "Image provenance provider (higgsfield, openai, …)"
         type: string
@@ -78,6 +89,7 @@ jobs:
           CONFIRM: ${{ inputs.confirm }}
           SLUG: ${{ inputs.slug }}
           IMAGE_PATH: ${{ inputs.path }}
+          SOURCE_URL: ${{ inputs.source_url }}
           ALT: ${{ inputs.alt }}
           PROVIDER: ${{ inputs.provider }}
           MODEL: ${{ inputs.model }}
@@ -94,8 +106,15 @@ jobs:
             fi
             export CC_ALLOW_PRODUCTION_PUBLISH=true
           fi
-          args=(--"$MODE" --target "$TARGET" --slug "$SLUG" --path "$IMAGE_PATH" --alt "$ALT" --provider "$PROVIDER" --prompt "$PROMPT")
-          if [ -n "$MODEL" ]; then args+=(--model "$MODEL"); fi
+          if [ "$MODE" = "list-missing" ]; then
+            args=(--list-missing --target "$TARGET")
+          else
+            # The tool refuses both or neither of path and source_url.
+            args=(--"$MODE" --target "$TARGET" --slug "$SLUG" --alt "$ALT" --provider "$PROVIDER" --prompt "$PROMPT")
+            if [ -n "$IMAGE_PATH" ]; then args+=(--path "$IMAGE_PATH"); fi
+            if [ -n "$SOURCE_URL" ]; then args+=(--source-url "$SOURCE_URL"); fi
+            if [ -n "$MODEL" ]; then args+=(--model "$MODEL"); fi
+          fi
           node packages/pipeline/tools/set-publication-image.ts "${args[@]}" | tee result.json
           {
             echo "### Publication image — $TARGET · $MODE"

@@ -96,6 +96,10 @@ image:                         # Phase 3f. Placeholder first (Josh, B안 2026-10
     kind: supabase             # none = keep nothing (static placeholder only, Phase 5 Codex PR #86)
     bucket: article-images     # created on first use (public, images only) with the service role
     public_path: /media        # the site serves the bucket here (apps/site/src/pages/media/[...path].ts)
+  import:                      # 3e (Josh 2026-11-19 A안): images generated outside the pipeline (Higgsfield via the Claude connector)
+    allowed_hosts: [d8j0ntlcm91z4.cloudfront.net]  # set-publication-image --source-url downloads only from these exact https hosts
+    max_bytes: 10485760        # 10 MB, the bucket's own limit
+    timeout_ms: 30000
   placeholder:                 # deterministic brand SVG: the first topic whose vocabulary matches picks the motif, the slug picks the palette
     default_topic: ai-infrastructure
     topics:
