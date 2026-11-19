@@ -121,6 +121,21 @@ export const ImageStorageConfig = z.strictObject({
 });
 export type ImageStorageConfig = z.infer<typeof ImageStorageConfig>;
 
+/** One exact lowercase DNS name (no scheme, port, path or wildcard). */
+const HostName = z.string().regex(/^(?=.{1,253}$)[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?(\.[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?)+$/, "an exact lowercase host name");
+
+/**
+ * Images made outside the pipeline and imported into the bucket (3e, Josh 2026-11-19 A안: Higgsfield images
+ * generated through the Claude connector). `set-publication-image --source-url` downloads only from these exact
+ * https hosts, at most `max_bytes` (the bucket's own limit is 10 MB), and stores the bytes like a run would.
+ */
+export const ImageImportConfig = z.strictObject({
+  allowed_hosts: z.array(HostName).default([]),
+  max_bytes: z.number().int().positive().max(10 * 1024 * 1024).default(10 * 1024 * 1024),
+  timeout_ms: z.number().int().positive().default(30000),
+});
+export type ImageImportConfig = z.infer<typeof ImageImportConfig>;
+
 export const ImageConfig = z
   .strictObject({
     /** Tried first. */
@@ -137,6 +152,7 @@ export const ImageConfig = z
     /** Chain for insight essays; absent = essays use the default chain (`CC_FLAG_ESSAY_IMAGE` sets it). */
     essay: ImageChainConfig.optional(),
     storage: ImageStorageConfig.prefault({}),
+    import: ImageImportConfig.prefault({}),
   })
   .refine(endsWithPlaceholder, {
     message: "image.fallback_chain must end with placeholder (fail-safe: an image failure never blocks publishing)",
