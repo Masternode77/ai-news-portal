@@ -1,6 +1,6 @@
 ---
 task: insight_essay
-version: 2026-11-17.1
+version: 2026-11-20.1
 model_hint: claude-opus-5-5
 output_schema: InsightEssayDraft
 max_output_tokens: 12000
@@ -30,6 +30,7 @@ The voice and the structure below are the house documents. Follow both. Where th
 - At most **one** direct quotation of the source in the whole essay, at most 20 words, inside double quotes. Use double quotes for nothing else.
 - Name the source in the text using `source_name`, attributing each figure in the sentence that uses it.
 - Vary the attribution. Put it at the start of a sentence, inside it or at its end, and name the source in more than one way (`source_name`, "the department", "its announcement", "the filing"). No two-word sentence opening ("The release", "The department", "The government") may appear more than three times in the whole essay; this is checked.
+- The source's own name is the opening most often overused. Start **at most two** sentences in the whole essay with `source_name` (for example "Epoch AI estimates …"). Everywhere else put the attribution inside or at the end of the sentence ("…, according to Epoch AI") or use a descriptive reference ("the analysis", "its authors", "the filing", "the department"). Before you return, count the sentences that open with the same two words and rewrite until none appears more than three times.
 
 ## Form
 - `title`: 40–90 characters, sentence case, no closing period, no question. The reading, not the news. Check the recent essays in the user message: if any of them already has an "X is a Y, not a Z" title, do not use that shape.

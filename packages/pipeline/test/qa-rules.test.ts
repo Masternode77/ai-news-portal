@@ -211,6 +211,12 @@ test("UNGROUNDED_ENTITY acronym plurals (2026-11-08): GPUs and PCs are acronyms,
   const unnamed = await check("UNGROUNDED_ENTITY", named, evidence(), { token_fallback: true });
   assert.equal(unnamed.pass, false);
   assert.deepEqual(unnamed.evidence["ungrounded"], ["Nvidia GPUs"]);
+  // The other direction (2026-11-20): a singular acronym in a longer name grounds by the source's plural.
+  // Staging sample 44692207005 rejected an essay on "Anthropic Direct TPU" against "Anthropic Direct" and "TPUs".
+  const direct = draft({ ...BRIEF, expert_lens: `${BRIEF.expert_lens} Spending shifts toward Anthropic Direct TPU leases.` });
+  assert.equal((await check("UNGROUNDED_ENTITY", direct, evidence({ sourceText: `${BODY} It leases TPUs directly under an arrangement called Anthropic Direct.` }), { token_fallback: true })).pass, true);
+  const noTpu = await check("UNGROUNDED_ENTITY", direct, evidence({ sourceText: `${BODY} An arrangement called Anthropic Direct.` }), { token_fallback: true });
+  assert.deepEqual(noTpu.evidence["ungrounded"], ["Anthropic Direct TPU"], "without the acronym in either number the name still fails");
   // A capitalised word ending in "s" is not an acronym plural: "Ross" and "Mrs" stay names.
   const ross = draft({ ...BRIEF, expert_lens: `${BRIEF.expert_lens} The analyst Ross expects delays.` });
   assert.deepEqual((await check("UNGROUNDED_ENTITY", ross, evidence())).evidence["ungrounded"], ["Ross"]);

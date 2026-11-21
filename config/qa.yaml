@@ -15,7 +15,7 @@
 # BUDGET_EXCEEDED (3d generate / runner). INSIGHT_DENSITY_LOW and HUMAN_STYLE_LOW are insight_essay
 # rules and arrive with 3e.
 
-version: "2026-11-16.1"         # 2026-11-16.1 (3e): ESSAY_STRUCTURE for insight essays, THIN_EXPERT_LENS briefs only (content_types), cross-article titles compared within essays / within briefs (code); ADR-009: English drafts (LANG_MISMATCH language en, UNGROUNDED_ENTITY sentence-initial + Korean-source handling); 2026-11-04.2 adds Southeast Asia(n) to allow; 2026-11-05.1 adds UNGROUNDED_ENTITY country aliases; 2026-11-08.1 QUOTE_TOO_LONG count_min_words 4; 2026-11-08.2 UNGROUNDED_ENTITY treats acronym plurals (GPUs, PCs) as acronyms (code)
+version: "2026-11-20.1"         # 2026-11-20.1: UNGROUNDED_ENTITY grounds a singular acronym by its plural in the source ("TPU" ↔ "TPUs", code); 2026-11-16.1 (3e): ESSAY_STRUCTURE for insight essays, THIN_EXPERT_LENS briefs only (content_types), cross-article titles compared within essays / within briefs (code); ADR-009: English drafts (LANG_MISMATCH language en, UNGROUNDED_ENTITY sentence-initial + Korean-source handling); 2026-11-04.2 adds Southeast Asia(n) to allow; 2026-11-05.1 adds UNGROUNDED_ENTITY country aliases; 2026-11-08.1 QUOTE_TOO_LONG count_min_words 4; 2026-11-08.2 UNGROUNDED_ENTITY treats acronym plurals (GPUs, PCs) as acronyms (code)
 
 rules:
   # ---- hard: a failing verdict rejects the draft -------------------------------------------------

@@ -331,3 +331,21 @@ PR #107은 merge `e47bba1e`로 머지됐고 배포 `dpl_E8mtJSAY…`는 READY다
 - 파일 크기: Higgsfield 2k high webp는 약 1.4 MB다(첫 칼럼 원본 1,397,026 바이트). 재압축하려면 `sharp`(lockfile에 astro의 optional 의존성으로 이미 있음)를 `packages/pipeline` 의존성으로 선언해야 하고, 이는 패키지 추가 승인 항목이다. `/media`는 immutable 캐시라 첫 요청 뒤에는 CDN이 내준다.
 - 예약 작업은 Higgsfield·GitHub 도구가 있는 Claude 세션에 묶인다. 그 세션이 끝나면 작업도 멈춘다. 그때는 `list-missing`으로 밀린 칼럼을 확인하고 같은 절차를 손으로 돌린다.
 - 비용: Higgsfield 크레딧 장당 2.75(2k high). 칼럼은 하루 최대 1편이다.
+
+### 8.6 staging 샘플 4 (2026-11-20, Josh "2·3 승인, 반영하고 샘플 1회 더 돌려")
+
+권고 2·3(11/17 반영: `min_total` 0.60, 프롬프트 2026-11-17.1)을 실제 칼럼으로 처음 확인했다. 런 44692207005(main `71cf6d99`, staging, `essay=sample`, $0.34).
+
+| 항목 | 결과 |
+|---|---|
+| 칼럼 | Epoch AI 분석 "Anthropic's S-1 commitments point to a slower curve and one heavy counterparty", 1,524단어, 소제목 5, $0.25 |
+| 권고 2 (주제 적합도) | total 0.611로 `min_total` 통과. AI 컴퓨트 수요·거래상대방 집중을 용량 공급자·대주 관점으로 다뤄 주제가 맞다 |
+| 사실 검사 | 숫자 22/22 근거, 인용 최장 18단어, 금지어 0, `ESSAY_STRUCTURE` 통과 |
+| 거절 | `UNGROUNDED_ENTITY` "Anthropic Direct TPU" — 원문은 "Anthropic Direct"와 "TPUs". 규칙은 초안 복수 → 원문 단수만 맞추고 반대 방향은 맞추지 않았다(오탐) |
+| 권고 3 (문체) | "Epoch AI"로 시작하는 문장 8회(`max_same_opening` 3, soft 자동 통과). 출처명 시작은 규칙이 막지 못했다 |
+
+Josh "1·2 승인, PR 올리고 샘플 다시 돌려"로 두 가지를 고쳤다(tuning-log 11).
+1. `UNGROUNDED_ENTITY`(qa 2026-11-20.1): 이름 안의 약어 단수가 원문 복수로도 근거 확인된다. 약어도 원문 어느 쪽 형태에도 없으면 그대로 실패한다(테스트).
+2. 칼럼 프롬프트 2026-11-20.1: `source_name`으로 시작하는 문장은 최대 2개, 나머지는 문장 안·끝 귀속이나 서술형 호칭("the analysis", "its authors"). 반환 전 같은 두 단어 시작 문장 수를 세어 고친다.
+
+같은 raw item으로는 칼럼을 다시 쓰지 않으므로, 확인 샘플은 다른 후보로 나온다.

@@ -21,6 +21,8 @@
  * Acronym plurals (2026-11-08): "GPUs", "PCs" are acronyms like "GPU", not names — the lowercase plural "s"
  * used to make them look like names (production restore: Altman–Samsung rejected on "GPUs", "PCs"). A run made
  * only of acronyms and their plurals is not checked; in a longer name such a token grounds by its singular too.
+ * The other direction (2026-11-20, staging sample 44692207005): a singular acronym in a longer name grounds by
+ * its plural in the source ("Anthropic Direct TPU leases" against "Anthropic Direct" and "TPUs").
  * `unchecked_source_languages` (ADR-009): an English brief from a Korean-language source writes Korean
  * names romanised ("Saemangeum" for 새만금), which the source text cannot carry, so for a source whose
  * `language` is listed the rule records the names it found and passes — a documented gap; the numbers
@@ -32,6 +34,9 @@ import { boolParam, numberParam, stringGroupsParam, stringListParam, verdict } f
 
 /** An acronym's plural ("GPUs", "PCs", "SSDs"): two or more capitals or digits, then a lowercase "s". */
 const ACRONYM_PLURAL = /^([A-Z][A-Z0-9&.-]*[A-Z0-9])s$/u;
+
+/** An acronym: two or more capitals or digits ("TPU", "GPU", "H100"). */
+const ACRONYM = /^[A-Z][A-Z0-9&.-]*[A-Z0-9]$/u;
 
 /** The run with every acronym plural written as its acronym ("Nvidia GPUs" → "Nvidia GPU"). */
 function singularAcronyms(entity: string): string {
@@ -77,7 +82,13 @@ export const rule: QaRule = {
     };
     const tokenInSource = (token: string): boolean => {
       const singular = token.replace(ACRONYM_PLURAL, "$1");
-      return hasWholeWord(haystack, token, false) || (singular !== token && hasWholeWord(haystack, singular, false)) || aliasIn(token) !== null;
+      const plural = ACRONYM.test(token) ? `${token}s` : token;
+      return (
+        hasWholeWord(haystack, token, false) ||
+        (singular !== token && hasWholeWord(haystack, singular, false)) ||
+        (plural !== token && hasWholeWord(haystack, plural, false)) ||
+        aliasIn(token) !== null
+      );
     };
     const byTokens = (entity: string): boolean => {
       const tokens = entity.split(/\s+/u).filter((token) => token.length >= minChars);
