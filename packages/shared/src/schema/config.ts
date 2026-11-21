@@ -16,9 +16,14 @@ export const StageFlags = z.strictObject(
 );
 export type StageFlags = z.infer<typeof StageFlags>;
 
+const CronExpression = z.string().regex(/^(\S+\s+){4}\S+$/, "5-field cron expression");
+
 export const ScheduleConfig = z.strictObject({
-  /** 5-field cron, UTC (ADR-002). */
-  cron: z.string().regex(/^(\S+\s+){4}\S+$/, "5-field cron expression"),
+  /**
+   * 5-field cron, UTC (ADR-002): one expression, or a list when the slots cannot share one (2026-11-21: the
+   * 07:45 slot moved to 08:13). Documentation only: `.github/workflows/pipeline.yml` `on.schedule` must list the same entries.
+   */
+  cron: z.union([CronExpression, z.array(CronExpression).min(1)]),
   timezone: z.literal("UTC"),
   slot_hours: z.number().int().positive().max(24),
 });

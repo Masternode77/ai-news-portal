@@ -5,6 +5,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
+import { parse as parseYaml } from "yaml";
 import {
   ConfigError,
   loadBannedPhrasesConfig,
@@ -204,4 +205,20 @@ test("notify block (Phase 3i): Telegram defaults when only `enabled` is given, s
   assert.equal(overridden.config.notify.telegram.enabled, true);
   assert.deepEqual(overridden.overrides.map((o) => [o.env, o.path, o.value]), [["CC_FLAG_NOTIFY_TELEGRAM", "notify.telegram.enabled", true]]);
   assert.throws(() => parsePipelineConfig(SAMPLE_PIPELINE_YAML, { env: { CC_FLAG_NOTIFY_TELEGRAM: "maybe" } }), ConfigError);
+});
+
+test("schedule.cron takes one 5-field expression or a non-empty list of them", () => {
+  const listed = parsePipelineConfig(SAMPLE_PIPELINE_YAML.replace('cron: "45 15,23,7 * * *"', 'cron: ["45 15,23 * * *", "13 8 * * *"]'), { env: {} });
+  assert.deepEqual(listed.config.schedule.cron, ["45 15,23 * * *", "13 8 * * *"]);
+  assert.throws(() => parsePipelineConfig(SAMPLE_PIPELINE_YAML.replace('cron: "45 15,23,7 * * *"', "cron: []"), { env: {} }), ConfigError);
+  assert.throws(() => parsePipelineConfig(SAMPLE_PIPELINE_YAML.replace('cron: "45 15,23,7 * * *"', 'cron: ["45 15,23 * * *", "13 8 *"]'), { env: {} }), ConfigError);
+});
+
+test("config/pipeline.yaml schedule.cron mirrors the pipeline.yml schedule entries", async () => {
+  const root = resolve(import.meta.dirname, "../../..");
+  const { config } = await loadPipelineConfig(resolve(root, "config/pipeline.yaml"), {});
+  const workflow = parseYaml(readFileSync(resolve(root, ".github/workflows/pipeline.yml"), "utf8")) as { on: { schedule?: { cron: string }[] } };
+  const fromWorkflow = (workflow.on.schedule ?? []).map((entry) => entry.cron);
+  const fromConfig = typeof config.schedule.cron === "string" ? [config.schedule.cron] : config.schedule.cron;
+  assert.deepEqual(fromWorkflow, fromConfig);
 });
