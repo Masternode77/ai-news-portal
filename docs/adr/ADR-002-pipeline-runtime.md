@@ -54,7 +54,7 @@ Phase 0 실측(`docs/diagnosis/01-pipeline-map.md`, `02-funnel.md`):
 | 항목 | 값 |
 |---|---|
 | 워크플로 | `.github/workflows/pipeline.yml` (신규, Phase 2) — `on.schedule` + `on.workflow_dispatch`(inputs: `dry_run`, `stage`, `fixture`) |
-| 주기 | `45 15,23,7 * * *` UTC = 00:45 / 08:45 / 16:45 KST (현행 Mac 슬롯 유지, `config/pipeline.yaml`의 `schedule.cron`과 동일 값을 문서화) |
+| 주기 | `45 15,23,7 * * *` UTC = 00:45 / 08:45 / 16:45 KST (현행 Mac 슬롯 유지, `config/pipeline.yaml`의 `schedule.cron`과 동일 값을 문서화). **2026-11-21 개정(Josh B안)**: 07:45 UTC 슬롯이 2026-11-16~21 6일 연속 런 자체가 생성되지 않아(cancelled 런도 없음) `45 15,23 * * *` + `13 8 * * *` UTC = 00:45 / 08:45 / **17:13** KST로 옮겼다. `schedule.cron`은 목록을 받고 `packages/shared/test/config.test.ts`가 워크플로 항목과 같은지 검사한다 |
 | 동시성 | `concurrency: { group: cc-pipeline, cancel-in-progress: false }` — 겹치면 대기 |
 | 타임아웃 | `timeout-minutes: 45` (Phase 0 Actions 시절 20~34분 실측 + 여유) |
 | 러너 | `ubuntu-latest`, Node 22.22.0(`.nvmrc`), `npm ci` |

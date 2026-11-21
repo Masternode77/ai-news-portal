@@ -55,6 +55,7 @@ export interface Stage<I, O> {
 13. Phase 3e 개정(2026-11-16) — insight_essay: 스테이지 이름이 DB enum(`cc_stage_name`)이라 칼럼은 새 스테이지가 아니다. `GenerateInput`에 선택 `candidates`(채점된 전체 후보; 칼럼 후보는 브리프 `selected` 밖일 수 있다)가 붙고, `GenerateStats.essay { enabled, outcome: off|drafted|skipped|failed|budget_stopped, reason, eligible, ineligible(첫 실패 규칙별 수, 2026-11-17), published_today, attempts_today, decision }`가 추가됐다(비용·토큰은 합계에 포함, 초안은 `drafted`에 포함). 칼럼 초안은 `drafts.body = { essay: InsightEssay, checks: { grounding, quote_max_words, banned, words, headings }, source }`. `PipelineConfig.essay { enabled(false), min_source_chars(2000), min_total(0.6, 2026-11-17), max_attempts_per_day(2), recent_essays(5), sample(false, 2026-11-17) }`, 플래그 `CC_FLAG_ESSAY` → `essay.enabled`(스냅샷 `essay`). QA: `QaRuleEntry.content_types?: ContentType[]`(없으면 전 유형; 해당 없는 초안에는 verdict 없음), `QaEvidence.recentPublishedTitles`는 브리프면 창 안의 칼럼 외 전부, 칼럼이면 최근 칼럼 10편(기간 무관, `RECENT_ESSAYS`) — 둘 다 새것부터, 같은 런에서 먼저 통과한 같은 종류 초안이 앞. 발행: `insight_essay` → `publications.body = { deck, thesis, article_body, meta_description, headings, tags, source_url, source_name, published_at_source, checks, generation }`(레거시 칼럼 모양, 사이트 변경 없음). 프롬프트 파일은 `<!-- include: <상대 경로> -->` 줄로 레포 안 문서를 끌어올 수 있다(파일 레지스트리, front matter 제거, 1단계).
 14. 3e 칼럼 이미지 개정(2026-11-18, Josh 승인): `ImageConfig`에 선택 `essay: { provider, fallback_chain(기본 [placeholder]) }`(insight_essay 전용 체인, 플래그 `CC_FLAG_ESSAY_IMAGE`, 스냅샷 `essay_image`)과 `storage: { kind: none|supabase(기본 none), bucket(기본 article-images), public_path(기본 /media) }`가 붙었다. `ImageRequest.content_type?`, `ImageChain.orderFor(contentType)`. `ImageStore` 구현에 Supabase Storage(`createSupabaseImageStore`: 공개 버킷 첫 사용 시 생성, 키 `<slug>/<variant>-<sha256 10자>.<ext>`, 경로 `<public_path>/<key>`, SVG는 `IMAGE_STORE_STATIC`으로 거절)가 추가됐다. 사이트는 `/media/<key>`를 그 버킷에서 같은 도메인으로 내준다(`apps/site/src/lib/media.ts`).
 15. 3e 칼럼 이미지 가져오기(2026-11-19, Josh "A안 승인"): `ImageConfig.import: { allowed_hosts(정확한 소문자 호스트, 기본 []), max_bytes(기본·최대 10 MB), timeout_ms(기본 30000) }`. 파이프라인 런은 읽지 않고 `tools/set-publication-image.ts --source-url`만 쓴다 — 허용 https 호스트에서 리다이렉트 없이 받아 magic bytes로 형식을 정하고 `createSupabaseImageStore`(variant `hero`)로 올린다. 같은 도구의 `--list-missing`은 읽기 전용이다. 기존 스키마·어댑터 인터페이스 변경 없음.
+16. 스케줄 개정(2026-11-21, Josh "B안 승인"): `ScheduleConfig.cron`은 5필드 식 하나 또는 비어 있지 않은 목록이다(GitHub Actions `on.schedule`의 여러 `cron` 항목과 같은 모양). 07:45 UTC 슬롯이 2026-11-16~21 매일 누락돼 `["45 15,23 * * *", "13 8 * * *"]`(00:45 / 08:45 / 17:13 KST)로 바꿨다. 런타임은 이 값을 읽지 않는다(문서용, `slot_hours`만 ops가 읽음). `packages/shared/test/config.test.ts`가 `.github/workflows/pipeline.yml`의 항목과 같은지 검사한다.
 
 ## 2. Adapter 인터페이스
 
@@ -201,7 +202,7 @@ export const InsightEssay = z.object({              // Phase 3e (2026-11-16): dr
 `config/pipeline.yaml`
 
 ```yaml
-schedule: { cron: "45 15,23,7 * * *", timezone: "UTC", slot_hours: 8 }
+schedule: { cron: ["45 15,23 * * *", "13 8 * * *"], timezone: "UTC", slot_hours: 8 }   # 문자열 하나 또는 목록(16항)
 flags:
   stages: { ingest: true, normalize: false, score: false, generate: false, qa: false, image: false, publish: true }   # normalize: 3b, score: 3c, generate: 3d, qa: 3g, image: 3f 기본 OFF (§7)
   publish_target: none        # none | staging | production  (ADR-006)

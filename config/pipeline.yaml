@@ -3,7 +3,9 @@
 # Environment overrides: CC_FLAG_STAGES_<STAGE>=true|false, CC_FLAG_PUBLISH_TARGET=none|staging|production, CC_FLAG_NOTIFY_TELEGRAM, CC_FLAG_LLM_PROVIDER, CC_FLAG_ESSAY=true|false|sample.
 
 schedule:
-  cron: "45 15,23,7 * * *"   # 00:45 / 08:45 / 16:45 KST (ADR-002)
+  cron:                      # ADR-002; .github/workflows/pipeline.yml on.schedule lists the same entries
+    - "45 15,23 * * *"         # 00:45 / 08:45 KST
+    - "13 8 * * *"             # 17:13 KST — moved from 07:45 UTC (16:45 KST), which GitHub dropped 2026-11-16..21 (Josh B안 2026-11-21)
   timezone: UTC
   slot_hours: 8
 
