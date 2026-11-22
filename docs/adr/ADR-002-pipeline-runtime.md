@@ -54,7 +54,7 @@ Phase 0 실측(`docs/diagnosis/01-pipeline-map.md`, `02-funnel.md`):
 | 항목 | 값 |
 |---|---|
 | 워크플로 | `.github/workflows/pipeline.yml` (신규, Phase 2) — `on.schedule` + `on.workflow_dispatch`(inputs: `dry_run`, `stage`, `fixture`) |
-| 주기 | `45 15,23,7 * * *` UTC = 00:45 / 08:45 / 16:45 KST (현행 Mac 슬롯 유지, `config/pipeline.yaml`의 `schedule.cron`과 동일 값을 문서화). **2026-11-21 개정(Josh B안)**: 07:45 UTC 슬롯이 2026-11-16~21 6일 연속 런 자체가 생성되지 않아(cancelled 런도 없음) `45 15,23 * * *` + `13 8 * * *` UTC = 00:45 / 08:45 / **17:13** KST로 옮겼다. `schedule.cron`은 목록을 받고 `packages/shared/test/config.test.ts`가 워크플로 항목과 같은지 검사한다 |
+| 주기 | `45 15,23,7 * * *` UTC = 00:45 / 08:45 / 16:45 KST (현행 Mac 슬롯 유지, `config/pipeline.yaml`의 `schedule.cron`과 동일 값을 문서화). **2026-11-21 개정(Josh B안)**: 2026-11-16~21 매일 schedule 런이 2개만 생성돼(03~05 UTC 1개 + 오후 1개, cancelled 런도 없음) 07:45 UTC 슬롯을 `45 15,23 * * *` + `13 8 * * *` UTC = 00:45 / 08:45 / **17:13** KST로 옮겼다. **정정(2026-11-22)**: "07:45 슬롯이 런을 만들지 않았다"는 판단은 틀렸다 — 11-21 오후 런(15:37 UTC)은 15:45 전에 생성돼 07:45 슬롯이 7 h 52 m 늦게 돈 것이고, 그날 빠진 것은 15:45 슬롯이다. 11-16~20의 오후 런(16:22~17:27 UTC)은 시각만으로 어느 슬롯인지 가릴 수 없다. 11-06~15에는 07:45 런이 14:21~15:41 UTC에 들어온 날만 하루 3런이었다 — 07:45 런이 15:45 무렵까지 밀리면 두 슬롯 중 하나만 남는다(가설, 미확정). 그렇다면 08:13 이동은 효과가 없을 수 있다. `pipeline.yml`의 Step summary가 `github.event.schedule`을 남겨 런마다 어느 항목이 띄웠는지 기록한다. `schedule.cron`은 목록을 받고 `packages/shared/test/config.test.ts`가 워크플로 항목과 같은지 검사한다 |
 | 동시성 | `concurrency: { group: cc-pipeline, cancel-in-progress: false }` — 겹치면 대기 |
 | 타임아웃 | `timeout-minutes: 45` (Phase 0 Actions 시절 20~34분 실측 + 여유) |
 | 러너 | `ubuntu-latest`, Node 22.22.0(`.nvmrc`), `npm ci` |
