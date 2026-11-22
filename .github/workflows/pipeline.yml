@@ -69,7 +69,9 @@ on:
         options: ["off", "on", "sample"]
   # ADR-002 schedule (approval Josh 2026-10-26, enabled 2026-10-29; production publishing from the Phase 5 cutover). Mirrors config/pipeline.yaml schedule.cron.
   # Rollback drill 2026-10-31 (docs/shadow/README.md §4, compare.md §4): disabled by PR #82, re-enabled by the next PR.
-  # 2026-11-21 (Josh B안): the 07:45 UTC slot never ran 2026-11-16..21 (no run, not even a cancelled one), so it moved to 08:13 UTC.
+  # 2026-11-21 (Josh B안): the 07:45 UTC slot moved to 08:13 UTC. Since 2026-11-16 only two scheduled runs a day were created
+  # (~03-05 UTC and one afternoon run); on 2026-11-21 the afternoon run (15:37 UTC) was the 07:45 slot 7 h 52 m late and the
+  # 15:45 slot created none. The step summary logs github.event.schedule so each run names the entry that fired it.
   schedule:
     - cron: "45 15,23 * * *"   # 00:45 / 08:45 KST
     - cron: "13 8 * * *"       # 17:13 KST
@@ -160,7 +162,15 @@ jobs:
           tail -n 200 pipeline-run.log
       - name: Step summary
         if: always()
+        env:
+          SCHEDULE_CRON: ${{ github.event.schedule }}
         run: |
+          # Which on.schedule entry fired this run (empty for a dispatch): GitHub starts scheduled runs hours late,
+          # so the run's start time alone cannot tell the 08:13 slot from the 15:45 one (2026-11-21 correction).
+          if [ -n "$SCHEDULE_CRON" ]; then
+            echo "schedule entry: $SCHEDULE_CRON"
+            echo "Scheduled by \`$SCHEDULE_CRON\` (UTC)" >> "$GITHUB_STEP_SUMMARY"
+          fi
           if [ -s pipeline-run.json ]; then
             node packages/pipeline/tools/ingest-dry-run-summary.ts pipeline-run.json >> "$GITHUB_STEP_SUMMARY"
           else
