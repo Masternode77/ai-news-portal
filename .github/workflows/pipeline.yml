@@ -72,8 +72,12 @@ on:
   # 2026-11-21 (Josh B안): the 07:45 UTC slot moved to 08:13 UTC. Since 2026-11-16 only two scheduled runs a day were created
   # (~03-05 UTC and one afternoon run); on 2026-11-21 the afternoon run (15:37 UTC) was the 07:45 slot 7 h 52 m late and the
   # 15:45 slot created none. The step summary logs github.event.schedule so each run names the entry that fired it.
+  # 2026-11-25 (Josh approval): one entry per slot. On 2026-11-23 the shared "45 15,23" entry created one run (02:35 UTC
+  # on 11-24) for both its slots, while on 2026-11-22 a still-pending 08:13 event did not stop the 15:45 entry from
+  # creating its own run, so late events appear to be merged within an entry, not across entries (inference).
   schedule:
-    - cron: "45 15,23 * * *"   # 00:45 / 08:45 KST
+    - cron: "45 15 * * *"      # 00:45 KST
+    - cron: "45 23 * * *"      # 08:45 KST
     - cron: "13 8 * * *"       # 17:13 KST
 
 permissions:
@@ -166,7 +170,8 @@ jobs:
           SCHEDULE_CRON: ${{ github.event.schedule }}
         run: |
           # Which on.schedule entry fired this run (empty for a dispatch): GitHub starts scheduled runs hours late,
-          # so the run's start time alone cannot tell the 08:13 slot from the 15:45 one (2026-11-21 correction).
+          # so the run's start time alone cannot tell one slot from another (2026-11-21 correction); each slot has its
+          # own entry since 2026-11-25.
           if [ -n "$SCHEDULE_CRON" ]; then
             echo "schedule entry: $SCHEDULE_CRON"
             echo "Scheduled by \`$SCHEDULE_CRON\` (UTC)" >> "$GITHUB_STEP_SUMMARY"
