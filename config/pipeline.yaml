@@ -4,7 +4,8 @@
 
 schedule:
   cron:                      # ADR-002; .github/workflows/pipeline.yml on.schedule lists the same entries
-    - "45 15,23 * * *"         # 00:45 / 08:45 KST
+    - "45 15 * * *"            # 00:45 KST — one entry per slot since 2026-11-25 (Josh approval): a shared "45 15,23" entry created one run for both slots on 11-23; see ADR-002
+    - "45 23 * * *"            # 08:45 KST
     - "13 8 * * *"             # 17:13 KST — moved from 07:45 UTC (16:45 KST) (Josh B안 2026-11-21): since 11-16 only two scheduled runs a day were created; see ADR-002
   timezone: UTC
   slot_hours: 8
